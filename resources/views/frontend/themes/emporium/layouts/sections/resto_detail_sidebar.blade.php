@@ -18,8 +18,10 @@
                 {{-- End Global Search Bar --}}
 
                 <li><a href="#restaurant1">INFO</a></li>
-                <li><a href="#video" class="">VIDEO</a></li>
-                <li><a href="#get-directions">GET DIRECTIONS</a></li>
+                @if($resturantArr[0]->video_type!='' || ($resturantArr[0]->part_of_hotel==1 && $resturantArr[0]->social_youtube!=''))
+					<li><a href="#video" class="">VIDEO</a></li>
+				@endif
+               <!-- <li><a href="#get-directions">GET DIRECTIONS</a></li>-->
             </ul>
             @if (!Auth::check())
 

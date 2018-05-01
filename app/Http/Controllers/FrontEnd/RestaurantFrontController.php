@@ -6,6 +6,7 @@ use App\Models\Restaurant;
 use Illuminate\Http\Request;
 use DB, Input, Redirect;
 use App\Http\Controllers\ContainerController;
+use File;
 
 class RestaurantFrontController extends Controller {
 
@@ -29,7 +30,7 @@ class RestaurantFrontController extends Controller {
 		$inspireArray=array();
 		$eventPackagesArray=array();
 
-		$props = \DB::table('tb_properties')->select('restaurant_ids','spa_ids','bar_ids','id')->where('property_slug', $request->slug)->first();
+		$props = \DB::table('tb_properties')->select('restaurant_ids','spa_ids','bar_ids','id', 'social_youtube')->where('property_slug', $request->slug)->first();
         if (!empty($props)) {
             $propertiesArr['data'] = $props;
 			if($props->restaurant_ids!='')
@@ -205,7 +206,7 @@ class RestaurantFrontController extends Controller {
 	public function restrurantDetail( Request $request )
 	{
 		$this->data['pagetitle'] = $request->slug;
-		$resturantArr = array();
+		$resturantArr = $relatedgridArr = array();
 		 
 		$resfileArr = \DB::table('tb_images_res_spa_bar')->join('tb_restaurants', 'tb_restaurants.id', '=', 'tb_images_res_spa_bar.parent_id')->select('tb_restaurants.*', 'tb_images_res_spa_bar.parent_id', 'tb_images_res_spa_bar.folder_id', 'tb_images_res_spa_bar.type')->where('tb_restaurants.alias', $request->slug)->where('tb_images_res_spa_bar.type', 'res')->first();
 		if(!empty($resfileArr))
@@ -213,6 +214,18 @@ class RestaurantFrontController extends Controller {
 			$rf=0;
 			
 			$resturantArr[$rf] = $resfileArr;
+			if($resfileArr->part_of_hotel==1)
+			{
+				$resturantArr[$rf]->social_youtube = '';
+				$qury = "Select social_youtube from tb_properties where FIND_IN_SET(".$resfileArr->id.",restaurant_ids) and restaurant_ids!='' and social_youtube !=''";
+				$exequry = \DB::select($qury);
+				//print_r($exequry); die;
+				if(!empty($exequry))
+				{
+					$resturantArr[$rf]->social_youtube = $exequry[0]->social_youtube;
+				}
+			}
+			
 			$fetchressliderfolder = \DB::table('tb_container')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container.id')->select('tb_container.id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'slider')->where('tb_frontend_container.container_type', 'folder')->first();
 			if(!empty($fetchressliderfolder))
 			{
@@ -244,8 +257,50 @@ class RestaurantFrontController extends Controller {
 					$resturantArr[$rf]->datamenupath = (new ContainerController)->getThumbpath($fetchresmenufolder->id);
 				}
 			}
+			
+			$relatedgridquery = "SELECT tb_restaurants.id, tb_restaurants.title, tb_restaurants.alias, tb_images_res_spa_bar.parent_id, tb_images_res_spa_bar.folder_id, tb_images_res_spa_bar.type FROM tb_restaurants join tb_images_res_spa_bar on tb_images_res_spa_bar.parent_id = tb_restaurants.id WHERE tb_restaurants.id != '". $resfileArr->id ."' AND FIND_IN_SET('". $resfileArr->category_id ."', tb_restaurants.category_id) AND tb_images_res_spa_bar.type = 'res' ORDER BY tb_restaurants.id DESC LIMIT 2";
+			
+			$relatedgrid = DB::select(DB::raw($relatedgridquery));
+			if (!empty($relatedgrid)) {
+				$pr = 0;
+				foreach ($relatedgrid as $rgrest) {
+					$relatedgridArr[$pr]['data']['alias'] = 'restaurants/'.$rgrest->alias;
+					$relatedgridArr[$pr]['data']['title'] = $rgrest->title;
+					$fetchresgallery = \DB::table('tb_container')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container.id')->select('tb_container.id')->where('tb_container.parent_id', $rgrest->folder_id)->where('tb_container.name', 'gallery')->where('tb_frontend_container.container_type', 'folder')->first();
+					if(!empty($fetchresgallery))
+					{
+						$resgalleryfiles = \DB::table('tb_container_files')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container_files.id')->where('tb_container_files.folder_id', $fetchresgallery->id)->where('tb_frontend_container.container_type', 'file')->orderBy('tb_container_files.file_sort_num','asc')->first();
+						if(!empty($resgalleryfiles))
+						{
+							if (!File::exists(public_path(). '/uploads/thumbs/format_'.$resgalleryfiles->folder_id.'_'.$resgalleryfiles->file_name))
+							{
+								$imgpath = (new ContainerController)->getContainerUserPath($resgalleryfiles->folder_id);
+								$mdimg = \Image::make($imgpath.$resgalleryfiles->file_name);
+								$actualsize = getimagesize($imgpath.$resgalleryfiles->file_name);
+								if($actualsize[0]>$actualsize[1])
+								{
+									$mdimg->resize(320, null, function ($constraint) {
+										$constraint->aspectRatio();
+									});
+								}
+								else
+								{
+									$mdimg->resize(null, 320, function ($constraint) {
+										$constraint->aspectRatio();
+									});
+								}
+								$thumbfile = 'format_'.$resgalleryfiles->folder_id.'_'.$resgalleryfiles->file_name;
+								$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+							}
+							$relatedgridArr[$pr]['data']['galleryimage'] = $resgalleryfiles;
+						}
+					}
+					$pr++;
+				}
+			}
 		}
 		$this->data['resturantArr'] = $resturantArr;
+		$this->data['relatedgridArr'] = $relatedgridArr;
 		return view('frontend.themes.emporium.properties.resto-detail', $this->data);
 	}
 	
@@ -253,12 +308,24 @@ class RestaurantFrontController extends Controller {
 	{
 		$this->data['pagetitle'] = $request->slug;
 		
-		$barsArr = array();
+		$barsArr = $relatedgridArr = array();
 		$barfileArr = \DB::table('tb_images_res_spa_bar')->join('tb_bars', 'tb_bars.id', '=', 'tb_images_res_spa_bar.parent_id')->select('tb_bars.*', 'tb_images_res_spa_bar.parent_id', 'tb_images_res_spa_bar.folder_id', 'tb_images_res_spa_bar.type')->where('tb_bars.alias', $request->slug)->where('tb_images_res_spa_bar.type', 'bar')->first();
 		if(!empty($barfileArr))
 		{
 			$bf=0;
 			$barsArr[$bf] = $barfileArr;
+			if($barfileArr->part_of_hotel==1)
+			{
+				$barsArr[$bf]->social_youtube = '';
+				$qury = "Select social_youtube from tb_properties where FIND_IN_SET(".$barfileArr->id.",bar_ids) and bar_ids!='' and social_youtube !=''";
+				$exequry = \DB::select($qury);
+				//print_r($exequry); die;
+				if(!empty($exequry))
+				{
+					$barsArr[$bf]->social_youtube = $exequry[0]->social_youtube;
+				}
+			}
+			
 			$fetchbarsliderfolder = \DB::table('tb_container')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container.id')->select('tb_container.id')->where('tb_container.parent_id', $barfileArr->folder_id)->where('tb_container.name', 'slider')->where('tb_frontend_container.container_type', 'folder')->first();
 			if(!empty($fetchbarsliderfolder))
 			{
@@ -290,15 +357,57 @@ class RestaurantFrontController extends Controller {
 					$barsArr[$bf]->datamenupath = (new ContainerController)->getThumbpath($fetchbarmenufolder->id);
 				}
 			}
+			
+			$relatedgridquery = "SELECT tb_bars.id, tb_bars.title, tb_bars.alias, tb_images_res_spa_bar.parent_id, tb_images_res_spa_bar.folder_id, tb_images_res_spa_bar.type FROM tb_bars join tb_images_res_spa_bar on tb_images_res_spa_bar.parent_id = tb_bars.id WHERE tb_bars.id != '". $barfileArr->id ."' AND FIND_IN_SET('". $barfileArr->category_id ."', tb_bars.category_id) AND tb_images_res_spa_bar.type = 'bar' ORDER BY tb_bars.id DESC LIMIT 2";
+			
+			$relatedgrid = DB::select(DB::raw($relatedgridquery));
+			if (!empty($relatedgrid)) {
+				$pr = 0;
+				foreach ($relatedgrid as $rgrest) {
+					$relatedgridArr[$pr]['data']['alias'] = 'bars/'.$rgrest->alias;
+					$relatedgridArr[$pr]['data']['title'] = $rgrest->title;
+					$fetchresgallery = \DB::table('tb_container')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container.id')->select('tb_container.id')->where('tb_container.parent_id', $rgrest->folder_id)->where('tb_container.name', 'gallery')->where('tb_frontend_container.container_type', 'folder')->first();
+					if(!empty($fetchresgallery))
+					{
+						$resgalleryfiles = \DB::table('tb_container_files')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container_files.id')->where('tb_container_files.folder_id', $fetchresgallery->id)->where('tb_frontend_container.container_type', 'file')->orderBy('tb_container_files.file_sort_num','asc')->first();
+						if(!empty($resgalleryfiles))
+						{
+							if (!File::exists(public_path(). '/uploads/thumbs/format_'.$resgalleryfiles->folder_id.'_'.$resgalleryfiles->file_name))
+							{
+								$imgpath = (new ContainerController)->getContainerUserPath($resgalleryfiles->folder_id);
+								$mdimg = \Image::make($imgpath.$resgalleryfiles->file_name);
+								$actualsize = getimagesize($imgpath.$resgalleryfiles->file_name);
+								if($actualsize[0]>$actualsize[1])
+								{
+									$mdimg->resize(320, null, function ($constraint) {
+										$constraint->aspectRatio();
+									});
+								}
+								else
+								{
+									$mdimg->resize(null, 320, function ($constraint) {
+										$constraint->aspectRatio();
+									});
+								}
+								$thumbfile = 'format_'.$resgalleryfiles->folder_id.'_'.$resgalleryfiles->file_name;
+								$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+							}
+							$relatedgridArr[$pr]['data']['galleryimage'] = $resgalleryfiles;
+						}
+					}
+					$pr++;
+				}
+			}
 		}
 		$this->data['barsArr'] = $barsArr;
+		$this->data['relatedgridArr'] = $relatedgridArr;
 		return view('frontend.themes.emporium.properties.bar-detail', $this->data);
 	}
 	
 	public function spaDetail( Request $request )
 	{
 		$this->data['pagetitle'] = $request->slug;
-		$spasArr = array();
+		$spasArr = $relatedgridArr = array();
 		
 		$spafileArr = \DB::table('tb_images_res_spa_bar')->join('tb_spas', 'tb_spas.id', '=', 'tb_images_res_spa_bar.parent_id')->select('tb_spas.*', 'tb_images_res_spa_bar.parent_id', 'tb_images_res_spa_bar.folder_id', 'tb_images_res_spa_bar.type')->where('tb_spas.alias', $request->slug)->where('tb_images_res_spa_bar.type', 'spa')->first();
 		
@@ -306,6 +415,18 @@ class RestaurantFrontController extends Controller {
 		{
 			$sf=0;
 			$spasArr[$sf] = $spafileArr;
+			if($spafileArr->part_of_hotel==1)
+			{
+				$spasArr[$sf]->social_youtube = '';
+				$qury = "Select social_youtube from tb_properties where FIND_IN_SET(".$spafileArr->id.",spa_ids) and spa_ids!='' and social_youtube !=''";
+				$exequry = \DB::select($qury);
+				//print_r($exequry); die;
+				if(!empty($exequry))
+				{
+					$spasArr[$sf]->social_youtube = $exequry[0]->social_youtube;
+				}
+			}
+			
 			$fetchspasliderfolder = \DB::table('tb_container')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container.id')->select('tb_container.id')->where('tb_container.parent_id', $spafileArr->folder_id)->where('tb_container.name', 'slider')->where('tb_frontend_container.container_type', 'folder')->first();
 			if(!empty($fetchspasliderfolder))
 			{
@@ -337,13 +458,56 @@ class RestaurantFrontController extends Controller {
 					$spasArr[$sf]->datamenupath = (new ContainerController)->getThumbpath($fetchspamenufolder->id);
 				}
 			}
+			
+			$relatedgridquery = "SELECT tb_spas.id, tb_spas.title, tb_spas.alias, tb_images_res_spa_bar.parent_id, tb_images_res_spa_bar.folder_id, tb_images_res_spa_bar.type FROM tb_spas join tb_images_res_spa_bar on tb_images_res_spa_bar.parent_id = tb_spas.id WHERE tb_spas.id != '". $spafileArr->id ."' AND FIND_IN_SET('". $spafileArr->category_id ."', tb_spas.category_id) AND tb_images_res_spa_bar.type = 'spa' ORDER BY tb_spas.id DESC LIMIT 2";
+			
+			$relatedgrid = DB::select(DB::raw($relatedgridquery));
+			if (!empty($relatedgrid)) {
+				$pr = 0;
+				foreach ($relatedgrid as $rgrest) {
+					$relatedgridArr[$pr]['data']['alias'] = 'spas/'.$rgrest->alias;
+					$relatedgridArr[$pr]['data']['title'] = $rgrest->title;
+					$fetchresgallery = \DB::table('tb_container')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container.id')->select('tb_container.id')->where('tb_container.parent_id', $rgrest->folder_id)->where('tb_container.name', 'gallery')->where('tb_frontend_container.container_type', 'folder')->first();
+					if(!empty($fetchresgallery))
+					{
+						$resgalleryfiles = \DB::table('tb_container_files')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container_files.id')->where('tb_container_files.folder_id', $fetchresgallery->id)->where('tb_frontend_container.container_type', 'file')->orderBy('tb_container_files.file_sort_num','asc')->first();
+						if(!empty($resgalleryfiles))
+						{
+							if (!File::exists(public_path(). '/uploads/thumbs/format_'.$resgalleryfiles->folder_id.'_'.$resgalleryfiles->file_name))
+							{
+								$imgpath = (new ContainerController)->getContainerUserPath($resgalleryfiles->folder_id);
+								$mdimg = \Image::make($imgpath.$resgalleryfiles->file_name);
+								$actualsize = getimagesize($imgpath.$resgalleryfiles->file_name);
+								if($actualsize[0]>$actualsize[1])
+								{
+									$mdimg->resize(320, null, function ($constraint) {
+										$constraint->aspectRatio();
+									});
+								}
+								else
+								{
+									$mdimg->resize(null, 320, function ($constraint) {
+										$constraint->aspectRatio();
+									});
+								}
+								$thumbfile = 'format_'.$resgalleryfiles->folder_id.'_'.$resgalleryfiles->file_name;
+								$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+							}
+							$relatedgridArr[$pr]['data']['galleryimage'] = $resgalleryfiles;
+						}
+					}
+					$pr++;
+				}
+			}
 		}
 		$this->data['spasArr'] = $spasArr;
+		$this->data['relatedgridArr'] = $relatedgridArr;
 		return view('frontend.themes.emporium.properties.spa-detail', $this->data);
 	}
 	
 	function reserveRestoTableRequest(Request $request)
 	{
+		$rules['reservetype'] = 'required';
 		$rules['restoid'] = 'required';
 		$rules['firstname'] = 'required';
 		$rules['lastname'] = 'required';
@@ -358,12 +522,43 @@ class RestaurantFrontController extends Controller {
 		$validator = Validator::make($request->all(), $rules);	
 		if ($validator->passes()) {
 			
-			$resArr = \DB::table('tb_restaurants')->where('id', $request->restoid)->first();
+			$type = $request->input('reservetype');
+			$srchtbl = 'tb_restaurants';
+			if($type=="bar")
+			{
+				$srchtbl = 'tb_bars';
+			}
+			elseif($type=="spa")
+			{
+				$srchtbl = 'tb_spas';
+			}
+			
+			$resArr = \DB::table($srchtbl)->where('id', $request->restoid)->first();
 			if(!empty($resArr))
 			{
+				$rsdata['reservetype'] = $type;
+				$rsdata['tbl_id'] = $request->restoid;
+				$rsdata['firstname'] = $request->input('firstname');
+				$rsdata['lastname'] = $request->input('lastname');
+				$rsdata['emailaddress'] = $request->input('emailaddress');
+				$rsdata['telephone_code'] = $request->input('telephone_code');
+				$rsdata['telephone_number'] = $request->input('telephone_number');
+				$rsdata['telephone_code2'] = $request->input('telephone_code2');
+				$rsdata['telephone_number2'] = $request->input('telephone_number2');
+				$rsdata['reserve_day'] = $request->input('reserve_day');
+				$rsdata['reserve_month'] = $request->input('reserve_month');
+				$rsdata['reserve_year'] = $request->input('reserve_year');
+				$rsdata['reserve_hour'] = $request->input('reserve_hour');
+				$rsdata['reserve_minute'] = $request->input('reserve_minute');
+				$rsdata['totalguest'] = $request->input('totalguest');
+				$rsdata['query'] = $request->input('query');
+				$rsdata['created'] = date('Y-m-d h:i:s');
+				\DB::table('tb_restro_spa_bar_reservation')->insertGetId($rsdata);
+				
 				$emlData['to'] 	 = $resArr->reservation_email;
-				$emlData['frmemail'] = $request->input('emailaddress');
-				$emlData['subject'] = 'Table Reservation request';
+				$emlData['frmemail'] =  "info@emporium-voyage.com";
+				$emlData['subject'] = 'Table Reservation request for '.$resArr->title;
+				$emessage = '<p><b>Name : '.$resArr->title.'</b></p>';
 				$emessage = '<p><b>First name : '.$request->input('firstname').'</b></p>';
 				$emessage .= '<p><b>last name : '.$request->input('lastname').'</b></p>';
 				$emessage .= '<p><b>Date : '.$request->input('reserve_day').' '.$request->input('reserve_month').' '. $request->input('reserve_year').'</b></p>';
@@ -372,6 +567,17 @@ class RestaurantFrontController extends Controller {
 				$emessage .= '<p><b>Message : '.$request->input('query').'</b></p>';
 				$edata['emessage'] = $emessage;
 				
+				\Mail::send('user.emails.contact', $edata, function($message) use ($emlData)
+				{
+					$message->from($emlData['frmemail'], CNF_APPNAME);
+
+					$message->to( $emlData['to']);
+					
+					$message->subject($emlData['subject']);
+				});
+				
+				$emlData['to'] 	= $request->input('emailaddress');
+				$emlData['frmemail'] =  "info@emporium-voyage.com";
 				\Mail::send('user.emails.contact', $edata, function($message) use ($emlData)
 				{
 					$message->from($emlData['frmemail'], CNF_APPNAME);

@@ -34,13 +34,13 @@
 			  <img src="{{ asset('themes/emporium/images/editorial-right-arrow.png') }}" alt="Icon">
 			</a>
 		  </div>
-		  <span class="scrollNextDiv"><a class="scrollpage" href="#spa1">Scroll Down</a></span>
+		  <span class="scrollNextDiv"><a class="scrollpage" href="#restaurant1">Scroll Down</a></span>
 		</section>
 	@endif
 
 	@if(!empty($spasArr[0]))
 		@if(array_key_exists('datagallery',$spasArr[0]))
-			<section id="spa1" class="hotelSliderSection">
+			<section id="restaurant1" class="hotelSliderSection">
 				<div class="container-fluid">
 					<div class="hotelSliderwrapper">
 						<div class="owl-carousel hotelSlider1 owl-theme">
@@ -85,7 +85,7 @@
 					<div class="modal-content">
 					  <div class="cstm_heading modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h1 class="modal-title">Planet Restaurant</h1>
+						<h1 class="modal-title">Planet Spa</h1>
 						<p>Lorem ipsum dolor sit amet.</p>
 						<p>Lorem ipsum dolor sit amet.</p>
 					  </div>
@@ -96,6 +96,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								 <div class="form-field">
+									<input type="hidden" value="spa" name="reservetype" />
 									 <select name="restoid">
 										 <option>Please select</option>
 										 @if(!empty($spasArr))
@@ -227,25 +228,29 @@
 			</section>
 		@endif
 		
-		@if($spasArr[0]->video_type!='')
-			<!-- Video Section starts here -->
-			<section id="video" class="videoSection">
-				@if($spasArr[0]->video_type=="link")
-					{{--*/ $vlink = explode('/',$spasArr[0]->video_link); $vimeoid = end($vlink); /*--}}
-                    @if($spasArr[0]->video_link_type=="youtube")
-                        {{--*/  $videolink = "https://www.youtube.com/embed/".$vimeoid; /*--}}
-                        <iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    @elseif($spasArr[0]->video_link_type=="vimeo")
-                        {{--*/  $videolink = "https://player.vimeo.com/video/".$vimeoid; /*--}}
-                        <iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    @endif
-				@elseif($spasArr[0]->video_type=="upload")
-					<video id="videoPoster" controls poster="{{ asset('themes/emporium/images/video-poster.jpg')}}">
-					  <source src="{{URL::to('uploads/spas/'.$spasArr[0]->video)}}" type="video/mp4">
-					</video>
-				@endif
-			</section>
-			<!-- Video Section END here -->
+		@if($spasArr[0]->part_of_hotel==1 && $spasArr[0]->social_youtube!='')
+			<div data-yt data-yt-channel="{{ $spasArr[0]->social_youtube }}" data-yt-content-columns="4"  data-yt-content-rows="1"></div>
+		@else
+			@if($spasArr[0]->video_type!='')
+				<!-- Video Section starts here -->
+				<section id="video" class="videoSection">
+					@if($spasArr[0]->video_type=="link")
+						{{--*/ $vlink = explode('/',$spasArr[0]->video_link); $vimeoid = end($vlink); /*--}}
+						@if($spasArr[0]->video_link_type=="youtube")
+							{{--*/  $videolink = "https://www.youtube.com/embed/".$vimeoid; /*--}}
+							<iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						@elseif($spasArr[0]->video_link_type=="vimeo")
+							{{--*/  $videolink = "https://player.vimeo.com/video/".$vimeoid; /*--}}
+							<iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						@endif
+					@elseif($spasArr[0]->video_type=="upload")
+						<video id="videoPoster" controls poster="{{ asset('themes/emporium/images/video-poster.jpg')}}">
+						  <source src="{{URL::to('uploads/spas/'.$spasArr[0]->video)}}" type="video/mp4">
+						</video>
+					@endif
+				</section>
+				<!-- Video Section END here -->
+			@endif
 		@endif
 	@endif
 
@@ -268,7 +273,7 @@
 		<div class="modal-content">
 		  <div class="cstm_heading modal-header">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h1 class="modal-title">Planet Restaurant</h1>
+			<h1 class="modal-title">Planet Spa</h1>
 			<p>Lorem ipsum dolor sit amet.</p>
 			<p>Lorem ipsum dolor sit amet.</p>
 		  </div>
@@ -279,6 +284,7 @@
 			<div class="row">
 		  <div class="col-md-4">
 			 <div class="form-field">
+				<input type="hidden" value="spa" name="reservetype" />
 				 <select name="restoid">
 					 <option>Please select</option>
 					 @if(!empty($spasArr))
@@ -413,8 +419,7 @@
 
 {{--For Right Side Icons --}}
 @section('right_side_iconbar')
-
-	@parent
+	@include('frontend.themes.emporium.layouts.sections.rdp_right_iconbar')
 @endsection
 
 {{-- For Include style files --}}
@@ -444,6 +449,7 @@
 @section('javascript')
     @parent
 	<script src="{{ asset('sximo/js/parsley.min.js')}}" type="text/javascript"></script>
+	<script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
 @endsection
 
 {{-- For custom script --}}

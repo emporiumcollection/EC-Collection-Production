@@ -43,7 +43,7 @@
 			<a href="{{ URL::to('restaurant/download?return='.$return) }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_download') }}">
 			<i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
 			@endif			
-		 
+			<input class="pull-right"  placeholder="Search" type="text" name="search_keyword"  >
 		</div> 		
 
 	
@@ -96,7 +96,7 @@
 						@if($access['is_edit'] ==1)
 						<a  href="{{ URL::to('restaurant/update/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-success" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit "></i></a>
 						@endif
-						<a href="{{ URL::to('restaurant/images/'.$row->id.'?return='.$return)}}" class="tips btn btn-xs btn-primary" title="{{ Lang::get('core.btn_view') }}"><i class="fa fa-file-image-o "></i></a>
+						<a href="{{ URL::to('restaurant_reservations/'.$row->id)}}" class="tips btn btn-xs btn-primary" title="{{ Lang::get('core.btn_view') }}"><i class="fa fa-file-image-o "></i></a>
 												
 					
 				</td>				 
@@ -121,6 +121,13 @@ $(document).ready(function(){
 	$('.do-quick-search').click(function(){
 		$('#SximoTable').attr('action','{{ URL::to("restaurant/multisearch")}}');
 		$('#SximoTable').submit();
+	});
+	
+	$('input[name="search_keyword"]').keypress(function(e) {
+		// Enter pressed?
+		if(e.which == 10 || e.which == 13) {
+			location.href="{{url('restaurant')}}?search=title:like:" + $(this).val();
+		}
 	});
 	
 });	

@@ -48,14 +48,15 @@
 						@endforeach
 					@endif
 				</div>
-
-				<!-- Left and right controls -->
-				<a class="left carousel-control" href="#myCarousel" data-slide="prev">
-					<img src="{{ asset('themes/emporium/images/editorial-left-arrow.png') }}" alt="Icon"/>
-				</a>
-				<a class="right carousel-control" href="#myCarousel" data-slide="next">
-					<img src="{{ asset('themes/emporium/images/editorial-right-arrow.png') }}" alt="Icon"/>
-				</a>
+				@if(count($slider) > 1)
+					<!-- Left and right controls -->
+					<a class="left carousel-control" href="#myCarousel" data-slide="prev">
+						<img src="{{ asset('themes/emporium/images/editorial-left-arrow.png') }}" alt="Icon"/>
+					</a>
+					<a class="right carousel-control" href="#myCarousel" data-slide="next">
+						<img src="{{ asset('themes/emporium/images/editorial-right-arrow.png') }}" alt="Icon"/>
+					</a>
+				@endif
 			</div>
 		@endif
     </section>
@@ -93,14 +94,7 @@
 							<div class="col-sm-6 col-md-6 col-lg-4">
 								<div class="hotel-card">
 									<figure>
-										{{--*/ $propertyImage = CustomQuery::getPropertyImage($props->id); /*--}}
-
-										@if(!empty($propertyImage) && count($propertyImage)>0)
-											
-											@if(isset($propertyImage))
-												<img alt="{{ $propertyImage->file_name }}" src="{{$propertyImage->img_src}}" />
-											@endif
-										@endif
+										<img alt="{{ $props->property_name}}" src="{{URL::to('propertyimagebyid/'.$props->id)}}" />
 										
 										<a href="{{URL::to($props->property_slug)}}" class="content-overlay">
 											<h5>{{ $props->property_name}}</h5>
@@ -153,7 +147,7 @@
 					<div class="full-width">
 						<div data-is data-is-api="{{ url('runInsta')}}"
 							 data-is-source="{{ $destination_category_instagram }}"
-							 data-is-rows="2" data-is-columns="5"></div>
+							 data-is-rows="2" data-is-limit="0" data-is-columns="5"></div>
 					</div>
 				</section>
 			</section>
@@ -289,9 +283,9 @@
 					var dataGridHtml ='<div class="col-sm-6 col-md-6 col-lg-4">';
 					dataGridHtml +='<div class="hotel-card">';
 					dataGridHtml +='<figure>';
-					//var imgscr = BaseURL + '/propertyimagebyid/'+obj.id;
-					dataGridHtml += '<img src="' + obj.img_src + '" />';
-					dataGridHtml +='<a href="'+obj.property_slug+'" class="content-overlay">';
+					var imgscr = BaseURL + '/propertyimagebyid/'+obj.id;
+					dataGridHtml += '<img src="' + imgscr + '" />';
+					dataGridHtml +='<a href="'+BaseURL+'/'+obj.property_slug+'" class="content-overlay">';
 					dataGridHtml +='<h5>'+obj.property_name+'</h5>';
 					dataGridHtml +='</a>';
 					dataGridHtml +='</figure>';
@@ -348,9 +342,9 @@
 					dataGridHtml +='<div class="col-sm-6 col-md-6 col-lg-4">';
 					dataGridHtml +='<div class="hotel-card">';
 					dataGridHtml +='<figure>';
-					//var imgscr = BaseURL + '/propertyimagebyid/'+obj.id;
-					dataGridHtml += '<img src="' + obj.img_src + '" />';
-					dataGridHtml +='<a href="'+obj.property_slug+'" class="content-overlay">';
+					var imgscr = BaseURL + '/propertyimagebyid/'+obj.id;
+					dataGridHtml += '<img src="' + imgscr + '" />';
+					dataGridHtml +='<a href="'+BaseURL+'/'+obj.property_slug+'" class="content-overlay">';
 					dataGridHtml +='<h5>'+obj.property_name+'</h5>';
 					if(obj.category_name!=undefined && obj.category_name!=""){
 						dataGridHtml +='<p>From € '+obj.price+' '+obj.category_name+'</p>';

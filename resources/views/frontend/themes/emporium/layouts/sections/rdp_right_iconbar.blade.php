@@ -21,27 +21,27 @@
         </li>
         <li class="calander"><a href="javascript:void(0)"><i class="fa fa-calendar"></i></a></li>
 		
-		@if(!empty($relatedgridpropertiesArr))
-			@if(array_key_exists('0',$relatedgridpropertiesArr))
+		@if(!empty($relatedgridArr))
+			@if(array_key_exists('0',$relatedgridArr))
 				<li>
-					<a href="{{url($relatedgridpropertiesArr[0]['data']->property_slug)}}"  class="showprevnextimage">
+					<a href="{{url($relatedgridArr[0]['data']['alias'])}}"  class="showprevnextimage">
 						<img src="{{ asset('themes/emporium/images/editorial-left-arrow.png') }}" alt=""/>
 						<span class="nextprevshow" style="display: none; opacity: 1;">
-							@if(array_key_exists('image', $relatedgridpropertiesArr[0]))
-								<img src="{{url('uploads/property_imgs_thumbs/front_property_'.$relatedgridpropertiesArr[0]['image']->folder_id.'_'.$relatedgridpropertiesArr[0]['image']->file_name)}}" alt="{{$relatedgridpropertiesArr[0]['data']->property_name}}" width="200">
+							@if(array_key_exists('galleryimage', $relatedgridArr[0]['data']))
+								<img src="{{url('uploads/thumbs/format_'.$relatedgridArr[0]['data']['galleryimage']->folder_id.'_'.$relatedgridArr[0]['data']['galleryimage']->file_name)}}" alt="{{$relatedgridArr[0]['data']['title']}}" width="200">
 							@endif
 						</span>
 					</a>
 				</li>
 			@endif
 			
-			@if(array_key_exists('1',$relatedgridpropertiesArr))
+			@if(array_key_exists('1',$relatedgridArr))
 				<li>
-					<a href="{{url($relatedgridpropertiesArr[1]['data']->property_slug)}}" class="showprevnextimage">
+					<a href="{{url($relatedgridArr[1]['data']['alias'])}}" class="showprevnextimage">
 						<img src="{{ asset('themes/emporium/images/editorial-right-arrow.png') }}" alt=""/>
 						<span class="nextprevshow" style="display: none; opacity: 1;">
-							@if(array_key_exists('image', $relatedgridpropertiesArr[1]))
-								<img src="{{url('uploads/property_imgs_thumbs/front_property_'.$relatedgridpropertiesArr[1]['image']->folder_id.'_'.$relatedgridpropertiesArr[1]['image']->file_name)}}" alt="{{$relatedgridpropertiesArr[1]['data']->property_name}}" width="200">
+							@if(array_key_exists('galleryimage', $relatedgridArr[1]['data']))
+								<img src="{{url('uploads/thumbs/format_'.$relatedgridArr[1]['data']['galleryimage']->folder_id.'_'.$relatedgridArr[1]['data']['galleryimage']->file_name)}}" alt="{{$relatedgridArr[1]['data']['title']}}" width="200">
 							@endif
 						</span>
 					</a>
@@ -63,9 +63,8 @@
     	<li><a href="javascript:void(0)" id="back-to-top">TOP</a></li>
     </ul>
 </div>
-
 <style>
-	@if(!array_key_exists('1',$relatedgridpropertiesArr))
+	@if(!array_key_exists('1',$relatedgridArr))
 		.pdprightnav.contactfixed {
 			top: 216px !important;
 		}
@@ -75,7 +74,7 @@
 		}
 	@endif
 	
-	@if(empty($relatedgridpropertiesArr))
+	@if(empty($relatedgridArr))
 		.pdprightnav.contactfixed {
 			top: 175px !important;
 		}

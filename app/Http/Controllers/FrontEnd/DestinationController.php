@@ -230,6 +230,7 @@ class DestinationController extends Controller {
 					$dataArr[$d]['id'] = $destinations->category_alias;
 					$dataArr[$d]['label'] = $destinations->category_name;
 					$dataArr[$d]['value'] = $destinations->category_name;
+					$dataArr[$d]['type'] = 'destination';
 					$d++;
 				}
             }
@@ -248,11 +249,117 @@ class DestinationController extends Controller {
 				}
             }
 			
+			$fetchrestro = DB::table('tb_restaurants')->select('id', 'title', 'alias')->where('title', 'like', '%'.$keyword.'%')->get();
 
+            if(!empty($fetchrestro))
+            {
+				foreach($fetchrestro as $restro)
+				{
+					$dataArr[$d]['id'] = $restro->alias;
+					$dataArr[$d]['label'] = $restro->title;
+					$dataArr[$d]['value'] = $restro->title;
+                    $dataArr[$d]['type'] = 'restro';
+					$d++;
+				}
+			}
+			
+			$fetchbars = DB::table('tb_bars')->select('id', 'title', 'alias')->where('title', 'like', '%'.$keyword.'%')->get();
+
+            if(!empty($fetchbars))
+            {
+                foreach($fetchbars as $bar)
+				{
+					$dataArr[$d]['id'] = $bar->alias;
+					$dataArr[$d]['label'] = $bar->title;
+					$dataArr[$d]['value'] = $bar->title;
+                    $dataArr[$d]['type'] = 'bar';
+					$d++;
+				}
+            }
+			
+			$fetchspas = DB::table('tb_spas')->select('id', 'title', 'alias')->where('title', 'like', '%'.$keyword.'%')->get();
+
+            if(!empty($fetchspas))
+            {
+                foreach($fetchspas as $spa)
+				{
+					$dataArr[$d]['id'] = $spa->alias;
+					$dataArr[$d]['label'] = $spa->title;
+					$dataArr[$d]['value'] = $spa->title;
+                    $dataArr[$d]['type'] = 'spa';
+					$d++;
+				}
+            }
 		}
 
 		$ajxData = json_encode($dataArr);
 		echo $request->callback.'('.$ajxData.')';
     }
+	
+	public function getAutoSuggestionAjaxRdp(Request $request) {
+		
+		$keyword = trim($request->keyword);
 
+		$dataArr = $respns = array(); 
+		$d=0;
+		if($keyword!='')
+		{
+            $fetchdestinations = DB::table('tb_categories')->select('id', 'category_name', 'category_alias')->where('category_published', 1)->where('category_name', 'like', '%'.$keyword.'%')->get();
+
+            if(!empty($fetchdestinations))
+            {
+                foreach($fetchdestinations as $destinations)
+				{
+					$dataArr[$d]['id'] = $destinations->category_alias;
+					$dataArr[$d]['label'] = $destinations->category_name;
+					$dataArr[$d]['value'] = $destinations->category_name;
+					$dataArr[$d]['ids'] = $destinations->id;
+					$d++;
+				}
+            }
+		}
+		$ajxData = json_encode($dataArr);
+		echo $request->callback.'('.$ajxData.')';
+    }
+	
+	public function getResturantSpaBarByTypeCityAjax(Request $request)
+	{
+		$res = array();
+		$type = $request->type;
+		$city = $request->city;
+		if($type!='' && $city!='')
+		{
+			$srchtbl = 'tb_restaurants';
+			if($type=="bars")
+			{
+				$srchtbl = 'tb_bars';
+			}
+			elseif($type=="spas")
+			{
+				$srchtbl = 'tb_spas';
+			}
+			$checkcatid = \DB::table('tb_categories')->select('id')->where('category_name', $city)->first();
+			if(!empty($checkcatid))
+			{
+				$searchtable = \DB::table($srchtbl)->select('id','title','alias')->where('category_id', $checkcatid->id)->get();
+				if(!empty($searchtable))
+				{
+					$res['status'] = 'success';
+					$res['records'] = $searchtable;
+				}
+			}
+			else
+			{
+				$res['status'] = 'error';
+				$res['errors'] = 'Please select city first!';
+			}
+		}
+		else
+		{
+			$res['status'] = 'error';
+			$res['errors'] = 'Please select city first!';
+		}
+		
+		return response()->json($res);
+	}
 }

@@ -212,7 +212,7 @@ class PropertyController extends Controller {
                 $crpropertiesArr = DB::select(DB::raw("SELECT tb_properties.property_name, tb_properties.property_slug, tb_container_files.file_name, tb_container_files.folder_id FROM tb_properties JOIN tb_properties_images ON tb_properties_images.property_id = tb_properties.id JOIN tb_container_files ON tb_container_files.id = tb_properties_images.file_id WHERE tb_properties.property_type='" . $props->property_type . "' AND tb_properties.property_status = '1' AND tb_properties.id!='" . $props->id . "' AND tb_properties_images.type = 'Property Images'  $getcats GROUP BY  tb_properties.property_slug ORDER BY tb_properties.id desc, tb_container_files.file_sort_num asc LIMIT 2"));
 				
 				
-				$relatedgridquery = "SELECT editor_choice_property,feature_property,id,property_name,property_slug,property_category_id FROM tb_properties WHERE property_type='Hotel' AND tb_properties.assign_detail_city = '".$props->assign_detail_city."' AND property_status = '1' ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price WHERE tb_properties_category_rooms_price.property_id = tb_properties.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, editor_choice_property desc, feature_property desc LIMIT 4";
+				$relatedgridquery = "SELECT editor_choice_property,feature_property,id,property_name,property_slug,property_category_id FROM tb_properties WHERE property_type='Hotel' AND tb_properties.assign_detail_city = '".$props->assign_detail_city."' AND property_status = '1' AND tb_properties.id != '".$props->id."' ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price WHERE tb_properties_category_rooms_price.property_id = tb_properties.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, editor_choice_property desc, feature_property desc LIMIT 4";
 
 				$relatedgridprops = DB::select(DB::raw($relatedgridquery));
 				if (!empty($relatedgridprops)) {
@@ -461,7 +461,7 @@ class PropertyController extends Controller {
         $property = DB::select($finalQry);
         $getRec = DB::select($CountRecordQry);
 		
-		foreach($property as $prop)
+		/*foreach($property as $prop)
 		{
 			$containerObj = new \App\Http\Controllers\ContainerController;
 			$proertyObj = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $prop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
@@ -470,7 +470,7 @@ class PropertyController extends Controller {
 			{
 				$prop->img_src = $containerObj->getThumbpath($proertyObj->folder_id).$proertyObj->file_name;
 			}	
-		}
+		}*/
 		
 		usort($property, function($a, $b) {
 			return trim($a->price) < trim($b->price);
@@ -492,14 +492,15 @@ class PropertyController extends Controller {
 		$propertyImage = CustomQuery::getPropertyImage($propid);
 		if(!empty($propertyImage))
 		{
-            $remoteImage = $propertyImage->img_src;
+			//echo $propertyImage->containerfolder_src;
+            $remoteImage = $propertyImage->containerfolder_src;
             $width = Image::make($remoteImage)->width();
-            if( $width >600){
+            /*if( $width >600){
                 $image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
             }else{
                 $image = Image::make($remoteImage)->response('jpg');
-            }
-
+            }*/
+			$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
             return $image;
 
 		}

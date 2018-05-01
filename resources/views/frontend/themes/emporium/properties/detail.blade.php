@@ -344,14 +344,14 @@
                                     <li>
                                         <h3>Arrival</h3>
                                         <div class="form-group">
-                                            <input name="arrive" id="reservationdate1" class="form-control datefield reservationdate" type="text" readonly required>
+                                            <input name="arrive" id="reservationdate-1" class="form-control datefield reservationdate" type="text" readonly required>
                                             <div class="input-group-icon"><i class="fa fa-calander"></i></div>
                                         </div>
                                     </li>
                                     <li>
                                         <h3>Departure</h3>
                                         <div class="form-group">
-                                            <input name="departure" id="reservationdate1" class="form-control datefield reservationdate" type="text" readonly required>
+                                            <input name="departure" id="reservationdate-2" class="form-control datefield reservationdate" type="text" readonly required>
                                             <div class="input-group-icon"><i class="fa fa-calander"></i></div>
                                         </div>
                                     </li>
@@ -427,7 +427,7 @@
                             @if($relatedgridpropertiesArr)
                                 {{--*/ $rw = 1;	$node_no = 1; $ads_node = 0; /*--}}
                                 @foreach($relatedgridpropertiesArr as $props)
-                                    <div class="col-sm-6 col-md-6 col-lg-3">
+                                    <div class="col-sm-6 col-md-6 col-lg-4">
                                         <div class="hotel-card">
                                             <figure>
                                                 @if(array_key_exists('image', $props))
@@ -473,7 +473,7 @@
                     <div class="full-width">
                         <div data-is data-is-api="{{ url('runInsta')}}"
                              data-is-source="{{(!empty($propertyDetail) && $propertyDetail['data']->social_instagram!='')? $propertyDetail['data']->social_instagram : '@socialdesignlocations777' }}"
-                             data-is-rows="2" data-is-columns="5"></div>
+                             data-is-rows="2" data-is-limit="0" data-is-columns="5"></div>
                     </div>
                 </section>
             </section>

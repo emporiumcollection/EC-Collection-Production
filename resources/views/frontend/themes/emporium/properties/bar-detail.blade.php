@@ -34,13 +34,13 @@
 			  <img src="{{ asset('themes/emporium/images/editorial-right-arrow.png') }}" alt="Icon">
 			</a>
 		  </div>
-		  <span class="scrollNextDiv"><a class="scrollpage" href="#bar1">Scroll Down</a></span>
+		  <span class="scrollNextDiv"><a class="scrollpage" href="#restaurant1">Scroll Down</a></span>
 		</section>
 	@endif
 
 	@if(!empty($barsArr[0]))
 		@if(array_key_exists('datagallery',$barsArr[0]))
-			<section id="bar1" class="hotelSliderSection">
+			<section id="restaurant1" class="hotelSliderSection">
 				<div class="container-fluid">
 					<div class="hotelSliderwrapper">
 						<div class="owl-carousel hotelSlider1 owl-theme">
@@ -85,7 +85,7 @@
 					<div class="modal-content">
 					  <div class="cstm_heading modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h1 class="modal-title">Planet Restaurant</h1>
+						<h1 class="modal-title">Planet Bar</h1>
 						<p>Lorem ipsum dolor sit amet.</p>
 						<p>Lorem ipsum dolor sit amet.</p>
 					  </div>
@@ -96,6 +96,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								 <div class="form-field">
+									<input type="hidden" value="bar" name="reservetype" />
 									 <select name="restoid">
 										 <option>Please select</option>
 										 @if(!empty($barsArr))
@@ -142,8 +143,8 @@
 						 <div class="form-field row">
 							<label>Preferred date</label>
 							<div class="col-xs-4">
-								 <select>
-								 <option name="reserve_day">DD</option>
+								 <select name="reserve_day">
+								 <option >DD</option>
 								 @for($arvDay=1;$arvDay<=31;$arvDay++)
 									 <option value="{{(strlen($arvDay)>1)?$arvDay:'0'.$arvDay}}">{{$arvDay}}</option>
 								 @endfor
@@ -227,25 +228,29 @@
 			</section>
 		@endif
 	
-		@if($barsArr[0]->video_type!='')
-			<!-- Video Section starts here -->
-			<section id="video" class="videoSection">
-				@if($barsArr[0]->video_type=="link")
-					{{--*/ $vlink = explode('/',$barsArr[0]->video_link); $vimeoid = end($vlink); /*--}}
-                    @if($barsArr[0]->video_link_type=="youtube")
-                        {{--*/  $videolink = "https://www.youtube.com/embed/".$vimeoid; /*--}}
-                        <iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    @elseif($barsArr[0]->video_link_type=="vimeo")
-                        {{--*/  $videolink = "https://player.vimeo.com/video/".$vimeoid; /*--}}
-                        <iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    @endif
-				@elseif($barsArr[0]->video_type=="upload")
-					<video id="videoPoster" controls poster="{{ asset('themes/emporium/images/video-poster.jpg')}}">
-					  <source src="{{URL::to('uploads/bars/'.$barsArr[0]->video)}}" type="video/mp4">
-					</video>
-				@endif
-			</section>
-			<!-- Video Section END here -->
+		@if($barsArr[0]->part_of_hotel==1 && $barsArr[0]->social_youtube!='')
+			<div data-yt data-yt-channel="{{ $barsArr[0]->social_youtube }}" data-yt-content-columns="4"  data-yt-content-rows="1"></div>
+		@else
+			@if($barsArr[0]->video_type!='')
+				<!-- Video Section starts here -->
+				<section id="video" class="videoSection">
+					@if($barsArr[0]->video_type=="link")
+						{{--*/ $vlink = explode('/',$barsArr[0]->video_link); $vimeoid = end($vlink); /*--}}
+						@if($barsArr[0]->video_link_type=="youtube")
+							{{--*/  $videolink = "https://www.youtube.com/embed/".$vimeoid; /*--}}
+							<iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						@elseif($barsArr[0]->video_link_type=="vimeo")
+							{{--*/  $videolink = "https://player.vimeo.com/video/".$vimeoid; /*--}}
+							<iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						@endif
+					@elseif($barsArr[0]->video_type=="upload")
+						<video id="videoPoster" controls poster="{{ asset('themes/emporium/images/video-poster.jpg')}}">
+						  <source src="{{URL::to('uploads/bars/'.$barsArr[0]->video)}}" type="video/mp4">
+						</video>
+					@endif
+				</section>
+				<!-- Video Section END here -->
+			@endif
 		@endif
 	@endif
 	
@@ -268,7 +273,7 @@
 		<div class="modal-content">
 		  <div class="cstm_heading modal-header">
 			<button type="button" class="close" data-dismiss="modal">&times;</button>
-			<h1 class="modal-title">Planet Restaurant</h1>
+			<h1 class="modal-title">Planet Bar</h1>
 			<p>Lorem ipsum dolor sit amet.</p>
 			<p>Lorem ipsum dolor sit amet.</p>
 		  </div>
@@ -279,6 +284,7 @@
 			<div class="row">
 		  <div class="col-md-4">
 			 <div class="form-field">
+				<input type="hidden" value="bar" name="reservetype" />
 				 <select name="restoid">
 					 <option>Please select</option>
 					 @if(!empty($barsArr))
@@ -413,8 +419,7 @@
 
 {{--For Right Side Icons --}}
 @section('right_side_iconbar')
-
-	@parent
+	@include('frontend.themes.emporium.layouts.sections.rdp_right_iconbar')
 @endsection
 
 {{-- For Include style files --}}
@@ -444,6 +449,7 @@
 @section('javascript')
     @parent
 	<script src="{{ asset('sximo/js/parsley.min.js')}}" type="text/javascript"></script>
+	<script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
 @endsection
 
 {{-- For custom script --}}

@@ -96,6 +96,7 @@
 						<div class="row">
 							<div class="col-md-4">
 								 <div class="form-field">
+									<input type="hidden" value="restro" name="reservetype" />
 									 <select name="restoid">
 										 <option>Please select</option>
 										 @if(!empty($resturantArr))
@@ -142,8 +143,8 @@
 						 <div class="form-field row">
 							<label>Preferred date</label>
 							<div class="col-xs-4">
-								 <select>
-								 <option name="reserve_day">DD</option>
+								 <select name="reserve_day">
+								 <option >DD</option>
 								 @for($arvDay=1;$arvDay<=31;$arvDay++)
 									 <option value="{{(strlen($arvDay)>1)?$arvDay:'0'.$arvDay}}">{{$arvDay}}</option>
 								 @endfor
@@ -227,25 +228,29 @@
 			</section>
 		@endif
 		
-		@if($resturantArr[0]->video_type!='')
-			<!-- Video Section starts here -->
-			<section id="video" class="videoSection">
-				@if($resturantArr[0]->video_type=="link")
-					{{--*/ $vlink = explode('/',$resturantArr[0]->video_link); $vimeoid = end($vlink); /*--}}
-                    @if($resturantArr[0]->video_link_type=="youtube")
-                        {{--*/  $videolink = "https://www.youtube.com/embed/".$vimeoid; /*--}}
-                        <iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    @elseif($resturantArr[0]->video_link_type=="vimeo")
-                        {{--*/  $videolink = "https://player.vimeo.com/video/".$vimeoid; /*--}}
-                        <iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-                    @endif
-				@elseif($resturantArr[0]->video_type=="upload")
-					<video id="videoPoster" controls poster="{{ asset('themes/emporium/images/video-poster.jpg')}}">
-					  <source src="{{URL::to('uploads/resturants/'.$resturantArr[0]->video)}}" type="video/mp4">
-					</video>
-				@endif
-			</section>
-			<!-- Video Section END here -->
+		@if($resturantArr[0]->part_of_hotel==1 && $resturantArr[0]->social_youtube!='')
+			<div data-yt data-yt-channel="{{ $resturantArr[0]->social_youtube }}" data-yt-content-columns="4"  data-yt-content-rows="1"></div>
+		@else
+			@if($resturantArr[0]->video_type!='')
+				<!-- Video Section starts here -->
+				<section id="video" class="videoSection">
+					@if($resturantArr[0]->video_type=="link")
+						{{--*/ $vlink = explode('/',$resturantArr[0]->video_link); $vimeoid = end($vlink); /*--}}
+						@if($resturantArr[0]->video_link_type=="youtube")
+							{{--*/  $videolink = "https://www.youtube.com/embed/".$vimeoid; /*--}}
+							<iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						@elseif($resturantArr[0]->video_link_type=="vimeo")
+							{{--*/  $videolink = "https://player.vimeo.com/video/".$vimeoid; /*--}}
+							<iframe src="{{$videolink}}" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+						@endif
+					@elseif($resturantArr[0]->video_type=="upload")
+						<video id="videoPoster" controls poster="{{ asset('themes/emporium/images/video-poster.jpg')}}">
+						  <source src="{{URL::to('uploads/resturants/'.$resturantArr[0]->video)}}" type="video/mp4">
+						</video>
+					@endif
+				</section>
+				<!-- Video Section END here -->
+			@endif
 		@endif
 	@endif
 
@@ -280,6 +285,7 @@
 			<div class="row">
 		  <div class="col-md-4">
 			 <div class="form-field">
+				<input type="hidden" value="restro" name="reservetype" />
 				 <select name="restoid">
 					 <option>Please select</option>
 					 @if(!empty($resturantArr))
@@ -413,8 +419,7 @@
 
 {{--For Right Side Icons --}}
 @section('right_side_iconbar')
-
-	@parent
+	@include('frontend.themes.emporium.layouts.sections.rdp_right_iconbar')
 @endsection
 
 {{-- For Include style files --}}
@@ -444,6 +449,7 @@
 @section('javascript')
     @parent
 	<script src="{{ asset('sximo/js/parsley.min.js')}}" type="text/javascript"></script>
+	<script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
 @endsection
 
 {{-- For custom script --}}

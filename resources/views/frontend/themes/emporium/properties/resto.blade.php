@@ -107,7 +107,7 @@
 														</div>
 													@endif
 												</div>
-												<p class="text-center"><a href="javascript:void(0)">Reservation</a> | <a class="contactUsPopup contactPopupOne" href="javascript:void(0);">Contact Us</a></p>
+												<p class="text-center"><a href="javascript:void(0)">Reservation</a> | <a data-action="contactform-restaurant" rel="restro" rel2="{{$resturantArr[0]->id}}" class="contactUsPopup contactPopupOne" href="javascript:void(0);">Contact Us</a></p>
 											</div>
 										</div>
 									</div>
@@ -134,11 +134,22 @@
 						<div class="row">
 							<div class="col-md-4">
 								 <div class="form-field">
-									 <select name="restoid">
-										 <option>Please select</option>
+								 	<input class="con-type" type="hidden" name="reservetype" value="" />
+									 <select data-action="restoid" id="restoid" name="restoid">
+										 <option value="0">Please select</option>
 										 @if(!empty($resturantArr))
 											  @foreach($resturantArr as $resturant)
-												<option value="{{$resturant->id}}">{{$resturant->title}}</option>
+												<option value="{{$resturant->id}}" rel="restro">{{$resturant->title}}</option>
+											  @endforeach
+										  @endif
+										  @if(!empty($barsArr))
+											  @foreach($barsArr as $bar)
+												<option value="{{$bar->id}}" rel="bar">{{$bar->title}}</option>
+											  @endforeach
+										  @endif
+										  @if(!empty($spasArr))
+											  @foreach($spasArr as $spa)
+												<option value="{{$spa->id}}" rel="spa">{{$spa->title}}</option>
 											  @endforeach
 										  @endif
 									 </select>
@@ -313,7 +324,8 @@
 														</div>
 													@endif
 												</div>
-												<p class="text-center"><a href="javascript:void(0)">Restaurant</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>
+												<!--<p class="text-center"><a href="javascript:void(0)">Restaurant</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>-->
+												<p class="text-center"><a href="javascript:void(0)">Restaurant</a> | <a rel="restro" rel2="{{$resturantArr[1]->id}}" data-action="contactform-restaurant" class="contactUsPopup contactPopupOne" href="javascript:void(0);">Contact Us</a></p>
 											</div>
 										</div>
 									</div>
@@ -343,7 +355,10 @@
 		</div> 
 	</section>
 	<!-- Video Section END here -->
-
+	
+	@if($propertiesArr['data']->social_youtube!='')
+		<div data-yt data-yt-channel="{{ $propertiesArr['data']->social_youtube }}" data-yt-content-columns="4"  data-yt-content-rows="1"></div>
+	@endif
 
 	@if(!empty($resturantArr[2]))
 		@if(array_key_exists('datagallery',$resturantArr[2]))
@@ -377,7 +392,8 @@
 														</div>
 													@endif
 												</div>
-												<p class="text-center"><a href="javascript:void(0)">Restaurant</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>
+												<!--<p class="text-center"><a href="javascript:void(0)">Restaurant</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>-->
+												<p class="text-center"><a href="javascript:void(0)">Restaurant</a> | <a rel="restro" rel2="{{$resturantArr[2]->id}}" data-action="contactform-restaurant" class="contactUsPopup contactPopupOne" href="javascript:void(0);">Contact Us</a></p>
 											</div>
 										</div>
 									</div>
@@ -421,7 +437,8 @@
 														</div>
 													@endif
 												</div>
-												<p class="text-center"><a href="javascript:void(0)">Bar</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>
+												<!--<p class="text-center"><a href="javascript:void(0)">Bar</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>-->
+												<p class="text-center"><a href="javascript:void(0)">Bar</a> | <a rel="bar" rel2="{{$barsArr[0]->id}}" data-action="contactform-restaurant" class="contactUsPopup contactPopupOne" href="javascript:void(0);">Contact Us</a></p>
 											</div>
 										</div>
 									</div>
@@ -469,7 +486,8 @@
 														</div>
 													@endif
 												</div>
-												<p class="text-center"><a href="javascript:void(0)">Bar</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>
+												<!--<p class="text-center"><a href="javascript:void(0)">Bar</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>-->
+												<p class="text-center"><a href="javascript:void(0)">Bar</a> | <a rel="bar" rel2="{{$barsArr[1]->id}}" data-action="contactform-restaurant" class="contactUsPopup contactPopupOne" href="javascript:void(0);">Contact Us</a></p>
 											</div>
 										</div>
 									</div>
@@ -518,7 +536,8 @@
 														</div>
 													@endif
 												</div>
-												<p class="text-center"><a href="javascript:void(0)">Bar</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>
+												<!--<p class="text-center"><a href="javascript:void(0)">Bar</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>-->
+												<p class="text-center"><a href="javascript:void(0)">Bar</a> | <a rel="bar" rel2="{{$barsArr[2]->id}}" data-action="contactform-restaurant" class="contactUsPopup contactPopupOne" href="javascript:void(0);">Contact Us</a></p>
 											</div>
 										</div>
 									</div>
@@ -562,7 +581,8 @@
 														</div>
 													@endif
 												</div>
-												<p class="text-center"><a href="javascript:void(0)">Spa</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>
+												<!--<p class="text-center"><a href="javascript:void(0)">Spa</a> / <a class="contactUsPopup" data-toggle="modal" data-target="#contactPopupSection" href="javascript:void(0);">Contact Us</a></p>-->
+												<p class="text-center"><a href="javascript:void(0)">Spa</a> | <a rel="spa" rel2="{{$spasArr[0]->id}}" data-action="contactform-restaurant" class="contactUsPopup contactPopupOne" href="javascript:void(0);">Contact Us</a></p>
 											</div>
 										</div>
 									</div>
@@ -581,7 +601,8 @@
 
 	<!-- Greenry Section here -->
 	<div id="seasonal-events-top" class="greenrysection">
-	<div class="content-circle contentCirsclePopupBtn">
+	<!-- <div class="content-circle contentCirsclePopupBtn"> -->
+	<div rel="" data-action="contactform-restaurant" class="content-circle contactPopupOne">
         <h2>Request</h2>
         <h3>A Table</h3>
         <p>Lorem ipsum dolor sit amet, mei omnium iudicabit cu. Eruditi urbanitas persequeris in has, mel te prodesset conceptam. Id quando deterruisset est. Quaestio scripserit nec eu. An argumentum temporibus usu, ne mei aeterno imperdiet, case aeque id vis.</p>
@@ -1069,6 +1090,7 @@
 @section('javascript')
     @parent
 	<script src="{{ asset('sximo/js/parsley.min.js')}}" type="text/javascript"></script>
+	<script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
 @endsection
 
 {{-- For custom script --}}
