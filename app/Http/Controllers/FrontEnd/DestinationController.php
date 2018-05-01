@@ -249,7 +249,7 @@ class DestinationController extends Controller {
 				}
             }
 			
-			$fetchrestro = DB::table('tb_restaurants')->select('id', 'title', 'alias')->where('title', 'like', '%'.$keyword.'%')->get();
+			/*$fetchrestro = DB::table('tb_restaurants')->select('id', 'title', 'alias')->where('title', 'like', '%'.$keyword.'%')->get();
 
             if(!empty($fetchrestro))
             {
@@ -289,7 +289,7 @@ class DestinationController extends Controller {
                     $dataArr[$d]['type'] = 'spa';
 					$d++;
 				}
-            }
+            }*/
 		}
 
 		$ajxData = json_encode($dataArr);
