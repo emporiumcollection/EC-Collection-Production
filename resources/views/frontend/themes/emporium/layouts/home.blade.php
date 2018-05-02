@@ -52,10 +52,6 @@
   gtag('config', 'UA-110391807-1');
 </script>
 
-<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="760dec3f-be0e-4331-bd80-0c07fb2f2e1e" type="text/javascript" async></script>
-
-<script id="CookieDeclaration" src="https://consent.cookiebot.com/760dec3f-be0e-4331-bd80-0c07fb2f2e1e/cd.js" type="text/javascript" async></script>
-</head>
 <body>
 {{--For Right Side Icons --}}
 @section('right_side_iconbar')
@@ -287,6 +283,9 @@
     </script>
 
 @show
+<script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="760dec3f-be0e-4331-bd80-0c07fb2f2e1e" type="text/javascript" async></script>
 
+<script id="CookieDeclaration" src="https://consent.cookiebot.com/760dec3f-be0e-4331-bd80-0c07fb2f2e1e/cd.js" type="text/javascript" async></script>
+</head>
 </body>
 </html>
