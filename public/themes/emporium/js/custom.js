@@ -148,6 +148,7 @@ $( ".owl-prev").html('<i class="glyphicon glyphicon-menu-left"></i>');
 var removeClass = true;
 $(".sidefixednav .block-content.togglenav").click(function () {
     $(".mobilemenu").addClass('open');
+	$(".page-container").addClass('overflowClass');
 	$(".whiteoverlay").fadeIn();
 	//$("body").css("overflow","hidden");
     removeClass = false;
@@ -160,6 +161,7 @@ $(".mobilemenu").click(function() {
 $(".mobilenavclosebtn, html").click(function () {
     if (removeClass) {
         $(".mobilemenu").removeClass('open');
+	    $(".page-container").removeClass('overflowClass');
 		$(".whiteoverlay").fadeOut();
 		//$("body").css("overflow","visible");
     }
@@ -374,9 +376,11 @@ $(".show-submenu").click(function(){
 // slide popup
 $(".loginSignPopupButton .clicktologin").click(function() {
     $('.popupMainDiv').addClass('openPopup');
+$('body').css('overflow','hidden')
 });
 $(".mainPopupClose").click(function(){
 	$('.popupMainDiv').removeClass('openPopup');
+	$('body').css('overflow','auto')
 });
 $(".logInPopupButton").click(function() {
     $('.logInPopup').addClass('openPopup');
