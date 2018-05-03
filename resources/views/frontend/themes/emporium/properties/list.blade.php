@@ -218,17 +218,18 @@
 		});
 		
 		var pageCounter = 2;
+		var pagehgt = 1200;
 		var it_scroll = false;
 		var totalPage = '{{$total_pages}}';
 		$(window).scroll(function () {
-            if ($(window).scrollTop() < 600) { return false; }
+            if ($(window).scrollTop() < pagehgt) { return false; }
 
             if (pageCounter > totalPage) {
 				return false;
 			} else {
 				it_scroll = true;
 				scrollDataAjax(it_scroll, pageCounter);
-
+				pagehgt = pagehgt + 1000;
 			}
 			pageCounter++;
 
