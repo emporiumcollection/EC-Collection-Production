@@ -470,11 +470,11 @@ class PropertyController extends Controller {
 			{
 				$prop->img_src = $containerObj->getThumbpath($proertyObj->folder_id).$proertyObj->file_name;
 			}	
-		}
+		}*/
 		
 		usort($property, function($a, $b) {
 			return trim($a->price) < trim($b->price);
-		});*/
+		});
 
         $this->data['properties'] = $property;
         $this->data['total_record'] = $getRec[0]->total_record;
