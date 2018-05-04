@@ -493,15 +493,15 @@ class PropertyController extends Controller {
 		if(!empty($propertyImage))
 		{
 			//echo $propertyImage->containerfolder_src;
-           /* $remoteImage = $propertyImage->containerfolder_src;
-            $width = Image::make($remoteImage)->width();
+            $remoteImage = $propertyImage->containerfolder_src;
+            /*$width = Image::make($remoteImage)->width();
             /*if( $width >600){
                 $image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
             }else{
                 $image = Image::make($remoteImage)->response('jpg');
-            }
-			$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');*/
-			$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
+            }*/
+			$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
+			//$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
             return $image;
 
 		}
