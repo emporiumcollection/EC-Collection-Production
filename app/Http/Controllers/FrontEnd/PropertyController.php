@@ -505,6 +505,7 @@ class PropertyController extends Controller {
 			//$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
             		return $image;
 		}*/
+		dd($propertyImage);
 		$remoteImage = $propertyImage->containerfolder_src;		
 		$propertyNameImg = $remoteImage.'emporium-voyage_'.$propertyName.'.jpg';
 		$abc = $remoteImage.' - '.$propertyNameImg;
