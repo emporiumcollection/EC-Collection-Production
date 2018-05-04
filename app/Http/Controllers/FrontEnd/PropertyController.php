@@ -508,7 +508,6 @@ class PropertyController extends Controller {
 		
 		$remoteImage = $propertyImage->containerfolder_src;		
 		$propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
-		dd($propertyNameImg);
 		if(file_exists($propertyNameImg)){
 			header("Content-type: image/jpeg");
 			$data = file_get_contents($propertyNameImg);
