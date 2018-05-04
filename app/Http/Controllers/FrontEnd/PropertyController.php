@@ -492,7 +492,7 @@ class PropertyController extends Controller {
 		$props = \DB::table('tb_properties')->select('property_name')->where('id', $propid)->first();
 		$propertyName = strtolower(str_replace(' ','',$props->property_name));
 		$propertyImage = CustomQuery::getPropertyImage($propid);
-		if(!empty($propertyImage)) {
+		/*if(!empty($propertyImage)) {
 			//echo $propertyImage->containerfolder_src;
 			$remoteImage = $propertyImage->containerfolder_src;
             		/*$width = Image::make($remoteImage)->width();
@@ -500,12 +500,21 @@ class PropertyController extends Controller {
                 		$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
             		}else{
                 		$image = Image::make($remoteImage)->response('jpg');
-            		}*/
+            		}* /
 			$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
 			//$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
-            		return $propertyName;
+            		return $image;
+		}*/
+		if(file_exists($propertyName)){
+			$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_'.$propertyName.'.jpg">';
+		} else {
+			if(!empty($propertyImage)) {
+				$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
+			} else {
+				return false;
+			}
 		}
-		return false;
+		return $image;
 	}
 
 
