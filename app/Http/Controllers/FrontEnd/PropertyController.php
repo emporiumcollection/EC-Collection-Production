@@ -505,10 +505,10 @@ class PropertyController extends Controller {
 			//$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
             		return $image;
 		}*/
-		dd($propertyImage);
+		
 		$remoteImage = $propertyImage->containerfolder_src;		
-		$propertyNameImg = $remoteImage.'emporium-voyage_'.$propertyName.'.jpg';
-		$abc = $remoteImage.' - '.$propertyNameImg;
+		$propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpg';
+		
 		if(file_exists($propertyNameImg)){
 			header("Content-type: image/jpg");
 			$type = pathinfo($propertyNameImg, PATHINFO_EXTENSION);
@@ -521,7 +521,7 @@ class PropertyController extends Controller {
 				return false;
 			}
 		}
-		return $abc;
+		return $image;
 	}
 
 
