@@ -501,7 +501,7 @@ class PropertyController extends Controller {
                 $image = Image::make($remoteImage)->response('jpg');
             }
 			$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');*/
-			$image = Image::make($propertyImage->folder_src.'/emporium-voyage_hotelname.jpg')->response('jpg');
+			$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_hotelname.jpg">';
             return $image;
 
 		}
