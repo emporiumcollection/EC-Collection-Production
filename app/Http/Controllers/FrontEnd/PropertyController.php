@@ -505,13 +505,13 @@ class PropertyController extends Controller {
 			//$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
             		return $image;
 		}*/
-		$propertyNameImg = $propertyImage->folder_src.'emporium-voyage_'.$propertyName.'.jpg';
+		$remoteImage = $propertyImage->containerfolder_src;
+		$propertyNameImg = $remoteImage.'emporium-voyage_'.$propertyName.'.jpg';
 		if(file_exists($propertyNameImg)){
 			header("Content-type: image/jpg");
 			$type = pathinfo($propertyNameImg, PATHINFO_EXTENSION);
 			$data = file_get_contents($propertyNameImg);
 			$image = 'data:image/' . $type . ';base64,' . base64_encode($data);
-
 		} else {
 			if(!empty($propertyImage)) {
 				$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
