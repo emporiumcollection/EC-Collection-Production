@@ -508,7 +508,7 @@ class PropertyController extends Controller {
 		echo $propertyName .' - ';
 		$propertyNameImg = $propertyImage->folder_src.'emporium-voyage_'.$propertyName.'.jpg';
 		echo $propertyNameImg;
-		/*if(file_exists($propertyNameImg)){
+		if(file_exists($propertyNameImg)){
 			$image = '<img src="'.$propertyNameImg.'">';
 		} else {
 			if(!empty($propertyImage)) {
@@ -516,7 +516,7 @@ class PropertyController extends Controller {
 			} else {
 				return false;
 			}
-		}*/
+		}
 		return $image;
 	}
 
