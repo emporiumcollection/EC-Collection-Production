@@ -507,8 +507,11 @@ class PropertyController extends Controller {
 		}*/
 		$propertyNameImg = $propertyImage->folder_src.'emporium-voyage_'.$propertyName.'.jpg';
 		if(file_exists($propertyNameImg)){
-			header("Content-type: image/jpg");			
-			$image = file_get_contents($propertyNameImg);
+			header("Content-type: image/jpg");
+			$type = pathinfo($propertyNameImg, PATHINFO_EXTENSION);
+			$data = file_get_contents($propertyNameImg);
+			$image = 'data:image/' . $type . ';base64,' . base64_encode($data);
+
 		} else {
 			if(!empty($propertyImage)) {
 				$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
