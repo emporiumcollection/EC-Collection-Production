@@ -489,21 +489,21 @@ class PropertyController extends Controller {
 	public function getPropertyImageById(Request $request)
 	{
 		$propid = $request->propid;
+		$props = \DB::table('tb_properties')->select('property_name')->where('id', $propid)->first();
+		$propertyName = strtolower(str_replace(' ','',$props->property_name));
 		$propertyImage = CustomQuery::getPropertyImage($propid);
-		if(!empty($propertyImage))
-		{
+		if(!empty($propertyImage)) {
 			//echo $propertyImage->containerfolder_src;
-            $remoteImage = $propertyImage->containerfolder_src;
-            /*$width = Image::make($remoteImage)->width();
-            /*if( $width >600){
-                $image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
-            }else{
-                $image = Image::make($remoteImage)->response('jpg');
-            }*/
+			$remoteImage = $propertyImage->containerfolder_src;
+            		/*$width = Image::make($remoteImage)->width();
+            		/*if( $width >600){
+                		$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
+            		}else{
+                		$image = Image::make($remoteImage)->response('jpg');
+            		}*/
 			$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
 			//$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
-            return $image;
-
+            		return $propertyName;
 		}
 		return false;
 	}
