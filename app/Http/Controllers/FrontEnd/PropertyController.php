@@ -513,7 +513,8 @@ class PropertyController extends Controller {
 			header("Content-type: image/jpg");
 			$type = pathinfo($propertyNameImg, PATHINFO_EXTENSION);
 			$data = file_get_contents($propertyNameImg);
-			$image = 'data:image/' . $type . ';base64,' . base64_encode($data);
+			//$image = 'data:image/' . $type . ';base64,' . base64_encode($data);
+			$image = base64_encode($data);
 		} else {
 			if(!empty($propertyImage)) {
 				$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
