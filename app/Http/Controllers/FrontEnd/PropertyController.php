@@ -505,11 +505,10 @@ class PropertyController extends Controller {
 			//$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
             		return $image;
 		}*/
-		echo $propertyName .' - ';
 		$propertyNameImg = $propertyImage->folder_src.'emporium-voyage_'.$propertyName.'.jpg';
-		echo $propertyNameImg;
 		if(file_exists($propertyNameImg)){
-			$image = '<img src="'.$propertyNameImg.'">';
+			header("Content-type: image/jpg");			
+			$image = file_get_contents($propertyNameImg);
 		} else {
 			if(!empty($propertyImage)) {
 				$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
