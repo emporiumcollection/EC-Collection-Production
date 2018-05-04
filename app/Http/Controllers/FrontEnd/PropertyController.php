@@ -500,8 +500,7 @@ class PropertyController extends Controller {
             }else{
                 $image = Image::make($remoteImage)->response('jpg');
             }*/
-			//$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
-			$image = Image::make($remoteImage)->crop(600, 600, 125, 125)->response('jpg');
+			$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
             return $image;
 
 		}
