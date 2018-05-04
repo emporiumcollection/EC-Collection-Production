@@ -505,8 +505,9 @@ class PropertyController extends Controller {
 			//$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
             		return $image;
 		}*/
-		if(file_exists($propertyName)){
-			$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_'.$propertyName.'.jpg">';
+		$propertyNameImg = $propertyImage->folder_src.'emporium-voyage_'.$propertyName.'.jpg';
+		if(file_exists($propertyNameImg)){
+			$image = '<img src="'.$propertyNameImg.'">';
 		} else {
 			if(!empty($propertyImage)) {
 				$image = Image::make($remoteImage)->resize(600, 600)->response('jpg');
