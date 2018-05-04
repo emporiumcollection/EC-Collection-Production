@@ -505,9 +505,9 @@ class PropertyController extends Controller {
 			//$image = '<img src="'.$propertyImage->folder_src.'emporium-voyage_memmobaleeira.jpg">';
             		return $image;
 		}*/
-		$remoteImage = $propertyImage->containerfolder_src;
-		echo $remoteImage.' - '.$propertyNameImg;
+		$remoteImage = $propertyImage->containerfolder_src;		
 		$propertyNameImg = $remoteImage.'emporium-voyage_'.$propertyName.'.jpg';
+		echo $remoteImage.' - '.$propertyNameImg;
 		if(file_exists($propertyNameImg)){
 			header("Content-type: image/jpg");
 			$type = pathinfo($propertyNameImg, PATHINFO_EXTENSION);
