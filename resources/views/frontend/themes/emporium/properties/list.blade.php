@@ -94,7 +94,7 @@
 							<div class="col-sm-6 col-md-6 col-lg-4">
 								<div class="hotel-card">
 									<figure>
-										<img alt="{{ $props->property_name}}" src="https://emporium-voyage.com/uploads/container_user_files/locations/hotel-josef/property-images/thumb.jpg" />
+										<img alt="{{ $props->property_name}}" src="{{URL::to('propertyimagebyid/'.$props->id)}}" />
 										
 										<a href="{{URL::to($props->property_slug)}}" class="content-overlay">
 											<h5>{{ $props->property_name}}</h5>
