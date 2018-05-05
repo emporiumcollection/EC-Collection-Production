@@ -15,7 +15,8 @@
 				{{--  Wrapper for slides --}}
 				<div class="carousel-inner">
 					@foreach($slider as $key => $slider_row)
-						<div class="item {{($key == 0)? 'active' : ''}}" style="background-image:url({{url('uploads/slider_images/'.$slider_row->slider_img)}});">
+						<div class="item {{($key == 0)? 'active' : ''}}">
+							<img src="('uploads/slider_images/'.$slider_row->slider_img)"/>
 							<div class="carousel-caption">
 								<h6>{{$slug}}</h6>
 								<h2>
