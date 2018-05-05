@@ -731,7 +731,13 @@ position: absolute;
     .sliderContent {
       height: unset;
       padding: 40px 30px;
-    }
+	}
+	.roomSuitSlider .noPadding{height:auto;}
+	.roomSuitSlider .noPadding .sliderContent{top:98px;padding: 0px 30px 30px;}
+	.sliderArrow{top:-260px; position:absolute; left:0;}
+	.sliderArrow a{font-size:50px;}
+	.sliderArrow a.nextClick{float:right; margin:0 5px 0 0;}
+	.sliderArrow a.prevClick{float:left; margin-left:5px;}
    .carousalCaption {
     width: 100%;
    }
