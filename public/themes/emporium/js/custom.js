@@ -273,6 +273,7 @@ if ($(window).width() < 1025) {
    $(".closenavlink").click(function(){
 	$(".mobilemenu").removeClass("open");
 	$(".whiteoverlay").fadeOut();
+	$(".page-container").removeClass('overflowClass');
 })
 }
 else {
