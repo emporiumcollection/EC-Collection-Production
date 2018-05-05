@@ -150,7 +150,8 @@ body.open{overflow:hidden;}
 	.sliderFooter{bottom:-40px;}
 	.sliderFooter ul li a{font-size:12px;}
 	#menu ul li a::before{height:3px;}
-	.sliderSection .carousel-caption{position:inherit;}
+	.sliderSection .carousel-inner .item a img{height:auto;}
+	.sliderSection .carousel-caption{position:static;}
 	.sliderSection .carousel-caption h1 {font-size: 25px;line-height: 1.2;}
 	.sliderSection .carousel-caption p {font-size: 15px;line-height: 22px;}
 	.sliderSection .carousel-control {width: 60px;height: 76px; padding: 22px 0 0;}
