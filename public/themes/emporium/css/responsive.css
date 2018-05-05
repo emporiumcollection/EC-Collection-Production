@@ -152,7 +152,7 @@ body.open{overflow:hidden;}
 	#menu ul li a::before{height:3px;}
 	.sliderSection .carousel-inner .item a img{height:290px;}
 	.sliderSection .carousel-caption{position:static;}
-	.sliderSection .carousel-caption h1 {font-size: 25px;line-height: 1.2;}
+	.sliderSection .carousel-caption h1 {font-size: 21px;line-height: 1.2;}
 	.sliderSection .carousel-caption p {font-size: 15px;line-height: 22px;}
 	.sliderSection .carousel-control {width: 60px;height: 76px; padding: 22px 0 0; top:214px}
 	.sliderSection .left.carousel-control {left:0;}
