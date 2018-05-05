@@ -741,7 +741,7 @@ position: absolute;
 	.sliderArrow a{font-size: 30px;
     background: rgba(0,0,0,0.3);
     line-height: normal;
-    padding: 10px 25px;}
+    padding: 10px 25px; color:#ABA07C;}
 	.sliderArrow a.nextClick{float:right; margin:0 5px 0 0;}
 	.sliderArrow a.prevClick{float:left; margin-left:0;}
    .carousalCaption {
