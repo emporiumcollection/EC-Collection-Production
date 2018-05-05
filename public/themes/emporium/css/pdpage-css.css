@@ -786,8 +786,13 @@ position: absolute;
   }
 
 .sliderArrow a.nextClick{margin-left:170px;}
+	.luxuryHotelSlider{padding-bottom:110px;}
+	.scrollNextDivHotel{bottom:50px;}
 	.luxuryHotelSlider .carousel-inner .item img{max-height:390px;}
 	.luxuryHotelSlider .carousel-caption{position:static;}
+	.luxuryHotelSlider .carousel-control{top:330px;}
+	.luxuryHotelSlider .left.carousel-control{left:0}
+	.luxuryHotelSlider .right.carousel-control{left:98px;}
 }
 @media screen and (max-width: 480px) {
   .hotelSearchDateInnerContent ul li {
