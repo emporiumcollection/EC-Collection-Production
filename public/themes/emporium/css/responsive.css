@@ -186,8 +186,9 @@ body.open{overflow:hidden;}
 		min-width: 100%;
 	}
 	
-	.mobilemenu{min-width:inherit; width:333px; position:absolute;}
-	.mobilemenu-inner{max-width:293px;}
+	
+	.mobilemenu{min-width:inherit; width:355px; position:absolute;}
+	.mobilemenu-inner{max-width:315px;}
 	.mobilemenulist .navheadimage .headingoverlay{padding-top:55px;}
 	
 	.custom_modal .modal-content{
@@ -274,4 +275,9 @@ body.open{overflow:hidden;}
 .sidefixednav{top:118px;}
 .restaurantrightnav.contactfixed{top:256px;}
 .restaurantrightnav.backcontrol{top:334px;}
+}
+
+@media(max-width:375px){
+.mobilemenu{min-width:inherit; width:333px;}
+	.mobilemenu-inner{max-width:293px;}
 }
