@@ -72,8 +72,8 @@ body.open{overflow:hidden;}
 	.sliderSection.restaurantSliderSec .carousel-caption{width:100%;}
 .hotelSliderSection .owl-carousel .hotelSliderContentImage .hotelSliderContent{padding:30px;}
 .sidefixednav{top:85px;}
-.searchresultnav.contactfixed{top:174px;}
-.searchresultnav.backcontrol{top:253px;}
+.searchresultnav.contactfixed{top:207px;}
+.searchresultnav.backcontrol{top:286px;}
 .sidefixednav ul li.calander{display:none;}
 .contactfixed{top:163px;}
 .homerightmenu.contactfixed{top:174px;}
@@ -269,7 +269,7 @@ body.open{overflow:hidden;}
 		margin-bottom: 20px;
 	}
 
-.sidefixednav{top:85px;}
+.sidefixednav{top:118px;}
 .restaurantrightnav.contactfixed{top:256px;}
 .restaurantrightnav.backcontrol{top:334px;}
 }
