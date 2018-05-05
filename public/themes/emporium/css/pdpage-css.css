@@ -797,7 +797,7 @@ position: absolute;
 	.scrollNextDivHotel{bottom:50px;}
 	.luxuryHotelSlider .carousel-inner .item img{height:auto;}
 	.luxuryHotelSlider .carousel-caption{position:static;}
-	.luxuryHotelSlider .carousel-control{top:196px;}
+	.luxuryHotelSlider .carousel-control{top:222px;}
 	.luxuryHotelSlider .left.carousel-control{left:0}
 	.luxuryHotelSlider .right.carousel-control{left:98px;}
 }
@@ -855,3 +855,8 @@ position: absolute;
     right: 0;
 	z-index:0;
 	background: rgba(37,37,37,0.35);}
+
+@media screen and (max-width: 375px) {
+.luxuryHotelSlider .carousel-control{top:196px;}
+}
+
