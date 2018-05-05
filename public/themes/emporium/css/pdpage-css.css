@@ -743,7 +743,7 @@ position: absolute;
     line-height: normal;
     padding: 10px 25px;}
 	.sliderArrow a.nextClick{float:right; margin:0 5px 0 0;}
-	.sliderArrow a.prevClick{float:left; margin-left:5px;}
+	.sliderArrow a.prevClick{float:left; margin-left:0;}
    .carousalCaption {
     width: 100%;
    }
