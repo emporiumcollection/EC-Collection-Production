@@ -735,8 +735,13 @@ position: absolute;
 	}
 	.roomSuitSlider .noPadding{height:auto;}
 	.roomSuitSlider .noPadding .sliderContent{top:98px;padding: 0px 30px 30px;}
-	.sliderArrow{top:-260px; position:absolute; left:0; width:100%;}
-	.sliderArrow a{font-size:50px;}
+	.sliderArrow{top: -105px;
+    position: absolute;
+    left: 0;}
+	.sliderArrow a{font-size: 30px;
+    background: rgba(0,0,0,0.3);
+    line-height: normal;
+    padding: 10px 25px;}
 	.sliderArrow a.nextClick{float:right; margin:0 5px 0 0;}
 	.sliderArrow a.prevClick{float:left; margin-left:5px;}
    .carousalCaption {
@@ -792,7 +797,7 @@ position: absolute;
     line-height: 20px;
   }
 
-.sliderArrow a.nextClick{margin-left:170px;}
+.sliderArrow a.nextClick{margin-left:-1px;}
 	.luxuryHotelSlider{padding-bottom:110px;}
 	.scrollNextDivHotel{bottom:50px;}
 	.luxuryHotelSlider .carousel-inner .item img{height:auto;}
