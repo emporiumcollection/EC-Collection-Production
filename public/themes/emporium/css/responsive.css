@@ -156,7 +156,7 @@ body.open{overflow:hidden;}
 	.sliderSection .carousel-caption p {font-size: 15px;line-height: 22px;}
 	.sliderSection .carousel-control {width: 60px;height: 76px; padding: 22px 0 0;}
 	.sliderSection .left.carousel-control {right: 70px;}
-	.sliderFooter {padding: 18px 10px;}
+	.sliderFooter {padding: 18px 20px; position:static}
 	.sliderFooter ul{margin: 0px;}
 	.sliderFooter ul li {width: 100%;}
 	.loginFormDiv{top:70px;}
