@@ -227,7 +227,7 @@ class PropertyController extends Controller {
             $this->data['destination_category']=$cateObj->id;
 			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
         }
-        dd($this->data);
+       // dd($this->data);
 		return view('frontend.themes.emporium.properties.list', $this->data);
                     
     }
