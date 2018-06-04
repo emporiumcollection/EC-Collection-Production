@@ -80,7 +80,7 @@ class PropertyController extends Controller {
         $this->data['total_record'] = $getRec[0]->total_record;
         $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
         $this->data['active_page']=$pageNumber;	
-        //dd($this->data);
+        dd($this->data);
 		return view('frontend.themes.emporium.properties.list', $this->data);
 	}
 	
