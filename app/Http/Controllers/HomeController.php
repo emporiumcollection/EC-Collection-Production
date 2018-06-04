@@ -3839,15 +3839,33 @@ class HomeController extends Controller {
 
         if (!is_null($request->input('arrive')) && $request->input('arrive') != '') {
             \Session::put('arrive_date', $request->input('arrive'));
-            $this->data['arrive_date'] = date("d.m.Y", strtotime(trim($request->input('arrive'))));
+            $arrive = trim($request->input('arrive'));
+                $arrive_array=explode("-",$arrive);
+                $t=$arrive_array[0];
+                $arrive_array[0]=$arrive_array[1];
+                $arrive_array[1]=$t;
+                $arrive_date=implode(".",$arrive_array);
+
+            $this->data['arrive_date']=$arrive_date;
         }
 
         if (!is_null($request->input('departure')) && $request->input('departure') != '') {
             \Session::put('departure', $request->input('departure'));
-            $this->data['departure'] = date("d.m.Y", strtotime(trim($request->input('departure'))));
+            
+
+             $departure = trim($request->input('departure'));
+                $departure_array=explode("-",$departure);
+                $t=$departure_array[0];
+                $departure_array[0]=$departure_array[1];
+                $departure_array[1]=$t;
+                $departure_date=implode(".",$departure_array);
+
+            
+            $this->data['departure'] = $departure_date;
         }
 		$this->data['adults'] = '';
 		$this->data['childs'] = '';
+      //  dd($request->all());
         if (!is_null($request->input('booking_adults')) && $request->input('booking_adults') != '') {
             \Session::put('adults', $request->input('booking_adults'));
             $this->data['adults'] = $request->input('booking_adults');

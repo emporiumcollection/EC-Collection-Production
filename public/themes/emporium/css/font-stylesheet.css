@@ -55,22 +55,3 @@
   font-weight: normal;
   font-style: normal;
 }
-
-@font-face {
-    font-family: 'SilverSouthScript';
-    src: url('../fonts/SilverSouthScript.eot');
-    src: url('../fonts/SilverSouthScript.eot') format('embedded-opentype'),
-         url('../fonts/SilverSouthScript.woff2') format('woff2'),
-         url('../fonts/SilverSouthScript.woff') format('woff'),
-         url('../fonts/SilverSouthScript.ttf') format('truetype'),
-         url('../fonts/SilverSouthScript.svg#SilverSouthScript') format('svg');
-}
-@font-face {
-    font-family: 'SilverSouthSerif';
-    src: url('../fonts/SilverSouthSerif.eot');
-    src: url('../fonts/SSilverSouthSerif.eot') format('embedded-opentype'),
-         url('../fonts/SilverSouthSerif.woff2') format('woff2'),
-         url('../fonts/SilverSouthSerif.woff') format('woff'),
-         url('../fonts/SilverSouthSerif.ttf') format('truetype'),
-         url('../fonts/SilverSouthSerif.svg#SilverSouthSerif') format('svg');
-}
