@@ -86,7 +86,7 @@ class PropertyController extends Controller {
 	
 	function propertySearch(Request $request) {
 
-dd($request->cat);
+
 		$selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
 		
@@ -208,7 +208,7 @@ dd($request->cat);
 
 		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		
+		dd($this->data);
 		
 		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
 		$tagsArr = array();
