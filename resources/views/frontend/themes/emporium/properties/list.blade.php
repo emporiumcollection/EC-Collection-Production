@@ -75,9 +75,9 @@
 		@endif
     </section>
    
-<?php /*
 
-@if(!empty($editorPropertiesArr))
+
+@if(count($editorPropertiesArr)>0)
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="row">
     		<h4 class="gridheading">{{ count($editorPropertiesArr) }} <span class="newfont"> Editor's choice</span> Hotels Found for {{ $slug }}  {{$dateslug}}</h4>
@@ -98,8 +98,8 @@
       <div>
         <div class="col-md-6 col-sm-6 col-xs-12">
          <a  href="{{ $url }}" >
-		          <img src="{{ url('uploads/slider_images/'.$slider_row->slider_img)}}" class="img-responsive" title="{{ $props->property_name}}" alt="{{ $props->property_name}}">
-		          {{-- url('uploads/slider_images/'.$slider_row->slider_img) --}}
+		          <img src="{{ URL::to('propertysliderimagebyid/'.$props->id)}}" class="img-responsive" title="{{ $props->property_name}}" alt="{{ $props->property_name}}">
+		         
     		  </a>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-12 slidertext">
@@ -121,7 +121,7 @@
     </div>
   </div>
 @endif
-<?php */?>
+
   <div class="col-md-12 col-sm-12 col-xs-12 misonrysection">
   
     <div class="row">
