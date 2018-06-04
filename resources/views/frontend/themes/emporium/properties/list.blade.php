@@ -190,7 +190,7 @@
 
 
 			?> 
-			@if($rw%39==0)
+			@if($rw%19==0)
 							{{--*/ $adscatid = ($destination_category > 0) ? $destination_category : 'Hotel'; $resultads = CommonHelper::getGridResultAds('grid_results', $adscatid) /*--}}
 							@if(!empty($resultads['resultads']))
 								 <div class="col-md-4 col-sm-4 col-xs-12 grid-item">
