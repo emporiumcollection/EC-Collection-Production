@@ -33,6 +33,7 @@ class PropertyController extends Controller {
         if(isset($request->page) && $request->page>0){
             $pageNumber = $request->page;
         }
+        dd("hii");
         $pageStart = ($pageNumber -1) * $perPage;
 
         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,"; 
