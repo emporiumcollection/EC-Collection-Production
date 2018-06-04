@@ -19,7 +19,7 @@ class PropertyController extends Controller {
 	
 	public function getPropertyGridListByCategory(Request $request)
 	{
-		dd("hi");
+		//dd("hi");
 		$this->data['slug'] = $request->slug;
 		$this->data['dateslug'] = '';
 
