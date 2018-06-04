@@ -93,12 +93,21 @@ class DestinationController extends Controller {
     public function getExperiencesAjax(Request $request) {
 		
 		$res = array(); 
-		$fetchexperience = DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_alias')->where('category_published', 1)->where('parent_category_id', 8)->get();
+		if(isset($request->catID))
+		{
+			$category_id=$request->catID;
+			
+			$fetchexperience = DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_alias')->where('category_published', 1)->where('parent_category_id', 8)->orderByRaw(DB::raw("FIELD(id, $category_id) desc, category_name "))->get();
+
+		}
+		else
+		{
+				$fetchexperience = DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_alias')->where('category_published', 1)->where('parent_category_id', 8)->orderByRaw(DB::raw("category_name"))->get();
+			
+		}
 		if(!empty($fetchexperience))
 		{
-			usort($fetchexperience, function($a, $b) {
-				return trim($a->category_name) > trim($b->category_name);
-			});
+			
 			
 			$res['status'] = 'success';
 			$res['dests'] = $fetchexperience;
