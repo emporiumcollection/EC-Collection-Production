@@ -281,15 +281,12 @@
                                                         src="{{$propertyDetail['roomimgs'][$propertyDetail['typedata'][$key]->id]['imgsrc'].$propertyDetail['roomimgs'][$propertyDetail['typedata'][$key]->id]['imgs'][0]->file_name}}"
                                                         alt="Image">
 
-
-
-                                                    </li>
-                                                    <li>
-                                                        
-                                                        <div rel="{{$propertyDetail['typedata'][$key]->id}}" class="showMoreSec">
+<div rel="{{$propertyDetail['typedata'][$key]->id}}" class="showMoreSec" style="display:inline-block;">
                                     <button type="button" class="btn buttonDefault">SHOW MORE</button>
                                 </div>
+
                                                     </li>
+
                                             {{--*/ $kn++; /*--}}
                                         @endif
                                     @endforeach
