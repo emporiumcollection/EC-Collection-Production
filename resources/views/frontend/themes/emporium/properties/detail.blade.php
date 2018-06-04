@@ -284,7 +284,7 @@
                                         @endif
                                     @endforeach
                                 </ol>
-                                <div class="showMoreSec">
+                                <div rel="{{$type->id}}" class="showMoreSec">
                                     <button type="button" class="btn buttonDefault">SHOW MORE</button>
                                 </div>
                             </div>
