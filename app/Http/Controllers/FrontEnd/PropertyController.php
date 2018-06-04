@@ -208,7 +208,7 @@ class PropertyController extends Controller {
 
 		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		dd($this->data);
+	
 		
 		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
 		$tagsArr = array();
@@ -227,7 +227,7 @@ class PropertyController extends Controller {
             $this->data['destination_category']=$cateObj->id;
 			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
         }
-
+        dd($this->data);
 		return view('frontend.themes.emporium.properties.list', $this->data);
                     
     }
