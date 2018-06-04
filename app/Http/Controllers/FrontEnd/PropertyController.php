@@ -20,7 +20,7 @@ class PropertyController extends Controller {
 	public function getPropertyGridListByCategory(Request $request)
 	{
 		//dd("hi");
-		echo $request->slug;die;
+		//echo $request->slug;die;
 		$this->data['slug'] = $request->slug;
 		$this->data['dateslug'] = '';
 
@@ -29,6 +29,7 @@ class PropertyController extends Controller {
           $this->data['destination_category'] =0;
         $perPage = 42;
         $pageNumber = 1;
+        dd($this->data);
         if(isset($request->page) && $request->page>0){
             $pageNumber = $request->page;
         }
