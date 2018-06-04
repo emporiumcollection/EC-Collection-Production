@@ -711,6 +711,7 @@ $('input[name="departure"]').daterangepicker({
 		});
 		
 		function renderRoomdetails(data) {
+            console.log(data)
 			var rimg = data.roomimgs.imgsrc;
 			$('.showMorePopup').css("background-image", "url('" + rimg + "')");
 			var imagesPro = '';
