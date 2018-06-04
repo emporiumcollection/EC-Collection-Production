@@ -75,7 +75,7 @@
 		@endif
     </section>
    
-
+<?php /*
 
 @if(!empty($editorPropertiesArr))
   <div class="col-md-12 col-sm-12 col-xs-12">
@@ -121,7 +121,7 @@
     </div>
   </div>
 @endif
-
+<?php */?>
   <div class="col-md-12 col-sm-12 col-xs-12 misonrysection">
   
     <div class="row">
