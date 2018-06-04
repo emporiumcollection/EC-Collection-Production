@@ -1659,7 +1659,7 @@ button.searchButton.btn:hover {
 /****/
 .terraceSuitindicator ol {
     position: relative;
-    width: 150px;
+    width: 300px;
     height: 80px;
     float: left;
     left: 0;
@@ -1710,7 +1710,7 @@ button.searchButton.btn:hover {
   opacity: 1;
 }
 .terraceSuitindicator ol li img {
-  width: 100%;
+  width: 50%;
   height: 100%;
   float: left;
   object-fit: cover;
