@@ -26,6 +26,7 @@
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
     {{--For Include and Add Files in Head --}}
+     <link href="{{ asset('themes/emporium/css/slick.css') }}" rel="stylesheet">
     @section('head')
         @parent
         <link href="{{ asset('themes/emporium/css/daterangepicker.css') }}" rel="stylesheet">
@@ -145,9 +146,21 @@
             @endif
 
             // Open Left Navigation For Experience on Page Load
+           // Open Left Navigation For Experience on Page Load
             @if(Request::segment(1)=='luxury_experience')
-            $('[data-action="select-experience"]').trigger('click');
+           
+                  hideAllOption();
+
+                   var datObj = {};
+                    datObj.catID = '{{$destination_category}}';
+                  var params = $.extend({}, doAjax_params_default);
+                  params['url'] = BaseURL + '/destination/experiences-ajax';
+                   params['data'] = datObj;
+                  params['successCallbackFunction'] = renderExperience;
+                  doAjax(params);
             @endif
+
+
 
             // Open Left Navigation For Destinations on Page Load
             @if(Request::segment(1)=='luxury_destinations')

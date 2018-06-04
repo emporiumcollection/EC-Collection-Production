@@ -93,6 +93,8 @@ $(function () {
         <div class="booking-form-bg">
             <div class="container">
                 <div class="form-custom-width">
+                      <a href="{{ redirect()->back()->getTargetUrl() }}" class="arrowlefttop"><i class="fa fa-arrow-left"></i></a>
+                                        <a href="{{ redirect()->back()->getTargetUrl() }}" class="timestop"><i class="fa fa-times"></i></a>
                     <a href="#"><img src="{{ asset('sximo/assets/images/logo-design_1.png')}}" alt="" class="img-responsive new-book-form-hotel-logo" style="width: 50%;" /></a>
                     <form id="frontend_booking" action="javascript:save_reserve_forms_data('frontend_booking');" >
                         <!--<form id="frontend_booking">-->
@@ -132,7 +134,7 @@ $(function () {
                                                 }
                                                 ?>
                                                 <div class="booking-form-heading">Number of Nights(s)</div>
-                                                <input id="number_of_nights" name="number_of_nights" type="number" value="{{$number_of_nights}}">
+                                                <input id="number_of_nights" min="0" name="number_of_nights" type="number" value="{{$number_of_nights}}">
                                             </div>
                                         </div>
                                         <div class="booking-form-all-fields-row-2">
@@ -145,6 +147,10 @@ $(function () {
                                                     <option {{ ($adults!='' && $adults==1) ? 'selected' : '' }}>1</option>
                                                     <option {{ ($adults!='' && $adults==2) ? 'selected' : '' }}>2</option>
                                                     <option {{ ($adults!='' && $adults==3) ? 'selected' : '' }}>3</option>
+
+                                                    <option {{ ($adults!='' && $adults==4) ? 'selected' : '' }}>4</option>
+                                                    <option {{ ($adults!='' && $adults==5) ? 'selected' : '' }}>5</option>
+                                                     <option {{ ($adults!='' && $adults==6) ? 'selected' : '' }}>6</option>
                                                 </select>
                                             </div>
                                             <div class="right-input-align2">
@@ -154,6 +160,10 @@ $(function () {
                                                     <option {{ ($childs!='' && $childs==1) ? 'selected' : '' }}>1</option>
                                                     <option {{ ($childs!='' && $childs==2) ? 'selected' : '' }}>2</option>
                                                     <option {{ ($childs!='' && $childs==3) ? 'selected' : '' }}>3</option>
+                                                    
+                                                    <option {{ ($childs!='' && $childs==4) ? 'selected' : '' }}>4</option>
+                                                    <option {{ ($childs!='' && $childs==5) ? 'selected' : '' }}>5</option>
+                                                    <option {{ ($childs!='' && $childs==6) ? 'selected' : '' }}>6</option>
                                                 </select>
                                             </div>
                                             <div class="clearfix"></div>

@@ -72,11 +72,11 @@ body.open{overflow:hidden;}
 	.sliderSection.restaurantSliderSec .carousel-caption{width:100%;}
 .hotelSliderSection .owl-carousel .hotelSliderContentImage .hotelSliderContent{padding:30px;}
 .sidefixednav{top:85px;}
-.searchresultnav.contactfixed{top:207px;}
-.searchresultnav.backcontrol{top:286px;}
+.searchresultnav.contactfixed{top:174px;}
+.searchresultnav.backcontrol{top:253px;}
 .sidefixednav ul li.calander{display:none;}
 .contactfixed{top:163px;}
-.homerightmenu.contactfixed{top:207px;}
+.homerightmenu.contactfixed{top:174px;}
 .backcontrol{top:340px;}
 .navbar-nav.setting-nav{display:none;}
 .sidefixednav ul li.hamburguricon{display:block;}
@@ -144,20 +144,17 @@ body.open{overflow:hidden;}
 	.left-sidebar .navbar-header{display:none;}
 	.left-sidebar .navbar-nav{margin:0;}
 	.sidebar-nav .navbar .navbar-collapse{border-color:#333;}
-	.page-container{padding-top:119px;}
+	.page-container{padding-top:70px;}
 	.social-menu li{margin:0 15px 0 0;}
 	#menu ul li a{font-size:22px; line-height:26px;}
 	.sliderFooter{bottom:-40px;}
 	.sliderFooter ul li a{font-size:12px;}
 	#menu ul li a::before{height:3px;}
-	.sliderSection .carousel-inner .item a img{height:290px;}
-	.sliderSection .carousel-caption{position:static;}
-	.sliderSection .carousel-caption h1 {font-size: 21px;line-height: 1.2;}
+	.sliderSection .carousel-caption h1 {font-size: 25px;line-height: 1.2;}
 	.sliderSection .carousel-caption p {font-size: 15px;line-height: 22px;}
-	.sliderSection .carousel-control {width: 60px;height: 76px; padding: 22px 0 0; top:214px}
-	.sliderSection .left.carousel-control {left:0;}
-	.sliderSection .right.carousel-control {left:58px;}
-	.sliderFooter {padding: 18px 20px; position:static}
+	.sliderSection .carousel-control {width: 60px;height: 76px; padding: 22px 0 0;}
+	.sliderSection .left.carousel-control {right: 70px;}
+	.sliderFooter {padding: 18px 10px;}
 	.sliderFooter ul{margin: 0px;}
 	.sliderFooter ul li {width: 100%;}
 	.loginFormDiv{top:70px;}
@@ -188,9 +185,8 @@ body.open{overflow:hidden;}
 		min-width: 100%;
 	}
 	
-	
-	.mobilemenu{min-width:inherit; width:355px; position:absolute;}
-	.mobilemenu-inner{max-width:315px;}
+	.mobilemenu{min-width:inherit; width:320px; position:absolute;}
+	.mobilemenu-inner{max-width:280px;}
 	.mobilemenulist .navheadimage .headingoverlay{padding-top:55px;}
 	
 	.custom_modal .modal-content{
@@ -240,8 +236,6 @@ body.open{overflow:hidden;}
 .restaurantrightnav.backcontrol{top:340px;}
 .termAndConditionPopUp label{padding:0 0 0 15px; display:block;}
 .termAndConditionPopUp p{padding:30px 0;}
-	.pdprightnav.contactfixed{top:289px;}
-	.pdprightnav.backcontrol{top:369px;}
 }
 
 @media (max-width:480px){
@@ -274,12 +268,18 @@ body.open{overflow:hidden;}
 		margin-bottom: 20px;
 	}
 
-.sidefixednav{top:118px;}
+.sidefixednav{top:85px;}
 .restaurantrightnav.contactfixed{top:256px;}
 .restaurantrightnav.backcontrol{top:334px;}
-}
 
-@media(max-width:375px){
-.mobilemenu{min-width:inherit; width:333px;}
-	.mobilemenu-inner{max-width:293px;}
+
+
+
+.sidefixednav {width: 45px; opacity: 0.5; z-index: 999;}
+	.sidefixednav:hover,.backcontrol:hover,.contactfixed ul li a:hover,.contactfixed:hover{opacity:1;}
+	.contactfixed {width: 289px; opacity: 0.5; z-index: 999;}
+.backcontrol {width: 44px;opacity: 0.5;z-index: 999; }
+.contactfixed ul li a {padding-left: 12px;opacity: 0.5; z-index: 999;}
+
+
 }
