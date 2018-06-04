@@ -77,7 +77,7 @@
    
 
 
-@if(count($editorPropertiesArr))
+@if(!empty($editorPropertiesArr))
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="row">
     		<h4 class="gridheading">{{ count($editorPropertiesArr) }} <span class="newfont"> Editor's choice</span> Hotels Found for {{ $slug }}  {{$dateslug}}</h4>
