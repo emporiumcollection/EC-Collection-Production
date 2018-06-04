@@ -29,7 +29,7 @@ class PropertyController extends Controller {
           $this->data['destination_category'] =0;
         $perPage = 42;
         $pageNumber = 1;
-        dd($this->data);
+
         if(isset($request->page) && $request->page>0){
             $pageNumber = $request->page;
         }
@@ -64,7 +64,7 @@ class PropertyController extends Controller {
 
         $editorData = DB::select($editorQuery);
         $this->data['editorPropertiesArr']=$editorData;
-
+        dd($this->data);
         $getRec = DB::select($CountRecordQry);
         $propertiesArr = DB::select($fianlQry);
         $featureData = DB::select($featureQuery);
