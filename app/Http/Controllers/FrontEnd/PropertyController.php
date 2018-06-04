@@ -69,8 +69,9 @@ class PropertyController extends Controller {
         $this->data['editorPropertiesArr']=$editorData;
        // dd($this->data);
         $getRec = DB::select($CountRecordQry);
-        dd($getRec);
+
         $propertiesArr = DB::select($fianlQry);
+        dd($propertiesArr);
         $featureData = DB::select($featureQuery);
 
 
