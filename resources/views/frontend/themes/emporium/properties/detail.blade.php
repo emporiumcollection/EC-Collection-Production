@@ -281,7 +281,7 @@
                                                         src="{{$propertyDetail['roomimgs'][$propertyDetail['typedata'][$key]->id]['imgsrc'].$propertyDetail['roomimgs'][$propertyDetail['typedata'][$key]->id]['imgs'][0]->file_name}}"
                                                         alt="Image">
 
-<div rel="{{$type->id}}" class="showMoreSec" style="display:inline-block;">
+<div rel="{{$type->id}}" name="{{$propertyDetail['data']->property_name}}" class="showMoreSec" style="display:inline-block;">
                                     <button type="button" class="btn buttonDefault">SHOW MORE</button>
                                 </div>
 
