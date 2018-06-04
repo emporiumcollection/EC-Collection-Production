@@ -60,7 +60,7 @@ class PropertyController extends Controller {
         $query .= " FROM tb_properties  pr";
         $whereClause = " WHERE pr.property_type='" . $request->slug . "' AND pr.property_status = '1' AND pr.editor_choice_property = 1 ";
         $OrderByQry =  " order by RAND() LIMIT 4 ";
-
+		$editorQuery = $query.' '.$whereClause.' '.$OrderByQry;
 
         $editorData = DB::select($editorQuery);
         dd($editorData);
