@@ -459,7 +459,8 @@ position: absolute;
 .sliderContent h3 {
   font-size: 16px;
   color: #ABA07C;
-  font-weight: 600;
+  font-weight: 400;
+  font-family:'geomanistlight' serif;
 }
 .sliderContent p {
   font-size: 14px;
