@@ -1286,7 +1286,7 @@ border-radius:0;
 .mobilemenulist .mobile-leftsearch button i{font-size:16px; color:#fff}
 .mobilemenu-inner .bottomlink{background:#252525; padding:15px 15px 15px 25px; color:#fff; font-size:13px;}
 .mobilemenu-inner .bottomlink a{color:#fff; text-decoration:underline;}
-.mobilenavheader h3{font-size:16px; color:#fff; margin:0 0 25px 0}
+.mobilenavheader h3{font-size:12px; color:#ABA07C; text-transform: lowercase; margin:0 0 25px 0}
 .searchourcollectonnav, .searchbydatenav, .mobilemainnav, .selectdestinationnav, .selectafricanav, .selectexperiencenav, .companynav, .selectafricanavchild, .restaurantnav, .searchbyfilternav, .destinationresultnav{display:none;}
 .homelinknav{padding: 10px 0 5px 0; margin-top:10px;color: #ABA07C;text-transform:lowercase;font-size:12px;display: inline-block;}
 .homelinknav:hover, .homelinknav:focus{color:#fff; outline:none;}
