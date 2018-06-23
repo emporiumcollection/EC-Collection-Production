@@ -219,7 +219,7 @@
 							           	<div class="image">
 							           		     <a class="showhide" href="{{$url}}" rel="bookmark" style="">{{ $props->property_name}}   </a>
 							            <a href="{{ $url }}" title="{{ $props->property_name}}">
-							          		  <img src="{{ URL::to('propertyimagebyid/'.$props->id)}}" class="img-responsive" alt="{{ $props->property_name}}" title="{{ $props->property_name}}">
+							          		  <img src="{{ URL::to('sximo/images/transparent.png') }}" data-src="{{ URL::to('propertyimagebyid/'.$props->id)}}" class="img-responsive rad-img" alt="{{ $props->property_name}}" title="{{ $props->property_name}}">
 							               {{-- URL::to('propertyimagebyid/'.$props->id)--}}
 							           	</a>
 
@@ -443,7 +443,49 @@ $('input[name="departure"]').daterangepicker({
 		minDate : todayDate
 	});
 @endif
+
+var noImg = "{{ URL::to('sximo/images/transparent.png') }}";
+function load_all_images(){
+    $grid.masonry('layout');
+    var totalHotelImg = $('img.rad-img').length;
+    var rri = 1;
+    $('img.rad-img').each(function(){
+        var thisSrc = $(this).data('src');
+        var thisObj = $(this);
+        if(((typeof thisSrc) != undefined) && ((typeof thisSrc) != 'undefined')){
+        
+        if(thisSrc.length > 0){
+            $("<img/>")
+            .on('load', function() { 
+                thisObj.attr('src',$(this).attr('src'));
+                if(totalHotelImg == rri){ $grid.masonry('layout'); }else{ rri++; }
+            })
+            .on('error', function() { 
+                thisObj.attr('src',noImg); thisObj.css('opacity','0'); 
+                if(totalHotelImg == rri){ $grid.masonry('layout'); }else{ rri++; }
+            })
+            .attr("src", thisSrc);
+        }else
+        {
+            thisObj.attr('src',noImg);
+            thisObj.css('display','block');
+        }
+            thisObj.removeAttr('data-src');
+        }else
+        {
+            thisObj.attr('src',noImg);
+            thisObj.css('display','block');
+        }
+        
+        thisObj.removeClass('rad-img');
+    });
+}
+
 		$(document).ready(function () {
+		  //load images after load full page
+          load_all_images();
+          //End
+          
 			$(document).on('change', '#myRange', function () {
 				var datObj = window.location.search;
 				if(datObj.match(/filter_max_price/g))
