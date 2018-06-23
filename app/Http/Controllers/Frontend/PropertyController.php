@@ -14,7 +14,7 @@ class PropertyController extends Controller {
     }
     
     /* Method : getPropertyDetail
-     *   Description : The Methos is using for property detai page (PDP)
+     *   Description : The Methos is using for property detai page (PDP) t
     */
 	
 	public function getPropertyGridListByCategory(Request $request)
