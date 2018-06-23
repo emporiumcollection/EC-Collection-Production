@@ -226,9 +226,9 @@ class PropertyController extends Controller {
                     
     }
 	
-	function fetchcategoryChildListIds($id = 0, $child_category_array = '') {
+	function fetchcategoryChildListIds($id = 0, $child_category_array = array()) {
 
-        if (!is_array($child_category_array))
+        /*if (!is_array($child_category_array))
             $child_category_array = array();
         //$uid = \Auth::user()->id;
         // Get Query 
@@ -238,7 +238,16 @@ class PropertyController extends Controller {
                 $child_category_array[] = $row->id;
                 $child_category_array = $this->fetchcategoryChildListIds($row->id, $child_category_array);
             }
+        }*/
+        
+        /** new optimized query by aks (18/June/2018) start **/
+        $child_category_array = array();
+        $results1 = DB::select(DB::raw("call property_multi_level_child_proc(?)"),[$id]);
+        foreach ($results1 as $row) {
+            $child_category_array[] = $row->id;
         }
+        /** new optimized query by aks end **/
+        
         return $child_category_array;
     }
 	
