@@ -5,7 +5,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use DB,Validator, Input, Redirect;
 
-class DestinationController extends Controller {
+class DestinationController_bkup extends Controller {
 
     public function __construct() {
         parent::__construct();
