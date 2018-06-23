@@ -158,7 +158,7 @@ class PropertyController extends Controller {
             $catprops = " OR pr.id in(".$timplod.") ";
         }
 		
-		$perPage = 2;
+		$perPage = 42;
 		$pageNumber = 1;
 		if(isset($request->page) && $request->page>0){
 			$pageNumber = $request->page;
