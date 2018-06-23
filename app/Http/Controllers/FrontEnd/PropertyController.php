@@ -79,7 +79,7 @@ class PropertyController extends Controller {
 	}
 	
 	function propertySearch(Request $request) {
-
+        dd('test');
 		$selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
 		
