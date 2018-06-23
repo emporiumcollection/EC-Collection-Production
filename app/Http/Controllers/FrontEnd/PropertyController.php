@@ -19,8 +19,7 @@ class PropertyController extends Controller {
 	
 	public function getPropertyGridListByCategory(Request $request)
 	{
-		//dd("hi");
-		//echo $request->slug;die;
+		//dd("hello");
 		$this->data['slug'] = $request->slug;
 		$this->data['dateslug'] = '';
 
@@ -29,11 +28,9 @@ class PropertyController extends Controller {
           $this->data['destination_category'] =0;
         $perPage = 42;
         $pageNumber = 1;
-
         if(isset($request->page) && $request->page>0){
             $pageNumber = $request->page;
         }
-       // dd("hii");
         $pageStart = ($pageNumber -1) * $perPage;
 
         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,"; 
@@ -54,24 +51,23 @@ class PropertyController extends Controller {
         $OrderByQry =  " order by RAND() LIMIT 4 ";
         $featureQuery = $query.' '.$whereClause.' '.$OrderByQry;
         
-         //Editor choice editor_choice_property
+        //Editor choice editor_choice_property
          $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,"; 
         $query .= " (SELECT rack_rate FROM tb_properties_category_rooms_price pcrp where pr.id=pcrp.property_id order by rack_rate DESC limit 0,1 ) as price ," ;
         $query .= " (SELECT category_name FROM tb_categories ct where pr.property_category_id=ct.id limit 0,1 ) as category_name ";
         $query .= " FROM tb_properties  pr";
         $whereClause = " WHERE pr.property_type='" . $request->slug . "' AND pr.property_status = '1' AND pr.editor_choice_property = 1 ";
         $OrderByQry =  " order by RAND() LIMIT 4 ";
-		$editorQuery = $query.' '.$whereClause.' '.$OrderByQry;
+
+        
+		$editorQuery = $query.' '.$whereClause.' '.$OrderByQry; 
+
 
         $editorData = DB::select($editorQuery);
-        //dd($editorData);
-
         $this->data['editorPropertiesArr']=$editorData;
-       // dd($this->data);
-        $getRec = DB::select($CountRecordQry);
 
+        $getRec = DB::select($CountRecordQry);
         $propertiesArr = DB::select($fianlQry);
-       
         $featureData = DB::select($featureQuery);
 
 
@@ -80,12 +76,10 @@ class PropertyController extends Controller {
         $this->data['total_record'] = $getRec[0]->total_record;
         $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
         $this->data['active_page']=$pageNumber;	
-        //dd($this->data);
 		return view('frontend.themes.emporium.properties.list', $this->data);
 	}
 	
 	function propertySearch(Request $request) {
-
 
 		$selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
@@ -116,47 +110,52 @@ class PropertyController extends Controller {
 		}
 
 
-		/******* New Query by Ravinder ********/ 
 		$catprops = '';   
 
 		   
 		$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 
         $chldIds = array();
-		if (!empty($cateObj)) {
-			$channel_url = $cateObj->category_youtube_channel_url;
-			$this->data['channel_url'] = $channel_url;
-			$cateObjtemp = \DB::table('tb_categories')->where('parent_category_id', $cateObj->id)->where('category_published', 1)->get();
-			if (!empty($cateObjtemp)) {
-				$chldIds = $this->fetchcategoryChildListIds($cateObj->id);
-				array_unshift($chldIds, $cateObj->id);
-			} else {
-				$chldIds[] = $cateObj->id;
-			}
-			$getcats = '';
-			if (!empty($chldIds)) {
-				$getcats = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', property_category_id)", $v);
-								}, array_values($chldIds))) . ")";
-			}
-
-			if ($arrive != '') {
-				$getcats = '';
-				if (!empty($chldIds)) {
-					$getcats = " AND (" . implode(" || ", array_map(function($v) {
-										return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-									}, array_values($chldIds))) . ")";
-				}
-				if ($departure != '') {
-					$getdestind = " AND pctr.room_active_to <= '$departure'";
-				}
-				$catprops = " OR pr.id in( SELECT pr.id FROM tb_properties pr, tb_properties_category_rooms pctr   WHERE pctr.property_id = pr.id AND  pr.property_status='1' AND pctr.room_active_from <= '".$arrive."' ".$getdestind."  ".$getcats." ) ";
-			} else {
-				$catprops = " OR pr.id in(SELECT id FROM tb_properties WHERE property_status='1' $getcats ) ";
-			}
-
-		}
-
+        if (!empty($cateObj)) {
+            $channel_url = $cateObj->category_youtube_channel_url;
+            $this->data['channel_url'] = $channel_url;
+            
+            //get all children start
+            $chldIds = $this->fetchcategoryChildListIds($cateObj->id);
+            //End
+            if(count($chldIds) <= 0){ $chldIds[] = $cateObj->id; }
+            
+            $getcatsID = array();
+            if (count($chldIds) > 0) {
+                $impload_ids = implode(',',$chldIds);
+                $catcond = " AND (pr.category_id IN(".$impload_ids."))";
+                /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
+									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+								}, array_values($chldIds))) . ")";*/
+                
+                $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
+                if(strlen(trim($arrive)) > 0){
+                    $ch_queries = "";
+                    $getdestind = "";
+                    if (strlen(trim($departure)) > 0) { $getdestind = " AND pctr.room_active_to <= '".$departure."'"; }
+                    $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr, tb_properties_category_rooms pctr WHERE pctr.property_id = pr.id AND  pr.property_status='1' AND pctr.room_active_from <= '".$arrive."' ".$getdestind."  ".$catcond." GROUP BY pr.id";
+                }
+                
+                $ch_queries = trim($ch_queries);
+                if(strlen($ch_queries) > 0){
+                    $childresult = DB::select($ch_queries);
+                    
+                    foreach($childresult as $siChild){
+                        $getcatsID[] = $siChild->id;
+                    }
+                }
+            }
+        }
+        
+        if(count($getcatsID) > 0){
+            $timplod = implode(',',$getcatsID);
+            $catprops = " OR pr.id in(".$timplod.") ";
+        }
 		
 		$perPage = 42;
 		$pageNumber = 1;
@@ -165,32 +164,29 @@ class PropertyController extends Controller {
 		}
 		$pageStart = ($pageNumber -1) * $perPage;
 
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id ";
-		$query .= ", (SELECT pcrp.rack_rate FROM tb_properties_category_rooms_price pcrp  where pr.id=pcrp.property_id  order by pcrp.rack_rate DESC limit 0,1 ) as price " ;
-		$query .= " FROM tb_properties pr ";
+		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
+		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
 		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 ";
-		$orderBy = "ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price pcrp WHERE pcrp.property_id = pr.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, pr.editor_choice_property desc  ";
+		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
 		$limit = " LIMIT ". $pageStart.",".$perPage; 
-		$finalQry = $query.$whereClause.$orderBy.$limit ; 
+        $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ; 
 		$CountRecordQry = "Select count(*) as total_record from tb_properties pr ".$whereClause ;
 			
 			//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id ";
-		$query .= ", (SELECT pcrp.rack_rate FROM tb_properties_category_rooms_price pcrp  where pr.id=pcrp.property_id  order by pcrp.rack_rate DESC limit 0,1 ) as price " ;
-		$query .= " FROM tb_properties pr ";
+		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
+		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
 		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 ";
 		$orderBy = "ORDER BY RAND()  ";
 		$limit = " LIMIT 4";
-		$featureQuery = $query.$whereClause.$orderBy.$limit ; 
+		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ; 
 		
 		  //Editor choice editor_choice_property
-         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id ";
-		$query .= ", (SELECT pcrp.rack_rate FROM tb_properties_category_rooms_price pcrp  where pr.id=pcrp.property_id  order by pcrp.rack_rate DESC limit 0,1 ) as price " ;
-		$query .= " FROM tb_properties pr ";
+         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
+		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
 		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 ";
 		$orderBy = "ORDER BY RAND()  ";
 		$limit = " LIMIT 4";
-		$editorQuery = $query.$whereClause.$orderBy.$limit ; 
+		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ; 
 
         $editorData = DB::select($editorQuery);
 		//dd($editorData);
@@ -208,7 +204,7 @@ class PropertyController extends Controller {
 
 		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-	
+		
 		
 		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
 		$tagsArr = array();
@@ -227,14 +223,14 @@ class PropertyController extends Controller {
             $this->data['destination_category']=$cateObj->id;
 			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
         }
-        //dd($this->data);
+
 		return view('frontend.themes.emporium.properties.list', $this->data);
                     
     }
 	
-	function fetchcategoryChildListIds($id = 0, $child_category_array = '') {
+	function fetchcategoryChildListIds($id = 0, $child_category_array = array()) {
 
-        if (!is_array($child_category_array))
+        /*if (!is_array($child_category_array))
             $child_category_array = array();
         //$uid = \Auth::user()->id;
         // Get Query 
@@ -244,7 +240,16 @@ class PropertyController extends Controller {
                 $child_category_array[] = $row->id;
                 $child_category_array = $this->fetchcategoryChildListIds($row->id, $child_category_array);
             }
+        }*/
+        
+        /** new optimized query by aks (18/June/2018) start **/
+        $child_category_array = array();
+        $results1 = DB::select(DB::raw("call property_multi_level_child_proc(?)"),[$id]);
+        foreach ($results1 as $row) {
+            $child_category_array[] = $row->id;
         }
+        /** new optimized query by aks end **/
+        
         return $child_category_array;
     }
 	
@@ -560,16 +565,18 @@ class PropertyController extends Controller {
 		$propertyImage = CustomQuery::getPropertyImage($propid);	
 		$remoteImage = $propertyImage->containerfolder_src;		
 		$propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
-		$width = Image::make($remoteImage)->width();
-		$height = Image::make($remoteImage)->height();
 		if(file_exists($propertyNameImg)){
 			header("Content-type: image/jpeg");
 			$data = file_get_contents($propertyNameImg);
 			$image = 'data:image/jpeg;base64,' . base64_encode($data);
 		} else {
 			if(!empty($propertyImage)) {
-				$height1 = 400 * $height /$width;
-				$image = Image::make($remoteImage)->resize(400,$height1)->response('jpg');
+				$tObj = Image::make($remoteImage);
+                $width = $tObj->width();
+                $height = $tObj->height();
+        
+                $height1 = 400 * $height /$width;
+				$image = $tObj->resize(400,$height1)->response('jpg');
 			} else {
 				return false;
 			}
