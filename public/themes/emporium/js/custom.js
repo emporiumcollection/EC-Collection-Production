@@ -563,9 +563,176 @@ slider.oninput = function() {
   output.innerHTML = this.value;
 }
 }
-
-
-
-
-
 */
+
+ $( ".c-header__btn-menu" ).click(function() {
+  $( this ).toggleClass( "highlight" );
+  $(".homerightmenu").toggleClass("me-right");
+  $(".mobilemenu").toggleClass( "me-left");
+  $(".menu-bx").toggleClass( "is-nav-active");  
+});
+
+ $( ".menu-bx .log_in-btn" ).click(function() {
+  $(".popupMainDiv").toggleClass("openPopup");
+  $(".signInPopup").removeClass("openPopup");      
+});
+ $( ".c-slideshow__control__bottom" ).click(function() {
+  $(".signInPopup").addClass("openPopup");
+  $(".popupMainDiv").toggleClass("openPopup");      
+});
+ 
+ $('.cnt-box').hide();
+ $('.bg-dark').hide();
+
+ //$('.round-crcle').hover(
+//function () {
+//     $('.cnt-box').show("slow");
+//      $('.carousel-caption').addClass("mob-hide");
+//       $('.bg-dark').fadeIn("slow");
+//   }, 
+//   function () {
+//    $('.cnt-box').hide();
+//   }
+// );
+if ( $(window).width() > 800 ) { 
+
+ $(function(){
+    $('.round-crcle').hover(function() {
+         $('.cnt-box').fadeIn("slow");
+        $('.bg-dark').fadeIn("slow");  
+  }, function() {
+    $('.cnt-box').fadeOut("slow");
+       $('.bg-dark').fadeOut("slow");   
+  })
+})
+}
+
+$(function(){
+  $('.logo-box, .menu-bx , .c-slideshow__control , .log_in-btn , .Home .sliderFooter a').hover(function() {
+    $('.bg-dark').fadeIn("slow");
+  }, function() {
+    $('.bg-dark').fadeOut("slow"); 
+  })
+})
+
+if ( $(window).width() < 800 ) {
+$(".round-crcle").click(function(){
+$(".cnt-box").fadeToggle("slow");
+$('.bg-dark').fadeToggle("slow");
+$('.round-crcle .c-slide__icon-more__container').fadeToggle("slow"); 
+});
+$("#home_sld .c-slideshow__control").click(function(){    
+    $(".cnt-box").fadeOut("slow");
+    $(".bg-dark").fadeOut("slow");
+    $(".round-crcle .c-slide__icon-more__container").fadeIn("slow");        
+});
+}
+
+ // var movementStrength = 25;
+// var height = movementStrength / $(window).height();
+// var width = movementStrength / $(window).width();
+// $("#home_sld .item").mousemove(function(e){
+//           var pageX = e.pageX - ($(window).width() / 2);
+//           var pageY = e.pageY - ($(window).height() / 2);
+//           var newvalueX = width * pageX * -1 - 0;
+//           var newvalueY = height * pageY * -1 - 20;
+//           $('#home_sld .item').css("background-position", newvalueX+"px     "+newvalueY+"px");
+// });
+
+$("button").click(function(){
+    $(".header-content").removeClass("showsearch");
+});
+
+$("#home_sld .c-slideshow__control--right").click(function(){
+    $(".sliderFooter").fadeIn("slow");
+    $(".hide-frst").fadeIn("slow");
+    $("footer").removeClass("first-arw");
+    $("#home_sld .carousel-caption").removeClass("item-front");
+    $(".cnt-box").fadeOut("slow");
+    $(".bg-dark").fadeOut("slow");
+    $(".round-crcle .c-slide__icon-more__container").fadeIn("slow");        
+});
+
+
+
+
+
+$('.user-type').each(function () {
+
+    // Cache the number of options
+    var $this = $(this),
+        numberOfOptions = $(this).children('option').length;
+
+    // Hides the select element
+    $this.addClass('s-hidden');
+
+    // Wrap the select element in a div
+    $this.wrap('<div class="select"></div>');
+
+    // Insert a styled div to sit over the top of the hidden select element
+    $this.after('<div class="styledSelect"></div>');
+
+    // Cache the styled div
+    var $styledSelect = $this.next('div.styledSelect');
+
+    // Show the first select option in the styled div
+    $styledSelect.text($this.children('option').eq(0).text());
+
+    // Insert an unordered list after the styled div and also cache the list
+    var $list = $('<ul />', {
+        'class': 'options'
+    }).insertAfter($styledSelect);
+
+    // Insert a list item into the unordered list for each select option
+    for (var i = 0; i < numberOfOptions; i++) {
+        $('<li />', {
+            text: $this.children('option').eq(i).text(),
+            rel: $this.children('option').eq(i).val()
+        }).appendTo($list);
+    }
+
+    // Cache the list items
+    var $listItems = $list.children('li');
+
+    // Show the unordered list when the styled div is clicked (also hides it if the div is clicked again)
+    $styledSelect.click(function (e) {
+        e.stopPropagation();
+        $('div.styledSelect.active').each(function () {
+            $(this).removeClass('active').next('ul.options').hide();
+        });
+        $(this).toggleClass('active').next('ul.options').toggle();
+    });
+
+    // Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
+    // Updates the select element to have the value of the equivalent option
+    $listItems.click(function (e) {
+        e.stopPropagation();
+        $styledSelect.text($(this).text()).removeClass('active');
+        $this.val($(this).attr('rel'));
+        $list.hide();
+        / alert($this.val()); Uncomment this for demonstration! /
+    });
+
+    // Hides the unordered list when clicking outside of it
+    $(document).click(function () {
+        $styledSelect.removeClass('active');
+        $list.hide();
+    });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 

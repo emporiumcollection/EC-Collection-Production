@@ -3,6 +3,88 @@ namespace App\Helpers;
 use Session, DB ;
 class CommonHelper
 {
+    static function url_title($str, $separator = '-', $lowercase = FALSE)
+    {
+        if ($separator == 'dash') 
+        {
+            $separator = '-';
+        }
+        else if ($separator == 'underscore')
+        {
+            $separator = '_';
+        }
+    
+        $q_separator = preg_quote($separator);
+    
+        $trans = array(
+            '&.+?;'                 => '',
+            '[^a-z0-9 _-]'          => '',
+            '\s+'                   => $separator,
+            '('.$q_separator.')+'   => $separator
+        );
+    
+        $str = strip_tags($str);
+    
+        foreach ($trans as $key => $val)
+        {
+            $str = preg_replace("#".$key."#i", $val, $str);
+        }
+    
+        if ($lowercase === TRUE)
+        {
+            $str = strtolower($str);
+        }
+    
+        return trim($str, $separator);
+    }
+
+    // check user type
+    static function getusertype($postData){
+        
+        $type = ((is_int($postData))?'int':((is_string($postData))?'string':''));
+        
+        $rtype = false;
+        
+        if(!defined('RUSER_GROUPS')){
+            $rgroups  = \DB::table('tb_groups')->select('group_id','name','level')->get();
+            $tarra = array(); 
+            foreach($rgroups as $si_group){
+                $group_id = (int) $si_group->group_id;
+                $group_name = self::url_title(trim($si_group->name),'-',true);
+                
+                $tarra[$group_name] = $group_id;
+            }   
+            
+            define('RUSER_GROUPS',$tarra);
+        }        
+                
+        $users = RUSER_GROUPS;
+        
+        if($type == 'string'){            
+            if(isset($users[$postData])){ $rtype = $users[$postData]; }
+        }elseif($type == 'int')
+        {
+            $postData = (int) $postData;
+            $rtype = array_search($postData, $users);
+        }
+        
+        return $rtype;
+    }
+    //End
+    
+    //is user metronic dashboard
+    static function isHotelDashBoard(){
+        $group_id = (int) \Auth::user()->group_id;
+        $user = self::getusertype($group_id);
+        $match_array = array('hotel-b2b');
+        $return = "";
+        
+        if(in_array($user,$match_array)){ $return = 'users_admin.metronic'; }
+        
+        return $return;
+    }
+    //end
+    
     //Return All images path of Property
     static function getInfo(){
 
