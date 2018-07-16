@@ -98,7 +98,7 @@
       <div>
         <div class="col-md-6 col-sm-6 col-xs-12">
          <a  href="{{ $url }}" >
-		          <img src="{{ URL::to('propertysliderimagebyid/'.$props->id)}}" class="img-responsive" title="{{ $props->property_name}}" alt="{{ $props->property_name}}">
+		          <img src="{{ URL::to('sximo/images/transparent.png') }}" data-src="{{ URL::to('propertysliderimagebyid/'.$props->id)}}" class="img-responsive rad-img" title="{{ $props->property_name}}" alt="{{ $props->property_name}}" data-ajax-link="{{ URL::to('ajax-rproperty-images/'.$props->id.'/3') }}" />
 		         
     		  </a>
         </div>
@@ -152,7 +152,7 @@
         <div class="row">
           <div class="gridinner">
             <a href="{{ $url }}" title="{{ $props->property_name}}">
-          		  <img src="{{ URL::to('propertysliderimagebyid/'.$props->id)}}" class="img-responsive" alt="{{ $props->property_name}}" title="{{ $props->property_name}}">
+          		  <img  src="{{ URL::to('sximo/images/transparent.png') }}" data-src="{{ URL::to('propertysliderimagebyid/'.$props->id)}}" class="img-responsive rad-img" alt="{{ $props->property_name}}" title="{{ $props->property_name}}" data-ajax-link="{{ URL::to('ajax-rproperty-images/'.$props->id.'/3') }}" />
                {{-- URL::to('propertyimagebyid/'.$props->id)--}}
            	</a>
             <div class="gridtext">
@@ -219,7 +219,7 @@
 							           	<div class="image">
 							           		     <a class="showhide" href="{{$url}}" rel="bookmark" style="">{{ $props->property_name}}   </a>
 							            <a href="{{ $url }}" title="{{ $props->property_name}}">
-							          		  <img src="{{ URL::to('sximo/images/transparent.png') }}" data-src="{{ URL::to('propertyimagebyid/'.$props->id)}}" class="img-responsive rad-img" alt="{{ $props->property_name}}" title="{{ $props->property_name}}">
+							          		  <img src="{{ URL::to('sximo/images/transparent.png') }}" data-src="{{ URL::to('propertyimagebyid/'.$props->id)}}" class="img-responsive rad-img" alt="{{ $props->property_name}}" title="{{ $props->property_name}}" data-ajax-link="{{ URL::to('ajax-rproperty-images/'.$props->id.'/3') }}" />
 							               {{-- URL::to('propertyimagebyid/'.$props->id)--}}
 							           	</a>
 
@@ -321,7 +321,7 @@
     <link href="{{ asset('themes/emporium/css/animate.css') }}" rel="stylesheet">
 	<link href="{{ asset('themes/emporium/css/pdpage-css.css') }}" rel="stylesheet">
 	<link href="{{ asset('themes/emporium/css/search-result.css') }}" rel="stylesheet">
-
+    <link href="{{ asset('themes/emporium/css/rad-photos-swap.css') }}" rel="stylesheet">
 
 @endsection
 
@@ -339,6 +339,7 @@
 	  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
   <script type="text/javascript" src="{{ asset('themes/emporium/js/imagesloaded.pkgd.min.js')}}"></script>
   <script type="text/javascript" src="{{ asset('themes/emporium/js/slick.js')}}"></script>
+  <script type="text/javascript" src="{{ asset('themes/emporium/js/rad-photos-swap.js')}}"></script>
    <script type="text/javascript">
    $('.multiple-items').slick({
     dots: true,
@@ -445,45 +446,9 @@ $('input[name="departure"]').daterangepicker({
 @endif
 
 var noImg = "{{ URL::to('sximo/images/transparent.png') }}";
-function load_all_images(){
-    $grid.masonry('layout');
-    var totalHotelImg = $('img.rad-img').length;
-    var rri = 1;
-    $('img.rad-img').each(function(){
-        var thisSrc = $(this).data('src');
-        var thisObj = $(this);
-        if(((typeof thisSrc) != undefined) && ((typeof thisSrc) != 'undefined')){
-        
-        if(thisSrc.length > 0){
-            $("<img/>")
-            .on('load', function() { 
-                thisObj.attr('src',$(this).attr('src'));
-                if(totalHotelImg == rri){ $grid.masonry('layout'); }else{ rri++; }
-            })
-            .on('error', function() { 
-                thisObj.attr('src',noImg); thisObj.css('opacity','0'); 
-                if(totalHotelImg == rri){ $grid.masonry('layout'); }else{ rri++; }
-            })
-            .attr("src", thisSrc);
-        }else
-        {
-            thisObj.attr('src',noImg);
-            thisObj.css('display','block');
-        }
-            thisObj.removeAttr('data-src');
-        }else
-        {
-            thisObj.attr('src',noImg);
-            thisObj.css('display','block');
-        }
-        
-        thisObj.removeClass('rad-img');
-    });
-}
-
 		$(document).ready(function () {
 		  //load images after load full page
-          load_all_images();
+          $('img.rad-img').photoLoadAfterPageLoad(noImg);
           //End
           
 			$(document).on('change', '#myRange', function () {
