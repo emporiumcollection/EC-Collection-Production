@@ -45,7 +45,7 @@
                 <div class="footer-coloumn newsletter">
                     <h2>NEWSLETTER</h2>
                     <p>Subscribe and get 10% off on your next reservation</p>
-                    <form action="http://just-emarketing.com/app/index.php/lists/za243dkcsjde0/subscribe" method="post" accept-charset="utf-8" target="_blank">
+                    <form action="https://just-emarketing.com/app/index.php/lists/za243dkcsjde0/subscribe" method="post" accept-charset="utf-8" target="_blank">
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="form-group">
