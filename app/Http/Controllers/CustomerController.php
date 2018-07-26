@@ -115,8 +115,10 @@ class CustomerController extends Controller {
         $rules = array(
 //            'firstname' => 'required|alpha_num|min:2',
 //            'lastname' => 'required|alpha_num|min:2',
+            'user_type' => 'required|integer',
             'email' => 'required|email|unique:tb_users',
-            'password' => 'required',
+            //'password' => 'required|min:8|regex:/^.*(?=.{3,})(?=.*[a-zA-Z])(?=)(?=.*[\d\X])(?=.*[!$#%]).*$/',
+            'password' => 'required|min:8|has_letters|has_one_upper_case|has_special_chars',
             'txtmobileNumber' =>'required',
 
 //            'mobile_number' => mobile_number'required|confirmed',
@@ -132,8 +134,31 @@ class CustomerController extends Controller {
         );
         if (CNF_RECAPTCHA == 'true')
             $rules['recaptcha_response_field'] = 'required|recaptcha';
+        
+        Validator::extend('has_letters', function ($attribute, $value, $parameters, $validator) {
+            return preg_match( '/[a-zA-Z]/', $value );
+        });
+        
+        Validator::extend('has_one_upper_case', function ($attribute, $value, $parameters, $validator) {
+            return preg_match('/[A-Z]+/', $value);
+        });
+        
+        Validator::extend('has_numbers', function ($attribute, $value, $parameters, $validator) {
+            return preg_match( '/\d/', $value );
+        });
+        
+        Validator::extend('has_special_chars', function ($attribute, $value, $parameters, $validator) {
+            return preg_match('/[^a-zA-Z\d]/', $value);
+        });
+        
+        $messages = array(
+            'has_letters' => 'The :attribute field must be at least one alpha character.',
+            'has_numbers' => 'The :attribute field must be at least one numeric character.',
+            'has_special_chars' => 'The :attribute field must be at least one non-alphanumeric (!, @, # etc.) character.',
+            'has_one_upper_case' => 'The :attribute field must be at least one uppercase character.',
+        );
 
-        $validator = Validator::make($request->all(), $rules);
+        $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->passes()) {
             $code = rand(10000, 10000000);
