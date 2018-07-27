@@ -38,7 +38,7 @@
     <link href="{{ asset('themes/emporium/css/owl.carousel.css') }}" rel="stylesheet">
     <link href="{{ asset('themes/emporium/css/font-stylesheet.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('themes/emporium/css/jquery.mCustomScrollbar.css') }}">
-    <link href="{{ asset('themes/emporium/css/bootstrap-datepicker.css')}}" rel="stylesheet">
+    {{--<link href="{{ asset('themes/emporium/css/bootstrap-datepicker.css')}}" rel="stylesheet">--}}
     <link href="{{ asset('lib/jquery-ui/jquery-ui.min.css') }}" rel="stylesheet">
     <!-- tilt css include -->
     <!-- end of tilt css include -->
@@ -52,8 +52,8 @@
      <link href="{{ asset('themes/emporium/css/slick.css') }}" rel="stylesheet">
     @section('head')
         @parent
-        <link href="{{ asset('themes/emporium/css/daterangepicker.css') }}" rel="stylesheet">
-        <link href="{{ asset('themes/emporium/css/calendar.css') }}" rel="stylesheet">
+        {{--<link href="{{ asset('themes/emporium/css/daterangepicker.css') }}" rel="stylesheet">
+        <link href="{{ asset('themes/emporium/css/calendar.css') }}" rel="stylesheet">--}}
     @show
 
     <link href="{{ asset('themes/emporium/css/style.css') }}" rel="stylesheet">
@@ -63,8 +63,8 @@
         @parent
         <link href="{{ asset('themes/emporium/css/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('sximo/assets/css/intlTelInput.css') }}" rel="stylesheet">
-
-
+        <link href="{{ asset('themes/emporium/daterangepicker/css/t-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('themes/emporium/daterangepicker/css/themes/t-datepicker-bluegrey.css') }}" rel="stylesheet" type="text/css" />
     @show
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-110391807-1"></script>
@@ -146,11 +146,12 @@
 {{-- For including javascript files --}}
 @section('javascript')
     @parent
+    <script src="{{ asset('themes/emporium/daterangepicker/js/t-datepicker.js') }}"></script>
     <!-- Date Picker js -->
     <script src="{{ asset('themes/emporium/js/moment.min.js') }}"></script>
 
-    <script src="{{ asset('themes/emporium/js/daterangepicker.js') }}"></script>
-    <script src="{{ asset('themes/emporium/js/single-date.js') }}"></script>
+    {{--<script src="{{ asset('themes/emporium/js/daterangepicker.js') }}"></script>
+    <script src="{{ asset('themes/emporium/js/single-date.js') }}"></script>--}}
     <script src="{{ asset('themes/emporium/js/custom.js') }}"></script>
     <script src="{{ asset('themes/emporium/js/custom/destination.js') }}"></script>
     <script src="{{ asset('themes/emporium/js/custom/experience.js') }}"></script>
@@ -165,6 +166,44 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#t-topbar-picker').tDatePicker({
+                'numCalendar':'2',
+                'autoClose':true,
+                'durationArrowTop':'200',
+                'formatDate':'mm-dd-yyyy',
+                'titleCheckIn':'Arrival',
+                'titleCheckOut':'Departure',
+                'inputNameCheckIn':'arrive',
+                'inputNameCheckOut':'departure',
+                'titleDateRange':'days',
+                'titleDateRanges':'days',
+                'iconDate':'<i class="fa fa-calendar"></i>',
+                'limitDateRanges':'365',
+                'dateCheckIn':'@if(isset($_GET['arrive']) && $_GET['arrive']!=''){{$_GET['arrive']}}@else{{'null'}}@endif',
+                'dateCheckOut':'@if(isset($_GET['departure']) && $_GET['departure']!=''){{$_GET['departure']}}@else{{'null'}}@endif'
+            }).on('afterCheckOut',function(e, dateCO) {
+                if(((typeof $(this).closest('form').find('[name="adult"]').val()) != 'undefined') && ((typeof $(this).closest('form').find('[name="adult"]').val()) != undefined)){
+                    $(this).closest('form').find('[name="adult"]').focus();
+                }
+            });
+            
+            $('#t-sidebar-picker').tDatePicker({
+                'numCalendar':'1',
+                'autoClose':true,
+                'durationArrowTop':'200',
+                'formatDate':'mm-dd-yyyy',
+                'titleCheckIn':'Arrival',
+                'titleCheckOut':'Departure',
+                'inputNameCheckIn':'arrive',
+                'inputNameCheckOut':'departure',
+                'titleDateRange':'days',
+                'titleDateRanges':'days',
+                'iconDate':'<i class="fa fa-calendar"></i>',
+                'limitDateRanges':'365',
+                'dateCheckIn':'@if(isset($_GET['arrive']) && $_GET['arrive']!=''){{$_GET['arrive']}}@else{{'null'}}@endif',
+                'dateCheckOut':'@if(isset($_GET['departure']) && $_GET['departure']!=''){{$_GET['departure']}}@else{{'null'}}@endif'
+            });
+            
             // Open Left Navigation For Search By Date on Page Load
             @if(isset($_GET['action']) && $_GET['action']=='bydate' )
             $('[data-action="search-by-date"]').trigger('click');
