@@ -9,14 +9,14 @@
   z-index: 2;
 }
 
-.Home #header{
-  display: none;
-}
 .Home #header .logo-wrapper{
   display: none;
 }
 .lognSignPopoUp{
   width: 100%;
+}
+.Home #header{
+  background: transparent !important;
 }
 @media (min-width: 1025px){
   .Home .mobilemenu {    
