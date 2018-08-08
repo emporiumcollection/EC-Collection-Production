@@ -67,13 +67,13 @@
         <link href="{{ asset('themes/emporium/daterangepicker/css/themes/t-datepicker-bluegrey.css') }}" rel="stylesheet" type="text/css" />
     @show
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110391807-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123599618-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-110391807-1');
+  gtag('config', 'UA-123599618-1');
 </script>
 
 @if(!empty($pageTitle))
