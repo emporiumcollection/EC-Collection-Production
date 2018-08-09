@@ -1,2 +1,7 @@
-User-agent: *
-Disallow:
+User-agent:*
+Disallow: /social-stream?sp=
+Disallow: /our-collection-pages/
+Disallow: /search?
+
+
+Sitemap: https://emporium-voyage.com/sitemap.xml
