@@ -6,7 +6,7 @@
     </div>
     <div class="mobilemenu-inner">
         <div class="mobilemainnav openmobilemenu">
-            <div class="mobilenavheader " data-option="home"><a href="{{url('/')}}"><img
+            <div class="mobilenavheader " data-option="home" data-option-type="logo"><a href="{{url('/')}}"><img
                             src="{{ asset('themes/emporium/images/emporium-voyage-logo.png')}}" alt="Emporium Voyage"
                             class="img-responsive"/></a></div>
             <div class="mobilenavheader hide" data-option="child-global">
@@ -132,12 +132,14 @@
                             <select name="currencyOption" class="form-control">
                                 <option value="EUR">Currency</option>
 								{{--*/ $currencyList=(CommonHelper::getCurrencyList()); /*--}}
+                                @if(!empty($currencyList))
 								@foreach($currencyList as $currencyCode => $currencyName)
 
 									<option value="{{ $currencyCode }}" title="{{ $currencyName }}">{{ $currencyName }}
 								</option>
 
 								@endforeach
+                                @endif
                             </select>
                             <p>$<span id="pricevalue">1</span> - $0</p>
                             <div class="clearfix"></div>
