@@ -96,6 +96,11 @@ Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate');
 Route::post('customer_ajaxPostSignin', 'CustomerController@ajaxPostSignin'); 
 Route::post('customer_ajaxPostRequest', 'CustomerController@ajaxPostRequest'); 
 
+Route::post('leadcreate', 'UserController@ajaxLeadCreate');
+Route::get('crmhotel/leadlisting', 'Core\UsersController@leadlisting');
+Route::get('crmhotel/hoteluserlisting', 'Core\UsersController@hoteluserlisting');
+Route::get('crmhotel/travelleruserlisting', 'Core\UsersController@travelleruserlisting');
+
 include('pageroutes.php');
 include('moduleroutes.php');
 include('custompageroutes.php');
