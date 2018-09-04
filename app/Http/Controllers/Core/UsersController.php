@@ -355,8 +355,7 @@ class UsersController extends Controller {
 
     
     public function leadlisting( Request $request )
-	{
-        echo "dd"; die;
+	{        
 		if($this->access['is_view'] ==0) 
 			return Redirect::to('dashboard')
 				->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus','error');
