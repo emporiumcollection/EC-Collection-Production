@@ -788,7 +788,7 @@ class UserController extends Controller {
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->passes()) { 
-            echo "passed"; die;
+            //echo "passed"; die;
             $authen = new User;
             $authen->first_name = $request->input('firstname');
             $authen->last_name = $request->input('lastname');
@@ -811,7 +811,7 @@ class UserController extends Controller {
             $authen->facebook = trim($request->input('facebook'));
             $authen->linkedin = trim($request->input('linkedin'));
                   
-            $authen->active = '0';
+            $authen->active = '0'; print_r($authen); die;
             $authen->save();
             
             $ucdata['user_id'] = $authen->id;
