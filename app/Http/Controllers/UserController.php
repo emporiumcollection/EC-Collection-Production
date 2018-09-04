@@ -766,7 +766,8 @@ class UserController extends Controller {
         }
     }
     
-    public function ajaxLeadCreate(Request $request) {        
+    public function ajaxLeadCreate(Request $request) {
+
         $rules = array(
             'firstname' => 'required',
             'lastname' => 'required',
@@ -788,7 +789,7 @@ class UserController extends Controller {
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->passes()) { 
-            //echo "passed"; die;
+            
             $authen = new User;
             $authen->first_name = $request->input('firstname');
             $authen->last_name = $request->input('lastname');
@@ -811,7 +812,7 @@ class UserController extends Controller {
             $authen->facebook = trim($request->input('facebook'));
             $authen->linkedin = trim($request->input('linkedin'));
                   
-            $authen->active = '0'; print_r($authen); die;
+            $authen->active = '0';
             $authen->save();
             
             $ucdata['user_id'] = $authen->id;
