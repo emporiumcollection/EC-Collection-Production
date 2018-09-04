@@ -26,39 +26,7 @@
 	<div class="page-content-wrapper m-t">
     <div id="formerrors"></div>
 
-    <div class="sbox animated fadeInRight">
-    	<div class="sbox-title"> <h5> <i class="fa fa-table"></i> </h5>
-            
-    	</div>
-    	<div class="sbox-content"> 	
-    	    <div class="toolbar-line ">
-    			<a href="{{ URL::to('crmhotel') }}" class="tips btn btn-sm btn-white"  title="Hotel Lead Listing">
-    			<i class="fa fa-list "></i>&nbsp;Hotel Lead Listing</a>
-                
-                <a href="{{ URL::to('crmhotel/lead') }}" class="tips btn btn-sm btn-white"  title="{{ Lang::get('core.btn_lead_create') }}">
-    			<i class="fa fa-plus-circle "></i>&nbsp;{{ Lang::get('core.btn_lead_create') }}</a>
-                
-                <a href="{{ URL::to('crmhotel/leadlisting') }}" class="tips btn btn-sm btn-white active"  title="User Lead Listing">
-    			<i class="fa fa-list "></i>&nbsp;{{ Lang::get('core.btn_lead_listing') }}</a>
-                 
-                <a href="{{ URL::to('crmhotel/hotellisting') }}" class="tips btn btn-sm btn-white"  title="Hotel">
-    			<i class="fa fa-list "></i>&nbsp;Hotel</a>
-                
-                <a href="{{ URL::to('crmhotel/hoteluserlisting') }}" class="tips btn btn-sm btn-white"  title="Hotel User">
-    			<i class="fa fa-list "></i>&nbsp;Hotel User</a>
-                
-                <a href="{{ URL::to('crmhotel/travelleruserlisting') }}" class="tips btn btn-sm btn-white"  title="Traveller">
-    			<i class="fa fa-list "></i>&nbsp;Traveller</a>
-                
-                <a href="{{ URL::to( 'core/users/crmsearch') }}" class="btn btn-sm btn-white" onclick="SximoModal(this.href,'Advance Search'); return false;" ><i class="text-danger fa fa-search"></i> Search</a>
-    		</div> 		
-    
     	
-    	
-    	 
-        
-    	</div>
-    </div>	
 	</div>	  
 </div>	
 
