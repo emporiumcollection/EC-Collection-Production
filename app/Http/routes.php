@@ -101,6 +101,11 @@ Route::get('crmhotel/leadlisting', 'Core\UsersController@leadlisting');
 Route::get('crmhotel/hoteluserlisting', 'Core\UsersController@hoteluserlisting');
 Route::get('crmhotel/travelleruserlisting', 'Core\UsersController@travelleruserlisting');
 
+Route::post('fetch_property_company_info', 'CrmhotelController@fetch_property_company_info');
+Route::post('fetch_user_info', 'CrmhotelController@fetch_user_info');
+Route::post('emailCRM', 'CrmhotelController@emailCRM');
+Route::post('emailInviteCRM', 'CrmhotelController@emailInviteCRM');
+
 include('pageroutes.php');
 include('moduleroutes.php');
 include('custompageroutes.php');
