@@ -353,6 +353,42 @@ class UsersController extends Controller {
 
 	}
 
+    function getCrmupdate(Request $request, $id = null)
+	{
+            
+            $module_id = 1;
+	
+		if($id =='')
+		{
+			if($this->access['is_add'] ==0 )
+			return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
+		}	
+		
+		if($id !='')
+		{
+			if($this->access['is_edit'] ==0 )
+			return Redirect::to('dashboard')->with('messagetext',\Lang::get('core.note_restric'))->with('msgstatus','error');
+		}				
+				
+		$row = $this->model->find($id);
+		if($row)
+		{
+			$this->data['row'] =  $row;
+		} else {
+			$this->data['row'] = $this->model->getColumnTable('tb_users'); 
+		}
+
+                /*
+                 * CRM Layout: Fetch page layout
+                 */
+
+                $this->data['all_rows'] = CrmLayoutHelper::fetchCrmLayout($module_id);
+
+                /********************************/
+                
+		$this->data['id'] = $id;
+		return view('core.users.crmform',$this->data);
+	}
     
     public function leadlisting( Request $request )
 	{        

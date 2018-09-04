@@ -257,7 +257,7 @@ p.gray-tx {
   </style>
 </head>
 <body style="margin: 0; padding: 0;">
-    <div class="invitation-box">
+ 	<div class="invitation-box">
  		<div class="container-box">
      		<div class="header"> 			
     			<div style="border-bottom: 1px solid #ddd; padding: 100px 0; text-align: center;">
@@ -266,22 +266,72 @@ p.gray-tx {
     			<div class="sections">
                     <div class="container-box">
                       <div class="txt-box">
-            				Hi
-
-                            {!! $msg !!}
+            				<h3>INVITATION SEND</h3>
+            				{!! $msg !!}
+                            <?php if(!empty($link)){ ?>
                             <br><br>
                             Please click on download button to download the file
                             <br>
                             <a href="{{ URL::to($link) }}">Download</a>
                             <br>
                             if button does not work please copy below link and paste into browser.<br>
-                            {{ URL::to($link) }}
-                            <br><br>
-                            Thanks            
+                            {{ URL::to($link) }}     
+                            <?php } ?>                   
                       </div>
                    </div>
     			</div> 				
      		</div>		 		
+     	</div>
+     	<div class="sections bg-gray">
+     		<div class="container-box">
+     			<div class="row-bx">
+     				<div class="col-6 bg-white">
+     					<div class="img-box bg-city">
+     						<h4>You have been<br>
+    							invited to join<br>
+    							emporium-voyage
+    						</h4>
+                            <div class="rounds"></div>
+     					</div>             
+                        <div class="pad-box">
+                            <div class="invite-box">
+                                <span class="sub-txt">Invitaiton by</span>
+                                <h4>{{ $byfirstname }} {{ $bylastname }}</h4>
+                                <a href="mailto:{{ $byemail }}">{{ $byemail }}</a>
+                            </div>
+                        </div>
+     				</div>
+     				<!-- end of div -->
+    
+                    <div class="col-6 bg-white">
+                      <div class="img-box">
+                        <h4>
+                        </h4>
+                      </div>
+                      <div class="pad-box bg-shadow">
+                          <div class="invite-box invite-person">
+                            <span class="sub-txt">Invited</span>
+                            <h4>{{ $tofirstname }} {{ $tolastname }}</h4>            
+                          </div>
+                          <div class="dates-n-valid">
+                            <div class="col-8">
+                              <span class="sub-txt">{{ $todate }} </span>
+                            </div>
+                            <div class="col-4">
+                              <span class="sub-txt">Validity</span>
+                              <p>{{ $todays }} days</p>
+                            </div>
+                           </div> 
+                      </div>
+                      <!-- end of valid dates -->
+                      <div class="box-barcode"> 
+                          <h2>Refferal Code </h2>
+                          {{$referral_code}}           
+                      </div>
+                    </div>
+                    <!-- end of div -->
+     			</div>
+     		</div>
      	</div>
         <div style="clear: both;"></div>
         <div class="sections">
@@ -327,8 +377,8 @@ p.gray-tx {
                   </div>
                 </div>
             </div>
-        </div>  
-    </div>
+        </div>          
 
+    </div>
 </body>
 </html>

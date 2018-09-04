@@ -765,5 +765,75 @@ class UserController extends Controller {
             return "error";
         }
     }
+    
+    public function ajaxLeadCreate(Request $request) {
 
+        $rules = array(
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'phonecode' => 'required',
+            'email' => 'required|email|unique:tb_users',
+            'phone' =>'required',
+            'company_name' =>'required',
+            'company_email' =>'required',
+        );
+        $messages = array(
+            'firstname.required' => 'The first name field is required.',
+            'lastname.required' => 'The last name field is required.',
+            'phonecode.required' => 'The phone code field is required.',
+            'email.required' => 'The email field is required.',
+            'phone.required' => 'The phone field is required.',
+            'company_name.required' => 'The company name field is required.',
+            'company_email.required' => 'The company email field is required.',
+        );
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->passes()) { 
+            
+            $authen = new User;
+            $authen->first_name = $request->input('firstname');
+            $authen->last_name = $request->input('lastname');
+            $authen->email = trim($request->input('email'));
+            $authen->lead_type = trim($request->input('lead_type'));
+            //$authen->hotel_type = $request->input('hotel_type');  
+            if(!is_null($request->input('hotel_type')))
+			{
+				$authen->hotel_type = implode(',',$request->input('hotel_type'));
+			}
+            
+            $gp_id = \CommonHelper::getusertype('new-lead'); 
+                         
+            $authen->group_id = (int) $gp_id;
+            
+            $authen->mobile_code=trim($request->input('phonecode'));
+            $authen->mobile_number=trim($request->input('phone'));
+            
+            $authen->instagram = trim($request->input('instagram'));
+            $authen->facebook = trim($request->input('facebook'));
+            $authen->linkedin = trim($request->input('linkedin'));
+                  
+            $authen->active = '0';
+            $authen->save();
+            
+            $ucdata['user_id'] = $authen->id;
+            $ucdata['company_name'] = trim($request->input('company_name'));
+            $ucdata['company_address'] = trim($request->input('company_address'));
+            $ucdata['company_city'] = trim($request->input('company_city'));
+            $ucdata['company_postal_code'] = trim($request->input('company_postal_code'));
+            $ucdata['company_country'] = trim($request->input('company_country'));
+            $ucdata['company_phone'] = trim($request->input('company_phone'));
+            $ucdata['company_website'] = trim($request->input('company_website'));
+            $ucdata['company_email'] = trim($request->input('company_email'));
+            $ucdata['company_status'] = trim($request->input('crm_prop_status'));
+            
+             \DB::table('tb_user_company_details')->insert($ucdata);
+            
+            $response = array('status' => 'success', 'message' => 'New Lead added successfully');
+            
+        } else {
+            $response = array('status' => 'error', 'message' => 'The following errors occurred', 'errors' => $validator->errors()->all());
+        }
+        
+        echo json_encode($response);
+    }
 }

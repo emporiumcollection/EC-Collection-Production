@@ -266,18 +266,9 @@ p.gray-tx {
     			<div class="sections">
                     <div class="container-box">
                       <div class="txt-box">
-            				Hi
-
-                            {!! $msg !!}
-                            <br><br>
-                            Please click on download button to download the file
-                            <br>
-                            <a href="{{ URL::to($link) }}">Download</a>
-                            <br>
-                            if button does not work please copy below link and paste into browser.<br>
-                            {{ URL::to($link) }}
-                            <br><br>
-                            Thanks            
+            				<h2>Hello {{ $first_name }}, </h2><br />                            
+                    		<p>Your account has been deleted successfully.</p>                    		
+                    		<br /><br /><p> Thank You </p>
                       </div>
                    </div>
     			</div> 				
