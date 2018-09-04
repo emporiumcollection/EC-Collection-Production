@@ -147,21 +147,6 @@ var substringMatcher = function(strs) {
     cb(matches);
   };
 };	
-var states = [{!! TagsFinder::findLeadListing() !!}];
 
-$('.searchform-navbar .typeahead').typeahead({
-  hint: true,
-  highlight: true,
-  minLength: 1
-},
-{
-  name: 'states',
-  source: substringMatcher(states)
-});
-$('.search-navbar').on('typeahead:selected', function (e, datum) {
-	var propname = $(this);
-	var sname = propname.val();
-	window.location.href = "{{URL::to('crmhotel/leadlisting')}}?search=first_name:equal:" + sname + "|";
-});
 </script>		
 @stop
