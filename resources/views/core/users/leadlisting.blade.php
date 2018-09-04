@@ -7,7 +7,7 @@
 <style>
 .modal-dialog { width:500px !important; }
 </style>
-{{--*/ usort($tableGrid, "SiteHelpers::_sort") /*--}}
+
   <div class="page-content row">
     <!-- Page header -->
     <div class="page-header">
