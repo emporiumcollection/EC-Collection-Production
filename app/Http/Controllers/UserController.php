@@ -767,7 +767,7 @@ class UserController extends Controller {
     }
     
     public function ajaxLeadCreate(Request $request) {
-
+        echo "ggg"; die;
         $rules = array(
             'firstname' => 'required',
             'lastname' => 'required',
