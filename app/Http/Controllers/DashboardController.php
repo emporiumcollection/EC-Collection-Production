@@ -18,7 +18,7 @@ class DashboardController extends Controller {
         if(strlen(trim($url))>0){
             return Redirect::to($url);
         }*/
-        echo "traveller"; die;
+        
         $this->data['container'] = new ContainerController();
         
         $this->data['pageslider'] = \DB::table('tb_pages_sliders')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('slider_page_id', 119)->where('slider_status', 1)->get();
@@ -33,6 +33,12 @@ class DashboardController extends Controller {
         
         $gp_id = trim(\CommonHelper::getusertype('users-b2c'));
         
+        print_r($this->data['pageslider']);
+        print_r($is_demo6); 
+        print_r($file_name); 
+        print_r($this->data['logged_user']);
+        print_r($this->data['online_users']);
+        die;
         /*if(!empty($gp_id)){           
            if($this->data['logged_user']->new_user == 1){
                 return Redirect::to('traveller');
