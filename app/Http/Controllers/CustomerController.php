@@ -157,7 +157,11 @@ class CustomerController extends Controller {
             'has_special_chars' => 'The :attribute field must be at least one non-alphanumeric (!, @, # etc.) character.',
             'has_one_upper_case' => 'The :attribute field must be at least one uppercase character.',
         );
-
+        
+        if($request->input('user_type') == '3'):
+            $rules['referral_code'] = 'required'; 
+        endif;
+        
         $validator = Validator::make($request->all(), $rules, $messages);
 
         if ($validator->passes()) {
@@ -168,38 +172,100 @@ class CustomerController extends Controller {
 //            $authen->last_name = $request->input('lastname');
             $authen->email = trim($request->input('email'));
             $authen->activation = $code;
-            $authen->group_id = 3;
+            $authen->group_id = (int) $request->input('user_type');
             $authen->mobile_number=trim($request->input('txtmobileNumber'));
             $authen->mobile_code=trim($request->input('txtmobileDialcode'));
             $authen->password = \Hash::make($request->input('password'));
-            $authen->active = '0';
-            $authen->save();
-
-            $ucdata['user_id'] = $authen->id;
-            \Session::set("uid",$authen->id);
-
-//            $ucdata['company_name'] = Input::get('company_name');
-//            $ucdata['company_address'] = Input::get('company_address');
-//            $ucdata['company_address2'] = Input::get('company_address2');
-            //$ucdata['company_phone'] = Input::get('company_phone');
-            //$ucdata['company_website'] = Input::get('company_website');
-            //$ucdata['company_tax_number'] = Input::get('company_tax_no');
-            if (Input::get('accept_terms')) {
-//                $ucdata['accept_terms'] = Input::get('accept_terms');
-            }
-
-            \DB::table('tb_user_company_details')->insert($ucdata);
-
-            /* $umdata['user_id'] = $authen->id;
-              $umdata['membership_id'] = $request->input('membership_plan');
-              $umdata['created'] = date('Y-m-d h:i:s');
-              $umId = \DB::table('tb_users_membership')->insertGetId($umdata); */
-
-            //return Redirect::to('choose/'.$umId);
-
-            $response = array('status' => 'success', 'message' => 'Registered successfully');
             
-//            return Redirect::to('customer/login')->with('message', \SiteHelpers::alert('success', 'Registered successfully.'));
+            if($request->input('user_type') == '3'):
+                $authen->new_user = '1';
+            endif;
+            if($request->input('user_type') == '3'){
+                $referral_code = trim($request->input('referral_code'));
+                $ref_code = true;
+                $inv_id = '';
+                $today = date('Y-m-d');
+                $invitee = \DB::table('tb_invitee')->where('email', $authen->email)->where('status', 0)->where('expired_on', '>', $today)->get();
+                
+                if(count($invitee)>0){
+                    foreach($invitee as $invite){                        
+                        if($invite->referral_code==$referral_code){
+                            $inv_id = $invite->id;
+                            $inv_uid = $invite->user_id;
+                            $ref_code = false;
+                        }
+                    }
+                    if($ref_code){
+                        $response = array('status' => 'error', 'message' => 'Refferal Code not matched', 'gid' => $authen->group_id, 'errors'=>true);
+                    }else{
+                        
+                        
+                        
+                        $authen->active = '1';
+                        $authen->save();
+            
+                        $ucdata['user_id'] = $authen->id;
+                        $userId = $authen->id;
+                        
+                        \Auth::loginUsingId($userId);
+                        \DB::table('tb_users')->where('id', '=', $userId)->update(array('last_login' => date("Y-m-d H:i:s")));
+                        \Session::put('uid', $userId);
+                        \Session::put('gid', $authen->group_id);
+                        \Session::put('eid', $authen->email);
+                        \Session::put('ll', date("Y-m-d H:i:s"));
+            
+                        \DB::table('tb_user_company_details')->insert($ucdata);
+                        
+                        $disdata['user_id']=$inv_uid;
+                        $disdata['invitee_id']=$inv_id;
+                        $disdata['availability']= 1;
+                        
+                        \DB::table('tb_user_invitee_discount')->insert($disdata);
+            
+                        $response = array('status' => 'success', 'message' => 'Registered successfully', 'gid' => $authen->group_id);
+                    }
+                }else{
+                    $response = array('status' => 'error', 'message' => 'Please connect with your referrer to resend your invitation or write us an email on <a href="mailto:marketing@emporium-voyage.com">marketing@emporium-voyage.com', 'gid' => $authen->group_id, 'errors'=>true);
+                }
+            }else{
+                
+                    $authen->active = '1';
+                    $authen->save();
+        
+                    $ucdata['user_id'] = $authen->id;
+                    $userId = $authen->id;
+                    //\Session::set("uid",$authen->id);
+                    
+                    \Auth::loginUsingId($userId);
+                    \DB::table('tb_users')->where('id', '=', $userId)->update(array('last_login' => date("Y-m-d H:i:s")));
+                    \Session::put('uid', $userId);
+                    \Session::put('gid', $authen->group_id);
+                    \Session::put('eid', $authen->email);
+                    \Session::put('ll', date("Y-m-d H:i:s"));   
+    
+        //            $ucdata['company_name'] = Input::get('company_name');
+        //            $ucdata['company_address'] = Input::get('company_address');
+        //            $ucdata['company_address2'] = Input::get('company_address2');
+                    //$ucdata['company_phone'] = Input::get('company_phone');
+                    //$ucdata['company_website'] = Input::get('company_website');
+                    //$ucdata['company_tax_number'] = Input::get('company_tax_no');
+                    if (Input::get('accept_terms')) {
+        //                $ucdata['accept_terms'] = Input::get('accept_terms');
+                    }
+        
+                    \DB::table('tb_user_company_details')->insert($ucdata);
+        
+                    /* $umdata['user_id'] = $authen->id;
+                      $umdata['membership_id'] = $request->input('membership_plan');
+                      $umdata['created'] = date('Y-m-d h:i:s');
+                      $umId = \DB::table('tb_users_membership')->insertGetId($umdata); */
+        
+                    //return Redirect::to('choose/'.$umId);
+        
+                    $response = array('status' => 'success', 'message' => 'Registered successfully', 'gid' => $authen->group_id);
+                    
+        //            return Redirect::to('customer/login')->with('message', \SiteHelpers::alert('success', 'Registered successfully.'));
+            }
         } else {
             $response = array('status' => 'error', 'message' => 'The following errors occurred', 'errors' => $validator->errors()->all());
 //            return Redirect::to('customer/register/' . $request->input('membership_plan'))->with('message', \SiteHelpers::alert('error', 'The following errors occurred')
@@ -545,20 +611,30 @@ class CustomerController extends Controller {
                         if (!is_null($request->input('language'))) {
                             \Session::put('lang', $request->input('language'));
                         } else {
-                            \Session::put('lang', 'Deutsch');
+                            \Session::put('lang', 'en');
                         }
                         if (CNF_FRONT == 'false') :
                             $response = array('status' => 'success', 'message' => 'Logged in successfully', 'errors' => array());
                         else :
+                            
                             $getusercompany = \DB::table('tb_user_company_details')->where('user_id', $row->id)->first();
                             if (!empty($getusercompany)) {
-                                $response = array('status' => 'success', 'message' => 'Logged in successfully', 'errors' => array());
+                                if($row->group_id == 3){
+                                    $response = array('status' => 'success', 'message' => 'Please complete your profile', 'errors' => array(), 'gid'=>$row->group_id, 'new_user'=>$row->new_user);                             
+                                }else{
+                                    $response = array('status' => 'success', 'message' => 'Logged in successfully', 'errors' => array(), 'gid'=>$row->group_id);
+                                }                                
                             } else {
+                                
                                 if($row->group_id == 4) {
-                                    $response = array('status' => 'success', 'message' => 'Please complete your profile and company details', 'errors' => array());
+                                    $response = array('status' => 'success', 'message' => 'Please complete your profile and company details', 'errors' => array(),'gid'=>$row->group_id);
+                                }elseif($row->group_id == 3){
+                                    $response = array('status' => 'success', 'message' => 'Please complete your profile', 'errors' => array(), 'gid'=>$row->group_id, 'new_user'=>$row->new_user);
+                                }else{
+                                    $response = array('status' => 'success', 'message' => 'Please complete your profile and company details', 'errors' => array(),'gid'=>$row->group_id );
                                 }
-                                $response = array('status' => 'success', 'message' => 'Please complete your profile and company details', 'errors' => array());
                             }
+
 
                         endif;
                     }
@@ -718,14 +794,14 @@ class CustomerController extends Controller {
 
 
                 $affectedRows = User::where('email', '=', $user->email)
-                        ->update(array('reminder' => $request->input('_token')));
+                        ->update(array('reminder' => $token));
 
-                return Redirect::to('customer/login')->with('message', \SiteHelpers::alert('success', 'Please check your email'));
+                return Redirect::to('user/login')->with('message', \SiteHelpers::alert('success', 'Please check your email'));
             } else {
-                return Redirect::to('customer/login')->with('message', \SiteHelpers::alert('error', 'Cant find email address'));
+                return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Cant find email address'));
             }
         } else {
-            return Redirect::to('customer/login')->with('message', \SiteHelpers::alert('error', 'The following errors occurred')
+            return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'The following errors occurred')
                     )->withErrors($validator)->withInput();
         }
     }
@@ -994,7 +1070,65 @@ return Redirect::to('customer/profile')->with('message', \SiteHelpers::alert('er
         }
     }
 
+    public function traveller(){
+        $user = User::find(\Session::get('uid'));
+        $this->data["guestUserData"]=$user;
+        $this->data['pageTitle'] = "Whoiam User Membership Type Selection";
+        $this->data['pageMetakey'] = "Whoiam User Membership";
+        $this->data['pageMetadesc'] = "Whoiam User Membership";
+        $contractObject =new Contract();
+        
+        $u_id = \Session::get('uid');  
+        $this->data['logged_user'] = \DB::table('tb_users')->where('id', $u_id)->first();
+        
+        $params = array(
+            
+        );
+        $resultContract= $contractObject->getRows($params); 
+        
+        $temp = $this->get_destinations_new();
+        
+        //print_r($temp);
+        
+        $this->data['destinations'] = $temp;
+        $this->data['inspirations'] = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 627)->get();
+        $this->data['experiences'] = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 8)->get();
+        
+        $extra = \DB::table('tb_properties')->where('user_id', $user->id)->first();
+        $this->data['extra'] = $extra;
+        //print_r($extra); die;
+        $this->data['user'] = $user;
+        //$this->data['contractdata']=$resultContract["rows"];
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));
+        
+        $t_f = 'whoiam';
+        if(isset($extra->approved)){ if(!((bool) $extra->approved)){ $t_f = 'approval_pending'; }}
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.customer.'.$t_f:'customer.whoiam';      
+        return view($file_name, $this->data);
+    }
+    
+    public function get_destinations_new($parent = 0, $spacing = '', $folder_tree_array = '') {
 
+        if (!is_array($folder_tree_array))
+		  $folder_tree_array = array();          
+		
+		  $filter = " AND parent_category_id='".$parent."'";
+		  $params = array(
+			'params'	=> $filter,
+			'order'		=> 'asc'
+		  );
+		  // Get Query 
+    	  $results = \DB::table('tb_categories')->where('parent_category_id', $parent)->where('id', '!=', 8)->get();
+          //print_r($results); die;
+          if ($results) {
+    		foreach($results as $row) {
+    		  $folder_tree_array[] = array("id" => $row->id, "name" => $spacing . $row->category_name);
+    		  $folder_tree_array = $this->get_destinations_new($row->id, $spacing . '', $folder_tree_array);
+    		}
+    	  }          
+    	  return $folder_tree_array;
+    }
+    
 
     public function whoIam() {
 
@@ -1009,9 +1143,17 @@ return Redirect::to('customer/profile')->with('message', \SiteHelpers::alert('er
             
         );
         $resultContract= $contractObject->getRows($params); 
-       
+        
+        $extra = \DB::table('tb_properties')->where('user_id', $user->id)->first();
+        $this->data['extra'] = $extra;
+        //print_r($extra); die;
+        $this->data['user'] = $user;
         $this->data['contractdata']=$resultContract["rows"];
-       return view('customer.whoiam', $this->data);
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));
+        $t_f = 'whoiam';
+        if(isset($extra->approved)){ if(!((bool) $extra->approved)){ $t_f = 'approval_pending'; }}
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.customer.'.$t_f:'customer.whoiam';      
+        return view($file_name, $this->data);
     }
         
 
@@ -1599,6 +1741,17 @@ $html .= '</div>';
         
     }
 
- /* End function by Ram to generate PDF*/      
+ /* End function by Ram to generate PDF*/
+ 
+    public function skipPreferences(Request $request){
+        $_user = User::find(\Session::get('uid'));
+        $_user->form_wizard = $request->input('form_wizard');
+        $_user->new_user = 0;
+        $_user->save();
+        $return_array['status'] = 'success';
+        $return_array['message'] = 'Successfully completed wizard!';
+        echo json_encode($return_array);
+        exit;
+    }   
 
 }

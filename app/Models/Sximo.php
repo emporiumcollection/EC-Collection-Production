@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sximo extends Model {
 
 
-	public static function getRows( $args )
+	public static function getRows( $args, $bypass=0 )
 	{
        $table = with(new static)->table;
 	   $key = with(new static)->primaryKey;
@@ -25,7 +25,7 @@ class Sximo extends Model {
 
 		// Update permission global / own access new ver 1.1
 		$table = with(new static)->table;
-		if($global == 0 )
+		if(($global == 0) && ($bypass == 0) )
 				$params .= " AND {$table}.entry_by ='".\Session::get('uid')."'"; 	
 		// End Update permission global / own access new ver 1.1			
         
@@ -126,8 +126,20 @@ class Sximo extends Model {
             $condition = $limit[0]." `".$limit[1]."` ".$limit[2]." ".$limit[3]." "; 
             if(count($parent)>=2 )
             {
-            	$row =  \DB::table($table)->where($parent[0],$parent[1])->get();
-            	 $row =  \DB::select( "SELECT * FROM ".$table." ".$condition ." AND ".$parent[0]." = '".$parent[1]."'");
+                $condition_param = ((isset($parent[2]))?trim($parent[2]):'where');                
+                switch($condition_param){
+                    case 'in':
+                        $valarr = explode(',',$parent[1]);
+                        $row =  \DB::table($table)->whereIn($parent[0],$valarr)->get();
+                    break; 
+                    
+                    case 'where':
+                    default:
+                         $row =  \DB::table($table)->where($parent[0],$parent[1])->get();
+              	         //$row =  \DB::select( "SELECT * FROM ".$table." ".$condition ." AND ".$parent[0]." = '".$parent[1]."'");
+                    break;
+                }
+                    	
             } else  {
 	           $row =  \DB::select( "SELECT * FROM ".$table." ".$condition);
             }        
@@ -136,7 +148,19 @@ class Sximo extends Model {
             $table = $params[0]; 
             if(count($parent)>=2 )
             {
-            	$row =  \DB::table($table)->where($parent[0],$parent[1])->get();
+                $condition_param = ((isset($parent[2]))?trim($parent[2]):'where');
+                switch($condition_param){
+                    case 'in':
+                        $valarr = explode(',',$parent[1]);
+                        $row =  \DB::table($table)->whereIn($parent[0],$valarr)->get();
+                    break; 
+                    
+                    case 'where':
+                    default:
+                         $row =  \DB::table($table)->where($parent[0],$parent[1])->get();
+                    break;
+                }
+            	
             } else  {
 	            $row =  \DB::table($table)->get();
             }	           

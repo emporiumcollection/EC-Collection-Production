@@ -182,14 +182,43 @@ class HotelMembershipController extends Controller {
         }
         
     }
-
+    
+    
+    
     /*
      * For Hotel Choose Package Page
     */
     public function hotelPackage(Request $request) {
-        $this->data['packages'] = \DB::table('tb_packages')->where('package_status', 1)->get();
+        $group_id = \Session::get('gid');
+        $this->data['packages'] = \DB::table('tb_packages')->where('allow_user_groups', $group_id)->where('package_status', 1)->get();
+        $packages_ids = array();
+        foreach($this->data['packages'] as $si_package){
+            $packages_ids[] = $si_package->id;
+        }        
         $this->data['moduleDetails'] = \DB::table('tb_module')->get();
-        return view('frontend.hotel_membership.hotel_package', $this->data);
+        
+        //get contract during signup
+        $this->data['userContracts'] = array();
+        $this->data['common_contracts'] = array();
+        $this->data['package_contracts'] = array();
+        if(count($packages_ids) > 0){
+            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description')->where('tb_users_contracts.contract_type','packages')->orderBy('tb_users_contracts.contract_id','DESC')->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->get();
+            $resetContracts = array();
+            foreach($usersContracts as $si_contract){
+                $resetContracts[$si_contract->contract_id] = $si_contract;
+            }
+            $this->data['userContracts'] = $resetContracts;
+            $contracts = \CommonHelper::get_default_contracts('packages','default',0,$packages_ids);
+            $this->data['common_contracts'] = $contracts['common'];
+            $this->data['package_contracts'] = $contracts['packages_wise'];
+        }            
+        //End
+        //echo "<pre>"; print_r($this->data['common_contracts']);print_r($this->data['package_contracts']);die;
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.frontend.hotel_membership.hotel_package':'frontend.hotel_membership.hotel_package';      
+        
+        return view($file_name, $this->data);
+        //return view('frontend.hotel_membership.hotel_package', $this->data);
     }
 
     /*
@@ -231,6 +260,14 @@ class HotelMembershipController extends Controller {
      * For Hotel Cart Page
     */
     public function hotelCart(Request $request) {
+        
+        $group_id = \Session::get('gid');
+        $this->data['packages'] = \DB::table('tb_packages')->where('allow_user_groups', $group_id)->where('package_status', 1)->get();
+        $packages_ids = array();
+        foreach($this->data['packages'] as $si_package){
+            $packages_ids[] = $si_package->id;
+        }  
+        
         $hotelPkgID = array(0);
         $advertPkgID = '';
 
@@ -257,13 +294,36 @@ class HotelMembershipController extends Controller {
 		}
 		$this->data['adspackages'] = $adsdataPackage;
 		
-        return view('frontend.hotel_membership.hotel_cart', $this->data);
+        if(count($packages_ids) > 0){
+            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description')->where('tb_users_contracts.contract_type','packages')->orderBy('tb_users_contracts.contract_id','DESC')->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->get();
+            $resetContracts = array();
+            foreach($usersContracts as $si_contract){
+                $resetContracts[$si_contract->contract_id] = $si_contract;
+            }
+            $this->data['userContracts'] = $resetContracts;
+            $contracts = \CommonHelper::get_default_contracts('packages','default',0,$packages_ids);
+            $this->data['common_contracts'] = $contracts['common'];
+            $this->data['package_contracts'] = $contracts['packages_wise'];
+        }
+        
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.frontend.hotel_membership.hotel_cart':'frontend.hotel_membership.hotel_cart';
+        
+        return view($file_name, $this->data);
+        //return view('frontend.hotel_membership.hotel_cart', $this->data);
     }
 
     /*
      * For Checkout Page
     */
     public function hotelCheckout(Request $request) {
+        
+        $group_id = \Session::get('gid');
+        $this->data['packages'] = \DB::table('tb_packages')->where('allow_user_groups', $group_id)->where('package_status', 1)->get();
+        $packages_ids = array();
+        foreach($this->data['packages'] as $si_package){
+            $packages_ids[] = $si_package->id;
+        }
 
 		$hotelPkgID = array(0);
 		$advertPkgID = '';
@@ -293,7 +353,23 @@ class HotelMembershipController extends Controller {
 		}
 		$this->data['adspackages'] = $adsdataPackage;
         $this->data['pageslider']="";
-        return view('frontend.hotel_membership.hotel_checkout', $this->data);
+        
+        if(count($packages_ids) > 0){
+            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description')->where('tb_users_contracts.contract_type','packages')->orderBy('tb_users_contracts.contract_id','DESC')->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->get();
+            $resetContracts = array();
+            foreach($usersContracts as $si_contract){
+                $resetContracts[$si_contract->contract_id] = $si_contract;
+            }
+            $this->data['userContracts'] = $resetContracts;
+            $contracts = \CommonHelper::get_default_contracts('packages','default',0,$packages_ids);
+            $this->data['common_contracts'] = $contracts['common'];
+            $this->data['package_contracts'] = $contracts['packages_wise'];
+        }
+        
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.frontend.hotel_membership.hotel_checkout':'frontend.hotel_membership.hotel_checkout';
+        return view($file_name, $this->data);
+        //return view('frontend.hotel_membership.hotel_checkout', $this->data);
     }
 
     /*
@@ -336,6 +412,7 @@ class HotelMembershipController extends Controller {
     
     
     public function getThanks(Request $request) {
+        $uid = \Session::get('uid');
         $this->data['pageTitle'] = "Thanks Page";
         $this->data['pageMetakey'] = "Thanks Page";
         $this->data['pageMetadesc'] = "Thanks Page";
@@ -343,9 +420,16 @@ class HotelMembershipController extends Controller {
 
         $this->data['pageslider'] = \DB::table('tb_pages_sliders')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('slider_page_id', 107)->get();
         
+        $obj_user = \DB::table('tb_users')->where('id', $uid)->first();
+        $this->data['user'] = $obj_user;
+        
         $this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
-           
-        return view('frontend.hotel_membership.thanks', $this->data);
+        
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.frontend.hotel_membership.thanks':'frontend.hotel_membership.thanks';      
+        
+        return view($file_name, $this->data); 
+        //return view('frontend.hotel_membership.thanks', $this->data);
     }
 
 
@@ -370,6 +454,189 @@ class HotelMembershipController extends Controller {
         }
        return ("success");   
 
+    }
+    
+    /*
+     * For Saving Hotel Membership Signup into Database
+    */
+    public function hotelMembershipSignupSave(Request $request) {
+
+        $uid = \Session::get('uid');
+        $rules['hotelinfo_name'] = 'required';
+        $rules['hotelinfo_status'] = 'required';
+        $rules['hotelinfo_type'] = 'required';
+        $rules['hotelinfo_building'] = 'required';
+        $rules['hotelinfo_opening_date'] = 'required';
+        $rules['hotelinfo_address'] = 'required';
+        $rules['hotelinfo_city'] = 'required';
+        $rules['hotelinfo_country'] = 'required';
+        $rules['hotelinfo_postal'] = 'required';
+        $rules['hotelinfo_website'] = 'required';
+        $rules['hotelinfo_daysopen'] = 'required';
+        $rules['hotelfac_num_rooms'] = 'required';
+        $rules['hotelfac_num_suites'] = 'required';
+        $rules['hoteldesc_concept'] = 'required';
+        $rules['hotel_contactinfo_address'] = 'required';
+        $rules['hotel_contactinfo_city'] = 'required';
+        $rules['hotel_contactinfo_country'] = 'required';
+        $rules['hotel_contactinfo_postal'] = 'required';
+        $rules['hotel_contactprsn_firstname'] = 'required';
+        $rules['hotel_contactprsn_lastname'] = 'required';
+        $rules['hotel_contactprsn_companyname'] = 'required';
+        $rules['hotel_contactprsn_jobtitle'] = 'required';
+        //$rules['hotel_contactprsn_email'] = 'required|email|unique:tb_users';
+        $rules['hotel_contactprsn_phone'] = 'required';
+        //$rules['hotel_contactprsn_mobile'] = 'required';
+       // $rules['hotel_signup_type'] = 'required';
+        //$rules['hotel_contactprsn_username'] = 'required';
+        //$rules['hotel_contactprsn_password'] = 'required|confirmed';
+        //$rules['hotel_contactprsn_password_confirmation'] = 'required';
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->passes()) {
+            
+            $code = rand(10000, 10000000);
+            $authen =  User::find($uid);
+            $authen->first_name = $request->input('hotel_contactprsn_firstname');
+            $authen->last_name = $request->input('hotel_contactprsn_lastname');
+            //$authen->email = trim($request->input('hotel_contactprsn_email'));
+            //$authen->username = trim($request->input('hotel_contactprsn_username'));
+            $authen->landline_number = trim($request->input('hotel_contactprsn_phone'));
+            //$authen->mobile_number = trim($request->input('hotel_contactprsn_mobile'));
+            $authen->address = trim($request->input('hotel_contactinfo_address'));
+            $authen->city = trim($request->input('hotel_contactinfo_city'));
+            $authen->zip_code = trim($request->input('hotel_contactinfo_postal'));
+            $authen->country = trim($request->input('hotel_contactinfo_country'));
+            $authen->form_wizard = $request->input('form_wizard_2');
+            $authen->activation = $code;
+            //$authen->active = '0';
+            $authen->save();
+            
+            $data['property_name'] = $request->input('hotelinfo_name');
+            $data['property_short_name'] = $request->input('hotelinfo_name');
+            $alias = \SiteHelpers::seoUrl(Input::get('hotelinfo_name'));
+            $exha = false;
+            for ($f = 1; $exha != true; $f++) {
+                if ($request->input('id') == '') {
+                    $check_alias = \DB::table('tb_properties')->where('property_slug', $alias)->count();
+                } else {
+                    $check_alias = \DB::table('tb_properties')->where('property_slug', $alias)->where('id', '!=', $id)->count();
+                }
+                if ($check_alias > 0) {
+                    $alias = $alias . '-' . $f;
+                } else {
+                    $alias = $alias;
+                    $exha = true;
+                }
+            }
+            $hod_final ='';
+            $hod = $request->input('hotelinfo_opening_date');
+            if(strlen($hod)>0){
+                $hod_arr = explode('/', $hod);                
+                if(count($hod_arr)>1){
+                    $hod_final = $hod_arr[2]."-".$hod_arr[0]."-".$hod_arr[1];
+                }
+            }
+            //print_r($hod_final); die;
+            $data['user_id'] = $uid;
+            $data['property_slug'] = $alias;
+            $data['social_status'] = 1;
+            $data['property_type'] = 'Hotel';
+            $data['booking_type'] = 'Rent';
+            $data['created'] = date('Y-m-d h:i:s');
+            $data['hotelinfo_status'] = $request->input('hotelinfo_status');
+            $data['hotelinfo_type'] = $request->input('hotelinfo_type');
+            $data['hotelinfo_building'] = $request->input('hotelinfo_building');
+            $data['hotelinfo_opening_date'] = $hod_final;
+            $data['hotelinfo_address'] = $request->input('hotelinfo_address');
+            $data['city'] = $request->input('hotelinfo_city');
+            $data['country'] = $request->input('hotelinfo_country');
+            $data['hotelinfo_postal'] = $request->input('hotelinfo_postal');
+            $data['website'] = $request->input('hotelinfo_website');
+            $data['hotelinfo_daysopen'] = $request->input('hotelinfo_daysopen');
+            $data['hotelinfo_avg_daily_rate'] = $request->input('hotelinfo_avg_daily_rate');
+            $data['hotelinfo_avg_occupancy'] = $request->input('hotelinfo_avg_occupancy');
+            
+            $data['hotelfac_num_rooms'] = $request->input('hotelfac_num_rooms');
+            $data['hotelfac_num_suites'] = $request->input('hotelfac_num_suites');
+            if (!empty($request->input('hotelfac_fb_outlets'))) {
+                $data['hotelfac_fb_outlets'] = implode(',', $request->input('hotelfac_fb_outlets'));
+            } else {
+                $data['hotelfac_fb_outlets'] = '';
+            }
+            if (!empty($request->input('hotelfac_guest_fac'))) {
+                $data['hotelfac_guest_fac'] = implode(',', $request->input('hotelfac_guest_fac'));
+            } else {
+                $data['hotelfac_guest_fac'] = '';
+            }
+            $data['hotelfac_meeting_area'] = $request->input('hotelfac_meeting_area');
+            $data['hotelfac_meeting_fac'] = $request->input('hotelfac_meeting_fac');
+            $data['hotelfac_comments'] = $request->input('hotelfac_comments');
+            
+            $data['hoteldesc_concept'] = $request->input('hoteldesc_concept');
+            $data['architecture_desciription'] = $request->input('hoteldesc_architecture_design');
+            $data['architecture_title'] = $request->input('hoteldesc_architecture_name');
+            $data['architecture_design_desciription'] = $request->input('hoteldesc_architecture_design');
+            $data['architecture_design_title'] = $request->input('hoteldesc_architecture_name');
+            $data['architecture_design_url'] = $request->input('hoteldesc_architecture_website');
+            $data['architecture_designer_title'] = $request->input('hoteldesc_interior_designer_name');
+            $data['architecture_designer_url'] = $request->input('hoteldesc_interior_designer_website');
+            $data['hoteldesc_local_integration'] = $request->input('hoteldesc_local_integration');
+            $data['hoteldesc_brand'] = $request->input('hoteldesc_brand');
+            $data['hoteldesc_brand_agency_name'] = $request->input('hoteldesc_brand_agency_name');
+            $data['hoteldesc_brand_agency_website'] = $request->input('hoteldesc_brand_agency_website');
+            $data['hoteldesc_brand_linkdin_profile'] = $request->input('hoteldesc_brand_linkdin_profile');
+            $data['social_instagram'] = $request->input('hoteldesc_brand_instagram_profile');
+            
+            $data['hotel_contactinfo_name'] = $request->input('hotel_contactinfo_name');
+            $data['owner_address'] = $request->input('hotel_contactinfo_address');
+            $data['owner_city'] = $request->input('hotel_contactinfo_city');
+            $data['owner_country'] = $request->input('hotel_contactinfo_country');
+            $data['owner_postal_code'] = $request->input('hotel_contactinfo_postal');
+            
+            $data['owner_name'] = $request->input('hotel_contactprsn_firstname');
+            $data['owner_last_name'] = $request->input('hotel_contactprsn_lastname');
+            $data['hotel_contactprsn_companyname'] = $request->input('hotel_contactprsn_companyname');
+            $data['hotel_contactprsn_jobtitle'] = $request->input('hotel_contactprsn_jobtitle');
+            $data['owner_email_primary'] = $authen->email;
+            $data['owner_phone_primary'] = $request->input('hotel_contactprsn_phone');
+            $data['owner_phone_emergency'] = $authen->mobile_number;
+            
+            $data['approved'] = 0;
+            
+            if (!is_null($request->input('hotel_contactprsn_agree'))) {
+                $data['hotel_contactprsn_agree'] = $request->input('hotel_contactprsn_agree');
+            } else {
+                $data['hotel_contactprsn_agree'] = 0;
+            }
+            
+            $check_prop_user = \DB::table('tb_properties')->where('user_id', $uid)->get();
+            
+            if(!empty($check_prop_user)){
+                $propertyquery = \DB::table('tb_properties')->where('user_id', $uid)->update($data);
+            }else{            
+                $propertyquery = \DB::table('tb_properties')->insertGetId($data);
+            }
+            
+            $email_data = array();
+            \Mail::send('user.emails.invoice', $email_data, function($message){
+                $message->from(CNF_EMAIL, CNF_APPNAME);
+
+                $message->to('aman.01rad@gmail.com');
+
+                $message->subject('Testing Email');
+            });
+            
+            $res['status'] = 'success';
+            $res['message'] = 'Hotel information has been successfully submitted!';
+            return json_encode($res);
+        } else {
+
+            $res['status'] = 'error';
+            $res['errors'] = $validator->errors()->all();
+            $res['message'] = 'Hotel information not submitted errors occurred!';
+            return json_encode($res);
+        }
+        
     }
 
 }

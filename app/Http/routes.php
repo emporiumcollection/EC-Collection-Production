@@ -79,6 +79,9 @@ Route::get('generate/destination', 'GenerateController@destinationGenerate');
 Route::get('generate/hotel', 'GenerateController@hotelGenerate');
 Route::get('personalized-service', 'Frontend\PersonalizedServiceController@index');
 Route::post('personalized-service/save', 'Frontend\PersonalizedServiceController@save');
+
+Route::post('personalized-service/ajax_save', 'Frontend\PersonalizedServiceController@ajax_save');
+
 Route::post('personalized-service/update', 'Frontend\PersonalizedServiceController@update');
 Route::get('personalized-service/my-services', 'Frontend\PersonalizedServiceController@list_my_services');
 Route::get('personalized-service/edit/{ps_id}', 'Frontend\PersonalizedServiceController@edit');
@@ -90,8 +93,21 @@ Route::controller('home', 'HomeController');
 
 Route::controller('/user', 'UserController');
 Route::controller('/customer', 'CustomerController');
-Route::get('/whoiam', 'CustomerController@whoIam');  
+Route::get('/traveller', 'CustomerController@traveller'); 
+Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences');  
 
+Route::get('/whoiam', 'CustomerController@whoIam');
+  
+Route::post('/viewInvite', 'UserController@viewInvite');   
+Route::post('editinvite', 'UserController@editInvite'); 
+Route::post('deleteinvite', 'UserController@deleteInvite');
+
+Route::post('addcompanion', 'UserController@addCompanion'); 
+Route::post('/viewcompanion', 'UserController@viewCompanion');   
+Route::post('editcompanion', 'UserController@editCompanion'); 
+Route::post('deletecompanion', 'UserController@deleteCompanion');
+Route::post('changepassword', 'UserController@ajaxSavepassword');
+ 
 Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate'); 
 Route::post('customer_ajaxPostSignin', 'CustomerController@ajaxPostSignin'); 
 Route::post('customer_ajaxPostRequest', 'CustomerController@ajaxPostRequest'); 
@@ -255,6 +271,9 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('customfields_edit_tab_content/{fid}/{tab}', 'CustomfieldsController@CustomfieldsEditTabContent');
 	
 	Route::get('properties_settings/{pid}/{tab}', 'PropertiesController@show_settings');
+    
+    Route::post('ajax_properties_setting_rooms', 'PropertiesController@ajax_show_settings');
+    
 	Route::post('properties_settings/{pid}/{tab}', 'PropertiesController@show_settings');
 	Route::post('add_property_type', 'PropertiesController@save_property_type_data');
 	Route::post('delete_property_type', 'PropertiesController@delete_property_type');
@@ -273,6 +292,9 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('change_property_type', 'PropertiesController@change_property_type');
 	Route::post('enable_diable_propertystatus', 'PropertiesController@enable_diable_propertystatus');
 	Route::post('get_category_rooms_reservations', 'PropertiesController@get_category_rooms_reservations');
+    
+    Route::post('enable_diable_hotel_approval', 'PropertiesController@enable_diable_hotelApproval');
+    
 	Route::post('add_new_reservation', 'PropertiesController@add_new_reservation');
 	Route::post('add_new_booking', 'HomeController@new_booking');
 	
@@ -304,11 +326,20 @@ Route::group(['middleware' => 'auth'], function()
 	Route::get('restaurant_reservations/{id}', 'RestaurantController@restroReservations');
 	Route::get('bar_reservations/{id}', 'BarController@barReservations');
 	Route::get('spa_reservations/{id}', 'SpaController@spaReservations');
-
+    
+    Route::post('deleteUserAds', 'UserController@deleteUserAds');
+    Route::post('save_new_profile', 'UserController@saveNewprofile');
+    
+    Route::post('save_new_hotel_profile', 'UserController@saveNewHotelprofile');
+    
+    Route::post('save_new_traveller_profile', 'UserController@saveNewTravellerProfile');
+        
+    Route::post('save_new_company_details', 'UserController@saveNewcompanydetails');
+    Route::post('confirm_new_profile', 'UserController@confirmNewprofile');
 
 });	
 
-
+Route::post('hotel_membership', 'Frontend\HotelMembershipController@hotelMembershipSignupSave');
 
 Route::get('hotel/membership', 'Frontend\HotelMembershipController@membershipSignup');
 Route::post('hotel/membership', 'Frontend\HotelMembershipController@membershipSignupSave');
@@ -422,6 +453,7 @@ Route::get('getpropertytypedetail/{id}', 'Frontend\PropertyController@getPropert
 Route::post('filter_category_destionation', 'HomeController@getPropertyByCategoryDestination');
 //Route::get('choosepackage/{id}', 'HomeController@index');
 
+Route::get('download_contract/{lid}', 'ContractController@download_contract');
 
 Route::post('find_property_by_name', 'HomeController@find_property_by_name');
 Route::get('getRooms/{slug}', 'PropertiesDetailController@getRoomsAjax');
@@ -452,6 +484,11 @@ Route::post('payment', array(
 Route::post('adspayment', array(
 	'as' => 'adspayment',
 	'uses' => 'PaypalController@advertisementPayment',
+));
+
+Route::post('save_new_adspayment', array(
+	'as' => 'save_new_adspayment',
+	'uses' => 'PaypalController@saveNewadspayment',
 ));
 
 // this is after make the payment, PayPal redirect back to your site
@@ -490,4 +527,5 @@ Route::controller('restaurantfront/{id}', 'Frontend\RestaurantFrontController');
 Route::controller('luxury-travel/{slug}', 'Frontend\PresentationController');
 Route::get('getEventPackages/{eventID}', 'Frontend\RestaurantFrontController@getEventPackages');
 
-
+Route::get('traveller/bookings', 'BookingsController@travellerBookings');
+Route::get('traveller/bookings/show/{id}', 'BookingsController@showBooking');

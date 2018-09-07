@@ -2966,7 +2966,7 @@ class HomeController extends Controller {
                         $toouser['pathToFile'] = $patOFile;
                         $etemp = $request->input('emailTemplate');
                         \Mail::send('user.emails.' . $etemp, $data, function($message) use ($toouser) {
-                            $message->from('info@design-locations.biz', CNF_APPNAME);
+                            $message->from('marketing@emporium-voyage.com', CNF_APPNAME);
 
                             $message->to($toouser['email']);
 
@@ -3995,10 +3995,16 @@ class HomeController extends Controller {
           $this->data['yachts'] = $yachts; */
 
         $this->data['is_logged_in'] = 'false';
+        $discount_apply = '';
         if (\Auth::check()) {
             $this->data['is_logged_in'] = 'true';
+            
+            $discount_apply = \DB::table('tb_user_invitee_discount')->where('user_id', \Auth::user()->id)->where('availability', 1)->first();
+            
         }
-
+        //print_r($discount_apply);
+        
+        $this->data['discount_apply']=$discount_apply;
         $this->data['hotel_terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $props->id)->first();
 
         $this->data['propertyDetail'] = $propertiesArr;
@@ -4979,10 +4985,13 @@ class HomeController extends Controller {
         $rules['roomType'] = 'required';
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
-
+            
+            $discount_apply = '';
             if (\Auth::check()) {
                 $uid = \Auth::user()->id;
                 $userdet = \DB::table('tb_users')->where('id', $uid)->first();
+                
+                $discount_apply = \DB::table('tb_user_invitee_discount')->where('user_id', \Auth::user()->id)->where('availability', 1)->first();
             }
             $props = \DB::table('tb_properties')->where('id', $request->input('property'))->first();
             $curnDate = date('Y-m-d');
@@ -5045,7 +5054,12 @@ class HomeController extends Controller {
             $data['price_mode'] = 'daily';
             $data['created_by'] = $uid;
             $data['created_date'] = date('Y-m-d h:i:s');
-
+            
+            if($discount_apply!=''){
+                $discount = ($price*10/100);
+                $data['discount'] = $discount;
+            }
+            
             $resid = \DB::table('tb_reservations')->insertGetId($data);
 
             /*
@@ -5166,7 +5180,7 @@ class HomeController extends Controller {
             $userData['landline_number'] = $request->input('landline_number');
             $userData['mobile_code'] = $request->input('mobile_code');
             $userData['mobile_number'] = $request->input('mobile_number');
-            $userData['email'] = $request->input('email');
+            //$userData['email'] = $request->input('email');
             $userData['prefer_communication_with'] = $request->input('prefer_communication_with');
 
             $userData['card_number'] = base64_encode($request->input('card_number'));
@@ -5208,12 +5222,20 @@ class HomeController extends Controller {
 
             $bookingEmail = base_path() . "/resources/views/user/emails/booking_notification.blade.php";
             $bookingEmailTemplate = file_get_contents($bookingEmail);
+            
+            $reservation_price = $reservation->price;
+             if($discount_apply!=''){
+                $discount_price = ($reservation->price*10/100);
+                $org_price = $reservation->price - $discount_price;
+                $reservation_price = $org_price;
+            }
 
             $bookingEmailTemplate = str_replace('{reservation_id}', 'DL-' . date('d.m.y') . '-' . $reservation->id, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{checkin_date}', date('M d, Y', strtotime($reservation->checkin_date)), $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{checkout_date}', date('M d, Y', strtotime($reservation->checkout_date)), $bookingEmailTemplate);
-            $bookingEmailTemplate = str_replace('{price}', '€' . $reservation->price, $bookingEmailTemplate);
-
+            //$bookingEmailTemplate = str_replace('{price}', '€' . $reservation->price, $bookingEmailTemplate);
+            $bookingEmailTemplate = str_replace('{price}', '€' . $reservation_price, $bookingEmailTemplate);
+            
             $bookingEmailTemplate = str_replace('{already_stayed}', $preferences->already_stayed, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{family_name}', trim($preferences->first_name . ' ' . $preferences->last_name), $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{relationship}', $preferences->relationship, $bookingEmailTemplate);
@@ -5540,7 +5562,7 @@ class HomeController extends Controller {
             $total_price = 0;
             $html = '';
             foreach ($reserved_rooms as $reserved_room) {
-                $total_price += ($reservation->number_of_nights * $reservation->price);
+                $total_price += ($reservation->number_of_nights * $reservation_price);
                 $html .= '<tr>
                             <th width="209" class="stack2" style="margin: 0;padding: 0;border-collapse: collapse;">
                                 <table width="209" align="center" cellpadding="0" cellspacing="0" border="0" class="table60032" style="border-bottom-color: #C7AB84;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
@@ -5567,7 +5589,7 @@ class HomeController extends Controller {
                                     <tr>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                         <!-- PRICE -->
-                                        <td class="RegularText5TD" style="border-collapse: collapse;" mc:edit="mcsec-26">€' . $reservation->price . '</td>
+                                        <td class="RegularText5TD" style="border-collapse: collapse;" mc:edit="mcsec-26">€' . $reservation_price . '</td>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                     </tr>
                                     <tr>
@@ -5599,7 +5621,7 @@ class HomeController extends Controller {
                                     <tr>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                         <!-- TOTAL -->
-                                        <td class="RegularText5TD" style="border-collapse: collapse;" mc:edit="mcsec-28">€' . ($reservation->number_of_nights * $reservation->price) . '</td>
+                                        <td class="RegularText5TD" style="border-collapse: collapse;" mc:edit="mcsec-28">€' . ($reservation->number_of_nights * $reservation_price) . '</td>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                     </tr>
                                     <tr>
@@ -5620,19 +5642,38 @@ class HomeController extends Controller {
             $bookingEmailTemplate = str_replace('{hotel_terms_n_conditions}', $hotel_terms_n_conditions, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{property_email}', $property->email, $bookingEmailTemplate);
 
-            $headers = "MIME-Version: 1.0" . "\r\n";
+            /*$headers = "MIME-Version: 1.0" . "\r\n";
             $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-            $headers .= 'From: ' . CNF_APPNAME . '<info@design-locations.biz>' . "\r\n";
+            $headers .= 'From: ' . CNF_APPNAME . '<marketing@emporium-voyage.com>' . "\r\n";
 
             mail($property->email, "Booking Confirmation", $bookingEmailTemplate, $headers);
-            mail($user_info->email, "Booking Confirmation", $bookingEmailTemplate, $headers);
-
+            mail($user_info->email, "Booking Confirmation", $bookingEmailTemplate, $headers);*/
+            
+            $tempe = 'blank';
+            $emailArr['msg'] = $bookingEmailTemplate;
+            
+            $toouser['email'] = $property->email;
+			$toouser['subject'] = "Booking Confirmation";	
+            		
+            \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser) {
+              $message->to($toouser['email'])
+                ->subject($toouser['subject'])
+                ->from('marketing@emporium-voyage.com', CNF_APPNAME);
+            });
+            $toouser1['email'] = $user_info->email;
+			$toouser1['subject'] = "Booking Confirmation";	
+            \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser1) {
+              $message->to($toouser['email'])
+                ->subject($toouser['subject'])
+                ->from('marketing@emporium-voyage.com', CNF_APPNAME);
+            });
+            
             /*             * ******************* Email notification end here **************************** */
 
             /*
              * Log in user
              */
-
+            
             if (!\Auth::check()) {
 
                 $temp = \Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')), 'false');
@@ -5650,6 +5691,10 @@ class HomeController extends Controller {
                         \Session::put('fid', $row->first_name . ' ' . $row->last_name);
                         \Session::put('lang', 'Deutsch');
                     }
+                }
+            }else{
+                if($discount_apply!=''){  
+                    \DB::table('tb_user_invitee_discount')->where('id', $discount_apply->id)->update(array('availability' => 0));
                 }
             }
 

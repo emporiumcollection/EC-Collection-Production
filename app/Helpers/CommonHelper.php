@@ -1,8 +1,498 @@
 <?php
 namespace App\Helpers;
 use Session, DB ;
+
 class CommonHelper
 {
+    static function submit_contracts($all_contracts_data,$type,$oid=0,$cType=""){
+        $contracts = $all_contracts_data;
+        
+        if(count($contracts) > 0){
+            
+            switch($type){
+                case 'sign-up' :
+                    \CommonHelper::submit_sign_up_contract($contracts);
+                break;
+                
+                case 'packages' :
+                    \CommonHelper::submit_packages_contract($contracts,$oid);
+                break;
+                
+                case 'commission' :
+                    \CommonHelper::submit_commission_contract($contracts,$oid,$cType);
+                break;
+                
+                case 'hotels' :
+                    \CommonHelper::submit_hotel_contract($contracts,$oid);
+                break;
+            }
+        }
+    }
+    
+    static function submit_hotel_contract($contracts,$oid){
+        if(\Auth::check()){
+            $uid = \Auth::user()->id;
+            $contractsAccepted = array();
+            
+            //insert contracts
+            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id')->where('tb_users_contracts.contract_type','hotels')->where('tb_users_contracts.hotel_id',$oid)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
+            $resetuserContract = array();
+            foreach($usersContracts as $si_usersContract){
+                $resetuserContract[$si_usersContract->contract_id] = $si_usersContract->id;                
+            }
+            
+            foreach($contracts as $si_contract){
+                if(!isset($resetuserContract[$si_contract->contract_id])){
+                    $temparray = array();
+                    $temparray['contract_id'] = $si_contract->contract_id;
+                    $temparray['hotel_id'] = $oid;
+                    $temparray['title'] = $si_contract->title;
+                    $temparray['description'] = $si_contract->description;
+                    $temparray['contract_type'] = $si_contract->contract_type;
+                    $temparray['package_ids'] = $si_contract->package_ids;
+                    $temparray['hotel_ids'] = $si_contract->hotel_ids;
+                    $temparray['event_ids'] = $si_contract->event_ids;
+                    $temparray['user_group_ids'] = $si_contract->user_group_ids;
+                    $temparray['user_ids'] = $si_contract->user_ids;
+                    $temparray['status'] = 1;
+                    $temparray['accepted_by'] = $uid;
+                    $temparray['created_by'] = $uid;
+                    $temparray['created_on'] = date('Y-m-d H:i:s');
+                    
+                    $contractsAccepted[] = $temparray;
+                }
+            }
+            
+            if(count($contractsAccepted) > 0){ \DB::table('tb_users_contracts')->insert($contractsAccepted); }
+            //End
+        }
+    }
+    
+    static function submit_packages_contract($contracts,$packgids){
+        if(\Auth::check()){
+            $uid = \Auth::user()->id;
+            $contractsAccepted = array();
+            
+            //insert contracts
+            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id')->where('tb_users_contracts.contract_type','packages')->whereIn('tb_users_contracts.package_id',$packgids)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
+            $resetuserContract = array();
+            foreach($usersContracts as $si_usersContract){
+                $resetuserContract[$si_usersContract->contract_id] = $si_usersContract->id;                
+            }
+            
+            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id')->where('tb_users_contracts.contract_type','packages')->whereNull('tb_users_contracts.package_id')->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
+            foreach($usersContracts as $si_usersContract){
+                $resetuserContract[$si_usersContract->contract_id] = $si_usersContract->id;                
+            }
+            
+            foreach($contracts as $si_contract){
+                if(!isset($resetuserContract[$si_contract->contract_id])){
+                    $temparray = array();
+                    $temparray['contract_id'] = $si_contract->contract_id;
+                    $temparray['order_id'] = $si_contract->order_id;
+                    if(isset($si_contract->package_id)){ $temparray['package_id'] = $si_contract->package_id; }
+                    $temparray['title'] = $si_contract->title;
+                    $temparray['description'] = $si_contract->description;
+                    $temparray['contract_type'] = $si_contract->contract_type;
+                    $temparray['package_ids'] = $si_contract->package_ids;
+                    $temparray['hotel_ids'] = $si_contract->hotel_ids;
+                    $temparray['event_ids'] = $si_contract->event_ids;
+                    $temparray['user_group_ids'] = $si_contract->user_group_ids;
+                    $temparray['user_ids'] = $si_contract->user_ids;
+                    $temparray['status'] = 1;
+                    $temparray['accepted_by'] = $uid;
+                    $temparray['created_by'] = $uid;
+                    $temparray['created_on'] = date('Y-m-d H:i:s');
+                    
+                    \DB::table('tb_users_contracts')->insert($temparray);
+                    //$contractsAccepted[] = $temparray;
+                }
+            }
+            
+            //if(count($contractsAccepted) > 0){ \DB::table('tb_users_contracts')->insert($contractsAccepted); }die;
+        }
+    }
+    
+    static function submit_commission_contract($contracts,$oid,$cType){
+        if(\Auth::check()){
+            $uid = \Auth::user()->id;
+            $contractsAccepted = array();
+            
+            //insert contracts
+            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id')->where('tb_users_contracts.contract_type','commission')->where('tb_users_contracts.hotel_id',$oid)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
+            $resetuserContract = array();
+            foreach($usersContracts as $si_usersContract){
+                $resetuserContract[$si_usersContract->contract_id] = $si_usersContract->id;                
+            }
+            
+            foreach($contracts as $si_contract){
+                if(!isset($resetuserContract[$si_contract->contract_id])){
+                    $temparray = array();
+                    $temparray['contract_id'] = $si_contract->contract_id;
+                    $temparray['hotel_id'] = $oid;
+                    $temparray['title'] = $si_contract->title;
+                    $temparray['description'] = $si_contract->description;
+                    $temparray['contract_type'] = $si_contract->contract_type;
+                    $temparray['package_ids'] = $si_contract->package_ids;
+                    $temparray['hotel_ids'] = $si_contract->hotel_ids;
+                    $temparray['event_ids'] = $si_contract->event_ids;
+                    $temparray['user_group_ids'] = $si_contract->user_group_ids;
+                    $temparray['user_ids'] = $si_contract->user_ids;
+                    $temparray['full_availability_commission'] = $si_contract->full_availability_commission;
+                    $temparray['partial_availability_commission'] = $si_contract->partial_availability_commission;
+                    $temparray['is_commission_set'] = 1;
+                    $temparray['commission_type'] = $cType;
+                    $temparray['status'] = 1;
+                    $temparray['accepted_by'] = $uid;
+                    $temparray['created_by'] = $uid;
+                    $temparray['created_on'] = date('Y-m-d H:i:s');
+                    
+                    $contractsAccepted[] = $temparray;
+                }
+            }
+            
+            if(count($contractsAccepted) > 0){ \DB::table('tb_users_contracts')->insert($contractsAccepted); }
+            //End
+        }
+    }
+    
+    static function submit_sign_up_contract($contracts){
+        if(\Auth::check()){
+            $uid = \Auth::user()->id;
+            $contractsAccepted = array();
+            
+            //insert contracts
+            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id')->where('tb_users_contracts.contract_type','sign-up')->orderBy('tb_users_contracts.contract_id','DESC')->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->get();
+            $resetuserContract = array();
+            foreach($usersContracts as $si_usersContract){
+                $resetuserContract[$si_usersContract->contract_id] = $si_usersContract->id;                
+            }
+            
+            foreach($contracts as $si_contract){
+                if(!isset($resetuserContract[$si_contract->contract_id])){
+                    $temparray = array();
+                    $temparray['contract_id'] = $si_contract->contract_id;
+                    $temparray['title'] = $si_contract->title;
+                    $temparray['description'] = $si_contract->description;
+                    $temparray['contract_type'] = $si_contract->contract_type;
+                    $temparray['package_ids'] = $si_contract->package_ids;
+                    $temparray['hotel_ids'] = $si_contract->hotel_ids;
+                    $temparray['event_ids'] = $si_contract->event_ids;
+                    $temparray['user_group_ids'] = $si_contract->user_group_ids;
+                    $temparray['user_ids'] = $si_contract->user_ids;
+                    $temparray['status'] = 1;
+                    $temparray['accepted_by'] = $uid;
+                    $temparray['created_by'] = $uid;
+                    $temparray['created_on'] = date('Y-m-d H:i:s');
+                    
+                    $contractsAccepted[] = $temparray;
+                }
+            }
+            
+            if(count($contractsAccepted) > 0){ \DB::table('tb_users_contracts')->insert($contractsAccepted); }
+            //End
+        }
+    }
+    
+    static function get_default_contracts($type="all",$fields="default",$gid=0,$ids=array()){
+        $gid = (int) $gid;
+        /*$package_id = (int) $package_id;
+        $package_id = (($package_id > 0)?$package_id:0); 
+        $hotel_id = (int) $hotel_id;
+        $hotel_id = (($hotel_id > 0)?$hotel_id:0); 
+        $event_id = (int) $event_id;
+        $event_id = (($event_id > 0)?$event_id:0); */
+        $type = strtolower(trim($type));
+        $type = str_replace(' ','-',$type);
+        
+        $uid = 0;
+        $groupId = (($gid > 0)?$gid:0);        
+        if(\Auth::check()){
+            $uid = \Auth::user()->id;
+            $groupId = \Auth::user()->group_id;            
+        }
+        
+        $fdata = array();
+        $is_default = false;
+        if($fields == 'default'){ $is_default = true; $fields = array('tb_contracts.contract_id','tb_contracts.title','tb_contracts.description','tb_contracts.contract_type');}
+        
+        switch($type){
+            case 'general':
+                
+            break;
+            
+            case 'sign-up':                
+                //get specific group wise contracts
+                $rdata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type);
+                if($groupId > 0){ $rdata = $rdata->join('tb_contracts_user_groups_ref','tb_contracts.contract_id','=','tb_contracts_user_groups_ref.contract_id')->where('tb_contracts_user_groups_ref.group_id',$groupId); }else{ $rdata->where('tb_contracts.user_group_ids','all'); }
+                $rdata = $rdata->orderBy('tb_contracts.contract_id','DESC')->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->get();                
+                foreach($rdata as $rval){
+                    $fdata[$rval->contract_id] = $rval;
+                }
+                //End
+                
+                //get common contracts
+                $adata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)->where('tb_contracts.user_group_ids','all')->orderBy('tb_contracts.contract_id','DESC')->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->get();
+                foreach($adata as $aval){
+                    $fdata[$aval->contract_id] = $aval;
+                }
+                //End
+            break;
+            
+            case 'packages':
+                $tdata = array();
+                if($is_default === true){ $fields[] = 'tb_contracts.package_ids';}
+                //get specific group wise contracts
+                if(count($ids) > 0){
+                    $rdata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                ->join('tb_contracts_packages_ref','tb_contracts.contract_id','=','tb_contracts_packages_ref.contract_id')->whereIn('tb_contracts_packages_ref.package_id',$ids)
+                                ->where('tb_contracts.user_group_ids','all')->where('tb_contracts.user_ids','all')
+                                ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();                
+                    foreach($rdata as $rval){
+                        $tdata[$rval->contract_id] = $rval;
+                    }
+                    
+                    if($groupId > 0){
+                        $gdata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                    ->join('tb_contracts_packages_ref','tb_contracts.contract_id','=','tb_contracts_packages_ref.contract_id')->whereIn('tb_contracts_packages_ref.package_id',$ids)
+                                    ->join('tb_contracts_user_groups_ref','tb_contracts.contract_id','=','tb_contracts_user_groups_ref.contract_id')->where('tb_contracts_user_groups_ref.group_id',$groupId)
+                                    ->where('tb_contracts.user_ids','all')
+                                    ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();                
+                        foreach($gdata as $rval){
+                            $tdata[$rval->contract_id] = $rval;
+                        }
+                    }
+                        
+                    
+                    if($uid > 0){
+                        $udata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                    ->join('tb_contracts_packages_ref','tb_contracts.contract_id','=','tb_contracts_packages_ref.contract_id')->whereIn('tb_contracts_packages_ref.package_id',$ids)
+                                    ->join('tb_contracts_users_ref','tb_contracts.contract_id','=','tb_contracts_users_ref.contract_id')->where('tb_contracts_users_ref.user_id',$uid)
+                                    ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();                
+                        foreach($udata as $rval){
+                            $tdata[$rval->contract_id] = $rval;
+                        }
+                    }                        
+                }                    
+                //End
+                
+                //get common contracts
+                $adata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)->where('tb_contracts.package_ids','all')->where('tb_contracts.user_group_ids','all')->where('tb_contracts.user_ids','all')->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->orderBy('tb_contracts.contract_id','DESC')->get();
+                foreach($adata as $aval){
+                    $tdata[$aval->contract_id] = $aval;
+                }
+                
+                if($groupId > 0){
+                    $gdata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                ->join('tb_contracts_user_groups_ref','tb_contracts.contract_id','=','tb_contracts_user_groups_ref.contract_id')->where('tb_contracts_user_groups_ref.group_id',$groupId)
+                                ->where('tb_contracts.package_ids','all')->where('tb_contracts.user_ids','all')
+                                ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();                
+                    foreach($gdata as $rval){
+                        $tdata[$rval->contract_id] = $rval;
+                    }
+                }
+                    
+                
+                if($uid > 0){
+                    $udata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                ->join('tb_contracts_users_ref','tb_contracts.contract_id','=','tb_contracts_users_ref.contract_id')->where('tb_contracts_users_ref.user_id',$uid)
+                                ->where('tb_contracts.package_ids','all')
+                                ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();                
+                    foreach($udata as $rval){
+                        $tdata[$rval->contract_id] = $rval;
+                    }
+                } 
+                //End
+                
+                $common_contracts = array();
+                $package_contracts = array();
+                foreach($tdata as $si_ccontract){
+                    $package_ids = $si_ccontract->package_ids;
+                    
+                    if($package_ids == 'all'){
+                        $common_contracts[] = $si_ccontract;
+                    }else if(strlen(trim($package_ids)) > 0){
+                        $explode_arr = explode(',',trim($package_ids));
+                        foreach($explode_arr as $si_packageid){
+                            if(!isset($package_contracts[$si_packageid])){ $package_contracts[$si_packageid] = array(); }
+                            $package_contracts[$si_packageid][] = $si_ccontract;
+                        }
+                    }
+                }
+                
+                $fdata = array("common"=>$common_contracts,"packages_wise"=>$package_contracts);
+            break;
+            
+            case 'hotels':
+                $tdata = array();
+                if($is_default === true){ $fields[] = 'tb_contracts.hotel_ids'; }
+                
+                if(count($ids) > 0){                    
+                    //get contracts for common user groups and users
+                    $specifchoteldata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                ->join('tb_contracts_hotels_ref','tb_contracts.contract_id','=','tb_contracts_hotels_ref.contract_id')->whereIn('tb_contracts_hotels_ref.hotel_id',$ids)
+                                ->where('tb_contracts.user_group_ids','all')->where('tb_contracts.user_ids','all')
+                                ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();
+                    foreach($specifchoteldata as $rval){
+                        $tdata[$rval->contract_id] = $rval;
+                    }
+                    //End
+                    
+                    //get contracts for specific user group and all users
+                    $specGroupdata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                ->join('tb_contracts_hotels_ref','tb_contracts.contract_id','=','tb_contracts_hotels_ref.contract_id')->whereIn('tb_contracts_hotels_ref.hotel_id',$ids)
+                                ->join('tb_contracts_user_groups_ref','tb_contracts.contract_id','=','tb_contracts_user_groups_ref.contract_id')->where('tb_contracts_user_groups_ref.group_id',$groupId)
+                                ->where('tb_contracts.user_ids','all')
+                                ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();
+                    foreach($specGroupdata as $rval){
+                        $tdata[$rval->contract_id] = $rval;
+                    }
+                    //End
+                    
+                    //get contracts for specific user
+                    $spuserdata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                            ->join('tb_contracts_hotels_ref','tb_contracts.contract_id','=','tb_contracts_hotels_ref.contract_id')->whereIn('tb_contracts_hotels_ref.hotel_id',$ids)
+                            ->join('tb_contracts_users_ref','tb_contracts.contract_id','=','tb_contracts_users_ref.contract_id')->where('tb_contracts_users_ref.user_id',$uid)
+                            ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();
+                    foreach($spuserdata as $rval){
+                        $tdata[$rval->contract_id] = $rval;
+                    }
+                    //End
+                }
+                
+                $alldata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                            ->join('tb_contracts_users_ref','tb_contracts.contract_id','=','tb_contracts_users_ref.contract_id')->where('tb_contracts_users_ref.user_id',$uid)
+                            ->where('tb_contracts.hotel_ids','all')
+                            ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();
+                foreach($alldata as $rval){
+                    $tdata[$rval->contract_id] = $rval;
+                }
+                
+                $alldata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                            ->join('tb_contracts_user_groups_ref','tb_contracts.contract_id','=','tb_contracts_user_groups_ref.contract_id')->where('tb_contracts_user_groups_ref.group_id',$groupId)
+                            ->where('tb_contracts.hotel_ids','all')->where('tb_contracts.user_ids','all')
+                            ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();
+                foreach($alldata as $rval){
+                    $tdata[$rval->contract_id] = $rval;
+                }
+                
+                $alldata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                ->where('tb_contracts.hotel_ids','all')->where('tb_contracts.user_group_ids','all')->where('tb_contracts.user_ids','all')
+                                ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();
+                foreach($alldata as $rval){
+                    $tdata[$rval->contract_id] = $rval;
+                }
+                
+                $common_contracts = array();
+                $hotel_contracts = array();
+                foreach($tdata as $si_ccontract){
+                    $hotel_ids = $si_ccontract->hotel_ids;
+                    
+                    if($hotel_ids == 'all'){
+                        $common_contracts[] = $si_ccontract;
+                    }else if(strlen(trim($hotel_ids)) > 0){
+                        $explode_arr = explode(',',trim($hotel_ids));
+                        foreach($explode_arr as $si_hotelid){
+                            if(!isset($hotel_contracts[$si_hotelid])){ $hotel_contracts[$si_hotelid] = array(); }
+                            $hotel_contracts[$si_hotelid][] = $si_ccontract;
+                        }
+                    }
+                }
+                
+                $fdata = array("common"=>$common_contracts,"hotels_wise"=>$hotel_contracts);
+            break;
+            
+            case 'commission':
+                $tdata = array();
+                if($is_default === true){ $fields[] = 'tb_contracts.hotel_ids'; $fields[] = 'tb_contracts.full_availability_commission'; $fields[] = 'tb_contracts.partial_availability_commission'; }
+                //check if commission contrat available for specific user
+                if(count($ids) > 0){                    
+                    //get contracts for common user groups and users
+                    $specifchoteldata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                ->join('tb_contracts_hotels_ref','tb_contracts.contract_id','=','tb_contracts_hotels_ref.contract_id')->whereIn('tb_contracts_hotels_ref.hotel_id',$ids)
+                                ->where('tb_contracts.user_group_ids','all')->where('tb_contracts.user_ids','all')
+                                ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();
+                    foreach($specifchoteldata as $si_hcontract){
+                        $hotel_ids = $si_hcontract->hotel_ids;
+                        if(strlen(trim($hotel_ids)) > 0){
+                            $explode_arr = explode(',',trim($hotel_ids));
+                            foreach($explode_arr as $is_a){
+                                $tdata[$is_a] = $si_hcontract;
+                            }
+                        }
+                    }
+                    //End
+                    
+                    //get contracts for specific user group and all users
+                    $specGroupdata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                ->join('tb_contracts_hotels_ref','tb_contracts.contract_id','=','tb_contracts_hotels_ref.contract_id')->whereIn('tb_contracts_hotels_ref.hotel_id',$ids)
+                                ->join('tb_contracts_user_groups_ref','tb_contracts.contract_id','=','tb_contracts_user_groups_ref.contract_id')->where('tb_contracts_user_groups_ref.group_id',$groupId)
+                                ->where('tb_contracts.user_ids','all')
+                                ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();
+                    foreach($specGroupdata as $si_hcontract){
+                        $hotel_ids = $si_hcontract->hotel_ids;
+                        if(strlen(trim($hotel_ids)) > 0){
+                            $explode_arr = explode(',',trim($hotel_ids));
+                            foreach($explode_arr as $is_a){
+                                $tdata[$is_a] = $si_hcontract;
+                            }
+                        }
+                    }
+                    //End
+                    
+                    //get contracts for specific user
+                    $spuserdata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                            ->join('tb_contracts_hotels_ref','tb_contracts.contract_id','=','tb_contracts_hotels_ref.contract_id')->whereIn('tb_contracts_hotels_ref.hotel_id',$ids)
+                            ->join('tb_contracts_users_ref','tb_contracts.contract_id','=','tb_contracts_users_ref.contract_id')->where('tb_contracts_users_ref.user_id',$uid)
+                            ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->get();
+                    foreach($spuserdata as $si_hcontract){
+                        $hotel_ids = $si_hcontract->hotel_ids;
+                        if(strlen(trim($hotel_ids)) > 0){
+                            $explode_arr = explode(',',trim($hotel_ids));
+                            foreach($explode_arr as $is_a){
+                                $tdata[$is_a] = $si_hcontract;
+                            }
+                        }
+                    }
+                    //End
+                }
+                
+                $alldata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                            ->join('tb_contracts_users_ref','tb_contracts.contract_id','=','tb_contracts_users_ref.contract_id')->where('tb_contracts_users_ref.user_id',$uid)
+                            ->where('tb_contracts.hotel_ids','all')
+                            ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->first();
+                
+                if(!isset($alldata->contract_id)){
+                    $alldata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                            ->join('tb_contracts_user_groups_ref','tb_contracts.contract_id','=','tb_contracts_user_groups_ref.contract_id')->where('tb_contracts_user_groups_ref.group_id',$groupId)
+                            ->where('tb_contracts.hotel_ids','all')->where('tb_contracts.user_ids','all')
+                            ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->first();
+                }
+                
+                if(!isset($alldata->contract_id)){
+                    $alldata  = \DB::table('tb_contracts')->select($fields)->where('tb_contracts.contract_type',$type)
+                                ->where('tb_contracts.hotel_ids','all')->where('tb_contracts.user_group_ids','all')->where('tb_contracts.user_ids','all')
+                                ->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->groupBy('tb_contracts.contract_id')->orderBy('tb_contracts.contract_id','DESC')->first();
+                }   
+                //End
+                
+                $fdata = array("common"=>((isset($alldata->contract_id))?$alldata:array()),"hotels_wise"=>$tdata);
+            break;
+            
+            case 'events':
+            
+            break;
+            
+            default:
+                                
+            break;
+        }
+        
+        //echo "<pre>";print_r($fdata); die;
+        
+        return $fdata;
+    }
+    
     static function url_title($str, $separator = '-', $lowercase = FALSE)
     {
         if ($separator == 'dash') 
@@ -73,15 +563,64 @@ class CommonHelper
     //End
     
     //is user metronic dashboard
-    static function isHotelDashBoard(){
-        $group_id = (int) \Auth::user()->group_id;
+    static function isHotelDashBoard($g_id=0){
+        $g_id = (int) $g_id;
+        $group_id = (int) (($g_id > 0)?$g_id:\Auth::user()->group_id);
+        $user = self::getusertype($group_id);
+        $return = "";
+        if($user=="hotel-b2b"){
+            $match_array = array('hotel-b2b');
+            if(in_array($user,$match_array)){ $return = 'users_admin.metronic'; }
+        }else if($user=="users-b2c"){
+            $return = 'users_admin.traveller';
+        }
+        return $return;
+    }
+    //end
+    
+    //is user metronic dashboard
+    static function check_membership_package($u_id=0){
+        $u_id = (int) $u_id;
+        $g_id = \Auth::user()->group_id;
+        
+        $g_id = (int) $g_id;
+        $group_id = (int) (($g_id > 0)?$g_id:\Auth::user()->group_id);
         $user = self::getusertype($group_id);
         $match_array = array('hotel-b2b');
         $return = "";
+        $red_url = '';
+        if(in_array($user,$match_array)){ 
+            $obj_hotel  = \DB::table('tb_properties')->where('user_id', $u_id)->first();
+            
+            if(!empty($obj_hotel)){ 
+                if(isset($obj_hotel->approved)){ 
+                    if($obj_hotel->approved==0){ 
+                        $red_url = 'whoiam';
+                    }else{ 
+                        $obj_order  = \DB::table('tb_orders')->where('user_id', $u_id)->get();
+                        //print_r($obj_order); die;
+                        if(count($obj_order) > 0){
+                            foreach($obj_order as $order){
+                                if($order->status=="Success"){
+                                    $red_url = '';
+                                    break;
+                                }else{
+                                    $red_url = 'hotel/package';
+                                }
+                            }
+                        }else{                        
+                            $red_url = 'hotel/package';
+                        }
+                    }
+                }else{
+                    $red_url = 'whoiam';
+                }
+            }else{
+                $red_url = 'whoiam';
+            }            
+        } 
+        return $red_url;
         
-        if(in_array($user,$match_array)){ $return = 'users_admin.metronic'; }
-        
-        return $return;
     }
     //end
     

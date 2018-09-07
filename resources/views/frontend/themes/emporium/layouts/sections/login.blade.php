@@ -44,33 +44,34 @@
 
                <img src="{{ asset('themes/emporium/images/emporium-voyage-membership.jpg')}}" alt="Images">
                <div class="loginFormDiv">
+                  <h3>CREATE YOUR ACCOUNT PASSWORD</h3>
+                  <div class="ai-sign-up-form-error-msg"></div>
+                  <div class="ai-sign-up-form-success-msg"></div>  
                   <div class="reltv">
-                  <select name="user_type" class="user-type">
+                  <select name="user_type" class="user-type" id="sel-user-type">
                      <option value="">Choose Your User Type</option>
                      <option value="{!! CommonHelper::getusertype('hotel-b2b') !!}">B2B Hotel</option>
                      <option value="{!! CommonHelper::getusertype('advertiser-b2b') !!}">Advertiser</option>
                      <option value="{!! CommonHelper::getusertype('users-b2c') !!}">Discerning Traveler</option>
                   </select>
-               </div>
-                  <h3>CREATE YOUR ACCOUNT PASSWORD</h3>
-                  <div class="ai-sign-up-form-error-msg"></div>
-                  <div class="ai-sign-up-form-success-msg"></div>
+                  </div>
+                  <div class="user_ref"></div>
                   
-                     <div class="form-group">
-                        <input class="form-control" name="email" type="text" placeholder="Email Address">
+                  <div class="form-group">
+                    <input class="form-control" name="email" type="text" placeholder="Email Address">
 
-                     </div>
-                     <div class="form-group">
-                        <input type="hidden" id="txtmobileDialcode" name="txtmobileDialcode">
-                        <input class="form-control"  name="txtmobileNumber" id="txtmobileNumber" type="tel" >
-                      <span id="valid-msg" class="hide">✓ Valid</span>
-                       <span id="error-msg" class="hide">Invalid number</span>
-                     </div>
-                     <div class="form-group">
+                  </div>
+                  <div class="form-group">
+                    <input type="hidden" id="txtmobileDialcode" name="txtmobileDialcode">
+                    <input class="form-control"  name="txtmobileNumber" id="txtmobileNumber" type="tel" >
+                    <span id="valid-msg" class="hide">✓ Valid</span>
+                    <span id="error-msg" class="hide">Invalid number</span>
+                  </div>
+                  <div class="form-group">
 
-                        <input class="form-control" name="password" type="password" placeholder="Password">
-                     </div>
-                     <button class="button" type="submit">Submit</button>
+                    <input class="form-control" id="password" name="password" type="password" placeholder="Password" data-html="true" data-toggle="popover" data-placement="top" title="Requirements for new password" data-html="true" data-content="<div class='pass_8'>Password must be 8 character.</div> <div class='upper_case'>&#13;Must be one uppercase character.</div> <div class='non_alpha'>&#13;Must be one Non-alphanumeric (!, @, # etc.) character.</div>">
+                  </div>
+                  <button class="button" type="submit">Submit</button>
                   
                </div>
                </form>

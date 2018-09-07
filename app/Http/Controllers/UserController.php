@@ -368,7 +368,7 @@ class UserController extends Controller {
                         if (!is_null($request->input('language'))) {
                             \Session::put('lang', $request->input('language'));
                         } else {
-                            \Session::put('lang', 'Deutsch');
+                            \Session::put('lang', 'en');
                         }
                         if (CNF_FRONT == 'false') :
                             return Redirect::to('dashboard');
@@ -414,7 +414,15 @@ class UserController extends Controller {
         $sidebar_ads_expiry_days = \DB::table('tb_settings')->where('key_value', 'filter_advertisement_expiry_days')->first();
         $sidebar_ads_price = \DB::table('tb_settings')->where('key_value', 'filter_advertisement_price')->first();
         $def_currency = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-
+        
+        $temp = $this->get_destinations_new();
+        //print_r($temp); die;
+        $destinations = $temp;
+        $inspirations = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 627)->get();
+        $experiences = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 8)->get();
+        
+        $preferences = \DB::table('tb_personalized_services')->where('customer_id', \Auth::user()->id)->first();
+        
         $maindest = (new CategoriesController)->fetchCategoryTree();
 
         $this->data = array(
@@ -430,10 +438,98 @@ class UserController extends Controller {
             'slider_ads_info' => $slider_ads_info,
             'sidebar_ads_info' => $sidebar_ads_info,
             'maindest' => $maindest,
+            'destinations' => $destinations,
+            'inspirations' => $inspirations,
+            'experiences' => $experiences,
+            'preferences' => $preferences
         );
-        return view('user.profile', $this->data);
+        
+        //get contract during signup
+        $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description')->where('tb_users_contracts.contract_type','sign-up')->orderBy('tb_users_contracts.contract_id','DESC')->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->get();
+        $resetContracts = array();
+        foreach($usersContracts as $si_contract){
+            $resetContracts[$si_contract->contract_id] = $si_contract;
+        }
+        $this->data['userContracts'] = $resetContracts;
+        $this->data['contracts'] = \CommonHelper::get_default_contracts('sign-up');
+        //End
+        
+        $group_id = \Auth::user()->group_id;
+        $file_name = 'user.profile';
+        $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
+        if($is_demo6 === true){
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            $file_name = $is_demo6.'.user.profile';
+            $is_newuser = (int) $info->new_user;
+            if($info->new_user == 1){
+                $file_name = $is_demo6.'.user.new_profile';
+            }
+        }
+        
+        return view($file_name, $this->data);
     }
+    
+    public function get_destinations_new($parent = 0, $spacing = '', $folder_tree_array = '') {
 
+        if (!is_array($folder_tree_array))
+		  $folder_tree_array = array();          
+		
+		  $filter = " AND parent_category_id='".$parent."'";
+		  $params = array(
+			'params'	=> $filter,
+			'order'		=> 'asc'
+		  );
+		  // Get Query 
+    	  $results = \DB::table('tb_categories')->where('parent_category_id', $parent)->where('id', '!=', 8)->get();
+          //print_r($results); die;
+          if ($results) {
+    		foreach($results as $row) {
+    		  $folder_tree_array[] = array("id" => $row->id, "name" => $spacing . $row->category_name);
+    		  $folder_tree_array = $this->get_destinations_new($row->id, $spacing . '', $folder_tree_array);
+    		}
+    	  }          
+    	  return $folder_tree_array;
+    }
+    
+    public function get_destinations($id = 0) {
+
+        $_chldIds = array();
+        
+        if($id == 0) {
+            $sub_destinations = \DB::table('tb_categories')->where('parent_category_id', 0)->where('id', '!=', 8)->get();
+        }
+        else {
+            $sub_destinations = \DB::table('tb_categories')->where('parent_category_id', $id)->get();
+        }
+        
+        if(!empty($sub_destinations)) {
+            foreach ($sub_destinations as $key => $sub_destination) {
+                
+                $chldIds = array();
+                
+                $chldIds[] = $sub_destination->id;
+                $temp = $this->get_destinations($sub_destination->id);
+
+                $sub_destinations[$key]->sub_destinations = $temp['sub_destinations'];
+                $chldIds = array_merge($chldIds, $temp['chldIds']);
+                $_chldIds = array_merge($_chldIds, $chldIds);
+                
+                $getcats = '';
+                if (!empty($chldIds)) {
+                    $getcats = " AND (" . implode(" || ", array_map(function($v) {
+                                        return sprintf("FIND_IN_SET('%s', property_category_id)", $v);
+                                    }, array_values($chldIds))) . ")";
+                    $preprops = \DB::select(\DB::raw("SELECT COUNT(*) AS total_rows FROM tb_properties WHERE property_status = '1' $getcats"));
+                    if($preprops[0]->total_rows == 0) {
+                        unset($sub_destinations[$key]);
+                    }
+                }
+            }
+        }
+        
+        return array('sub_destinations' => $sub_destinations, 'chldIds' => $_chldIds);
+    }
+    
     public function postSaveprofile(Request $request) {
         if (!\Auth::check())
             return Redirect::to('user/login');
@@ -441,6 +537,13 @@ class UserController extends Controller {
             'first_name' => 'required|alpha_num|min:2',
             'last_name' => 'required|alpha_num|min:2',
         );
+        
+        //get contract during signup
+        $contracts = \CommonHelper::get_default_contracts('sign-up','tb_contracts.*');
+        if(count($contracts) > 0){
+            $rules['accept_contract'] = 'required';
+        }
+        //End
 
         if ($request->input('email') != \Session::get('eid')) {
             $rules['email'] = 'required|email|unique:tb_users';
@@ -449,7 +552,6 @@ class UserController extends Controller {
         $validator = Validator::make($request->all(), $rules);
 
         if ($validator->passes()) {
-
 
             if (!is_null(Input::file('avatar'))) {
                 $file = $request->file('avatar');
@@ -470,12 +572,186 @@ class UserController extends Controller {
             if (isset($data['avatar']))
                 $user->avatar = $newfilename;
             $user->save();
+            
+            //insert contracts
+            \CommonHelper::submit_contracts($contracts,'sign-up');
+            //End
 
             return Redirect::to('user/profile')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
         } else {
             return Redirect::to('user/profile')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
                             ->withErrors($validator)->withInput();
         }
+    }
+    
+    public function postSavetravellerprofile(Request $request) {
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+            
+        $rules = array(
+            'first_name' => 'required|alpha_num|min:2',
+            'last_name' => 'required|alpha_num|min:2',
+            'txtmobilecode' => 'required',
+            'txtmobileNumber' => 'required',
+        );
+        
+        //get contract during signup
+        $contracts = \CommonHelper::get_default_contracts('sign-up','tb_contracts.*');
+        if(count($contracts) > 0){
+            $rules['accept_contract'] = 'required';
+        }
+        //End
+
+        if ($request->input('email') != \Session::get('eid')) {
+            $rules['email'] = 'required|email|unique:tb_users';
+        }
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->passes()) {
+            
+            if (!is_null(Input::file('avatar'))) {
+                $file = $request->file('avatar');
+                $destinationPath = './uploads/users/';
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                $newfilename = \Session::get('uid') . '.' . $extension;
+                $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
+                if ($uploadSuccess) {
+                    $data['avatar'] = $newfilename;
+                }
+            }
+            
+            $user = User::find(\Session::get('uid'));
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            $user->email = $request->input('email');
+            
+            $user->mobile_code = $request->input('txtmobilecode');
+            $user->mobile_number = $request->input('txtmobileNumber');
+            $user->gender = $request->input('gender');            
+            $user->prefer_communication_with = $request->input('prefer_communication_with');
+            $user->preferred_currency = $request->input('preferred_currency');
+            if (isset($data['avatar']))
+                $user->avatar = $newfilename;
+                
+            $user->save();
+            
+            //insert contracts
+            \CommonHelper::submit_contracts($contracts,'sign-up');
+            //End
+
+            return Redirect::to('user/profile')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
+        } else {
+            return Redirect::to('user/profile')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
+                            ->withErrors($validator)->withInput();
+        }
+    }
+    
+    public function saveNewprofile(Request $request){
+        $return_array = array();
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required|alpha_num|min:2',
+            'last_name' => 'required|alpha_num|min:2',
+            'username' => 'required|alpha_num|min:2',
+        );
+        
+        //get contract during signup
+        $contracts = \CommonHelper::get_default_contracts('sign-up','tb_contracts.*');
+        if(count($contracts) > 0){
+            $rules['accept_contract'] = 'required';
+        }
+        //End
+        
+        if ($request->input('email') != \Session::get('eid')) {
+            $rules['email'] = 'required|email|unique:tb_users';
+        }
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->passes()) {
+
+            if (!is_null(Input::file('avatar'))) {
+                $file = $request->file('avatar');
+                $destinationPath = './uploads/users/';
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                $newfilename = \Session::get('uid') . '.' . $extension;
+                $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
+                if ($uploadSuccess) {
+                    $data['avatar'] = $newfilename;
+                }
+            }
+
+            $user = User::find(\Session::get('uid'));
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            $user->email = $request->input('email');
+            $user->username = $request->input('username');
+            $user->form_wizard = $request->input('form_wizard');
+            if (isset($data['avatar']))
+                $user->avatar = $newfilename;
+            $user->save();
+            
+            //insert contracts
+            \CommonHelper::submit_contracts($contracts,'sign-up');
+            //End
+            
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'Profile has been saved!';
+
+        } else {
+            
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Profile not saved errors occurred!';
+            
+        }
+        
+        echo json_encode($return_array);
+        exit;
+    }
+    
+    public function confirmNewprofile(Request $request){
+        
+        $return_array = array();
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        
+        $rules = array(
+            'accept' => 'required',
+        );
+        
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->passes()) {
+            
+            if($request->input('accept') == 1){
+                $user = User::find(\Session::get('uid'));
+                $user->new_user = 0;
+                $user->form_wizard = $request->input('form_wizard');
+                $user->save();
+                
+                $return_array['status'] = 'success';
+                $return_array['message'] = 'Profile has been successfully submitted!';    
+            }
+            else{
+                $return_array['status'] = 'error';
+                $return_array['message'] = 'Profile not submitted errors occurred!';
+            }
+
+            
+
+        } else {
+            
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Profile not submitted errors occurred!';
+            
+        }
+        
+        echo json_encode($return_array);
+        exit;
     }
 
     public function postSavepassword(Request $request) {
@@ -525,7 +801,7 @@ class UserController extends Controller {
 
                 $token = base64_encode(rand(10000, 10000000));
                 $edata = array();
-                $emlData['frmemail'] = 'info@design-locations.biz';
+                $emlData['frmemail'] = 'marketing@emporium-voyage.com';
                 $edata['token'] = $token;
                 $emlData['email'] = $request->input('credit_email');
                 $emlData['subject'] = 'REQUEST PASSWORD RESET';
@@ -558,7 +834,7 @@ class UserController extends Controller {
     public function getReset(Request $request, $token = '') {
         if (\Auth::check())
             return Redirect::to('dashboard');
-        $token = $request->input('token');
+        //$token = $request->input('token');
         $user = User::where('reminder', '=', $token);
         if ($user->count() >= 1) {
             $data = array('verCode' => $token);
@@ -710,7 +986,85 @@ class UserController extends Controller {
                             ->withErrors($validator)->withInput();
         }
     }
+    
+    public function saveNewcompanydetails(Request $request) {
+        
+        if (!\Auth::check())
+            return Redirect::to('user/login');
 
+        $rules = array(
+            'company_name' => 'required',
+            'company_owner' => 'required',
+            'contact_person' => 'required',
+            'company_phone' => 'required',
+            'company_website' => 'required',
+            'company_tax_no' => 'required',
+            'company_logo' => 'mimes:jpeg,png'
+        );
+
+        if ($request->input('company_email') != \Session::get('eid')) {
+            $rules['company_email'] = 'required|email';
+        }
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->passes()) {
+            
+            if (!is_null(Input::file('company_logo'))) {
+                $file = $request->file('company_logo');
+                $destinationPath = './uploads/users/company/';
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                $newfilename = \Session::get('uid') . '.' . $extension;
+                $uploadSuccess = $request->file('company_logo')->move($destinationPath, $newfilename);
+                if ($uploadSuccess) {
+                    $data['company_logo'] = $newfilename;
+                }
+            }
+
+            $data['user_id'] = \Auth::user()->id;
+            $data['company_name'] = Input::get('company_name');
+            $data['company_owner'] = Input::get('company_owner');
+            $data['contact_person'] = Input::get('contact_person');
+            $data['company_email'] = Input::get('company_email');
+            $data['company_address'] = Input::get('company_address');
+            $data['company_address2'] = Input::get('company_address2');
+            $data['company_city'] = Input::get('company_city');
+            $data['company_postal_code'] = Input::get('company_postal_code');
+            $data['company_country'] = Input::get('company_country');
+            $data['company_phone'] = Input::get('company_phone');
+            $data['company_website'] = Input::get('company_website');
+            $data['company_tax_number'] = Input::get('company_tax_no');
+            $data['steuernummer'] = Input::get('steuernummer');
+            $data['umsatzsteuer_id'] = Input::get('umsatzsteuer_id');
+            $data['geschäftsführer'] = Input::get('geschäftsführer');
+            $data['handelsregister'] = Input::get('handelsregister');
+            $data['amtsgericht'] = Input::get('amtsgericht');
+            
+            $_user = User::find(\Session::get('uid'));
+            $_user->form_wizard = $request->input('form_wizard');
+            $_user->new_user = 0;
+            $_user->save();
+            
+            if (Input::get('compedit_id') != "" && Input::get('compedit_id') > 0) {
+                $data['updated'] = date('y-m-d h:i:s');
+                \DB::table('tb_user_company_details')->where('id', Input::get('compedit_id'))->update($data);
+            } else {
+                $data['created'] = date('y-m-d h:i:s');
+                \DB::table('tb_user_company_details')->insert($data);
+            }
+
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'Company details has been saved!';
+        } else {
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Company details not saved error occurred!';
+        }
+        
+        echo json_encode($return_array);
+        exit;
+    }
+    
     public function postSaveshippingbilling(Request $request) {
         if (!\Auth::check())
             return Redirect::to('user/login');
@@ -764,6 +1118,606 @@ class UserController extends Controller {
         } else {
             return "error";
         }
+    }
+    
+    public function saveNewHotelprofile(Request $request){
+        $return_array = array();
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required|alpha_num|min:2',
+            'last_name' => 'required|alpha_num|min:2',
+            'username' => 'required|alpha_num|min:2',
+            'contractSignCheck' => 'required',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->passes()) {
+
+            if (!is_null(Input::file('avatar'))) {
+                $file = $request->file('avatar');
+                $destinationPath = './uploads/users/';
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                $newfilename = \Session::get('uid') . '.' . $extension;
+                $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
+                if ($uploadSuccess) {
+                    $data['avatar'] = $newfilename;
+                }
+            }
+
+            $user = User::find(\Session::get('uid'));
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            //$user->mobile_number=trim($request->input('txtPhoneNumber'));
+            //$user->email = $request->input('txtPhoneNumber');
+            $user->username = $request->input('username');
+            $user->form_wizard = $request->input('form_wizard');
+            $user->contracts = $request->input('contractSignCheck');
+
+            if (isset($data['avatar']))
+                $user->avatar = $newfilename;
+            $user->save();
+            
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'Profile has been saved!';
+
+        } else {
+            
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Profile not saved errors occurred!';
+            
+        }
+        
+        echo json_encode($return_array);
+        exit;
+    }
+    
+    public function saveNewTravellerProfile(Request $request){
+        $return_array = array();
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required|alpha_num|min:2',
+            'last_name' => 'required|alpha_num|min:2',            
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->passes()) {
+
+            if (!is_null(Input::file('avatar'))) {
+                $file = $request->file('avatar');
+                $destinationPath = './uploads/users/';
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                $newfilename = \Session::get('uid') . '.' . $extension;
+                $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
+                if ($uploadSuccess) {
+                    $data['avatar'] = $newfilename;
+                }
+            }
+
+            $user = User::find(\Session::get('uid'));
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            //$user->mobile_number=trim($request->input('txtPhoneNumber'));
+            //$user->email = $request->input('txtPhoneNumber');
+            //$user->username = $request->input('username');
+            $user->form_wizard = $request->input('form_wizard');
+            $user->gender = $request->input('gender');
+            
+            $user->prefer_communication_with = $request->input('prefer_communication_with');
+            $user->preferred_currency = $request->input('preferred_currency');
+            if(isset($data['avatar']))
+                $user->avatar = $newfilename;
+            
+            $user->save();
+            
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'Profile has been saved!';
+
+        } else {
+            
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Profile not saved errors occurred!';
+            
+        }
+        
+        echo json_encode($return_array);
+        exit;
+    }
+    public function getCompanion(){
+        $user = User::find(\Session::get('uid'));
+        $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->where('status', 0)->get();
+        $user = User::find(\Session::get('uid'));
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.companion':'';      
+        return view($file_name, $this->data);
+    }
+    public function postCompanion(Request $request){
+        $user = User::find(\Session::get('uid'));
+        
+        $return_array = array();
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->passes()) {
+            
+            $user = User::find(\Session::get('uid'));
+            $companion_data['user_id'] = $user->id;
+            $companion_data['first_name'] = $request->input('first_name');
+            $companion_data['last_name'] = $request->input('last_name');            
+            $companion_data['email'] = $request->input('email');
+            $companion_data['phone_code'] = $request->input('phone_code');
+            $companion_data['phone_number'] = $request->input('phone_number');
+            $companion_data['gender'] = $request->input('gender');
+            $companion_data['preferred_language'] = $request->input('preferred_language');
+            $companion_data['preferred_currency'] = $request->input('preferred_currency');
+            	
+            $companionId = \DB::table('tb_companion')->insertGetId($companion_data);             
+            if($companionId > 0){
+                
+                if (!is_null(Input::file('avatar'))) {
+                    $file = $request->file('avatar');
+                    $destinationPath = './uploads/users/companion';
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                    $newfilename = $companionId . '.' . $extension;
+                    $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
+                    if ($uploadSuccess) {
+                        $data['avatar'] = $newfilename;
+                        \DB::table('tb_companion')->where('id', $companionId)->update(['avatar' => $newfilename]);   
+                    }
+                }                
+                return Redirect::to('user/companion')->with('message', 'You have successfully added a travel companion')->with('msgstatus', 'success');
+            }else{            
+                return Redirect::to('user/companion')->with('message', 'Error while adding companion')->with('msgstatus', 'error');
+            }
+        } else {
+            return Redirect::to('user/companion')->withErrors($validator)->withInput();
+        }        
+        
+    }
+    public function viewCompanion(Request $request){
+        $id = $request->input('id'); 
+        $companion = \DB::table('tb_companion')->where('id', $id)->get();
+        echo json_encode($companion);
+    }
+    public function addcompanion(Request $request){
+        $user = User::find(\Session::get('uid'));
+        
+        $return_array = array();
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->passes()) { 
+            //$referral_code = strtoupper(uniqid());
+            
+            $user = User::find(\Session::get('uid'));            
+            $companion_data['user_id'] = $user->id;
+            $companion_data['first_name'] = $request->input('first_name');
+            $companion_data['last_name'] = $request->input('last_name');            
+            $companion_data['email'] = $request->input('email');
+            $companion_data['phone_code'] = $request->input('phone_code');
+            $companion_data['phone_number'] = $request->input('phone_number');
+            $companion_data['gender'] = $request->input('gender');
+            $companion_data['preferred_language'] = $request->input('preferred_language');
+            $companion_data['preferred_currency'] = $request->input('preferred_currency');
+            
+            $companionId = \DB::table('tb_companion')->insertGetId($companion_data);             
+            if($companionId > 0){
+            
+                if (!is_null(Input::file('avatar'))) {
+                    $file = $request->file('avatar');
+                    $destinationPath = './uploads/users/companion';
+                    $filename = $file->getClientOriginalName();
+                    $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                    $newfilename = $companionId . '.' . $extension;
+                    $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
+                    if ($uploadSuccess) {
+                        $data['avatar'] = $newfilename;
+                        \DB::table('tb_companion')->where('id', $companionId)->update(['avatar' => $newfilename]);   
+                    }
+                }  
+                
+                
+                $edata = array();
+                $emlData['frmemail'] = 'marketing@emporium-voyage.com';
+                $edata['first_name'] = $request->input('first_name');
+                $edata['last_name'] = $request->input('last_name'); 
+                $edata['email'] = trim($request->input('email'));
+                
+                $emlData['email'] = trim($request->input('email'));
+                $emlData['subject'] = 'Companion Add';
+                
+                
+                $etemp = 'companion';
+                // echo view('user.emails.' . $etemp, $edata); die;
+                \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
+                    $message->from($emlData['frmemail'], CNF_APPNAME);
+        
+                    $message->to($emlData['email']);
+        
+                    $message->subject($emlData['subject']);
+                });
+                
+                
+            }            
+                       
+            
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'You have successfully added a travel companion';          
+            
+        } else {
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Error while adding companion';            
+        }        
+        echo json_encode($return_array);
+    }
+    public function editCompanion(Request $request){
+        $user = User::find(\Session::get('uid'));
+        
+        $return_array = array();
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'edit_first_name' => 'required',
+            'edit_last_name' => 'required',
+            'edit_email' => 'required'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->passes()) { 
+            //$referral_code = strtoupper(uniqid());
+            
+            $user = User::find(\Session::get('uid'));
+                        
+            $comp_id = $request->input('edit_id');
+            $companion_data['user_id'] = $user->id;
+            $companion_data['first_name'] = $request->input('edit_first_name');
+            $companion_data['last_name'] = $request->input('edit_last_name');            
+            $companion_data['email'] = $request->input('edit_email');
+            $companion_data['phone_code'] = $request->input('edit_phone_code');
+            $companion_data['phone_number'] = $request->input('edit_phone_number');
+            $companion_data['gender'] = $request->input('edit_gender');
+            $companion_data['preferred_language'] = $request->input('edit_preferred_language');
+            $companion_data['preferred_currency'] = $request->input('edit_preferred_currency');
+            
+            if (!is_null(Input::file('edit_avatar'))) {
+                $file = $request->file('edit_avatar');
+                $destinationPath = './uploads/users/companion';
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                $newfilename = $comp_id . '.' . $extension;
+                $uploadSuccess = $request->file('edit_avatar')->move($destinationPath, $newfilename);
+                if ($uploadSuccess) {
+                    $data['avatar'] = $newfilename;
+                    \DB::table('tb_companion')->where('id', $comp_id)->update(['avatar' => $newfilename]);   
+                }
+            }                
+            if (isset($data['avatar']))
+                $companion_data['avatar'] = $newfilename;
+            
+            //print_r($companion_data); die;    
+            $companionId = \DB::table('tb_companion')->where('id', $comp_id)->update($companion_data);             
+            
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'Updated successfully';          
+            
+        } else {
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Error While updating';            
+        }        
+        echo json_encode($return_array);
+    }
+    public function deleteCompanion(Request $request){
+        $id = $request->input('id'); 
+        $invitee = \DB::table('tb_companion')->where('id', $id)->update(array('status'=>1));
+        
+        $return_array['status'] = 'success';
+        $return_array['message'] = 'Deleted successfully'; 
+        
+        echo json_encode($return_array);
+    }
+    public function getInvite(){
+        $user = User::find(\Session::get('uid'));
+        $this->data['invitees'] = \DB::table('tb_invitee')->where('user_id', \Session::get('uid'))->where('status', 0)->get();
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.invite':'';      
+        return view($file_name, $this->data);
+    }
+    public function postInvite(Request $request){
+        $user = User::find(\Session::get('uid'));
+        
+        $return_array = array();
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required|alpha_num|min:2',
+            'last_name' => 'required|alpha_num|min:2',
+            'email' => 'required'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->passes()) {
+            $referral_code = strtoupper(uniqid());
+            
+            $user = User::find(\Session::get('uid'));
+            $invitee_data['user_id'] = $user->id;
+            $invitee_data['first_name'] = $request->input('first_name');
+            $invitee_data['last_name'] = $request->input('last_name');            
+            $invitee_data['email'] = $request->input('email');
+            $invitee_data['message'] = $request->input('message');
+            $invitee_data['referral_code'] = $referral_code;
+            $invitee_data['created'] = date("Y-m-d");
+            $today =  date("Y-m-d");            
+            $expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($today)));
+            
+            $invitee_data['expired_on'] = $expiry_date;
+            
+            $inviteeId = \DB::table('tb_invitee')->insertGetId($invitee_data);             
+            if($inviteeId > 0){
+                
+                $edata = array();
+                $emlData['frmemail'] = 'marketing@emporium-voyage.com';
+                $edata['referral_code'] = $referral_code;
+                $edata['msg'] = $request->input('message');
+                $edata['first_name'] = $request->input('first_name');
+                $edata['last_name'] = $request->input('last_name');
+                $emlData['email'] = $request->input('email');
+                $emlData['subject'] = 'Invitation send by '.$request->input('email');
+                
+                $edata['byfirstname'] = $user->first_name;
+                $edata['bylastname'] = $user->last_name;
+                $edata['byemail'] = $user->email;
+                
+                    
+                $edata['tofirstname'] = $request->input('first_name');
+                $edata['tolastname'] = $request->input('last_name');
+                $edata['todate'] = $today;
+                $expiry_date = date("Y-m-d", strtotime("+30 day", strtotime($today)));
+                $edata['todays'] = 30;
+                $edata['referral_code'] = $referral_code; 
+                
+                //if (\Session::get('newlang') == 'English') {
+                //    $etemp = 'auth.reminder_eng';
+                //}
+                
+                $etemp = 'invite';
+                //echo view('user.emails.invites.' . $etemp, $edata); die;
+                try{ 
+                \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
+                    $message->from($emlData['frmemail'], CNF_APPNAME);
+
+                    $message->to($emlData['email']);
+
+                    $message->subject($emlData['subject']);
+                });
+                }catch(Exception $ex){
+                    //print_r($ex); 
+                }
+            }            
+            return Redirect::to('user/invite/')->with('message', 'Invites send successfully')->with('msgstatus', 'success');
+        } else {
+            return Redirect::to('user/invite/')->withErrors($validator)->withInput();
+        }        
+        
+    }
+    public function getSettings(){
+        $user = User::find(\Session::get('uid'));
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.settings':'';      
+        return view($file_name);
+    }
+    public function getCompany(){
+        $user = User::find(\Session::get('uid'));
+        $this->data['extra'] = \DB::table('tb_user_company_details')->where('user_id', $user->id)->first();
+        //print_r($this->data['extra']);
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.company':'';      
+        return view($file_name, $this->data);
+    }
+    public function postSavecompamy(Request $request){
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+
+        $rules = array(
+            'company_name' => 'required',
+            'company_owner_name' => 'required',
+            'company_legal_representive_name' => 'required',
+            'company_phone' => 'required',
+        );
+
+        /*if ($request->input('company_email') != \Session::get('eid')) {
+            $rules['company_email'] = 'required|email';
+        }*/
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->passes()) {
+
+
+            /*if (!is_null(Input::file('company_logo'))) {
+                $file = $request->file('company_logo');
+                $destinationPath = './uploads/users/company/';
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                $newfilename = \Session::get('uid') . '.' . $extension;
+                $uploadSuccess = $request->file('company_logo')->move($destinationPath, $newfilename);
+                if ($uploadSuccess) {
+                    $data['company_logo'] = $newfilename;
+                }
+            }*/
+
+            $data['user_id'] = \Auth::user()->id;
+            $data['company_name'] = Input::get('company_name');
+            $data['company_address'] = Input::get('company_address');
+            $data['company_city'] = Input::get('company_city');            
+            $data['company_state'] = Input::get('company_state');
+            $data['company_postal_code'] = Input::get('company_postal_code');
+            $data['company_country'] = Input::get('company_country');
+            $data['company_phone'] = Input::get('company_phone');
+            
+            $data['contact_person'] = Input::get('company_legal_representive_name');            
+            $data['company_email'] = Input::get('company_legal_representive_email');
+            $data['contact_person_phone'] = Input::get('company_legal_representive_phone');
+            $data['country_of_incorporation'] = Input::get('company_legal_representive_country_of_incorporation');
+            $data['company_tax_number'] = Input::get('company_registration_number');
+            $data['date_of_incorporation'] = Input::get('company_legal_representive_dt_incorporation');
+            
+            $data['company_owner'] = Input::get('company_owner_name');
+            $data['company_owner_dob'] = Input::get('company_owner_dob');
+            
+            /*$data['company_email'] = Input::get('company_email');            
+            $data['company_address2'] = Input::get('company_address2');
+            $data['company_website'] = Input::get('company_website');
+            $data['steuernummer'] = Input::get('steuernummer');
+            $data['umsatzsteuer_id'] = Input::get('umsatzsteuer_id');
+            $data['geschäftsführer'] = Input::get('geschäftsführer');
+            $data['handelsregister'] = Input::get('handelsregister');
+            $data['amtsgericht'] = Input::get('amtsgericht');*/
+            //print_r($data); die;
+            //echo Input::get('hid_id'); die;
+            if (Input::get('hid_id') != "" && Input::get('hid_id') > 0) {
+                $data['updated'] = date('y-m-d h:i:s');
+                \DB::table('tb_user_company_details')->where('id', Input::get('hid_id'))->update($data);
+            } else {
+                $data['created'] = date('y-m-d h:i:s');
+                \DB::table('tb_user_company_details')->insert($data);
+            }
+
+            return Redirect::to('user/company')->with('messagetext', 'Company details has been saved!')->with('msgstatus', 'success');
+        } else {
+            return Redirect::to('user/company')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
+                            ->withErrors($validator)->withInput();
+        }
+    }
+    public function postIagree(Request $request){
+        $iagree_data['i_agree'] = $request->input('agree');
+        $iagree_data['privacy_policy'] = $request->input('privacy_policy');
+        $iagree_data['cookie_policy'] = $request->input('cookie_policy');
+        if($iagree_data['i_agree'] !=0 && $iagree_data['privacy_policy']!=0 && $iagree_data['cookie_policy']!=0){
+            $u_id = \Session::get('uid');  
+            
+            \DB::table('tb_users')->where('id', $u_id)->update($iagree_data);
+            
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'Thank for accepting';
+        }else{            
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'error while accepting policy';
+        } 
+        echo json_encode($return_array);      
+    }
+    public function viewInvite(Request $request){
+        $id = $request->input('id'); 
+        $invitee = \DB::table('tb_invitee')->where('id', $id)->get();
+        echo json_encode($invitee);
+    }
+    public function editInvite(Request $request){
+        $user = User::find(\Session::get('uid'));
+        
+        $return_array = array();
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'edit_first_name' => 'required|alpha_num|min:2',
+            'edit_last_name' => 'required|alpha_num|min:2',
+            'edit_email' => 'required'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+        
+        if ($validator->passes()) { 
+            //$referral_code = strtoupper(uniqid());
+            
+            $user = User::find(\Session::get('uid'));
+            $inv_id = $request->input('edit_id');
+            $invitee_data['user_id'] = $user->id;
+            $invitee_data['first_name'] = $request->input('edit_first_name');
+            $invitee_data['last_name'] = $request->input('edit_last_name');            
+            $invitee_data['email'] = $request->input('edit_email');
+            $invitee_data['message'] = $request->input('edit_message');
+            $invitee_data['referral_code'] = $request->input('edit_refferal_code');
+            //$invitee_data['created'] = date("Y-m-d");
+            //$today =  date("Y-m-d");            
+            //$expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($today)));
+            
+            //$invitee_data['expired_on'] = $expiry_date;
+            //print_r($invitee_data);
+            $inviteeId = \DB::table('tb_invitee')->where('id', $inv_id)->update($invitee_data);             
+            if($inviteeId > 0){
+                
+                $edata = array();
+                $emlData['frmemail'] = 'marketing@emporium-voyage.com';
+                $edata['referral_code'] = $request->input('edit_refferal_code');
+                $edata['msg'] = $request->input('message');
+                $edata['first_name'] = $request->input('first_name');
+                $edata['last_name'] = $request->input('last_name');
+                $emlData['email'] = $request->input('email');
+                $emlData['subject'] = 'Invitation send by '.$request->input('email');
+                
+                $edata['byfirstname'] = $user->first_name;
+                $edata['bylastname'] = $user->last_name;
+                $edata['byemail'] = $user->email;
+                
+                    
+                $edata['tofirstname'] = $request->input('first_name');
+                $edata['tolastname'] = $request->input('last_name');
+                $edata['todate'] = $today;
+                $expiry_date = date("Y-m-d", strtotime("+30 day", strtotime($today)));
+                $edata['todays'] = 30;
+                $edata['referral_code'] = $referral_code;
+                
+                $etemp = 'invite';
+                
+                try{ 
+                \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
+                    $message->from($emlData['frmemail'], CNF_APPNAME);
+
+                    $message->to($emlData['email']);
+
+                    $message->subject($emlData['subject']);
+                });
+                }catch(Exception $ex){
+                    //print_r($ex); 
+                }
+            }  
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'Updated successfully';          
+            
+        } else {
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Error While updating';            
+        }        
+        echo json_encode($return_array);
+    }
+    public function deleteInvite(Request $request){
+        $id = $request->input('id'); 
+        $invitee = \DB::table('tb_invitee')->where('id', $id)->update(array('status'=>1));
+        
+        $return_array['status'] = 'success';
+        $return_array['message'] = 'Deleted successfully'; 
+        
+        echo json_encode($return_array);
     }
     
     public function ajaxLeadCreate(Request $request) {
@@ -836,4 +1790,91 @@ class UserController extends Controller {
         
         echo json_encode($response);
     }
+    public function postRemoveaccount(){        
+        $user = User::find(\Session::get('uid'));
+        $success = \DB::table('tb_users')->where('id', $user->id)->update(['active'=>0,'deleted'=>1]);
+        if($success){ 
+            
+            $edata = array();
+            $emlData['frmemail'] = 'marketing@emporium-voyage.com';
+            $edata['first_name'] = $user->first_name;
+            $edata['last_name'] = $user->last_name;
+            $edata['email'] = $user->email;
+            $emlData['email'] = $user->email;
+            $emlData['subject'] = 'Account Removed';
+            
+            $etemp = 'account_remove';
+             
+            \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
+                $message->from($emlData['frmemail'], CNF_APPNAME);
+
+                $message->to($emlData['email']);
+
+                $message->subject($emlData['subject']);
+            });
+            
+            \Auth::logout();
+            \Session::flush();
+            
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'Your account has been removed successfully';
+        }else{
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Error while removing your account';
+        }
+       
+        echo json_encode($return_array);
+    }
+    public function postDeactivateaccount(){
+        $user = User::find(\Session::get('uid')); 
+        $success = \DB::table('tb_users')->where('id', $user->id)->update(['deactivation'=>1]);
+            
+        $edata = array();
+        $emlData['frmemail'] = 'marketing@emporium-voyage.com';
+        $edata['first_name'] = $user->first_name;
+        $edata['last_name'] = $user->last_name;
+        $edata['email'] = $user->email;
+        $edata['link'] = 'core/users/update/'.$user->id;
+        $emlData['email'] = 'riaan@number7even.com';
+        $emlData['subject'] = 'Account deactivation request';
+        
+        
+        $etemp = 'deactivation';
+        // echo view('user.emails.' . $etemp, $edata); die;
+        \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
+            $message->from($emlData['frmemail'], CNF_APPNAME);
+
+            $message->to($emlData['email']);
+
+            $message->subject($emlData['subject']);
+        });
+        
+        $return_array['status'] = 'success';
+        $return_array['message'] = 'Your account deactivation request send to administrator';
+        
+        echo json_encode($return_array);
+    } 
+    public function ajaxSavepassword(Request $request) {
+        
+        $rules = array(
+            'password' => 'required',
+            'password_confirmation' => 'required'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if ($validator->passes()) {
+            $user = User::find(\Session::get('uid'));
+            $user->password = \Hash::make($request->input('password'));
+            $user->save();
+
+            //return Redirect::to('user/profile')->with('message', \SiteHelpers::alert('success', 'Password has been saved!'));
+            $return_array['status'] = 'success';
+            $return_array['message'] = 'Password has been saved!';
+        } else {
+            //return Redirect::to('user/profile')->with('message', \SiteHelpers::alert('error', 'The following errors occurred')
+            //        )->withErrors($validator)->withInput();
+            $return_array['status'] = 'error';
+            $return_array['message'] = 'Error occured while saving password!';
+        }
+        echo json_encode($return_array);
+    } 
 }
