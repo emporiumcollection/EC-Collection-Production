@@ -212,6 +212,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
                     <?php 
                         
                         $latest_reservation = \DB::table('tb_reservations')->where('client_id', $logged_user->id)->orderBy('id', 'DESC')->first();
+                        print_r($latest_reservation); die;
                         $arrival_day = '';
                         $arrival_month = '';
                         $arrival_year = '';
