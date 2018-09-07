@@ -413,7 +413,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
             							<div class="m-widget28__tab-items">                                        
             								<div class="m-widget28__tab-item">
             									<span>
-            										Hotel Name
+            										
             									</span>
             									<span>
             										
@@ -421,7 +421,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
             								</div>
             								<div class="m-widget28__tab-item">
             									<span>
-            										Booking Confirmation Number
+            										
             									</span>
             									<span>
             										
@@ -429,7 +429,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
             								</div>
             								<div class="m-widget28__tab-item">
             									<span>
-            										Total Charges
+            										
             									</span>
             									<span>
             										
