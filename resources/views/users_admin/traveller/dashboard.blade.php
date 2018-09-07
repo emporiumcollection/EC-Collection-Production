@@ -219,7 +219,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
                         $departure_day = '';
                         $departure_month = '';
                         $departure_year = '';
-                        if(!empty($latest_reservation)){
+                        if(isset($latest_reservation->id)){
                             $arrival = $latest_reservation->checkin_date;
                             $arrival_day = date('j', strtotime($arrival));
                             $arrival_month = date('M', strtotime($arrival));
@@ -323,7 +323,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
                             <div class="overlay"></div>
                         </div>
         				<div class="m-widget28__container">
-                        <?php if(!empty($latest_reservation)){ ?>
+                        <?php if(isset($latest_reservation->id)){ ?>
         					<!-- begin::Nav pills -->
         					<ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
         						<li class="m-widget28__nav-item nav-item">
