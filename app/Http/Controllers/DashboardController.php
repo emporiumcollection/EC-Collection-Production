@@ -18,7 +18,7 @@ class DashboardController extends Controller {
         if(strlen(trim($url))>0){
             return Redirect::to($url);
         }*/
-        
+        echo "traveller"; die;
         $this->data['container'] = new ContainerController();
         
         $this->data['pageslider'] = \DB::table('tb_pages_sliders')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('slider_page_id', 119)->where('slider_status', 1)->get();
@@ -41,5 +41,5 @@ class DashboardController extends Controller {
         
 		return view($file_name,$this->data);
 	}
-    
+        
 }
