@@ -33,11 +33,11 @@ class DashboardController extends Controller {
         
         $gp_id = trim(\CommonHelper::getusertype('users-b2c'));
         
-        if(!empty($gp_id)){           
+        /*if(!empty($gp_id)){           
            if($this->data['logged_user']->new_user == 1){
                 return Redirect::to('traveller');
            }
-        }
+        }*/
         
 		return view($file_name,$this->data);
 	}
