@@ -199,7 +199,247 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
    
     <div class="row">
 		
-        
+        <div class="col-sm-12 col-md-4 col-xl-4">
+            <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force">
+        		<div class="m-portlet__head m-portlet__head--fit">
+        			<div class="m-portlet__head-caption">
+        				<div class="m-portlet__head-title">
+        					<h3 class="m-portlet__head-text m--font-light">
+        						My Reservations
+        					</h3>
+        				</div>
+        			</div>
+                    <?php 
+                        
+                        $latest_reservation = \DB::table('tb_reservations')->where('client_id', $logged_user->id)->orderBy('id', 'DESC')->first();
+                        $arrival_day = '';
+                        $arrival_month = '';
+                        $arrival_year = '';
+                        $departure_day = '';
+                        $departure_month = '';
+                        $departure_year = '';
+                        if(count($latest_reservation)>0){
+                            $arrival = $latest_reservation->checkin_date;
+                            $arrival_day = date('j', strtotime($arrival));
+                            $arrival_month = date('M', strtotime($arrival));
+                            $arrival_year = date('Y', strtotime($arrival));
+                            $departure = $latest_reservation->checkout_date;
+                            $departure_day = date('j', strtotime($departure));
+                            $departure_month = date('M', strtotime($departure));
+                            $departure_year = date('Y', strtotime($departure));
+                            
+                            $obj_properties = \DB::table('tb_properties')->where('id', $latest_reservation->property_id)->orderBy('id', 'DESC')->first(); 
+                            //print_r($obj_properties);
+                            $reserved_rooms = \DB::table('td_reserved_rooms')->join('tb_properties_category_types', 'td_reserved_rooms.type_id', '=', 'tb_properties_category_types.id' )->where('reservation_id', $latest_reservation->id)->get(); 
+                            //print_r($reserved_rooms);
+                            $total_price = 0;
+                            $reservation_price = $latest_reservation->price;                            
+                            if(!empty($reserved_rooms)){
+                                foreach($reserved_rooms as $room){
+                                    $total_price += ($latest_reservation->number_of_nights * $reservation_price);
+                                }
+                            }
+                            $commission_due = $total_price * ($obj_properties->commission / 100);
+                            $grand_total = $commission_due + $total_price;
+                            
+                            $room_type= $reserved_rooms[0]->category_name;
+                            
+                            $room_type_id= $reserved_rooms[0]->type_id;
+                            
+                            $category = \DB::table('tb_properties_category_types')->where('id', $latest_reservation->type_id)->where('status', 0)->where('show_on_booking', 1)->first();
+                            
+                            $category_image = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $category->property_id)->where('tb_properties_images.category_id', $latest_reservation->type_id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
+                            
+                            $imgsrc = $container->getThumbpath($category_image->folder_id);
+                            
+                            $img = $imgsrc.'/'.$category_image->file_name;
+                            
+                            $book_again = 'book-property/'.$obj_properties->property_slug.'?property='.$obj_properties->id.'&roomType='.$room_type_id.'&arrive=&departure=&booking_adults=1&booking_children=0';
+                        }
+                        
+                    ?>
+        			<div class="m-portlet__head-tools">
+        				<ul class="m-portlet__nav">
+        					<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
+        						<a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill m-btn btn-outline-light m-btn--hover-light a_white">
+        							2018
+        						</a>
+        						<div class="m-dropdown__wrapper" style="display: none;">
+        							<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
+        							<div class="m-dropdown__inner">
+        								<div class="m-dropdown__body">
+        									<div class="m-dropdown__content">
+        										<ul class="m-nav">
+        											<li class="m-nav__section m-nav__section--first">
+        												<span class="m-nav__section-text">
+        													Reports
+        												</span>
+        											</li>
+        											<li class="m-nav__item">
+        												<a href="" class="m-nav__link">
+        													<i class="m-nav__link-icon flaticon-share"></i>
+        													<span class="m-nav__link-text">
+        														Activity
+        													</span>
+        												</a>
+        											</li>
+        											<li class="m-nav__item">
+        												<a href="" class="m-nav__link">
+        													<i class="m-nav__link-icon flaticon-chat-1"></i>
+        													<span class="m-nav__link-text">
+        														Messages
+        													</span>
+        												</a>
+        											</li>
+        											<li class="m-nav__item">
+        												<a href="" class="m-nav__link">
+        													<i class="m-nav__link-icon flaticon-info"></i>
+        													<span class="m-nav__link-text">
+        														FAQ
+        													</span>
+        												</a>
+        											</li>
+        											<li class="m-nav__item">
+        												<a href="" class="m-nav__link">
+        													<i class="m-nav__link-icon flaticon-lifebuoy"></i>
+        													<span class="m-nav__link-text">
+        														Support
+        													</span>
+        												</a>
+        											</li>
+        										</ul>
+        									</div>
+        								</div>
+        							</div>
+        						</div>
+        					</li>
+        				</ul>
+        			</div>
+        		</div>
+        		<div class="m-portlet__body">
+        			<div class="m-widget28">
+        				<div class="m-widget28__pic m-portlet-fit--sides" style="background: url('{{$img}}'); background-size: cover;">
+                            <div class="overlay"></div>
+                        </div>
+        				<div class="m-widget28__container">
+                        <?php if(count($latest_reservation)>0){ ?>
+        					<!-- begin::Nav pills -->
+        					<ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
+        						<li class="m-widget28__nav-item nav-item">
+                                    <div class="top-heading">Book Again</div>
+        							<a class="nav-link a_white dash-res-view" href="{{ Url::to($book_again) }}">
+        								View
+        							</a>
+        						</li>
+        						<li class="m-widget28__nav-item nav-item">
+                                    <div class="top-heading">Arrival</div>
+        							<a class="nav-link a_white" data-toggle="pill" href="#menu21">
+        								<span class="day_size_big">{{$arrival_day}}</span> {{$arrival_month}} {{$arrival_year}}
+        							</a>
+        						</li>
+        						<li class="m-widget28__nav-item nav-item">
+                                    <div class="top-heading">Departure</div>
+        							<a class="nav-link a_white" data-toggle="pill" href="#menu31">
+        								<span class="day_size_big">{{$departure_day}}</span> {{$departure_month}} {{$departure_year}}
+        							</a>
+        						</li>
+        					</ul>
+        					<!-- end::Nav pills --> 
+                            <!-- begin::Tab Content -->
+                            <?php if(!empty($obj_properties)){ ?>
+        					<div class="m-widget28__tab tab-content">
+        						<div id="menu11" class="m-widget28__tab-container tab-pane active">
+        							<div class="m-widget28__tab-items">                                        
+        								<div class="m-widget28__tab-item">
+        									<span>
+        										Hotel Name
+        									</span>
+        									<span>
+        										{{ $obj_properties->property_name }} / {{ $room_type }}
+        									</span>
+        								</div>
+        								<div class="m-widget28__tab-item">
+        									<span>
+        										Booking Confirmation Number
+        									</span>
+        									<span>
+        										DL-<?php echo date('d.m.y', strtotime($latest_reservation->created_date)); ?>-{{ $latest_reservation->id }}
+        									</span>
+        								</div>
+        								<div class="m-widget28__tab-item">
+        									<span>
+        										Total Charges
+        									</span>
+        									<span>
+        										&euro;{{ $grand_total }}
+        									</span>
+        								</div>
+        								<div class="m-widget28__tab-item">
+        									<span>
+        										Hotel Terms
+        									</span>
+        									<span>
+        										<a href="#" data-toggle="modal" data-target="#hotel_term_popup"> Show hotel terms</a> 
+        									</span>
+                                            <a href="{{Url::to('traveller/bookings')}}" id="show_more">Show More</a>
+        								</div>
+        							</div>
+        						</div>
+        					</div>
+                            <?php } ?>
+        					<!-- end::Tab Content -->
+                            <?php } else { ?>
+                                    
+            					<!-- begin::Nav pills -->
+            					<ul class="m-widget28__nav-items nav nav-pills nav-fill ul_width" role="tablist">
+            						<li class="m-widget28__nav-item nav-item">
+                                        <div class="top-heading">Book Again</div>
+            							<a href="{{Url::to('/')}}" class="nav-link a_white dash-res-view">
+            								View
+            							</a>
+            						</li>
+            					</ul>
+            					<!-- end::Nav pills --> 
+                                <!-- begin::Tab Content -->
+                                
+            					<div class="m-widget28__tab tab-content">
+            						<div id="menu11" class="m-widget28__tab-container tab-pane active">
+            							<div class="m-widget28__tab-items">                                        
+            								<div class="m-widget28__tab-item">
+            									<span>
+            										Hotel Name
+            									</span>
+            									<span>
+            										
+            									</span>
+            								</div>
+            								<div class="m-widget28__tab-item">
+            									<span>
+            										Booking Confirmation Number
+            									</span>
+            									<span>
+            										
+            									</span>
+            								</div>
+            								<div class="m-widget28__tab-item">
+            									<span>
+            										Total Charges
+            									</span>
+            									<span>
+            										
+            									</span>
+            								</div>
+            								
+            							</div>
+            						</div>
+            					</div>
+                                                            
+                            <?php } ?>
+        				</div>
+        			</div>
+        		</div>
+        	</div>
+        </div>
         <div class="col-sm-12 col-md-4 col-xl-4">
             <div class="m-portlet m-portlet--head-overlay m-portlet--full-height   m-portlet--rounded-force">
         		<div class="m-portlet__head m-portlet__head--fit">
