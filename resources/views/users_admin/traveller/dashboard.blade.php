@@ -212,14 +212,13 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
                     <?php 
                         
                         $latest_reservation = \DB::table('tb_reservations')->where('client_id', $logged_user->id)->orderBy('id', 'DESC')->first();
-                        print_r($latest_reservation); die;
                         $arrival_day = '';
                         $arrival_month = '';
                         $arrival_year = '';
                         $departure_day = '';
                         $departure_month = '';
                         $departure_year = '';
-                        if(count($latest_reservation)>0){
+                        if(!empty($latest_reservation)){
                             $arrival = $latest_reservation->checkin_date;
                             $arrival_day = date('j', strtotime($arrival));
                             $arrival_month = date('M', strtotime($arrival));
@@ -323,7 +322,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
                             <div class="overlay"></div>
                         </div>
         				<div class="m-widget28__container">
-                        <?php if(count($latest_reservation)>0){ ?>
+                        <?php if(!empty($latest_reservation)){ ?>
         					<!-- begin::Nav pills -->
         					<ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
         						<li class="m-widget28__nav-item nav-item">
