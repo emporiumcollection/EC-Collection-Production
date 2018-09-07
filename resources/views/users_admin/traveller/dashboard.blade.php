@@ -319,11 +319,12 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
         		</div>
         		<div class="m-portlet__body">
         			<div class="m-widget28">
-        				<div class="m-widget28__pic m-portlet-fit--sides" style="background: url('{{$img}}'); background-size: cover;">
+        				
+                        <?php if(isset($latest_reservation) && !empty($latest_reservation)){ ?>
+                        <div class="m-widget28__pic m-portlet-fit--sides" style="background: url('{{$img}}'); background-size: cover;">
                             <div class="overlay"></div>
                         </div>
         				<div class="m-widget28__container">
-                        <?php if(isset($latest_reservation) && !empty($latest_reservation)){ ?>
         					<!-- begin::Nav pills -->
         					<ul class="m-widget28__nav-items nav nav-pills nav-fill" role="tablist">
         						<li class="m-widget28__nav-item nav-item">
@@ -388,9 +389,13 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
         						</div>
         					</div>
                             <?php } ?>
+                        </div>
         					<!-- end::Tab Content -->
                             <?php } else { ?>
-                                    
+                                <div class="m-widget28__pic m-portlet-fit--sides" style="background: url('https://emporium-voyage.com/images/hotel_reservation.jpg'); background-size: cover;">
+                                    <div class="overlay"></div>
+                                </div>
+                				<div class="m-widget28__container">    
             					<!-- begin::Nav pills -->
             					<ul class="m-widget28__nav-items nav nav-pills nav-fill ul_width" role="tablist">
             						<li class="m-widget28__nav-item nav-item">
@@ -435,8 +440,9 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
             						</div>
             					</div>
                                                             
+                            </div>
                             <?php } ?>
-        				</div>
+        				
         			</div>
         		</div>
         	</div>
