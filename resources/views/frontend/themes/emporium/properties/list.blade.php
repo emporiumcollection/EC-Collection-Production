@@ -86,20 +86,17 @@
 
 @foreach($editorPropertiesArr as  $props)
 <?php
-				$url=URL::to($props->property_slug);
+				$url=URL::to(rtrim($props->property_slug,'-'));
 				if(Request::has("departure") || Request::has("arrive"))
 				{
 					$url.='?arrive='.Request::input("arrive")."&departure=".Request::input("departure");
 				}
-
-
 			?> 
 
       <div>
         <div class="col-md-6 col-sm-6 col-xs-12">
          <a  href="{{ $url }}" >
-		          <img src="{{ URL::to('sximo/images/transparent.png') }}" data-src="{{ URL::to('propertysliderimagebyid/'.$props->id)}}" class="img-responsive rad-img" title="{{ $props->property_name}}" alt="{{ $props->property_name}}" data-ajax-link="{{ URL::to('ajax-rproperty-images/'.$props->id.'/3') }}" />
-		         
+		          <img src="{{ URL::to('sximo/images/transparent.png') }}" data-src="{{ URL::to('propertysliderimagebyid/'.$props->id)}}" class="img-responsive rad-img" alt="{{ $props->property_name}}" title="{{ $props->property_name}}" data-ajax-link="{{ URL::to('ajax-rproperty-images/'.$props->id.'/3') }}" />
     		  </a>
         </div>
         <div class="col-md-6 col-sm-6 col-xs-12 slidertext">
@@ -138,13 +135,11 @@
 		@foreach($featurePropertiesArr as $props)
 			
 			<?php
-				$url=URL::to($props->property_slug);
+				$url=URL::to(rtrim($props->property_slug,'-'));
 				if(Request::has("departure") || Request::has("arrive"))
 				{
 					$url.='?arrive='.Request::input("arrive")."&departure=".Request::input("departure");
 				}
-
-
 			?> 
 
 
@@ -152,7 +147,10 @@
         <div class="row">
           <div class="gridinner">
             <a href="{{ $url }}" title="{{ $props->property_name}}">
-          		  <img  src="{{ URL::to('sximo/images/transparent.png') }}" data-src="{{ URL::to('propertysliderimagebyid/'.$props->id)}}" class="img-responsive rad-img" alt="{{ $props->property_name}}" title="{{ $props->property_name}}" data-ajax-link="{{ URL::to('ajax-rproperty-images/'.$props->id.'/3') }}" />
+          		  <img src="{{ URL::to('themes/emporium/images/emporium-voyage-logo-white-loader.svg') }}" data-src="{{ URL::to('propertysliderimagebyid/'.$props->id)}}" class="img-responsive rad-img" alt="{{ $props->property_name}}" title="{{ $props->property_name}}" />
+                  
+                  {{-- <img src="{{ URL::to('themes/emporium/images/emporium-voyage-logo-white-loader.svg') }}" data-src="http://staging.emporium-voyage.com/propertysliderimagebyid/61" class="img-responsive rad-img" alt="The Soho Hotel " title="The Soho Hotel"
+                  data-imagessrc='[{"src":"http://staging.emporium-voyage.com/propertysliderimagebyid/61"},{"src":"http://staging.emporium-voyage.com/propertysliderimagebyid/69"},{"src":"http://staging.emporium-voyage.com/propertyimagebyid/213"}]' />  --}}
                {{-- URL::to('propertyimagebyid/'.$props->id)--}}
            	</a>
             <div class="gridtext">
@@ -182,7 +180,7 @@
 {{--*/ $rw = 1 /*--}}
 		@foreach($propertiesArr as $props)
 			<?php
-				$url=URL::to($props->property_slug);
+				$url=URL::to(rtrim($props->property_slug,'-'));
 				if(Request::has("departure") || Request::has("arrive"))
 				{
 					$url.='?arrive='.Request::input("arrive")."&departure=".Request::input("departure");
@@ -217,9 +215,9 @@
 							        <div class="row">
 							           <div class="gridinner">
 							           	<div class="image">
-							           		     {{-- <a class="showhide" href="{{$url}}" rel="bookmark" style="">{{ $props->property_name}}   </a> --}}
+							           		    {{-- <a class="showhide" href="{{$url}}" rel="bookmark" style="">{{ $props->property_name}}   </a> --}}
 							            <a href="{{ $url }}" title="{{ $props->property_name}}">
-							          		  <img src="{{ URL::to('sximo/images/transparent.png') }}" data-src="{{ URL::to('propertyimagebyid/'.$props->id)}}" class="img-responsive rad-img" alt="{{ $props->property_name}}" title="{{ $props->property_name}}" data-ajax-link="{{ URL::to('ajax-rproperty-images/'.$props->id.'/3') }}" />
+							          		  <img src="{{ URL::to('themes/emporium/images/emporium-voyage-logo-white-loader.svg') }}" data-src="{{ URL::to('propertyimagebyid/'.$props->id)}}" class="img-responsive rad-img" alt="{{ $props->property_name}}" title="{{ $props->property_name}}"  />
 							               {{-- URL::to('propertyimagebyid/'.$props->id)--}}
 							           	</a>
 
@@ -290,7 +288,7 @@
 					<div class="full-width">
 						<div data-is data-is-api="{{ url('runInsta')}}"
 							 data-is-source="{{ $destination_category_instagram }}"
-							 data-is-rows="2" data-is-limit="0" data-is-columns="5"></div>
+							 data-is-rows="2" data-is-limit="0" data-is-columns="5" data-is-image-click-action="none"></div>
 					</div>
 				</section>
 			</section>
@@ -328,6 +326,7 @@
 {{-- For custom style  --}}
 @section('custom_css')
     @parent
+    
 @endsection
 
 {{-- For Include javascript files --}}
@@ -336,7 +335,8 @@
 	<!-- instagram -->
 	
 	<script src="{{ asset('sximo/instajs/instashow/elfsight-instagram-feed.js')}}"></script>
-	  <script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>
+	  <?php /*<script src="https://unpkg.com/masonry-layout@4/dist/masonry.pkgd.min.js"></script>*/ ?>
+      <script src="{{ asset('themes/emporium/js/masonry.pkgd.min.js')}}"></script>
   <script type="text/javascript" src="{{ asset('themes/emporium/js/imagesloaded.pkgd.min.js')}}"></script>
   <script type="text/javascript" src="{{ asset('themes/emporium/js/slick.js')}}"></script>
   <script type="text/javascript" src="{{ asset('themes/emporium/js/rad-photos-swap.js')}}"></script>
@@ -370,7 +370,7 @@ $grid.imagesLoaded().progress( function() {
 @section('custom_js')
     @parent
 	<script>
-        var noImg = "{{ URL::to('sximo/images/transparent.png') }}";
+        var noImg = "{{ URL::to('sximo/images/noimg.jpg') }}";
         $(window).on('load', function(e){
             //load images after load full page
                 $('img.rad-img').photoLoadAfterPageLoad(noImg);

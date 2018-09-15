@@ -380,22 +380,26 @@ $('body').css('overflow','hidden')
 });
 $(".mainPopupClose").click(function(){
 	$('.popupMainDiv').removeClass('openPopup');
+    $(".Home .logo-box").removeClass( "remove-h-logo");
 	$('body').css('overflow','auto')
 });
 $(".logInPopupButton").click(function() {
     $('.logInPopup').addClass('openPopup');
     $('.signInPopup').removeClass('openPopup');
     $('.forgetPassPopup').removeClass('openPopup');
+    $('.travellerThanksPopup').removeClass('openPopup'); 
 });
 $(".signInPopupButton").click(function() {
     $('.signInPopup').addClass('openPopup');
     $('.logInPopup').removeClass('openPopup');
     $('.forgetPassPopup').removeClass('openPopup');
+    $('.travellerThanksPopup').removeClass('openPopup'); 
 });
 $(".forgetPassBtn").click(function() {
     $('.forgetPassPopup').addClass('openPopup');
     $('.logInPopup').removeClass('openPopup');
     $('.signInPopup').removeClass('openPopup');
+    $('.travellerThanksPopup').removeClass('openPopup'); 
 });
 $(".loginPopupCloseButton").click(function(){
 	$(this).parent().removeClass('openPopup');
@@ -406,13 +410,15 @@ $(".loginSecForMob").click(function() {
     $('.logInPopup').addClass('openPopup');
     $('.signInPopup').removeClass('openPopup');
     $('.forgetPassPopup').removeClass('openPopup');
+    $('.travellerThanksPopup').removeClass('openPopup'); 
 });
 $(".registerSecForMob").click(function() {
     $('.popupMainDiv').addClass('openPopup');
     $('.signInPopup').addClass('openPopup');
     $('.logInPopup').removeClass('openPopup');
     $('.forgetPassPopup').removeClass('openPopup');
-});
+    $('.travellerThanksPopup').removeClass('openPopup'); 
+});;
 
 
 $(".searchOurCollectonButton").click(function(){
@@ -568,6 +574,10 @@ slider.oninput = function() {
 
  $('.cnt-box').hide();
  $('.bg-dark').hide();
+ 
+ if($('#search-result-slider').hasClass('luxuryHotelSlider')){
+    $('.header-content').addClass('showsearch');
+ }
 
  //$('.round-crcle').hover(
 //function () {
@@ -714,10 +724,12 @@ $(function(){
     $( this ).toggleClass( "highlight" );
     $(".homerightmenu").toggleClass("me-right");
     $(".mobilemenu").toggleClass("me-left");
-    $(".menu-bx").toggleClass( "is-nav-active");  
+    $(".menu-bx").toggleClass( "is-nav-active"); 
+    $(".Home .logo-box").toggleClass( "remove-h-logo");
   });
 
    $( ".menu-bx .log_in-btn" ).click(function() {
+    $(".Home .logo-box").addClass( "remove-h-logo");
     $(".popupMainDiv").toggleClass("openPopup");
     $(".signInPopup").removeClass("openPopup");      
   });
@@ -730,6 +742,7 @@ $(function(){
         $(".menu-bx").removeClass( "is-nav-active"); 
         $(".homerightmenu").removeClass("me-right");        
   });
+  
 });
 
 
