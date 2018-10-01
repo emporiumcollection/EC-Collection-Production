@@ -70,6 +70,9 @@
     					@if($t['view'] =='1')
     						<th>{{ $t['label'] }}</th>
     					@endif
+                        @if($t['field'] == 'username')
+    						<th>Lead Type</th>
+    					@endif
     				@endforeach
     				<th width="70" >{{ Lang::get('core.btn_action') }}</th>
     			  </tr>
@@ -99,6 +102,9 @@
     							{!! SiteHelpers::gridDisplay($row->$col,$field['field'],$conn) !!}	
     						@endif						 
     					 </td>
+    					 @endif	
+                         @if($field['field'] == 'username')
+    						<td>{{$row->lead_type}}</td>
     					 @endif					 
     				 @endforeach
     				 <td width="100">
