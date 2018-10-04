@@ -34,6 +34,7 @@ class HomeController extends Controller {
         $this->data['pageTitle'] = 'Home';
         $this->data['pageMetakey'] = CNF_METAKEY;
         $this->data['pageMetadesc'] = CNF_METADESC;
+        
         return view('frontend.themes.emporium.pages.index', $this->data);
     }
     
@@ -3838,21 +3839,24 @@ class HomeController extends Controller {
         $props = \DB::table('tb_properties')->where('property_slug', $request->slug)->first();
         
         $arrive_date = '';
-        if (!is_null($request->input('arrive')) && $request->input('arrive') != '') {
+        $book_arrive_date = '';
+        if (!is_null($request->input('arrive')) && $request->input('arrive') != '' && $request->input('arrive') != 'null') {
             \Session::put('arrive_date', $request->input('arrive'));
             $arrive = trim($request->input('arrive'));
-                $arrive_array=explode("-",$arrive);
+                $arrive_array=explode("-",$arrive); 
                 $t=$arrive_array[0];
                 $arrive_array[0]=$arrive_array[1];
                 $arrive_array[1]=$t;
                 $arrive_date=implode(".",$arrive_array);
 
-            
+            $book_arrive_date = $arrive_array[2]."/".$arrive_array[1]."/".$arrive_array[0];
         }
         $this->data['arrive_date']=$arrive_date;
+        $this->data['book_arrive_date']=$book_arrive_date;
         
+        $book_departure_date ='';
         $departure_date ='';
-        if (!is_null($request->input('departure')) && $request->input('departure') != '') {
+        if (!is_null($request->input('departure')) && $request->input('departure') != '' && $request->input('arrive') != 'null') {
             \Session::put('departure', $request->input('departure'));
             
 
@@ -3862,9 +3866,12 @@ class HomeController extends Controller {
                 $departure_array[0]=$departure_array[1];
                 $departure_array[1]=$t;
                 $departure_date=implode(".",$departure_array);
-                            
+
+            $book_departure_date = $departure_array[2]."/".$departure_array[1]."/".$departure_array[0];
+            
         }
         $this->data['departure'] = $departure_date;
+        $this->data['book_departure'] = $book_departure_date;
         
 		$this->data['adults'] = '';
 		$this->data['childs'] = '';
@@ -5060,6 +5067,7 @@ class HomeController extends Controller {
                 $data['discount'] = $discount;
             }
             
+
             $resid = \DB::table('tb_reservations')->insertGetId($data);
 
             /*
@@ -5207,7 +5215,7 @@ class HomeController extends Controller {
 
             /*
              * Send email notification
-             */
+             */             
 
             $reservation = \DB::table('tb_reservations')->where('id', $resid)->first();
             $preferences = \DB::table('td_booking_preferences')->where('reservation_id', $reservation->id)->first();
@@ -5235,7 +5243,7 @@ class HomeController extends Controller {
             $bookingEmailTemplate = str_replace('{checkout_date}', date('M d, Y', strtotime($reservation->checkout_date)), $bookingEmailTemplate);
             //$bookingEmailTemplate = str_replace('{price}', '€' . $reservation->price, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{price}', '€' . $reservation_price, $bookingEmailTemplate);
-            
+
             $bookingEmailTemplate = str_replace('{already_stayed}', $preferences->already_stayed, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{family_name}', trim($preferences->first_name . ' ' . $preferences->last_name), $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{relationship}', $preferences->relationship, $bookingEmailTemplate);
@@ -5639,32 +5647,40 @@ class HomeController extends Controller {
             $bookingEmailTemplate = str_replace('{total_price}', '€' . $total_price, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{commission_due}', '€' . $commission_due, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{grand_total}', '€' . $grand_total, $bookingEmailTemplate);
-            $bookingEmailTemplate = str_replace('{hotel_terms_n_conditions}', $hotel_terms_n_conditions, $bookingEmailTemplate);
-            $bookingEmailTemplate = str_replace('{property_email}', $property->email, $bookingEmailTemplate);
-
-            /*$headers = "MIME-Version: 1.0" . "\r\n";
-            $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-            $headers .= 'From: ' . CNF_APPNAME . '<marketing@emporium-voyage.com>' . "\r\n";
-
-            mail($property->email, "Booking Confirmation", $bookingEmailTemplate, $headers);
-            mail($user_info->email, "Booking Confirmation", $bookingEmailTemplate, $headers);*/
             
+            $hotel_term_and_condition = '';
+            if(!empty($hotel_terms_n_conditions)){
+                if(isset($hotel_terms_n_conditions->terms_n_conditions)){
+                    $hotel_term_and_condition = $hotel_terms_n_conditions->terms_n_conditions;
+                }
+            }
+            
+            $bookingEmailTemplate = str_replace('{hotel_terms_n_conditions}', $hotel_term_and_condition, $bookingEmailTemplate);
+            $bookingEmailTemplate = str_replace('{property_email}', $property->email, $bookingEmailTemplate);
+            //print_r($bookingEmailTemplate); die;
+            //$headers = "MIME-Version: 1.0" . "\r\n";
+            //$headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+            //$headers .= 'From: ' . CNF_APPNAME . '<marketing@emporium-voyage.com>' . "\r\n";
+            //$headers .= 'From: ' . CNF_APPNAME . '<aman01test@gmail.com>' . "\r\n";
+            //mail($property->email, "Booking Confirmation", $bookingEmailTemplate, $headers);
+            //mail($user_info->email, "Booking Confirmation", $bookingEmailTemplate, $headers);
+            //mail('dalip.01rad@gmail.com', "Booking Confirmation", $bookingEmailTemplate, $headers);
             $tempe = 'blank';
             $emailArr['msg'] = $bookingEmailTemplate;
             
-            $toouser['email'] = $property->email;
-			$toouser['subject'] = "Booking Confirmation";	
-            		
+            $toouser['email'] = $property->email;            
+			$toouser['subject'] = "Booking Confirmation";            		
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser) {
               $message->to($toouser['email'])
                 ->subject($toouser['subject'])
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
+            
             $toouser1['email'] = $user_info->email;
 			$toouser1['subject'] = "Booking Confirmation";	
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser1) {
-              $message->to($toouser['email'])
-                ->subject($toouser['subject'])
+              $message->to($toouser1['email'])
+                ->subject($toouser1['subject'])
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
             

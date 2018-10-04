@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="{{ asset('sximo/assets/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('sximo/assets/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css"/>
-        <link href="{{ asset('sximo/assets/css/daterangepicker.min.css')}}" rel="stylesheet" type="text/css"/>
+        {{-- <link href="{{ asset('sximo/assets/css/daterangepicker.min.css')}}" rel="stylesheet" type="text/css"/> --}}
         <link href="{{ asset('sximo/assets/css/jquery-ui.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('sximo/assets/css/style.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('sximo/assets/css/book-now-page-style.css')}}" rel="stylesheet" type="text/css"/>
@@ -15,12 +15,19 @@
         <link href="{{ asset('sximo/assets/css/crousal-book-form.css')}}" rel="stylesheet" type="text/css"/>
         <link href="{{ asset('sximo/assets/css/booking-form.css')}}" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="{{ asset('sximo/assets/css/ai_bookingform_responsive.css')}}" />
-
+        
+        <link href="{{ asset('themes/emporium/daterangepicker/css/t-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('themes/emporium/daterangepicker/css/themes/t-datepicker-bluegrey.css') }}" rel="stylesheet" type="text/css" />
+        
         <script src="{{ asset('sximo/assets/js/jquery-2.1.0.min.js')}}" type="text/javascript"></script>
         <script src="{{ asset('sximo/assets/js/bootstrap.min.js')}}" type="text/javascript"></script>
         <script src="{{ asset('sximo/assets/js/jquery-ui.js')}}" type="text/javascript"></script>
+        
+        <script src="{{ asset('themes/emporium/daterangepicker/js/t-datepicker.js') }}"></script>
+        
         <script src="{{ asset('sximo/assets/js/moment.min.js')}}" type="text/javascript"></script>
-        <script src="{{ asset('sximo/assets/js/jquery.daterangepicker.min.js')}}" type="text/javascript"></script>
+        {{-- <script src="{{ asset('sximo/assets/js/jquery.daterangepicker.min.js')}}" type="text/javascript"></script> --}}
+        
         <script src="{{ asset('sximo/assets/js/book-now-page-style.js')}}" type="text/javascript"></script>
         <script src="{{ asset('sximo/assets/js/m-popup.js')}}" type="text/javascript"></script>
         <script src="{{ asset('sximo/assets/js/jasor.js')}}" type="text/javascript"></script>
@@ -54,6 +61,9 @@
             .date-picker-wrapper.no-shortcuts.no-gap.two-months {
                 top: 585px !important;
             }
+            .font-italic{
+                font-style: italic;
+            }
         </style>
 		<!-- Global site tag (gtag.js) - Google Analytics -->
 		<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110391807-1"></script>
@@ -66,9 +76,7 @@
 		</script>
     </head>
     <body>
-        <!--<pre>
-        {{print_r($propertyDetail)}}
-        </pre>-->
+        
         <script>
 $(function () {
     $(".draggable").draggable({
@@ -90,7 +98,13 @@ $(function () {
     });
 });
         </script>
-        <div class="booking-form-bg">
+        <?php 
+        $bg_img = '';
+        if(!empty($propertyDetail['propimage'][0]->file_name)){
+            $bg_img = $propertyDetail['propimage'][0]->imgsrc.$propertyDetail['propimage'][0]->file_name;
+        } 
+        ?>
+        <div class="" style="background-attachment: fixed; background-image: url('<?php echo $bg_img; ?>'); background-repeat: no-repeat; background-size: cover; min-height: 100vh;">
             <div class="container">
                 <div class="form-custom-width">
                       <a href="{{ redirect()->back()->getTargetUrl() }}" class="arrowlefttop"><i class="fa fa-arrow-left"></i></a>
@@ -112,14 +126,28 @@ $(function () {
                                         <div class="booking-form-all-fields">
                                             <div>
                                                 <ul class="booking-form-dates" id="two-inputs">
-                                                    <li>
-                                                        <div class="booking-form-heading">Arrival Date</div>
-                                                        <input  id="date-range-arrive" size="20" name="booking_arrive" value="{{ ($arrive_date!='') ? $arrive_date : date('d.m.Y') }}">
-                                                    </li>
-                                                    <li>
-                                                        <div class="booking-form-heading">Departure Date</div>
-                                                        <input  id="date-range-destination" size="20" name="booking_destination" value="{{ ($departure!='') ? $departure : '' }}">
-                                                    </li>
+                                                    <div id="t-middel-picker" class="t-datepicker">
+                                                    
+                                                        <li>
+                                                            <div class="booking-form-heading">Arrival Date</div>
+                                                            <div class="t-check-in"></div>
+                                                        </li>
+                                                        <li>
+                                                            <div class="booking-form-heading">Departure Date</div>
+                                                            <div class="t-check-out"></div>
+                                                        </li>
+                                                    
+                                                        <?php /* <ul class="booking-form-dates" id="two-inputs">
+                                                            <li>
+                                                                <div class="booking-form-heading">Arrival Date</div>
+                                                                <input  id="date-range-arrive" size="20" name="booking_arrive" value="{{ ($arrive_date!='') ? $arrive_date : date('d.m.Y') }}">
+                                                            </li>
+                                                            <li>
+                                                                <div class="booking-form-heading">Departure Date</div>
+                                                                <input  id="date-range-destination" size="20" name="booking_destination" value="{{ ($departure!='') ? $departure : '' }}">
+                                                            </li>
+                                                        </ul>  */ ?>
+                                                    </div>
                                                 </ul>
                                             </div>
                                             <div class="right-input-align">
@@ -228,7 +256,13 @@ $(function () {
                                                                     <h4>{{$type->category_name}}</h4>
                                                                     @if($type->price!='')
                                                                     <div class="hotel-slider-price">
-                                                                        {{($currency->content!='') ? $currency->content : '$'}} {{$type->price}}
+                                                                        @if($discount_apply!='')
+                                                                            {{($currency->content!='') ? $currency->content : '$'}} {{$type->price}}
+                                                                            <br />Discount 10% {{($currency->content!='') ? $currency->content : '$'}} {{ ($type->price) * 10 / 100 }}
+                                                                            <br /> {{($currency->content!='') ? $currency->content : '$'}} {{ $type->price - (($type->price) * 10 / 100) }}
+                                                                        @else
+                                                                            {{($currency->content!='') ? $currency->content : '$'}} {{$type->price}}         
+                                                                        @endif
                                                                     </div>
                                                                     @endif
                                                                     <div class="description">{{$type->room_desc}}</div>
@@ -1350,7 +1384,9 @@ $(function () {
                                                 <h4 class="margin-bottom-15">Terms And Conditions</h4>
                                                 <input class="our_term_n_conditions_check_box" name="term_n_conditions" value="On" type="checkbox">
                                                 <label>
-                                                    By checking this box, I accept and acknowledge <a data-toggle="modal" data-target="#our_term_n_conditions_modal" href="#">Design Locations</a> 
+                                                    I have read the <a href="{{Url::to('privacy-policy')}}">Privacy Policy</a>. <span class="font-italic">I agree that my personal data will be collected and stored electronically and used electronically to make this reservation with emporium-voyage and the respective partner hotel.</span>  <?php /* <a data-toggle="modal" data-target="#our_term_n_conditions_modal" href="#">emporium-voyage</a> */ ?> 
+                                                    <br />
+                                                    <span class="font-italic">Note: You may revoke your consent at any time by e-mail to <a href="mailto:info@emporium-voyage.com">info@emporium-voyage.com</a> or from your settings section in your account admin.</span>
                                                 </label>
                                                 <div id="our_term_n_conditions_modal" class="modal fade" role="dialog">
                                                     <div class="modal-dialog">
@@ -1445,11 +1481,12 @@ All prices displayed on the Design-Locations websites are current, day prices, s
                                                         </div>
                                                     </div>
                                                 </div>
+                                                
                                                 <div class="clearfix"></div>
                                                 <?php if(!empty($hotel_terms_n_conditions) && trim($hotel_terms_n_conditions->terms_n_conditions) != ''): ?>
                                                 <input class="hotel_term_n_conditions_check_box" name="hotel_term_n_conditions" value="On" type="checkbox">
                                                 <label>
-                                                    By checking this box, I accept and acknowledge <a data-toggle="modal" data-target="#hotel_term_n_conditions_modal" href="#">{{$propertyDetail['data']->property_name}}</a>
+                                                    I agree to my personal data being stored and used to make this reservation <a data-toggle="modal" data-target="#hotel_term_n_conditions_modal" href="#">emporium-voyage</a>
                                                 </label>
                                                 <div id="hotel_term_n_conditions_modal" class="modal fade" role="dialog">
                                                     <div class="modal-dialog">
@@ -1465,11 +1502,26 @@ All prices displayed on the Design-Locations websites are current, day prices, s
                                                     </div>
                                                 </div>
                                                 <?php endif; ?>
+                                                
+                                                <div class="clearfix"></div>
+                                                <input class="hotel_offer_personal_preferences_check_box" name="hotel_offer_personal_preferences" value="On" type="checkbox">
+                                                <label>
+                                                    <span class="font-italic">I agree to receive booking confirmations via email or phone and acknowledge that i can change my communication methods from my personal account preferences.</span>
+                                                </label>
+                                                <div class="clearfix"></div>
+                                                <input class="emporium_voyage_term_n_conditions_check_box" name="emporium_voyage_term_n_conditions" value="On" type="checkbox">
+                                                <label>
+                                                    <span class="font-italic">I agree to the emporium-voyage&trade;  <a href="{{Url::to('terms-and-conditions')}}">terms and conditions</a> pertaining to the reservation.</span>
+                                                </label>
+                                                
                                             </div>
                                             <!--Terms and conditions-->
                                             <div class="partition-border-bottom"></div>
                                             <div class="validations">
                                                 <div id="frontend_booking_term_n_conditions_errorloc" class="error_strings text-danger"></div>
+                                                <div id="frontend_booking_emporium_voyage_term_n_conditions_errorloc" class="error_strings text-danger"></div>
+                                                <div id="frontend_booking_hotel_offer_personal_preferences_errorloc" class="error_strings text-danger"></div>
+                                                
                                                 <div id="frontend_booking_booking_arrive_errorloc" class="error_strings text-danger"></div>
                                                 <div id="frontend_booking_booking_destination_errorloc" class="error_strings text-danger"></div>
                                                 <div id="frontend_booking_number_of_nights_errorloc" class="error_strings text-danger"></div>
@@ -1499,9 +1551,68 @@ All prices displayed on the Design-Locations websites are current, day prices, s
                 </div>
             </div>
         </div>
+        <style>
+            .booking-form-dates .t-check-in,.t-check-out{
+                width: 100% !important;
+            }
+            .booking-form-dates .t-dates{                
+                border: 1px solid #b3b3b3 !important;
+                background: #fff !important;
+                color: #000 !important;
+            }
+            #number_of_nights{
+                height: 37px !important;
+            }
+        </style>
         <script>
             $(document).ready(function () {
-                $('#two-inputs').dateRangePicker({
+                var arrive_date = '{{$book_arrive_date}}';
+                var departure = '{{$book_departure}}';
+                
+                var chk_date = ''; 
+                if(arrive_date != '' && arrive_date != '1970-01-01' && arrive_date != 'null'){
+                    
+                    var dt = new Date(arrive_date);
+                    var t_chk_v_year = dt.getFullYear(); 
+                    var t_chk_v_month = dt.getMonth(); 
+                    var t_chk_v_day = dt.getDate(); 
+                    chk_date = new Date(t_chk_v_year,t_chk_v_month,t_chk_v_day)
+                }
+                var chk_out_date = ''; 
+                if(departure != '' && departure != '1970-01-01' && departure != 'null'){
+                    var dt_out = new Date(departure);
+                    var t_chk_v_out_year = dt_out.getFullYear(); 
+                    var t_chk_v_out_month = dt_out.getMonth(); 
+                    var t_chk_v_out_day = dt_out.getDate(); 
+                    chk_out_date = new Date(t_chk_v_out_year,t_chk_v_out_month,t_chk_v_out_day);
+                }
+                
+                
+                $('#t-middel-picker').tDatePicker({
+                    'numCalendar':'2',
+                    'autoClose':true,
+                    'durationArrowTop':'200',
+                    'formatDate':'mm-dd-yyyy',
+                    'titleCheckIn':'Arrival',
+                    'titleCheckOut':'Departure',
+                    'inputNameCheckIn':'booking_arrive',
+                    'inputNameCheckOut':'booking_destination',
+                    'titleDateRange':'days',
+                    'titleDateRanges':'days',
+                    'iconDate':'<i class="fa fa-calendar"></i>',
+                    'limitDateRanges':'365',
+                    'dateCheckIn':chk_date,
+                    'dateCheckOut':chk_out_date,
+                }).on('afterCheckOut',function(e, dateCO) {
+                    s1 = dateCO[0];
+                    s2 = dateCO[1];
+                    var start = new Date(moment(s1).format('YYYY-MM-DD'));
+                    var end = new Date(moment(s2).format('YYYY-MM-DD'));
+                    var diff = new Date(end - start);
+                    var days = diff/1000/60/60/24;
+                    $('#number_of_nights').val(days + 1);                    
+                });
+/*                $('#two-inputs').dateRangePicker({
                     selectForward: (Boolean),
                     stickyMonths: (Boolean),
                     startDate: "<?php echo date('Y-m-d'); ?>",
@@ -1525,7 +1636,7 @@ All prices displayed on the Design-Locations websites are current, day prices, s
                     }
                 }).bind('datepicker-first-date-selected', function (event, obj) {
                     $("#date-range-destination").val('');
-                });
+                }); */
             });
         </script>
         <script>
@@ -1835,12 +1946,18 @@ All prices displayed on the Design-Locations websites are current, day prices, s
                     });
                 }
             }
-
+            $(document).ready(function () {
             var frmvalidator = new Validator("frontend_booking");
             frmvalidator.EnableOnPageErrorDisplay();
             frmvalidator.EnableMsgsTogether();
+            
             frmvalidator.addValidation("term_n_conditions", "shouldselchk=On", "You must agree with our terms and conditions.");
+            
+            frmvalidator.addValidation("emporium_voyage_term_n_conditions", "shouldselchk=On", "You must agree to emporium-voyage.");
+            frmvalidator.addValidation("hotel_offer_personal_preferences", "shouldselchk=On", "You must agree to personal preferences.");
+            
 //            frmvalidator.addValidation("hotel_term_n_conditions", "shouldselchk=On", "You must agree with hotel terms and conditions.");
+            //frmvalidator.addValidation("booking_arrive2", "req", "Please enter arrival date.");
             frmvalidator.addValidation("booking_arrive", "req", "Please enter arrival date.");
             frmvalidator.addValidation("booking_destination", "req", "Please enter departure date.");
             frmvalidator.addValidation("number_of_nights", "dontselect=0", "Please select number of nights.");
@@ -1861,6 +1978,7 @@ All prices displayed on the Design-Locations websites are current, day prices, s
             frmvalidator.addValidation("password", "req", "Please enter password.");
             frmvalidator.addValidation("confirm_password", "eqelmnt=password", "Password doesn't matach.");
             <?php endif; ?>
+            });
         </script>
         <!--include('layouts/elliot/ai_booking-page')-->
     </body>
