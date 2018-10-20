@@ -19,6 +19,12 @@ Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 /*
  * AIC: CRM Layout Module
  */
+ 
+Route::get('press/{id}', 'ContainerController@media_relations');
+Route::get('press', 'ContainerController@media_relations');
+Route::get('presssearch', 'ContainerController@pressSearchAjax');
+Route::get('getPressFolderListAjaxonload/{id}', 'ContainerController@getPressFolderListAjaxonload');
+
 Route::group(['middleware' => 'auth'], function()
 {
     
@@ -337,7 +343,12 @@ Route::group(['middleware' => 'auth'], function()
         
     Route::post('save_new_company_details', 'UserController@saveNewcompanydetails');
     Route::post('confirm_new_profile', 'UserController@confirmNewprofile');
-
+    
+    Route::get('signup-contract/{isview}', 'ContractController@download_signup_contract');    
+    Route::post('ownhotelsetup', 'UserController@ownhotelsetup');
+    Route::post('hotelavaibility', 'UserController@hotelavaibility');    
+    Route::post('upload_contract', 'PropertiesController@contract_upload');    
+    Route::post('package_skip', 'CustomerController@skipPackage'); 
 });	
 
 Route::post('hotel_membership', 'Frontend\HotelMembershipController@hotelMembershipSignupSave');
@@ -475,7 +486,7 @@ Route::get('stripedetails/{uid}', 'StripepaymentController@index');
 
 Route::get('choosepackage/{packageid}', 'StripepaymentController@checkout');
 Route::post('order-post', 'StripepaymentController@checkoutPost');
-
+Route::post('wizard-order-post', 'StripepaymentController@wizardcheckoutPost');
 // Add this route for checkout or submit form to pass the item into paypal
 Route::post('payment', array(
 	'as' => 'payment',
@@ -530,3 +541,19 @@ Route::get('getEventPackages/{eventID}', 'Frontend\RestaurantFrontController@get
 
 Route::get('traveller/bookings', 'BookingsController@travellerBookings');
 Route::get('traveller/bookings/show/{id}', 'BookingsController@showBooking');
+
+Route::get('hotel/bookings', 'BookingsController@hotelBookings');
+Route::post('customer_request_referral', 'CustomerController@ajaxSendMail');
+
+Route::get('press/view/{fid}/{id}', 'ContainerController@PressShowfilesAjax');
+
+Route::get('tpress/view/{fid}/{id}', 'ContainerController@PressShowTiffFiles');
+Route::get('getPressFolderListAjax/{id}', 'ContainerController@getPressFolderListAjax');
+    
+Route::get('getPressFoldersAjax/{id}', 'ContainerController@getPressFoldersAjax');
+Route::post('pressseletedfileszip', 'ContainerController@PressDownloadZipSelected');
+Route::post('pressseletedfileslowPdf', 'ContainerController@PressDownloadlowPdfSelected');
+Route::post('pressseletedfileshighPdf', 'ContainerController@PressDownloadhighPdfSelected');
+
+Route::get('hotel/get_cart', 'Frontend\HotelMembershipController@getwizardCart');
+Route::get('hotel/get_checkout', 'Frontend\HotelMembershipController@getwizardCheckout');	
