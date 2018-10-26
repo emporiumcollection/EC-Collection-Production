@@ -10,9 +10,9 @@ class PropertyController extends Controller {
 
     public function __construct() {
         parent::__construct();
-        if(!isset(\Auth::user()->id)){
+        /*if(!isset(\Auth::user()->id)){
             Redirect::to('/')->send();
-        }
+        }*/
     }
     
     /* Method : getPropertyDetail
@@ -205,8 +205,16 @@ class PropertyController extends Controller {
 
 		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		
-		
+		//get emotional gallery
+        $emotional_gallery_array = array();
+        $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
+        if(isset($emtional_parentFolder->id)){
+            $peid = (int) $emtional_parentFolder->id;
+            $emtional_containerfiles = \DB::table('tb_container')->select('tb_container_files.id','tb_container_files.file_name','tb_container_files.folder_id','tb_container.name')->join('tb_container_files','tb_container_files.folder_id','=','tb_container.id')->where('parent_id',$peid)->where('name',$keyword)->orderby('tb_container_files.file_sort_num','asc')->get();
+            if((!empty($emtional_containerfiles)) && (is_array($emtional_containerfiles))){$emotional_gallery_array = $emtional_containerfiles;}
+        }
+        $this->data['emotional_gallery'] = $emotional_gallery_array;
+        //End 
 		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
 		$tagsArr = array();
 		if (!empty($tags_Arr)) {
@@ -557,6 +565,23 @@ class PropertyController extends Controller {
 		
         return response()->json($this->data);
     }
+	
+	public function getContainerImageById(Request $request)
+	{
+	    $image = '';
+		$propid = $request->id;
+		$containerImgObj = \DB::table('tb_container_files')->select('id','file_name','folder_id')->where('id', $propid)->first();
+        if(isset($containerImgObj->file_name)){
+            $img_src = $containerObj->getThumbpath($containerImgObj->folder_id).$containerImgObj->file_name;
+            header("Content-type: image/jpeg");
+			$data = file_get_contents($img_src);
+			$image = 'data:image/jpeg;base64,' . base64_encode($data);
+        }else
+        {
+            return false;
+        }
+		return $image;
+	}
 	
 	public function getPropertyImageById(Request $request)
 	{
