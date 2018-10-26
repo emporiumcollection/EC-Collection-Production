@@ -185,16 +185,11 @@
 				{
 					$url.='?arrive='.Request::input("arrive")."&departure=".Request::input("departure");
 				}
-                $temotional_gallery = array();
-                if(((($rw % 20) == 0) || ($rw == count($propertiesArr))) && (count($emotional_gallery) > 0)){
-                    for($i = 0; $i<5; $i++){
-                        if(count($emotional_gallery) > 0){ $temotional_gallery[] = array_shift($emotional_gallery); }
-                    }
-                }
+
+
 			?> 
 			@if($rw%19==0)
 							{{--*/ $adscatid = ($destination_category > 0) ? $destination_category : 'Hotel'; $resultads = CommonHelper::getGridResultAds('grid_results', $adscatid) /*--}}
-                            
 							@if(!empty($resultads['resultads']))
 								 <div class="col-md-4 col-sm-4 col-xs-12 grid-item">
 							        <div class="row">
@@ -239,34 +234,6 @@
 							        </div>
 							      </div>
 							 @endif
-                             
-                             @if(count($temotional_gallery) > 0)
-                                <?php
-                                $images_arr = array();
-                                foreach($temotional_gallery as $si_g_image){
-                                    //$images_arr[] = array("src"=>\URL::to('container-image/'.$si_g_image->id));
-                                    $images_arr[] = array("src"=>\URL::to('uploads/thumbs/format_'.$si_g_image->folder_id.'_'.$si_g_image->file_name));
-                                }
-                                $img_str = json_encode($images_arr);
-                                ?>
-                                <div class="col-md-4 col-sm-4 col-xs-12 grid-item">
-							        <div class="row">
-							           <div class="gridinner">
-							           	<div class="image">
-							           		    {{-- <a class="showhide" href="{{$url}}" rel="bookmark" style="">{{ $props->property_name}}   </a> --}}
-							            <a href="javascript:false;">
-							          		 <img src="{{ URL::to('themes/emporium/images/emporium-voyage-logo-white-loader.svg') }}" data-src="{{$images_arr[0]['src']}}" data-imagessrc="{{$img_str}}" class="img-responsive rad-img" alt="Emotional Gallery" title="Emotional Gallery" data-rad-auto-run="true"  />
-							           	</a>
-
-							           </div>
-							            <div class="gridtext">
-							              <h5 class="entry-title"></h5>
-							               <p></p>
-							            </div>
-							          </div>
-							        </div>
-							      </div>
-                            @endif
 
       		{{--*/ $rw++ /*--}}
       @endforeach 
@@ -321,7 +288,7 @@
 					<div class="full-width">
 						<div data-is data-is-api="{{ url('runInsta')}}"
 							 data-is-source="{{ $destination_category_instagram }}"
-							 data-is-rows="2" data-is-limit="0" data-is-columns="5" ></div>
+							 data-is-rows="2" data-is-limit="0" data-is-columns="5"></div>
 					</div>
 				</section>
 			</section>
