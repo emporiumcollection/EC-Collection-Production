@@ -157,7 +157,7 @@
                                         <button class="btn btn-default" type="button" onclick="choose_room_type('{{$type->id}}');">Book Now</button>
                                         @if($type->price!='')
                                             <button class="btn btn-default"
-                                                    type="button"> {{($currency->content!='') ? $currency->content : '$'}} {{$type->price}} </button>
+                                                    type="button"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}} </button>
                                         @endif
                                         <div class="sliderArrow">
                                             <a href="javascript:void(0);" class="prevClick"><i
