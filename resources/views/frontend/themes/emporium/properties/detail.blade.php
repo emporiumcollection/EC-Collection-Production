@@ -633,6 +633,14 @@
 @section('custom_js')
     @parent
 	<script>
+        var logined = true;
+        <?php
+            if(isset(\Auth::user()->id)){
+        ?>
+                logined = false;    
+        <?php
+            }
+        ?>
         $(document).ready(function () {
             
             
@@ -719,7 +727,7 @@
 			{
 				imagesPro += '<h2>';
 				imagesPro += (data.currency.content != '') ? data.currency.content : '$';
-				imagesPro += data.typedata.price;
+				imagesPro += (logined) ? 'Login to view' : data.typedata.price;
 				imagesPro += '</h2>';
 			}
 			imagesPro += '<a href="javascript:void(0);" onclick="choose_room_type(' + data.typedata.id + ');" class="button">Book</a>';
@@ -730,12 +738,16 @@
 		
 		function choose_room_type(type)
 		{
-			$('#roomType').val('');
-			if (type != '' && type > 0)
-			{
-				$('#roomType').val(type);
-				$(".detail-page-booking-form").trigger("submit");
-			}
+            if(logined){
+                $("#showLoginPopup").modal();
+            }else{
+    			$('#roomType').val('');
+    			if (type != '' && type > 0)
+    			{
+    				$('#roomType').val(type);
+    				$(".detail-page-booking-form").trigger("submit");
+    			}
+            }
 		}
 
 	</script>
