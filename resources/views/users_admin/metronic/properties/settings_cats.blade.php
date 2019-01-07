@@ -1,9 +1,5 @@
 @extends('users_admin.metronic.layouts.app')
 
-@section('page_name')
-    Property  <small>Properties</small>
-@stop
-
 @section('breadcrumb')
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 
@@ -59,11 +55,131 @@
             @if(!empty($property_data)) {{$property_data->property_name}} @endif 
         </div>
         <div class="col-sm-8 col-md-8 col-lg-8">
+            
             <a href="{{URL::to('properties/update/'.$pid)}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Property Management"><i class="fa fa-edit"></i>&nbsp;Property Management</a>
+            
+            <a href="{{URL::to('flipviewpdf/Emporium-Voyage-Add-Category-help.pdf')}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Add Suite Category" style="margin-right: 10px;" target="_blank"><i class="fa fa-edit"></i>&nbsp;View Documentation</a>
         </div>
         
         <!--begin::Portlet-->
 		<div class="m-portlet">
+            <div class="m-portlet__head">				
+				<div class="m-portlet__head-tools margin-left-98">
+					<ul class="m-portlet__nav bg-gray">
+						<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+							<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
+								<span class="desk_bars1"></span>
+                                <span class="desk_bars2"></span>
+                                <span class="desk_bars3"></span>
+							</a>
+							<div class="m-dropdown__wrapper" style="z-index: 101;">
+								<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 18px;"></span>
+								<div class="m-dropdown__inner">
+									<div class="m-dropdown__body">
+										<div class="m-dropdown__content">
+											<ul class="m-nav">
+												<li class="m-nav__section m-nav__section--first">
+													<span class="m-nav__section-text">
+														Quick Actions
+													</span>
+												</li>                                                
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties/update/'.$pid.'?return='.$return) }}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Hotel/Property
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/types')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suite Type
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/rooms')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suites
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/seasons')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Seasons
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/calendar')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Reservation Management
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/price')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Price
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/property_documents')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Documents
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/property_images')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Images
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/gallery_images')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Galleries
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{URL::to('advertising')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Become Featured
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="https://emporium-collection.com/" class="m-nav__link" target="_blank">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Get Help
+														</span>
+													</a>
+											    </li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div class="m-portlet__body">
 				<ul class="nav nav-tabs" role="tablist">
                     @if(!empty($tabss))
@@ -108,7 +224,7 @@
     								<div class="col-lg-9">
     									<div class="row">
     										<div class="form-group col-lg-3">
-    											<label for="cat_name">Category Name </label>
+    											<label for="cat_name">Suite Type </label>
     											<input name="cat_name" id="cat_name" type="text" class="form-control input-sm" value="" required="required" /> 
     										</div> 
     										<div class="form-group col-lg-3">
@@ -141,11 +257,11 @@
     											<input name="guests_junior" id="guests_junior" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
     										</div>
     										<div class="form-group col-lg-2">
-    											<label for="guests_babies">Babies </label>
+    											<label for="guests_babies">Infants </label>
     											<input name="guests_babies" id="guests_babies" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
     										</div>
     										<div class="form-group col-lg-3">
-                                                <label for="babies_count_toward_total">Babies count toward total </label>
+                                                <label for="babies_count_toward_total">Infants count toward total </label>
     											<div class="margin-top-10">
                                                     <div class="m-checkbox-inline">
             											<label class="m-checkbox m-checkbox--solid m-checkbox--brand">
@@ -184,7 +300,7 @@
 									<div class="col-lg-9">
 										<div class="row">
 											<div class="form-group col-lg-3">
-												<label for="cat_name">Category Name </label>
+												<label for="cat_name">Suite Type </label>
 												<input name="cat_name" id="cat_name" type="text" class="form-control input-sm" value="{{$cat->category_name}}" required="required" /> 
 											</div> 
 											<div class="form-group col-lg-3">
@@ -217,11 +333,11 @@
 												<input name="guests_junior" id="guests_junior" type="text" class="form-control input-sm" value="{{$cat->guests_juniors}}" data-rule-number="true" required="required" /> 
 											</div>
 											<div class="form-group col-lg-2">
-												<label for="guests_babies">Babies </label>
+												<label for="guests_babies">Infants </label>
 												<input name="guests_babies" id="guests_babies" type="text" class="form-control input-sm" value="{{$cat->guests_babies}}" data-rule-number="true" required="required" /> 
 											</div>
 											<div class="form-group col-lg-3">
-                                                <label for="babies_count_toward_total">Babies count toward total </label>
+                                                <label for="babies_count_toward_total">Infants count toward total </label>
 												<div class="margin-top-10">
                                                     <div class="m-checkbox-inline">
             											<label class="m-checkbox m-checkbox--solid m-checkbox--brand">
@@ -261,7 +377,7 @@
 								<div class="col-lg-9">
 									<div class="row">
 										<div class="form-group col-lg-3">
-											<label for="cat_name">Category Name </label>
+											<label for="cat_name">Suite Type </label>
 											<input name="cat_name" id="cat_name" type="text" class="form-control input-sm" value="" required="required" /> 
 										</div> 
 										<div class="form-group col-lg-3">
@@ -294,11 +410,11 @@
 											<input name="guests_junior" id="guests_junior" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
 										<div class="form-group col-lg-2">
-											<label for="guests_babies">Babies </label>
+											<label for="guests_babies">Infants </label>
 											<input name="guests_babies" id="guests_babies" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
 										<div class="form-group col-lg-3">
-                                            <label for="babies_count_toward_total">Babies count toward total </label>
+                                            <label for="babies_count_toward_total">Infants count toward total </label>
 											<div class="margin-top-10">												
                                                 <div class="m-checkbox-inline">
         											<label class="m-checkbox m-checkbox--solid m-checkbox--brand">
@@ -360,7 +476,7 @@ $(document).ready(function () {
              return false; // required to block normal submit since you used ajax
          }
      });*/
-	$(document).on('click', '.btn', function (){ console.log($(this).parents('form.add_property_type_setup').attr('id'));
+	$(document).on('click', '.btn', function (){
 		 var frmid = $(this).parents('form.add_property_type_setup').attr('id');
 		  $('#'+frmid).validate({
 			submitHandler: function (form) {
@@ -393,12 +509,14 @@ $(document).ready(function () {
 				}
 				else
 				{
+				    
 					if(data.type=='update')
 					{
 						html +='<div class="alert alert-success fade in block-inner">';
 						html +='<button data-dismiss="alert" class="close" type="button">×</button>';
 						html +='<i class="icon-checkmark-circle"></i> Record Updated Successfully </div>';
 						$('.page-content-wrapper #formerrors').html(html);
+                        toastr.success('Record Updated Successfully');
 						window.scrollTo(0, 0);
 					}
 					else
@@ -419,7 +537,7 @@ $(document).ready(function () {
 						html +='<div class="col-lg-9">';
 						html +='<div class="row">';
 						html +='<div class="form-group col-lg-3">';
-						html +='<label for="cat_name">Category Name </label>';
+						html +='<label for="cat_name">Suite TYpe </label>';
 						html +='<input name="cat_name" id="cat_name" type="text" class="form-control input-sm" value="" required="required" />'; 
 						html +='</div>'; 
 						html +='<div class="form-group col-lg-3">';
@@ -452,18 +570,18 @@ $(document).ready(function () {
 						html +='<input name="guests_junior" id="guests_junior" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" />'; 
 						html +='</div>';
 						html +='<div class="form-group col-lg-2">';
-						html +='<label for="guests_babies">Babies </label>';
+						html +='<label for="guests_babies">Infants </label>';
 						html +='<input name="guests_babies" id="guests_babies" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" />'; 
 						html +='</div>';
 						html +='<div class="form-group col-lg-3">';
 						html +='<div class="margin-top-10">';
 						//html +='<label class="optionbox">';
-						//html +='<input type="checkbox" name="count_baby" value="1"> Babies count toward total';
+						//html +='<input type="checkbox" name="count_baby" value="1"> Infants count toward total';
 						//html +='</label>';
                         
                         html +='<div class="m-checkbox-inline">';
 						html +='<label class="m-checkbox m-checkbox--solid m-checkbox--brand">';
-						html +='<input type="checkbox" name="count_baby" value="1"> Babies count toward total';
+						html +='<input type="checkbox" name="count_baby" value="1"> Infants count toward total';
 						html +='<span></span>';
 						html +='</label>';
 						html +='</div>';
@@ -533,6 +651,7 @@ $(document).ready(function () {
 							html +='<button data-dismiss="alert" class="close" type="button">×</button>';
 							html +='<i class="icon-checkmark-circle"></i> Record Not Found </div>';
 							$('.page-content-wrapper #formerrors').html(html);
+                            toastr.error("Record Not Found");
 							window.scrollTo(0, 0);
 					  }
 					  else{
@@ -541,6 +660,7 @@ $(document).ready(function () {
 							html +='<button data-dismiss="alert" class="close" type="button">×</button>';
 							html +='<i class="icon-checkmark-circle"></i> Record Deleted Successfully </div>';
 							$('.page-content-wrapper #formerrors').html(html);
+                            toastr.success("Record Deleted Successfully");
 							window.scrollTo(0, 0);
 					  }
 				  }

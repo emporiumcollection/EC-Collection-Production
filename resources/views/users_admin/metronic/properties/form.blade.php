@@ -1,9 +1,5 @@
 @extends('users_admin.metronic.layouts.app')
 
-@section('page_name')
-    Property  <small>Update</small>
-@stop
-
 @section('breadcrumb')
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 
@@ -33,7 +29,7 @@
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 
         <a href="javascript:;" class="m-nav__link"> 
-            <span class="m-nav__link-text"> Hotel/Property </span> 
+            <span class="m-nav__link-text breadcrumb-end"> Hotel/Property </span> 
         </a> 
     </li>
     <?php } ?>
@@ -49,7 +45,7 @@
 					<div class="m-portlet__head-caption">
 						<div class="m-portlet__head-title">
 							<h3 class="m-portlet__head-text">
-								Update Property
+								Property Management System - Setup Wizard
 							</h3>
 						</div>
 					</div>					
@@ -91,7 +87,7 @@
 														<span></span>
 													</div>
 													<div class="m-wizard__step-label">
-														Hotel Info
+														Hotel/Property Info
 													</div>
 												</div>
 											</div>
@@ -150,12 +146,15 @@
     										<div class="m-wizard__form-step m-wizard__form-step--current" id="m_wizard_form_step_1">
                                                 <input name="form_wizard" type="hidden" id="form_wizard" value="1" />  
     											<div class="m-form__section m-form__section--first">
+                                                    <div class="col-xl-12 col-sm-12 col-md-12 col-lg-12 m--align-right"><a href="#" class="tips btn btn-xs btn-primary"><i class="fa  icon-file-pdf "></i>View Hotel Setup Documentation</a></div>
                                                     <div class="m-form__heading">
     													<h3 class="m-form__heading-title">
-    														Hotel Info
+    														Hotel info cont.
     													</h3>
     												</div>   
-                                                    
+                                                    <div class="form-group m-form__group row">
+                                                        <div class="col-xl-3 col-sm-3 col-md-3 col-lg-3"></div>                                                        
+                                                    </div>
                                                     <div class="form-group m-form__group row">
                                                         <label class="col-xl-3 col-lg-3 col-form-label">{{ Lang::get('hotel.property-name') }} <span class="asterix"> * </span></label>
                                                         <div class="col-xl-9 col-lg-9">
@@ -166,7 +165,7 @@
                                                         </div> 
                                                     </div> 					
                                                     <div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ Lang::get('hotel.property-short-name') }} </label>
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> {{ Lang::get('hotel.property-short-name') }} <span class="asterix"> * </span></label>
                                                         <div class="col-xl-9 col-lg-9">
                                                             {!! Form::text('property_short_name', $row['property_short_name'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'',   )) !!}
                                                             <span class="m-form__help">
@@ -178,7 +177,7 @@
                                                         <label class="col-xl-3 col-lg-3 col-form-label"> Property Type <span class="asterix"> * </span></label>
                                                         <div class="col-xl-9 col-lg-9">
                                                             <?php $property_type = explode(',', $row['property_type']);
-                                                            $property_type_opt = array('Hotel' => 'Hotel', 'Yachts' => 'Yachts', 'Villas' => 'Villas', 'Spas' => 'Spas', 'Safari Lodges' => 'Safari Lodges');
+                                                            $property_type_opt = array('Hotel' => 'Hotel', 'Yacht' => 'Yacht', 'Private Villa' => 'Private Villa', 'Spa & wellness Hotel' => 'Spa & wellness Hotel', 'Safari Lodge' => 'Safari Lodge', 'Private Island' => 'Private Island','Boutique Hotel' => 'Boutique Hotel');
                                                             ?>
                                                             <select name='property_type' id='property_type' rows='5' required="required"  class='form-control m-input m-input--solid select2 ' onchange="check_yachts(this.value)";  > 
                                                                 <?php
@@ -219,15 +218,6 @@
     														</span>  
                                                         </div>
                                                     </div>
-                                                    <?php /* <div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Commission ( in % ) </label>
-                                                        <div class="col-xl-9 col-lg-9">
-                                                            {!! Form::text('commission', $row['commission'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'',   )) !!}
-                                                            <span class="m-form__help">
-    															Please enter commission
-    														</span> 
-                                                        </div>
-                                                    </div> */ ?>
                     
                                                     <div class="form-group m-form__group row">
                                                         <label class="col-xl-3 col-lg-3 col-form-label"> About </label>
@@ -249,18 +239,18 @@
                                                         </div>                                                         
                                                     </div> 
                     
-                                                    <div class="form-group m-form__group row">
+                                                    <div class="form-group m-form__group row" style="display: none;">
                                                         <label class="col-xl-3 col-lg-3 col-form-label"> Assign User <span class="asterix"> * </span></label>
                                                         <div class="col-xl-9 col-lg-9">
-                                                            <select name='assigned_user_id' rows='5' id='assigned_user_id' class='form-control m-input m-input--solid select2'></select>
+                                                            <select name='assigned_user_id' rows='5' id='assigned_user_id' class='form-control m-input m-input--solid select2' multiple="multiple"></select>
                                                             <span class="m-form__help">
-    															Please select user
+    															
     														</span> 
                                                         </div>                                                        
                                                     </div> 
                     
                                                     <div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Assign Amenities </label>
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Assign Property Amenities </label>
                                                         <div class="col-xl-9 col-lg-9">
                                                             <select name='assigned_amenities[]' rows='5' id='assigned_amenities' class='form-control m-input m-input--solid select2 ' multiple="multiple"  >
                                                                 @if(!empty($amenties))
@@ -270,7 +260,7 @@
                                                                 @endif
                                                             </select>
                                                             <span class="m-form__help">
-    															Please select assign amenties
+    															Please select assign amenties, Type in the white box to search/select
     														</span> 
                                                         </div>
                                                     </div> 
@@ -283,13 +273,13 @@
     																<input type="checkbox" name="copy_amenities_rooms" id="copy_amenities_rooms" checked="" value="1" {{($row['copy_amenities_rooms'] == 1) ? " checked='checked' " : '' }} >
     																<span></span>
     															</label>
-    														</div>                                                            
+    														</div>                                                   
                                                         </div>
                                                     </div> 
                                                     <div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Destinations</label>
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Destinations &amp; Experience</label>
                                                         <div class="col-xl-9 col-lg-9">                    
-                                                            <select name='destinations[]' id="property_category_id" rows='5'   class='form-control m-input m-input--solid select2 ' multiple="multiple"   > 
+                                                            <select name='destinations[]' id="property_category_id" rows='5' class='form-control m-input m-input--solid select2 ' multiple="multiple"   > 
                                                                 <option  value ="0">-- Select Category --</option> 
                                                                 @foreach($categories as $val)
                     
@@ -297,7 +287,7 @@
                                                                 @endforeach						
                                                             </select> 
                                                             <span class="m-form__help">
-    															Please select destination
+    															Please select destination, Type in the white box to search/select.
     														</span>
                                                         </div>
                                                     </div>
@@ -311,6 +301,9 @@
     																<span></span>
     															</label>
     														</div>
+                                                            <span class="m-form__help">
+    															Used in Reservation Management, Leave checked if you are not sure.
+    														</span> 
                                                         </div> 
                                                     </div>
                     
@@ -389,84 +382,315 @@
     														</span> 
                                                         </div>                                                        
                                                     </div>
-                    								
-                    								<div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Featured Property </label>
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label">Primary airport <span class="asterix"> * </span></label>
                                                         <div class="col-xl-9 col-lg-9">
-                                                            <div class="col-xl-9 col-lg-9">
-                                                                <div class="m-checkbox-inline">
-        															<label class="m-checkbox m-checkbox--solid m-checkbox--brand">
-        																<input type="checkbox" name="feature_property" id="feature_property" value="1" {{($row['feature_property'] == 1) ? " checked='checked' " : '' }} >
-        																<span></span>
-        															</label>
-        														</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                    								
-                    								<div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Editor's Choice </label>
-                                                        <div class="col-xl-9 col-lg-9">
-                                                            <div class="col-xl-9 col-lg-9">
-                                                                <div class="m-checkbox-inline">
-        															<label class="m-checkbox m-checkbox--solid m-checkbox--brand">
-        																<input type="checkbox" name="editor_choice_property" id="editor_choice_property" value="1" {{($row['editor_choice_property'] == 1) ? " checked='checked' " : '' }} >
-        																<span></span>
-        															</label>
-        														</div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                    								
-                    								<div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Restaurants</label>
-                                                        <div class="col-xl-9 col-lg-9">
-                                                            <select name='restaurantids[]' id="restaurantids" rows='5'   class='form-control m-input m-input--solid select2 ' multiple="multiple"   > 
-                                                                <option  value ="0">-- Select Restaurant --</option> 
-                                                                @foreach($restaurants as $val)
-                    
-                                                                <option  value ="{{$val->id}}" {{(isset($row['restaurant_ids']) && in_array($val->id,explode(',',$row['restaurant_ids']))) ? " selected='selected' " : '' }}>{{$val->title}}</option> 						
-                                                                @endforeach						
-                                                            </select> 
+                                                            {!! Form::text('primary_airport', $row['primary_airport'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'', 'required'=>'true'  )) !!}
                                                             <span class="m-form__help">
-    															Please select restaurants
-    														</span>
+    															Please enter primary airport
+    														</span>  
                                                         </div>
                                                     </div>
-                    								
-                    								<div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Bars</label>
-                                                        <div class="col-xl-9 col-lg-9">                    
-                                                            <select name='barids[]' id="barids" rows='5' class='form-control m-input m-input--solid select2 ' multiple="multiple"   > 
-                                                                <option  value ="0">-- Select Bar --</option> 
-                                                                @foreach($bars as $val)
-                    
-                                                                <option  value ="{{$val->id}}" {{(isset($row['bar_ids']) && in_array($val->id,explode(',',$row['bar_ids']))) ? " selected='selected' " : '' }}>{{$val->title}}</option> 						
-                                                                @endforeach						
-                                                            </select>
-                                                            <span class="m-form__help">
-    															Please select bars
-    														</span>
-                                                        </div>
-                                                    </div>
-                    								
-                    								<div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Spas</label>
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label">Secondary airport <span class="asterix"> * </span></label>
                                                         <div class="col-xl-9 col-lg-9">
-                                                            <select name='spaids[]' id="spaids" rows='5'   class='form-control m-input m-input--solid select2 ' multiple="multiple"   > 
-                                                                <option  value ="0">-- Select Spa --</option> 
-                                                                @foreach($spas as $val)
-                    
-                                                                <option  value ="{{$val->id}}" {{(isset($row['spa_ids']) && in_array($val->id,explode(',',$row['spa_ids']))) ? " selected='selected' " : '' }}>{{$val->title}}</option> 						
-                                                                @endforeach						
-                                                            </select> 
+                                                            {!! Form::text('secondary_airport', $row['secondary_airport'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'', 'required'=>'true'  )) !!}
                                                             <span class="m-form__help">
-    															Please select spas
-    														</span>
+    															Please enter secondary airport
+    														</span>  
                                                         </div>
-                                                    </div>
-                                                                                 					
+                                                     </div>                      					
     											</div>
+                                                
+                                                <div class="m-separator m-separator--dashed m-separator--lg"></div>
+                                                <div class="m-form__section bg-gray">
+    											    <div class="m-form__heading">
+    												    <h3 class="m-form__heading-title">
+    												        Hotel Contact     													   
+    													</h3>
+                                                    </div>
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Hotel Generic Email Address </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            {!! Form::text('hotel_generic_email_address', $row['hotel_generic_email_address'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                            <span class="m-form__help">
+    															Please enter hotel generic email address
+    														</span> 
+                                                        </div>
+                                                    </div> 
+            
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> General Manager's Name </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            {!! Form::text('general_manager_name', $row['general_manager_name'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                            <span class="m-form__help">
+    															Please enter general manager name
+    														</span> 
+                                                        </div>
+                                                    </div> 
+            
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Time Zone </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            {!! Form::text('hotel_time_zone', $row['hotel_time_zone'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                            <span class="m-form__help">
+    															Please enter time zone
+    														</span> 
+                                                        </div>
+                                                    </div>
+            
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Currency </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            {!! Form::text('hotel_currency', $row['hotel_currency'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                            <span class="m-form__help">
+    															Please enter currency
+    														</span> 
+                                                        </div>
+                                                    </div>                                                    
+                                                    
+                                                    <div class="form-group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label" for="Video"> Telephone No. </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            <div class="row">
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('hotel_telephone_country_code', $row['hotel_telephone_country_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Country Code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('hotel_telephone_area_code', $row['hotel_telephone_area_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Area/City code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-8 col-sm-8 col-md-8">
+                                                                    {!! Form::text('hotel_telephone_no', $row['hotel_telephone_no'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!}
+                                                                </div> 
+                                                            </div>
+                                                            <span class="m-form__help">
+    															Please enter telephone number with country and area/city code.
+    														</span> 
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> General Fax No. </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            <div class="row">
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('general_fax_country_code', $row['general_fax_country_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Country Code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('general_fax_area_code', $row['general_fax_area_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Area/City code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-8 col-sm-8 col-md-8">
+                                                                    {!! Form::text('general_fax_no', $row['general_fax_no'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                                </div>
+                                                            </div>
+                                                            <span class="m-form__help">
+    															Please enter general fax number with country and area/city code.
+    														</span>
+                                                        </div>
+                                                    </div>
+            
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Reservations Direct Telephone No. </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            <div class="row">
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('reservations_direct_telephone_country_code', $row['reservations_direct_telephone_country_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Country Code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('reservations_direct_telephone_area_code', $row['reservations_direct_telephone_area_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Area/City code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-8 col-sm-8 col-md-8">
+                                                                    {!! Form::text('reservations_direct_telephone_no', $row['reservations_direct_telephone_no'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!}
+                                                                </div>
+                                                            </div>
+                                                            <span class="m-form__help">
+    															Please enter reservations direct telephone number with country and area/city code.
+    														</span> 
+                                                        </div>
+                                                    </div> 
+                                                    
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Reservations Toll Free No. </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            <div class="row">
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('reservations_toll_free_country_code', $row['reservations_toll_free_country_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Country Code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('reservations_toll_free_area_code', $row['reservations_toll_free_area_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Area/City code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-8 col-sm-8 col-md-8">
+                                                                    {!! Form::text('reservations_toll_free_no', $row['reservations_toll_free_no'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!}
+                                                                </div>
+                                                            </div> 
+                                                            <span class="m-form__help">
+    															Please enter reservations toll free number with country and area/city code.
+    														</span> 
+                                                        </div>
+                                                    </div> 
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Reservations Department Fax No. </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            <div class="row">
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('reservations_department_fax_country_code', $row['reservations_department_fax_country_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Country Code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('reservations_department_fax_area_code', $row['reservations_department_fax_area_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Area/City code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-8 col-sm-8 col-md-8">
+                                                                    {!! Form::text('reservations_department_fax_no', $row['reservations_department_fax_no'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!}
+                                                                </div>
+                                                            </div>
+                                                            <span class="m-form__help">
+    															Please enter reservations department fax number with country and area/city code.
+    														</span> 
+                                                        </div>
+                                                    </div> 
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Reservations Alternate Fax No. </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            <div class="row">
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('reservations_alternate_fax_country_code', $row['reservations_alternate_fax_country_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Country Code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-2 col-sm-2 col-md-2">
+                                                                    {!! Form::text('reservations_alternate_fax_area_code', $row['reservations_alternate_fax_area_code'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>'Area/City code'  )) !!}
+                                                                </div>
+                                                                <div class="col-xs-8 col-sm-8 col-md-8">
+                                                                    {!! Form::text('reservations_alternate_fax_no', $row['reservations_alternate_fax_no'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!}
+                                                                </div>
+                                                            </div>
+                                                            <span class="m-form__help">
+    															Please enter reservations alternate fax number with country and area/city code.
+    														</span> 
+                                                        </div>
+                                                    </div> 
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Reservations General Email Address </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            {!! Form::text('reservations_general_email_address', $row['reservations_general_email_address'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!}
+                                                            <span class="m-form__help">
+    															Please enter reservations general email address.
+    														</span>  
+                                                        </div>
+                                                    </div> 
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label">Primary City </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            {!! Form::text('primary_city', $row['primary_city'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                            <span class="m-form__help">
+    															Please enter primary city.
+    														</span> 
+                                                        </div>
+                                                    </div> 
+                                                    <div class="form-group m-form__group row">
+                                                        <label class="col-xl-3 col-lg-3 col-form-label">Secondary City </label>
+                                                        <div class="col-xl-9 col-lg-9">
+                                                            {!! Form::text('secondary_city', $row['secondary_city'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                            <span class="m-form__help">
+    															Please enter secondary city.
+    														</span> 
+                                                        </div>
+                                                    </div> 
+                                                </div>
+                                                    
+                                                    <div class="m-separator m-separator--dashed m-separator--lg"></div>
+                                                    <div class="m-form__section">
+                                                        <div class="m-form__heading">
+        												    <h3 class="m-form__heading-title">
+        												        GDS Existing Codes    													   
+        													</h3>
+                                                        </div>
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label">Amadeus </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                {!! Form::text('amadeus', $row['amadeus'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                                <span class="m-form__help">
+        															Please enter amadeus.
+        														</span> 
+                                                            </div>
+                                                        </div> 
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label">Galileo </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                {!! Form::text('galileo', $row['galileo'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                                <span class="m-form__help">
+        															Please enter galileo.
+        														</span> 
+                                                            </div>
+                                                        </div> 
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label">Sabre </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                {!! Form::text('sabre', $row['sabre'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                                <span class="m-form__help">
+        															Please enter sabre.
+        														</span> 
+                                                            </div>
+                                                        </div> 
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label">Worldspan
+     </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                {!! Form::text('worldspan', $row['worldspan'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                                <span class="m-form__help">
+        															Please enter worldspan.
+        														</span> 
+                                                            </div>
+                                                        </div> 
+                                                    </div>
+                                                    <div class="m-separator m-separator--dashed m-separator--lg"></div>
+                                                    <div class="m-form__section  bg-gray">
+                                                        <div class="m-form__heading">
+        												    <h3 class="m-form__heading-title">
+        												        Taxes & Fees (enter amount or percent and select option)    													   
+        													</h3>
+                                                        </div>    
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label">VAT Tax </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                {!! Form::text('vat_tax', $row['vat_tax'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                                <span class="m-form__help">
+        															Please enter VAT tax.
+        														</span>
+                                                            </div>
+                                                        </div> 
+                                                        
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label">Occupancy Tax </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                {!! Form::text('occupancy_tax', $row['occupancy_tax'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                                <span class="m-form__help">
+        															Please enter occupancy tax.
+        														</span>
+                                                            </div>
+                                                        </div> 
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label">Service Charge </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                {!! Form::text('service_charge', $row['service_charge'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                                <span class="m-form__help">
+        															Please enter service charge.
+        														</span>
+                                                            </div>
+                                                        </div> 
+                                                        
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label">Travel Agent Commission </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                {!! Form::text('travel_agent_commission', $row['travel_agent_commission'],array('class'=>'form-control m-input m-input--solid', 'placeholder'=>''  )) !!} 
+                                                                <span class="m-form__help">
+        															Please enter travel agent commission.
+        														</span>
+                                                            </div>
+                                                        </div> 
+                                                    </div>    
+                                                    
+                                                    
+                                                    
+                                                 
+                                                
                                             </div>
                                             <!--begin: Form Wizard Step 1-->
                                             
@@ -498,10 +722,12 @@
                                                         <label class="col-xl-3 col-lg-3 col-form-label"> Image </label>
                                                         <div class="col-xl-9 col-lg-9">
                                                             <input  type='file' class="form-control m-input m-input--solid" name='architecture_image' id='architecture_image'  />
+                                                            @if(!empty($row['architecture_image']))
                                                             <div >
                                                                 {!! SiteHelpers::showUploadedFile($row['architecture_image'],'/uploads/properties_subtab_imgs/') !!}
             
                                                             </div>
+                                                            @endif
                                                         </div>
                                                     </div>
             
@@ -522,18 +748,20 @@
     														</div>
                                                         </div>
                                                     </div>
-            
-                                                    <div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Video </label>
-                                                        <div class="col-xl-9 col-lg-9">
-                                                            <input  type='file' name='architecture_video' id='architecture_video' class="form-control m-input m-input--solid"  />
-                                                            <div >
-                                                                {!! SiteHelpers::showUploadedFile($row['architecture_video'],'/uploads/properties_subtab_imgs/') !!}
-            
+                                                    
+                                                    <div class="architecture_videotypeupload" style="display:none;" >
+                                                        <div class="form-group m-form__group row" >
+                                                            <label class="col-xl-3 col-lg-3 col-form-label"> Video </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                <input  type='file' name='architecture_video' id='architecture_video' class="form-control m-input m-input--solid"  />
+                                                                <div >
+                                                                    {!! SiteHelpers::showUploadedFile($row['architecture_video'],'/uploads/properties_subtab_imgs/') !!}
+                
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
-            
+                                                    
                                                     <div class="architecture_videotypelink" style="display:none;" >
                                                         <div class="form-group m-form__group row">
                                                             <label class="col-xl-3 col-lg-3 col-form-label"> Link Type </label>
@@ -560,20 +788,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-            
-            
-                                                    <div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Designer </label>
-                                                        <div class="col-xl-9 col-lg-9">
-                                                            <select name='assigned_architecture_designer[]' rows='5' id='assigned_architecture_designer' class='form-control m-input m-input--solid select2 ' multiple="multiple"  >
-                                                                @if(!empty($designers))
-                                                                @foreach($designers as $designer)
-                                                                <option value="{{$designer->id}}" {{(isset($row['assigned_architecture_designer']) && in_array($designer->id,explode(',',$row['assigned_architecture_designer']))) ? " selected='selected' " : '' }}>{{$designer->designer_name}}</option>
-                                                                @endforeach
-                                                                @endif
-                                                            </select> 
-                                                        </div>
-                                                    </div>    
+                                                     
                                                 </div>
                                                 <div class="m-separator m-separator--dashed m-separator--lg"></div>
                                                 <div class="m-form__section bg-gray">
@@ -600,45 +815,50 @@
                                                         <label class="col-xl-3 col-lg-3 col-form-label"> Image </label>
                                                         <div class="col-xl-9 col-lg-9">
                                                             <input  type='file' class="form-control m-input m-input--solid" name='architecture_design_image' id='architecture_design_image'  />
+                                                            @if(!empty($row['architecture_design_image']))
                                                             <div >
                                                                 {!! SiteHelpers::showUploadedFile($row['architecture_design_image'],'/uploads/properties_subtab_imgs/') !!}
             
                                                             </div>					
-            
+                                                            @endif
                                                         </div>
                                                     </div>
             
                                                     <div class="form-group m-form__group row">
                                                         <label class="col-xl-3 col-lg-3 col-form-label"> Video Type </label>
                                                         <div class="col-xl-9 col-lg-9">
+                                                            
+                                                            <div class="m-radio-inline">
+    															<label class="m-radio m-radio--solid m-radio--brand">
+    																<input type="radio" name="architecture_design_video_type" value ='upload'  id='architecture_design_displayupload' @if($row['architecture_design_video_type'] == 'upload') checked="checked" @endif >
+    																Upload
+    																<span></span>
+    															</label>
+    															<label class="m-radio m-radio--solid m-radio--brand">
+    																<input type="radio" name="architecture_design_video_type" value ='link' id='architecture_design_displaylink' @if($row['architecture_design_video_type'] == 'link') checked="checked" @endif >
+    																Link
+    																<span></span>
+    															</label>
+    														</div>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="architecture_design_videotypeupload" style="display:none;" >
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label" for="Video"> Video </label>
                                                             <div class="col-xl-9 col-lg-9">
-                                                                <div class="m-radio-inline">
-        															<label class="m-radio m-radio--solid m-radio--brand">
-        																<input type="radio" name="architecture_design_video_type" value ='upload'  id='architecture_design_displayupload' @if($row['architecture_design_video_type'] == 'upload') checked="checked" @endif >
-        																Upload
-        																<span></span>
-        															</label>
-        															<label class="m-radio m-radio--solid m-radio--brand">
-        																<input type="radio" name="architecture_design_video_type" value ='link' id='architecture_design_displaylink' @if($row['architecture_design_video_type'] == 'link') checked="checked" @endif >
-        																Link
-        																<span></span>
-        															</label>
-        														</div>
+                                                                <input  type='file' name='architecture_design_video' class="form-control  m-input m-input--solid" id='architecture_design_video'  />
+                                                                @if(!empty($row['architecture_design_video']))
+                                                                <div >
+                                                                    {!! 	SiteHelpers::showUploadedFile($row['architecture_design_video'],'/uploads/properties_subtab_imgs/') !!}
+                
+                                                                </div>
+                                                                @endif
                                                             </div>
                                                         </div>
                                                     </div>
-            
-                                                    <div class="form-group architecture_design_videotypeupload" style="display:none;" >
-                                                        <label for="Video" class=" control-label col-md-4 text-left"> Video </label>
-                                                        <div class="col-xl-9 col-lg-9">
-                                                            <input  type='file' name='architecture_design_video' class="form-control  m-input m-input--solid" id='architecture_design_video'  />
-                                                            <div >
-                                                                {!! 	SiteHelpers::showUploadedFile($row['architecture_design_video'],'/uploads/properties_subtab_imgs/') !!}
-            
-                                                            </div>
-                                                        </div>
-                                                    </div>
-            
+                                                    
                                                     <div class="architecture_design_videotypelink" style="display:none;" >
                                                         <div class="form-group m-form__group row">
                                                             <label class="col-xl-3 col-lg-3 col-form-label"> Link Type </label>
@@ -723,16 +943,20 @@
     														</div>
                                                         </div>
                                                     </div>
-            
-                                                    <div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Video </label>
-                                                        <div class="col-xl-9 col-lg-9">
-                                                            <input  type='file' class="form-control m-input m-input--solid" name='architecture_designer_video' id='architecture_designer_video'  />
-                                                            <div >
-                                                                {!! SiteHelpers::showUploadedFile($row['architecture_designer_video'],'/uploads/properties_subtab_imgs/') !!}
-            
-                                                            </div>
-                                                        </div>
+                                                    
+                                                    <div class="architecture_designer_videotypeupload" style="display:none;" >
+                                                        <div class="form-group m-form__group row">
+                                                            <label class="col-xl-3 col-lg-3 col-form-label"> Video </label>
+                                                            <div class="col-xl-9 col-lg-9">
+                                                                <input  type='file' class="form-control m-input m-input--solid" name='architecture_designer_video' id='architecture_designer_video'  />
+                                                                @if(!empty($row['architecture_designer_video']))
+                                                                <div >
+                                                                    {!! SiteHelpers::showUploadedFile($row['architecture_designer_video'],'/uploads/properties_subtab_imgs/') !!}
+                
+                                                                </div>
+                                                                @endif
+                                                             </div>
+                                                         </div>
                                                     </div>
             
                                                     <div class="architecture_designer_videotypelink" style="display:none;" >
@@ -762,20 +986,7 @@
                                                             </div>
                                                         </div>
                                                     </div>
-            
-                                                    <div class="form-group m-form__group row">
-                                                        <label class="col-xl-3 col-lg-3 col-form-label"> Designer </label>
-                                                        <div class="col-xl-9 col-lg-9">
-                                                            <select name='architecture_designer_designer[]' rows='5' id='architecture_designer_designer' class='form-control m-input m-input--solid select2 ' multiple="multiple"  >
-                                                                @if(!empty($designers))
-                                                                @foreach($designers as $designer)
-                                                                <option value="{{$designer->id}}" {{(isset($row['architecture_designer_designer']) && in_array($designer->id,explode(',',$row['architecture_designer_designer']))) ? " selected='selected' " : '' }}>{{$designer->designer_name}}</option>
-                                                                @endforeach
-                                                                @endif
-                                                            </select> 
-                                                        </div>
-                                                    </div>
-            
+                                                    
                                                     <div class="form-group m-form__group row">
                                                         <label class="col-xl-3 col-lg-3 col-form-label"> URL </label>
                                                         <div class="col-xl-9 col-lg-9">
@@ -792,9 +1003,15 @@
     													<h3 class="m-form__heading-title">
     														Social Networks
     													</h3>
-                                                        <input name="form_wizard_2" type="hidden" id="form_wizard_2" value="3" />
+                                                        <input name="form_wizard_3" type="hidden" id="form_wizard_3" value="3" />
                                                         <input name="compedit_id" type="hidden" id="compedit_id" value="" />
-    												</div>                                                    
+    												</div>  
+                                                    <div class="form-group m-form__group row">
+                                                        <div class="col-xl-3 col-sm-3 col-md-3 col-lg-3"></div>
+                                                            
+                                                        <div class="col-xl-9 col-sm-9 col-md-9 col-lg-9"><a href="#" class="tips btn btn-xs btn-primary"><i class="fa  icon-file-pdf "></i>How to add social networks</a></div>
+                                                        
+                                                    </div>                                                  
                                                     <div class="form-group m-form__group row">
                                                         <label class="col-xl-3 col-lg-3 col-form-label"> Social Tab </label>
                                                         <div class="col-xl-9 col-lg-9">
@@ -925,10 +1142,83 @@
 {{-- For custom script --}}
 @section('custom_js_script')
     @parent
+    <script>
+        var base_url = '{{ url() }}';
+        /*Dropzone.autoDiscover = false;*/    
+        $(document).ready( function () {  
+            $(".select2").select2();
+            
+            $("#assigned_user_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_users:id:first_name|last_name') }}",
+                    {selected_value: '{{ $property_user }}'});
+                    
+            /* architecture video section */
+            if ($("#architecture_displayupload").is(":checked"))
+            { 
+                $(".architecture_videotypeupload").show();
+                $(".architecture_videotypelink").hide();
+            }
+
+            if ($("#architecture_displaylink").is(":checked"))
+            {
+                $(".architecture_videotypeupload").hide();
+                $(".architecture_videotypelink").show();
+            }
+            $("input[name=architecture_video_type]").click(function(){
+                if ($("#architecture_displayupload").is(":checked"))
+                { 
+                    $(".architecture_videotypeupload").show();
+                    $(".architecture_videotypelink").hide();
+                }
     
+                if ($("#architecture_displaylink").is(":checked"))
+                {
+                    $(".architecture_videotypeupload").hide();
+                    $(".architecture_videotypelink").show();
+                }
+            });
+            
+            chk_design();
+            $("input[name=architecture_design_video_type]").click(function(){
+                chk_design();
+            });
+            function chk_design(){                
+                if($("#architecture_design_displayupload").is(":checked")){
+                    $(".architecture_design_videotypeupload").show();
+                    $(".architecture_design_videotypelink").hide();
+                }
+                if($("#architecture_design_displaylink").is(":checked")){
+                    $(".architecture_design_videotypeupload").hide();
+                    $(".architecture_design_videotypelink").show();
+                }
+            }
+
+            chk_designer();
+            $("input[name=architecture_designer_video_type]").click(function(){
+                chk_designer();
+            });
+            function chk_designer(){         
+                if($("#architecture_designer_displayupload").is(":checked")){
+                    $(".architecture_designer_videotypeupload").show();
+                    $(".architecture_designer_videotypelink").hide();
+                }
+                if($("#architecture_designer_displaylink").is(":checked")){
+                    $(".architecture_designer_videotypeupload").hide();
+                    $(".architecture_designer_videotypelink").show();
+                }
+            }
+            
+        });
+    </script>
 @endsection
 
 @section('script')
+    <script type="text/javascript">
+        var activeTab = '@if($active_tab > 0){{$active_tab}}@else{{0}}@endif'; 
+        activeTab = parseInt(activeTab);
+        var prevTab = activeTab;
+        activeTab++;
+        var base_url = '{{ url() }}';
+    </script>
     <script src="{{ asset('metronic/assets/demo/demo6/base/property_update_wizard.js') }}"></script>
     <script src="{{ asset('metronic/assets/demo/demo6/base/bootstrap-datepicker.js') }}"></script>
     <script src="{{ asset('metronic/assets/demo/demo6/base/toastr.js') }}"></script>

@@ -149,7 +149,15 @@ class BookingsController extends Controller {
         if (\Auth::user()->group_id == 4) {
             return view('customer.bookings', $this->data);
         }
-
+        if (\Auth::user()->group_id == 3) {
+            return Redirect::to('traveller/bookings');
+        }
+        if (\Auth::user()->group_id == 5) {
+            return Redirect::to('hotel/bookings');
+        }
+        //$is_demo6 = trim(\CommonHelper::isHotelDashBoard());        
+        //$file_name = (strlen($is_demo6) > 0)?$is_demo6.'.bookings.index':'bookings.index';
+        
         return view('bookings.index', $this->data);
     }
 
@@ -171,49 +179,56 @@ class BookingsController extends Controller {
         } else {
             $this->data['row'] = $this->model->getColumnTable('tb_reservations');
         }
+        //print_r($row); die;        
         $this->data['fields'] = \SiteHelpers::fieldLang($this->info['config']['forms']);
 
         $this->data['id'] = $id;
         $this->data['preferences'] = \DB::table('td_booking_preferences')->where('reservation_id', $id)->first();
         $this->data['rooms'] = \DB::table('td_reserved_rooms')->where('reservation_id', $id)->get();
-        $this->data['user_info'] = \DB::table('tb_users')->where('id', $this->data['row']->client_id)->first();
-
+        
+        if(isset($this->data['row']->client_id)){
+            $this->data['user_info'] = \DB::table('tb_users')->where('id', $this->data['row']->client_id)->first();
+        }
+        
         $uid = \Auth::user()->id;
         $this->data['login_user'] = \DB::table('tb_users')->where('id', $uid)->first();
-
-        $this->data['category'] = \DB::table('tb_properties_category_types')->where('id', $this->data['row']->type_id)->where('status', 0)->where('show_on_booking', 1)->first();
-        $this->data['category_image'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $this->data['category']->property_id)->where('tb_properties_images.category_id', $this->data['row']->type_id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
-        $this->data['category_image']->imgsrc = (new ContainerController)->getThumbpath($this->data['category_image']->folder_id);
-
-        $props = \DB::table('tb_properties')->where('id', $this->data['category']->property_id)->first();
-
-        if ($props->default_seasons != 1) {
-            $checkseason = \DB::table('tb_seasons')->where('property_id', $props->id)->orderBy('season_priority', 'asc')->get();
-        } else {
-            $checkseason = \DB::table('tb_seasons')->where('property_id', 0)->orderBy('season_priority', 'asc')->get();
-        }
-        if (!empty($checkseason)) {
-            $foundsean = false;
-            for ($sc = 0; $foundsean != true; $sc++) {
-                $checkseasonDate = \DB::table('tb_seasons_dates')->where('season_id', $checkseason[$sc]->id)->where('season_from_date', '>=', $curnDate)->where('season_to_date', '<=', $curnDate)->count();
-                if ($checkseasonDate > 0) {
-                    $checkseasonPrice = \DB::table('tb_properties_category_rooms_price')->where('season_id', $checkseason[$sc]->id)->where('property_id', $props->id)->where('category_id', $this->data['category']->id)->first();
-                    if (!empty($checkseasonPrice)) {
-                        $this->data['category']->price = $checkseasonPrice->rack_rate;
-                        $foundsean = true;
+        
+        if(isset($this->data['row']->type_id)){
+        
+            $this->data['category'] = \DB::table('tb_properties_category_types')->where('id', $this->data['row']->type_id)->where('status', 0)->where('show_on_booking', 1)->first();
+            $this->data['category_image'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $this->data['category']->property_id)->where('tb_properties_images.category_id', $this->data['row']->type_id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
+            $this->data['category_image']->imgsrc = (new ContainerController)->getThumbpath($this->data['category_image']->folder_id);
+    
+            $props = \DB::table('tb_properties')->where('id', $this->data['category']->property_id)->first();
+    
+            if ($props->default_seasons != 1) {
+                $checkseason = \DB::table('tb_seasons')->where('property_id', $props->id)->orderBy('season_priority', 'asc')->get();
+            } else {
+                $checkseason = \DB::table('tb_seasons')->where('property_id', 0)->orderBy('season_priority', 'asc')->get();
+            }
+            if (!empty($checkseason)) {
+                $foundsean = false;
+                for ($sc = 0; $foundsean != true; $sc++) {
+                    $checkseasonDate = \DB::table('tb_seasons_dates')->where('season_id', $checkseason[$sc]->id)->where('season_from_date', '>=', $curnDate)->where('season_to_date', '<=', $curnDate)->count();
+                    if ($checkseasonDate > 0) {
+                        $checkseasonPrice = \DB::table('tb_properties_category_rooms_price')->where('season_id', $checkseason[$sc]->id)->where('property_id', $props->id)->where('category_id', $this->data['category']->id)->first();
+                        if (!empty($checkseasonPrice)) {
+                            $this->data['category']->price = $checkseasonPrice->rack_rate;
+                            $foundsean = true;
+                        }
                     }
                 }
-            }
-            if ($foundsean != true) {
-                $checkseasonPrice_ifnotforloop = \DB::table('tb_properties_category_rooms_price')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $this->data['category']->id)->first();
-                if (!empty($checkseasonPrice_ifnotforloop)) {
-                    $this->data['category']->price = $checkseasonPrice_ifnotforloop->rack_rate;
+                if ($foundsean != true) {
+                    $checkseasonPrice_ifnotforloop = \DB::table('tb_properties_category_rooms_price')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $this->data['category']->id)->first();
+                    if (!empty($checkseasonPrice_ifnotforloop)) {
+                        $this->data['category']->price = $checkseasonPrice_ifnotforloop->rack_rate;
+                    }
                 }
-            }
-        } else {
-            $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $this->data['category']->id)->first();
-            if (!empty($checkseasonPrice_ifnotanyseason)) {
-                $this->data['category']->price = $checkseasonPrice_ifnotanyseason->rack_rate;
+            } else {
+                $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $this->data['category']->id)->first();
+                if (!empty($checkseasonPrice_ifnotanyseason)) {
+                    $this->data['category']->price = $checkseasonPrice_ifnotanyseason->rack_rate;
+                }
             }
         }
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
@@ -1039,5 +1054,297 @@ class BookingsController extends Controller {
         $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.bookings.view':'bookings.view';
         
         return view($file_name, $this->data);
+    }
+    public function hotelBookings(Request $request){ 
+        $uid = \Auth::user()->id;
+        $this->data['hide_email_btn'] = false;
+        if ($this->access['is_view'] == 0)
+            return Redirect::to('dashboard')
+                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
+
+        $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
+        $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
+        // End Filter sort and order for query 
+        $ids = array();
+        $assigned_properties =  \DB::table('tb_properties')->select('id')->where('assigned_user_id', \Session::get('uid'))->get();
+        if(count($assigned_properties) > 0){
+            foreach($assigned_properties as $prop){
+                $ids[] = $prop->id;
+            }
+        }
+        $str_ids = implode(',', $ids);
+        //print_r($assigned_properties); die;
+        // Filter Search for query		
+        $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
+        $filter .= " AND tb_reservations.property_id in ('".$str_ids."')" ;
+        //echo $filter; die;
+        if (\Auth::user()->group_id != 1) {
+            $this->data['hide_email_btn'] = true;
+            //$filter .= " AND (client_id='" . $uid . "')";
+        }
+		
+        $page = $request->input('page', 1);
+        $params = array(
+            'page' => $page,
+            'limit' => (!is_null($request->input('rows')) ? filter_var($request->input('rows'), FILTER_VALIDATE_INT) : static::$per_page ),
+            'sort' => $sort,
+            'order' => $order,
+            'params' => $filter,
+            'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
+        );
+
+        // Get Query 
+        $results = $this->model->getRows($params);
+        
+        // Build pagination setting
+        $page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;
+        $pagination = new Paginator($results['rows'], $results['total'], $params['limit']);
+        $pagination->setPath('traveller/bookings');
+
+        if (!empty($results['rows'])) {
+            foreach ($results['rows'] as $key => $row) {
+                $results['rows'][$key]->category = \DB::table('tb_properties_category_types')->where('id', $row->type_id)->where('status', 0)->where('show_on_booking', 1)->first();
+                $results['rows'][$key]->category_image = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $results['rows'][$key]->category->property_id)->where('tb_properties_images.category_id', $row->type_id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
+                $results['rows'][$key]->category_image->imgsrc = (new ContainerController)->getThumbpath($results['rows'][$key]->category_image->folder_id);
+
+                $props = \DB::table('tb_properties')->where('id', $results['rows'][$key]->category->property_id)->first();
+                $results['rows'][$key]->props = $props;
+                
+                if ($props->default_seasons != 1) {
+                    $checkseason = \DB::table('tb_seasons')->where('property_id', $props->id)->orderBy('season_priority', 'asc')->get();
+                } else {
+                    $checkseason = \DB::table('tb_seasons')->where('property_id', 0)->orderBy('season_priority', 'asc')->get();
+                }
+                if (!empty($checkseason)) {
+                    $foundsean = false;
+                    $curnDate = date('Y-m-d');
+                    for ($sc = 0; $foundsean != true; $sc++) {
+                        $checkseasonDate = \DB::table('tb_seasons_dates')->where('season_id', $checkseason[$sc]->id)->where('season_from_date', '>=', $curnDate)->where('season_to_date', '<=', $curnDate)->count();
+                        if ($checkseasonDate > 0) {
+                            $checkseasonPrice = \DB::table('tb_properties_category_rooms_price')->where('season_id', $checkseason[$sc]->id)->where('property_id', $props->id)->where('category_id', $results['rows'][$key]->category->id)->first();
+                            if (!empty($checkseasonPrice)) {
+                                $results['rows'][$key]->category->price = $checkseasonPrice->rack_rate;
+                                $foundsean = true;
+                            }
+                        }
+                    }
+                    if ($foundsean != true) {
+                        $checkseasonPrice_ifnotforloop = \DB::table('tb_properties_category_rooms_price')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $results['rows'][$key]->category->id)->first();
+                        if (!empty($checkseasonPrice_ifnotforloop)) {
+                            $results['rows'][$key]->category->price = $checkseasonPrice_ifnotforloop->rack_rate;
+                        }
+                    }
+                } else {
+                    $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $results['rows'][$key]->category->id)->first();
+                    if (!empty($checkseasonPrice_ifnotanyseason)) {
+                        $results['rows'][$key]->category->price = $checkseasonPrice_ifnotanyseason->rack_rate;
+                    }
+                }
+                $results['rows'][$key]->category->currency = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
+                $results['rows'][$key]->user_info = \DB::table('tb_users')->where('id', $row->client_id)->first();
+                
+                $results['rows'][$key]->reserved_rooms = \DB::table('td_reserved_rooms')->join('tb_properties_category_types', 'td_reserved_rooms.type_id', '=', 'tb_properties_category_types.id' )->where('reservation_id', $row->id)->get();
+            }
+        }
+
+        $this->data['rowData'] = $results['rows'];
+        // Build Pagination 
+        $this->data['pagination'] = $pagination;
+        // Build pager number and append current param GET
+        $this->data['pager'] = $this->injectPaginate();
+        // Row grid Number 
+        $this->data['i'] = ($page * $params['limit']) - $params['limit'];
+        // Grid Configuration 
+        $this->data['tableGrid'] = $this->info['config']['grid'];
+        $this->data['tableForm'] = $this->info['config']['forms'];
+        $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
+        // Group users permission
+        $this->data['access'] = $this->access;
+        // Detail from master if any
+        // Master detail link if any 
+        $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
+        // Render into template
+
+        if (\Auth::user()->group_id == 4) {
+            return view('customer.bookings', $this->data);
+        }
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.bookings.index':'bookings.index';
+        
+        return view($file_name, $this->data);
+    }
+    public function bookingshow($id = null) {
+        if ($this->access['is_detail'] == 0)
+            return Redirect::to('dashboard')
+                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
+
+        $row = $this->model->getRow($id);
+        if ($row) {
+            
+            
+                $row->category = \DB::table('tb_properties_category_types')->where('id', $row->type_id)->where('status', 0)->where('show_on_booking', 1)->first();
+                $row->category_image = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $row->category->property_id)->where('tb_properties_images.category_id', $row->type_id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
+                $row->category_image->imgsrc = (new ContainerController)->getThumbpath($row->category_image->folder_id);
+
+                $props = \DB::table('tb_properties')->where('id', $row->category->property_id)->first();
+                $row->props = $props;
+                
+                if ($props->default_seasons != 1) {
+                    $checkseason = \DB::table('tb_seasons')->where('property_id', $props->id)->orderBy('season_priority', 'asc')->get();
+                } else {
+                    $checkseason = \DB::table('tb_seasons')->where('property_id', 0)->orderBy('season_priority', 'asc')->get();
+                }
+                if (!empty($checkseason)) {
+                    $foundsean = false;
+                    $curnDate = date('Y-m-d');
+                    for ($sc = 0; $foundsean != true; $sc++) {
+                        $checkseasonDate = \DB::table('tb_seasons_dates')->where('season_id', $checkseason[$sc]->id)->where('season_from_date', '>=', $curnDate)->where('season_to_date', '<=', $curnDate)->count();
+                        if ($checkseasonDate > 0) {
+                            $checkseasonPrice = \DB::table('tb_properties_category_rooms_price')->where('season_id', $checkseason[$sc]->id)->where('property_id', $props->id)->where('category_id', $results['rows'][$key]->category->id)->first();
+                            if (!empty($checkseasonPrice)) {
+                                $row->category->price = $checkseasonPrice->rack_rate;
+                                $foundsean = true;
+                            }
+                        }
+                    }
+                    if ($foundsean != true) {
+                        $checkseasonPrice_ifnotforloop = \DB::table('tb_properties_category_rooms_price')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $row->category->id)->first();
+                        if (!empty($checkseasonPrice_ifnotforloop)) {
+                            $row->category->price = $checkseasonPrice_ifnotforloop->rack_rate;
+                        }
+                    }
+                } else {
+                    $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $row->category->id)->first();
+                    if (!empty($checkseasonPrice_ifnotanyseason)) {
+                        $row->category->price = $checkseasonPrice_ifnotanyseason->rack_rate;
+                    }
+                }
+                $row->category->currency = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
+                $row->user_info = \DB::table('tb_users')->where('id', $row->client_id)->first();
+                
+                $row->reserved_rooms = \DB::table('td_reserved_rooms')->join('tb_properties_category_types', 'td_reserved_rooms.type_id', '=', 'tb_properties_category_types.id' )->where('reservation_id', $row->id)->get();
+                $row->preferences = \DB::table('td_booking_preferences')->where('reservation_id', $row->id)->first();
+                
+                $this->data['row'] = $row;
+            
+        } else {
+            $this->data['row'] = $this->model->getColumnTable('tb_reservations');
+        }
+        $this->data['fields'] = \SiteHelpers::fieldLang($this->info['config']['grid']);
+
+        $this->data['id'] = $id;
+        $this->data['access'] = $this->access;
+        
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.bookings.view':'bookings.view';
+        
+        return view($file_name, $this->data);
+        /*if ($this->access['is_detail'] == 0)
+            return Redirect::to('dashboard')
+                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
+
+        $row = $this->model->getRow($id);
+        if ($row) {
+            $this->data['row'] = $row;
+        } else {
+            $this->data['row'] = $this->model->getColumnTable('tb_reservations');
+        }
+        $this->data['fields'] = \SiteHelpers::fieldLang($this->info['config']['grid']);
+
+        $this->data['row'] = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name','tb_users.email', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->where('tb_reservations.id', $id)->first();
+
+        $this->data['id'] = $id;
+        $this->data['access'] = $this->access;
+        //return view(, $this->data);
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());  
+        if(strlen($is_demo6) > 0){      
+            $file_name = $is_demo6.'.bookings.hotelbookingview';
+            return view($file_name, $this->data);
+        }else{
+            return Redirect::to('dashboard')
+                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
+        }*/
+        
+    }
+   	function searchbooking(Request $request) {	
+        $this->data['keyword'] = $request->s;
+        
+		$arrive = $departure = $adult = $childs = '';
+		if (!is_null($request->arrive) && $request->arrive != '' && $request->arrive != 'null') {			
+            $arrive = \CommonHelper::dateformat($request->arrive);
+		}
+		if (!is_null($request->departure) && $request->departure != '' && $request->departure != 'null') {			
+            $departure = \CommonHelper::dateformat($request->departure);
+		}
+		$this->data['arrive'] = $arrive;
+        $this->data['departure'] = $departure;
+        
+		$uid = \Session::get('uid');
+        $prop_id = 0;
+        $property_name = '';
+        $obj_property = \DB::table('tb_properties')->where('user_id', $uid)->first();
+        if(!empty($obj_property)){
+            $prop_id = $obj_property->id;
+            $property_name = $obj_property->property_name;
+        }
+        $this->data['pid'] = $prop_id;
+        
+        $this->data['hotel_name'] = $property_name;
+        
+        $this->data['cat_types'] = (new PropertiesController)->find_categories_room($prop_id);
+            
+        $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
+        
+        //return json_encode($res);
+		//return view('frontend.themes.emporium.properties.list', $this->data);
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());  
+        if(strlen($is_demo6) > 0){      
+            $file_name = $is_demo6.'.bookings.searchbooking';
+            return view($file_name, $this->data);
+        }else{
+            return Redirect::to('dashboard')
+                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
+        }
+    }
+    function searchbookingresult(Request $request) {	
+        $keyword = $request->skeyword;	
+		$arrive = $departure = $adult = $childs = '';
+		if (!is_null($request->arrive) && $request->arrive != '') {			
+            $arrive = \CommonHelper::dateformat($request->arrive);
+		}
+		if (!is_null($request->departure) && $request->departure != '') {		
+            $departure = \CommonHelper::dateformat($request->departure);
+		}
+		$uid = \Session::get('uid');
+        
+        
+        
+        $property_ids = array();
+        if($uid > 0){
+            $assigned_property = \DB::table('tb_properties_users')->where('user_id', $uid)->get();
+            if(!empty($assigned_property)){
+                foreach($assigned_property as $prop){
+                    $property_ids[] = $prop->property_id;
+                }
+            }
+        }
+        $final_properties = implode(',', $property_ids);
+		$query = "SELECT tb_reservations.*, tb_users.first_name, tb_users.last_name, (Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms, (Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults,(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child from tb_reservations inner join tb_users on tb_reservations.client_id=tb_users.id  where 1=1 and tb_reservations.property_id in($final_properties)";
+        
+        if(strlen(trim($keyword))>0){ 
+            $query .= " and booking_number=".$keyword;
+        }        
+        if (!is_null($request->arrive) && $request->arrive != ''  && $request->arrive != 'null') {
+            $query .= " and created_date >= '".$arrive."'";            
+        }
+        if (!is_null($request->departure) && $request->departure != '' && $request->departure != 'null') {
+            $query .= " and created_date <= '".$departure."'";            
+        }
+        //echo $query; die;
+        $booking = \DB::select($query);
+        
+        $res['status'] = 'success';
+        $res['data'] = $booking;
+        return json_encode($res);		
     }
 }

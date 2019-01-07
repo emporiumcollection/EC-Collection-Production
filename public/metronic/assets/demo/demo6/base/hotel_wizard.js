@@ -1,18 +1,22 @@
 //== Class definition
+var wizard;
 var WizardDemo = function () {
     //== Base elements
     var wizardEl = $('#m_hotel_wizard');
     var formEl = $('#hotel_form');
     var validator;
-    var wizard;
     
     //== Private functions
     var initWizard = function () {
         //== Initialize form wizard
         wizard = new mWizard('m_hotel_wizard', {
-            startStep: 1
+            startStep: activeTab
         });
-
+        if(wizard.isLastStep()){
+            $("#wizard_submit_btn").css('display', 'none'); 
+        }else{
+            $("#wizard_submit_btn").css('display', ''); 
+        }
         //== Validation before going to next page
         wizard.on('beforeNext', function(wizard) {
             if (validator.form() !== true) {
@@ -21,15 +25,37 @@ var WizardDemo = function () {
             else{
                 var _wizard_step = wizard.getStep();
                 //var base_url = $('#base_url').val();
-                if(_wizard_step == '1'){
+                if((_wizard_step == '1') && (prevTab != _wizard_step)){
                        wizard_step_1();
+                }
+                else if((_wizard_step == '2') && (prevTab != _wizard_step)){
+                       wizard_step_2();
+                }
+                else if((_wizard_step == '3') && (prevTab != _wizard_step)){
+                       wizard_step_3();
+                }
+                else if((_wizard_step == '4') && (prevTab != _wizard_step)){
+                       wizard_step_4();
+                }
+                else if((_wizard_step == '5') && (prevTab != _wizard_step)){
+                       wizard_step_5();
+                }
+                else if((_wizard_step == '6') && (prevTab != _wizard_step)){
+                     wizard_step_6();
                 }
             }
         });
-
+        wizard.on('beforePrev', function(wizard) {
+            prevTab--;
+        });
         //== Change event
         wizard.on('change', function(wizard) {
             mUtil.scrollTop();
+            if(wizard.isLastStep()){
+                $("#wizard_submit_btn").css('display', 'none'); 
+            }else{
+                $("#wizard_submit_btn").css('display', ''); 
+            }
         });
     }
 
@@ -56,18 +82,30 @@ var WizardDemo = function () {
                 txtPhoneNumber: {
                     required: true,                    
                 }, 
-                contractSignCheckFinal: {
-                    required: true,                    
-                },
-                contractSignCheck: {
-                    required: true,   
-                },
+                //contractSignCheckFinal: {
+                //    required: true,                    
+                //},
+                //contractSignCheck: {
+                //    required: true,   
+                //},
                 
                 //=== Confirmation(last step)
                 hotelinfo_name: {
                     required: true,                    
                 }, 
-                hotelinfo_status: {
+                company_name:{
+                    required: true,
+                },
+                company_email:{
+                    required: true,
+                },
+                company_city:{
+                    required: true,
+                },
+                company_country:{
+                    required: true,
+                },
+                /*hotelinfo_status: {
                     required: true,                    
                 }, 
                 hotelinfo_type: {
@@ -144,7 +182,7 @@ var WizardDemo = function () {
                 
                 accept: {
                     required: true
-                }
+                }*/
             },
 
             //== Validation messages
@@ -179,39 +217,6 @@ var WizardDemo = function () {
 
     var initSubmit = function() {
         var btn = formEl.find('[data-wizard-action="submit"]');
-
-        btn.on('click', function(e) {
-            e.preventDefault();
-
-            if (validator.form()) {
-                
-                var base_url = $('#base_url').val();
-                var form_wizard = $("#form_wizard_2").val();
-                var accept = $('input[name=hotel_contactprsn_agree]').val();
-                
-                var fdata = $( "form" ).serialize();
-                
-                $.ajax({
-                    url:base_url+'/hotel_membership',
-                    type:'POST',
-                    dataType:'json',
-                    data:fdata,
-                    success:function(response){
-                        if(response.status == 'success'){
-                            toastr.success(response.message);
-                            var htmltxt = '<div class="col-md-12 col-xs-12"><div class="m-alert m-alert--icon m-alert--icon-solid m-alert--outline alert alert-danger alert-dismissible fade show" role="alert"><div class="m-alert__icon"><i class="flaticon-exclamation-1"></i><span></span></div> <div class="m-alert__text"> <strong>Approval pending!</strong> Any further information please contact administrator.</div> </div></div>';
-                            $('.m-content .row').html(htmltxt);
-                            /*setTimeout(function(){
-                                   location.reload();
-                              }, 3000);*/ 
-                        }
-                        else{
-                            toastr.error(response.message);
-                        }
-                    }
-                });                
-            }
-        });
     }
 
     return {
@@ -232,6 +237,33 @@ jQuery(document).ready(function() {
 });
 
 function wizard_step_1(){
+    wizard.stop = true;
+    var fdata = new FormData();    
+    fdata.append("form_wizard_1",$("input[name=form_wizard_1]").val());  
+    fdata.append("own_hotel_setup",$("input[name=accountsetup]:checked").val());       
+    var base_url = $('#base_url').val();
+    $.ajax({
+        url:base_url+'/ownhotelsetup',
+        type:'POST',
+        dataType:'json',
+        contentType: false,
+        processData: false,
+        data:fdata,
+        success:function(response){
+            if(response.status == 'success'){
+                toastr.success(response.message);
+                prevTab++;
+                wizard.goNext();
+            }
+            else{
+                toastr.error(response.message);
+            }
+        }
+    }); 
+}
+
+function wizard_step_2(){
+    wizard.stop = true;
     var fdata = new FormData();
     
     fdata.append("username",$("input[name=username]").val());
@@ -240,7 +272,30 @@ function wizard_step_1(){
     fdata.append("last_name",$("input[name=last_name]").val());
     fdata.append("contractSignCheck",$("input[name=contractSignCheck]").val());
     fdata.append("_token",$("input[name=_token]").val());
-    fdata.append("form_wizard",$("input[name=form_wizard]").val());
+    fdata.append("form_wizard",$("input[name=form_wizard_2]").val());
+    
+    fdata.append("hotelinfo_name",$("input[name=hotelinfo_name]").val());
+    fdata.append("hotelinfo_city",$("input[name=hotelinfo_city]").val());
+    fdata.append("hotelinfo_country",$("input[name=hotelinfo_country]").val());
+    fdata.append("hotelinfo_website",$("input[name=hotelinfo_website]").val());
+    
+    fdata.append("company_name",$("input[name=company_name]").val());
+    fdata.append("company_owner",$("input[name=company_owner]").val());
+    fdata.append("contact_person",$("input[name=contact_person]").val());
+    fdata.append("company_email",$("input[name=company_email]").val());
+    fdata.append("company_address",$("input[name=company_address]").val());
+    fdata.append("company_city",$("input[name=company_city]").val());
+    fdata.append("company_country",$("input[name=company_country]").val());    
+    
+    fdata.append("european", $("input[name=european]:checked").val());
+    fdata.append("hotelinfo_vat_no", $("input[name=hotelinfo_vat_no]").val());
+    
+    var newsLetter = 0;
+    if($("input[name=newsLetter]").is(":checked")){
+         newsLetter = 1;
+    }
+    fdata.append("subscribe_notification", newsLetter);
+        
     if($("input[type=file]")[0].files.length>0){
        fdata.append("avatar",$("input[type=file]")[0].files[0]) 
     }
@@ -255,11 +310,143 @@ function wizard_step_1(){
         data:fdata,
         success:function(response){
             if(response.status == 'success'){
+                $("#propId").val(response.pid);
                 toastr.success(response.message);
+                prevTab++;
+                wizard.goNext();
             }
             else{
                 toastr.error(response.message);
             }
         }
     }); 
+}
+function wizard_step_3(){
+    wizard.stop = true;    
+    
+    if($("input[name=accepted_commission_contracts]").is(":checked")){
+        
+        var fdata = new FormData();    
+        fdata.append("form_wizard",$("input[name=form_wizard_3]").val());  
+        fdata.append("roomavailability",$("input[name=roomavailability]:checked").val());       
+        var base_url = $('#base_url').val();
+        $.ajax({
+            url:base_url+'/hotelavaibility',
+            type:'POST',
+            dataType:'json',
+            contentType: false,
+            processData: false,
+            data:fdata,
+            success:function(response){
+                if(response.status == 'success'){
+                    toastr.success(response.message);
+                    prevTab++;
+                    wizard.goNext();
+                }
+                else{
+                    toastr.error(response.message);
+                }
+            }
+        });
+    
+    }else{
+        toastr.success("Please confirm the commission contract to proceed to the next step.");
+    }
+     
+}
+function wizard_step_4(){ 
+    wizard.stop = true;
+    var is_runajax = true;
+    var agreedval = new Array();
+    var disagreedval = new Array(); 
+    $("input.rad_contracts").each(function(){
+        var pr = true; 
+        if($(this).is(":checked") === false){ pr = false; if($(this).hasClass('rad_required')){ is_runajax = false; } }
+        
+        if(pr === true){ agreedval.push($(this).val()); }
+        else{disagreedval.push($(this).val());}            
+    });
+    var dwl_val =  $('#hd_download').val();
+    if(dwl_val==0){
+        //run ajax if user will accept all required contracts
+        if((is_runajax === true) && ((agreedval.length > 0) || (disagreedval.length > 0))){
+            $.ajax({
+        	  url: base_url+'/user/wizardacceptcontracts',
+        	  type: "post",
+        	  data: {"agree_contracts":agreedval,"disagree_contracts":disagreedval},
+        	  dataType: "json",
+        	  success: function(data){
+                if(data.status == "fail"){
+                    toastr.error(data.message);
+                }else
+                {
+                    //toastr.success(data.message);
+                    $("#dv_contract_view_download").css('display', '');
+                    var dwl_val =  $('#hd_download').val();
+                    if(dwl_val==0){
+                        toastr.error('Please download contract to proceed');
+                    }else{
+                        toastr.success('Thanks for accepting and downloading contracts');
+                        prevTab++;
+                        wizard.goNext();
+                    }
+                }
+        	  },
+              error: function(e){
+                toastr.error("Unexpected error occured, Please try again after some time!");
+              }
+        	});
+        }else
+        {
+            toastr.error("Please accept all required contracts!");
+        }
+    }
+    else{
+        toastr.success('Thanks for accepting and downloading contracts');
+        prevTab++;
+        wizard.goNext();
+    }
+    //End
+    return false;
+}
+function wizard_step_5(){ 
+    wizard.stop = true;
+    var fdata = new FormData();
+    
+    fdata.append("form_wizard",$("input[name=form_wizard_5]").val());
+    if($("input[name=signed_contract]")[0].files.length>0){
+       fdata.append("signedcontract",$("input[name=signed_contract]")[0].files[0]) 
+    }
+    
+    if($("input[name=hotel_brochure]")[0].files.length>0){
+       fdata.append("hotelbrochure",$("input[name=hotel_brochure]")[0].files[0]) 
+    }
+    
+    fdata.append("propId",$("input[name=propId]").val());  
+    fdata.append("uploadType",$("input[name=uploadType]").val());  
+       
+    var base_url = $('#base_url').val();
+    $.ajax({
+        url:base_url+'/upload_contract',
+        type:'POST',
+        dataType:'json',
+        contentType: false,
+        processData: false,
+        data:fdata,
+        success:function(response){
+            if(response.status == 'success'){                
+                $("#dv_pkg").css('display', '');
+                $("#cart_row").css('display', 'none');
+                toastr.success(response.message);
+                prevTab++;
+                wizard.goNext();
+            }
+            else{
+                toastr.error(response.message);
+            }
+        }
+    });
+}
+function wizard_step_6(){
+    
 }

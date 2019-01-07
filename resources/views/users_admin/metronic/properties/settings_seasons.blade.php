@@ -1,9 +1,5 @@
 @extends('users_admin.metronic.layouts.app')
 
-@section('page_name')
-    Property  <small>Properties</small>
-@stop
-
 @section('breadcrumb')
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 
@@ -58,10 +54,128 @@
         </div>
         <div class="col-sm-8 col-md-8 col-lg-8">
             <a href="{{URL::to('properties/update/'.$pid)}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Property Management"><i class="fa fa-edit"></i>&nbsp;Property Management</a>
+            <a href="{{URL::to('flipviewpdf/Emporium-Voyage-Add-Seasons-help.pdf')}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Add Seasons" style="margin-right: 10px;" target="_blank"><i class="fa fa-edit"></i>&nbsp;View Documentation</a>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12">
         <!--begin::Portlet-->
 		<div class="m-portlet">
+            <div class="m-portlet__head">				
+				<div class="m-portlet__head-tools margin-left-98">
+					<ul class="m-portlet__nav bg-gray">
+						<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+							<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
+								<span class="desk_bars1"></span>
+                                <span class="desk_bars2"></span>
+                                <span class="desk_bars3"></span>
+							</a>
+							<div class="m-dropdown__wrapper" style="z-index: 101;">
+								<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 18px;"></span>
+								<div class="m-dropdown__inner">
+									<div class="m-dropdown__body">
+										<div class="m-dropdown__content">
+											<ul class="m-nav">
+												<li class="m-nav__section m-nav__section--first">
+													<span class="m-nav__section-text">
+														Quick Actions
+													</span>
+												</li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/properties/update/2309?return=" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Hotel/Property
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/properties_settings/2309/types" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Room Types
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/properties_settings/2309/rooms" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Rooms
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/properties_settings/2309/seasons" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Seasons
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/properties_settings/2309/calendar" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Reservation Management
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/properties_settings/2309/price" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Price
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/properties_settings/2309/property_documents" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Documents
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/properties_settings/2309/property_images" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Images
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/properties_settings/2309/gallery_images" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Galleries
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/advertising" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Become Featured
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="https://emporium-collection.com/" class="m-nav__link" target="_blank">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Get Help
+														</span>
+													</a>
+											    </li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div class="m-portlet__body">
 				<ul class="nav nav-tabs" role="tablist">
                     @if(!empty($tabss))
@@ -260,13 +374,14 @@
 <script src="{{ asset('metronic/assets/demo/demo6/base/toastr.js') }}"></script>
 
 <script>
+
 $(document).ready(function () {
 	
-	$('.datepic').datepicker({
-			numberOfMonths: 2,
-			showButtonPanel: true,
-			dateFormat: 'yy-mm-dd'
-	});
+	$(".datepic").datepicker( {
+        todayHighlight:!0, orientation:"bottom left", format:"yyyy-mm-dd", templates: {
+            leftArrow: '<i class="la la-angle-left"></i>', rightArrow: '<i class="la la-angle-right"></i>'
+        }
+    });
 
     $(document).on('click', '.addseason', function (){
 		 var frmid = $(this).parents('form.add_season').attr('id');
@@ -318,6 +433,7 @@ function save_addseason_data(formid)
 					html +='<button data-dismiss="alert" class="close" type="button">×</button>';
 					html +='<i class="icon-checkmark-circle"></i> Record Updated Successfully </div>';
 					$('.page-content-wrapper #formerrors').html(html);
+                    toastr.success("Record Updated Successfully");
 					window.scrollTo(0, 0);
 				}
 				else
@@ -463,7 +579,7 @@ function delete_season_data(seasonId)
 						$('.page-content-wrapper #formerrors').html(html);
 						window.scrollTo(0, 0);
                         
-                        toastr.success("Record Inserted Successfully");
+                        toastr.error("Record Not Found");
                         window.location.reload();
 				  }
 				  else{
@@ -503,6 +619,7 @@ function delete_season_dates_data(dateId)
 						html +='<button data-dismiss="alert" class="close" type="button">×</button>';
 						html +='<i class="icon-checkmark-circle"></i> Record Not Found </div>';
 						$('.page-content-wrapper #formerrors').html(html);
+                        toastr.error("Record Not Found");
 						window.scrollTo(0, 0);
 				  }
 				  else{
@@ -511,6 +628,7 @@ function delete_season_dates_data(dateId)
 						html +='<button data-dismiss="alert" class="close" type="button">×</button>';
 						html +='<i class="icon-checkmark-circle"></i> Record Deleted Successfully </div>';
 						$('.page-content-wrapper #formerrors').html(html);
+                        toastr.success("Record Deleted Successfully");
 						window.scrollTo(0, 0);
 				  }
 			  }

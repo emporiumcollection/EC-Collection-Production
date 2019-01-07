@@ -13,32 +13,34 @@
             <tbody>
             	{{--*/ $subTotal = 0; $orderTotal = 0; /*--}}
             	@foreach($packages as $package)
+                @if($package->package_price_type!=1)
     			{{--*/ $subTotal += $package->package_price; /*--}}
+                @endif
                 <tr>                    
                     <td>
                     	<div class="product-title-and-remove-option">
-                        	<span class="product-title">{{$package->package_title}}</span>
+                        	<span class="product-title"><b>{{$package->package_title}}</b></span>
                         </div>
                         <div>
-                            @if($package->package_modules !="" && $package->package_modules!="NULL")
-                            
-                              <h4>Module Offered in this packages are:</h4>
-                              {{--*/  $modulesOffered = DB::table('tb_module')->whereIn('module_id', explode(',',$package->package_modules))->get();/*--}}
-                              @foreach ($modulesOffered as $moduleRow)
-                              
-                                <p><h5>Module Name: {{ $moduleRow->module_name}}</h5></p>
-                                <p>Module Note: {{ $moduleRow->module_note}}</p>
-                                <p>Module Description: {!! nl2br($moduleRow->module_desc) !!}</p>
-                               @endforeach
-                               <a href="#" onclick="javascript: return false;" data-toggle="modal" data-target="#contract_model_{{$package->id}}">View contracts</a>
-                            @endif
+                            <p>{!! nl2br($package->package_description) !!}</p>
                         </div>
                     </td>
                
-                    <td class="overview-td">1
+                    <td class="overview-td m--align-center">1</td>
+                    <td class="overview-td">
+                    @if($package->package_price_type!=1)
+                        <span class="m--pull-right">{!! isset($currency->content)?$currency->content:'&euro;' !!}{{number_format($package->package_price,2)}}</span>
+                    @else
+                         Price on Request
+                    @endif
+                    </td>                    
+                    <td class="overview-td">
+                    @if($package->package_price_type!=1)
+                        <span class="m--pull-right">{!! isset($currency->content)?$currency->content:'&euro;' !!}{{number_format($package->package_price,2)}}</span>
+                    @else
+                         Price on Request
+                    @endif
                     </td>
-                         <td class="overview-td">{!! isset($currency->content)?$currency->content:'$' !!}  {{number_format($package->package_price,2)}}</td>
-                    <td class="overview-td">{!! isset($currency->content)?$currency->content:'$' !!}  {{number_format($package->package_price,2)}}</td>
                 </tr>
                 @endforeach
     			@foreach($adspackages as $package)
@@ -49,7 +51,7 @@
                         </div>
                     </td>
                     <td class="overview-td">
-    					{!! isset($currency->content)?$currency->content:'$' !!}
+    					{!! isset($currency->content)?$currency->content:'&euro;' !!}
     					@if(\session()->get('hotel_cart')['advert_advert']['package']['content']['ads_pacakge_type']=='cpc')
     						{{ number_format($package->space_cpc_price,2,'.','') . '/' . $package->space_cpc_num_clicks .' Click' }}
     					@elseif(\session()->get('hotel_cart')['advert_advert']['package']['content']['ads_pacakge_type']=='cpm')
@@ -68,7 +70,7 @@
     					@elseif(\session()->get('hotel_cart')['advert_advert']['package']['content']['ads_pacakge_type']=='cpd')
     						 {{--*/ $prc = CommonHelper::calc_price($package->space_cpd_price,$package->space_cpm_num_days,\session()->get('hotel_cart')['advert_advert']['package']['content']['ads_days']) /*--}} 
     					@endif
-    					{!! isset($currency->content)?$currency->content:'$' !!} {{$prc}}
+    					{!! isset($currency->content)?$currency->content:'&euro;' !!} {{$prc}}
     				</td>
                 </tr>
     			{{--*/ $subTotal += $prc; /*--}}
@@ -81,35 +83,54 @@
 <div class="m--clearfix"></div>
 <div class="m-section" style="width: 100%;">
     <div class="m-section__content">
-        <div class="col-md-4 col-sm-12 m--pull-right">
+        <div class="col-md-6 col-sm-12 m--pull-right">
             <table class="table">
                 <tr>
                     <td>
                         <label>Total (excl. VAT) </label> 
                     </td>
                     <td>
-                        <label>{!! isset($currency->content)?$currency->content:'$' !!} {{ number_format($orderTotal,2,'.','')-(($orderTotal*$data["vatsettings"]->content)/100)}}</label>                            
+                        <label class="m--pull-right">{!! isset($currency->content)?$currency->content:'&euro;' !!}{{ number_format(number_format($orderTotal,2,'.','')-(($orderTotal*$data["vatsettings"]->content)/100), 2)}}</label>                            
                     </td>
                 </tr>
                                        
                 <tr>
                     <td>
-                        Vat {{ $data["vatsettings"]->content}}% 
+                        Vat {{(\Auth::user()->european) ? 'Inclusive' : 'Exclusive'}} {{ $data["vatsettings"]->content}}% 
                     </td>
                     <td>
-                        {!! isset($currency->content)?$currency->content:'$' !!} 
-                        {{  ($orderTotal*$data["vatsettings"]->content)/100 }}                                
+                        <label class="m--pull-right">
+                        {!! isset($currency->content)?$currency->content:'&euro;' !!} 
+                        {{  number_format(($orderTotal*$data["vatsettings"]->content)/100,2,'.','') }}
+                        </label>                              
                     </td> 
                 </tr>
-                
+                <?php 
+                    if(!(\Auth::user()->european)){    
+                        $orderTotal = $orderTotal - (($orderTotal*$data["vatsettings"]->content)/100); 
+                    } 
+                ?> 
                 <tr>
                     <td>
                         <label>Order Total</label> 
                     </td>
                     <td>
-                        {!! isset($currency->content)?$currency->content:'$' !!}  {{number_format($orderTotal,2,'.','')}}
+                        <label class="m--pull-right">{!! isset($currency->content)?$currency->content:'&euro;' !!}{{number_format($orderTotal,2,'.','')}}</label>
                     </td> 
                 </tr>
+                
+                @if($subtract_at_booking_amt > 0)
+                <tr>
+                    <td>
+                    <label>Subtract this fee from my first booking commission.</label> 
+                    </td>
+                    <td>
+                    <label class="m--pull-right">{!! isset($currency->content)?$currency->content:'&euro;' !!}{{number_format($subtract_at_booking_amt,2,'.','')}}</label>
+                    </td> 
+                </tr>
+                {{--*/ $orderTotal = $orderTotal - $subtract_at_booking_amt; /*--}}
+                @endif
+                
             </table>
         </div>
     </div>
@@ -117,6 +138,7 @@
 <div class="m--clearfix"></div>
 <div class="m-section" style="width: 100%;">
     <div class="m-section__content">
+        
         <div class="col-md-4 col-sm-12 m--pull-right" style="padding-bottom: 50px;">
         <form action="{{URL::to('wizard-order-post')}}" method="POST" class="m-form m-form--fit m-form--label-align-right">
 
@@ -126,6 +148,7 @@
                 <label>Order Comments</label>                                
                 <textarea name="order_comments" id="order_comments" class="form-control m-input"></textarea>
             </div>
+            @if($orderTotal > 0)
             <div class="form-group m-form__group">
                 <script
                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -138,8 +161,14 @@
                     data-locale="auto">
                 </script>
             </div>
+            @else
+            <div class="form-group m-form__group m--pull-right">
+                <a class="btn btn-primary" href="#" id="finish_btn">Submit</a>
+            </div>
+            @endif
         </form>
-        </div>
+        </div>        
+        
     </div>
 </div>
 @else

@@ -144,55 +144,48 @@
 															<div class="m-scrollable" data-scrollable="false" data-height="380" data-mobile-height="200">
 																<div class="m-nav-grid m-nav-grid--skin-light">
 																	<div class="m-nav-grid__row">
-																		<a href="{{ URL::to('dashboard')}}" class="m-nav-grid__item">
-																			<i class="m-nav-grid__icon flaticon-dashboard"></i>
+																		<a href="{{ URL::to('properties') }}" class="m-nav-grid__item">
+																			<i class="m-nav-grid__icon flaticon-cogwheel-2"></i>
 																			<span class="m-nav-grid__text">
 																				Property Management
 																			</span>
 																		</a>
-																		<a href="{{ URL::to('')}}" class="m-nav-grid__item">
-																			<i class="m-nav-grid__icon flaticon-imac"></i>
+																		<a href="{{ URL::to('reservations') }}" class="m-nav-grid__item">
+																			<i class="m-nav-grid__icon flaticon-graphic-2"></i>
 																			<span class="m-nav-grid__text">
 																				Reservation Management
 																			</span>
 																		</a>
 																	</div>
 																	<div class="m-nav-grid__row">
-																		<a href="{{ URL::to('core/elfinder')}}" class="m-nav-grid__item">
-																			<i class="m-nav-grid__icon flaticon-folder-4"></i>
+																		<a href="{{URL::to('salesreport')}}" class="m-nav-grid__item">
+																			<i class="m-nav-grid__icon flaticon-graph"></i>
 																			<span class="m-nav-grid__text">
 																				Sales Reports
 																			</span>
 																		</a>
-																		<a href="#" class="m-nav-grid__item">
-																			<i class="m-nav-grid__icon flaticon-clipboard"></i>
+																		<a href="{{ URL::to('hotelpackages') }}" class="m-nav-grid__item">
+																			<i class="m-nav-grid__icon flaticon-share"></i>
 																			<span class="m-nav-grid__text">
-																				View Modules
+																				Membership &amp; Support Services
 																			</span>
 																		</a>
 																	</div>
                                                                     <div class="m-nav-grid__row">
-																		<a href="{{ URL::to('core/elfinder')}}" class="m-nav-grid__item">
-																			<i class="m-nav-grid__icon flaticon-folder-4"></i>
+																		<a href="{{URL::to('arrivaldeparture')}}" class="m-nav-grid__item">
+																			<i class="m-nav-grid__icon flaticon-clock-2"></i>
 																			<span class="m-nav-grid__text">
-																				Cancelations
+																				Arrivals, Departures &amp; Cancelations
 																			</span>
 																		</a>
-																		<a href="#" class="m-nav-grid__item">
-																			<i class="m-nav-grid__icon flaticon-clipboard"></i>
-																			<span class="m-nav-grid__text">
-																				Arrivals & Departures
-																			</span>
-																		</a>
-																	</div>
-                                                                    <div class="m-nav-grid__row">
-																		<a href="{{ URL::to('core/elfinder')}}" class="m-nav-grid__item">
-																			<i class="m-nav-grid__icon flaticon-folder-4"></i>
+                                                                        <a href="{{URL::to('advertising')}}" class="m-nav-grid__item">
+																			<i class="m-nav-grid__icon flaticon-statistics"></i>
 																			<span class="m-nav-grid__text">
 																				Advertising
 																			</span>
 																		</a>
 																	</div>
+                                                                    
 																</div>
 															</div>
 														</div>
@@ -252,6 +245,17 @@
 																</li>
 																
                                                                 <li class="m-nav__item">
+																	<a href="{{ URL::to('hotel/bookings')}}" class="m-nav__link">
+																		<i class="m-nav__link-icon flaticon-graphic-2"></i>
+																		<span class="m-nav__link-title">
+																			<span class="m-nav__link-wrap">
+																				My Reservations
+																			</span>
+																		</span>
+																	</a>
+																</li>
+                                                                
+                                                                <li class="m-nav__item">
 																	<a href="{{ URL::to('user/profile')}}" class="m-nav__link">
 																		<i class="m-nav__link-icon flaticon-suitcase"></i>
 																		<span class="m-nav__link-title">
@@ -275,7 +279,7 @@
                                                                 
                                                                 <li class="m-nav__item">
 																	<a href="{{ URL::to('press')}}" class="m-nav__link">
-																		<i class="m-nav__link-icon 	flaticon-folder-4"></i>
+																		<i class="m-nav__link-icon flaticon-folder-4"></i>
 																		<span class="m-nav__link-title">
 																			<span class="m-nav__link-wrap">
 																				Press

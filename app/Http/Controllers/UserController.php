@@ -445,7 +445,7 @@ class UserController extends Controller {
         );
         
         //get contract during signup
-        $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description')->where('tb_users_contracts.contract_type','sign-up')->where('tb_users_contracts.accepted_by', \Auth::user()->id)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
+        $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description','tb_users_contracts.is_required','tb_users_contracts.is_agree','tb_users_contracts.sort_num')->where('tb_users_contracts.contract_type','sign-up')->where('tb_users_contracts.accepted_by', \Auth::user()->id)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
         $resetContracts = array();
         foreach($usersContracts as $si_contract){
             $resetContracts[$si_contract->contract_id] = $si_contract;
@@ -530,18 +530,49 @@ class UserController extends Controller {
         return array('sub_destinations' => $sub_destinations, 'chldIds' => $_chldIds);
     }
     
-    public function postSaveprofile(Request $request) {
+    public function postAcceptcontracts(Request $request){
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        
+        $return_arr = array("status"=>"fail","message"=>"Invalid contracts");
+        $agreeContratcts = (array) $request->agree_contracts; 
+        $disagreeContratcts = (array) $request->disagree_contracts;
+        
+        $refreshArray = array();
+        if((count($agreeContratcts) > 0) || (count($disagreeContratcts) > 0)){
+            $contracts = \CommonHelper::get_default_contracts('sign-up','tb_contracts.*');
+            
+            foreach($contracts as $si_contratc){
+                $si_contratc->is_agree = 0;
+                if(in_array($si_contratc->contract_id, $agreeContratcts)){ $si_contratc->is_agree = 1; }
+                $refreshArray[] = $si_contratc;
+            }
+        }
+        
+        if(count($refreshArray) > 0){
+            //insert contracts
+            \CommonHelper::submit_contracts($refreshArray,'sign-up');
+            //End
+            
+            $return_arr = array("status"=>"success","message"=>"Thanks for accepting contracts.");
+        }
+        
+        echo json_encode($return_arr);
+        exit;
+    }
+    
+    public function postSaveprofile(Request $request) { 
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
-            'first_name' => 'required|alpha_num|min:2',
-            'last_name' => 'required|alpha_num|min:2',
+            'first_name' => 'required',
+            'last_name' => 'required',
         );
         
         //get contract during signup
         $contracts = \CommonHelper::get_default_contracts('sign-up','tb_contracts.*');
         if(count($contracts) > 0){
-            $rules['accept_contract'] = 'required';
+            //$rules['accept_contract'] = 'required';
         }
         //End
 
@@ -573,12 +604,13 @@ class UserController extends Controller {
                 $user->avatar = $newfilename;
             $user->save();
             
+            \Session::put('fid', $request->input('first_name') . ' ' . $request->input('last_name'));
             //insert contracts
             \CommonHelper::submit_contracts($contracts,'sign-up');
             //End
 
             return Redirect::to('user/profile')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
-        } else {
+        } else {            
             return Redirect::to('user/profile')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
                             ->withErrors($validator)->withInput();
         }
@@ -819,7 +851,7 @@ class UserController extends Controller {
 
 
                 $affectedRows = User::where('email', '=', $user->email)
-                        ->update(array('reminder' => $request->input('_token')));
+                        ->update(array('reminder' => $token));
 
                 return Redirect::to('user/login')->with('message', \SiteHelpers::alert('success', 'Please check your email'));
             } else {
@@ -836,7 +868,8 @@ class UserController extends Controller {
             return Redirect::to('dashboard');
         //$token = $request->input('token');
         $user = User::where('reminder', '=', $token);
-        if ($user->count() >= 1) {
+        
+        if ($user->count() >= 1) { 
             $data = array('verCode' => $token);
             return view('user.remind', $data);
         } else {
@@ -1064,7 +1097,7 @@ class UserController extends Controller {
         echo json_encode($return_array);
         exit;
     }
-    
+
     public function postSaveshippingbilling(Request $request) {
         if (!\Auth::check())
             return Redirect::to('user/login');
@@ -1129,6 +1162,11 @@ class UserController extends Controller {
             'last_name' => 'required|alpha_num|min:2',
             'username' => 'required|alpha_num|min:2',
             'contractSignCheck' => 'required',
+            'hotelinfo_name' => 'required',
+            'company_name' => 'required',
+            'company_email' => 'required',
+            'company_city' => 'required',
+            'company_country' => 'required',        
         );
 
         $validator = Validator::make($request->all(), $rules);
@@ -1155,17 +1193,112 @@ class UserController extends Controller {
             $user->username = $request->input('username');
             $user->form_wizard = $request->input('form_wizard');
             $user->contracts = $request->input('contractSignCheck');
+            $user->european = $request->input('european');
+            $user->subscribe_notification = $request->input('subscribe_notification');
 
             if (isset($data['avatar']))
                 $user->avatar = $newfilename;
             $user->save();
             
+            $hotelinfo_name = trim($request->input('hotelinfo_name'));
+            $hotelinfo_city = $request->input('hotelinfo_city');
+            $hotelinfo_country = $request->input('hotelinfo_country');
+            $hotelinfo_website = $request->input('hotelinfo_website');
+            
+            $prop_id = '';
+            $obj_prop = \DB::table('tb_properties')->where('property_name', $hotelinfo_name)->first();
+            $super_admin = \DB::table('tb_users')->where('group_id', 1)->where('active', 1)->get();
+            //print_r($super_admin); die;
+            if(!empty($obj_prop)){
+                $prop_user = \DB::table('tb_properties_users')->where('property_id', $obj_prop->id)->get();
+                if(count($prop_user)>0){
+                    $super_admins = array();
+                    $data_prop_user = array();
+                    foreach($prop_user as $si_usr){
+                        $super_admins[]= $si_usr->user_id;
+                    }
+                    foreach($super_admin as $si_usr){
+                        if(!in_array($si_usr->id, $super_admins)){
+                            $data_prop_user[] = array('property_id'=>$obj_prop->id, 'user_id'=>$si_usr->id);
+                        }
+                    }
+                    //if(empty($prop_user)){
+                        //foreach($prop_user as $si_usr){
+                            if(!in_array($user->id, $super_admins)){
+                                $data_prop_user[] = array('property_id'=>$obj_prop->id, 'user_id'=>$user->id);
+                            }
+                        //}                    
+                    //}
+                    if(count($data_prop_user)>0){
+                        \DB::table('tb_properties_users')->insert($data_prop_user);
+                    }
+                }else{
+                    $data_prop_user = array();
+                    foreach($super_admin as $si_adm){
+                         $data_prop_user[] = array('property_id'=>$obj_prop->id, 'user_id'=>$si_adm->id);
+                    }             
+                    $data_prop_user[] = array('property_id'=>$obj_prop->id, 'user_id'=>$user->id);
+                    \DB::table('tb_properties_users')->insert($data_prop_user);   
+                }
+                //\DB::table('tb_properties')->where('id', $obj_prop->id)->update(array('assigned_user_id'=>$user->id));
+                $prop_id =  $obj_prop->id;
+                \DB::table('tb_properties')->where('id', $prop_id)->update(array('user_id'=>$user->id));
+            }else{
+                $hotel_data = array(
+                    'property_name' => trim($request->input('hotelinfo_name')),
+                    'city' => $request->input('hotelinfo_city'),
+                    'country' => $request->input('hotelinfo_country'),
+                    'website' => $request->input('hotelinfo_website'),
+                    'user_id' => $user->id,
+                    //'assigned_user_id' => $user->id,
+                ); 
+                $prop_id = \DB::table('tb_properties')->insertGetId($hotel_data);    
+                $data_prop_user = array();
+                foreach($super_admin as $si_adm){
+                     $data_prop_user[] = array('property_id'=>$prop_id, 'user_id'=>$si_adm->id);
+                }             
+                $data_prop_user[] = array('property_id'=>$prop_id, 'user_id'=>$user->id);
+                \DB::table('tb_properties_users')->insert($data_prop_user);                        
+            }
+            
+            $hotelinfo_vat_no = trim($request->input('hotelinfo_vat_no'));
+            
+            $company_name = trim($request->input('company_name'));
+            $company_owner = trim($request->input('company_owner'));
+            $contact_person = trim($request->input('contact_person'));
+            $company_email = trim($request->input('company_email'));
+            $company_address = trim($request->input('company_address'));
+            $company_city = trim($request->input('company_city'));
+            $company_country = trim($request->input('company_country'));
+            
+            
+            //if(!empty($hotelinfo_vat_no)){
+                $obj_comp = \DB::table('tb_user_company_details')->where('user_id', $user->id)->first();
+                $company_data = array(
+                    'company_tax_number' => $hotelinfo_vat_no,
+                    'company_name' => $company_name,
+                    'company_owner' => $company_owner,
+                    'contact_person' => $contact_person,
+                    'company_email' => $company_email,
+                    'company_address' => $company_address,
+                    'company_city' => $company_city,
+                    'company_country' => $company_country                    
+                );
+                if(empty($obj_comp)){
+                    \DB::table('tb_user_company_details')->insertGetId($company_data);
+                }else{
+                    \DB::table('tb_user_company_details')->where('id', $obj_comp->id)->update($company_data);
+                }
+            //}
+            
+            
             $return_array['status'] = 'success';
             $return_array['message'] = 'Profile has been saved!';
-
+            $return_array['pid'] = $prop_id;
         } else {
             
             $return_array['status'] = 'error';
+            $return_array['va'] = $validator->errors();
             $return_array['message'] = 'Profile not saved errors occurred!';
             
         }
@@ -1790,6 +1923,7 @@ class UserController extends Controller {
         
         echo json_encode($response);
     }
+    
     public function postRemoveaccount(){        
         $user = User::find(\Session::get('uid'));
         $success = \DB::table('tb_users')->where('id', $user->id)->update(['active'=>0,'deleted'=>1]);
@@ -1876,7 +2010,7 @@ class UserController extends Controller {
             $return_array['message'] = 'Error occured while saving password!';
         }
         echo json_encode($return_array);
-    } 
+    }  
     
     public function ajaxLeadUpdate(Request $request) {
         
@@ -1947,5 +2081,460 @@ class UserController extends Controller {
         
         echo json_encode($response);
     }
+    public function ownhotelsetup(Request $request){
+        $id = \Session::get('uid');
+        $own_setup = trim($request->input('own_hotel_setup'));
+        $form_wizard = trim($request->input('form_wizard_1')); 
+        $updated = \DB::table('tb_users')->where('id', $id)->update(array('own_hotel_setup'=>$own_setup, 'form_wizard'=>$form_wizard));
+        //if($updated){
+            $response = array('status' => 'success', 'message' => 'Account setup added successfully');
+        //}else{            
+        //    $response = array('status' => 'error', 'message' => 'Error while adding account setup');
+        //}
+        echo json_encode($response);
+    }
     
+    public function hotelavaibility(Request $request){
+        $id = \Session::get('uid');
+        $roomavailability = trim($request->input('roomavailability'));
+        $form_wizard = trim($request->input('form_wizard')); 
+        $updated = \DB::table('tb_users')->where('id', $id)->update(array('commission'=>$roomavailability, 'form_wizard'=>$form_wizard));
+        
+        /** commission contracts start **/
+        $contractdata = \CommonHelper::get_default_contracts('commission','tb_contracts.*');
+        $contractdata["common"]->commission_type = $roomavailability;
+        $contracts = array();
+        $contracts[] = ((isset($contractdata["common"]))?$contractdata["common"]:'');
+        /** commission contracts end **/
+        
+        //insert contracts
+        \CommonHelper::submit_contracts($contracts,'commission',$id);
+        //End
+        
+        
+        //if($updated){
+            $response = array('status' => 'success', 'message' => 'Rates added successfully');
+        //}else{            
+        //    $response = array('status' => 'error', 'message' => 'Error while adding room availability');
+        //}
+        echo json_encode($response);
+    } 
+    
+    public function postWizardacceptcontracts(Request $request){
+        $id = \Session::get('uid');
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        
+        $return_arr = array("status"=>"fail","message"=>"Invalid contracts");
+        $agreeContratcts = (array) $request->agree_contracts; 
+        $disagreeContratcts = (array) $request->disagree_contracts;
+        
+        $refreshArray = array();
+        if((count($agreeContratcts) > 0) || (count($disagreeContratcts) > 0)){
+            $contracts = \CommonHelper::get_default_contracts('sign-up','tb_contracts.*');
+            
+            foreach($contracts as $si_contratc){
+                $si_contratc->is_agree = 0;
+                if(in_array($si_contratc->contract_id, $agreeContratcts)){ $si_contratc->is_agree = 1; }
+                $refreshArray[] = $si_contratc;
+            }
+        }
+        
+        if(count($refreshArray) > 0){
+            //insert contracts
+            \CommonHelper::submit_contracts($refreshArray,'sign-up');
+            //End
+            \DB::table('tb_users')->where('id', $id)->update(array('form_wizard'=>4));
+            
+            $return_arr = array("status"=>"success","message"=>"Thanks for accepting contracts.");
+        }
+        
+        echo json_encode($return_arr);
+        exit;
+    }
+    
+    function getContractflipbook()
+	{	   
+		$red = '/';
+        $group_id = \Session::get('gid');
+        $default_package = \DB::table('tb_packages')->where('allow_user_groups', $group_id)->where('package_status', 1)->where('package_for', 2)->first();
+		$downFileName = 'uploads/contract-signup-'.\Auth::user()->id.'_'.date('d-m-Y').'.pdf';
+        
+        $obj_properties = \DB::table("tb_properties_users")->join('tb_properties', 'tb_properties_users.property_id', '=', 'tb_properties.id')->where('tb_properties_users.user_id', \Auth::user()->id)->first();
+        $property_name = '';
+        if(!empty($obj_properties)){
+            $property_name = $obj_properties->property_name;
+        }
+        //echo $property_name;  die;
+        $selectFields = array('tb_users_contracts.*','tb_users.first_name','tb_users.last_name','tb_users_contracts.contract_type','tb_users_contracts.commission_type','tb_users_contracts.partial_availability_commission','tb_users_contracts.full_availability_commission');
+        $usersContracts = \DB::table('tb_users_contracts')
+                            ->select($selectFields)
+                            ->join('tb_users', 'tb_users_contracts.accepted_by', '=', 'tb_users.id')
+                            ->where('tb_users_contracts.contract_type','sign-up')->where('tb_users_contracts.accepted_by', \Auth::user()->id)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)
+                            ->orderBy('tb_users_contracts.sort_num','DESC')->get();
+                            
+        $CommissionContracts = \DB::table('tb_users_contracts')
+                            ->select($selectFields)
+                            ->join('tb_users', 'tb_users_contracts.accepted_by', '=', 'tb_users.id')
+                            ->where('tb_users_contracts.contract_type','commission')->where('tb_users_contracts.accepted_by', \Auth::user()->id)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)
+                            ->orderBy('tb_users_contracts.sort_num','ASC')->first();
+        if(isset($CommissionContracts->contract_type)){ $usersContracts[] = $CommissionContracts; }
+        
+        usort($usersContracts, function($a, $b) {
+						return $a->sort_num - $b->sort_num; 
+					});
+        $usersContracts = array_reverse($usersContracts);
+        
+        //$package_price = \DB::table('tb_orders')->where('user_id', \Auth::user()->id)->orderBy('tb_orders.id', 'DESC')->first();
+        
+        $center_content = '';
+        $i = 1;
+        $date_signed = '';
+        $username = '';
+        foreach($usersContracts as $si_contract){
+            $username = trim(ucfirst($si_contract->first_name).' '.ucfirst($si_contract->last_name));
+            $created_on = date_create($si_contract->created_on);
+            $date_signed = date_format($created_on,"d:m:Y");
+            $date_signed2 = date_format($created_on,"Y/m/d");
+            if($i==1){
+                $center_content .= '<div class="Mrgtop200 font13">';
+            }else{
+                $center_content .= '<div class="Mrgtop80 font13">';
+            }
+            
+                $center_content .= '<h3>'.$i++.'. '.$si_contract->title.'</h3>';
+                if((!empty($si_contract->commission_type)) && ($si_contract->contract_type == 'commission')){
+                    $center_content .= '<p> <span class="strong">Availability: </span><span class="font14">'.ucfirst($si_contract->commission_type).'</p>';
+                    $center_content .= '<p> <span class="strong">Commission (%): </span><span class="font14">';
+                
+                    if($si_contract->commission_type == 'partial'){
+                        $center_content .= $si_contract->partial_availability_commission;
+                    }
+                    if($si_contract->commission_type == 'full'){
+                        $center_content .= $si_contract->full_availability_commission;
+                    }
+                    $center_content .= '</span></p>';
+                } 
+                $str_desc = $si_contract->description;
+                $valid_until = date('jS F Y', strtotime('+2 years', strtotime($date_signed2)));
+                $valid_until_year = date('Y', strtotime($valid_until));
+                $date_signedf = date('jS F Y', strtotime($date_signed2));
+                $string_array_replace = array(                    
+                    '{signed_date}'=>$date_signedf,
+                    '{valid_until}'=>$valid_until,
+                    '{valid_until_year}'=>$valid_until_year,
+                    '{annual_fee}'=>(!empty($default_package) ? $default_package->package_price : '2700'),
+                );
+                foreach($string_array_replace as $key => $value){                    
+                    $str_replaced = str_replace($key, $value, $str_desc);
+                    $str_desc = $str_replaced;
+                }                
+                $center_content .= '<p></span><span class="font14">'.$str_desc.'</span></p>';         
+            $center_content .= '</div>';
+        }
+        
+        $contract_first_name = \DB::table('tb_settings')->where('key_value', 'contract_first_name')->first();
+		$contract_last_name = \DB::table('tb_settings')->where('key_value', 'contract_last_name')->first();
+        $contract_company = \DB::table('tb_settings')->where('key_value', 'contract_company')->first();
+        
+        $contract_full_name = '';
+        if(!empty($contract_first_name->content)){
+            $contract_full_name = $contract_first_name->content." ".$contract_last_name->content;
+        }
+        
+        if((strlen($username) > 0) && (strlen($date_signed) > 0)){
+            $center_content .= '<div class="Mrgtop80 font13 tb_page_break">';
+				$center_content .= '<p class="font13">I hereby agree to supply the above for entry into Emporium-Voyage</p>';
+                $center_content .= '<p class="font13">General terms & conditions apply.</p>';
+                $center_content .= '<table class="tablewc">';
+                    $center_content .= '<tr><td class="strong">Signed by: </td> <td class="underline">'.$username.'</td></tr>';    
+                    $center_content .= '<tr><td class="strong">Print name: </td> <td class="underline">'.$username.'</td></tr>';
+                    $center_content .= '<tr><td class="strong">For and on behalf of: </td> <td class="underline">'.$property_name.'</td></tr>';
+                    $center_content .= '<tr><td class="strong">Date signed: </td> <td class="underline">'.$date_signed.'</td></tr>';
+                    $center_content .= '<tr><td></td><td><img src="'. \URL::to('sximo/assets/images/checked-box.png').'" width="20px;" height="20px;"><label style="display:inline-block;text-align:left;">I agreed to the Terms stipulated in this contract</label></td></tr>';
+                    $center_content .= '<tr><td class="strong">Signed by: </td> <td class="underline">'.$contract_full_name.'</td></tr>';    
+                    $center_content .= '<tr><td class="strong">Print name: </td> <td class="underline">'.$contract_full_name.'</td></tr>';
+                    $center_content .= '<tr><td class="strong">For and on behalf of: </td> <td class="underline">'.$contract_company->content.'</td></tr>';
+                    $center_content .= '<tr><td class="strong">Date signed: </td> <td class="underline">'.$date_signed.'</td></tr>';
+                $center_content .= '</table>';
+			$center_content .= '</div>';
+        }
+        
+        $pdfHeader = \CommonHelper::getcontractPDFHeader($center_content);
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->setPaper('A4');
+        $pdf->loadHTML($pdfHeader);
+        @$pdf->output();
+        $dom_pdf = @$pdf->getDomPDF();
+        
+        $canvas = @$dom_pdf ->get_canvas();
+        $y = $canvas->get_height() - 50;
+        $canvas->page_text(30, $y, 'Page {PAGE_NUM} of {PAGE_COUNT} - Accepted', null, 10, array(0, 0, 0));
+        //return $pdf->stream();
+        //if($viewPDF === true){ return $pdf->stream(); }else{ return $pdf->download($downFileName); }  
+        file_put_contents($downFileName, @$pdf->output());
+		if($downFileName!='')
+		{
+		    $path = Url()."/".$downFileName;
+			//print_r($path); die;
+				$flipimgs = array();
+				$fl=0;
+					
+					$flipimgs[$fl]['imgpath'] = $path;
+					$flipimgs[$fl]['imgname'] = $pdf;
+					$flipimgs[$fl]['file_type'] = 'application/pdf';
+					$flipimgs[$fl]['folder'] = '';
+					
+				$this->data['flips'] = $flipimgs;
+				$this->data['fliptype'] = 'high';
+                
+                $group_id = \Session::get('gid');
+                $is_demo6 = trim(\CommonHelper::isHotelDashBoard($group_id));
+                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.flipbook':'user.flipbook'; 
+				return view($file_name,$this->data);
+			
+		}
+		else
+		{
+			return Redirect::to($red)->with('messagetext','Invalid link.')->with('msgstatus','error');
+		}
+	}
+    public function getViewuploadedcontract(Request $request, $property_id){
+        $hotelcontacts = (new PropertiesController)->get_property_files($property_id, 'Hotel Contracts');
+        $filepath = '';
+        if(!empty($hotelcontacts)){
+            foreach($hotelcontacts as $img){
+                $filepath = $img->imgsrc.$img->file_name;
+            }
+        }
+        
+        if($filepath!='')
+		{
+		    $path = $filepath;			
+				$flipimgs = array();
+				$fl=0;
+					
+					$flipimgs[$fl]['imgpath'] = $path;
+					$flipimgs[$fl]['imgname'] = '';
+					$flipimgs[$fl]['file_type'] = 'application/pdf';
+					$flipimgs[$fl]['folder'] = '';
+					
+				$this->data['flips'] = $flipimgs;
+				$this->data['fliptype'] = 'high';
+                
+				return view('properties.flipbook', $this->data);
+			
+		}
+		else
+		{ 
+		    $return = 'properties/?return=' . self::returnUrl();
+			return Redirect::to($return)->with('messagetext','Contract has not uploaded yet.')->with('msgstatus','error');
+		}
+    }
+    public function getViewuploadedbrochure(Request $request, $property_id){
+        $hotelcontacts = (new PropertiesController)->get_property_files($property_id, 'Hotel Brochure');
+        $filepath = '';
+        if(!empty($hotelcontacts)){
+            foreach($hotelcontacts as $img){
+                $filepath = $img->imgsrc.$img->file_name;
+            }
+        }
+        
+        if($filepath!='')
+		{
+		    $path = $filepath;			
+				$flipimgs = array();
+				$fl=0;
+					
+					$flipimgs[$fl]['imgpath'] = $path;
+					$flipimgs[$fl]['imgname'] = '';
+					$flipimgs[$fl]['file_type'] = 'application/pdf';
+					$flipimgs[$fl]['folder'] = '';
+					
+				$this->data['flips'] = $flipimgs;
+				$this->data['fliptype'] = 'high';
+                
+				return view('properties.flipbook', $this->data);
+			
+		}
+		else
+		{ 
+		    $return = 'properties/?return=' . self::returnUrl();
+			return Redirect::to($return)->with('messagetext','Contract has not uploaded yet.')->with('msgstatus','error');
+		}
+    }
+    public function savemanagementpersonnel(Request $request){        
+        $data['managing_proprietor_last_name'] = $request->input('managing_proprietor_last_name');
+        $data['managing_proprietor_first_name'] = $request->input('managing_proprietor_first_name');
+        $data['managing_proprietor_title'] = $request->input('managing_proprietor_title');
+        $data['managing_proprietor_job_title'] = $request->input('managing_proprietor_job_title');
+        $data['managing_proprietor_email_address'] = $request->input('managing_proprietor_email_address');
+        
+        $data['managing_director_last_name'] = $request->input('managing_director_last_name');
+        $data['managing_director_first_name'] = $request->input('managing_director_first_name');
+        $data['managing_director_title'] = $request->input('managing_director_title');
+        $data['managing_director_job_title'] = $request->input('managing_director_job_title');
+        $data['managing_director_email_address'] = $request->input('managing_director_email_address');
+        
+        $data['general_manager_last_name'] = $request->input('general_manager_last_name');
+        $data['general_manager_first_name'] = $request->input('general_manager_first_name');
+        $data['general_manager_title'] = $request->input('general_manager_title');
+        $data['general_manager_job_title'] = $request->input('general_manager_job_title');
+        $data['general_manager_email_address'] = $request->input('general_manager_email_address');
+        
+        $data['director_of_operations_last_name'] = $request->input('director_of_operations_last_name');
+        $data['director_of_operations_first_name'] = $request->input('director_of_operations_first_name');
+        $data['director_of_operations_title'] = $request->input('director_of_operations_title');
+        $data['director_of_operations_job_title'] = $request->input('director_of_operations_job_title');
+        $data['director_of_operations_email_address'] = $request->input('director_of_operations_email_address');
+        
+        $data['executive_assistant_manager_last_name'] = $request->input('executive_assistant_manager_last_name');
+        $data['executive_assistant_manager_first_name'] = $request->input('executive_assistant_manager_first_name');
+        $data['executive_assistant_manager_title'] = $request->input('executive_assistant_manager_title');
+        $data['executive_assistant_manager_job_title'] = $request->input('executive_assistant_manager_job_title');
+        $data['executive_assistant_manager_email_address'] = $request->input('executive_assistant_manager_email_address');
+        
+        $data['director_of_sales_marketing_last_name'] = $request->input('director_of_sales_marketing_last_name');
+        $data['director_of_sales_marketing_first_name'] = $request->input('director_of_sales_marketing_first_name');
+        $data['director_of_sales_marketing_title'] = $request->input('director_of_sales_marketing_title');
+        $data['director_of_sales_marketing_job_title'] = $request->input('director_of_sales_marketing_job_title');
+        $data['director_of_sales_marketing_email_address'] = $request->input('director_of_sales_marketing_email_address');
+        
+        $data['director_of_marketing_last_name'] = $request->input('director_of_marketing_last_name');
+        $data['director_of_marketing_first_name'] = $request->input('director_of_marketing_first_name');
+        $data['director_of_marketing_title'] = $request->input('director_of_marketing_title');
+        $data['director_of_marketing_job_title'] = $request->input('director_of_marketing_job_title');
+        $data['director_of_marketing_email_address'] = $request->input('director_of_marketing_email_address');
+        
+        $data['director_of_sales_last_name'] = $request->input('director_of_sales_last_name');
+        $data['director_of_sales_first_name'] = $request->input('director_of_sales_first_name');
+        $data['director_of_sales_title'] = $request->input('director_of_sales_title');
+        $data['director_of_sales_job_title'] = $request->input('director_of_sales_job_title');
+        $data['director_of_sales_email_address'] = $request->input('director_of_sales_email_address');
+        
+        $data['sales_manager_last_name'] = $request->input('sales_manager_last_name');
+        $data['sales_manager_first_name'] = $request->input('sales_manager_first_name');
+        $data['sales_manager_title'] = $request->input('sales_manager_title');
+        $data['sales_manager_job_title'] = $request->input('sales_manager_job_title');
+        $data['sales_manager_email_address'] = $request->input('sales_manager_email_address');
+        
+        $data['group_sales_contact_last_name'] = $request->input('group_sales_contact_last_name');
+        $data['group_sales_contact_first_name'] = $request->input('group_sales_contact_first_name');
+        $data['group_sales_contact_title'] = $request->input('group_sales_contact_title');
+        $data['group_sales_contact_job_title'] = $request->input('group_sales_contact_job_title');
+        $data['group_sales_contact_email_address'] = $request->input('group_sales_contact_email_address');
+        
+        $data['leaders_club_contact_last_name'] = $request->input('leaders_club_contact_last_name');
+        $data['leaders_club_contact_first_name'] = $request->input('leaders_club_contact_first_name');
+        $data['leaders_club_contact_title'] = $request->input('leaders_club_contact_title');
+        $data['leaders_club_contact_job_title'] = $request->input('leaders_club_contact_job_title');
+        $data['leaders_club_contact_email_address'] = $request->input('leaders_club_contact_email_address');
+        
+        $data['internal_public_relations_manager_last_name'] = $request->input('internal_public_relations_manager_last_name');
+        $data['internal_public_relations_manager_first_name'] = $request->input('internal_public_relations_manager_first_name');
+        $data['internal_public_relations_manager_title'] = $request->input('internal_public_relations_manager_title');
+        $data['internal_public_relations_manager_job_title'] = $request->input('internal_public_relations_manager_job_title');
+        $data['internal_public_relations_manager_email_address'] = $request->input('internal_public_relations_manager_email_address');
+        
+        $data['director_of_rooms_division_last_name'] = $request->input('director_of_rooms_division_last_name');
+        $data['director_of_rooms_division_first_name'] = $request->input('director_of_rooms_division_first_name');
+        $data['director_of_rooms_division_title'] = $request->input('director_of_rooms_division_title');
+        $data['director_of_rooms_division_job_title'] = $request->input('director_of_rooms_division_job_title');
+        $data['director_of_rooms_division_email_address'] = $request->input('director_of_rooms_division_email_address');
+        
+        $data['rooms_division_manager_last_name'] = $request->input('rooms_division_manager_last_name');
+        $data['rooms_division_manager_first_name'] = $request->input('rooms_division_manager_first_name');
+        $data['rooms_division_manager_title'] = $request->input('rooms_division_manager_title');
+        $data['rooms_division_manager_job_title'] = $request->input('rooms_division_manager_job_title');
+        $data['rooms_division_manager_email_address'] = $request->input('rooms_division_manager_email_address');
+        
+        $data['director_yield_last_name'] = $request->input('director_yield_last_name');
+        $data['director_yield_first_name'] = $request->input('director_yield_first_name');
+        $data['director_yield_title'] = $request->input('director_yield_title');
+        $data['director_yield_job_title'] = $request->input('director_yield_job_title');
+        $data['director_yield_email_address'] = $request->input('director_yield_email_address');
+        
+        $data['revenue_manager_last_name'] = $request->input('revenue_manager_last_name');
+        $data['revenue_manager_first_name'] = $request->input('revenue_manager_first_name');
+        $data['revenue_manager_title'] = $request->input('revenue_manager_title');
+        $data['revenue_manager_job_title'] = $request->input('revenue_manager_job_title');
+        $data['revenue_manager_email_address'] = $request->input('revenue_manager_email_address');
+        
+        $data['reservations_manager_last_name'] = $request->input('reservations_manager_last_name');
+        $data['reservations_manager_first_name'] = $request->input('reservations_manager_first_name');
+        $data['reservations_manager_title'] = $request->input('reservations_manager_title');
+        $data['reservations_manager_job_title'] = $request->input('reservations_manager_job_title');
+        $data['reservations_manager_email_address'] = $request->input('reservations_manager_email_address');
+        
+        $data['reception_manager_last_name'] = $request->input('reception_manager_last_name');
+        $data['reception_manager_first_name'] = $request->input('reception_manager_first_name');
+        $data['reception_manager_title'] = $request->input('reception_manager_title');
+        $data['reception_manager_job_title'] = $request->input('reception_manager_job_title');
+        $data['reception_manager_email_address'] = $request->input('reception_manager_email_address');
+        
+        $data['concierge_last_name'] = $request->input('concierge_last_name');
+        $data['concierge_first_name'] = $request->input('concierge_first_name');
+        $data['concierge_title'] = $request->input('concierge_title');
+        $data['concierge_job_title'] = $request->input('concierge_job_title');
+        $data['concierge_email_address'] = $request->input('concierge_email_address');
+        
+        $data['lhw_spa_director_contact_last_name'] = $request->input('lhw_spa_director_contact_last_name');
+        $data['lhw_spa_director_contact_first_name'] = $request->input('lhw_spa_director_contact_first_name');
+        $data['lhw_spa_director_contact_title'] = $request->input('lhw_spa_director_contact_title');
+        $data['lhw_spa_director_contact_job_title'] = $request->input('lhw_spa_director_contact_job_title');
+        $data['lhw_spa_director_contact_email_address'] = $request->input('lhw_spa_director_contact_email_address');
+        
+        $data['spa_manager_last_name'] = $request->input('spa_manager_last_name');
+        $data['spa_manager_first_name'] = $request->input('spa_manager_first_name');
+        $data['spa_manager_title'] = $request->input('spa_manager_title');
+        $data['spa_manager_job_title'] = $request->input('spa_manager_job_title');
+        $data['spa_manager_email_address'] = $request->input('spa_manager_email_address');
+        
+        $data['chef_last_name'] = $request->input('chef_last_name');
+        $data['chef_first_name'] = $request->input('chef_first_name');
+        $data['chef_title'] = $request->input('chef_title');
+        $data['chef_job_title'] = $request->input('chef_job_title');
+        $data['chef_email_address'] = $request->input('chef_email_address');
+        
+        $data['food_beverage_manager_last_name'] = $request->input('food_beverage_manager_last_name');
+        $data['food_beverage_manager_first_name'] = $request->input('food_beverage_manager_first_name');
+        $data['food_beverage_manager_title'] = $request->input('food_beverage_manager_title');
+        $data['food_beverage_manager_job_title'] = $request->input('food_beverage_manager_job_title');
+        $data['food_beverage_manager_email_address'] = $request->input('food_beverage_manager_email_address');
+        
+        $data['purchasing_manager_last_name'] = $request->input('purchasing_manager_last_name');
+        $data['purchasing_manager_first_name'] = $request->input('purchasing_manager_first_name');
+        $data['purchasing_manager_title'] = $request->input('purchasing_manager_title');
+        $data['purchasing_manager_job_title'] = $request->input('purchasing_manager_job_title');
+        $data['purchasing_manager_email_address'] = $request->input('purchasing_manager_email_address');
+        
+        $data['controller_last_name'] = $request->input('controller_last_name');
+        $data['controller_first_name'] = $request->input('controller_first_name');
+        $data['controller_title'] = $request->input('controller_title');
+        $data['controller_job_title'] = $request->input('controller_job_title');
+        $data['controller_email_address'] = $request->input('controller_email_address');
+        
+        $data['credit_manager_last_name'] = $request->input('credit_manager_last_name');
+        $data['credit_manager_first_name'] = $request->input('credit_manager_first_name');
+        $data['credit_manager_title'] = $request->input('credit_manager_title');
+        $data['credit_manager_job_title'] = $request->input('credit_manager_job_title');
+        $data['credit_manager_email_address'] = $request->input('credit_manager_email_address');
+        
+        $data['human_resources_manager_last_name'] = $request->input('human_resources_manager_last_name');
+        $data['human_resources_manager_first_name'] = $request->input('human_resources_manager_first_name');
+        $data['human_resources_manager_title'] = $request->input('human_resources_manager_contact_title');
+        $data['human_resources_manager_job_title'] = $request->input('human_resources_manager_job_title');
+        $data['human_resources_manager_email_address'] = $request->input('human_resources_manager_email_address');
+        
+        if ($request->input('manper_compedit_id') != "" && $request->input('manper_compedit_id') > 0) {
+            $data['updated'] = date('y-m-d h:i:s');
+            \DB::table('tb_user_company_details')->where('id', $request->input('manper_compedit_id'))->update($data);
+            $response = array('status' => 'success', 'message' => 'Management personnel updated successfully');
+        }else{
+            $response = array('status' => 'error', 'message' => 'Error while updating management personnel');        
+            
+        }        
+        echo json_encode($response);
+        exit;
+    }
 }

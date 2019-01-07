@@ -126,6 +126,7 @@ return array(
  "tab_popup2_menu"			=> "Popup 2 Menu",
  "tab_business_menu"			=> "Business Menu",
  "tab_intranet_menu"			=> "Intranet Menu",
+ "tab_hotel_menu"			=> "Hotel Menu",
  "sb_reorder"			=> "Reorder Menu",  
  "fr_mtitle"			=> "Name / Title ",  
  "fr_mtype"			=> "Menu Type",  
@@ -304,6 +305,7 @@ return array(
  "crmhotel_email_popup_send_btn"			=> "Send",  
 "ads_delete_confirm_msg"			=> "Are you sure to delete this?", 
 "fr_youtube_api_key"=>'Youtube API Key',
+"fr_superadmin_emailsys"            => "Super Admin Email",
 
 /*------------ Start ----------- */
 /* Module Heading and Alerts info */
@@ -315,5 +317,6 @@ return array(
     "btn_lead_create"			=> "Lead Create",
     "btn_lead_listing"			=> "Lead Listing",
     "refferal_invite"			=> "Refferal Invitation",
-    
+    "request_refferal_email_to_superadmin"			=> "Request Refferal Email To Super Admin",
+     "request_refferal_email_to_user"			=> "Request Refferal Email To User",
  );

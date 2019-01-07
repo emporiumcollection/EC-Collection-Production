@@ -1,7 +1,7 @@
 @extends('users_admin.metronic.layouts.app')
 
 @section('page_name')
-    Dashboard
+    
 @stop
     
 @section('subheader_search')
@@ -9,49 +9,66 @@
         <h2 class="m-subheader-search__title">
     		Recent Bookings
     		<span class="m-subheader-search__desc">
-    			Onling Bookings Management
+    			Quick Reservation Search
     		</span>
     	</h2>
-    	<form class="m-form">
+    	<form class="m-form booking-form" action="{{URL::to('searchbooking')}}" method="get" id="searchBookingForm" name="searchBookingForm">
     		<div class="m-grid m-grid--ver-desktop m-grid--desktop">
     			<div class="m-grid__item m-grid__item--middle">
     				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
-    					<input type="text" class="form-control form-control-lg m-input m-input--pill" placeholder="Booking Number">
-    					<span class="m-input-icon__icon m-input-icon__icon--right">
-    						<span>
-    							<i class="la la-puzzle-piece"></i>
-    						</span>
-    					</span>
+                        <input type="text" name="s" data-action="auto-suggestion-booking" class="form-control" placeholder="Booking Number">
+    					   					
     				</div>
-    				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
-    					<input type="text" class="form-control form-control-lg m-input m-input--pill" placeholder="From">
-    					<span class="m-input-icon__icon m-input-icon__icon--right">
-    						<span>
-    							<i class="la la-calendar-check-o"></i>
-    						</span>
-    					</span>
+    				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+                        <input name="from" type="text" class="form-control datepic" placeholder="From" />
     				</div>
-    				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-md m-input-icon--right">
-    					<input type="text" class="form-control form-control-lg m-input m-input--pill" placeholder="To">
-    					<span class="m-input-icon__icon m-input-icon__icon--right">
-    						<span>
-    							<i class="la la-calendar-check-o"></i>
-    						</span>
-    					</span>
+                    <div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+                        <input name="to" type="text" class="form-control datepic" placeholder="To" />				
     				</div>
     			</div>
     			<div class="m-grid__item m-grid__item--middle">
     				<div class="m--margin-top-20 m--visible-tablet-and-mobile"></div>
-    				<button type="button" class="btn m-btn--pill m-subheader-search__submit-btn">
+    				<button type="submit" class="btn m-btn--pill m-subheader-search__submit-btn">
     					Search Bookings
     				</button>
-    				<a href="#" class="m-subheader-search__link m-link">
-    					Advance Search
-    				</a>
     			</div>
     		</div>
     	</form>
     </div>
+    <?php /* <div class="m-subheader-search">
+        <h2 class="m-subheader-search__title">
+    		Recent Bookings
+    		<span class="m-subheader-search__desc">
+    			Quick Reservation Search
+    		</span>
+    	</h2>
+    	<form class="m-form booking-form" action="{{URL::to('searchbooking')}}" method="get" id="searchBookingForm" name="searchBookingForm">
+    		<div class="m-grid m-grid--ver-desktop m-grid--desktop">
+    			<div class="m-grid__item m-grid__item--middle">
+    				<div class="m-input-icon m-input-icon--fixed m-input-icon--fixed-large m-input-icon--right">
+                        <input type="text" name="s" data-action="auto-suggestion-booking" class="form-control" placeholder="Booking Number">
+    					   					
+    				</div>
+    				<div class="m-input-icon m-input-icon--fixed-large m-input-icon--fixed-md m-input-icon--right search-cal-top">
+    					<div class="calendarbox">
+                    	   <div class="row">
+                                <div id="t-topbar-picker" class="col-xs-12 col-md-12 t-datepicker">
+                                    <div class="t-check-in"></div>
+                                    <div class="t-check-out"></div>
+                                </div>
+                    	   </div>
+                    	</div>
+    				</div>
+    			</div>
+    			<div class="m-grid__item m-grid__item--middle search-btn-top-margin">
+    				<div class="m--margin-top-20 m--visible-tablet-and-mobile"></div>
+    				<button type="submit" class="btn m-btn--pill m-subheader-search__submit-btn">
+    					Search Bookings
+    				</button>
+    			</div>
+    		</div>
+    	</form>
+    </div> */?>
 @stop
 
 @section('breadcrumb')
@@ -63,2657 +80,192 @@
     </li>
 @stop
 
-@section('content')
-    <?php /* @if(!empty($pageslider))
-    <section class="sliderSection termConditionSlider">
-        <div id="restaurantSlider" class="carousel" data-ride="carousel">
-        <!-- Indicators -->
-        <!-- Wrapper for slides -->
-            <div class="carousel-inner">
-                @foreach($pageslider as $key => $slider_row)
-                  <div class="item {{($key == 0)? 'active' : ''}}" style="background:url({{url('uploads/slider_images/'.$slider_row->slider_img)}}) center center no-repeat; background-size:cover;">
-                    <div class="carousel-caption">
-                      <a href="{{$slider_row->slider_link}}">
-                      <h1>{{$slider_row->slider_title}}</h1>
-                      <h4>{{$slider_row->slider_description}}</h4>    
-                      </a>                  
-                    </div>
-                  </div>
-                @endforeach
-            </div>
-        <!-- Left and right controls -->
-        <a class="left carousel-control" href="#restaurantSlider" data-slide="prev">
-          <img src="{{ asset('themes/emporium/images/editorial-left-arrow.png') }}" alt="Icon">
-        </a>
-        <a class="right carousel-control" href="#restaurantSlider" data-slide="next">
-          <img src="{{ asset('themes/emporium/images/editorial-right-arrow.png') }}" alt="Icon">
-        </a>
-        </div>
-        <span class="scrollNextDiv"><a class="scrollpage" href="#membershpipStepSec">Scroll Down</a></span>
-    </section>
-    @endif */ ?>
-    
+@section('content')    
     <!--Begin::Section_portlet-->
-        <div class="parent_hotel_name">
-            <div class="m-subheader" style="padding: 0px; margin-bottom: 20px;">
-				<div class="d-flex align-items-center">
-					<div class="mr-auto">
-						<h3 class="m-subheader__title m-subheader__title--separator">
-							Hotel Name
-						</h3>
-					</div>
+    <div class="parent_hotel_name">
+        <div class="m-subheader" style="padding: 0px; margin-bottom: 20px;">
+			<div class="d-flex align-items-center">
+				<div class="mr-auto">
+					<h3 class="m-subheader__title m-subheader__title--separator">
+						{{$hotel_name}}
+					</h3>
 				</div>
-			</div>
-        
-        <!-- Second Row -->
-			<div class="row">
-				<div class="col-sm-12 col-md-4 col-xl-4">
-					
-                    
-                    <!--begin:: Widgets/Announcements 2-->
-					<div class="m-portlet m--bg-danger m-portlet--bordered-semi m-portlet--skin-dark m-portlet--full-height ">
-						<div class="m-portlet__head">
-							<div class="m-portlet__head-caption">
-								<div class="m-portlet__head-title">
-									<h3 class="m-portlet__head-text">
-										Hotel Name
-									</h3>
-								</div>
-							</div>							
-						</div>
-						<div class="m-portlet__body">
-							<!--begin::Widget 7-->
-							<div class="m-widget7 m-widget7--skin-dark">								
-								<div class="m-widget7__user">
-									<div class="m-widget7__user-img">
-										<img class="m-widget7__img" src="{{asset('metronic/assets/app/media/img/users/emp.png')}}" alt="">
-									</div>
-									<div class="m-widget7__info">
-										<span class="m-widget7__username">
-											Hotel Name
-										</span>
-									</div>
-								</div>
-                                <div class="m-widget7__desc">
-									Welcome to the emporium Voyage World. 
-Emporium Voyage is a prestige organisation seeking to serve your every need. Navigate through your dashboard and connect with your account execitive with any questions you may have.
-								</div>
-								<div class="m-widget7__button">
-									<a class="m-btn m-btn--pill btn btn-accent" href="{{URL::to('user/profile')}}" role="button">
-										GO TO MY PROFILE
-									</a>
-								</div>
-							</div>
-							<!--end::Widget 7-->
-						</div>
-					</div>
-					<!--end:: Widgets/Announcements 2-->
-				
-                    
-                    
-				</div>
-				<div class="col-sm-12 col-md-4 col-xl-4">
-					<!--begin:: Widgets/Authors Profit-->
-					<div class="m-portlet m-portlet--bordered-semi m-portlet--full-height ">
-						<div class="m-portlet__head">
-							<div class="m-portlet__head-caption">
-								<div class="m-portlet__head-title">
-									<h3 class="m-portlet__head-text">
-										Quick Navigation
-									</h3>
-								</div>
-							</div>
-							<div class="m-portlet__head-tools" style="display: none;">
-								<ul class="m-portlet__nav">
-									<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-										<a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
-											All
-										</a>
-										<div class="m-dropdown__wrapper">
-											<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-											<div class="m-dropdown__inner">
-												<div class="m-dropdown__body">
-													<div class="m-dropdown__content">
-														<ul class="m-nav">
-															<li class="m-nav__section m-nav__section--first">
-																<span class="m-nav__section-text">
-																	Quick Actions
-																</span>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-share"></i>
-																	<span class="m-nav__link-text">
-																		Activity
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-chat-1"></i>
-																	<span class="m-nav__link-text">
-																		Messages
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-info"></i>
-																	<span class="m-nav__link-text">
-																		FAQ
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																	<span class="m-nav__link-text">
-																		Support
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__separator m-nav__separator--fit"></li>
-															<li class="m-nav__item">
-																<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-																	Cancel
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="m-portlet__body">
-							<div class="m-widget4">
-								<div class="m-widget4__item">									
-									<div class="m-widget4__info">
-										<span class="m-widget4__title">
-											Property Management
-										</span>
-									</div>
-									<span class="m-widget4__ext">
-										<span class="m-widget4__number m--font-brand">
-											<a href="{{ URL::to('properties')}}">View</a>
-										</span>
-									</span>
-								</div>
-								<div class="m-widget4__item">									
-									<div class="m-widget4__info">
-										<span class="m-widget4__title">
-											Reservation Management
-										</span>
-									</div>
-									<span class="m-widget4__ext">
-										<span class="m-widget4__number m--font-brand">
-											<a href="#">View</a>
-										</span>
-									</span>
-								</div>
-								<div class="m-widget4__item">									
-									<div class="m-widget4__info">
-										<span class="m-widget4__title">
-											Sales Reports
-										</span>
-									</div>
-									<span class="m-widget4__ext">
-										<span class="m-widget4__number m--font-brand">
-											<a href="#">View</a>
-										</span>
-									</span>
-								</div>
-								<div class="m-widget4__item">									
-									<div class="m-widget4__info">
-										<span class="m-widget4__title">
-											View Modules
-										</span>										
-									</div>
-									<span class="m-widget4__ext">
-										<span class="m-widget4__number m--font-brand">
-											<a href="#">View</a>
-										</span>
-									</span>
-								</div>
-								<div class="m-widget4__item">									
-									<div class="m-widget4__info">
-										<span class="m-widget4__title">
-											Cancelations
-										</span>
-									</div>
-									<span class="m-widget4__ext">
-										<span class="m-widget4__number m--font-brand">
-											<a href="#">View</a>
-										</span>
-									</span>
-								</div>
-                                <div class="m-widget4__item">									
-									<div class="m-widget4__info">
-										<span class="m-widget4__title">
-											Arrivals & Departures
-										</span>
-									</div>
-									<span class="m-widget4__ext">
-										<span class="m-widget4__number m--font-brand">
-											<a href="#">View</a>
-										</span>
-									</span>
-								</div>
-                                
-                                <div class="m-widget4__item">									
-									<div class="m-widget4__info">
-										<span class="m-widget4__title">
-											Advertising
-										</span>
-									</div>
-									<span class="m-widget4__ext">
-										<span class="m-widget4__number m--font-brand">
-											<a href="#">View</a>
-										</span>
-									</span>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end:: Widgets/Authors Profit-->
-				</div>                
-                <div class="col-sm-12 col-md-4 col-xl-4">
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    <!--begin:: Packages-->
-								<div class="m-portlet  m-portlet--bordered-semi   m-portlet--full-height ">
-									<div class="m-portlet__head m--padding-top-20">
-										<div class="m-portlet__head-caption">
-											<div class="m-portlet__head-title">
-												<h3 class="m-portlet__head-text">
-													Packages
-												</h3>
-											</div>
-										</div>
-										<div class="m-portlet__head-tools" style="display: none;">
-											<ul class="m-portlet__nav">
-												<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-													<a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn  ">
-														All
-													</a>
-													<div class="m-dropdown__wrapper">
-														<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-														<div class="m-dropdown__inner">
-															<div class="m-dropdown__body">
-																<div class="m-dropdown__content">
-																	<ul class="m-nav">
-																		<li class="m-nav__section m-nav__section--first">
-																			<span class="m-nav__section-text">
-																				Quick Actions
-																			</span>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-share"></i>
-																				<span class="m-nav__link-text">
-																					Activity
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-chat-1"></i>
-																				<span class="m-nav__link-text">
-																					Messages
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-info"></i>
-																				<span class="m-nav__link-text">
-																					FAQ
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__item">
-																			<a href="" class="m-nav__link">
-																				<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																				<span class="m-nav__link-text">
-																					Support
-																				</span>
-																			</a>
-																		</li>
-																		<li class="m-nav__separator m-nav__separator--fit"></li>
-																		<li class="m-nav__item">
-																			<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-																				Cancel
-																			</a>
-																		</li>
-																	</ul>
-																</div>
-															</div>
-														</div>
-													</div>
-												</li>
-											</ul>
-										</div>
-									</div>
-									<div class="m-portlet__body m-portlet__body--no-padding">
-										<!--begin::Widget 30-->
-                                        <?php
-                                            $group_id = \Session::get('gid');
-                                            $packages = \DB::table('tb_packages')->where('allow_user_groups', $group_id)->where('package_status', 1)->get();
-                                        ?>
-										<div class="m-widget30">
-											<div class="m-widget_head">
-												<div class="m-widget_head-owlcarousel-items owl-carousel">
-                                                    <?php if(count($packages) > 0){
-                                                        foreach($packages as $package){
-                                                    ?>
-                                                            <div class="m-widget_head-owlcarousel-item carousel">
-        														<span>
-        															<?php echo $package->package_title; ?>
-        														</span>														
-        													</div>
-                                                    <?php        
-                                                            }
-                                                        }
-                                                    ?>
-													
-												</div>
-											</div>
-											<div class="m-widget_body">
-												<div class="m-widget_body-owlcarousel-items owl-carousel" id="m_widget_body_owlcarousel_items">
-													<?php 
-                                                    if(count($packages) > 0){                                                        
-                                                    ?>  
-                                                    @foreach($packages as $key=>$package)                                                  
-                                                    <div class="m-widget_body-owlcarousel-item carousel">
-														<div class="m-widget_body-items">
-															<div class="m-widget_body-item">
-																<div class="m-widget_body-item-pic">	
-                                                                    <img class="img-responsive object-fit-size" src="{{URL::to('uploads/packages/'.$package->package_image)}}" alt="{{$package->package_image}}" style="width: 100%;" >
-																</div>
-																<div class="m-widget_body-item-desc ">
-																	<span>
-                                                                        {{$package->package_description}}
-																	</span>																	
-																</div>
-															</div>																														
-														</div>
-													</div>
-                                                    @endforeach
-                                                    <?php                                                            
-                                                    }
-                                                    ?>
-												</div>
-											</div>
-										</div>
-										<!--end::Widget 30-->
-									</div>
-								</div>
-								<!--end:: Packages-->
-                    
-                </div>
-                				
-			</div>
-        </div>
-    <!-- Third Row -->
-        <div class="parent_notifications">           
-            <div class="m-subheader" style="padding: 0px; margin-bottom: 20px;">
-				<div class="d-flex align-items-center">
-					<div class="mr-auto">
-						<h3 class="m-subheader__title m-subheader__title--separator">
-							Notifications
-						</h3>
-					</div>
-				</div>
-			</div> 
-           
-			    <div class="row">
-					<div class="col-sm-12 col-md-8 col-xl-8">
-                        <div class="row">
-                        <div class="col-sm-12">
-						<!--begin:: Widgets/Tasks -->
-						<div class="m-portlet m-portlet--full-height ">
-							<div class="m-portlet__head">
-								<div class="m-portlet__head-caption">
-									<div class="m-portlet__head-title">
-										<h3 class="m-portlet__head-text">
-											Tasks
-										</h3>
-									</div>
-								</div>								
-							</div>
-							<div class="m-portlet__body">
-								<div class="tab-content">
-									<div class="tab-pane active" id="m_widget2_tab1_content">
-										<div class="m-widget2">
-											<div class="m-widget2__item m-widget2__item--primary">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="{{URL::to('user/profile')}}" class="m-task-link">Complete your profile</a>
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="m-widget2__item m-widget2__item--warning">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="{{URL::to('hotel/package')}}" class="m-task-link">Subscribe to Membership Packages</a>
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="m-widget2__item m-widget2__item--brand">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="{{URL::to('whoiam')}}" class="m-task-link">Add your Hotel(s)</a> 
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="m-widget2__item m-widget2__item--success">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="{{URL::to('user/profile')}}" class="m-task-link">Add your Rooms & Seasons</a>
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="m-widget2__item m-widget2__item--danger">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="{{URL::to('user/profile')}}" class="m-task-link">Add your Rates</a>
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-											<div class="m-widget2__item m-widget2__item--info">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="#" class="m-task-link">Add your Restaurant's, Bar & Spa</a>
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-                                            
-                                            
-                                            
-                                            <div class="m-widget2__item m-widget2__item--info">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="#" class="m-task-link">Add your Events & Special Occassions</a>
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-                                            <div class="m-widget2__item m-widget2__item--info">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="#" class="m-task-link">Review the Quality Assurance Guidelines</a>
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-                                            <div class="m-widget2__item m-widget2__item--info">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="#" class="m-task-link">Like Emporium Voyage</a>
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-                                            <div class="m-widget2__item m-widget2__item--info">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="#" class="m-task-link">Invite Guest to Elite Members Club</a>
-													</span>													
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>
-                                            <div class="m-widget2__item m-widget2__item--info">
-												<div class="m-widget2__checkbox">
-													<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-														<input type="checkbox">
-														<span></span>
-													</label>
-												</div>
-												<div class="m-widget2__desc">
-													<span class="m-widget2__text">
-														<a href="#" class="m-task-link">Review Hotel Marketing Packages</a>
-													</span>
-												</div>
-												<div class="m-widget2__actions">
-													<div class="m-widget2__actions-nav">
-														<div class="m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-															<a href="#" class="m-dropdown__toggle">
-																<i class="la la-ellipsis-h"></i>
-															</a>
-															<div class="m-dropdown__wrapper">
-																<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																<div class="m-dropdown__inner">
-																	<div class="m-dropdown__body">
-																		<div class="m-dropdown__content">
-																			<ul class="m-nav">
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-share"></i>
-																						<span class="m-nav__link-text">
-																							Activity
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-chat-1"></i>
-																						<span class="m-nav__link-text">
-																							Messages
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-info"></i>
-																						<span class="m-nav__link-text">
-																							FAQ
-																						</span>
-																					</a>
-																				</li>
-																				<li class="m-nav__item">
-																					<a href="" class="m-nav__link">
-																						<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																						<span class="m-nav__link-text">
-																							Support
-																						</span>
-																					</a>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																</div>
-															</div>
-														</div>
-													</div>
-												</div>
-											</div>                                            
-                                            
-                                            
-                                            
-                                            
-                                            
-										</div>
-									</div>
-									<div class="tab-pane" id="m_widget2_tab2_content"></div>
-									<div class="tab-pane" id="m_widget2_tab3_content"></div>
-								</div>
-							</div>
-						</div>
-						<!--end:: Widgets/Tasks -->
-                        </div>
-                        </div>
-                        <div class="row">
-                        <div class="col-sm-12">
-                        
-						<!--begin:: Widgets/Announcements 1-->
-						<div class="m-portlet m--bg-accent m-portlet--bordered-semi m-portlet--skin-dark m-portlet--full-height ">
-							<div class="m-portlet__head">
-								<div class="m-portlet__head-caption">
-									<div class="m-portlet__head-title">
-										<h3 class="m-portlet__head-text">
-											Announcements
-										</h3>
-									</div>
-								</div>
-								<div class="m-portlet__head-tools">
-									<ul class="m-portlet__nav">
-										<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-											<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
-												<i class="la la-ellipsis-h m--font-light"></i>
-											</a>
-											<div class="m-dropdown__wrapper">
-												<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-												<div class="m-dropdown__inner">
-													<div class="m-dropdown__body">
-														<div class="m-dropdown__content">
-															<ul class="m-nav">
-																<li class="m-nav__section m-nav__section--first">
-																	<span class="m-nav__section-text">
-																		Quick Actions
-																	</span>
-																</li>
-																<li class="m-nav__item">
-																	<a href="" class="m-nav__link">
-																		<i class="m-nav__link-icon flaticon-share"></i>
-																		<span class="m-nav__link-text">
-																			Activity
-																		</span>
-																	</a>
-																</li>
-																<li class="m-nav__item">
-																	<a href="" class="m-nav__link">
-																		<i class="m-nav__link-icon flaticon-chat-1"></i>
-																		<span class="m-nav__link-text">
-																			Messages
-																		</span>
-																	</a>
-																</li>
-																<li class="m-nav__item">
-																	<a href="" class="m-nav__link">
-																		<i class="m-nav__link-icon flaticon-info"></i>
-																		<span class="m-nav__link-text">
-																			FAQ
-																		</span>
-																	</a>
-																</li>
-																<li class="m-nav__item">
-																	<a href="" class="m-nav__link">
-																		<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																		<span class="m-nav__link-text">
-																			Support
-																		</span>
-																	</a>
-																</li>
-																<li class="m-nav__separator m-nav__separator--fit"></li>
-																<li class="m-nav__item">
-																	<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-																		Cancel
-																	</a>
-																</li>
-															</ul>
-														</div>
-													</div>
-												</div>
-											</div>
-										</li>
-									</ul>
-								</div>
-							</div>
-							<div class="m-portlet__body">
-								<!--begin::Widget 7-->
-								<div class="m-widget7 m-widget7--skin-dark">
-									<div class="m-widget7__desc">
-										Lorem ipsum dolor sit amet,consectetuer edipiscing elit,sed diam nonummy euismod tinciduntut laoreet doloremagna
-									</div>
-									<div class="m-widget7__user">
-										<div class="m-widget7__user-img">
-											<img class="m-widget7__img" src="{{asset('metronic/assets/app/media/img/users/100_3.jpg')}}" alt="">
-										</div>
-										<div class="m-widget7__info">
-											<span class="m-widget7__username">
-												Dan Bold
-											</span>
-											<br>
-											<span class="m-widget7__time">
-												3 days ago
-											</span>
-										</div>
-									</div>
-									<div class="m-widget7__button">
-										<a class="m-btn m-btn--pill btn btn-danger" href="#" role="button">
-											All Feeds
-										</a>
-									</div>
-								</div>
-								<!--end::Widget 7-->
-							</div>
-						</div>
-						<!--end:: Widgets/Announcements 1-->
-					   </div>
-                       </div>
-                        
-                        
-                        
-                        
-                        
-					</div>
-					
-                    <div class="col-sm-12 col-md-4 col-xl-4">
-                        <!--begin:: Widgets/Blog-->
-						<div class="m-portlet m-portlet--bordered-semi m-portlet--full-height  m-portlet--rounded-force">
-							<div class="m-portlet__head m-portlet__head--fit">
-								<div class="m-portlet__head-caption">
-									<div class="m-portlet__head-action">
-										<button type="button" class="btn btn-sm m-btn--pill  btn-brand">
-											Blog
-										</button>
-									</div>
-								</div>
-							</div>
-							<div class="m-portlet__body">
-								<div class="m-widget19">
-									<div class="m-widget19__pic m-portlet-fit--top m-portlet-fit--sides" style="min-height-: 286px">
-										<img src="{{asset('metronic/assets/app/media/img/blog/blog1.jpg')}}" alt="">
-										<h3 class="m-widget19__title m--font-light">
-											Introducing New Feature
-										</h3>
-										<div class="m-widget19__shadow"></div>
-									</div>
-									<div class="m-widget19__content">
-										<div class="m-widget19__header">
-											<div class="m-widget19__user-img">
-												<img class="m-widget19__img" src="{{asset('metronic/assets/app/media/img/users/user1.jpg')}}" alt="">
-											</div>
-											<div class="m-widget19__info">
-												<span class="m-widget19__username">
-													Anna Krox
-												</span>
-												<br>
-												<span class="m-widget19__time">
-													UX/UI Designer, Google
-												</span>
-											</div>
-											<div class="m-widget19__stats">
-												<span class="m-widget19__number m--font-brand">
-													18
-												</span>
-												<span class="m-widget19__comment">
-													Comments
-												</span>
-											</div>
-										</div>
-										<div class="m-widget19__body">
-											Lorem Ipsum is simply dummy text of the printing and typesetting industry scrambled it to make text of the printing and typesetting industry scrambled a type specimen book text of the dummy text of the printing printing and typesetting industry scrambled dummy text of the printing.
-										</div>
-									</div>
-									<div class="m-widget19__action">
-										<button type="button" class="btn m-btn--pill btn-secondary m-btn m-btn--hover-brand m-btn--custom">
-											Read More
-										</button>
-									</div>
-								</div>
-							</div>
-						</div>
-						<!--end:: Widgets/Blog-->
-                    </div>
-                    
-				</div>
-        </div>
-				<!--End::Section-->
-                
-		    <!-- End First Row -->   
-	        
-		<div class="parent_reservation_ans_distribution">
-           <div class="m-subheader" style="padding: 0px; margin-bottom: 20px;">
-				<div class="d-flex align-items-center">
-					<div class="mr-auto">
-						<h3 class="m-subheader__title m-subheader__title--separator">
-							Reservation & Distribution
-						</h3>
-					</div>
-				</div>
-			</div> 
-            
-			<div class="row">
-				<div class="col-sm-12 col-md-4 col-xl-4">
-					<!--begin:: Widgets/Activity-->
-					<div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--skin-light  m-portlet--rounded-force">
-						<div class="m-portlet__head">
-							<div class="m-portlet__head-caption">
-								<div class="m-portlet__head-title">
-									<h3 class="m-portlet__head-text m--font-light">
-										Reservation & Distribution
-									</h3>
-								</div>
-							</div>
-							<div class="m-portlet__head-tools">
-								<ul class="m-portlet__nav">
-									<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-										<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
-											<i class="fa fa-genderless m--font-light"></i>
-										</a>
-										<div class="m-dropdown__wrapper">
-											<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-											<div class="m-dropdown__inner">
-												<div class="m-dropdown__body">
-													<div class="m-dropdown__content">
-														<ul class="m-nav">
-															<li class="m-nav__section m-nav__section--first">
-																<span class="m-nav__section-text">
-																	Quick Actions
-																</span>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-share"></i>
-																	<span class="m-nav__link-text">
-																		Activity
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-chat-1"></i>
-																	<span class="m-nav__link-text">
-																		Messages
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-info"></i>
-																	<span class="m-nav__link-text">
-																		FAQ
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																	<span class="m-nav__link-text">
-																		Support
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__separator m-nav__separator--fit"></li>
-															<li class="m-nav__item">
-																<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-																	Cancel
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="m-portlet__body">
-							<div class="m-widget17">
-								<div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
-									<div class="m-widget17__chart" style="height:320px;">
-										<canvas id="m_chart_activities"></canvas>
-									</div>
-								</div>
-								<div class="m-widget17__stats">
-									<div class="m-widget17__items m-widget17__items-col1">
-										<div class="m-widget17__item">
-											<span class="m-widget17__icon">
-												<i class="fa fa-home m--font-brand"></i>
-											</span>
-											<span class="m-widget17__subtitle">
-												Property Management
-											</span>
-											<span class="m-widget17__desc">
-												15 New Paskages
-											</span>
-										</div>
-										<div class="m-widget17__item">
-											<span class="m-widget17__icon">
-												<i class="flaticon-paper-plane m--font-info"></i>
-											</span>
-											<span class="m-widget17__subtitle">
-												Container
-											</span>
-											<span class="m-widget17__desc">
-												72 Support Cases
-											</span>
-										</div>
-									</div>
-									<div class="m-widget17__items m-widget17__items-col2">
-										<div class="m-widget17__item">
-											<span class="m-widget17__icon">
-												<i class="flaticon-pie-chart m--font-success"></i>
-											</span>
-											<span class="m-widget17__subtitle">
-												Reservation Management
-											</span>
-											<span class="m-widget17__desc">
-												72 New Items
-											</span>
-										</div>
-										
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end:: Widgets/Activity-->
-				</div>	
-                
-                <div class="col-sm-12 col-md-4 col-xl-4">
-                    <!--begin:: Widgets/Sale Reports-->
-					<div class="m-portlet m-portlet--full-height ">
-						<div class="m-portlet__head">
-							<div class="m-portlet__head-caption">
-								<div class="m-portlet__head-title">
-									<h3 class="m-portlet__head-text">
-										Guest Arrivals | Departures
-									</h3>
-								</div>
-							</div>
-							<div class="m-portlet__head-tools">
-								<ul class="nav nav-pills nav-pills--brand m-nav-pills--align-right m-nav-pills--btn-pill m-nav-pills--btn-sm" role="tablist">
-									<li class="nav-item m-tabs__item">
-										<a class="nav-link m-tabs__link active" data-toggle="tab" href="#m_widget11_tab1_content" role="tab">
-											Today
-										</a>
-									</li>
-									<li class="nav-item m-tabs__item">
-										<a class="nav-link m-tabs__link" data-toggle="tab" href="#m_widget11_tab2_content" role="tab">
-											Month
-										</a>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="m-portlet__body">
-							<!--Begin::Tab Content-->
-							<div class="tab-content">
-								<!--begin::tab 1 content-->
-								<div class="tab-pane active" id="m_widget11_tab1_content">
-									<!--begin::Widget 11-->
-									<div class="m-widget11">
-										<div class="table-responsive">
-											<!--begin::Table-->
-											<table class="table">
-												<!--begin::Thead-->
-												<thead>
-													<tr>														
-														<td class="m-widget11__app">
-															Guest Name
-														</td>
-														<td class="m-widget11__sales">
-															Guest #
-														</td>														
-														<td class="m-widget11__total m--align-right">
-															Date of Arrival
-														</td>
-													</tr>
-												</thead>
-												<!--end::Thead-->
-<!--begin::Tbody-->
-												<tbody>
-													<tr>
-														<td>
-															Room name booked $309/pn														
-														</td>
-														<td>
-															#3
-														</td>														
-														<td class="m--align-right m--font-brand">
-															10:10:2018
-														</td>
-													</tr>
-													<tr>
-														<td>
-															Room name booked $309/pn														
-														</td>
-														<td>
-															#3
-														</td>														
-														<td class="m--align-right m--font-brand">
-															10:10:2018
-														</td>
-													</tr>
-													<tr>
-														<td>
-															Room name booked $309/pn														
-														</td>
-														<td>
-															#3
-														</td>														
-														<td class="m--align-right m--font-brand">
-															10:10:2018
-														</td>
-													</tr>
-													<tr>
-														<td>
-															Room name booked $309/pn														
-														</td>
-														<td>
-															#3
-														</td>														
-														<td class="m--align-right m--font-brand">
-															10:10:2018
-														</td>
-													</tr>
-												</tbody>
-												<!--end::Tbody-->
-											</table>
-											<!--end::Table-->
-										</div>
-										
-									</div>
-									<!--end::Widget 11-->
-								</div>
-								<!--end::tab 1 content-->
-<!--begin::tab 2 content-->
-								<div class="tab-pane" id="m_widget11_tab2_content">
-									<!--begin::Widget 11-->
-									<div class="m-widget11">
-										<div class="table-responsive">
-											<!--begin::Table-->
-											<table class="table">
-												<!--begin::Thead-->
-												<thead>
-													<tr>
-														<td class="m-widget11__label">
-															#
-														</td>
-														<td class="m-widget11__app">
-															Application
-														</td>
-														<td class="m-widget11__sales">
-															Sales
-														</td>
-														<td class="m-widget11__change">
-															Change
-														</td>
-														<td class="m-widget11__price">
-															Avg Price
-														</td>
-														<td class="m-widget11__total m--align-right">
-															Total
-														</td>
-													</tr>
-												</thead>
-												<!--end::Thead-->
-<!--begin::Tbody-->
-												<tbody>
-													<tr>
-														<td>
-															<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-																<input type="checkbox">
-																<span></span>
-															</label>
-														</td>
-														<td>
-															<span class="m-widget11__title">
-																Loop
-															</span>
-															<span class="m-widget11__sub">
-																CRM System
-															</span>
-														</td>
-														<td>
-															19,200
-														</td>
-														<td>
-															$63
-														</td>
-														<td>
-															$11,300
-														</td>
-														<td class="m--align-right m--font-brand">
-															$34,740
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-																<input type="checkbox">
-																<span></span>
-															</label>
-														</td>
-														<td>
-															<span class="m-widget11__title">
-																Selto
-															</span>
-															<span class="m-widget11__sub">
-																Powerful Website Builder
-															</span>
-														</td>
-														<td>
-															24,310
-														</td>
-														<td>
-															$39
-														</td>
-														<td>
-															$14,700
-														</td>
-														<td class="m--align-right m--font-brand">
-															$46,010
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-																<input type="checkbox">
-																<span></span>
-															</label>
-														</td>
-														<td>
-															<span class="m-widget11__title">
-																Jippo
-															</span>
-															<span class="m-widget11__sub">
-																The Best Selling App
-															</span>
-														</td>
-														<td>
-															9,076
-														</td>
-														<td>
-															$105
-														</td>
-														<td>
-															$8,400
-														</td>
-														<td class="m--align-right m--font-brand">
-															$67,800
-														</td>
-													</tr>
-													<tr>
-														<td>
-															<label class="m-checkbox m-checkbox--solid m-checkbox--single m-checkbox--brand">
-																<input type="checkbox">
-																<span></span>
-															</label>
-														</td>
-														<td>
-															<span class="m-widget11__title">
-																Verto
-															</span>
-															<span class="m-widget11__sub">
-																Web Development Tool
-															</span>
-														</td>
-														<td>
-															11,094
-														</td>
-														<td>
-															$16
-														</td>
-														<td>
-															$12,500
-														</td>
-														<td class="m--align-right m--font-brand">
-															$18,520
-														</td>
-													</tr>
-												</tbody>
-												<!--end::Tbody-->
-											</table>
-											<!--end::Table-->
-										</div>
-										<div class="m-widget11__action m--align-right">
-											<button type="button" class="btn m-btn--pill btn-outline-brand m-btn m-btn--custom">
-												Generate Report
-											</button>
-										</div>
-									</div>
-									<!--end::Widget 11-->
-								</div>
-								<!--end::tab 2 content-->
-<!--begin::tab 3 content-->
-								<div class="tab-pane" id="m_widget11_tab3_content"></div>
-								<!--end::tab 3 content-->
-							</div>
-							<!--End::Tab Content-->
-						</div>
-					</div>
-					<!--end:: Widgets/Sale Reports-->
-                </div>
-                
-                <div class="col-sm-12 col-md-4 col-xl-4">
-                    <!--begin:: Widgets/Adwords Stats-->
-					<div class="m-portlet m-portlet--full-height m-portlet--skin-light m-portlet--fit ">
-						<div class="m-portlet__head">
-							<div class="m-portlet__head-caption">
-								<div class="m-portlet__head-title">
-									<h3 class="m-portlet__head-text">
-										Sales Stats
-									</h3>
-								</div>
-							</div>
-							<div class="m-portlet__head-tools">
-								<ul class="m-portlet__nav">
-									<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
-										<a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
-											Select Range
-										</a>
-										<div class="m-dropdown__wrapper" style="z-index: 101;">
-											<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 47px;"></span>
-											<div class="m-dropdown__inner">
-												<div class="m-dropdown__body">
-													<div class="m-dropdown__content">
-														<ul class="m-nav">
-															<li class="m-nav__section m-nav__section--first">
-																<span class="m-nav__section-text">
-																	Quick Actions
-																</span>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-share"></i>
-																	<span class="m-nav__link-text">
-																		Activity
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-chat-1"></i>
-																	<span class="m-nav__link-text">
-																		Messages
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-info"></i>
-																	<span class="m-nav__link-text">
-																		FAQ
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																	<span class="m-nav__link-text">
-																		Support
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__separator m-nav__separator--fit"></li>
-															<li class="m-nav__item">
-																<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-																	Cancel
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="m-portlet__body">
-							<div class="m-widget21" style="min-height: 420px">
-								<div class="row">
-									<div class="col col-sm-12 col-md-6 col-xl-6">
-										<div class="m-widget21__item m--pull-right">
-											<span class="m-widget21__icon">
-												<a href="#" class="btn btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-													<i class="fa flaticon-alert-2 m--font-light"></i>
-												</a>
-											</span>
-											<div class="m-widget21__info">
-												<span class="m-widget21__title">
-													Sales
-												</span>
-												<br>
-												<span class="m-widget21__sub">
-													IPO, Margins, Transactions
-												</span>
-											</div>
-										</div>
-									</div>
-									<div class="col col-sm-12 col-md-6 col-xl-6 m--align-left">
-										<div class="m-widget21__item m--pull-left">
-											<span class="m-widget21__icon">
-												<a href="#" class="btn btn-accent m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-													<i class="fa flaticon-coins m--font-light m--font-light"></i>
-												</a>
-											</span>
-											<div class="m-widget21__info">
-												<span class="m-widget21__title">
-													Commission Paid
-												</span>
-												<br>
-												<span class="m-widget21__sub">
-													Expenses, Loses, Profits
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="m-widget21__chart m-portlet-fit--sides" style="height:310px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-									<canvas id="m_chart_adwords_stats" width="502" height="310" class="chartjs-render-monitor" style="display: block; width: 502px; height: 310px;"></canvas>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end:: Widgets/Adwords Stats-->
-                </div>
-                						
 			</div>
 		</div>
-        <div class="parent_sales_and_marketing">
-            <div class="m-subheader" style="padding: 0px; margin-bottom: 20px;">
-				<div class="d-flex align-items-center">
-					<div class="mr-auto">
-						<h3 class="m-subheader__title m-subheader__title--separator">
-							Sales & Marketing
-						</h3>
-					</div>
-				</div>
+        
+        <div class="row">
+			<div class="col-sm-12 col-md-4 col-xl-4">
+				
+                @if(!empty($blogs))
+                <div id="b2cblog_carousel" class="rad-carousel">
+                     
+                    <ol class="carousel-indicators">
+                        @foreach($blogs as $key => $blog_row)
+                        <li data-target="#Carousel" data-slide-to="{{$key}}" class="{{($key == 0)? 'active' : ''}}"></li>
+                        @endforeach
+                    </ol>
+                     
+                    <!-- Carousel items -->
+                    <div class="rad-carousel-inner">
+                    @foreach($blogs as $key => $blog_row)    
+                    <?php 
+                        $final_url = '#';
+                        $ext_url = trim($blog_row->external_link);
+                        if(strlen($ext_url)>0){                        
+                            if(strpos($ext_url, 'http://') !== 0 && strpos($ext_url, 'https://') !== 0 ) {
+                              $final_url = 'http://' . $ext_url;
+                            } else {
+                              $final_url = $ext_url;
+                            }  
+                        }                       
+                    ?>
+                    <div class="item {{($key == 0)? 'active' : ''}}">
+                    	<div class="row">
+                        <div class="col-md-12">
+                            <a href="{{$final_url}}" class="thumbnail" target="_blank">                                
+                                <img src="{{url('/uploads/article_imgs/'.$blog_row->featured_image)}}" alt="{{$blog_row->title_pos_1}}" style="max-width:100%;">
+                                <div class="dash_img_overlay"></div>
+                            </a>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="heading">
+                                <a href="#">{{$blog_row->title_pos_1}}</a>
+                            </div>
+                        </div>   
+                                    	  
+                        <div class="col-md-12">
+                            <div class="blog-desc">
+                                <p>{{str_limit(strip_tags($blog_row->description_pos_1), 255)}}</p>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <a href="{{$final_url}}" class="blog-readmore">Continue Reading</a>
+                        </div>                              
+                    	</div><!--.row-->
+                    </div><!--.item-->
+                    @endforeach 
+                     
+                    </div><!--.carousel-inner-->
+                      <!--<a data-slide="prev" href="#Carousel" class="left carousel-control"><</a>
+                      <a data-slide="next" href="#Carousel" class="right carousel-control">></a> -->
+                </div><!--.Carousel-->
+                @endif
+                
+                
+                <!--begin:: Widgets/Announcements 2-->                    
 			</div>
             
-			<div class="row">
-				<div class="col-sm-12 col-md-4 col-xl-4">
-					<!--begin:: Widgets/Activity-->
-					<div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--skin-light  m-portlet--rounded-force">
-						<div class="m-portlet__head">
-							<div class="m-portlet__head-caption">
-								<div class="m-portlet__head-title">
-									<h3 class="m-portlet__head-text m--font-light">
-										Sales & Marketing
-									</h3>
-								</div>
-							</div>
-							<div class="m-portlet__head-tools">
-								<ul class="m-portlet__nav">
-									<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-										<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
-											<i class="fa fa-genderless m--font-light"></i>
-										</a>
-										<div class="m-dropdown__wrapper">
-											<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-											<div class="m-dropdown__inner">
-												<div class="m-dropdown__body">
-													<div class="m-dropdown__content">
-														<ul class="m-nav">
-															<li class="m-nav__section m-nav__section--first">
-																<span class="m-nav__section-text">
-																	Quick Actions
-																</span>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-share"></i>
-																	<span class="m-nav__link-text">
-																		Activity
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-chat-1"></i>
-																	<span class="m-nav__link-text">
-																		Messages
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-info"></i>
-																	<span class="m-nav__link-text">
-																		FAQ
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																	<span class="m-nav__link-text">
-																		Support
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__separator m-nav__separator--fit"></li>
-															<li class="m-nav__item">
-																<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-																	Cancel
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="m-portlet__body">
-							<div class="m-widget17">
-								<div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
-									<div class="m-widget17__chart" style="height:320px;">
-										<canvas id="m_chart_activities2"></canvas>
-									</div>
-								</div>
-								<div class="m-widget17__stats">
-									<div class="m-widget17__items m-widget17__items-col1">
-										<div class="m-widget17__item">
-											<span class="m-widget17__icon">
-												<i class="fa fa-envelope m--font-brand"></i>
-											</span>
-											<span class="m-widget17__subtitle">
-												Email-Marketing
-											</span>
-											<span class="m-widget17__desc">
-												<a href="#">View</a>
-											</span>
-										</div>
-										<div class="m-widget17__item">
-											<span class="m-widget17__icon">
-												<i class="flaticon-paper-plane m--font-info"></i>
-											</span>
-											<span class="m-widget17__subtitle">
-												Heatmap Tracking
-											</span>
-											<span class="m-widget17__desc">
-												<a href="#">View</a>
-											</span>
-										</div>
-									</div>
-									<div class="m-widget17__items m-widget17__items-col2">
-										<div class="m-widget17__item">
-											<span class="m-widget17__icon">
-												<i class="flaticon-pie-chart m--font-success"></i>
-											</span>
-											<span class="m-widget17__subtitle">
-												Social Content Distribution
-											</span>
-											<span class="m-widget17__desc">
-												<a href="#">View</a>
-											</span>
-										</div>
-										
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end:: Widgets/Activity-->
-				</div>
-                
-                <div class="col-sm-12 col-md-4 col-xl-4">
-                    <!--begin:: Widgets/Product Sales-->
-					<div class="m-portlet m-portlet--bordered-semi m-portlet--space m-portlet--full-height ">
-						<div class="m-portlet__head">
-							<div class="m-portlet__head-caption">
-								<div class="m-portlet__head-title">
-									<h3 class="m-portlet__head-text">
-										Product Sales
-										<span class="m-portlet__head-desc">
-											Total Sales By Products
-										</span>
-									</h3>
-								</div>
-							</div>
-							<div class="m-portlet__head-tools">
-								<ul class="m-portlet__nav">
-									<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
-										<a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
-											Filter
-										</a>
-										<div class="m-dropdown__wrapper">
-											<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 36.5px;"></span>
-											<div class="m-dropdown__inner">
-												<div class="m-dropdown__body">
-													<div class="m-dropdown__content">
-														<ul class="m-nav">
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-share"></i>
-																	<span class="m-nav__link-text">
-																		Activity
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-chat-1"></i>
-																	<span class="m-nav__link-text">
-																		Messages
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-info"></i>
-																	<span class="m-nav__link-text">
-																		FAQ
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																	<span class="m-nav__link-text">
-																		Support
-																	</span>
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="m-portlet__body">
-							<div class="m-widget25">
-								<span class="m-widget25__price m--font-brand">
-									$237,650
-								</span>
-								<span class="m-widget25__desc">
-									Total Revenue This Month
-								</span>
-								<div class="m-widget25--progress">
-									<div class="m-widget25__progress">
-										<span class="m-widget25__progress-number">
-											63%
-										</span>
-										<div class="m--space-10"></div>
-										<div class="progress m-progress--sm">
-											<div class="progress-bar m--bg-danger" role="progressbar" style="width: 63%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-										<span class="m-widget25__progress-sub">
-											Rooms
-										</span>
-									</div>
-									<div class="m-widget25__progress">
-										<span class="m-widget25__progress-number">
-											39%
-										</span>
-										<div class="m--space-10"></div>
-										<div class="progress m-progress--sm">
-											<div class="progress-bar m--bg-accent" role="progressbar" style="width: 39%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-										<span class="m-widget25__progress-sub">
-											Events
-										</span>
-									</div>
-									<div class="m-widget25__progress" >
-										<span class="m-widget25__progress-number">
-											54%
-										</span>
-										<div class="m--space-10"></div>
-										<div class="progress m-progress--sm">
-											<div class="progress-bar m--bg-warning" role="progressbar" style="width: 54%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
-										</div>
-										<span class="m-widget25__progress-sub">
-											Restuarant / Spa / Bar
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end:: Widgets/Product Sales-->
+            <div class="col-sm-12 col-md-8 col-xl-8">
+                <div class="dashboard-right-top">
+                    @if(!empty($pageslider))
+                        <div id="b2cdash_carousel" class="carousel slide">
+                             
+                            <ol class="carousel-indicators">
+                                @foreach($pageslider as $key => $slider_row)
+                                <li data-target="#Carousel" data-slide-to="{{$key}}" class="{{($key == 0)? 'active' : ''}}"></li>
+                                @endforeach
+                            </ol>
+                             
+                            <!-- Carousel items -->
+                            <div class="carousel-inner">
+                            @foreach($pageslider as $key => $slider_row)    
+                            <div class="item {{($key == 0)? 'active' : ''}}">
+                            	<div class="row">
+                            	  <div class="col-md-12">
+                                    <a href="{{$slider_row->slider_link}}" class="thumbnail">                            
+                                        <div class="b2c-banner-text">{{$slider_row->slider_title}}</div>
+                                        <img src="{{url('uploads/slider_images/'.$slider_row->slider_img)}}" alt="{{$slider_row->slider_title}}" style="max-width:100%;">
+                                        <div class="dash_img_overlay"></div>
+                                    </a>
+                                  </div>                	  
+                            	</div><!--.row-->
+                            </div><!--.item-->
+                            @endforeach 
+                             
+                            </div><!--.carousel-inner-->
+                              <!--<a data-slide="prev" href="#Carousel" class="left carousel-control"><</a>
+                              <a data-slide="next" href="#Carousel" class="right carousel-control">></a>-->
+                        </div><!--.Carousel-->
+                    @endif
                 </div>
-                
-                <div class="col-sm-12 col-md-4 col-xl-4">
-                    <!--begin:: Widgets/Adwords Stats-->
-					<div class="m-portlet m-portlet--full-height m-portlet--skin-light m-portlet--fit ">
-						<div class="m-portlet__head">
-							<div class="m-portlet__head-caption">
-								<div class="m-portlet__head-title">
-									<h3 class="m-portlet__head-text">
-										Sales Stats
-									</h3>
-								</div>
-							</div>
-							<div class="m-portlet__head-tools">
-								<ul class="m-portlet__nav">
-									<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
-										<a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill btn-secondary m-btn m-btn--label-brand">
-											Select Range
-										</a>
-										<div class="m-dropdown__wrapper" style="z-index: 101;">
-											<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 47px;"></span>
-											<div class="m-dropdown__inner">
-												<div class="m-dropdown__body">
-													<div class="m-dropdown__content">
-														<ul class="m-nav">
-															<li class="m-nav__section m-nav__section--first">
-																<span class="m-nav__section-text">
-																	Quick Actions
-																</span>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-share"></i>
-																	<span class="m-nav__link-text">
-																		Activity
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-chat-1"></i>
-																	<span class="m-nav__link-text">
-																		Messages
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-info"></i>
-																	<span class="m-nav__link-text">
-																		FAQ
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																	<span class="m-nav__link-text">
-																		Support
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__separator m-nav__separator--fit"></li>
-															<li class="m-nav__item">
-																<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-																	Cancel
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="m-portlet__body">
-							<div class="m-widget21" style="min-height: 420px">
-								<div class="row">
-									<div class="col col-sm-12 col-md-6 col-xl-6">
-										<div class="m-widget21__item m--pull-right">
-											<span class="m-widget21__icon">
-												<a href="#" class="btn btn-brand m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-													<i class="fa flaticon-alert-2 m--font-light"></i>
-												</a>
-											</span>
-											<div class="m-widget21__info">
-												<span class="m-widget21__title">
-													Sales
-												</span>
-												<br>
-												<span class="m-widget21__sub">
-													IPO, Margins, Transactions
-												</span>
-											</div>
-										</div>
-									</div>
-									<div class="col col-sm-12 col-md-6 col-xl-6 m--align-left">
-										<div class="m-widget21__item m--pull-left">
-											<span class="m-widget21__icon">
-												<a href="#" class="btn btn-accent m-btn m-btn--icon m-btn--icon-only m-btn--custom m-btn--pill">
-													<i class="fa flaticon-coins m--font-light m--font-light"></i>
-												</a>
-											</span>
-											<div class="m-widget21__info">
-												<span class="m-widget21__title">
-													Commission Paid
-												</span>
-												<br>
-												<span class="m-widget21__sub">
-													Expenses, Loses, Profits
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<div class="m-widget21__chart m-portlet-fit--sides" style="height:310px;"><div class="chartjs-size-monitor" style="position: absolute; left: 0px; top: 0px; right: 0px; bottom: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
-									<canvas id="m_chart_adwords_stats3" width="502" height="310" class="chartjs-render-monitor" style="display: block; width: 502px; height: 310px;"></canvas>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end:: Widgets/Adwords Stats-->
+                <div class="dashboard-right-bottom">
+                    <div class="row" style="margin-left: 0px;">
+                        <div class="setting-box-advert1">
+                            <a href="{{ URL::to('properties') }}">
+                                <i class="grid_icon flaticon-cogwheel-2"></i>																	
+                    			<span class="grid_link-text">
+                    				Property Management
+                    			</span>
+                    		</a>
+                        </div>
+                        <div class="setting-box-advert2">
+                            <a href="{{ URL::to('reservations') }}">
+                                <i class="grid_icon flaticon-graphic-2"></i>																	
+                    			<span class="grid_link-text">
+                    				Reservation Management
+                    			</span>
+                    		</a>
+                        </div>
+                        <div class="setting-box-advert3">
+                            <a href="{{ URL::to('hotelcontainer')}}">
+                    			<i class="grid_icon flaticon-layers"></i>																	
+                    			<span class="grid_link-text">
+                    				Digital Media Management & Distribution System
+                    			</span>
+                    		</a>
+                        </div>
+                        <div class="setting-box-advert4">
+                            <a href="{{ URL::to('hotelpackages') }}" id="dash_communication">
+                    			<i class="grid_icon flaticon-share"></i>																	
+                    			<span class="grid_link-text">
+                    				Membership &amp; Support Services
+                    			</span>
+                    		</a>
+                        </div>
+                        
+                        
+                        <div class="setting-box-advert5">
+                            <a href="{{URL::to('arrivaldeparture')}}">
+                                <i class="grid_icon flaticon-clock-2"></i>																	
+                    			<span class="grid_link-text">
+                    				Arrivals, Departures &amp; Cancelations
+                    			</span>
+                    		</a>
+                        </div>
+                        <div class="setting-box-advert6">
+                            <a href="{{URL::to('advertising')}}">
+                                <i class="grid_icon flaticon-statistics"></i>																	
+                    			<span class="grid_link-text">
+                    				Advertising
+                    			</span>
+                    		</a>
+                        </div>
+                        <div class="setting-box-advert7">
+                            <a href="{{URL::to('salesreport')}}">
+                    			<i class="grid_icon flaticon-graph"></i>																	
+                    			<span class="grid_link-text">
+                    				Sales Reports
+                    			</span>
+                    		</a>
+                        </div>
+                        <div class="setting-box-advert8">
+                            <a href="{{URL::to('qualityassurances')}}" id="dash_communication">
+                    			<i class="grid_icon flaticon-pie-chart"></i>																	
+                    			<span class="grid_link-text">
+                    				Quality Assurance
+                    			</span>
+                    		</a>
+                        </div>
+                        
+                    </div>
                 </div>
-                							
-			</div>
-        </div>
-        <div class="parent_quality_assurance">		
-            <div class="m-subheader" style="padding: 0px; margin-bottom: 20px;">
-				<div class="d-flex align-items-center">
-					<div class="mr-auto">
-						<h3 class="m-subheader__title m-subheader__title--separator">
-							Quality Assurance
-						</h3>
-					</div>
-				</div>
-			</div>
-         
-            <div class="row">
-				<div class="col-sm-12 col-md-4 col-xl-4">
-					<!--begin:: Widgets/Activity-->
-					<div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--skin-light  m-portlet--rounded-force">
-						<div class="m-portlet__head">
-							<div class="m-portlet__head-caption">
-								<div class="m-portlet__head-title">
-									<h3 class="m-portlet__head-text m--font-light">
-										Quality Assurance
-									</h3>
-								</div>
-							</div>
-							<div class="m-portlet__head-tools">
-								<ul class="m-portlet__nav">
-									<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
-										<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
-											<i class="fa fa-genderless m--font-light"></i>
-										</a>
-										<div class="m-dropdown__wrapper">
-											<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-											<div class="m-dropdown__inner">
-												<div class="m-dropdown__body">
-													<div class="m-dropdown__content">
-														<ul class="m-nav">
-															<li class="m-nav__section m-nav__section--first">
-																<span class="m-nav__section-text">
-																	Quick Actions
-																</span>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-share"></i>
-																	<span class="m-nav__link-text">
-																		Activity
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-chat-1"></i>
-																	<span class="m-nav__link-text">
-																		Messages
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-info"></i>
-																	<span class="m-nav__link-text">
-																		FAQ
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__item">
-																<a href="" class="m-nav__link">
-																	<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																	<span class="m-nav__link-text">
-																		Support
-																	</span>
-																</a>
-															</li>
-															<li class="m-nav__separator m-nav__separator--fit"></li>
-															<li class="m-nav__item">
-																<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-																	Cancel
-																</a>
-															</li>
-														</ul>
-													</div>
-												</div>
-											</div>
-										</div>
-									</li>
-								</ul>
-							</div>
-						</div>
-						<div class="m-portlet__body">
-							<div class="m-widget17">
-								<div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
-									<div class="m-widget17__chart" style="height:320px;">
-										<canvas id="m_chart_activities3"></canvas>
-									</div>
-								</div>
-								<div class="m-widget17__stats">
-									<div class="m-widget17__items m-widget17__items-col1">
-										<div class="m-widget17__item">
-											<span class="m-widget17__icon">
-												<i class="fa fa-check-square m--font-brand"></i>
-											</span>
-											<span class="m-widget17__subtitle">
-												Quality Assurance
-											</span>
-											<span class="m-widget17__desc">
-												<a href="#">View QA Module</a>
-											</span>
-										</div>
-										
-									</div>
-									
-								</div>
-							</div>
-						</div>
-					</div>
-					<!--end:: Widgets/Activity-->
-				</div>
-                
-                <div class="col-sm-12 col-md-8 col-xl-8">
-                    <div class="m-portlet m-portlet--tab">
-																	<div class="m-portlet__head">
-																		<div class="m-portlet__head-caption">
-																			<div class="m-portlet__head-title">
-																				<span class="m-portlet__head-icon m--hide">
-																					<i class="la la-gear"></i>
-																				</span>
-																				<h3 class="m-portlet__head-text">
-																					Quality Assurance Program
-																				</h3>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="m-portlet__body">
-																		<div id="m_amcharts_13" style="height: 500px;"></div>
-																	</div>
-																</div>
-                    <!--begin:: Widgets/Support Cases-->
-																<?php /* <div class="m-portlet  m-portlet--full-height ">
-																	<div class="m-portlet__head">
-																		<div class="m-portlet__head-caption">
-																			<div class="m-portlet__head-title">
-																				<h3 class="m-portlet__head-text">
-																					Support Cases
-																				</h3>
-																			</div>
-																		</div>
-																		<div class="m-portlet__head-tools">
-																			<ul class="m-portlet__nav">
-																				<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
-																					<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl m-dropdown__toggle">
-																						<i class="la la-ellipsis-h m--font-brand"></i>
-																					</a>
-																					<div class="m-dropdown__wrapper">
-																						<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
-																						<div class="m-dropdown__inner">
-																							<div class="m-dropdown__body">
-																								<div class="m-dropdown__content">
-																									<ul class="m-nav">
-																										<li class="m-nav__section m-nav__section--first">
-																											<span class="m-nav__section-text">
-																												Select
-																											</span>
-																										</li>
-																										<li class="m-nav__item">
-																											<a href="" class="m-nav__link">
-																												<i class="m-nav__link-icon flaticon-share"></i>
-																												<span class="m-nav__link-text">
-																													Q1
-																												</span>
-																											</a>
-																										</li>
-																										<li class="m-nav__item">
-																											<a href="" class="m-nav__link">
-																												<i class="m-nav__link-icon flaticon-chat-1"></i>
-																												<span class="m-nav__link-text">
-																													Q2
-																												</span>
-																											</a>
-																										</li>
-																										<li class="m-nav__item">
-																											<a href="" class="m-nav__link">
-																												<i class="m-nav__link-icon flaticon-info"></i>
-																												<span class="m-nav__link-text">
-																													Q3
-																												</span>
-																											</a>
-																										</li>
-																										<li class="m-nav__item">
-																											<a href="" class="m-nav__link">
-																												<i class="m-nav__link-icon flaticon-lifebuoy"></i>
-																												<span class="m-nav__link-text">
-																												    Q4
-																												</span>
-																											</a>
-																										</li>
-																										<li class="m-nav__separator m-nav__separator--fit"></li>
-																										<li class="m-nav__item">
-																											<a href="#" class="btn btn-outline-danger m-btn m-btn--pill m-btn--wide btn-sm">
-																												Q5
-																											</a>
-																										</li>
-																									</ul>
-																								</div>
-																							</div>
-																						</div>
-																					</div>
-																				</li>
-																			</ul>
-																		</div>
-																	</div>
-																	<div class="m-portlet__body">
-																		<div class="m-widget16">
-																			<div class="row">
-																				<div class="col-md-5">
-																					
-																					<div class="m-widget16__body">
-																						<!--begin::widget item-->
-																						<div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Bedroom
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-brand">
-																								20%
-																							</span>
-																						</div>
-																						<!--end::widget item-->	
-						<!--begin::widget item-->
-																						<div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Bathroom
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-accent">
-																								10%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-						<!--begin::widget item-->
-																						<div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Exterior/Grounds
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-accent">
-																								14%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Lobby
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								6%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Restaurants/Bars
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Guest Room Corridors
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Restrooms
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Elevators
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								
-																							</span>
-																						</div>
-                                                                                        <!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								HE Employee - Behavioural Standards
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Fitness Center
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Swimming Pool/Beach
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Tennis/Squash Courts
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Steam Room/Sauna/Jacuzzi
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Changing Rooms
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-                                                                                        <div class="m-widget16__item">
-																							<span class="m-widget16__date">
-																								Other Fields
-																							</span>
-																							<span class="m-widget16__price m--align-right m--font-danger">
-																								5%
-																							</span>
-																						</div>
-																						<!--end::widget item-->
-																						
-																					</div>
-																				</div>
-																				<div class="col-md-7">
-																					<div class="m-widget16__stats">
-																						<div class="m-widget16__visual">
-																							<div id="m_chart_support_tickets" style="height: 180px"></div>
-																						</div>
-																						
-																					</div>
-																				</div>
-																			</div>
-																		</div>
-																	</div>
-																</div>
-																<!--end:: Widgets/Support Stats--> */ ?>
-					
-                </div>
-                
-                
-                							
-			</div>
-  </div>   
-			
-		
+            </div> 
+                           		
+		</div>
+    </div>
+	
 	<!--End::Section_portlet-->
-<!--Start: First Time on Dashboard modal pop up-->
+    <!--Start: First Time on Dashboard modal pop up-->
     <div class="modal fade" id="agree_model" tabindex="-1" role="dialog" aria-labelledby="agreeModalLabel" aria-hidden="true" style="display: none;">
     	<div class="modal-dialog modal-lg" role="document">
     		<div class="modal-content">
@@ -2798,8 +350,8 @@ Note: You may revoke your consent at any time by e-mail to info@emporium-voyage.
     		</div>
     	</div>
     </div>    
- <!--end: modal pop up-->
- <!--Start: First Time on Dashboard modal pop up-->
+    <!--end: modal pop up-->
+    <!--Start: First Time on Dashboard modal pop up-->
     <div class="modal fade" id="confirm_model" tabindex="-1" role="dialog" aria-labelledby="agreeModalLabel" aria-hidden="true" style="display: none;">
     	<div class="modal-dialog modal-lg" role="document">
     		<div class="modal-content">
@@ -2832,13 +384,267 @@ Note: You may revoke your consent at any time by e-mail to info@emporium-voyage.
     		</div>
     	</div>
     </div>    
- <!--end: modal pop up-->   
+    <!--end: modal pop up-->  
+    <!-- Reservation model -->
+    <div class="modal fade" id="reservationsmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog" role="document">
+    	<div class="modal-content">
+    	  <div class="modal-header">
+            <h5 class="modal-title" id="guesttitle">Booked Details</h5>
+    		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    	  </div>
+          
+          <div class="modal-body">
+            <div class="m-portlet m-portlet--full-height" style="padding: 0px; margin-bottom: 0px;">
+                <form class="m-form">
+                    <div class="m-portlet__body" style="padding: 0px;">
+                        <div id="bookingdetailbody">
+    		
+    	                </div>
+                    </div>
+                </form>
+            </div>
+          </div>
+          
+    	  
+    	</div>
+      </div>
+    </div> 
+    <!-- End reservation model -->
 @stop
 {{-- For custom style  --}}
 @section('style')
     @parent
     <link href="//www.amcharts.com/lib/3/plugins/export/export.css" rel="stylesheet" type="text/css" />
+    <!--<link href="{{ asset('themes/emporium/daterangepicker/css/t-datepicker.min.css') }}" rel="stylesheet" type="text/css" /> 
+    <link href="{{ asset('themes/emporium/daterangepicker/css/themes/t-datepicker-bluegrey.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
+   
     <style>
+    	.cursor{cursor:col-resize;}
+    	.selectedCell{background:pink;}
+        .BookedCell{background:pink; cursor: pointer; }
+        .selectedCell span{ cursor: pointer; }
+    	.optionbox {
+    		-moz-user-select: none;
+    		-webkit-user-select: none;
+    		-ms-user-select: none;
+    		padding: 8px;
+    		cursor: pointer;
+    		background-color: #eee;
+    		border-radius: 3px;
+    		border: 1px solid #dadada;
+    		line-height: 18px;
+    		display: inline-block;
+    	}
+        .m-content>div:nth-child(even) .row {
+            background: none !important;
+            padding: 10px 15px;
+        }
+    </style>
+    <style>
+    
+    .carousel {
+      position: relative;
+    }
+    
+    .carousel-inner {
+      position: relative;
+      width: 100%;
+      /*height:400px;*/
+      overflow: hidden;
+    }
+    
+    .carousel-inner > .item {      
+      /*position: absolute;
+      height:400px;*/
+      display: none;
+      -webkit-transition: 0.6s ease-in-out left;
+              transition: 0.6s ease-in-out left;
+    }
+    
+    .carousel-inner > .item > img,
+    .carousel-inner > .item > a > img {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      line-height: 1;
+    }
+    
+    .carousel-inner > .active,
+    .carousel-inner > .next,
+    .carousel-inner > .prev {
+      display: block;
+    }
+    
+    .carousel-inner > .active {
+      left: 0;
+    }
+    
+    .carousel-inner > .next,
+    .carousel-inner > .prev {
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+    
+    .carousel-inner > .next {
+      left: 100%;
+    }
+    
+    .carousel-inner > .prev {
+      left: -100%;
+    }
+    
+    .carousel-inner > .next.left,
+    .carousel-inner > .prev.right {
+      left: 0;
+    }
+    
+    .carousel-inner > .active.left {
+      left: -100%;
+    }
+    
+    .carousel-inner > .active.right {
+      left: 100%;
+    }
+    
+    .carousel-control {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 0;
+      width: 15%;
+      font-size: 20px;
+      color: #ffffff;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+      opacity: 0.5;
+      filter: alpha(opacity=50);
+    }
+    
+    .carousel-control.left {
+      background-image: -webkit-gradient(linear, 0 top, 100% top, from(rgba(0, 0, 0, 0.5)), to(rgba(0, 0, 0, 0.0001)));
+      background-image: -webkit-linear-gradient(left, color-stop(rgba(0, 0, 0, 0.5) 0), color-stop(rgba(0, 0, 0, 0.0001) 100%));
+      background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.5) 0, rgba(0, 0, 0, 0.0001) 100%);
+      background-repeat: repeat-x;
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#80000000', endColorstr='#00000000', GradientType=1);
+    }
+    
+    .carousel-control.right {
+      right: 0;
+      left: auto;
+      background-image: -webkit-gradient(linear, 0 top, 100% top, from(rgba(0, 0, 0, 0.0001)), to(rgba(0, 0, 0, 0.5)));
+      background-image: -webkit-linear-gradient(left, color-stop(rgba(0, 0, 0, 0.0001) 0), color-stop(rgba(0, 0, 0, 0.5) 100%));
+      background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+      background-image: linear-gradient(to right, rgba(0, 0, 0, 0.0001) 0, rgba(0, 0, 0, 0.5) 100%);
+      background-repeat: repeat-x;
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#80000000', GradientType=1);
+    }
+    
+    .carousel-control:hover,
+    .carousel-control:focus {
+      color: #ffffff;
+      text-decoration: none;
+      opacity: 0.9;
+      filter: alpha(opacity=90);
+    }
+    
+    .carousel-control .icon-prev,
+    .carousel-control .icon-next,
+    .carousel-control .glyphicon-chevron-left,
+    .carousel-control .glyphicon-chevron-right {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 5;
+      display: inline-block;
+    }
+    
+    .carousel-control .icon-prev,
+    .carousel-control .icon-next {
+      width: 20px;
+      height: 20px;
+      margin-top: -10px;
+      margin-left: -10px;
+      font-family: serif;
+    }
+    
+    .carousel-control .icon-prev:before {
+      content: '\2039';
+    }
+    
+    .carousel-control .icon-next:before {
+      content: '\203a';
+    }
+    
+    .carousel-indicators {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      z-index: 15;
+      width: 60%;
+      padding-left: 0;
+      margin-left: -30%;
+      text-align: center;
+      list-style: none;
+    }
+    
+    .carousel-indicators li {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      margin: 1px;
+      text-indent: -999px;
+      cursor: pointer;
+      border: 1px solid #ffffff;
+      border-radius: 10px;
+    }
+    
+    .carousel-indicators .active {
+      width: 12px;
+      height: 12px;
+      margin: 0;
+      background-color: #ffffff;
+    }
+    
+    .carousel-caption {
+      position: absolute;
+      right: 15%;
+      bottom: 20px;
+      left: 15%;
+      z-index: 10;
+      padding-top: 20px;
+      padding-bottom: 20px;
+      color: #ffffff;
+      text-align: center;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+    }
+    
+    .carousel-caption .btn {
+      text-shadow: none;
+    }
+    
+    @media screen and (min-width: 768px) {
+      .carousel-control .icon-prev,
+      .carousel-control .icon-next {
+        width: 30px;
+        height: 30px;
+        margin-top: -15px;
+        margin-left: -15px;
+        font-size: 30px;
+      }
+      .carousel-caption {
+        right: 20%;
+        left: 20%;
+        padding-bottom: 30px;
+      }
+      .carousel-indicators {
+        bottom: 20px;
+      }
+    }
+    
     .carousel-control {
         position: absolute;
     }
@@ -2877,7 +683,7 @@ Note: You may revoke your consent at any time by e-mail to info@emporium-voyage.
         margin-bottom: 3em;
     }
     .m-subheader-search{
-        margin-top: 20px;
+        /*margin-top: 20px;*/
     }
     .m-widget7 .m-widget7__user .m-widget7__user-img .m-widget7__img{
         width: 4.9rem;
@@ -2885,23 +691,166 @@ Note: You may revoke your consent at any time by e-mail to info@emporium-voyage.
     .m-nav-grid>.m-nav-grid__row>.m-nav-grid__item{
         padding: .75rem .75rem;
     }
+    
+    .carousel {
+        margin-bottom: 0;
+        /*padding: 0 40px 30px 40px;*/
+    }
+    /* The controlsy */
+    .carousel-control {
+    	left: 30px;
+        height: 40px;
+    	width: 40px;
+        background: none repeat scroll 0 0 #222222;
+        border: 4px solid #FFFFFF;
+        border-radius: 23px 23px 23px 23px;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+    .carousel-control.right {
+    	right: 30px;
+    }
+    
+    .carousel-control2 {
+    	left: 30px;
+        height: 40px;
+    	width: 40px;
+        background: none repeat scroll 0 0 #222222;
+        border: 4px solid #FFFFFF;
+        border-radius: 23px 23px 23px 23px;
+        top: 50%;
+        -webkit-transform: translateY(-50%);
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+    }
+    .carousel-control2.right {
+    	right: 30px;
+    }
+    /* The indicators */
+    .carousel-indicators {
+    	right: 50%;
+    	top: auto;
+    	bottom: -10px;
+    	margin-right: -19px;
+        display: none;
+    }
+    /* The colour of the indicators */
+    .carousel-indicators li {
+    	background: #cecece;
+    }
+    .carousel-indicators .active {
+    background: #428bca;
+    }
+    
+    .rad-carousel{
+        position: relative;
+    }
+    .rad-carousel-inner {      
+      position: relative;
+      /*height:680px;*/
+      width: 100%;
+      overflow: hidden;
+    }
+    
+    .rad-carousel-inner > .item {
+      /*position: absolute;
+      height:400px;*/
+      display: none;
+      
+    }
+    
+    .rad-carousel-inner > .item > img,
+    .rad-carousel-inner > .item > a > img {
+      display: block;
+      height: auto;
+      max-width: 100%;
+      line-height: 1;
+    }
+    
+    .m-content>div:nth-child(even) .row{
+        padding: 0px 0px !important;
+    }
+    .m-content>div:nth-child(even) .row {
+        margin: 0px;
+    }
+    .rad-carousel .carousel-control{
+        top: 25% !important;
+    }
+    /* t-date picker  */
+    .search-cal-top .t-dates{
+        background: #eee7e1;
+        color: #898b96;
+        padding: 9px 15px;
+        height: 39px;
+        box-sizing: border-box;
+        border: 1px solid #898b96;
+        border-radius: 3px;
+    }
+    .search-cal-top .t-check-in{
+       width: 45% !important;
+       margin-right: 17px;
+    }
+    .search-cal-top .t-check-out{
+       width: 45% !important;
+    }
+    .form-control-height{
+        height: 39px !important;
+    }
+    .ui-widget.ui-widget-content {
+        padding: 0px;
+        max-width: 350px;
+    }
+    .t-check-in .t-date-info-title{
+        left: 38px;
+    }
+    .t-check-out .t-date-info-title{
+        left: 38px;
+    }
+    @media (max-width:1024px) {    
+        .rad-carousel{
+            margin-bottom: 30px;
+        }
+    }
+    
+/* End */
     </style>
 @endsection
 
 {{-- For custom style  --}}
 @section('custom_js_script')
     @parent      
+    <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>    
+    <script src="{{ asset('sximo/js/jquery.validate.js')}}"></script>
+    <!--<script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}"></script>
+    <script src="{{ asset('themes/emporium/js/custom/do_ajax.js') }}"></script>
+    <script src="{{ asset('themes/emporium/js/custom/common.js') }}"></script> -->
     <script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
     <script type="text/javascript">(function (w,d) {var loader = function () {var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src="https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s,tag);}; if(w.addEventListener){w.addEventListener("load", loader, false);}else if(w.attachEvent){w.attachEvent("onload", loader);}else{w.onload = loader;}})(window, document);</script>
+    <!--<script src="{{ asset('themes/emporium/daterangepicker/js/t-datepicker.js') }}"></script> -->
     <script>
         $(document).ready(function(){
+            
+            /*$('.datepic').datepicker({
+				numberOfMonths: 1,
+				showButtonPanel: true,
+                dateFormat: 'mm-dd-yy'				
+		    });*/
+            
+            $(".datepic").datepicker( {
+                todayHighlight:!0, orientation:"bottom left", format:"mm-dd-yyyy", templates: {
+                    leftArrow: '<i class="la la-angle-left"></i>', rightArrow: '<i class="la la-angle-right"></i>'
+                }
+            });
+            
             <?php if($logged_user->i_agree == 0 || $logged_user->privacy_policy == 0 || $logged_user->cookie_policy == 0){ ?>
                     $("#agree_model").modal({backdrop: 'static', keyboard: false}, 'show');
             <?php }else if($logged_user->new_user == 1){ ?>
                     window.location.href = "{{URL::to('whoiam')}}";
-            <?php }else if($logged_user->hotel_setup_complete == 0){ ?>
+            <?php }/*else if($logged_user->hotel_setup_complete == 0){ ?>
                     $("#confirm_model").modal({backdrop: 'static', keyboard: false}, 'show');
-            <?php } ?>
+            <?php }*/ ?>
             
             $("#yeshotelsetupbtn").click(function(){
                 <?php if($logged_user->property_info_setup == 0){ if($pid > 0){ ?>
@@ -2978,7 +927,186 @@ Note: You may revoke your consent at any time by e-mail to info@emporium-voyage.
                 }
             });
             
+            // settings
+              var $slider = $('#b2cdash_carousel .carousel-inner'); // class or id of carousel slider
+              var $slide = '.item'; // could also use 'img' if you're not using a ul
+              var $transition_time = 1000; // 1 second
+              var $time_between_slides = 4000; // 4 seconds
+            
+              function slides(){
+                return $slider.find($slide);
+              }
+            
+              slides().fadeOut();
+            
+              // set active classes
+              slides().first().addClass('active');
+              slides().first().fadeIn($transition_time);
+            
+              // auto scroll 
+              $interval = setInterval( 
+                function(){
+                if(slides().length > 1){
+                  var $i = $slider.find($slide + '.active').index();
+                                      
+                  slides().eq($i).removeClass('active');
+                  slides().eq($i).fadeOut(0);
+            
+                  if (slides().length == $i + 1) $i = -1; // loop to start
+            
+                  slides().eq($i + 1).fadeIn($transition_time);
+                  slides().eq($i + 1).addClass('active');
+                  }
+                }
+                , $transition_time +  $time_between_slides 
+              );
+            
+            
+            $("#b2cdash_carousel .left").click(function(){
+                var $i = $slider.find($slide + '.active').index();
+                if($i - 1 >= 0){ 
+                  slides().eq($i).removeClass('active');
+                  slides().eq($i).fadeOut($transition_time);                  
+                  slides().eq($i - 1).fadeIn($transition_time);
+                  slides().eq($i - 1).addClass('active');
+                }
+            });
+            
+            $("#b2cdash_carousel .right").click(function(){
+                var $i = $slider.find($slide + '.active').index();
+                if($i + 1 < slides().length){ 
+                  slides().eq($i).removeClass('active');
+                  slides().eq($i).fadeOut($transition_time);
+                  slides().eq($i + 1).fadeIn($transition_time);
+                  slides().eq($i + 1).addClass('active');
+                }
+            });
+            
+            
+            // settings
+              var $slider2 = $('#b2cblog_carousel .rad-carousel-inner'); // class or id of carousel slider
+              var $slide2 = '.item'; // could also use 'img' if you're not using a ul
+              var $transition_time2 = 1000; // 1 second
+              var $time_between_slides2 = 4000; // 4 seconds
+            
+              function slides2(){
+                return $slider2.find($slide2);
+              }
+            
+              slides2().fadeOut();
+            
+              // set active classes
+              slides2().first().addClass('active');
+              slides2().first().fadeIn($transition_time2);
+            
+              // auto scroll 
+              $interval = setInterval( 
+                function(){
+                if(slides2().length > 1){
+                  var $i = $slider2.find($slide2 + '.active').index();
+                                      
+                  slides2().eq($i).removeClass('active');
+                  slides2().eq($i).fadeOut(0);
+            
+                  if (slides2().length == $i + 1) $i = -1; // loop to start
+            
+                  slides2().eq($i + 1).fadeIn($transition_time2);
+                  slides2().eq($i + 1).addClass('active');
+                  }
+                }
+                , $transition_time2 +  $time_between_slides2
+              );
+            
+            
+            $("#b2cblog_carousel .left").click(function(){
+                var $i = $slider2.find($slide2 + '.active').index();
+                if($i - 1 >= 0){ 
+                  slides2().eq($i).removeClass('active');
+                  slides2().eq($i).fadeOut($transition_time2);                  
+                  slides2().eq($i - 1).fadeIn($transition_time2);
+                  slides2().eq($i - 1).addClass('active');
+                }
+            });
+            
+            $("#b2cblog_carousel .right").click(function(){
+                var $i = $slider2.find($slide2 + '.active').index();
+                if($i + 1 < slides2().length){ 
+                  slides2().eq($i).removeClass('active');
+                  slides2().eq($i).fadeOut($transition_time2);
+                  slides2().eq($i + 1).fadeIn($transition_time2);
+                  slides2().eq($i + 1).addClass('active');
+                }
+            });
+            /*arrival_depart();
+            $(".m_tab1_content").click(function(){
+                $(".m_tab1_content").removeClass('active');
+                $(this).addClass('active');
+                arrival_depart();
+            });
+            function arrival_depart(){
+                //$obj = $(".m_tab1_content.active");
+                var reportfor = $(".m_tab1_content.active").attr('data-reportfor');
+                var arrival_departure = $("#dd_arrival_departure").val();
+                //console.log($obj);
+                $.ajax({
+                    url:"{{URL::to('user_arrival_departure')}}",
+                    type:'POST',
+                    dataType:'json',
+                    data:{'reportfor':reportfor, 'arrival_departure':arrival_departure}, 
+                    beforeSend: function() {
+                      $("#table_data").html('<tr class="m--align-center"><td colspan="5"><div class="m-loader m-loader--brand"></div></td></tr>');
+                    },                   
+                    success:function(response){
+                        var html = '';
+                        $("#table_data").html('');
+                        if(response.status == 'success'){
+                            
+                            var reservations = response.reservations;
+                            if(reservations.length > 0){
+                                $.each(reservations, function(key, val){
+                                    console.log(val);
+                                     
+                                    html += '<tr><td>'+val.first_name+' '+val.last_name+'</td><td class="m--align-center">'+val.total_adults+'</td><td class="m--align-center">'+val.total_child+'</td><td class="m--align-right m--font-brand">'+val.checkin_date+'</td><td class="m--align-right m--font-brand">'+val.checkout_date+'</td></tr>';													
+								});	
+                                			
+                            }else{
+                                html += '<tr class="m--align-center"><td colspan="5">Currently no record found</td></tr>';													
+								
+                            }
+                            $("#table_data").html(html);
+                        }
+                        else{
+                            toastr.error(response.message);
+                        }
+                    }
+                });
+            }
+            */
+            /*$('#t-topbar-picker').tDatePicker({
+                'numCalendar':'2',
+                'autoClose':true,
+                'durationArrowTop':'200',
+                'formatDate':'mm-dd-yyyy',
+                'titleCheckIn':'Arrival',
+                'titleCheckOut':'Departure',
+                'inputNameCheckIn':'arrive',
+                'inputNameCheckOut':'departure',
+                'titleDateRange':'days',
+                'titleDateRanges':'days',
+                'iconDate':'<i class="fa fa-calendar"></i>',
+                'limitDateRanges':'365',
+                'dateCheckIn':'@if(isset($_GET['arrive']) && $_GET['arrive']!=''){{$_GET['arrive']}}@else{{'null'}}@endif',
+                'dateCheckOut':'@if(isset($_GET['departure']) && $_GET['departure']!=''){{$_GET['departure']}}@else{{'null'}}@endif'
+            }).on('afterCheckOut',function(e, dateCO) {
+                if(((typeof $(this).closest('form').find('[name="adult"]').val()) != 'undefined') && ((typeof $(this).closest('form').find('[name="adult"]').val()) != undefined)){
+                    $(this).closest('form').find('[name="adult"]').focus();
+                }
+            });*/
+            
         }); 
+        
+        
+        
     </script>
 @endsection
 @section('script')

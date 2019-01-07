@@ -1,9 +1,5 @@
 @extends('users_admin.metronic.layouts.app')
 
-@section('page_name')
-    Hotel Details
-@stop
-
 @section('breadcrumb')
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 
@@ -20,15 +16,20 @@
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 
         <a href="{{ URL::to('properties')}}" class="m-nav__link"> 
-            <span class="m-nav__link-text"> Properties </span> 
+            <span class="m-nav__link-text  breadcrumb-end"> Property Management System </span> 
         </a> 
     </li>
 @stop
 
 @section('content')
   
-<div class="row">
-        
+<div class="row">    
+    <div class="col-xl-12 col-sm-12 col-md-12 col-lg-12">
+        <h2>Property Management System</h2>
+    </div> 
+    <div class="col-xl-12 col-sm-12 col-md-12 col-lg-12">
+        Emporium Collection exclusively markets a selection of the luxury network's extraordinary Hotels & Luxury Partners, utilising a sophisticated mix of online and offline media to position properties for maximum exposure in an elite market. Members recognised for their agility, expertise and superior competence in both local and global markets.
+    </div>
         {{--*/ $is_commission_popup = false; $hotelWiseContracts = array(); /*--}}
         @foreach ($rowData as $row)
             {{--*/
@@ -50,6 +51,11 @@
                     $hcontract_ids[] = $shotelcontrat->contract_id;
                 }
             }
+            $bg_img = '';
+            if(isset($propertiesImgArr[$row->id])){ 
+                $bg_img = $propertiesImgArr[$row->id]['propimage'][0]->imgsrc.''.$propertiesImgArr[$row->id]['propimage'][0]->file_name; 
+            }
+            
             /*--}}
             
             @if((count($hotelcontract) > 0))
@@ -68,11 +74,15 @@
             <!--end:: hotel contracts alert -->
             @endif
             
+            <div class="col-md-12 col-xs-12 m--align-right"> 
+                <div class="col-xl-12 col-sm-12 col-md-12 col-lg-12 padding-30"><a href="{{ URL::to('downloadrequirementsheet/Emporium-Voyage-Property-Management-System-help.pdf')}}" class="tips btn btn-xs btn-primary"><i class="fa  icon-file-pdf "></i>Download Setup Documentation</a></div>
+            </div>
+            
             <div class="col-md-12 col-xs-12">                    
                     @if((count($comcontract) > 0) && (!isset($commission_contracts[$row->id])))
                     {{--*/ $is_commission_popup = true; /*--}}
                     <!--start:: contracts popup -->
-                    <div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--rounded-force commission-popup-main-div">
+                    <?php /* <div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--rounded-force commission-popup-main-div">
                         <div class="m-portlet col-sm-8 col-lg-8 inner-r-div">
                             <div class="m-portlet__head">
                                 <div class="m-portlet__head-caption">
@@ -110,22 +120,27 @@
 								</div>
 							</div>
                         </div>
-                    </div>
+                    </div> */ ?>
                     <!--end:: contracts popup start -->
                     @endif
-                    
+                                                          
                     <!--begin:: Widgets/Activity-->
+                    <div class="col-md-12 col-xs-12">
+                        <span class="m-form__help">
+                            Hotel can only be activated once approved by administrator.
+                        </span> 
+                    </div>                    
 					<div class="m-portlet m-portlet--bordered-semi m-portlet--widget-fit m-portlet--full-height m-portlet--skin-light  m-portlet--rounded-force">
 						<div class="m-portlet__head">
 							<div class="m-portlet__head-caption">
 								<div class="m-portlet__head-title">
 									<span class="m-switch m-switch--outline m-switch--success switch-btn-bot-pad">
     									<label>
-    										<input type="checkbox" name="switch_property" id="switch_property" />
+    										<input type="checkbox" name="switch_property" <?php echo ($row->approved) ? 'checked="checked"' : ''; ?> id="switch_property" />
     										<span></span>
     									</label>
-    								</span>                                    
-								</div>
+    								</span>                                                                       
+								</div>                                
 							</div>
                             <div class="m-portlet__head-tools">
 								<ul class="m-portlet__nav">
@@ -141,7 +156,9 @@
 								<ul class="m-portlet__nav">
 									<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
 										<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
-											<i class="fa fa-bars m--font-light"></i>
+											<span class="desk_bars1"></span>
+                                            <span class="desk_bars2"></span>
+                                            <span class="desk_bars3"></span>
 										</a>
 										<div class="m-dropdown__wrapper">
 											<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
@@ -166,7 +183,7 @@
 																<a href="{{ URL::to('properties_settings/'.$row->id.'/types')}}" class="m-nav__link">
 																	<i class="m-nav__link-icon"></i>
 																	<span class="m-nav__link-text">
-																		Room Types
+																		Suite Types
 																	</span>
 																</a>
 														    </li> 
@@ -174,7 +191,7 @@
 																<a href="{{ URL::to('properties_settings/'.$row->id.'/rooms')}}" class="m-nav__link">
 																	<i class="m-nav__link-icon"></i>
 																	<span class="m-nav__link-text">
-																		Rooms
+																		Suites
 																	</span>
 																</a>
 														    </li> 
@@ -183,6 +200,14 @@
 																	<i class="m-nav__link-icon"></i>
 																	<span class="m-nav__link-text">
 																		Seasons
+																	</span>
+																</a>
+														    </li> 
+                                                            <li class="m-nav__item">
+																<a href="{{ URL::to('properties_settings/'.$row->id.'/calendar')}}" class="m-nav__link">
+																	<i class="m-nav__link-icon"></i>
+																	<span class="m-nav__link-text">
+																		Reservation Management
 																	</span>
 																</a>
 														    </li> 
@@ -219,7 +244,7 @@
 																</a>
 														    </li> 
                                                             <li class="m-nav__item">
-																<a href="#" class="m-nav__link">
+																<a href="{{URL::to('advertising')}}" class="m-nav__link">
 																	<i class="m-nav__link-icon"></i>
 																	<span class="m-nav__link-text">
 																		Become Featured
@@ -227,7 +252,7 @@
 																</a>
 														    </li> 
                                                             <li class="m-nav__item">
-																<a href="#" class="m-nav__link">
+																<a href="https://emporium-collection.com/" class="m-nav__link" target="_blank">
 																	<i class="m-nav__link-icon"></i>
 																	<span class="m-nav__link-text">
 																		Get Help
@@ -243,12 +268,13 @@
 								</ul>
 							</div>
 						</div>
+                        
 						<div class="m-portlet__body">
 							<div class="m-widget17">
 								<div class="m-widget17__visual m-widget17__visual--chart m-portlet-fit--top m-portlet-fit--sides m--bg-danger">
 									<div class="m-widget17__chart" style="height:360px;">
                                         
-                                        <div class="" style="background: url(http://staging.emporium-voyage.com/uploads/container_user_files/locations/hh/property-images/64070036634-63502574132.jpeg); width: 100%; background-size: cover; height:300px; opacity: 50%;">
+                                        <div class="" style="background: url({{$bg_img}}); width: 100%; background-size: cover; height:300px; opacity: 50%;">
                                         <div class="hotel_name">
                                             {{$row->property_name}}
                                         </div>
@@ -257,7 +283,7 @@
 								</div>
 								<div class="m-widget17__stats">
 									<div class="m-widget17__items m-widget17__items-col1">
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block1_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
@@ -267,10 +293,12 @@
                                         				Hotel/Property
                                         			</span>
                                         		</a>
+                                                 <br />
+                                                <div class="start"><i class="fa fa-home"></i></div>
 											</span>
 											
 										</div>
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block6_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
@@ -286,7 +314,7 @@
 										</div>
 									</div>
 									<div class="m-widget17__items m-widget17__items-col1">
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block2_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
@@ -294,13 +322,13 @@
 												<a href="{{ URL::to('properties_settings/'.$row->id.'/types')}}">
                                         			<i class="m-nav__link-icon"></i>
                                         			<span class="m-nav__link-text">
-                                        				Room Types
+                                        				Suite Types
                                         			</span>
                                         		</a>
 											</span>
 											
 										</div>
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block7_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
@@ -308,7 +336,7 @@
 												<a href="{{ URL::to('properties_settings/'.$row->id.'/property_images')}}">
                                         			<i class="m-nav__link-icon"></i>
                                         			<span class="m-nav__link-text">
-                                        				Images
+                                        				Property Images
                                         			</span>
                                         		</a>
 											</span>
@@ -316,7 +344,7 @@
 										</div>
 									</div>
                                     <div class="m-widget17__items m-widget17__items-col1">
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block3_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
@@ -324,13 +352,13 @@
 											     <a href="{{ URL::to('properties_settings/'.$row->id.'/rooms')}}">
                                         			<i class="m-nav__link-icon"></i>
                                         			<span class="m-nav__link-text">
-                                        				Rooms
+                                        				Suites
                                         			</span>
                                         		</a>
 											</span>
 											
 										</div>
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block8_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
@@ -338,7 +366,7 @@
 											     <a href="{{ URL::to('properties_settings/'.$row->id.'/gallery_images')}}">
                                         			<i class="m-nav__link-icon"></i>
                                         			<span class="m-nav__link-text">
-                                        				Galleries
+                                        				Property Galleries
                                         			</span>
                                         		</a>	
 											</span>
@@ -346,7 +374,7 @@
 										</div>
 									</div>
                                     <div class="m-widget17__items m-widget17__items-col1">
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block4_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
@@ -360,12 +388,12 @@
 											</span>
 											
 										</div>
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block9_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
 											<span class="m-widget17__subtitle">
-												<a href="#">
+												<a href="{{URL::to('advertising')}}">
                                         			<i class="m-nav__link-icon"></i>
                                         			<span class="m-nav__link-text">
                                         				Become Featured
@@ -375,7 +403,7 @@
 										</div>
 									</div>
                                     <div class="m-widget17__items m-widget17__items-col1">
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block5_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
@@ -383,20 +411,20 @@
 											     <a href="{{ URL::to('properties_settings/'.$row->id.'/price')}}">
                                         			<i class="m-nav__link-icon"></i>
                                         			<span class="m-nav__link-text">
-                                        				Price
+                                        				Rate
                                         			</span>
                                         		</a>
 											</span>											
 										</div>
-										<div class="m-widget17__item">
+										<div class="m-widget17__item property_block10_bg">
 											<span class="m-widget17__icon">
 												
 											</span>
 											<span class="m-widget17__subtitle">
-												<a href="#" class="m-nav__link">
+												<a href="https://emporium-collection.com/" class="m-nav__link" target="_blank">
                                         			<i class="m-nav__link-icon"></i>
                                         			<span class="m-nav__link-text">
-                                        				Get Help
+                                        				Support
                                         			</span>
                                         		</a>
 											</span>
@@ -420,7 +448,7 @@
         <div class="modal-content" data-id="{{$key}}">
             <div class="modal-header">
                 <h5 class="modal-title" id="contractModalLabel{{$key}}">{{$hotelName}}'s Contracts</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">�</span></button>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             
             <div class="modal-body">
@@ -451,13 +479,30 @@
 </div>
 @endforeach
 
+<div class="modal fade" id="property_approve_msg_modal" tabindex="-1" role="dialog" aria-labelledby="property_approve" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Property Management System Alert</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            
+            <div class="modal-body">
+                <div class="m-portlet__body">
+                    <p>Thank you for your hotel submission. Your hotel is being reviewed. A Property consultant will contact you once your hotel has been approved.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 @stop
 {{-- For custom style  --}}
 @section('style')
     @parent
     <style type="text/css">
         .box-property{
-            background-color: #fff; padding: 10px; margin: 10px 20px; text-align: center; font-size: 15px;
+            background-color: #F7F2ED; padding: 10px; margin: 10px 20px; text-align: center; font-size: 15px;
         }
         .m-pertlet_head-switch-btn{
             vertical-align: middle;
@@ -630,9 +675,9 @@ $(document).ready(function () {
     
     $("#switch_property").click(function(){
       if($("#switch_property").is(":checked")){
-        
+        $("#property_approve_msg_modal").modal('show');  
       }else{
-        
+        $("#property_approve_msg_modal").modal('hide'); 
       }      
     });
 });

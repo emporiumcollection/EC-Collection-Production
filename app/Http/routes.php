@@ -103,7 +103,7 @@ Route::get('/traveller', 'CustomerController@traveller');
 Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences');  
 
 Route::get('/whoiam', 'CustomerController@whoIam');
-  
+
 Route::post('/viewInvite', 'UserController@viewInvite');   
 Route::post('editinvite', 'UserController@editInvite'); 
 Route::post('deleteinvite', 'UserController@deleteInvite');
@@ -112,22 +112,21 @@ Route::post('addcompanion', 'UserController@addCompanion');
 Route::post('/viewcompanion', 'UserController@viewCompanion');   
 Route::post('editcompanion', 'UserController@editCompanion'); 
 Route::post('deletecompanion', 'UserController@deleteCompanion');
-Route::post('changepassword', 'UserController@ajaxSavepassword');
- 
-Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate'); 
-Route::post('customer_ajaxPostSignin', 'CustomerController@ajaxPostSignin'); 
-Route::post('customer_ajaxPostRequest', 'CustomerController@ajaxPostRequest'); 
+Route::post('changepassword', 'UserController@ajaxSavepassword'); 
+
+Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate');
 
 Route::post('leadcreate', 'UserController@ajaxLeadCreate');
 Route::post('leadupdate', 'UserController@ajaxLeadUpdate');
+
 Route::get('crmhotel/leadlisting', 'Core\UsersController@leadlisting');
 Route::get('crmhotel/hoteluserlisting', 'Core\UsersController@hoteluserlisting');
 Route::get('crmhotel/travelleruserlisting', 'Core\UsersController@travelleruserlisting');
+ 
+Route::post('socialinfo', 'UserController@ajaxSocialInfo');
 
-Route::post('fetch_property_company_info', 'CrmhotelController@fetch_property_company_info');
-Route::post('fetch_user_info', 'CrmhotelController@fetch_user_info');
-Route::post('emailCRM', 'CrmhotelController@emailCRM');
-Route::post('emailInviteCRM', 'CrmhotelController@emailInviteCRM');
+Route::post('customer_ajaxPostSignin', 'CustomerController@ajaxPostSignin'); 
+Route::post('customer_ajaxPostRequest', 'CustomerController@ajaxPostRequest'); 
 
 include('pageroutes.php');
 include('moduleroutes.php');
@@ -176,7 +175,7 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('addfile', 'ContainerController@uploadFile');
 	Route::get('folders/{id}', 'ContainerController@getIndex');
 	Route::get('getFolderListAjax/{id}', 'ContainerController@getFolderListAjax');
-	Route::get('getFolderListAjaxonload/{id}', 'ContainerController@getFolderListAjaxonload');
+	Route::get('getFolderListAjaxonload/{id}', 'ContainerController@getFolderListAjaxonload');	
 	Route::get('getFoldersAjax/{id}', 'ContainerController@getFoldersAjax');
 	Route::get('getFoldersAjax/{id}/{wnd}', 'ContainerController@getFoldersAjax');
 	Route::get('getUserList', 'ContainerController@getUserListAjax');
@@ -314,10 +313,17 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('delete_selected_image', 'PropertiesController@delete_selectedproperty_image');
 	Route::post('fetch_property_info', 'CrmhotelController@fetch_property_info');
 	Route::post('fetch_company_info', 'CrmhotelController@fetch_company_info');
+    
+    Route::post('fetch_property_company_info', 'CrmhotelController@fetch_property_company_info');
+    Route::post('fetch_user_info', 'CrmhotelController@fetch_user_info');
+    
 	Route::post('emailCRM', 'CrmhotelController@emailCRM');
+    
+    Route::post('emailInviteCRM', 'CrmhotelController@emailInviteCRM');
+    
 	Route::get('pull_property_hotels', 'CrmhotelController@pull_property_hotels');
 	Route::post('getfolderlistforselectoptions', 'ContainerController@fetchFolderTreeOptions');
-	Route::post('getPropertyRates', 'PropertiesController@getPropertyRates');
+    Route::post('getPropertyRates', 'PropertiesController@getPropertyRates');
 
 	Route::post('gallery_images_uploads', 'CitycontentController@gallery_images_uploads');
 	Route::post('delete_gallery_image', 'CitycontentController@delete_gallery_image');
@@ -329,6 +335,9 @@ Route::group(['middleware' => 'auth'], function()
 	
 	Route::get('fetchpackagedetails/{pckid}', 'HomeController@fetchpackagedetails');
 	Route::get('userorder_downloadinvoicepdf/{ordid}', 'UserorderController@ordersdownloadinvoicepdf');
+    
+    Route::get('userorderdownloadinvoicepdf/{ordid}', 'UserorderController@userordersdownloadinvoicepdf');
+    
 	Route::post('delete_menu_image', 'Sximo\MenuController@deleteMenuImage');
 	Route::get('restaurant_reservations/{id}', 'RestaurantController@restroReservations');
 	Route::get('bar_reservations/{id}', 'BarController@barReservations');
@@ -344,12 +353,70 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('save_new_company_details', 'UserController@saveNewcompanydetails');
     Route::post('confirm_new_profile', 'UserController@confirmNewprofile');
     
-    Route::get('signup-contract/{isview}', 'ContractController@download_signup_contract');    
+    Route::get('signup-contract/{isview}', 'ContractController@download_signup_contract');
+    
     Route::post('ownhotelsetup', 'UserController@ownhotelsetup');
-    Route::post('hotelavaibility', 'UserController@hotelavaibility');    
-    Route::post('upload_contract', 'PropertiesController@contract_upload');    
+    Route::post('hotelavaibility', 'UserController@hotelavaibility');
+    
+    Route::post('upload_contract', 'PropertiesController@contract_upload');
+    
     Route::post('package_skip', 'CustomerController@skipPackage'); 
-});	
+    
+    Route::post('hotel/subtractfee', 'Frontend\HotelMembershipController@subtractfee'); 
+    
+    Route::get('downloadrequirementsheet/{filename}', 'UserorderController@downloadrequirementsheet');
+    
+    Route::get('addhotel', 'PropertiesController@addhotel');
+    
+    Route::get('get_setup', 'PackagesController@get_setup');
+    
+    Route::post('save_hotel_info', 'PropertiesController@saveHotelInfo');
+    Route::post('save_hotel_architect_info', 'PropertiesController@saveHotelArchitectInfo');
+    Route::post('save_hotel_social_info', 'PropertiesController@saveHotelSocialInfo');
+    Route::post('check_hotel_setup', 'PropertiesController@checkHotelSetup');
+    
+    Route::post('priceonrequest', 'CustomerController@priceonrequest');
+    
+    Route::post('confirmreservation', 'PropertiesController@confirmreservation');
+    
+    Route::post('get_b2ccategory_rooms_reservations', 'PropertiesController@get_b2ccategory_rooms_reservations');
+    
+    Route::post('get_reservation_details', 'PropertiesController@get_reservation_details');
+    
+    Route::post('user_arrival_departure', 'PropertiesController@user_arrival_departure');
+    Route::post('user_arrival_departure_cancelations', 'PropertiesController@user_arrival_departure_cancelations');
+    
+    Route::get('reservations', 'PropertiesController@reservations');
+    Route::get('hotelpackages', 'Frontend\HotelMembershipController@packages');
+    Route::get('qualityassurances', 'PropertiesController@qualityassurances');
+    
+    Route::post('salesoverview', 'PropertiesController@salesoverview');
+    
+    Route::get('salesreport', 'PropertiesController@salesreport');
+    Route::get('arrivaldeparture', 'PropertiesController@arrivaldeparture');
+    Route::get('advertising', 'PropertiesController@advertising');
+    
+    Route::get('hotelcontainer', 'ContainerController@hotelcontainer');
+    
+    Route::get('flipview/{filename}', 'PropertiesController@flipview');
+    
+    Route::get('conatinerflip/{filename}', 'PropertiesController@conatinerflip');
+    
+    Route::get('flipviewpdf/{filename}', 'UserorderController@flipviewpdf');
+    
+    Route::get('hotelinvoices', 'UserorderController@hotelinvoices');
+    
+    Route::get('ordershow/{id}', 'UserorderController@ordershow');
+    
+    Route::get('bookingshow/{id}', 'BookingsController@bookingshow');
+    
+    Route::get('searchbooking', 'BookingsController@searchbooking');
+    Route::post('searchbookingresult', 'BookingsController@searchbookingresult');
+    
+    Route::post('salesstats', 'PropertiesController@salesstats');
+    Route::post('save_management_personnel', 'UserController@savemanagementpersonnel');
+    
+});
 
 Route::post('hotel_membership', 'Frontend\HotelMembershipController@hotelMembershipSignupSave');
 
@@ -431,6 +498,7 @@ Route::post('get-article-by-title', 'HomeController@getArticleByTitle');
 Route::get('getproperty/{id}', 'HomeController@getPropertyQuickView');
 Route::get('search-property-ajax', 'Frontend\PropertyController@getSearchPropertyAjax');
 Route::get('propertyimagebyid/{propid}', 'Frontend\PropertyController@getPropertyImageById');
+Route::get('container-image/{id}', 'Frontend\PropertyController@getContainerImageById');
 Route::get('propertysliderimagebyid/{propid}', 'Frontend\PropertyController@getPropertySliderImageById');
 Route::get('radtempimage/{propid}/{fileid}', 'Frontend\PropertyController@getPropertyImageByFileID');
 Route::post('ajax-rproperty-images/{propid}/{limit}', 'Frontend\PropertyController@getPropertyAjaxFilesByID');
@@ -487,6 +555,7 @@ Route::get('stripedetails/{uid}', 'StripepaymentController@index');
 Route::get('choosepackage/{packageid}', 'StripepaymentController@checkout');
 Route::post('order-post', 'StripepaymentController@checkoutPost');
 Route::post('wizard-order-post', 'StripepaymentController@wizardcheckoutPost');
+Route::post('wizard-subtract-fee', 'StripepaymentController@wizardSubtractFee');
 // Add this route for checkout or submit form to pass the item into paypal
 Route::post('payment', array(
 	'as' => 'payment',
@@ -545,6 +614,8 @@ Route::get('traveller/bookings/show/{id}', 'BookingsController@showBooking');
 Route::get('hotel/bookings', 'BookingsController@hotelBookings');
 Route::post('customer_request_referral', 'CustomerController@ajaxSendMail');
 
+//Route::get('press/view/{fid}/{id}', 'ContainerController@PressShowfiles');
+
 Route::get('press/view/{fid}/{id}', 'ContainerController@PressShowfilesAjax');
 
 Route::get('tpress/view/{fid}/{id}', 'ContainerController@PressShowTiffFiles');
@@ -556,4 +627,11 @@ Route::post('pressseletedfileslowPdf', 'ContainerController@PressDownloadlowPdfS
 Route::post('pressseletedfileshighPdf', 'ContainerController@PressDownloadhighPdfSelected');
 
 Route::get('hotel/get_cart', 'Frontend\HotelMembershipController@getwizardCart');
-Route::get('hotel/get_checkout', 'Frontend\HotelMembershipController@getwizardCheckout');	
+
+Route::post('hotel/update_cart', 'Frontend\HotelMembershipController@postwizardCart');
+
+Route::get('hotel/get_checkout', 'Frontend\HotelMembershipController@getwizardCheckout');
+
+Route::get('hotel/add_package_to_cart_wizard', 'Frontend\HotelMembershipController@addToCartWizardAjax');
+
+Route::get('hotel/thanks/{id}', 'Frontend\HotelMembershipController@hotelThanks');	

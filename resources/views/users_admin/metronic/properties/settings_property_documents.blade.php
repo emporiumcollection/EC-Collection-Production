@@ -1,9 +1,5 @@
 @extends('users_admin.metronic.layouts.app')
 
-@section('page_name')
-    Property  <small>Properties</small>
-@stop
-
 @section('breadcrumb')
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 
@@ -57,11 +53,129 @@
         </div>
         <div class="col-sm-8 col-md-8 col-lg-8">
             <a href="{{URL::to('properties/update/'.$pid)}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Property Management"><i class="fa fa-edit"></i>&nbsp;Property Management</a>
+            <a href="{{URL::to('flipviewpdf/Emporium-Voyage-Add-Property-Documents-help.pdf')}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Add Property Documents" style="margin-right: 10px;" target="_blank"><i class="fa fa-edit"></i>&nbsp;View Documentation</a>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12">
         <!--begin::Portlet-->
 		<div class="m-portlet">
-			<div class="m-portlet__body">
+            <div class="m-portlet__head">				
+				<div class="m-portlet__head-tools margin-left-98">
+					<ul class="m-portlet__nav bg-gray">
+						<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+							<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
+								<span class="desk_bars1"></span>
+                                <span class="desk_bars2"></span>
+                                <span class="desk_bars3"></span>
+							</a>
+							<div class="m-dropdown__wrapper" style="z-index: 101;">
+								<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 18px;"></span>
+								<div class="m-dropdown__inner">
+									<div class="m-dropdown__body">
+										<div class="m-dropdown__content">
+											<ul class="m-nav">
+												<li class="m-nav__section m-nav__section--first">
+													<span class="m-nav__section-text">
+														Quick Actions
+													</span>
+												</li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties/update/'.$pid.'?return='.$return) }}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Hotel/Property
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/types')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suite Types
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/rooms')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suites
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/seasons')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Seasons
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/calendar')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Reservation Management
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/price')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suite Price
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/property_documents')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Documents
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/property_images')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Images
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/gallery_images')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Galleries
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="http://localhost:8181/emporium-staging-forge/public/advertising" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Become Featured
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="https://emporium-collection.com/" class="m-nav__link" target="_blank">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Get Help
+														</span>
+													</a>
+											    </li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
+			<div class="m-portlet__body">                
 				<ul class="nav nav-tabs" role="tablist">
                     @if(!empty($tabss))
         				@foreach($tabss as $key=>$val)
@@ -128,7 +242,7 @@
 												<i class="glyphicon glyphicon-ban-circle"></i>
 												<span>Cancel upload</span>
 											</button>
-											<a class="btn btn-success" @if(!empty($imgs)) href="{{URL::to('folders/'.$hotel_broch[0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
+											<a class="btn btn-success" @if(!empty($hotel_broch)) href="{{URL::to('folders/'.$hotel_broch[0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
 												<span>Re-Order</span>
 											</a>
 											<button type="button" class="btn btn-danger" onclick="delete_selected_imgs('hb');" >
@@ -162,24 +276,48 @@
 														</td>
 														<td>
 															<span class="preview">
-																<a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#blueimp-gallery">
+																
 																	@if($img->file_type=="application/pdf")
+                                                                    <a href="{{URL::to('flipview')}}/{{$img->id}}" title="{{$img->file_name}}" target="_blank">
 																		<img src="{{URL::to('uploads/images/bigpage_white_acrobat.png')}}">
+                                                                    </a>
 																	@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.word")
+                                                                    <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#blueimp-gallery">
 																		<img src="{{URL::to('uploads/images/doc.png')}}">
+                                                                    </a>
 																	@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.spre")
+                                                                    <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#blueimp-gallery">
 																		<img src="{{URL::to('uploads/images/xls.png')}}">
-																		
+																	</a>	
 																	@else
+                                                                    <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#blueimp-gallery">
 																		<img src="{{URL::to('uploads/property_imgs_thumbs/'.$img->file_name)}}">
+                                                                    </a>
 																	@endif
 																	
-																</a>
+																
 															</span>
 														</td>
 														<td>
 															<p class="name">
-																<a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#blueimp-gallery">{{$img->file_display_name}}</a>
+																@if($img->file_type=="application/pdf")
+                                                                <a href="{{URL::to('flipview')}}/{{$img->id}}" title="{{$img->file_display_name}}" target="_blank">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.word")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#blueimp-gallery">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.spre")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#blueimp-gallery">
+																	{{$img->file_display_name}}
+																</a>	
+																@else
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#blueimp-gallery">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@endif
+                                                                
 															</p>
 														</td>
 														<td>
@@ -252,7 +390,7 @@
 												<i class="glyphicon glyphicon-ban-circle"></i>
 												<span>Cancel upload</span>
 											</button>
-											<a class="btn btn-success" @if(!empty($slider_imgs)) href="{{URL::to('folders/'.$restru_menu[0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
+											<a class="btn btn-success" @if(!empty($restru_menu)) href="{{URL::to('folders/'.$restru_menu[0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
 												<span>Re-Order</span>
 											</a>
 											<button type="button" class="btn btn-danger" onclick="delete_selected_imgs('rm');" >
@@ -286,14 +424,45 @@
 														</td>
 														<td>
 															<span class="preview">
-																<a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-resto" >
+                                                                @if($img->file_type=="application/pdf")
+                                                                <a href="{{URL::to('flipview')}}/{{$img->id}}" title="{{$img->file_name}}" target="_blank">
+																	<img src="{{URL::to('uploads/images/bigpage_white_acrobat.png')}}">
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.word")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-resto">
+																	<img src="{{URL::to('uploads/images/doc.png')}}">
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.spre")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-resto">
+																	<img src="{{URL::to('uploads/images/xls.png')}}">
+																</a>	
+																@else
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-resto">
 																	<img src="{{URL::to('uploads/property_imgs_thumbs/'.$img->file_name)}}">
-																</a>
+                                                                </a>
+																@endif
 															</span>
 														</td>
 														<td>
 															<p class="name">
-																<a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-resto">{{$img->file_display_name}}</a>
+																@if($img->file_type=="application/pdf")
+                                                                <a href="{{URL::to('flipview')}}/{{$img->id}}" title="{{$img->file_display_name}}" target="_blank">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.word")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-resto">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.spre")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-resto">
+																	{{$img->file_display_name}}
+																</a>	
+																@else
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-resto">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@endif
+                                                                
 															</p>
 														</td>
 														<td>
@@ -365,7 +534,7 @@
 												<i class="glyphicon glyphicon-ban-circle"></i>
 												<span>Cancel upload</span>
 											</button>
-											<a class="btn btn-success" @if(!empty($slider_imgs)) href="{{URL::to('folders/'.$spa_broch[0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
+											<a class="btn btn-success" @if(!empty($spa_broch)) href="{{URL::to('folders/'.$spa_broch[0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
 												<span>Re-Order</span>
 											</a>
 											<button type="button" class="btn btn-danger" onclick="delete_selected_imgs('sb');" >
@@ -399,14 +568,46 @@
 														</td>
 														<td>
 															<span class="preview">
-																<a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-spa" >
+                                                                @if($img->file_type=="application/pdf")
+                                                                <a href="{{URL::to('flipview')}}/{{$img->id}}" title="{{$img->file_name}}" target="_blank">
+																	<img src="{{URL::to('uploads/images/bigpage_white_acrobat.png')}}">
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.word")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-spa">
+																	<img src="{{URL::to('uploads/images/doc.png')}}">
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.spre")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-spa">
+																	<img src="{{URL::to('uploads/images/xls.png')}}">
+																</a>	
+																@else
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-spa">
 																	<img src="{{URL::to('uploads/property_imgs_thumbs/'.$img->file_name)}}">
-																</a>
+                                                                </a>
+																@endif
+																
 															</span>
 														</td>
 														<td>
 															<p class="name">
-																<a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-spa">{{$img->file_display_name}}</a>
+                                                                @if($img->file_type=="application/pdf")
+                                                                <a href="{{URL::to('flipview')}}/{{$img->id}}" title="{{$img->file_display_name}}" target="_blank">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.word")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-spa">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.spre")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-spa">
+																	{{$img->file_display_name}}
+																</a>	
+																@else
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-spa">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@endif
+																
 															</p>
 														</td>
 														<td>
@@ -478,7 +679,7 @@
 												<i class="glyphicon glyphicon-ban-circle"></i>
 												<span>Cancel upload</span>
 											</button>
-											<a class="btn btn-success" @if(!empty($slider_imgs)) href="{{URL::to('folders/'.$hotelcontacts[0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
+											<a class="btn btn-success" @if(!empty($hotelcontacts)) href="{{URL::to('folders/'.$hotelcontacts[0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
 												<span>Re-Order</span>
 											</a>
 											<button type="button" class="btn btn-danger" onclick="delete_selected_imgs('hc');" >
@@ -512,14 +713,45 @@
 														</td>
 														<td>
 															<span class="preview">
-																<a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-contracts" >
+                                                                @if($img->file_type=="application/pdf")
+                                                                <a href="{{URL::to('flipview')}}/{{$img->id}}" title="{{$img->file_name}}" target="_blank">
+																	<img src="{{URL::to('uploads/images/bigpage_white_acrobat.png')}}">
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.word")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-contracts">
+																	<img src="{{URL::to('uploads/images/doc.png')}}">
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.spre")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-contracts">
+																	<img src="{{URL::to('uploads/images/xls.png')}}">
+																</a>	
+																@else
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-contracts">
 																	<img src="{{URL::to('uploads/property_imgs_thumbs/'.$img->file_name)}}">
-																</a>
+                                                                </a>
+																@endif																
 															</span>
 														</td>
 														<td>
 															<p class="name">
-																<a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-contracts">{{$img->file_display_name}}</a>
+																@if($img->file_type=="application/pdf")
+                                                                <a href="{{URL::to('flipview')}}/{{$img->id}}" title="{{$img->file_display_name}}" target="_blank">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.word")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-contracts>
+																	{{$img->file_display_name}}
+                                                                </a>
+																@elseif($img->file_type=="application/vnd.openxmlformats-officedocument.spre")
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-contracts">
+																	{{$img->file_display_name}}
+																</a>	
+																@else
+                                                                <a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_display_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-contracts">
+																	{{$img->file_display_name}}
+                                                                </a>
+																@endif
+                                                                
 															</p>
 														</td>
 														<td>

@@ -1,9 +1,5 @@
 @extends('users_admin.metronic.layouts.app')
 
-@section('page_name')
-    Property  <small>Properties</small>
-@stop
-
 @section('breadcrumb')
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 
@@ -57,10 +53,128 @@
         </div>
         <div class="col-sm-8 col-md-8 col-lg-8">
             <a href="{{URL::to('properties/update/'.$pid)}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Property Management"><i class="fa fa-edit"></i>&nbsp;Property Management</a>
+            <a href="{{URL::to('flipviewpdf/Emporium-Voyage-Add-Gallery-Images-help.pdf')}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Add Gallery Images" style="margin-right: 10px;" target="_blank"><i class="fa fa-edit"></i>&nbsp;View Documentation</a>
         </div>
         <div class="col-sm-12 col-md-12 col-lg-12">
         <!--begin::Portlet-->
 		<div class="m-portlet">
+            <div class="m-portlet__head">				
+				<div class="m-portlet__head-tools margin-left-98">
+					<ul class="m-portlet__nav bg-gray">
+						<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+							<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
+								<span class="desk_bars1"></span>
+                                <span class="desk_bars2"></span>
+                                <span class="desk_bars3"></span>
+							</a>
+							<div class="m-dropdown__wrapper" style="z-index: 101;">
+								<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 18px;"></span>
+								<div class="m-dropdown__inner">
+									<div class="m-dropdown__body">
+										<div class="m-dropdown__content">
+											<ul class="m-nav">
+												<li class="m-nav__section m-nav__section--first">
+													<span class="m-nav__section-text">
+														Quick Actions
+													</span>
+												</li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties/update/'.$pid.'?return='.$return) }}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Hotel/Property
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/types')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suite Types
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/rooms')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suites
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/seasons')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Seasons Management
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/calendar')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Reservation Management
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/price')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suite Price
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/property_documents')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Documents
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/property_images')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Images
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/gallery_images')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Galleries
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{URL::to('advertising')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Become Featured
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="https://emporium-collection.com/" class="m-nav__link" target="_blank">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Get Help
+														</span>
+													</a>
+											    </li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div class="m-portlet__body">
 				<ul class="nav nav-tabs" role="tablist">
                     @if(!empty($tabss))

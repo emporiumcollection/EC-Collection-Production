@@ -35,6 +35,11 @@ class HomeController extends Controller {
         $this->data['pageMetakey'] = CNF_METAKEY;
         $this->data['pageMetadesc'] = CNF_METADESC;
         
+        if(!((bool) \auth()->check())){
+            $package_cond = (array) $this->getPackagesIdsAccordingMembership();
+            $this->data['isfPublic'] = ((count($package_cond) > 0)?true:false);
+        }   
+        
         return view('frontend.themes.emporium.pages.index', $this->data);
     }
     
@@ -4986,8 +4991,10 @@ class HomeController extends Controller {
      * AI booking function
      */
 
-    function new_room_booking(Request $request) {
-
+    function new_room_booking(Request $request) {        
+        
+        //$reserved_rooms = \DB::table('td_reserved_rooms')->join('tb_properties_category_types', 'tb_properties_category_types.id', '=', 'td_reserved_rooms.type_id')->join('tb_properties_category_rooms_price', 'tb_properties_category_rooms_price.category_id', '=', 'td_reserved_rooms.type_id')->where('reservation_id', 36)->get();
+        //print_r($reserved_rooms); die;
         $uid = 0;
         $rules['roomType'] = 'required';
         $validator = Validator::make($request->all(), $rules);
@@ -5038,8 +5045,37 @@ class HomeController extends Controller {
              */
 
             $data['property_id'] = $request->input('property');
-            $data['checkin_date'] = date("Y-m-d", strtotime($request->input('booking_arrive')));
-            $data['checkout_date'] = date("Y-m-d", strtotime($request->input('booking_destination')));
+            
+            $arrive_date = '';
+            $book_arrive_date = '';
+            if (!is_null($request->input('booking_arrive')) && $request->input('booking_arrive') != '' && $request->input('booking_arrive') != 'null') {
+                
+                $arrive = trim($request->input('booking_arrive'));
+                    $arrive_array=explode("-",$arrive); 
+                    $t=$arrive_array[0];
+                    $arrive_array[0]=$arrive_array[1];
+                    $arrive_array[1]=$t;
+                    $arrive_date=implode(".",$arrive_array);
+    
+                $book_arrive_date = $arrive_array[2]."-".$arrive_array[1]."-".$arrive_array[0];
+            }
+            
+            $checkout_date = '';
+            $book_checkout_date = '';
+            if (!is_null($request->input('booking_destination')) && $request->input('booking_destination') != '' && $request->input('booking_destination') != 'null') {
+                
+                $checkout_date = trim($request->input('booking_destination'));
+                    $checkout_date_array=explode("-",$checkout_date); 
+                    $t=$checkout_date_array[0];
+                    $checkout_date_array[0]=$checkout_date_array[1];
+                    $checkout_date_array[1]=$t;
+                    $checkout_date_date=implode(".",$checkout_date_array);
+    
+                $book_checkout_date = $checkout_date_array[2]."-".$checkout_date_array[1]."-".$checkout_date_array[0];
+            }
+            
+            $data['checkin_date'] = $book_arrive_date;
+            $data['checkout_date'] = $book_checkout_date;
             $data['type_id'] = $request->input('roomType');
             $data['number_of_nights'] = $request->input('number_of_nights');
             $data['organizing_transfers'] = (!is_null($request->input('organizing_transfers')) && $request->input('organizing_transfers') != '') ? 'Yes' : 'No';
@@ -5061,7 +5097,7 @@ class HomeController extends Controller {
             $data['price_mode'] = 'daily';
             $data['created_by'] = $uid;
             $data['created_date'] = date('Y-m-d h:i:s');
-            
+            //print_r($data); die;
             if($discount_apply!=''){
                 $discount = ($price*10/100);
                 $data['discount'] = $discount;
@@ -5076,11 +5112,12 @@ class HomeController extends Controller {
 
             $booking_adults = $request->input('booking_adults');
             $booking_children = $request->input('booking_children');
+            $booking_Room_type = $request->input('booking_Room_type');
 
             if (!empty($booking_adults)) {
                 foreach ($booking_adults as $key => $booking_adult) {
                     $rooms_data['reservation_id'] = $resid;
-                    $rooms_data['type_id'] = $request->input('roomType');
+                    $rooms_data['type_id'] = $booking_Room_type[$key]==0 ? $request->input('roomType') : $booking_Room_type[$key];
                     $rooms_data['booking_adults'] = $booking_adult;
                     $rooms_data['booking_children'] = $booking_children[$key];
                     \DB::table('td_reserved_rooms')->insertGetId($rooms_data);
@@ -5201,6 +5238,7 @@ class HomeController extends Controller {
             if (empty($checkUser)) {
 
                 $userData['username'] = $request->input('email');
+                $userData['email'] = $request->input('email');
                 $userData['password'] = \Hash::make($request->input('password'));
                 $userData['group_id'] = 3;
                 $userData['active'] = 1;
@@ -5212,7 +5250,9 @@ class HomeController extends Controller {
             } else {
                 \DB::table('tb_users')->where('id', $uid)->update($userData);
             }
-
+            
+            $booking_number = '101'.str_pad($resid, 5, 0, STR_PAD_LEFT);
+            \DB::table('tb_reservations')->where('id', $resid)->update(array('booking_number' => $booking_number));
             /*
              * Send email notification
              */             
@@ -5226,7 +5266,8 @@ class HomeController extends Controller {
             $type_image = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $reservation->property_id)->where('tb_properties_images.category_id', $reservation->type_id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
             $type_image->imgsrc = (new ContainerController)->getThumbpath($type_image->folder_id);
             $hotel_terms_n_conditions = \DB::table('td_property_terms_n_conditions')->where('property_id', $reservation->property_id)->first();
-            $reserved_rooms = \DB::table('td_reserved_rooms')->where('reservation_id', $reservation->id)->get();
+            //$reserved_rooms = \DB::table('td_reserved_rooms')->where('reservation_id', $reservation->id)->get();
+            $reserved_rooms = \DB::table('td_reserved_rooms')->join('tb_properties_category_types', 'tb_properties_category_types.id', '=', 'td_reserved_rooms.type_id')->join('tb_properties_category_rooms_price', 'tb_properties_category_rooms_price.category_id', '=', 'td_reserved_rooms.type_id')->where('reservation_id', $reservation->id)->get();
 
             $bookingEmail = base_path() . "/resources/views/user/emails/booking_notification.blade.php";
             $bookingEmailTemplate = file_get_contents($bookingEmail);
@@ -5570,7 +5611,8 @@ class HomeController extends Controller {
             $total_price = 0;
             $html = '';
             foreach ($reserved_rooms as $reserved_room) {
-                $total_price += ($reservation->number_of_nights * $reservation_price);
+                //$total_price += ($reservation->number_of_nights * $reservation_price);
+                $total_price += ($reservation->number_of_nights * $reserved_room->rack_rate);
                 $html .= '<tr>
                             <th width="209" class="stack2" style="margin: 0;padding: 0;border-collapse: collapse;">
                                 <table width="209" align="center" cellpadding="0" cellspacing="0" border="0" class="table60032" style="border-bottom-color: #C7AB84;mso-table-lspace: 0pt;mso-table-rspace: 0pt;">
@@ -5580,7 +5622,7 @@ class HomeController extends Controller {
                                     <tr>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                         <!-- DESCRIPTION -->
-                                        <td class="header2TD" style="border-collapse: collapse;" mc:edit="mcsec-25">' . $type->category_name . '
+                                        <td class="header2TD" style="border-collapse: collapse;" mc:edit="mcsec-25">' . $reserved_room->category_name . '
                                             <br/> </td>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                     </tr>
@@ -5597,7 +5639,7 @@ class HomeController extends Controller {
                                     <tr>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                         <!-- PRICE -->
-                                        <td class="RegularText5TD" style="border-collapse: collapse;" mc:edit="mcsec-26">€' . $reservation_price . '</td>
+                                        <td class="RegularText5TD" style="border-collapse: collapse;" mc:edit="mcsec-26">€' . $reserved_room->rack_rate . '</td>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                     </tr>
                                     <tr>
@@ -5629,7 +5671,7 @@ class HomeController extends Controller {
                                     <tr>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                         <!-- TOTAL -->
-                                        <td class="RegularText5TD" style="border-collapse: collapse;" mc:edit="mcsec-28">€' . ($reservation->number_of_nights * $reservation_price) . '</td>
+                                        <td class="RegularText5TD" style="border-collapse: collapse;" mc:edit="mcsec-28">€' . ($reservation->number_of_nights * $reserved_room->rack_rate) . '</td>
                                         <td width="30" class="wz2" style="border-collapse: collapse;"></td>
                                     </tr>
                                     <tr>
@@ -5669,7 +5711,8 @@ class HomeController extends Controller {
             $emailArr['msg'] = $bookingEmailTemplate;
             
             $toouser['email'] = $property->email;            
-			$toouser['subject'] = "Booking Confirmation";            		
+			//$toouser['subject'] = "Booking Confirmation"; 
+            $toouser['subject'] = "Booking Request";           		
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser) {
               $message->to($toouser['email'])
                 ->subject($toouser['subject'])
@@ -5677,7 +5720,8 @@ class HomeController extends Controller {
             });
             
             $toouser1['email'] = $user_info->email;
-			$toouser1['subject'] = "Booking Confirmation";	
+			//$toouser1['subject'] = "Booking Confirmation";	
+            $toouser1['subject'] = "Booking Request";
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser1) {
               $message->to($toouser1['email'])
                 ->subject($toouser1['subject'])

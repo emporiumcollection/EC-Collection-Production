@@ -3,7 +3,7 @@ namespace App\Helpers;
 use Session, DB ;
 
 class CommonHelper
-{
+{   
     static function submit_contracts($all_contracts_data,$type,$oid=0,$cType=""){
         $contracts = $all_contracts_data;
         
@@ -54,6 +54,9 @@ class CommonHelper
                     $temparray['event_ids'] = $si_contract->event_ids;
                     $temparray['user_group_ids'] = $si_contract->user_group_ids;
                     $temparray['user_ids'] = $si_contract->user_ids;
+                    if(isset($si_contract->is_required)){ $temparray['is_required'] = (bool) $si_contract->is_required; }
+                    if(isset($si_contract->is_agree)){ $temparray['is_agree'] = (bool) $si_contract->is_agree; }
+                    if(isset($si_contract->sort_num)){ $temparray['sort_num'] = (int) $si_contract->sort_num; }
                     $temparray['status'] = 1;
                     $temparray['accepted_by'] = $uid;
                     $temparray['created_by'] = $uid;
@@ -99,6 +102,9 @@ class CommonHelper
                     $temparray['event_ids'] = $si_contract->event_ids;
                     $temparray['user_group_ids'] = $si_contract->user_group_ids;
                     $temparray['user_ids'] = $si_contract->user_ids;
+                    if(isset($si_contract->is_required)){ $temparray['is_required'] = (bool) $si_contract->is_required; }
+                    if(isset($si_contract->is_agree)){ $temparray['is_agree'] = (bool) $si_contract->is_agree; }
+                    if(isset($si_contract->sort_num)){ $temparray['sort_num'] = (int) $si_contract->sort_num; }
                     $temparray['status'] = 1;
                     $temparray['accepted_by'] = $uid;
                     $temparray['created_by'] = $uid;
@@ -117,16 +123,18 @@ class CommonHelper
         if(\Auth::check()){
             $uid = \Auth::user()->id;
             $contractsAccepted = array();
-            
+            $update_array = array();
             //insert contracts
             $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id')->where('tb_users_contracts.contract_type','commission')->where('tb_users_contracts.hotel_id',$oid)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
             $resetuserContract = array();
+            $resetuserContractIds = array();
             foreach($usersContracts as $si_usersContract){
-                $resetuserContract[$si_usersContract->contract_id] = $si_usersContract->id;                
+                $resetuserContract[$si_usersContract->contract_id] = $si_usersContract->id;  
+                $resetuserContractIds[$si_usersContract->id] = $si_usersContract->contract_id;               
             }
             
             foreach($contracts as $si_contract){
-                if(!isset($resetuserContract[$si_contract->contract_id])){
+                //if(!isset($resetuserContract[$si_contract->contract_id])){
                     $temparray = array();
                     $temparray['contract_id'] = $si_contract->contract_id;
                     $temparray['hotel_id'] = $oid;
@@ -140,18 +148,33 @@ class CommonHelper
                     $temparray['user_ids'] = $si_contract->user_ids;
                     $temparray['full_availability_commission'] = $si_contract->full_availability_commission;
                     $temparray['partial_availability_commission'] = $si_contract->partial_availability_commission;
+                    $temparray['is_required'] = true;
+                     $temparray['is_agree'] = true;
+                    if(isset($si_contract->sort_num)){ $temparray['sort_num'] = (int) $si_contract->sort_num; }
                     $temparray['is_commission_set'] = 1;
-                    $temparray['commission_type'] = $cType;
+                    $temparray['commission_type'] = $si_contract->commission_type;
                     $temparray['status'] = 1;
                     $temparray['accepted_by'] = $uid;
                     $temparray['created_by'] = $uid;
                     $temparray['created_on'] = date('Y-m-d H:i:s');
                     
+                    //$contractsAccepted[] = $temparray;
+                //}
+                if(in_array($si_contract->contract_id, $resetuserContractIds)){
+                    $updateContractsAccepted['updatedarray'] = $temparray;
+                    $updateContractsAccepted['id'] = (array_keys($resetuserContractIds, $si_contract->contract_id));
+                    $update_array[] = $updateContractsAccepted;
+                }else{
                     $contractsAccepted[] = $temparray;
                 }
             }
             
             if(count($contractsAccepted) > 0){ \DB::table('tb_users_contracts')->insert($contractsAccepted); }
+            if(count($update_array) > 0){
+                foreach($update_array as $item){
+                    \DB::table('tb_users_contracts')->where('id', $item['id'])->update($item['updatedarray']);
+                }
+            }
             //End
         }
     }
@@ -161,15 +184,18 @@ class CommonHelper
             $uid = \Auth::user()->id;
             $contractsAccepted = array();
             
+            $update_array = array();
             //insert contracts
-            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id')->where('tb_users_contracts.contract_type','sign-up')->orderBy('tb_users_contracts.contract_id','DESC')->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->get();
+            $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id')->where('tb_users_contracts.accepted_by', \Auth::user()->id)->where('tb_users_contracts.contract_type','sign-up')->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
             $resetuserContract = array();
+            $resetuserContractIds = array();
             foreach($usersContracts as $si_usersContract){
-                $resetuserContract[$si_usersContract->contract_id] = $si_usersContract->id;                
+                $resetuserContract[$si_usersContract->contract_id] = $si_usersContract->id;
+                $resetuserContractIds[$si_usersContract->id] = $si_usersContract->contract_id;                
             }
-            
+            //print_r($resetuserContractIds); die;
             foreach($contracts as $si_contract){
-                if(!isset($resetuserContract[$si_contract->contract_id])){
+                //if(!isset($resetuserContract[$si_contract->contract_id])){
                     $temparray = array();
                     $temparray['contract_id'] = $si_contract->contract_id;
                     $temparray['title'] = $si_contract->title;
@@ -180,16 +206,31 @@ class CommonHelper
                     $temparray['event_ids'] = $si_contract->event_ids;
                     $temparray['user_group_ids'] = $si_contract->user_group_ids;
                     $temparray['user_ids'] = $si_contract->user_ids;
+                    if(isset($si_contract->is_required)){ $temparray['is_required'] = (bool) $si_contract->is_required; }
+                    if(isset($si_contract->is_agree)){ $temparray['is_agree'] = (bool) $si_contract->is_agree; }
+                    if(isset($si_contract->sort_num)){ $temparray['sort_num'] = (int) $si_contract->sort_num; }
                     $temparray['status'] = 1;
                     $temparray['accepted_by'] = $uid;
                     $temparray['created_by'] = $uid;
                     $temparray['created_on'] = date('Y-m-d H:i:s');
                     
+                    //$contractsAccepted[] = $temparray;
+                //}
+                if(in_array($si_contract->contract_id, $resetuserContractIds)){
+                    $updateContractsAccepted['updatedarray'] = $temparray;
+                    $updateContractsAccepted['id'] = (array_keys($resetuserContractIds, $si_contract->contract_id));
+                    $update_array[] = $updateContractsAccepted;
+                }else{
                     $contractsAccepted[] = $temparray;
                 }
             }
             
             if(count($contractsAccepted) > 0){ \DB::table('tb_users_contracts')->insert($contractsAccepted); }
+            if(count($update_array) > 0){
+                foreach($update_array as $item){
+                    \DB::table('tb_users_contracts')->where('id', $item['id'])->update($item['updatedarray']);
+                }
+            }
             //End
         }
     }
@@ -214,7 +255,7 @@ class CommonHelper
         
         $fdata = array();
         $is_default = false;
-        if($fields == 'default'){ $is_default = true; $fields = array('tb_contracts.contract_id','tb_contracts.title','tb_contracts.description','tb_contracts.contract_type');}
+        if($fields == 'default'){ $is_default = true; $fields = array('tb_contracts.contract_id','tb_contracts.title','tb_contracts.description','tb_contracts.contract_type','tb_contracts.is_required','tb_contracts.sort_num');}
         
         switch($type){
             case 'general':
@@ -983,5 +1024,204 @@ $allowedCurrenciesinProject=array("OMR","BHD","KWD","USD","CHF","EUR","KYD","GIP
             }
     }
 
-
+    static function getcontractPDFHeader($center_content){
+        
+        $contract_logo = \DB::table('tb_settings')->where('key_value', 'contract_logo')->first();
+        $contract_company = \DB::table('tb_settings')->where('key_value', 'contract_company')->first();
+		$contract_title1 = \DB::table('tb_settings')->where('key_value', 'contract_title1')->first();
+		$contract_title2 = \DB::table('tb_settings')->where('key_value', 'contract_title2')->first();
+		$contract_title3 = \DB::table('tb_settings')->where('key_value', 'contract_title3')->first();
+        $contract_paragraph = \DB::table('tb_settings')->where('key_value', 'contract_paragraph')->first(); 
+        
+        $obj_hotel = \DB::table('tb_properties')->where('assigned_user_id', \Session::get('uid'))->first();
+        
+        $p_content = '';
+        if(!empty($contract_paragraph->content)){
+            $p_content = $contract_paragraph->content;
+            $string_array_replace = array(                    
+                '{hotel_name}'=>(isset($obj_hotel->property_name) ? $obj_hotel->property_name : ''),
+                '{company_name}'=>$contract_company->content,
+            );
+            foreach($string_array_replace as $key => $value){                    
+                $str_replaced = str_replace($key, $value, $p_content);
+                $p_content = $str_replaced;
+            }       
+        }    
+        
+        $cont_logo = '';        
+        if($contract_logo->content!=''){
+            if(file_exists(public_path().'/sximo/images/'.$contract_logo->content)){
+                $cont_logo = \URL::to('/sximo/images/'.$contract_logo->content);
+            }else{
+                $cont_logo =  \URL::to('sximo/assets/images/logo-design_1.png');
+            }     
+        }else{
+                $cont_logo =  \URL::to('sximo/assets/images/logo-design_1.png');
+        }  
+        
+        $contract_block1 = \DB::table('tb_settings')->where('key_value', 'contract_block1')->first();
+        $contract_block2 = \DB::table('tb_settings')->where('key_value', 'contract_block2')->first();
+		$contract_block3 = \DB::table('tb_settings')->where('key_value', 'contract_block3')->first();       
+                                
+        $html = '<style> 
+						.main { margin:2px; width:100%; font-family: Poppins, sans-serif; } 
+						.page-break { page-break-after: always; } 
+						.tb_page_break{ page-break-before: always; }
+						.header{ position: fixed; width: 100%; top: 0px; height:250px; background: #fff;} 
+                        .footer{ position: fixed; bottom: 100px; left: 0px; right: 0px; height: 100px; background: #fff; }
+						.footer .page-number:after { content: counter(page); }
+						.pagenum:after {content: counter(page);} 
+						.imgBox { text-align:center; width:400px; } 
+						.nro { text-align:center; font-size:12px; } 
+						.header img { height: 100px; margin-bottom: 20px; } 
+                        .Mrgtop200 {margin-top:280px;} 
+						.Mrgtop80 {margin-top:80px;} 
+						.Mrgtop40 {margin-top:40px;}
+						.Mrgtop20 {margin-top:10px;} 
+						.monimg img { width:125px; height:80px; }  
+						.font13 { font-size:13px; } 
+						.font12 { font-size:12px; } 
+						.algRgt { text-align:right; } 
+						.algCnt { text-align:center; } 
+						
+						.pagenum:after {content: counter(page);}
+						.title {text-align:right; width:100%; font-size:30px; font-weight:bold;}
+                        .title1 {width:100%; font-size:16px; font-weight:bold;} 
+						.clrgrey{ color:#3f3f3f;} 
+						.alnRight{text-align:right;} 
+						.alnCenter{text-align:center;} 
+						td{font-size:12px; padding:1px;} 
+						th{background-color:#999; color:#000000; text-align:left; padding:1px; font-size:14px;}
+						.totl{background-color:#999; color:#000000; font-weight:bold;} 
+						h2{padding-bottom:0px; margin-bottom:0px;} 
+						.valin{ vertical-align:top;} 
+						.valinbt{ vertical-align:bottom; text-align:right;}
+                        .footer-font-size{ font-size:9px; }
+						.page {
+						  background: white;
+						  display: block;
+						  margin: 0 auto;
+						  margin-bottom: 0.5cm;
+						  
+						}
+						.tablewc{
+						  width: 50%; 
+                          margin: 0px auto;
+                        }
+                        .tr_vertical_align{
+                            vertical-align: top;    
+                        }
+						@media print {
+						  body, page {
+						    margin: 0;
+						    box-shadow: 0;
+						  }
+						}
+                        .underline{
+                            border-bottom:1px solid #ccc;
+                            font-size:14px;                            
+                        }
+                        .fnt15{
+                            font-size:15px;
+                         }   
+                        .strong{
+                            font-weight:bold;
+                            width:150px;
+                            font-size:14px;
+                            text-align:right;
+                            margin-right:5px;                                                                                    
+                         }
+                         table{
+                            border-collapse:separate; 
+                            border-spacing: 0 0.5em;                            
+                          }  
+                          label {
+                            display: block;
+                            padding-left: 20px;
+                            text-indent: -15px;
+                            font-size:14px;                            
+                        }
+                        input {
+                            width: 13px;
+                            height: 13px;
+                            padding: 0;
+                            margin:0;
+                            top:-1px;                            
+                            position: relative;
+                            *overflow: hidden;
+                        }                                                      
+                        .center_content br {
+                            content: "";
+                            margin: 2em;
+                            display: block;
+                            font-size: 36%;
+                        }
+				</style>';
+        
+        $html .= '
+            <div class="main">
+                <div class="header"> 
+                    <table width="100%">
+                        <tr>  
+    						<td>    						    
+    							<center><img src="'.$cont_logo.'" height="100px;"></center>  				 	 
+    						</td>
+    					 </tr>
+                         <tr>
+    						<td class="title1" align="center">
+    							<center>'.$contract_title1->content.'</center>
+    						</td>
+    					 </tr>
+                         <tr>
+    						<td class="title1" align="center">
+    							<center>'.$contract_title2->content.'</center>
+    						</td>
+    					 </tr>
+                         <tr>
+    						<td align="left">
+    							'.$p_content.'
+    						</td>
+    					 </tr>
+                         <tr>
+    						<td class="title1" align="center">
+    							<center>'.$contract_title3->content.'</center>
+    						</td>
+    					 </tr>                                                                                                       
+                    </table>
+                </div>  
+                
+                <div style="clear:both;"> &nbsp;</div>
+                <div class="center_content">
+                '.nl2br($center_content).'
+                </div>
+                <div style="clear:both;"> &nbsp;</div>
+                <div class="footer"> 
+                    <table width="100%" class="Mrgtop40">  
+                                          
+                        <tr class="tr_vertical_align">  
+    						<td width="40%" class="footer-font-size">    						    
+    						  '.nl2br($contract_block1->content).'	   				 	 
+    						</td>
+                            <td width="30%" class="footer-font-size">    						    
+    						  '.nl2br($contract_block2->content).'	   				 	 
+    						</td>
+                            <td width="30%" class="footer-font-size">    						    
+    						  '.nl2br($contract_block3->content).'	   				 	 
+    						</td>
+    					 </tr>                                                                                        
+                    </table> 
+                </div>
+            </div>
+        ';
+        //echo $html; die;    
+        return $html;
+    }
+    static function dateformat($date){
+        $final_dt = '';
+        $dtarr = explode('-', $date);
+        if(count($dtarr)>1){
+            $final_dt = $dtarr[2]."-".$dtarr[0]."-".$dtarr[1];
+        }
+        return $final_dt;
+    }
 }

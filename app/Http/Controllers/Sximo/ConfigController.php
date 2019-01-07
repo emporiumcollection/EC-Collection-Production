@@ -22,13 +22,17 @@ class ConfigController extends Controller {
 	public function getIndex()
 	{	
 		$this->data['active'] = '';
+        
+        $gId = \CommonHelper::getusertype("users-b2c");
+        
+        $this->data['b2c_packages'] = \DB::table('tb_packages')->select('tb_packages.id','tb_packages.package_title', 'tb_packages.is_public')->join('tb_packages_user_groups', 'tb_packages.id', '=', 'tb_packages_user_groups.package_id')->where('tb_packages_user_groups.group_id', $gId)->get();
+        
 		return view('sximo.config.index',$this->data);	
 	}
 
 
 	static function postSave( Request $request )
-	{
-		
+	{	    
 		$rules = array(
 			'cnf_appname'=>'required|min:2',
 			'cnf_appdesc'=>'required|min:2',
@@ -60,6 +64,7 @@ class ConfigController extends Controller {
 			$val .= 	"define('CNF_GROUP','".CNF_GROUP."');\n";	
 			$val .= 	"define('CNF_ACTIVATION','".CNF_ACTIVATION."');\n";	
 			$val .= 	"define('CNF_MULTILANG','".(!is_null($request->input('cnf_multilang')) ? 1 : 0 )."');\n";
+            $val .= 	"define('CNF_SUBTRACT_FEE','".(!is_null($request->input('cnf_subtract_fee_first_booking')) ? 1 : 0 )."');\n";
 			$val .= 	"define('CNF_LANG','".$request->input('cnf_lang')."');\n";
 			$val .= 	"define('CNF_REGIST','".CNF_REGIST."');\n";	
 			$val .= 	"define('CNF_FRONT','".CNF_FRONT."');\n";		
@@ -72,12 +77,30 @@ class ConfigController extends Controller {
 			$val .= 	"define('CNF_ALLOWIP','".CNF_ALLOWIP."');\n";
 			$val .= 	"define('CNF_RESTRICIP','".CNF_RESTRICIP."');\n";									
 			$val .= 	"define('CNF_YOUTUBE_API_KEY','".$request->input('cnf_youtube_api_key')."');\n";
+            $val .= 	"define('CNF_SUPERADMIN_EMAIL','".$request->input('cnf_superadmin_email')."');\n";
 			$val .= 	"?>";
 	
 			$filename = base_path().'/setting.php';
 			$fp=fopen($filename,"w+"); 
 			fwrite($fp,$val); 
 			fclose($fp); 
+            
+            $gId = \CommonHelper::getusertype("users-b2c");        
+            $b2c_packages = \DB::table('tb_packages')->select('tb_packages.id','tb_packages.package_title', 'tb_packages.is_public')->join('tb_packages_user_groups', 'tb_packages.id', '=', 'tb_packages_user_groups.package_id')->where('tb_packages_user_groups.group_id', $gId)->get();
+            $pkgs = array();
+    		$pkg = $request->input('public_package');
+            if(!empty($pkg)){
+                $pkgs = $pkg;
+            }            
+            if(!empty($b2c_packages)){
+                foreach($b2c_packages as $pkg){
+                    if(in_array($pkg->id, $pkgs)) 
+                    \DB::table('tb_packages')->where('id', $pkg->id)->update(array('is_public'=>1));
+                    else
+                    \DB::table('tb_packages')->where('id', $pkg->id)->update(array('is_public'=>0));
+                }
+            }
+            
 			return Redirect::to('sximo/config')->with('messagetext','Setting Has Been Save Successful')->with('msgstatus','success');
 		} else {
 			return Redirect::to('sximo/config')->with('messagetext', 'The following errors occurred')->with('msgstatus','success')
@@ -107,6 +130,8 @@ class ConfigController extends Controller {
 		$removalreminder = base_path()."/resources/views/user/emails/removal_reminder.blade.php";
         
 		$refferalInvitation = base_path()."/resources/views/user/emails/invite.blade.php";
+        $requestReferralEmailtoSuperAdmin = base_path()."/resources/views/user/emails/request_referral.blade.php";
+        $requestReferralEmailtoUser = base_path()."/resources/views/user/emails/request_referral_user.blade.php";
         
 		$this->data = array(
 			'groups'	=> Groups::all(),
@@ -127,6 +152,8 @@ class ConfigController extends Controller {
 			'removalreminder'	=> 	file_get_contents($removalreminder),
 			'active'		=> 'email',
             'refferalInvitation'	=> 	file_get_contents($refferalInvitation),
+            'requestReferralEmailtoSuperAdmin'	=> 	file_get_contents($requestReferralEmailtoSuperAdmin),
+            'requestReferralEmailtoUser'	=> 	file_get_contents($requestReferralEmailtoUser),
 		);	
 		return view('sximo.config.email',$this->data);		
 	
@@ -475,6 +502,9 @@ class ConfigController extends Controller {
 		$this->data['invoice_phone_num'] = \DB::table('tb_settings')->where('key_value', 'invoice_phone_num')->first();
 		$this->data['invoice_email_id'] = \DB::table('tb_settings')->where('key_value', 'invoice_email_id')->first();
 		$this->data['invoice_address'] = \DB::table('tb_settings')->where('key_value', 'invoice_address')->first();
+        
+        $this->data['invoice_total_footer_message'] = \DB::table('tb_settings')->where('key_value', 'invoice_total_footer_message')->first();
+		$this->data['invoice_footer_message'] = \DB::table('tb_settings')->where('key_value', 'invoice_footer_message')->first();
 		
 		return view('sximo.config.invoice',$this->data);	
 	}	
@@ -503,6 +533,9 @@ class ConfigController extends Controller {
 			\DB::table('tb_settings')->where('key_value', 'invoice_phone_num')->update(['content' => Input::get('invoice_phone_num')]);
 			\DB::table('tb_settings')->where('key_value', 'invoice_email_id')->update(['content' => Input::get('invoice_email_id')]);
 			\DB::table('tb_settings')->where('key_value', 'invoice_address')->update(['content' => Input::get('invoice_address')]);
+            
+            \DB::table('tb_settings')->where('key_value', 'invoice_total_footer_message')->update(['content' => Input::get('invoice_total_footer_message')]);
+			\DB::table('tb_settings')->where('key_value', 'invoice_footer_message')->update(['content' => Input::get('invoice_footer_message')]);
 			
 			return Redirect::to('sximo/config/invoice')->with('messagetext', 'Invoice settings Has Been Updated')->with('msgstatus','success');	
 			
@@ -717,5 +750,87 @@ class ConfigController extends Controller {
 		}
 	
 	}
+    
+    public function getContract()
+	{
+		$this->data = array(
+			'pageTitle'	=> 'Help Manual',
+			'pageNote'	=> 'Documentation',
+			'active'	=> 'contract'
+		);	
+		
+        $this->data['contract_first_name'] = \DB::table('tb_settings')->where('key_value', 'contract_first_name')->first();
+        $this->data['contract_last_name'] = \DB::table('tb_settings')->where('key_value', 'contract_last_name')->first();  
+		$this->data['contract_logo'] = \DB::table('tb_settings')->where('key_value', 'contract_logo')->first();
+        $this->data['contract_company'] = \DB::table('tb_settings')->where('key_value', 'contract_company')->first();
+		$this->data['contract_title1'] = \DB::table('tb_settings')->where('key_value', 'contract_title1')->first();
+		$this->data['contract_title2'] = \DB::table('tb_settings')->where('key_value', 'contract_title2')->first();
+		$this->data['contract_title3'] = \DB::table('tb_settings')->where('key_value', 'contract_title3')->first();
+        $this->data['contract_paragraph'] = \DB::table('tb_settings')->where('key_value', 'contract_paragraph')->first();
+        
+        $this->data['contract_company_eng'] = \DB::table('tb_settings')->where('key_value', 'contract_company_eng')->first();
+		$this->data['contract_title1_eng'] = \DB::table('tb_settings')->where('key_value', 'contract_title1_eng')->first();
+		$this->data['contract_title2_eng'] = \DB::table('tb_settings')->where('key_value', 'contract_title2_eng')->first();
+		$this->data['contract_title3_eng'] = \DB::table('tb_settings')->where('key_value', 'contract_title3_eng')->first();
+        $this->data['contract_paragraph_eng'] = \DB::table('tb_settings')->where('key_value', 'contract_paragraph_eng')->first();
+        
+        $this->data['contract_block1'] = \DB::table('tb_settings')->where('key_value', 'contract_block1')->first();
+		$this->data['contract_block2'] = \DB::table('tb_settings')->where('key_value', 'contract_block2')->first();
+		$this->data['contract_block3'] = \DB::table('tb_settings')->where('key_value', 'contract_block3')->first();
+		
+		return view('sximo.config.contract',$this->data);	
+	}	
+	
+	
+	function postContract( Request $request)
+	{
+		
+		//print_r($_POST);exit;
+		$rules = array(
+			'contract_company'		=> 'required',			
+		);	
+		$validator = Validator::make($request->all(), $rules);	
+		if ($validator->passes()) 
+		{
+		    $logo = '';
+			if(!is_null(Input::file('contract_logo')))
+			{
+				$file = Input::file('contract_logo');                
+			 	$destinationPath = public_path().'/sximo/images/'; 
+				$filename = $file->getClientOriginalName();
+				$extension =$file->getClientOriginalExtension(); //if you need extension of the file
+				$logo = 'contract-logo.'.$extension;
+				$uploadSuccess = $file->move($destinationPath, $logo);
+                
+                \DB::table('tb_settings')->where('key_value', 'contract_logo')->update(['content' => $logo]);
+			}
+            
+            \DB::table('tb_settings')->where('key_value', 'contract_first_name')->update(['content' => Input::get('contract_first_name')]);			
+			\DB::table('tb_settings')->where('key_value', 'contract_last_name')->update(['content' => Input::get('contract_last_name')]);
+            
+			\DB::table('tb_settings')->where('key_value', 'contract_company')->update(['content' => Input::get('contract_company')]);			
+			\DB::table('tb_settings')->where('key_value', 'contract_title1')->update(['content' => Input::get('contract_title1')]);
+            \DB::table('tb_settings')->where('key_value', 'contract_title2')->update(['content' => Input::get('contract_title2')]);			
+			\DB::table('tb_settings')->where('key_value', 'contract_title3')->update(['content' => Input::get('contract_title3')]);
+            \DB::table('tb_settings')->where('key_value', 'contract_paragraph')->update(['content' => Input::get('contract_paragraph')]);
+			
+			\DB::table('tb_settings')->where('key_value', 'contract_company_eng')->update(['content' => Input::get('contract_company_eng')]);			
+			\DB::table('tb_settings')->where('key_value', 'contract_title1_eng')->update(['content' => Input::get('contract_title1_eng')]);
+            \DB::table('tb_settings')->where('key_value', 'contract_title2_eng')->update(['content' => Input::get('contract_title2_eng')]);			
+			\DB::table('tb_settings')->where('key_value', 'contract_title3_eng')->update(['content' => Input::get('contract_title3_eng')]);
+            \DB::table('tb_settings')->where('key_value', 'contract_paragraph_eng')->update(['content' => Input::get('contract_paragraph_eng')]);
+            
+            \DB::table('tb_settings')->where('key_value', 'contract_block1')->update(['content' => Input::get('contract_block1')]);			
+			\DB::table('tb_settings')->where('key_value', 'contract_block2')->update(['content' => Input::get('contract_block2')]);
+            \DB::table('tb_settings')->where('key_value', 'contract_block3')->update(['content' => Input::get('contract_block3')]);
+			
+			return Redirect::to('sximo/config/contract')->with('messagetext', 'Contract settings Has Been Updated')->with('msgstatus','success');	
+			
+		}	else {
 
+			return Redirect::to('sximo/config/contract')->with('messagetext', 'The following errors occurred')->with('msgstatus','success')
+			->withErrors($validator)->withInput();
+		}
+	
+	}
 }

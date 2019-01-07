@@ -1,7 +1,7 @@
 @extends('users_admin.metronic.layouts.app')
 
 @section('page_name')
-    Property  <small>View</small>
+    
 @stop
 
 @section('breadcrumb')
@@ -12,15 +12,10 @@
         </a> 
     </li>
     <li class="m-nav__separator"> - </li>
+    
     <li class="m-nav__item"> 
-        <a href="{{ URL::to('properties')}}" class="m-nav__link"> 
-            <span class="m-nav__link-text"> Reservation & Distribution </span> 
-        </a> 
-    </li>
-    <li class="m-nav__separator"> - </li>
-    <li class="m-nav__item"> 
-        <a href="{{ URL::to('properties')}}" class="m-nav__link"> 
-            <span class="m-nav__link-text"> Properties </span> 
+        <a href="{{ URL::to('hotelcontainer')}}" class="m-nav__link"> 
+            <span class="m-nav__link-text breadcrumb-end"> Digital Media Management &amp; Distribution System </span> 
         </a> 
     </li>
 @stop
@@ -31,8 +26,23 @@
 
 <?php $imgfancy = array();
 	$filType = array('jpg'=>'JPEG image', 'jpeg'=>'JPEG image', 'JPG'=>'JPEG image', 'png'=>'PNG image', 'gif'=>'GIF image', 'xls'=>'Excel spreadsheet', 'eps'=>'EPS Image', 'mp4'=>'MPEG-4 video', 'mkv'=>'Matroska Video', 'flv'=>'Flash Video', 'avi'=>'Audio Video', 'wma'=>'Windows Media Audio', 'wmp'=>'Windows Media Player', 'psd'=>'PSD Image', 'pdf'=>'PDF document', 'ppt'=>'PowerPoint presentation', 'mp3'=>'MP3 audio', 'tif'=>'TIFF image', 'doc'=>'Word document', 'docx'=>'Word document', 'bmp'=>'Bitmap image', 'cad'=>'CAD image', 'zip'=>'Compress document');
- ?>
+ ?> 
+ 
 <div class="row">
+    <div class="col-xl-12 col-sm-12 col-md-12 col-lg-12">
+        <h2>Digital Media Management &amp; Distribution System</h2>
+    </div> 
+    <div class="col-xl-12 col-sm-12 col-md-12 col-lg-12">
+        The Digital Media Management & Distribution System is the DeFacto travel industry digital media management, and is the only all-in-one solution that helps hotels with the storage, management and distribution of visual content across all marketing and distribution channels.
+    </div>
+    <div class="col-xl-12 col-sm-12 col-md-12 col-lg-12">
+        <hr />
+    </div>
+    <div class="col-md-12 col-xs-12 m--align-right">
+        <a href="{{URL::to('hotelpackages')}}" class="tips btn btn-xs btn-primary" style="height: auto !important;">Upgrade to pro</a>
+    </div>
+    
+    @if($check_images)
 	<div class="col-sm-3">	
 		<div class="row">
 			<div class="col-sm-12">
@@ -258,6 +268,11 @@
 			</div>
 		</div>
 	</div>
+    @else
+    <div class="col-xl-12 col-sm-12 col-md-12 col-lg-12 m--align-center">    		
+        Currently no data found for this property.        
+    </div>    
+    @endif
 </div>
 
 <div id="showallmodals"> </div>

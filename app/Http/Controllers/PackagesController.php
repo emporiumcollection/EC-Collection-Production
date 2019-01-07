@@ -160,6 +160,8 @@ class PackagesController extends Controller {
 				$data['package_modules'] = implode(',',$request->input('package_modules'));
 			}
             
+            $data['package_for'] = $request->input('package_for');
+            
             $userGroups = array();
             if(!is_null($request->input('allow_user_groups')))
 			{
@@ -294,7 +296,12 @@ class PackagesController extends Controller {
             
         }
     }		
-
+    public function get_setup(){
+        $group_id = \Session::get('gid');
+        $setup_package = \DB::table('tb_packages')->where('allow_user_groups', $group_id)->where('package_status', 1)->where('package_for', 1)->first();
+        echo json_encode(array('id'=>$setup_package->id));
+        exit();
+    }
 
 }
 

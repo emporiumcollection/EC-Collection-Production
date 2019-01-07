@@ -1,9 +1,5 @@
 @extends('users_admin.metronic.layouts.app')
 
-@section('page_name')
-    Property  <small>Properties</small>
-@stop
-
 @section('breadcrumb')
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 
@@ -59,9 +55,127 @@
         </div>
         <div class="col-sm-8 col-md-8 col-lg-8">
             <a href="{{URL::to('properties/update/'.$pid)}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Property Management"><i class="fa fa-edit"></i>&nbsp;Property Management</a>
+            <a href="{{URL::to('flipviewpdf/Emporium-Voyage-Add-Suites-help.pdf')}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Add Suites" style="margin-right: 10px;" target="_blank"><i class="fa fa-edit"></i>&nbsp;View Documentation</a>
         </div>
         <!--begin::Portlet-->
 		<div class="m-portlet">
+            <div class="m-portlet__head">				
+				<div class="m-portlet__head-tools margin-left-98">
+					<ul class="m-portlet__nav bg-gray">
+						<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover" aria-expanded="true">
+							<a href="#" class="m-portlet__nav-link m-portlet__nav-link--icon m-portlet__nav-link--icon-xl">
+								<span class="desk_bars1"></span>
+                                <span class="desk_bars2"></span>
+                                <span class="desk_bars3"></span>
+							</a>
+							<div class="m-dropdown__wrapper" style="z-index: 101;">
+								<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust" style="left: auto; right: 18px;"></span>
+								<div class="m-dropdown__inner">
+									<div class="m-dropdown__body">
+										<div class="m-dropdown__content">
+											<ul class="m-nav">
+												<li class="m-nav__section m-nav__section--first">
+													<span class="m-nav__section-text">
+														Quick Actions
+													</span>
+												</li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties/update/'.$pid.'?return='.$return) }}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Hotel/Property
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/types')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suite Types
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/rooms')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suites
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/seasons')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Seasons
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/calendar')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Reservation Management
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/price')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Suite Price
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/property_documents')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Documents
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/property_images')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Images
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{ URL::to('properties_settings/'.$pid.'/gallery_images')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Property Galleries
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="{{URL::to('advertising')}}" class="m-nav__link">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Become Featured
+														</span>
+													</a>
+											    </li> 
+                                                <li class="m-nav__item">
+													<a href="https://emporium-collection.com/" class="m-nav__link" target="_blank">
+														<i class="m-nav__link-icon"></i>
+														<span class="m-nav__link-text">
+															Get Help
+														</span>
+													</a>
+											    </li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+						</li>
+					</ul>
+				</div>
+			</div>
 			<div class="m-portlet__body">
 				<ul class="nav nav-tabs" role="tablist">
                     @if(!empty($tabss))
@@ -94,25 +208,31 @@
                             </div>
                         </div>
 						@if(!empty($cat_types))
+                        {{--*/ $i = 1; $j = 1; /*--}}                        
 						<div class="box well">
-							<div class="header">
-								<p>Changing the name for existing rooms will change it in existing reservation and normally shouldn't be done Room active dates are used to determine when the room is available for booking, and used to calculate day to day occupancy statistics. Leave end date blank unless you want the room to expire at some point</p>
+							<div>
+								<p>Changing the name for existing suites will change it in existing reservation and normally shouldn't be done suite active dates are used to determine when the suite is available for booking, and used to calculate day to day occupancy statistics. Leave end date blank unless you want the suite to expire at some point</p>
 							</div> 
 							<div class="tab-container">
 								<ul class="nav nav-tabs" role="tablist">
 									@foreach($cat_types as $cat)
 										<li class="nav-item bg-gray">
-                                            <a class="nav-link" href="#" data-target="#tab{{$cat['data']->id}}" data-toggle="tab">{{$cat['data']->category_name}}</a>
+                                            @if($i==1)                                        
+                                                <a class="nav-link active show" href="#" data-target="#tab{{$cat['data']->id}}" data-toggle="tab">{{$cat['data']->category_name}}</a>
+                                            @else
+                                                <a class="nav-link" href="#" data-target="#tab{{$cat['data']->id}}" data-toggle="tab">{{$cat['data']->category_name}}</a>                                                                                        
+                                            @endif                                            
                                         </li>
+                                    {{--*/ $i++ /*--}}                                            
 									@endforeach
 								</ul>
 								<div class="tab-content">
 									@foreach($cat_types as $cat)
-										<div class="tab-pane use-padding" id="tab{{$cat['data']->id}}">
+										<div class="tab-pane <?php echo ($j==1) ? 'active' : '' ?> use-padding" id="tab{{$cat['data']->id}}">
 											<div class="tab-container">
 												<ul class="nav nav-tabs" role="tablist">
 													<li class="nav-item">
-                                                        <a class="nav-link"  href="#" data-target="#rooms_details_cat{{$cat['data']->id}}" data-toggle="tab">Rooms Details</a>
+                                                        <a class="nav-link <?php echo ($j==1) ? 'active' : '' ?>"  href="#" data-target="#rooms_details_cat{{$cat['data']->id}}" data-toggle="tab">Rooms Details</a>
                                                     </li>
 													<li class="nav-item">
                                                         <a class="nav-link" href="#" data-target="#rooms_images_cat{{$cat['data']->id}}" data-toggle="tab">Rooms Images</a>
@@ -123,7 +243,7 @@
 												</ul>
 												
 												<div class="tab-content">
-													<div class="tab-pane use-padding" id="rooms_details_cat{{$cat['data']->id}}">
+													<div class="tab-pane <?php echo ($j==1) ? 'active' : '' ?> use-padding" id="rooms_details_cat{{$cat['data']->id}}">
                                                         <div id="refresh_{{$cat['data']->id}}">
 														@if(array_key_exists('rooms', $cat))
 															{{--*/ $r=1; /*--}}
@@ -331,7 +451,7 @@
 																		<i class="glyphicon glyphicon-ban-circle"></i>
 																		<span>Cancel upload</span>
 																	</button>
-																	<a class="btn btn-success" @if(array_key_exists('imgs', $cat)) href="{{URL::to('folders/'.$cat['imgs'][0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
+																	<a class="btn btn-success" title="Re-oder your images from the container after room setup has been completed" @if(array_key_exists('imgs', $cat)) href="{{URL::to('folders/'.$cat['imgs'][0]->folder_id.'?show=thumb')}}" @else href="#" @endif>
 																		<span>Re-Order</span>
 																	</a>
 																	<button type="button" class="btn btn-danger" onclick="delete_selected_imgs('ff{{$cat['data']->id}}');" >
@@ -426,15 +546,20 @@
 															<div class="row margin-top-10">
 																<div class="col-lg-8">
 																	<div class="row">
-																		<div class="form-group col-lg-12">
+																		<div class="form-group" style="width:100%;">
+                                                                            <div class="col-lg-12" style="width:100%;">
 																			<label for="room_name">Amenities </label>
-																			<select name='assigned_amenities[]' rows='5' id='assigned_amenities' class='form-control select2 ' multiple="multiple" required="required">
+																			<select name='assigned_amenities[]' rows='5' id='assigned_amenities' class='form-control m-input m-input--solid select2' multiple="multiple" required="required" style="width:100%;">
 																			  @if(!empty($amenties))
 																					@foreach($amenties as $amenty)
 																						<option value="{{$amenty->id}}" {{(array_key_exists('amenty', $cat) && in_array($amenty->id,explode(',',$cat['amenties']))) ? " selected='selected' " : '' }}>{{$amenty->amenity_title}}</option>
 																					@endforeach
 																				@endif
-																		  </select>
+																		    </select>
+                                                                            <span class="m-form__help">
+                    															Please select assign amenties, Type in the white box to search/select
+                    														</span> 
+                                                                            </div>
 																		</div>
 																	</div>
 																	<div class="row">
@@ -468,6 +593,7 @@
 												</div>
 											</div>
 										</div>
+                                        {{--*/ $j++ /*--}} 
 									@endforeach
 								</div>
 							</div>
@@ -527,8 +653,8 @@
     @parent
     <link href="{{ asset('sximo/css/bookingSys.css')}}" rel="stylesheet">
     <script src="{{ asset('sximo/js/jquery.validate.js')}}"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <?php /*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*/ ?>
     <link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">
     <link rel="stylesheet" href="{{ asset('sximo/file_upload/css/jquery.fileupload.css')}}">
     <link rel="stylesheet" href="{{ asset('sximo/file_upload/css/jquery.fileupload-ui.css')}}">
@@ -554,7 +680,7 @@
 <script>
 
 $(document).ready(function () {
-
+    $(".select2").select2();
      /*$(".add_property_type_setup").validate({
 		 errorPlacement: function(error, element) {
 			// Append error within linked label
@@ -566,11 +692,17 @@ $(document).ready(function () {
          }
      });*/
 	 
-		$('.datepic').datepicker({
+		/*$('.datepic').datepicker({
 				numberOfMonths: 2,
 				showButtonPanel: true,
 				format: 'yyyy-mm-dd'
-		});
+		});*/
+        
+    $(".datepic").datepicker( {
+        todayHighlight:!0, orientation:"bottom left", format:"yyyy-mm-dd", templates: {
+            leftArrow: '<i class="la la-angle-left"></i>', rightArrow: '<i class="la la-angle-right"></i>'
+        }
+    });
 		
 	$(document).on('click', '.btn', function (){
 		 var frmid = $(this).parents('form.add_property_room_setup').attr('id');
@@ -994,5 +1126,4 @@ $(document).ready(function () {
 		}
 	}
 </script>
-
 @stop
