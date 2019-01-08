@@ -65,6 +65,14 @@
 			<input name="cnf_email" type="text" id="cnf_email" class="form-control input-sm" value="{{ CNF_EMAIL }}" /> 
 			 </div> 
 		  </div> 
+          
+          <div class="form-group">
+		    <label for="ipt" class=" control-label col-md-4">{{ Lang::get('core.fr_superadmin_emailsys') }} </label>
+			<div class="col-md-8">
+			<input name="cnf_superadmin_email" type="text" id="cnf_superadmin_email" class="form-control input-sm" value="{{ CNF_SUPERADMIN_EMAIL }}" /> 
+			 </div> 
+		  </div> 
+          
 		  <div class="form-group">
 		    <label for="ipt" class=" control-label col-md-4">{{ Lang::get('core.fr_youtube_api_key') }} </label>
 			<div class="col-md-8">
@@ -81,8 +89,19 @@
 				</div>	
 			 </div> 
 		  </div> 
-		     
-		   <div class="form-group">
+		   
+           <div class="form-group">
+		    <label for="ipt" class=" control-label col-md-4"> Subtract this fee from my first booking commission </label>
+			<div class="col-md-8">
+				<div class="checkbox">
+					<input name="cnf_subtract_fee_first_booking" type="checkbox" id="cnf_subtract_fee_first_booking" value="1"
+					@if(CNF_SUBTRACT_FEE ==1) checked @endif
+					  />  {{ Lang::get('core.fr_enable') }} 
+				</div>	
+			 </div> 
+		  </div> 
+             
+		  <div class="form-group">
 		    <label for="ipt" class=" control-label col-md-4">{{ Lang::get('core.fr_mainlanguage') }} </label>
 			<div class="col-md-8">
 
@@ -124,12 +143,7 @@
 			 </div> 
 		  </div> 		  
 		  
-		  <div class="form-group">
-		    <label for="ipt" class=" control-label col-md-4">&nbsp;</label>
-			<div class="col-md-8">
-				<button class="btn btn-primary" type="submit">{{ Lang::get('core.sb_savechanges') }} </button>
-			 </div> 
-		  </div> 
+		  
 		</div>
 
 		<div class="col-sm-6 animated fadeInRight ">
@@ -163,7 +177,32 @@
 			 </div> 
 		  </div>  		  
 
-		</div>  
+		</div>
+        
+        <div class="col-sm-12 animated">
+            <div class="form-group">
+    		    <label for="ipt" class=" control-label col-md-2"> Membership Category   </label>
+    			<div class="col-md-10">
+                @if(!empty($b2c_packages))
+                    @foreach($b2c_packages as $pkg)                                 
+    				<label class="checkbox checkbox-inline">
+    					<input name="public_package[]" type="checkbox" id="public_package" @if($pkg->is_public == '1') checked="checked" @endif value="{{$pkg->id}}" />  {{$pkg->package_title}}
+    				</label>
+                    @endforeach
+                @endif	                                    
+    			 </div> 
+    		  </div> 
+        </div>        
+        
+        <div class="col-sm-12 animated">
+            <div class="form-group">
+    		    <label for="ipt" class=" control-label col-md-4">&nbsp;</label>
+    			<div class="col-md-8">
+    				<button class="btn btn-primary" type="submit">{{ Lang::get('core.sb_savechanges') }} </button>
+    			 </div> 
+    		  </div> 
+        </div>                        
+                                                        
 		 {!! Form::close() !!}
 	</div>
 	</div>	 
