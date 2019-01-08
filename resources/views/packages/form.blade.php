@@ -50,8 +50,8 @@
                                                 <option value="">Select Category</option>
                                                 <option value="Sales_Marketing" <?php echo ($row['package_category'] == 'Sales_Marketing' ? " selected='selected' " : '' ); ?>>Sales & Marketing</option>
                                                 <option value="Reservation_Distribution" <?php echo ($row['package_category'] == 'Reservation_Distribution' ? " selected='selected' " : '' ); ?>>Reservation & Distribution</option> 
-                                                <option value="Advertising" <?php echo ($row['package_category'] == 'Advertising' ? " selected='selected' " : '' ); ?>>Advertising</option>
-                                                <option value="Membership" <?php echo ($row['package_category'] == 'Membership' ? " selected='selected' " : '' ); ?>>Membership</option>    
+                                                <option value="Advertising" <?php echo ($row['package_category'] == 'Advertising' ? " selected='selected' " : '' ); ?>>Advertising</option>  
+                                                <option value="Membership" <?php echo ($row['package_category'] == 'Membership' ? " selected='selected' " : '' ); ?>>Membership</option>  
                         						<?php /*
                         						foreach($package_category_opt as $key=>$val)
                         						{
@@ -193,7 +193,22 @@
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div> </fieldset>
+								  </div>
+                                  <div class="form-group">
+									<label for="Is Public" class=" control-label col-md-4 text-left">Set Default membership or Setup </label>
+									<div class="col-md-6">	
+                                        <label class='radio radio-inline'>
+                    					<input type='radio' name='package_for' value ='0' @if($row['package_for'] == '0') checked="checked" @endif > Normal </label>								  
+                    					<label class='radio radio-inline'>
+                    					<input type='radio' name='package_for' value ='1' @if($row['package_for'] == '1') checked="checked" @endif > Setup </label>
+                    					<label class='radio radio-inline'>
+                    					<input type='radio' name='package_for' value ='2' @if($row['package_for'] == '2') checked="checked" @endif > Default Membership </label> 
+									 </div> 
+									 <div class="col-md-2">
+									 	
+									 </div>
+								  </div> 
+                    </fieldset>
 			</div>
 			
 			
