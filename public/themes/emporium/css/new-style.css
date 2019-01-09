@@ -4346,7 +4346,8 @@ svg:not(:root) {
     right: 25px;
   }
    .Home .sliderSection .carousel-caption h1 {
-    font-size: 18px;
+    font-size: 48px;
+    margin-top:120px;
    }
    .Home .u-marg-r-w1of13 {
     margin-right: 15px;
