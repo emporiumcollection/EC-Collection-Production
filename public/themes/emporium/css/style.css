@@ -793,19 +793,19 @@ border-radius:0;
 }
 .sliderSection  .carousel-caption p {
   color: #fff;
-  font-family: GeomanistLight;
-  font-size: 16px;
+  font-family: DomaineDisplay;
+  font-size: 22px;
   font-weight: lighter;
-  line-height: 28px;
+  line-height: 24px;
   margin-top: 13px;
 }
 .sliderSection  .carousel-caption h1 {
     color: #ABA07C;
-    font-family: GeomanistLight;
-    font-size: 18px;
+    font-family: DomaineDisplay;
+    font-size: 48px;
     font-style: normal;
     margin: 0px;
-    line-height: 1.42857143;
+    line-height: 1.0;
     font-weight: normal;
 }
 .sliderSection .carousel-caption h1 a, .sliderSection .carousel-caption h1 a:hover {
