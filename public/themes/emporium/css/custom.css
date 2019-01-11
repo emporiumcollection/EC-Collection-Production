@@ -84,7 +84,7 @@ input.error {
 #search-result-slider .carousel-inner .item,
 .mobilemenulist .navheadimage .headingoverlay,
 .hotel-card figure {
-    background-color: rgba(37, 37, 37, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .mobilemenulist .navheadimage {
