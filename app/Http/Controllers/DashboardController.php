@@ -19,6 +19,10 @@ class DashboardController extends Controller {
             return Redirect::to($url);
         }*/
         
+        if(\CommonHelper::checkDeactivatedUser()){
+            return Redirect::to('traveller/invoices');   
+        }
+        
         $this->data['container'] = new ContainerController();
         
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
@@ -43,6 +47,9 @@ class DashboardController extends Controller {
                if($this->data['logged_user']->new_user == 1){
                     return Redirect::to('traveller');
                }
+               
+               $this->data['blogs'] = \DB::table('tb_post_articles')->join('tb_news_categories', 'tb_post_articles.cat_id', '=' , 'tb_news_categories.cat_id')->select( 'title_pos_1', 'description_pos_1', 'featured_image', 'external_link')->where('tb_news_categories.cat_slug', 'traveller-dashboard')->where('cat_status', 1)->get(); 
+               
                $this->data['pageslider'] = \DB::table('tb_pages_sliders')->join('tb_pages_content', 'tb_pages_sliders.slider_page_id', '=' , 'tb_pages_content.pageID')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('tb_pages_content.alias', 'traveller-dashboard')->where('slider_status', 1)->get();
             }elseif($gp_id=="hotel-b2b"){
                /*if($this->data['logged_user']->new_user == 1){
