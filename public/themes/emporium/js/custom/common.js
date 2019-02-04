@@ -208,7 +208,56 @@ $(document).ready(function () {
             .appendTo( ul );
         };
     }
+    
+    if($('[data-action="auto-suggestion-booking"]').length) {   
+        $('[data-action="auto-suggestion-booking"]').autocomplete({
+            source: function (request, response) {
+                var datObj = {};
+                datObj.keyword = request.term;
+                var params = $.extend({}, doAjax_params_default);
+                params['url'] = BaseURL + '/destination/auto-suggestion-ajax-booking';
+                params['data'] = datObj;
+                params['dataType'] = 'jsonp';
+                params['successCallbackFunction'] = function (data) {
+                    response(data);
+                };
+                doAjax(params);
+            },
+            minLength: 2,
+            select: function (event, ui) {
+                //log("Selected: " + ui.item.label + " aka " + ui.item.id);
 
+                if(ui.item.type == 'category') {
+                    location.href=BaseURL + '/' + ui.item.id;
+                } else if(ui.item.type == 'restro') {
+                    location.href=BaseURL + '/restaurants/' + ui.item.id;
+                } else if(ui.item.type == 'bar') {
+                    location.href=BaseURL + '/bars/' + ui.item.id;
+                } else if(ui.item.type == 'spa') {
+                    location.href=BaseURL + '/spas/' + ui.item.id;
+                } else {}
+            }
+        })
+        .autocomplete( "instance" )._renderItem = function( ul, item ) {
+            var destIcon = '';
+            if(item.type == 'category') {
+                destIcon = '<i class="iconsheet icon-collections"></i>';
+            } else if(item.type == 'destination') {
+                destIcon = '<i class="iconsheet icon-destinations"></i>';
+            } else if(item.type == 'restro') {
+                destIcon = '<i class="iconsheet icon-restaurant"></i>';
+            } else if(item.type == 'bar') {
+                destIcon = '<i class="iconsheet icon-bar"></i>';
+            } else {
+                destIcon = '<i class="iconsheet icon-spa"></i>';
+            }
+
+            return $('<li>')
+            .append( destIcon + item.label )
+            .appendTo( ul );
+        };
+    }
+    
    /*
    * For Global Search
    */
@@ -439,7 +488,19 @@ $(document).ready(function () {
         $(this).parent().children('.mobilemenulist').slideToggle(400);
         $(this).parent().siblings().children('.mobilemenulist').slideUp(400);
     });
+    
+    /*
+    * For Membership of Left Sidebar
+    */
+    $(document).on('click', '[data-action="select-membership"]', function () {
+        
+        var params = $.extend({}, doAjax_params_default);
+        params['url'] = BaseURL + '/destination/membership';        
+        params['successCallbackFunction'] = renderMembership;
+        doAjax(params);
 
+
+    });
 });
 
 /*function renderResturantSpaBarByTypeCity(dataObj) {
@@ -689,3 +750,27 @@ $(document).on('click', '[data-action="make-reservation"]', function () {
 		window.location.href = BaseURL+'/'+rdpType+'/'+rdpCountry;
 	}
 });
+function renderMembership(dataObj) {
+    if (dataObj.membershiptypes == undefined) {
+        location.href = dataObj.current_menu.url;
+        return false;
+    }
+
+    var data = {};
+    data.main_title = 'Membership';
+    data.sub_title = 'Home';
+    data.id = 0;
+    data.type = 'home';
+    
+    var menuHtml = '';
+    hideAllOption();
+    putDataOnLeft(data);
+    $(dataObj.membershiptypes).each(function (i, val) {
+        menuHtml += '<li><a href="' + BaseURL + '/memberships" data-action="select-membership">' + val.package_title + '</a></li>';
+    });
+
+    $('[data-option="selected-option-list"]').html(menuHtml);
+    $('[data-option="global"]').removeClass('hide');
+    $('[data-option="child-global"]').removeClass('hide');
+    $('[data-option="selected-option-list"]').removeClass('hide');
+}
