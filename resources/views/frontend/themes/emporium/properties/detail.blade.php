@@ -103,7 +103,105 @@
                 </div>
             </div>
         </setion>
-
+        
+        <!-- MEMBERSHIP SECTION -->
+        <setion class="HamYardHotelSection" id="cont_connoiss">
+            <div class="HamYardHotelInner HamYardHotelInnerthird">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="leftPaddingSec">
+                                <h2>CONNOISSEUR OF LUXURY</h2>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="leftPaddingSec">
+                                <p>Whatever your heart desires, we make it happen! Our par excellence, tailored concierge services ensure that the vision of all our customers is realized and they enjoy nothing less than the vacation of their dreams.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="rightPaddingSec">
+                                <p>We make immense pride in our dense network of luxury associates who help make our members experiences exceptional whereever of contracts ensures that our members get the very best life has to offer -no matter where they are in the world.</p>  
+                                <div>
+                                    <div class="colMembershipType">                                        
+                                        <div class="dropdown show">
+                                              <a class="btnMembershipType dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                Our Memberships
+                                              </a>
+                                            
+                                              <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                <a class="dropdown-item" href="#">Lifestyle</a>
+                                                <a class="dropdown-item" href="#">Bespoke</a>
+                                                <a class="dropdown-item" href="#">Dedicated</a>
+                                              </div>
+                                        </div>
+                                    </div>
+                                    <!--<div class="colMembershipType">
+                                        <a class="btnMembershipTypeJoin" href="#roomsSuit">Join The Club</a>
+                                    </div> -->   
+                                </div>                         
+                            </div>
+                        </div>
+                    </div>
+                </div>                
+            </div>
+        </setion>
+        
+        
+        <div class="row member-type-pad" id="cont_packages" style="display: none;">
+            @if(!empty($packages))                        
+            {{--*/ $k=1; /*--}} 
+			<div id="mem-accordion" class="panel-group">
+                @foreach($packages as $key=>$package)
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h4 class="panel-title">
+                            <a class="click0" data-toggle="collapse" data-parent="#mem-accordion" href="#collapse_{{$k}}">{{$package->package_title}}</a>
+                        </h4>
+                    </div>
+                    <div id="collapse_{{$k}}" class="panel-collapse collapse <?php echo ($k==1) ? 'in' : '' ?>">
+                        <div class="panel-body magin-top-30">
+                            <div class="row">
+								<div class="col-sm-6 col-md-6 col-lg-6 pull-left">
+                                @if($package->package_image!='')
+                                    <img class="img-responsive object-fit-size" src="{{URL::to('uploads/packages/'.$package->package_image)}}" alt="{{$package->package_image}}" style="width: 100%;" >
+                                @endif
+                                </div>
+                                <div  class="col-sm-6 col-md-6 col-lg-6 pull-right">
+                                    <div class="row">
+                                        <div  class="col-sm-12 col-md-12 col-lg-12 border-2px">
+                                            <p>{!! nl2br($package->package_description) !!}</p>
+                                            <div class="row">
+                                                <div class="col-sm-12 col-md-12 col-lg-12 top-margin-20">
+                                                  
+                                                    <h6>{!! isset($currency->content)?$currency->content:'&euro;' !!} {{ number_format($package->package_price,2) }} </h6>                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>                
+                                    <div class="row" style="margin-top: 10px;">
+                                                                                                                             
+                                        <div class="col-lg-12 m--align-right">
+                                            <div>                                                                        
+                                                <a class="btnMembershipTypeJoin" href="javascript:void(0);">Join The Club</a>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>   
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {{--*/ $k++;  /*--}}
+                @endforeach				
+            </div>
+            @endif
+        </div>
+               
+        
         @if (array_key_exists('typedata', $propertyDetail))
             <!-- hotel slider 1 -->
             @foreach($propertyDetail['typedata'] as $type)
@@ -155,10 +253,12 @@
                                         <p>{{(strlen($type->room_desc) > 100) ? substr($type->room_desc,0,100).'...':$type->room_desc}}</p>
                                         <button class="btn btn-default moreButtonPopup" type="button" rel="{{$type->id}}">More</button>
                                         <button class="btn btn-default" type="button" onclick="choose_room_type('{{$type->id}}');">Book Now</button>
+                                        
                                         @if($type->price!='')
                                             <button class="btn btn-default"
                                                     type="button"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}} </button>
                                         @endif
+                                        
                                         <div class="sliderArrow">
                                             <a href="javascript:void(0);" class="prevClick"><i
                                                         class="fa fa-angle-left"></i></a>
@@ -334,9 +434,11 @@
                         <div class="row">
                             <div class="col-xs-12">
                                 <div class="hotelPopupHeadings">
-                                    <h2>Emporium Voyage is your ideal, vogue vacation planner!</h2>
-                                    <p>With over 300 posh properties, elite spas and exquisite yachts huddled in its
-                                        cocoon, Emporium Voyage ensure the ultimate luxury experience</p>
+                                    <!--<h2>Emporium Voyage is your ideal, vogue vacation planner!</h2>-->
+                                    <h2>Connoisseurs of Luxury Lifestyle</h2>
+                                    <p class="planner-text">Emporium Collection provides a bespoke service that offers an extensive collection of some of the most exquisite and exclusive suites & experiences around the world.</p>
+                                    <!--<p>With over 300 posh properties, elite spas and exquisite yachts huddled in its
+                                        cocoon, Emporium Voyage ensure the ultimate luxury experience</p> -->
                                 </div>
                             </div>
                         </div>
@@ -414,12 +516,16 @@
                                     <li>
                                         <a href="javascript:void(0);">
                                             <span>Join the worlds leading luxury club</span>
+                                        </a>
+                                        <a href="javascript:void(0);" class="enjoy_exclusive_member">
                                             <h6>Enjoy exclusive members only benefits</h6>
                                         </a>
                                     </li>
                                     <li>
                                         <a href="javascript:void(0);">
                                             <span>View or Modify Reserveration</span>
+                                        </a>
+                                        <a href="javascript:void(0);" class="login_hotel_pms">
                                             <h6>Login to Hotel PMS</h6>
                                         </a>
                                     </li>
@@ -559,6 +665,22 @@
 		  </div>
 		</div>
 	</div>
+    <!-- Show Login Popup -->
+	<div class="showLoginPopup fullWidthPopup">
+	  <a href="javascript:void(0);" class="loginPopupCloseButton">×</a>
+		<div class="container-fluid">
+		  <div class="row">
+			  <div class="col-sm-4 col-md-6">
+				  
+			  </div>
+			  <div class="col-md-6 col-sm-8 col-xs-12 noPadding">
+				<div class="showLoginContent">
+				    Please Login to book  
+				</div>
+			  </div>
+		  </div>
+		</div>
+	</div>
 @endsection
 
 
@@ -591,6 +713,9 @@
     @if(!empty($propertyDetail))
         @if( array_key_exists('propimage', $propertyDetail))
             <style>
+                .magin-top-30{
+                    margin-top: 30px;
+                }
                 .HamYardHotelInnerfirst {
                     background-image: url('{{ $propertyDetail['propimage_thumbpath'].$propertyDetail['propimage'][1]->file_name}}');
                 }
@@ -598,7 +723,12 @@
 				.HamYardHotelInnersecond {
                     background-image: url('{{ $propertyDetail['propimage_thumbpath'].$propertyDetail['propimage'][2]->file_name}}');
                 }
-				
+                
+				.HamYardHotelInnerthird {
+                    background-image: url('{{URL::to("images/connoiser-bg.jpg")}}');
+                    padding-top: 100px !important;
+                }
+                
 				.HamYardHotelInnerfooter {
                     background-image: url('{{ $propertyDetail['propimage_thumbpath'].$propertyDetail['propimage'][3]->file_name}}') !important;
                 }
@@ -617,6 +747,113 @@
                     margin-top: 16px;
                     margin-bottom: 40px;
                 }
+                .hotelBorderList .t-dates{
+                    background-color: transparent !important;
+                }
+                .hotelBorderList .t-datepicker-day{
+                    color: #000 !important;
+                }
+                .hotelBorderList .t-arrow-top{
+                    top: 65px;
+                }
+                .dropdown-menu{
+                    left: 17px;
+                    top: -27px;
+                    min-width: 143px !important;                    
+                    background-color: #000;
+                    border: 1px solid #fff;   
+                }
+                .dropdown-item {
+                    display: block;
+                    width: 100%;
+                    padding: .25rem 1.5rem;
+                    clear: both;
+                    font-weight: 400;
+                    color: #fff;
+                    text-align: inherit;
+                    white-space: nowrap;
+                    background-color: transparent;
+                    border: 0;
+                }
+                .btnMembershipType::after {
+                    display: inline-block;
+                    width: 0;
+                    height: 0;
+                    margin-left: .255em;
+                    vertical-align: .255em;
+                    content: "";
+                    border-top: 0;
+                    border-right: .3em solid transparent;
+                    border-bottom: .3em solid;
+                    border-left: .3em solid transparent;
+                }
+                .dropdown-item:hover, .dropdown-item:focus{
+                    color: #fff;
+                }
+                <!-- Start Modal popup -->
+                #showMemberLoginPopup .modal-dialog{
+                    width: 700px !important;
+                }
+                #showMemberLoginPopup .modal-header{
+                    border: 0px;        
+                    padding:0px !important;
+                }
+                #showMemberLoginPopup .modal-content{
+                    background: #252525 !important;        
+                    min-height: 300px;
+                }
+                #showMemberLoginPopup .modal-content .popup-title{
+                    color: #fff !important;
+                    padding: 0px;
+                    margin-top: 0px;
+                    font-family: DomaineDisplay;
+                }
+                #showMemberLoginPopup .modal-content p{
+                    color: #fff !important;        
+                }
+                #showMemberLoginPopup .modal-content h6{
+                    color: #fff !important;        
+                }
+                #showMemberLoginPopup .btnMembershipTypeJoin{
+                    margin-top: 25px;
+                    float: none;
+                    width: 90%;
+                    /*margin: 0px auto;*/
+                    text-align: center;
+                    display: block;
+                    cursor: pointer;
+                }
+                .btnMembershipTypeBack {
+                    border: 1px solid #fff;
+                    border-radius: 0px;
+                    color: #fff;
+                    font-size: 12px;
+                    padding: 12px 20px;
+                    text-transform: uppercase;
+                    /*margin-left: 10px;*/
+                    float: left;
+                    text-decoration: none;
+                    /*margin-top: 93px;*/
+                    margin-top: 25px;
+                    cursor: pointer;
+                }
+                .btnMembershipTypeBack:hover, .btnMembershipTypeBack:focus {
+                    color:#fff;
+                }
+                .modal-backdrop{background-color:#252525 !important}
+                .modal-backdrop.fade{filter:alpha(opacity=0);opacity:0}
+                .modal-backdrop.in{filter:alpha(opacity=95);opacity:.95}
+                
+                @media (max-width:1199px){
+                    #showMemberLoginPopup .modal-dialog{
+                        width:auto !important;
+                    }
+                    .btnMembershipTypeBack{
+                        width: 100%;
+                        text-align: center;
+                    }
+                }
+                <!-- End Modal popup -->
             </style>
         @endif
     @endif
@@ -643,12 +880,34 @@
         ?>
         $(document).ready(function () {
             
+            $(".btnMembershipType").click(function(e){
+                e.preventDefault();
+                $("#cont_connoiss").css('display', 'none')
+                $("#cont_packages").css('display', '');        
+            });
+            
+            $(".btnMembershipTypeJoin").click(function(e){
+                e.preventDefault();
+                $(".clicktologin").trigger("click");
+                $(".signInPopupButton").trigger('click');
+            });
+            
+            $(".login_hotel_pms").click(function(){
+                $(".clicktologin").trigger("click");
+            });
+            $(".enjoy_exclusive_member").click(function(){
+                var left  = ($(window).width()/2)-(500/2);
+                var top   = ($(window).height()/2)-(450/2);
+                newwindow=window.open("https://emporium-lifestyle.com",'name','height=500,width=450,top=100, left='+left+'');
+                if (window.focus) {newwindow.focus()}
+                return false;
+            });
             
             var chk_date = new Date(); 
             
             var chk_out_date = new Date();
             
-            console.log(chk_date);
+            
             
             $('#t-middel-picker').tDatePicker({
                 'numCalendar':'2',
@@ -722,16 +981,20 @@
 			imagesPro += '<h1>' + data.typedata.category_name + '</h1>';
 			imagesPro += '<p>' + data.amenities.amenities_eng.replace(/\n/g, "<br />") + '</p>';
 			imagesPro += '<p>' + data.typedata.room_desc + '</p>';
-			imagesPro += '<div class="shoMoreButtonSection">';
-			if (data.typedata.price != '')
-			{
-				imagesPro += '<h2>';
-				imagesPro += (data.currency.content != '') ? data.currency.content : '$';
-				imagesPro += (logined) ? 'Login to view' : data.typedata.price;
-				imagesPro += '</h2>';
-			}
-			imagesPro += '<a href="javascript:void(0);" onclick="choose_room_type(' + data.typedata.id + ');" class="button">Book</a>';
-			imagesPro += '</div>';
+            
+            
+    			imagesPro += '<div class="shoMoreButtonSection">';
+    			if (data.typedata.price != '')
+    			{
+    				imagesPro += '<h2>';
+    				imagesPro += (data.currency.content != '') ? data.currency.content : '$';
+    				imagesPro += (logined) ? 'Login to view' : data.typedata.price;
+    				imagesPro += '</h2>';
+    			}
+    			imagesPro += '<a href="javascript:void(0);" onclick="choose_room_type(' + data.typedata.id + ');" class="button">Book</a>';
+    			imagesPro += '</div>';
+            
+            
 			$('.showMoreContent').html(imagesPro);
 			$('.showMorePopup').addClass('openPopup');
 		}
@@ -739,7 +1002,9 @@
 		function choose_room_type(type)
 		{
             if(logined){
-                $("#showLoginPopup").modal();
+                show_modal_content('lifestyle-collection');
+                $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
+                //$("#showLoginPopup").modal();
             }else{
     			$('#roomType').val('');
     			if (type != '' && type > 0)
@@ -749,7 +1014,54 @@
     			}
             }
 		}
-
+        
+        function show_modal_content(memtype){
+            $.ajax({
+                url:'{{URL::to("membershiptype/popup")}}',
+                type: "POST",
+                data: {memtype:memtype},
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    var popupHtml = '';
+                    if (data.status == 'success') {
+                        var obj = data.mem_package;
+                        popupHtml += '<div class="row">';
+                        
+                            popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6">';
+                                popupHtml += '<img class="img-responsive object-fit-size" src="{{URL::to("uploads/category_imgs")}}/'+obj.category_image+'" style="width: 100%;">';
+                            popupHtml += '</div>';
+                            popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6">';
+                                popupHtml += '<h2 class="popup-title">'+obj.category_name+'</h2>';
+                                popupHtml += '<p>'+(obj.category_description).replace(/\n/g,"<br>")+'</p>';
+                                //popupHtml += '<h6>{!! isset($currency->content)?$currency->content:"&euro;" !!}'+obj.package_price+'</h6>';
+                                
+                                str_mem = '';
+                                if(memtype=="dedicated-collection"){
+                                    str_mem = 'Dedicated';
+                                    str_mem2 = 'dedicated';
+                                }else if(memtype=="bespoke-collection"){
+                                    str_mem = 'Bespoke';
+                                    str_mem2 = 'bespoke';
+                                }else if(memtype=="lifestyle-collection"){
+                                    str_mem = 'Lifestyle';
+                                    str_mem2 = 'lifestyle';
+                                }
+                                popupHtml += '<a class="btnMembershipTypeJoin" href="{{URL::to("memberships")}}?type='+str_mem2+'">View Membership Benefits</a>';
+                                popupHtml += '<a class="btnMembershipTypeJoin" id="loginasa">Login as a '+str_mem+' Member</a>';
+                                
+                            popupHtml += '</div>';
+                            popupHtml += '<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">';
+                                popupHtml += '<a class="btnMembershipTypeBack" onclick="window.history.back();">Back</a>';
+                            popupHtml += '</div>';
+                            //popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6  col-xs-12">';
+                                
+                            //popupHtml += '</div>';
+                        popupHtml += '</div>';
+                    }
+                    $(".mem-modal-popup").html(popupHtml);
+                }
+            });
+        }
 	</script>
 @endsection
 

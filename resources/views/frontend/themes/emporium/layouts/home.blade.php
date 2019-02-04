@@ -67,17 +67,22 @@
         <link href="{{ asset('themes/emporium/daterangepicker/css/themes/t-datepicker-bluegrey.css') }}" rel="stylesheet" type="text/css" />
     @show
 <!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-123599618-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110391807-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
 
-  gtag('config', 'UA-123599618-1');
+  gtag('config', 'UA-110391807-1');
 </script>
 
+{{--*/
+$isfLoginned = (bool) \auth()->check();
+if((isset($isfPublic)) && ($isfLoginned === false)){ $isfLoginned = (bool) $isfPublic; }
+/*--}}
+
 @if(!empty($pageTitle))
-<body class='{{str_replace(" ","_","$pageTitle")}} @if(auth()->check()) {{'user_logged_in'}} @endif '>
+<body class='{{str_replace(" ","_","$pageTitle")}} @if($isfLoginned) {{'user_logged_in'}} @endif '>
 @else
 <body>
  @endif
@@ -127,6 +132,7 @@
 @if(!auth()->check())
     @include('frontend.themes.emporium.layouts.sections.login')
 @endif
+
 <!-- Modal -->
 <div id="showLoginPopup" class="modal fade" role="dialog">
   <div class="modal-dialog">
@@ -143,6 +149,25 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
       </div>
+    </div>
+    <!-- End Modal content-->
+    
+  </div>
+</div>
+<!-- End Modal -->
+<!-- Modal -->
+<div id="showMemberLoginPopup" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <!--<button type="button" class="close" data-dismiss="modal">&times;</button>-->
+        <h4 class="modal-title"></h4>
+      </div>
+      <div class="modal-body mem-modal-popup">
+        
+      </div>      
     </div>
     <!-- End Modal content-->
     
@@ -186,18 +211,137 @@
 
 
     <script type="text/javascript">
+        function checkMembership(param){
+            var memtype = param;
+            user_referral = '';
+            if(memtype=="bespoke-membership"){
+                $("input[name='email']").parent('.form-group').removeClass('mg-top');
+                user_referral = '<div class="form-group mg-top" id="dv_referral"> <input class="form-control" name="referral_code" type="text" placeholder="Enter Referral Code"> </div>';
+                $(user_referral).insertAfter(".user_ref");    
+            }else{
+                $("#dv_referral").remove();
+                $("input[name='email']").parent('.form-group').addClass('mg-top');
+            }
+            
+        }
         $(document).ready(function () {
             
             var list = $('ul.options li');
             $(list).click(function(){
+                
                 var list_val = $(this).attr('rel');
                 var user_ref = '';
                 if(list_val.length > 0 && list_val == '3'){
-                    user_ref = '<div class="form-group"> <input class="form-control" name="referral_code" type="text" placeholder="Enter Referral Code"> </div>';
-                }
-                $('.user_ref').html(user_ref);
-            });
                     
+                    //$("input[name='email']").parent('.form-group').removeClass('mg-top');
+                    
+                    $.ajax({
+                        url: "{{URL::to('membershiptypes')}}",
+                        type: "GET",
+                        dataType: "json",                        
+                        success: function (data, textStatus, jqXHR) {
+                            if (data.status == 'success') {
+                                user_ref = '<div class="reltv" id="dv-member-type"><select name="member_type" class="member-type mg-top" id="sel-member-type" style="margin-top:20px;">';
+                                var obj = data.objmember;
+                                $("#sel-member-type").empty();                                
+                                $.each(obj, function(key, value){
+                                    //console.log('key:'+key+':value:'+value.id); 
+                                    var ttl = (value.package_title).trim();
+                                    ttl = ttl.replace(' ', '-');
+                                    ttl = ttl.toLowerCase();
+                                    user_ref += "<option value='"+ttl+"'>"+value.package_title+"</option>";
+                                });
+                                user_ref += '</select></div>'; //console.log(user_ref);
+                                $('.user_ref').css('margin-top', '20px');
+                                $('.user_ref').html(user_ref);
+                                
+                                $('.member-type').each(function () {
+
+                                    // Cache the number of options
+                                    var $this = $(this),
+                                        numberOfOptions = $(this).children('option').length;
+                                
+                                    // Hides the select element
+                                    $this.addClass('s-hidden');
+                                
+                                    // Wrap the select element in a div
+                                    $this.wrap('<div class="newselect"></div>');
+                                
+                                    // Insert a styled div to sit over the top of the hidden select element
+                                    $this.after('<div class="styledSelect"></div>');
+                                
+                                    // Cache the styled div
+                                    var $styledSelect = $this.next('div.styledSelect');
+                                
+                                    // Show the first select option in the styled div
+                                    $styledSelect.text($this.children('option').eq(0).text());
+                                
+                                    // Insert an unordered list after the styled div and also cache the list
+                                    var $list = $('<ul />', {
+                                        'class': 'options newoptions'
+                                    }).insertAfter($styledSelect);
+                                
+                                    // Insert a list item into the unordered list for each select option
+                                    for (var i = 0; i < numberOfOptions; i++) {
+                                        $('<li />', {
+                                            text: $this.children('option').eq(i).text(),
+                                            rel: $this.children('option').eq(i).val()
+                                        }).appendTo($list);
+                                    }
+                                
+                                    // Cache the list items
+                                    var $listItems = $list.children('li');
+                                
+                                    // Show the unordered list when the styled div is clicked (also hides it if the div is clicked again)
+                                    $styledSelect.click(function (e) {
+                                        e.stopPropagation();
+                                        $('div.styledSelect.active').each(function () {
+                                            $(this).removeClass('active').next('ul.options').hide();
+                                        });
+                                        $(this).toggleClass('active').next('ul.options').toggle();
+                                    });
+                                
+                                    // Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
+                                    // Updates the select element to have the value of the equivalent option
+                                    $listItems.click(function (e) {
+                                        e.stopPropagation();
+                                        $styledSelect.text($(this).text()).removeClass('active');
+                                        $this.val($(this).attr('rel'));
+                                        $list.hide();
+                                        
+                                        checkMembership($this.val());
+                                        
+                                        / alert($this.val()); Uncomment this for demonstration! /
+                                    });
+                                
+                                    // Hides the unordered list when clicking outside of it
+                                    $(document).click(function () {
+                                        $styledSelect.removeClass('active');
+                                        $list.hide();
+                                    });
+                                });
+                            }
+                            else {
+                                
+                            }
+                        }
+                    });
+                    
+                    //user_ref += '<div class="form-group"> <input class="form-control" name="referral_code" type="text" placeholder="Enter Referral Code"> </div>';
+                    //user_ref += '<div class="form-group"><div class="no-referral"><div class="no-referral-input"><input type="checkbox" id="no_referal_code" name="no_referal_code" ></div><div class="no-referral-label">I have no referral code. Please send me invitation</div></div></div>';
+                    
+                }else{
+                    $("#dv-member-type").remove();
+                    $("#dv_referral").remove();
+                    $("input[name='email']").parent('.form-group').addClass('mg-top');
+                    $('.user_ref').css('margin-top', '0px');
+                }
+                //console.log(user_ref);
+                //$('.user_ref').html(user_ref);
+                
+                
+            });
+                                    
             $('#t-topbar-picker').tDatePicker({
                 'numCalendar':'2',
                 'autoClose':true,
@@ -322,61 +466,98 @@
             /*
             * Register BUTTON  Click Start Action Here
             */
-
+            
             $("#customerRegisterarioForm").submit(function (event) {
-
                 
-                var tobje = $("#txtmobileNumber").closest('.form-group').find('#error-msg');
-                //if(((typeof tobje.html()) != 'undefined') && ((typeof tobje.html()) != undefined)){tobje.html('Invalid number');}
-                var countryData = $("#txtmobileNumber").intlTelInput("getSelectedCountryData");
-
-                var error = $("#txtmobileNumber").intlTelInput("getValidationError");
-                var isValid = $("#txtmobileNumber").intlTelInput("isValidNumber");
-
-                if (isValid) {
-                    $("#txtmobileDialcode").val(countryData.dialCode);
-                } else {
-                    if(((typeof tobje.html()) != 'undefined') && ((typeof tobje.html()) != undefined) && ($("#txtmobileNumber").val().length <= 0)){
-                        //tobje.html('This field is required.');
-                        tobje.removeClass('hide');
+                if($("#no_referal_code").is(':checked')){                    
+                    var email = $("#customerRegisterarioForm input[name='email']").val();
+                    if(email==''){
+                        $("#email-error-msg").removeClass('hide');
+                        $("#customerRegisterarioForm input[name='email']").addClass('email-error');
+                        return false
                     }
-                    $("#txtmobileNumber").addClass('error');
-                    return false
+                    event.preventDefault();
+    
+                    $(".ai-sign-up-form-success-msg").html('');
+                    $(".ai-sign-up-form-error-msg").html('');
+                    $(".ai-login-form-success-msg").html('');
+    
+                    var formData = $(this).serialize();
+    
+                    $.ajax({
+                        url: "{{URL::to('customer_request_referral')}}",
+                        type: "POST",
+                        dataType: "json",
+                        data: formData,
+                        success: function (data, textStatus, jqXHR) {
+    
+    
+                            if (data.status == 'success') {
+                                $(".ai-sign-up-form-error-msg").html(data.message);                                
+                            }
+                            else {
+                                var message = data.message;
+                                for (var i = 0; i < data.errors.length; i++) {
+                                    message += '<br>' + data.errors[i];
+                                }
+                                $(".ai-sign-up-form-error-msg").html(message);
+                            }
+                        }
+                    });
+                }else{
+                
+                    var tobje = $("#txtmobileNumber").closest('.form-group').find('#error-msg');
+                    //if(((typeof tobje.html()) != 'undefined') && ((typeof tobje.html()) != undefined)){tobje.html('Invalid number');}
+                    var countryData = $("#txtmobileNumber").intlTelInput("getSelectedCountryData");
+    
+                    var error = $("#txtmobileNumber").intlTelInput("getValidationError");
+                    var isValid = $("#txtmobileNumber").intlTelInput("isValidNumber");
+    
+                    if (isValid) {
+                        $("#txtmobileDialcode").val(countryData.dialCode);
+                    } else {
+                        if(((typeof tobje.html()) != 'undefined') && ((typeof tobje.html()) != undefined) && ($("#txtmobileNumber").val().length <= 0)){
+                            //tobje.html('This field is required.');
+                            tobje.removeClass('hide');
+                        }
+                        $("#txtmobileNumber").addClass('error');
+                        return false
+                    }
+                    event.preventDefault();
+    
+                    $(".ai-sign-up-form-success-msg").html('');
+                    $(".ai-sign-up-form-error-msg").html('');
+                    $(".ai-login-form-success-msg").html('');
+    
+                    var formData = $(this).serialize();
+    
+                    $.ajax({
+                        url: "{{URL::to('customer_ajaxPostCreate')}}",
+                        type: "POST",
+                        dataType: "json",
+                        data: formData,
+                        success: function (data, textStatus, jqXHR) {
+    
+    
+                            if (data.status == 'success') {
+                                $(".ai-sign-up-form-success-msg").html(data.message);
+                                //window.location.href = "{{URL::to('whoiam')}}";
+                                if(data.gid==3){
+                                    window.location.href = "{{URL::to('traveller')}}";
+                                }else{
+                                    window.location.href = "{{URL::to('dashboard')}}";
+                                }
+                            }
+                            else {
+                                var message = data.message;
+                                for (var i = 0; i < data.errors.length; i++) {
+                                    message += '<br>' + data.errors[i];
+                                }
+                                $(".ai-sign-up-form-error-msg").html(message);
+                            }
+                        }
+                    });
                 }
-                event.preventDefault();
-
-                $(".ai-sign-up-form-success-msg").html('');
-                $(".ai-sign-up-form-error-msg").html('');
-                $(".ai-login-form-success-msg").html('');
-
-                var formData = $(this).serialize();
-
-                $.ajax({
-                    url: "{{URL::to('customer_ajaxPostCreate')}}",
-                    type: "POST",
-                    dataType: "json",
-                    data: formData,
-                    success: function (data, textStatus, jqXHR) {
-
-
-                        if (data.status == 'success') {
-                            $(".ai-sign-up-form-success-msg").html(data.message);
-                            //window.location.href = "{{URL::to('whoiam')}}";
-                            if(data.gid==3){
-                                window.location.href = "{{URL::to('traveller')}}";
-                            }else{
-                                window.location.href = "{{URL::to('dashboard')}}";
-                            }
-                        }
-                        else {
-                            var message = data.message;
-                            for (var i = 0; i < data.errors.length; i++) {
-                                message += '<br>' + data.errors[i];
-                            }
-                            $(".ai-sign-up-form-error-msg").html(message);
-                        }
-                    }
-                });
             });
 
 
@@ -421,6 +602,7 @@
         // on keyup / change flag: reset
         telInput.on("keyup change", reset);
 
+        
 
     </script>
 

@@ -35,11 +35,44 @@
                 <li><a class="cursor" data-action="search-by-date">Search availability</a></li>
                 <li><a class="cursor" data-action="select-destination" data-id="0">Search by destination</a></li>
                 <li><a class="cursor" data-action="select-experience">Search by Experience</a></li>
+                <li><a class="cursor" data-action="select-destination-youtube">Search Destination Channel</a></li>
                 <!--li><a href="javascript:void(0)" >PERSONALIZED SERVICE</a></li-->
                 <li><a class="cursor" data-action="select-menu" data-position="business" data-id="0">Company & Info</a></li>
+                <!--<li><a class="cursor" data-action="select-membership" >Membership</a></li>-->
+                <li><a class="cursor" href="{{URL::to('memberships')}}">Membership</a></li>
             </ul>
             <ul class="mobilemenulist hide" data-option="search-our-collection">
-				{{--*/ $colection_menus = SiteHelpers::menus('top') /*--}}
+            <?php 
+                $m_collection = \DB::table('tb_categories')->where('category_alias', 'our-collection')->where('category_approved', 1)->where('category_published', 1)->first();                
+                if(!empty($m_collection)){
+                $cat_collection = \DB::table('tb_categories')->where('parent_category_id', $m_collection->id)->where('category_approved', 1)->where('category_published', 1)->get();                
+                    if(count($cat_collection)>0){
+                        $str_title = '';
+            ?>
+                        @foreach ($cat_collection as $si)
+                            <li>
+        						<div class="navheadimage">
+                                    <?php 
+                                        //$str_title = strtolower($si->package_title); 
+                                        //$str_title = str_replace(' ', '-', $str_title);
+                                        $str_title = $si->category_alias;
+                                    ?>
+        							<a href="{{URL::to('luxurytravel/Hotel')}}/{{$str_title}}">
+        								<img src="{{URL::to('uploads/category_imgs/'.$si->category_image)}}" alt=""/>			
+        								<div class="headingoverlay">
+        									<span class="destinationTitle">
+        										{{$si->category_name}}
+        									</span>
+        								</div>
+        							</a>
+        						</div>
+        					</li>
+                        @endforeach
+            <?php
+                    }        
+                }
+            ?>
+			<?php /* 	{{--*/ $colection_menus = SiteHelpers::menus('top') /*--}}
 				@if(!empty($colection_menus))
 					@foreach ($colection_menus as $cmenu)
 						<li>
@@ -63,7 +96,7 @@
 							</div>
 						</li>
 					@endforeach
-				@endif
+				@endif  */ ?>
             </ul>
             <ul class="mobilemenulist hide" data-option="selected-option-list">
             </ul>

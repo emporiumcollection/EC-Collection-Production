@@ -23,8 +23,8 @@
                  <div class="carousel-inner wrapper">
                     @foreach($slider as $key => $slider_row)
                       <div class="card item {{($key == 0)? 'active' : ''}}" data-tilt>
-          <div class="image-overaly-bg"></div>
-          <div class="image-overaly-bg bg-dark"></div>
+          <a href="{{$slider_row->slider_link}}"><div class="image-overaly-bg"></div></a>
+          <a href="{{$slider_row->slider_link}}"><div class="image-overaly-bg bg-dark"></div></a>
                          <a href="{{$slider_row->slider_link}}">
                            <img src="{{url('uploads/slider_images/'.$slider_row->slider_img)}}"> alt=""/>
                          </a>
@@ -68,6 +68,7 @@
 </div></a> 
 
 @if(!auth()->check())
+
 <div class="log_in-btn c-slideshow__control__bottom u-cursor-pointer u-absolute u-pos-bl u-marg-b-vh1of12 u-marg-l-w5of12 u-vacuum u-marg-l-0@sm u-align-center@sm u-w3of12@sm hide-frst"><div class="c-slideshow__control__bottom__border u-absolute u-pos-tl u-w1of2 u-fit-h u-hide@sm "><div class="c-slideshow__control__bottom__border__bar u-absolute u-pos-tl u-fit-w u-bg--white"></div> <div class="c-slideshow__control__bottom__border__bar u-absolute u-pos-bl u-fit-w u-bg--white"></div> <div class="c-slideshow__control__bottom__border__bar u-absolute u-pos-tl u-fit-h u-bg--white"></div></div> <div class="c-slideshow__control__bottom__border u-absolute u-pos-tr u-w1of2 u-fit-h u-hide@sm"><div class="c-slideshow__control__bottom__border__bar u-absolute u-pos-tl u-fit-w u-bg--white"></div> <div class="c-slideshow__control__bottom__border__bar u-absolute u-pos-bl u-fit-w u-bg--white"></div> <div class="c-slideshow__control__bottom__border__bar u-absolute u-pos-tr u-fit-h u-bg--white"></div></div> <span class="c-slideshow__control__bottom__label t-text--xs t-text--ls-md t-text--black u-relative u-inline-block u-valign-middle u-marg-r-md u-uppercase u-force-3d u-marg-r-0@sm u-marg-b-xs@sm">Join the Club</span> <div class="c-slideshow__control__bottom__container u-absolute u-pos-r u-pos-y-center u-marg-r-md u-inline-block u-valign-middle u-force-3d u-overflow-h u-relative@sm u-block@sm u-marg-x-auto@sm"><div class="c-slideshow__control__bottom__arrow u-absolute"><div class="c-slideshow__control__bottom__line u-bg--white"></div>
 
 <img src="{{ asset('themes/emporium/images/arrow-y-top-end.svg')}}" alt="" class="c-slideshow__control__bottom__arrow__icon t-icon--arrow-y" />
@@ -77,6 +78,7 @@
 <img src="{{ asset('themes/emporium/images/arrow-y-top-end.svg')}}" alt="" class="c-slideshow__control__bottom__icon t-icon--arrow-y u-absolute u-pos-bl" />
 
 </div></div> 
+
 @endif
 
 <a href="#myCarousel" data-slide="next" class="c-slideshow__control c-slideshow__control--right t-link u-absolute u-vacuum u-pos-br u-pad-t-sm u-pad-b-xs u-marg-r-w1of13 u-marg-b-vh1of12 u-align-right"><div><div class="c-slideshow__control__line--before u-bg--white u-inline-block u-valign-middle u-hide@sm"></div> <span class="c-slideshow__control__label t-text--xs t-text--ls-md t-text--black u-relative u-inline-block u-valign-middle u-marg-r-lg u-uppercase u-marg-r-md@md u-block@sm u-align-right@sm u-marg-b-xs@sm u-marg-r-0@sm"><span class="c-slideshow__control__label__word u-absolute u-pos-tr u-force-inline u-inline-block u-inline-block nxt-pg">Next</span>

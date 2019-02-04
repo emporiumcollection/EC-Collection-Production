@@ -80,7 +80,7 @@
 @if(count($editorPropertiesArr)>0)
   <div class="col-md-12 col-sm-12 col-xs-12">
     <div class="row">
-    		<h4 class="gridheading">{{ count($editorPropertiesArr) }} <span class="newfont"> Editor's choice</span> Hotels Found for {{ $slug }}  {{$dateslug}}</h4>
+    		<h4 class="gridheading">{{ count($editorPropertiesArr) }} <span class="newfont"> Editor's choice</span> Hotels Found for {{ $slug_type }}  {{$dateslug}}</h4>
     <div class="slider multiple-items">
 
 
@@ -128,7 +128,7 @@
 
 
 @if(!empty($featurePropertiesArr))
-		<h4 class="gridheading"> {{ count($featurePropertiesArr) }}<span class="newfont"> Featured </span> Hotels Found for {{ $slug }}  {{$dateslug}}</h4>
+		<h4 class="gridheading"> {{ count($featurePropertiesArr) }}<span class="newfont"> Featured </span> Hotels Found for {{ $slug_type }}  {{$dateslug}}</h4>
 			<div class="grid">
 
         {{ $frw = 1 }}
@@ -204,7 +204,7 @@
 
       <div class="clearfix"></div>
       	@if($propertiesArr)
-  	<h4 class="gridheading">{{$total_record}} 	<span class="newfont"> Luxury Hotel(s)</span> Found for {{$slug}} {{$dateslug}}</h4>
+  	<h4 class="gridheading">{{$total_record}} 	<span class="newfont"> Luxury Hotel(s)</span> Found for {{$slug_type}} {{$dateslug}}</h4>
 	@endif
     <div class="grid">
     
@@ -380,6 +380,8 @@
     @include('frontend.themes.emporium.layouts.sections.grid_sidebar')
 @endsection
 
+
+
 {{-- For Include style files --}}
 @section('head')
     @parent
@@ -393,7 +395,71 @@
 {{-- For custom style  --}}
 @section('custom_css')
     @parent
+    <style>
+    #showMemberLoginPopup .modal-dialog{
+        width: 700px !important;
+    }
+    #showMemberLoginPopup .modal-header{
+        border: 0px;        
+        padding:0px !important;
+    }
+    #showMemberLoginPopup .modal-content{
+        background: #252525 !important;        
+        min-height: 300px;
+    }
+    #showMemberLoginPopup .modal-content .popup-title{
+        color: #fff !important;
+        padding: 0px;
+        margin-top: 0px;
+        font-family: DomaineDisplay;
+    }
+    #showMemberLoginPopup .modal-content p{
+        color: #fff !important;        
+    }
+    #showMemberLoginPopup .modal-content h6{
+        color: #fff !important;        
+    }
+    #showMemberLoginPopup .btnMembershipTypeJoin{
+        margin-top: 25px;
+        float: none;
+        width: 90%;
+        /*margin: 0px auto;*/
+        text-align: center;
+        display: block;
+        cursor: pointer;
+    }
+    .btnMembershipTypeBack {
+        border: 1px solid #fff;
+        border-radius: 0px;
+        color: #fff;
+        font-size: 12px;
+        padding: 12px 20px;
+        text-transform: uppercase;
+        /*margin-left: 10px;*/
+        float: left;
+        text-decoration: none;
+        /*margin-top: 93px;*/
+        margin-top: 25px;
+        cursor: pointer;
+    }
+    .btnMembershipTypeBack:hover, .btnMembershipTypeBack:focus {
+        color:#fff;
+    }
+    .modal-backdrop{background-color:#252525 !important}
+    .modal-backdrop.fade{filter:alpha(opacity=0);opacity:0}
+    .modal-backdrop.in{filter:alpha(opacity=95);opacity:.95}
     
+    @media (max-width:1199px){
+        #showMemberLoginPopup .modal-dialog{
+            width:auto !important;
+        }
+        .btnMembershipTypeBack{
+            width: 100%;
+            text-align: center;
+        }
+    }
+    
+    </style>
 @endsection
 
 {{-- For Include javascript files --}}
@@ -466,6 +532,21 @@ $grid.imagesLoaded().progress( function() {
 			@if($dateslug!='')
 				$('[data-action="search-by-date"]').trigger('click');
 			@endif
+            
+            
+            
+            @if(($mtype=="dedicated-membership") or ($mtype=="bespoke-membership")) 
+                <?php if(in_array($ptype, $mpackage)){ ?>
+                <?php }else{ ?>
+                        show_modal_content('{{$ptype}}');
+                        $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
+                <?php } ?>
+            @endif
+            
+            $(document).on('click', '#loginasa', function(e){
+                $(".clicktologin").trigger('click');
+            });
+            
 		});
 		
 		var pageCounter = 2;
@@ -600,7 +681,7 @@ $grid.imagesLoaded().progress( function() {
 					dataGridHtml +='<h5>'+obj.property_name+'</h5>';
 					if(obj.category_name!=undefined && obj.category_name!=""){
 						dataGridHtml +='<p>From € '+obj.price+' '+obj.category_name+'</p>';
-					}else {
+					}else{
 						dataGridHtml +='<p>From € '+obj.price+'</p>';
 					}
 
@@ -617,6 +698,58 @@ $grid.imagesLoaded().progress( function() {
 			});
 			$('[data-option="property-grid-list"]').html(dataGridHtml);
 		}
+        function show_modal_content(memtype){
+            $.ajax({
+                url:'{{URL::to("membershiptype/popup")}}',
+                type: "POST",
+                data: {memtype:memtype},
+                dataType: "json",
+                success: function (data, textStatus, jqXHR) {
+                    var popupHtml = '';
+                    if (data.status == 'success') {
+                        var obj = data.mem_package;
+                        popupHtml += '<div class="row">';
+                        
+                            popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6">';
+                                popupHtml += '<img class="img-responsive object-fit-size" src="{{URL::to("uploads/category_imgs")}}/'+obj.category_image+'" style="width: 100%;">';
+                            popupHtml += '</div>';
+                            popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6">';
+                                popupHtml += '<h2 class="popup-title">'+obj.category_name+'</h2>';
+                                popupHtml += '<p>'+(obj.category_description).replace(/\n/g,"<br>")+'</p>';
+                                //popupHtml += '<h6>{!! isset($currency->content)?$currency->content:"&euro;" !!}'+obj.package_price+'</h6>';
+                                
+                                str_mem = '';
+                                str_mem2 = '';
+                                if(memtype=="dedicated-collection"){
+                                    str_mem = 'Dedicated';
+                                    str_mem2 = 'dedicated';
+                                }else if(memtype=="bespoke-collection"){
+                                    str_mem = 'Bespoke';
+                                    str_mem2 = 'bespoke';
+                                }
+                                popupHtml += '<a class="btnMembershipTypeJoin" href="{{URL::to("memberships")}}?type='+str_mem2+'">View Membership Benefits</a>';
+                                popupHtml += '<a class="btnMembershipTypeJoin" id="loginasa">Login as a '+str_mem+' Member</a>';
+                                
+                            popupHtml += '</div>';
+                            popupHtml += '<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">';
+                                popupHtml += '<a class="btnMembershipTypeBack" href="{{URL::to("luxurytravel/Hotel/lifestyle-collection")}}">Back</a>';
+                            popupHtml += '</div>';
+                            popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6  col-xs-12">';
+                                /*str_mem = '';
+                                if(memtype=="dedicated-membership"){
+                                    str_mem = 'Dedicated';
+                                }else if(memtype=="bespoke-membership"){
+                                    str_mem = 'Bespoke';
+                                }
+                                popupHtml += '<a class="btnMembershipTypeJoin" href="{{URL::to("memberships")}}">View Membership Benefits</a>';
+                                popupHtml += '<a class="btnMembershipTypeJoin" id="loginasa">Login as a '+str_mem+' Member</a>';*/
+                            popupHtml += '</div>';
+                        popupHtml += '</div>';
+                    }
+                    $(".mem-modal-popup").html(popupHtml);
+                }
+            });
+        }
 	</script>
 @endsection
 

@@ -128,6 +128,7 @@
 													</span>
 												</span>
 											</a>
+                                            @if(!\CommonHelper::checkDeactivatedUser())
 											<div class="m-dropdown__wrapper">
 												<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
 												<div class="m-dropdown__inner">
@@ -150,32 +151,54 @@
 																				My Profile
 																			</span>
 																		</a>
+                                                                        <a href="{{ URL::to('user/preferences')}}" class="m-nav-grid__item">
+																			<i class="m-nav-grid__icon flaticon-interface-6"></i>
+																			<span class="m-nav-grid__text">
+																				My Preferences
+																			</span>
+																		</a>
+																		
+																	</div>
+																	<div class="m-nav-grid__row">
 																		<a href="{{ URL::to('user/settings')}}" class="m-nav-grid__item">
 																			<i class="m-nav-grid__icon flaticon-settings-1"></i>
 																			<span class="m-nav-grid__text">
 																				Account Settings
 																			</span>
 																		</a>
-																	</div>
-																	<div class="m-nav-grid__row">
-																		<a href="{{ URL::to('user/invite')}}" class="m-nav-grid__item">
+                                                                        <a href="{{ URL::to('user/invite')}}" class="m-nav-grid__item">
 																			<i class="m-nav-grid__icon flaticon-mail-1"></i>
 																			<span class="m-nav-grid__text">
 																				Guest Invitations
 																			</span>
 																		</a>
+																		
+																	</div>
+                                                                    <div class="m-nav-grid__row">
 																		<a href="#" class="m-nav-grid__item" id="top_menu_communication">
 																			<i class="m-nav-grid__icon flaticon-computer"></i>
 																			<span class="m-nav-grid__text">
 																				Communication
 																			</span>
 																		</a>
-																	</div>
-                                                                    <div class="m-nav-grid__row">
-																		<a href="{{ URL::to('user/companion')}}" class="m-nav-grid__item">
+                                                                        <a href="{{ URL::to('user/companion')}}" class="m-nav-grid__item">
 																			<i class="m-nav-grid__icon flaticon-users"></i>
 																			<span class="m-nav-grid__text">
 																				Companions
+																			</span>
+																		</a>
+																	</div>
+                                                                    <div class="m-nav-grid__row">
+																		<a href="{{URL::to('user/security')}}" class="m-nav-grid__item" id="top_menu_communication">
+																			<i class="m-nav-grid__icon flaticon-lock-1"></i>
+																			<span class="m-nav-grid__text">
+																				Security &amp; Privacy
+																			</span>
+																		</a>
+                                                                        <a href="{{ URL::to('traveller/invoices')}}" class="m-nav-grid__item">
+																			<i class="m-nav-grid__icon flaticon-diagram"></i>
+																			<span class="m-nav-grid__text">
+																				Billings & Contracts
 																			</span>
 																		</a>
 																	</div>
@@ -185,6 +208,7 @@
 													</div>
 												</div>
 											</div>
+                                            @endif
 										</li>
 										<li class="m-nav__item m-topbar__user-profile  m-dropdown m-dropdown--medium m-dropdown--arrow  m-dropdown--align-right m-dropdown--mobile-full-width m-dropdown--skin-light" m-dropdown-toggle="click">
 											<a href="#" onclick="return false;" class="m-nav__link m-dropdown__toggle">
@@ -218,6 +242,7 @@
 															</div>
 														</div>
 													</div>
+                                                    
 													<div class="m-dropdown__body">
 														<div class="m-dropdown__content">
 															<ul class="m-nav m-nav--skin-light">
@@ -226,16 +251,29 @@
 																		Section
 																	</span>
 																</li>
+                                                                @if(!\CommonHelper::checkDeactivatedUser())
 																<li class="m-nav__item">
 																	<a href="{{ URL::to('user/profile')}}" class="m-nav__link">
 																		<i class="m-nav__link-icon flaticon-profile-1"></i>
 																		<span class="m-nav__link-title">
 																			<span class="m-nav__link-wrap">
-																				My Profile / Preferences
+																				My Profile
 																			</span>
 																		</span>
 																	</a>
-																</li>																
+																</li>
+                                                                
+                                                                <li class="m-nav__item">
+																	<a href="{{ URL::to('user/preferences')}}" class="m-nav__link">
+																		<i class="m-nav__link-icon flaticon-interface-6"></i>
+																		<span class="m-nav__link-title">
+																			<span class="m-nav__link-wrap">
+																				My Preferences
+																			</span>
+																		</span>
+																	</a>
+																</li>	                                                                
+                                                                																
                                                                 <li class="m-nav__item">
 																	<a href="{{ URL::to('traveller/bookings')}}" class="m-nav__link">
 																		<i class="m-nav__link-icon flaticon-book"></i>
@@ -276,19 +314,42 @@
 																		</span>
 																	</a>
 																</li> 
-                                                                	
-																<li class="m-nav__separator m-nav__separator--fit"></li>
                                                                 
+                                                                <li class="m-nav__item">
+																	<a href="{{ URL::to('user/security')}}" class="m-nav__link">
+																		<i class="m-nav__link-icon flaticon-lock-1"></i>
+																		<span class="m-nav__link-title">
+																			<span class="m-nav__link-wrap">
+																				  Security &amp; Privacy
+																			</span>
+																		</span>
+																	</a>
+																</li> 
+                                                                
+                                                                <li class="m-nav__item">
+																	<a href="{{ URL::to('traveller/invoices')}}" class="m-nav__link">
+																		<i class="m-nav__link-icon flaticon-diagram"></i>
+																		<span class="m-nav__link-title">
+																			<span class="m-nav__link-wrap">
+																				  Billings & Contracts
+																			</span>
+																		</span>
+																	</a>
+																</li> 
+                                                               
+																<li class="m-nav__separator m-nav__separator--fit"></li>
+                                                                @endif 	
 																<li class="m-nav__item">
-																	<a href="{{ URL::to('user/logout')}}" class="btn m-btn--pill    btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder"> {{ Lang::get('core.m_logout') }} </a>
+																	<a href="{{ URL::to('user/logout')}}" class="btn m-btn--pill btn-secondary m-btn m-btn--custom m-btn--label-brand m-btn--bolder"> {{ Lang::get('core.m_logout') }} </a>
 																</li>
 															</ul>
 														</div>
 													</div>
+                                                    
 												</div>
 											</div>
 										</li>
-                                        
+                                        @if(!\CommonHelper::checkDeactivatedUser())
 										<li id="m_quick_sidebar_toggle" class="m-nav__item">
 											<a href="#" class="m-nav__link m-dropdown__toggle">
 												<span class="m-nav__link-icon m-nav__link-icon-alt">
@@ -298,7 +359,7 @@
 												</span>
 											</a>
 										</li>
-                                        
+                                        @endif
 									</ul>
 								</div>
 							</div>

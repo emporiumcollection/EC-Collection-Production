@@ -54867,8 +54867,10 @@ i.m-menu__link-icon.fa {
     background: #F7F2ED;
 }
 .m-form__section.bg-gray {
-    padding: 30px 4rem;
-    margin: 0 -4rem !important;
+    /*padding: 30px 4rem;
+    margin: 0 -4rem !important;*/
+    padding: 30px 20px;
+    margin: 0 -21px !important;
     background: #FAF2EB;
 }
 .fun-bg-gray{
@@ -55377,6 +55379,211 @@ i.m-menu__link-icon.fa {
     font-size: 34px !important;
 }
 
+/*----Traveller dashboard start----*/
+.trav-dash-setting-box1{
+    background-color: #d9a0af;
+    text-align: center;
+    width: 24%;
+    margin: 0px 14px 16px 0px;
+    padding: 20px 5px;
+    min-height: 109px;
+}
+.trav-dash-setting-box1 .grid_icon{
+    text-align: center;
+    font-size: 25px;
+    color: #503030;
+}
+.trav-dash-setting-box1 .grid_link-text{
+    display: block;
+    line-height: 1;
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #2A3C3C;
+}
+.trav-dash-setting-box1 a:hover{
+    text-decoration: none !important;
+}
+
+.trav-dash-setting-box2{
+    background-color: #D1DBBD;
+    text-align: center;
+    width: 24%;
+    margin: 0px 14px 16px 0px;
+    padding: 20px 5px;
+    min-height: 109px;
+}
+.trav-dash-setting-box2 .grid_icon{
+    text-align: center;
+    font-size: 25px;
+    color: #503030;
+}
+.trav-dash-setting-box2 a:hover{
+    text-decoration: none !important;
+}
+.trav-dash-setting-box2 .grid_link-text{
+    display: block;
+    line-height: 1;
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #2A3C3C;
+}
+
+.trav-dash-setting-box3{
+    background-color: #648da6;
+    text-align: center;
+    width: 24%;
+    margin: 0px 14px 16px 0px;
+    padding: 20px 5px;
+    min-height: 109px;
+}
+.trav-dash-setting-box3 .grid_icon{
+    text-align: center;
+    font-size: 25px;
+    color: #fff;
+}
+.trav-dash-setting-box3 .grid_link-text{
+    display: block;
+    line-height: 1;
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+}
+.trav-dash-setting-box3 a:hover{
+    text-decoration: none !important;
+}
+.trav-dash-setting-box4{
+    background-color: #90a2b6;
+    text-align: center;
+    width: 24%;
+    margin: 0px 0px 16px 0px;
+    padding: 20px 5px;
+    min-height: 109px;
+}
+.trav-dash-setting-box4 .grid_icon{
+    text-align: center;
+    font-size: 25px;
+    color: #503030;
+}
+.trav-dash-setting-box4 a:hover{
+    text-decoration: none !important;
+}
+.trav-dash-setting-box4 .grid_link-text{
+    display: block;
+    line-height: 1;
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #2A3C3C;
+}
+.trav-dash-setting-box5{
+    background-color: #f2ccc1;
+    text-align: center;
+    width: 24%;
+    margin: 0px 14px 16px 0px;
+    padding: 20px 5px;
+    min-height: 109px;
+}
+.trav-dash-setting-box5 .grid_icon{
+    text-align: center;
+    font-size: 25px;
+    color: #2A3C3C;
+}
+.trav-dash-setting-box5 .grid_link-text{
+    display: block;
+    line-height: 1;
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #2A3C3C;
+}
+.trav-dash-setting-box5 a:hover{
+    text-decoration: none !important;
+}
+.trav-dash-setting-box6{
+    background-color: #2B7379;
+    text-align: center;
+    width: 24%;
+    margin: 0px 14px 16px 0px;
+    padding: 20px 5px;
+    min-height: 109px;
+}
+.trav-dash-setting-box6 .grid_icon{
+    text-align: center;
+    font-size: 25px;
+    color: #fff;
+}
+.trav-dash-setting-box6 .grid_link-text{
+    display: block;
+    line-height: 1;
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #fff;
+}
+.trav-dash-setting-box6 a:hover{
+    text-decoration: none !important;
+}
+.trav-dash-setting-box7{
+    background-color: #6c5a7b;
+    text-align: center;
+    width: 24%;
+    margin: 0px 14px 16px 0px;
+    padding: 15px 25px;
+    min-height: 109px;
+}
+.trav-dash-setting-box7 .grid_icon{
+    text-align: center;
+    font-size: 25px;
+    color: #2A3C3C;
+}
+.trav-dash-setting-box7 .grid_link-text{
+    display: block;
+    line-height: 1;
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #2A3C3C;
+}
+.trav-dash-setting-box7 a:hover{
+    text-decoration: none !important;
+}
+.trav-dash-setting-box8{
+    background-color: #c06c83;
+    text-align: center;
+    width: 24%;
+    margin: 0px 0px 16px 0px;
+    padding: 15px 25px;
+    min-height: 109px;
+}
+.trav-dash-setting-box8 .grid_icon{
+    text-align: center;
+    font-size: 25px;
+    color: #2A3C3C;
+}
+.trav-dash-setting-box8 .grid_link-text{
+    display: block;
+    line-height: 1;
+    text-align: center;
+    margin: 10px 0 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #2A3C3C;
+}
+.trav-dash-setting-box8 a:hover{
+    text-decoration: none !important;
+}
+/*----traveller dashboard end------*/
+
 @media (min-width:1400px) {
     
     .setting-box-advert1{
@@ -55584,8 +55791,9 @@ i.m-menu__link-icon.fa {
     .font-34 {
         font-size: 50px !important;
     }
+    
 }
-@media (min-width:22A3C3Cpx) {
+@media (min-width:2000px) {
     
     .setting-box-advert1{
         background-color: #d9a0af;
@@ -55947,7 +56155,39 @@ i.m-menu__link-icon.fa {
     }
     .setting-box-advert8{
         width: 45%;
-    }    
+    } 
+    .trav-dash-setting-box1{
+        width: 45%;
+        margin: 0px 15px 15px 0px;
+    }  
+    .trav-dash-setting-box2{
+        width: 45%;
+        margin: 0px 15px 15px 0px;
+    } 
+    .trav-dash-setting-box3{
+        width: 45%;
+        margin: 0px 15px 15px 0px;
+    } 
+    .trav-dash-setting-box4{
+        width: 45%;
+        margin: 0px 15px 15px 0px;
+    } 
+    .trav-dash-setting-box5{
+        width: 45%;
+        margin: 0px 15px 15px 0px;
+    } 
+    .trav-dash-setting-box6{
+        width: 45%;
+        margin: 0px 15px 15px 0px;
+    } 
+    .trav-dash-setting-box7{
+        width: 45%;
+        margin: 0px 15px 15px 0px;
+    } 
+    .trav-dash-setting-box8{
+        width: 45%;
+        margin: 0px 15px 15px 0px;
+    } 
 }
 .arrival_departure{
     margin-right: 5px;

@@ -32,7 +32,7 @@ class UserorderController extends Controller {
 		);
 		
 		$this->data['vatsettings'] = \DB::table('tb_settings')->where('key_value', 'default_tax_amount')->first();
-		
+		\CommonHelper::checkDeactivatedUser();
 	}
 
 	public function getIndex( Request $request )
@@ -687,6 +687,19 @@ class UserorderController extends Controller {
                     $client_number = 'EV:'.$userInfo->client_number;
                 }
                 
+                $objorders = \DB::table('tb_orders')->where('id', $ordid)->first();
+                $invoice_no = $objorders->invoice_num;
+                $invoice_numbr = '';
+                $inv_date = date('d.m.Y', strtotime($order_item[0]->created));
+                
+                if($order_item[0]->package_type=='hotel'){                    
+                    $invoice_numbr = 'B-'.$inv_date."-".$invoice_no;        
+                }elseif($order_item[0]->package_type=='advert'){
+                    $invoice_numbr = 'A-'.$inv_date."-".$invoice_no;  
+                }elseif($order_item[0]->package_type=='traveller'){
+                    $invoice_numbr = 'C-'.$inv_date."-".$invoice_no;
+                }
+                
 				$html = '<style> 
 						.main { margin:2px; width:100%; font-family: arial, sans-serif; color: #252525; } 
 						.page-break { page-break-after: always; } 
@@ -827,7 +840,7 @@ class UserorderController extends Controller {
 								<table width="100%" >
                                     <tr>
                                         <td>'.$company_full_address.'</td>
-                                    </tr>                                    
+                                    </tr>                                   
                                     <tr>
                                         <td>'.$comp_vat_id.'</td>
                                     </tr>
@@ -849,7 +862,7 @@ class UserorderController extends Controller {
 												
 												<td  align="right">Invoice Number:</td>
 												<td  align="right" width="10px">&nbsp;&nbsp;</td>
-												<td  align="right" class="alnRight" >'. $invoice_num->content .'</td>
+												<td  align="right" class="alnRight" >'. $invoice_numbr .'</td>
 											</tr>
 											<tr>
 											
@@ -950,7 +963,27 @@ class UserorderController extends Controller {
 						}
 						
 						$html .= '<tr><td>'.$nos.'</td><td><b>Advertisement</b><br>'.$adsdata.'</td><td class="algCnt">'.$dsqty.'</td><td class="algRgt">'.$currency->content . $pacpric.'</td></tr>';
-					}
+					}elseif($oitem->package_type=='traveller')
+                    {
+                        $title = '';
+                        $pacpric = 0;
+                        $pacprice_show = '';
+                        
+                        $pchkdet = \DB::table('tb_packages')->select('package_title','package_price', 'package_price_type')->where('id', $oitem->package_id)->first();
+                        if(!empty($pchkdet))
+                        {
+                            $title = $pchkdet->package_title;
+                            if($pchkdet->package_price_type!=1){
+							 $pacpric = $pchkdet->package_price;
+                             $pacprice_show = $currency->content.$pchkdet->package_price;
+                            }else{
+                              $pacpric =0;  
+                              $pacprice_show = "Price on Request";
+                            }
+                        }
+                        $html .= '<tr><td>'.$nos.'</td><td><b>'.$title.'</b></td><td class="algCnt">'.$qty.'</td><td class="algRgt">'.$pacprice_show.'</td></tr>';
+                    }
+                    
 					$nos++;
 					$qtyPr = $pacpric * $qty;
 					$Totprice = $Totprice + $qtyPr;
@@ -1198,4 +1231,63 @@ class UserorderController extends Controller {
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');        
         }
     }  
+    
+    public function travellerinvoices( Request $request )
+	{        
+		$sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id'); 
+		$order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
+		// End Filter sort and order for query 
+		// Filter Search for query		
+		$filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
+        $uid = \Auth::user()->id;
+
+        $filter .= " AND (user_id = '".$uid."')" ;
+		
+		$page = $request->input('page', 1);
+		$params = array(
+			'page'		=> $page ,
+			'limit'		=> (!is_null($request->input('rows')) ? filter_var($request->input('rows'),FILTER_VALIDATE_INT) : static::$per_page ) ,
+			'sort'		=> $sort ,
+			'order'		=> $order,
+			'params'	=> $filter,
+			
+		);
+		// Get Query 
+		$results = $this->model->getRows( $params );		
+		
+		// Build pagination setting
+		$page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;	
+		$pagination = new Paginator($results['rows'], $results['total'], $params['limit']);	
+		$pagination->setPath('userorder');
+		
+		$this->data['rowData']		= $results['rows'];
+		// Build Pagination 
+		$this->data['pagination']	= $pagination;
+		// Build pager number and append current param GET
+		$this->data['pager'] 		= $this->injectPaginate();	
+		// Row grid Number 
+		$this->data['i']			= ($page * $params['limit'])- $params['limit']; 
+		// Grid Configuration 
+		$this->data['tableGrid'] 	= $this->info['config']['grid'];
+		$this->data['tableForm'] 	= $this->info['config']['forms'];
+		$this->data['colspan'] 		= \SiteHelpers::viewColSpan($this->info['config']['grid']);		
+		// Group users permission
+		$this->data['access']		= $this->access;
+        
+		// Detail from master if any
+		
+		// Master detail link if any 
+		$this->data['subgrid']	= (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array()); 
+		// Render into template
+		//return view('userorder.index',$this->data);
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+        if(strlen($is_demo6) > 0){
+            $file_name = $is_demo6.'.userorder.index';        
+            return view($file_name, $this->data);
+        }else{            
+            return Redirect::to('dashboard')
+                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');        
+        }
+	}  
+    
 }
