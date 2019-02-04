@@ -418,6 +418,9 @@ z-index: 1;
 .reltv ul.options li:last-child{
   border-bottom: 0;
 }
+.reltv .member-type{
+  display: none;
+}
 /*effct css*/
 /*** uncss> filename: static/build.css ***/
 
