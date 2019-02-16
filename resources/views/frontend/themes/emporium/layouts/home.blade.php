@@ -1,5 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110391807-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-110391807-1');
+</script>
+
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -721,7 +731,7 @@ if((isset($isfPublic)) && ($isfLoginned === false)){ $isfLoginned = (bool) $isfP
 <script>
 $(document).ready(function(){
 
-//var special_character = /^[a-zA-Z!”$%&’()*\+,\/;\[\\\]\^_`{|}~]+$/;
+//var special_character = /^[a-zA-Z!Â”$%&Â’()*\+,\/;\[\\\]\^_`{|}~]+$/;
 //var special_character = /^(?=\S*?[_@./#&+-])\S{1,}$/;
 //minimum 8 characters
 var bad = /(?=.{8,}).*/;
