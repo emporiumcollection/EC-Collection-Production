@@ -417,7 +417,9 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('salesstats', 'PropertiesController@salesstats');
     Route::post('save_management_personnel', 'UserController@savemanagementpersonnel');
     
+    Route::post('getPropertyTypeRates', 'PropertiesController@getPropertyTypeRates');
     
+    Route::get('ajaxcalendar', 'Frontend\PropertyController@ajaxcalendar');
 });
 
 Route::post('hotel_membership', 'Frontend\HotelMembershipController@hotelMembershipSignupSave');
@@ -651,3 +653,9 @@ Route::post('traveller/businessdetails', 'CustomerController@businessdetails');
 Route::post('traveller/persondetails', 'CustomerController@persondetails');
 Route::get('traveller/invoices', 'UserorderController@travellerinvoices');
 Route::get('traveller/invoice/{id}', 'UserorderController@ordershow');
+Route::get('traveller/getMapReservation', 'BookingsController@getMapReservation');
+Route::get('traveller/checkroomavailability', 'BookingsController@checkroomavailability');
+Route::get('traveller/checkroomavailabilitybydates', 'BookingsController@checkroomavailabilitybydates');
+Route::get('traveller/checkcategoryavailability', 'BookingsController@checkcategoryavailability');
+
+Route::get('traveller/get_daywise_price', 'HomeController@get_daywise_price');

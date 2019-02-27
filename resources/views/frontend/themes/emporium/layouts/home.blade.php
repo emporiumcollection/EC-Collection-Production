@@ -1,15 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110391807-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-110391807-1');
-</script>
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -71,26 +61,40 @@
     {{--For Custom Styles --}}
     @section('custom_css')
         @parent
+        <style>
+            .iub-no-markup{
+                color: #fff;
+                text-decoration: underline;
+            }
+            .iub-no-markup:hover{
+                color: #fff;
+                text-decoration: underline;
+            }
+        </style>
         <link href="{{ asset('themes/emporium/css/custom.css') }}" rel="stylesheet">
         <link href="{{ asset('sximo/assets/css/intlTelInput.css') }}" rel="stylesheet">
         <link href="{{ asset('themes/emporium/daterangepicker/css/t-datepicker.min.css') }}" rel="stylesheet" type="text/css" />
         <link href="{{ asset('themes/emporium/daterangepicker/css/themes/t-datepicker-bluegrey.css') }}" rel="stylesheet" type="text/css" />
     @show
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-110391807-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-110391807-1');
-</script>
+@if(defined('CNF_GOOGLE_ANALYTIC_KEY'))
+    @if(CNF_GOOGLE_ANALYTIC_KEY != '')
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id={{ CNF_GOOGLE_ANALYTIC_KEY }}"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', '{{ CNF_GOOGLE_ANALYTIC_KEY }}');
+    </script>
+    @endif
+@endif
 
 {{--*/
 $isfLoginned = (bool) \auth()->check();
 if((isset($isfPublic)) && ($isfLoginned === false)){ $isfLoginned = (bool) $isfPublic; }
 /*--}}
-
+</head>
 @if(!empty($pageTitle))
 <body class='{{str_replace(" ","_","$pageTitle")}} @if($isfLoginned) {{'user_logged_in'}} @endif '>
 @else
@@ -223,7 +227,18 @@ if((isset($isfPublic)) && ($isfLoginned === false)){ $isfLoginned = (bool) $isfP
     <script type="text/javascript">
         function checkMembership(param){
             var memtype = param;
-            user_referral = '';
+            
+            var login_type = '';
+            if(memtype=="lifestyle-membership"){
+                login_type = "Lifestyle";        
+            }else if(memtype=="dedicated-membership"){
+                login_type = "Dedicated"; 
+            }else if(memtype=="bespoke-membership"){
+                login_type = "Bespoke"; 
+            }
+            $("#sp-mem-type").html(login_type);
+            
+            user_referral = ''; 
             if(memtype=="bespoke-membership"){
                 $("input[name='email']").parent('.form-group').removeClass('mg-top');
                 user_referral = '<div class="form-group mg-top" id="dv_referral"> <input class="form-control" name="referral_code" type="text" placeholder="Enter Referral Code"> </div>';
@@ -235,6 +250,26 @@ if((isset($isfPublic)) && ($isfLoginned === false)){ $isfLoginned = (bool) $isfP
             
         }
         $(document).ready(function () {
+            
+            $(document).on('click', ".iubenda-white2", function(e){
+                e.preventDefault();
+                var w=600;
+                var h=450;
+                var left = (screen.width/2)-(w/2);
+                var top = (screen.height/2)-(h/2);
+                window.open("https://www.iubenda.com/privacy-policy/70156957", "Emporium Voyage Privacy Policy", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+               console.log("hee"); 
+            });
+            $(document).on('click', ".iubenda-white", function(e){
+                e.preventDefault();
+                var w=600;
+                var h=450;
+                var left = (screen.width/2)-(w/2);
+                var top = (screen.height/2)-(h/2);
+                window.open("https://www.iubenda.com/privacy-policy/70156957/cookie-policy", "Emporium Voyage Terms and Condition", 'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width='+w+', height='+h+', top='+top+', left='+left);
+               console.log("hee"); 
+            });
+            
             
             var list = $('ul.options li');
             $(list).click(function(){
@@ -731,7 +766,7 @@ if((isset($isfPublic)) && ($isfLoginned === false)){ $isfLoginned = (bool) $isfP
 <script>
 $(document).ready(function(){
 
-//var special_character = /^[a-zA-Z!Â”$%&Â’()*\+,\/;\[\\\]\^_`{|}~]+$/;
+//var special_character = /^[a-zA-Z!”$%&’()*\+,\/;\[\\\]\^_`{|}~]+$/;
 //var special_character = /^(?=\S*?[_@./#&+-])\S{1,}$/;
 //minimum 8 characters
 var bad = /(?=.{8,}).*/;
@@ -816,6 +851,5 @@ $('input[data-toggle="popover"]').popover({
 });
 
 })</script>
-</head>
 </body>
 </html>

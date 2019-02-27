@@ -255,8 +255,12 @@
                                         <button class="btn btn-default" type="button" onclick="choose_room_type('{{$type->id}}');">Book Now</button>
                                         
                                         @if($type->price!='')
-                                            <button class="btn btn-default"
-                                                    type="button"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}} </button>
+                                            <a class="btn btn-default" title="{{$type->season}}"
+                                                    > {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}} </button>
+                                            @if(isset(\Auth::user()->id))
+                                                <?php /* <a  href="#" onclick="getseasonrates({{$type->id}});" class="btn btn-default" title="Rates" data-toggle="modal" data-target="#psrModal">Full Rate List</a> */ ?>
+                                                <a  href="#" data-id="{{$type->id}}" class="btn btn-default full-rate" title="Rates">Full Rate List</a>
+                                            @endif                                           
                                         @endif
                                         
                                         <div class="sliderArrow">
@@ -304,6 +308,59 @@
                                         </a>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="row season-accordion">
+                                    
+                                    
+                                        
+                                    
+                                    
+                                    @if(!empty($type->seasonwiseprice))                        
+                                    {{--*/ $k=1; /*--}} 
+                        			<div id="mem-accordion-{{$type->id}}" class="panel-group" style="display: none;">
+                                        <div class="col-sm-6 calendar-left-box">
+                                            <div class="col-sm-10 t-datepicker-box">
+                                                <div id="season-dpicker-{{$type->id}}" class="t-datepicker">
+                                                    <div class="t-date-divide">
+                                                        <div class="t-check-in"></div>
+                                                    </div>
+                                                    <div class="t-date-divide">
+                                                        <div class="t-check-out"></div>
+                                                    </div>
+                                                </div> 
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <button class="btn season-search" data-id='{{$type->id}}'>Submit</button>
+                                            </div>
+                                            <div class="col-sm-12" style="margin-top: 20px;">
+                                                @foreach($type->seasonwiseprice as $si)
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">
+                                                        <h4 class="panel-title">
+                                                            <a class="click0" data-toggle="collapse" data-parent="#mem-accordion-{{$type->id}}" href="#collapse_{{$type->id}}_{{$k}}"><?php echo ($si->season_name!='' && $si->season_name!='null') ? $si->season_name : 'Default'; ?></a>
+                                                        </h4>
+                                                    </div>
+                                                    <div id="collapse_{{$type->id}}_{{$k}}" class="panel-collapse collapse <?php echo ($k==1) ? 'in' : '' ?>">
+                                                        <div class="panel-body">
+                                                            <div class="row">
+                                                                <div  class="col-sm-12 col-md-12 col-lg-12">
+                                                                    Base rate: {{$si->rack_rate}}                                                               
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{--*/ $k++;  /*--}}                                            
+                                                @endforeach
+                                            </div>
+                                        </div>	
+                                        <div class="col-sm-6 season-calendar" id="calendar-{{$type->id}}">
+                                            <?php echo $type->room_calendar; ?>                                            
+                                        </div>			
+                                    </div>
+                                    @endif
+                                
+                                
                             </div>
                         </div>
                     </section>
@@ -681,6 +738,24 @@
 		  </div>
 		</div>
 	</div>
+    <!-- Property Season Rates Modal -->
+    <div class="modal fade" id="psrModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog" role="document">
+    	<div class="modal-content">
+    	  <div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    		<h4 class="modal-title" id="myModalLabel">Property Rates</h4>
+    	  </div>
+    	  <div class="modal-body" id="ratecomm">
+    		
+    	  </div>
+    	  <div class="modal-footer">
+    		<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">OK</button>
+    	  </div>
+    	  </form>
+    	</div>
+      </div>
+    </div>
 @endsection
 
 
@@ -717,11 +792,11 @@
                     margin-top: 30px;
                 }
                 .HamYardHotelInnerfirst {
-                    background-image: url('{{ $propertyDetail['propimage_thumbpath'].$propertyDetail['propimage'][1]->file_name}}');
+                    background-image: url('{{ !empty($propertyDetail['propimage_thumbpath'])? $propertyDetail['propimage_thumbpath'].$propertyDetail['propimage'][1]->file_name : ''}}');
                 }
 				
 				.HamYardHotelInnersecond {
-                    background-image: url('{{ $propertyDetail['propimage_thumbpath'].$propertyDetail['propimage'][2]->file_name}}');
+                    background-image: url('{{ !empty($propertyDetail['propimage_thumbpath']) ? $propertyDetail['propimage_thumbpath'].$propertyDetail['propimage'][2]->file_name : ''}}');
                 }
                 
 				.HamYardHotelInnerthird {
@@ -730,7 +805,7 @@
                 }
                 
 				.HamYardHotelInnerfooter {
-                    background-image: url('{{ $propertyDetail['propimage_thumbpath'].$propertyDetail['propimage'][3]->file_name}}') !important;
+                    background-image: url('{{ !empty($propertyDetail['propimage_thumbpath']) ? $propertyDetail['propimage_thumbpath'].$propertyDetail['propimage'][3]->file_name : ''}}') !important;
                 }
                 .center-calendarbox .fa.fa-calendar{
                     float: left;
@@ -844,6 +919,18 @@
                 .modal-backdrop.fade{filter:alpha(opacity=0);opacity:0}
                 .modal-backdrop.in{filter:alpha(opacity=95);opacity:.95}
                 
+                .calendar-left-box{
+                    margin: 10px 0px;
+                }
+                .calendar-left-box .season-search{
+                    background: #aba00b;
+                    color: #fff;
+                }
+                .t-datepicker-box .t-check-in, .t-datepicker-box .t-check-out {
+                    width: 97% !important;
+                }
+                
+                
                 @media (max-width:1199px){
                     #showMemberLoginPopup .modal-dialog{
                         width:auto !important;
@@ -879,6 +966,71 @@
             }
         ?>
         $(document).ready(function () {
+            
+            
+            
+            @if(array_key_exists('typedata', $propertyDetail))            
+                @foreach($propertyDetail['typedata'] as $type)
+                    @if (array_key_exists($type->id, $propertyDetail['roomimgs']))
+                        $('#season-dpicker-{{$type->id}}').tDatePicker({
+                            'numCalendar':'2',
+                            'autoClose':true,
+                            'durationArrowTop':'200',
+                            'formatDate':'mm-dd-yyyy',
+                            'titleCheckIn':'Arrival',
+                            'titleCheckOut':'Departure',
+                            'inputNameCheckIn':'arrive_{{$type->id}}',
+                            'inputNameCheckOut':'departure_{{$type->id}}',
+                            'titleDateRange':'days',
+                            'titleDateRanges':'days',
+                            'iconDate':'<i class="fa fa-calendar"></i>',
+                            'limitDateRanges':'365',
+                            'dateCheckIn':chk_date,
+                            'dateCheckOut':chk_out_date,
+                            //'dateCheckIn':'@if(isset($_GET['arrive']) && $_GET['arrive']!=''){{$_GET['arrive']}}@else{{'null'}}@endif',
+                            //'dateCheckOut':'@if(isset($_GET['departure']) && $_GET['departure']!=''){{$_GET['departure']}}@else{{'null'}}@endif'
+                        });    
+                    @endif
+                @endforeach
+            @endif
+            
+            
+            
+            $('.season-search').click(function(e){
+                e.preventDefault();
+                var c_id = $(this).attr('data-id'); 
+                var s_dt = $('input[name=arrive_'+c_id+']').val();
+                var e_dt = $('input[name=departure_'+c_id+']').val();
+                //console.log(s_dt+'/'+e_dt);
+                $.ajax({
+                    url:'{{URL::to("ajaxcalendar")}}',
+                    dataType:'json',
+                    data: {c_id:c_id, s_dt:s_dt, e_dt:e_dt},
+                    type: 'get',
+                    success: function(response){
+                        //console.log(response);
+                        $('#calendar-'+c_id).html('');
+                        if(response.status=='success'){
+                            $('#calendar-'+c_id).html(response.data);
+                        }
+                    }
+                });
+            });
+            
+            
+            
+            $('.full-rate').click(function(e){
+                e.preventDefault();
+                var id = $(this).attr('data-id');
+                $("#mem-accordion-"+id).toggle();
+                //$("#mem-accordion-"+id).focus();
+                
+                //var selector = document.getElementById("mem-accordion-"+id);
+                //console.log(selector);
+                
+                //if(typeof selector.scrollIntoView !== 'undefined' )
+                //    selector.scrollIntoView();         
+            });
             
             $(".btnMembershipType").click(function(e){
                 e.preventDefault();
@@ -1062,6 +1214,59 @@
                 }
             });
         }
+        
+        function getseasonrates(proid)
+        {
+        	if(proid!='' && proid>0)
+        	{
+        		$.ajax({
+        		  url: "{{ URL::to('getPropertyTypeRates')}}",
+        		  type: "post",
+        		  data: 'propid='+proid,
+        		  dataType: 'json',
+        		  success: function(data){
+        			if(data.status!='error')
+        			{
+        				var prorates = '';
+        				var im=0;
+                        prorates += "<table>";
+                        prorates += "<tbody>";
+                        
+        				$(data.cat_rooms_price.cat_rooms).each(function (i, val) {
+        					prorates += '<tr>';
+        					//prorates += '<td>'+val.category_name+'</td>';
+        					prorates += '<td>';
+        					if(val.season_name==null)
+        					{
+        						prorates += 'Default';
+        					}
+        					else
+        					{
+        						prorates += val.season_name;
+        					}	
+        					prorates += '</td>';
+        					prorates += '<td>'+val.rack_rate+'</td>';
+        					//prorates += '<td>'+data.cat_rooms_price.usercomm.commission+'</td>';
+        					prorates += '<td>';
+        					/*if(data.cat_rooms_price.usercomm.commission!=null)
+        					{
+        						var pert = (val.rack_rate*data.cat_rooms_price.usercomm.commission)/100;
+        						var finalvl = val.rack_rate - pert;
+        						prorates += finalvl;
+        					}*/						
+        					prorates += '</td>';
+        					prorates += '</tr>';
+        				});
+                        prorates += "</tbody>";
+                        prorates += "</table>";
+                        
+        				$('#ratecomm').html(prorates);
+        			}
+        		  }
+        		});
+        	}
+        }
+        
 	</script>
 @endsection
 

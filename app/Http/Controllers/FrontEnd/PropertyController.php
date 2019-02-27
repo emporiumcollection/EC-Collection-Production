@@ -89,7 +89,196 @@ class PropertyController extends Controller {
 		return view('frontend.themes.emporium.properties.list', $this->data);
 	}
 	
-	function propertySearch(Request $request) {
+    function propertySearch(Request $request) {
+
+		$selCurrency=$request->input("currencyOption");
+        \Session::put('currencyOption', $selCurrency);
+		
+		$this->data["convertedOneUnitPrice"]=0;
+        $keyword = trim($request->cat);
+        $show = 'asc';
+        if($request->segment(1)=='search'){
+           $keyword = $request->s;
+        }
+
+		$sldkeyword = str_replace('-',' ',$keyword);
+        
+		$this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
+		
+
+		$this->data['dateslug'] = '';
+		$arrive = $departure = $adult = $childs = '';
+        $arrive_new = $departure_new = '';
+		if (!is_null($request->arrive) && $request->arrive != '') {
+			\Session::put('arrive_date', $request->arrive);
+			$this->data['arrive_date'] = $request->arrive;
+			$this->data['dateslug'] = $request->arrive;
+			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+            $arrive_new = \CommonHelper::dateformat(trim($request->arrive));
+		}
+		if (!is_null($request->departure) && $request->departure != '') {
+			\Session::put('departure_date', $request->departure);
+			$this->data['departure_date'] = $request->departure;
+			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+			$departure = date("Y-m-d", strtotime(trim($request->departure)));
+            $departure_new = \CommonHelper::dateformat(trim($request->departure));
+		}
+        
+		$catprops = '';   
+
+		   
+		//$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_name', $sldkeyword)->where('category_published', 1)->first();
+
+        $chldIds = array();
+        $getcatsID = array();
+        if (!empty($cateObj)) {
+            $channel_url = $cateObj->category_youtube_channel_url;
+            $this->data['channel_url'] = $channel_url;
+            
+            //get all children start
+            $chldIds = $this->fetchcategoryChildListIds($cateObj->id);
+            //End
+            if(count($chldIds) <= 0){ $chldIds[] = $cateObj->id; }
+            
+            if (count($chldIds) > 0) {
+                $impload_ids = implode(',',$chldIds);
+                $catcond = " AND (pr.category_id IN(".$impload_ids."))";
+                /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
+									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+								}, array_values($chldIds))) . ")";*/
+                
+                $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
+                if(strlen(trim($arrive_new)) > 0){
+                    $ch_queries = "";
+                    $getdestind = "";
+                    if (strlen(trim($departure_new)) > 0) { $getdestind = " AND pctr.room_active_to <= '".$departure_new."'"; }
+                    $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr, tb_properties_category_rooms pctr WHERE pctr.property_id = pr.id AND  pr.property_status='1' AND pctr.room_active_from <= '".$arrive_new."' ".$getdestind."  ".$catcond." GROUP BY pr.id";
+                }
+                
+                $ch_queries = trim($ch_queries);
+                if(strlen($ch_queries) > 0){
+                    $childresult = DB::select($ch_queries);
+                    
+                    foreach($childresult as $siChild){
+                        $getcatsID[] = $siChild->id;
+                    }
+                }
+            }
+        }
+        
+        if(count($getcatsID) > 0){
+            $timplod = implode(',',$getcatsID);
+            $catprops = " OR pr.id in(".$timplod.") ";
+        }
+		
+		$perPage = 20;
+		$pageNumber = 1;
+		if(isset($request->page) && $request->page>0){
+			$pageNumber = $request->page;
+		}
+		$pageStart = ($pageNumber -1) * $perPage;
+
+		/*$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
+		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+		$limit = " LIMIT ". $pageStart.",".$perPage; 
+        $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;*/ 
+		//$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+		
+        //print_r($finalQry); die;
+        $query = "Select pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price  ";
+        $query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        if($arrive_new != '' && $departure_new != ''){
+            $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
+            $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
+        }
+        
+        $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+        $limit = " LIMIT ". $pageStart.",".$perPage; 
+        $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        
+        $CountRecordQry = "Select count(*) as total_record from tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        //print_r($finalQry); die;	
+			//Feature Query
+		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
+		$query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        if($arrive_new != '' && $departure_new != ''){
+            $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
+            $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
+        }
+		$orderBy = "ORDER BY RAND()  ";
+		$limit = " LIMIT 4";
+		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ; 
+		
+		  //Editor choice editor_choice_property
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
+		$query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        if($arrive_new != '' && $departure_new != ''){
+            $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
+            $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
+        }        
+		$orderBy = "ORDER BY RAND()  ";
+		$limit = " LIMIT 4";
+		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ; 
+        
+        $editorData = DB::select($editorQuery);
+		//dd($editorData);
+        $this->data['editorPropertiesArr']=$editorData;
+//echo $finalQry; die;
+		$property = DB::select($finalQry);
+		$getRec = DB::select($CountRecordQry);
+		$featureData = DB::select($featureQuery);
+		
+		$this->data['featurePropertiesArr']=$featureData;
+		$this->data['propertiesArr'] = $property;
+		$this->data['total_record'] = $getRec[0]->total_record;
+		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+		$this->data['active_page']=$pageNumber;
+
+		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+
+		//get emotional gallery
+        $emotional_gallery_array = array();
+        $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
+        if(isset($emtional_parentFolder->id)){
+            $peid = (int) $emtional_parentFolder->id;
+            $emtional_containerfiles = \DB::table('tb_container')->select('tb_container_files.id','tb_container_files.file_name','tb_container_files.folder_id','tb_container.name')->join('tb_container_files','tb_container_files.folder_id','=','tb_container.id')->where('parent_id',$peid)->where('name',$keyword)->orderby('tb_container_files.file_sort_num','asc')->get();
+            if((!empty($emtional_containerfiles)) && (is_array($emtional_containerfiles))){$emotional_gallery_array = $emtional_containerfiles;}
+        }
+        $this->data['emotional_gallery'] = $emotional_gallery_array;
+        //End 
+		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+		$tagsArr = array();
+		if (!empty($tags_Arr)) {
+			foreach ($tags_Arr as $tags) {
+				$tagsArr[$tags->parent_tag_id][] = $tags;
+			}
+		}
+		
+		$this->data['slug'] = $keyword;
+
+		$this->data['action']=request()->segments(1);
+        $this->data['destination_category'] =0;
+
+		if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+            $this->data['destination_category']=$cateObj->id;
+			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+        }
+
+		return view('frontend.themes.emporium.properties.list', $this->data);
+                    
+    }
+    
+	function propertySearch_old(Request $request) {
 
 		$selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
@@ -288,11 +477,14 @@ class PropertyController extends Controller {
         if (!empty($props)) {
             $propertiesArr['data'] = $props;
             $propertiesArr['propimage'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-
-            $propertiesArr['propimage_thumbpath'] = (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id);
-			$propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id))); 
-            $propertiesArr['propimage_containerpath'] = (new ContainerController)->getContainerUserPath($propertiesArr['propimage'][0]->folder_id);
-			
+            $propertiesArr['propimage_thumbpath'] = '';
+            $propertiesArr['propimage_thumbpath_dir']= '';
+            $propertiesArr['propimage_containerpath'] = '';
+            if(!empty($propertiesArr['propimage'])){
+                $propertiesArr['propimage_thumbpath'] = (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id);
+    			$propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id))); 
+                $propertiesArr['propimage_containerpath'] = (new ContainerController)->getContainerUserPath($propertiesArr['propimage'][0]->folder_id);
+			}
 			$this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
 
             if ($props->property_category_id != '') {
@@ -340,7 +532,7 @@ class PropertyController extends Controller {
                 $c = 0;
                 foreach ($cat_types as $type) {
                     $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-					
+					$type_cale = '';
                     $filen = array();
                     if (!empty($roomfileArr)) {
 						$propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
@@ -350,30 +542,48 @@ class PropertyController extends Controller {
                         $propertiesArr['typedata'][$c]->price = '';
                         $curnDate = date('Y-m-d');
                         if ($props->default_seasons != 1) {
-							$checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '>=', $curnDate)->where('tb_seasons_dates.season_to_date', '<=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
-							
+							$checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
+							//print_r($checkseason); die;
                         } else {
-                            $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '>=', $curnDate)->where('tb_seasons_dates.season_to_date', '<=', $curnDate)->first();
+                            $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->first();
                         }
 						
 						if (!empty($checkseason)) {
 							 $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
+                             $propertiesArr['typedata'][$c]->season = $checkseason->season_name;
                         } else {
                             $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $type->id)->first();
                             if (!empty($checkseasonPrice_ifnotanyseason)) {
                                 $propertiesArr['typedata'][$c]->price = $checkseasonPrice_ifnotanyseason->rack_rate;
+                                $propertiesArr['typedata'][$c]->season = '';
                             }
                         }
+                        
+                        $cat_rooms_price = \DB::table('tb_properties_category_rooms_price')->leftJoin('tb_properties_category_types','tb_properties_category_types.id','=','tb_properties_category_rooms_price.category_id')->leftJoin('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->select('tb_seasons.season_name','tb_properties_category_rooms_price.rack_rate','tb_properties_category_types.category_name')->where('tb_properties_category_rooms_price.category_id', $type->id)->get();                        
+                        
+                        $propertiesArr['typedata'][$c]->seasonwiseprice = $cat_rooms_price;
+                        
+                        //$room_availablity_bytype = \DB::table('tb_properties_category_rooms')->where('tb_properties_category_rooms.category_id', $type->id)->get();                       
+                        //$propertiesArr['typedata'][$c]->room_availablity_bytype = $room_availablity_bytype;   
+                        
+                        $reserved_room_bytype = \DB::table('tb_reservations')->join('td_reserved_rooms','tb_reservations.id','=','td_reserved_rooms.reservation_id')->where('td_reserved_rooms.type_id', $type->id)->get();                                             
+                        
+                        $type_cale = $this->viewcalendar($type->id, $curnDate);
+                        
+                        $propertiesArr['typedata'][$c]->room_calendar = $type_cale;
+                        
 						$c++;
                     }
+                    
+                    
                 }
 
                 usort($propertiesArr['typedata'], function($a, $b) {
                     return trim($a->price) < trim($b->price);
                 });
             }
-            
-            
+            //echo "<pre>";
+            //print_r($propertiesArr);die;
             $this->data['propertyDetail'] = $propertiesArr;
             $this->data['relatedproperties'] = $crpropertiesArr;
     		$this->data['relatedgridpropertiesArr'] = $relatedgridpropertiesArr;
@@ -835,4 +1045,229 @@ class PropertyController extends Controller {
         //print_r($this->data['pckages_ids']); die;
 		return view('frontend.themes.emporium.properties.listbytype', $this->data);
 	}
+    
+    function viewcalendar($type, $currentDt){
+        //$current_date =  date('Y-m-d');
+        //$current_date =  date('Y-m-d', strtotime($currentDt));
+        $year = date('Y', strtotime($currentDt));
+        $month = date('m', strtotime($currentDt));
+        $monthStartDate = $year."-".$month."-01";
+        $dayNumber = date('w', strtotime($monthStartDate));
+        
+        $numberOfDayInMonth = date('t', strtotime($monthStartDate)); 
+        //echo $current_date."-".$dayNumber."-".$year."-".$month."-".$numberOfDayInMonth."<br />";      
+        $monthEndDate = $year."-".$month."-".$numberOfDayInMonth;
+        $start_dt = '';
+        $end_dt = '';
+        
+        //$room_availablity_bytype = \DB::table('tb_properties_category_rooms_price')->leftJoin('tb_properties_category_rooms', 'tb_properties_category_rooms_price.category_id', '=', 'tb_properties_category_rooms.category_id')->leftJoin('tb_seasons', 'tb_properties_category_rooms_price.season_id', '=', 'tb_seasons.id')->leftJoin('tb_seasons_dates', 'tb_seasons.id', '=', 'tb_seasons_dates.season_id')->where('tb_properties_category_rooms_price.category_id', $type)->orderBy('season_priority')->first();
+        
+        
+        //$room_availablity_bytype = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons', 'tb_properties_category_rooms_price.season_id', '=', 'tb_seasons.id')->join('tb_seasons_dates', 'tb_seasons.id', '=', 'tb_seasons_dates.season_id')->where('tb_properties_category_rooms_price.category_id', $type)->orderBy('season_priority')->first();
+        
+        //echo "<pre>";
+        //print_r($room_availablity_bytype); die;
+        $date_wise_arr = array();
+        //$current_date = $year."-".$month."-".$k;
+        //$curr_date = date('Y-m-d', strtotime($c_date));
+        $query = "SELECT * FROM tb_properties_category_rooms_price inner join tb_seasons on tb_seasons.id=tb_properties_category_rooms_price.season_id inner join tb_seasons_dates on tb_seasons.id=tb_seasons_dates.season_id  where ((season_from_date <= '".$monthStartDate."' AND season_to_date >='".$monthEndDate."') OR (season_from_date BETWEEN '".$monthStartDate."' AND '".$monthEndDate."') OR  (season_to_date BETWEEN '".$monthStartDate."' AND '".$monthEndDate."')) and tb_properties_category_rooms_price.category_id=".$type." ORDER by tb_seasons.season_priority";
+        $check_season = \DB::select($query);
+        $arr_start_date = $monthStartDate;
+        if(!empty($check_season)){
+            foreach($check_season as $si_sea){
+                for($m=1; $m<=$numberOfDayInMonth; $m++){
+                    $m = (strlen($m)==1) ? str_pad($m, 2, '0', STR_PAD_LEFT) : $m;                        
+                    $cu_date = $year."-".$month."-".$m;
+                    $curre_date = date('Y-m-d', strtotime($cu_date)); 
+                    if (!array_key_exists($curre_date, $date_wise_arr)){                   
+                        if($si_sea->season_from_date <= $curre_date && $si_sea->season_to_date >= $curre_date){
+                            $date_wise_arr[$curre_date]=$si_sea;
+                        }
+                    }                    
+                }
+                //$arr_start_date = date('Y-m-d', strtotime("+1 day", strtotime($arr_start_date)));             
+            }
+        }else{
+            //$room_availablity_bytype = \DB::table('tb_properties_category_rooms_price')->leftJoin('tb_properties_category_rooms', 'tb_properties_category_rooms_price.category_id', '=', 'tb_properties_category_rooms.category_id')->leftJoin('tb_seasons', 'tb_properties_category_rooms_price.season_id', '=', 'tb_seasons.id')->leftJoin('tb_seasons_dates', 'tb_seasons.id', '=', 'tb_seasons_dates.season_id')->where('tb_properties_category_rooms_price.category_id', $type)->orderBy('season_priority')->first();
+            //$query2 = "SELECT *, 'default' as season_name FROM tb_properties_category_rooms_price inner join tb_properties_category_rooms on tb_properties_category_rooms_price.category_id=tb_properties_category_rooms.category_id where ((room_active_from <= '".$monthStartDate."' AND room_active_to >='".$monthEndDate."') OR (room_active_from BETWEEN '".$monthStartDate."' AND '".$monthEndDate."') OR  (room_active_to BETWEEN '".$monthStartDate."' AND '".$monthEndDate."')) and tb_properties_category_rooms_price.category_id=".$type." and tb_properties_category_rooms_price.season_id=0";
+            $query2 = "SELECT *, 'default' as season_name FROM tb_properties_category_rooms_price inner join tb_properties_category_rooms on tb_properties_category_rooms_price.category_id=tb_properties_category_rooms.category_id where active_full_year=1 and tb_properties_category_rooms_price.category_id=".$type." and tb_properties_category_rooms_price.season_id=0";
+            $check_room = \DB::select($query2);
+            //print_r($check_room); die;
+            if(!empty($check_room)){
+                foreach($check_room as $si_room){
+                    for($m=1; $m<=$numberOfDayInMonth; $m++){
+                        $m = (strlen($m)==1) ? str_pad($m, 2, '0', STR_PAD_LEFT) : $m;                        
+                        $cu_date = $year."-".$month."-".$m;
+                        $curre_date = date('Y-m-d', strtotime($cu_date)); 
+                        if (!array_key_exists($curre_date, $date_wise_arr)){                   
+                            //if($si_room->room_active_from <= $curre_date && $si_room->room_active_to >= $curre_date){
+                                
+                                $date_wise_arr[$curre_date]=$si_room;
+                            //}
+                        }                    
+                    }
+                    //$arr_start_date = date('Y-m-d', strtotime("+1 day", strtotime($arr_start_date)));             
+                }
+            }
+        }
+        if(count($date_wise_arr) < $numberOfDayInMonth){
+            $query2 = "SELECT *, 'default' as season_name FROM tb_properties_category_rooms_price inner join tb_properties_category_rooms on tb_properties_category_rooms_price.category_id=tb_properties_category_rooms.category_id where ((room_active_from <= '".$monthStartDate."' AND room_active_to >='".$monthEndDate."') OR (room_active_from BETWEEN '".$monthStartDate."' AND '".$monthEndDate."') OR  (room_active_to BETWEEN '".$monthStartDate."' AND '".$monthEndDate."')) and tb_properties_category_rooms_price.category_id=".$type." and tb_properties_category_rooms_price.season_id=0";
+            $check_room = \DB::select($query2);
+            if(!empty($check_room)){
+                foreach($check_room as $si_room){
+                    for($m=1; $m<=$numberOfDayInMonth; $m++){
+                        $m = (strlen($m)==1) ? str_pad($m, 2, '0', STR_PAD_LEFT) : $m;                        
+                        $cu_date = $year."-".$month."-".$m;
+                        $curre_date = date('Y-m-d', strtotime($cu_date)); 
+                        if (!array_key_exists($curre_date, $date_wise_arr)){                   
+                            if($si_room->room_active_from <= $curre_date && $si_room->room_active_to >= $curre_date){
+                                
+                                $date_wise_arr[$curre_date]=$si_room;
+                            }
+                        }                    
+                    }
+                    //$arr_start_date = date('Y-m-d', strtotime("+1 day", strtotime($arr_start_date)));             
+                }
+            }
+        }
+        //echo "<pre>";
+        //print_r($date_wise_arr); die;
+        //print_r($room_availablity_bytype); die;
+        /*$defalt_season = array();
+        $seasons = array();
+        if(!empty($room_availablity_bytype)){
+            
+            foreach($room_availablity_bytype as $si){
+              if($si->season_id==''){
+                $defalt_season[] = $si;  
+              }else{
+                $seasons[] = $si;
+              }  
+            }
+            if(count($seasons > 0)){
+                
+            }
+            echo "<pre>";
+            print_r($defalt_season);
+            echo "--------------------------------";
+            print_r($seasons);
+            die;
+            if(!empty($seasons)){
+                foreach($seasons as $se){
+                    
+                }
+                $season_start = $seasons->season_from_date;
+                $season_end = $seasons->season_to_date;
+            }else{
+                $start_dt = $room_availablity_bytype->room_active_from;
+                $end_dt = $room_availablity_bytype->room_active_to;
+            }
+        }*/
+        //print_r($room_availablity_bytype); die;
+        //$start_dt = $room_availablity_bytype->room_active_from;
+        //$end_dt = $room_availablity_bytype->room_active_to;  
+        
+        $flag = 0;
+        $cls = '';
+        
+        $arr_season_class = array(); 
+        $sr = 0;
+        
+        $s_price = 0;
+        
+        $html = "<table id='tbl_".$type."' class='table'>";
+        $html .= "<thead><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></thead>";
+        for($i=1; $i<=$numberOfDayInMonth; $i++){
+            $html .= "<tr>";
+            for($j=0; $j<7; $j++){
+                if($j==$dayNumber or $flag==1){                    
+                    $flag = 1;
+                    if($i <= $numberOfDayInMonth){
+                        $k = (strlen($i)==1) ? str_pad($i, 2, '0', STR_PAD_LEFT) : $i;                        
+                        $c_date = $year."-".$month."-".$k;
+                        $curr_date = date('Y-m-d', strtotime($c_date));
+                        //echo $start_dt."/".$c_date."/".$end_dt; die;
+                        /*if($start_dt <= $curr_date && $end_dt >=$curr_date){
+                            $html .= '<td class="'.$c_date.'">'.$i.'<br /><span class="available">Available</span></td>';
+                        }else{
+                            $html .= '<td class="'.$c_date.'">'.$i.'<br /><span class="not-available">Not Available</span></td>';
+                        }*/
+                        
+                        if(array_key_exists($curr_date, $date_wise_arr)){   
+                            $new_cls = $date_wise_arr[$curr_date]->season_name;
+                            
+                            switch ($j){
+                                case 0:
+                                    $s_price = ($date_wise_arr[$curr_date]->sunday_price > 0) ? $date_wise_arr[$curr_date]->sunday_price : $date_wise_arr[$curr_date]->rack_rate;
+                                    break;
+                                case 1:
+                                    $s_price = ($date_wise_arr[$curr_date]->monday_price > 0) ? $date_wise_arr[$curr_date]->monday_price : $date_wise_arr[$curr_date]->rack_rate;
+                                    break;
+                                case 2:
+                                    $s_price = ($date_wise_arr[$curr_date]->tuesday_price > 0) ? $date_wise_arr[$curr_date]->tuesday_price : $date_wise_arr[$curr_date]->rack_rate;
+                                    break;
+                                case 3:
+                                    $s_price = ($date_wise_arr[$curr_date]->wednesday_price > 0) ? $date_wise_arr[$curr_date]->wednesday_price : $date_wise_arr[$curr_date]->rack_rate;
+                                    break;
+                                case 4:
+                                    $s_price = ($date_wise_arr[$curr_date]->thursday_price > 0) ? $date_wise_arr[$curr_date]->thursday_price : $date_wise_arr[$curr_date]->rack_rate;
+                                    break;
+                                case 5:
+                                    $s_price = ($date_wise_arr[$curr_date]->friday_price > 0) ? $date_wise_arr[$curr_date]->friday_price : $date_wise_arr[$curr_date]->rack_rate;
+                                    break;
+                                case 6:
+                                    $s_price = ($date_wise_arr[$curr_date]->saturday_price > 0) ? $date_wise_arr[$curr_date]->saturday_price : $date_wise_arr[$curr_date]->rack_rate;
+                                    break;
+                            }
+                            
+                            if($cls!=$new_cls){
+                                $cls = $new_cls;                                
+                                $sr++;
+                                $arr_season_class[] = array('c_name'=>$sr, 's_name'=>$cls);
+                            }
+                            $html .= '<td class="'.$c_date.' season-'.$sr.'" data-day="'.$j.'">'.$i.'<br /><span class="available">Available</span><br /><span class="price">'.$s_price.'</span></td>';
+                        }else{
+                            $html .= '<td class="na '.$c_date.'">'.$i.'<br /><span class="not-available">Not Available</span></td>';
+                        }
+                    }else{
+                        $html .= '<td></td>';
+                    }
+                }else{
+                   $html .= '<td></td>';
+                   $i--;  
+                }
+                if($j==6){
+                    //echo "<br />";
+                    $i--; 
+                }                
+                $i++;               
+            }
+            $html .= "</tr>";
+        }
+        $html .= "</table>";
+        if(!empty($arr_season_class)){
+            $html .= "<div class='season-footer'>";            
+            foreach($arr_season_class as $seas){
+                $html .= "<div class='s-footer-item'>";
+                    $html .= "<div class='s-footer-lable'>".$seas['s_name']."</div>";
+                    $html .= "<div class='s-footer-box-".$seas['c_name']."'></div>";        
+                $html .= "</div>";
+            }            
+            $html .= "</div>";
+        }
+        return $html;
+    }
+    function ajaxcalendar(Request $request){
+        $type_id = $request->input('c_id');
+        $s_date = $request->input('s_dt');
+        $e_date = $request->input('e_dt');
+        $s_date = \CommonHelper::dateformat(trim($s_date));
+        $e_date = \CommonHelper::dateformat(trim($e_date));
+        //echo $type_id."/".$s_date."/".$e_date;
+        $v = $this->viewcalendar($type_id, $s_date);
+        $return['data'] = $v;
+        $return['status'] = "success";
+        echo json_encode($return); 
+        die;
+    }
 }
