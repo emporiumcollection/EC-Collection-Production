@@ -76,7 +76,6 @@
     padding: 0 15px 10px 15px;
     background: transparent;
 }
-
 #home_sld .left.carousel-control {
     left: 60px !important;
     right: auto !important;
@@ -168,7 +167,6 @@ z-index: 1;
 #home_sld .item{
   height: 100vh;  
 }
-
 #home_sld .right.carousel-control .txt-mid{
     margin-right: 40px;
     will-change: transform;
@@ -4349,8 +4347,7 @@ svg:not(:root) {
     right: 25px;
   }
    .Home .sliderSection .carousel-caption h1 {
-    font-size: 48px;
-    margin-top:120px;
+    font-size: 18px;
    }
    .Home .u-marg-r-w1of13 {
     margin-right: 15px;
