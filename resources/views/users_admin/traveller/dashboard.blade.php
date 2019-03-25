@@ -470,31 +470,10 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
             					<div class="m-widget28__tab tab-content">
             						<div id="menu11" class="m-widget28__tab-container tab-pane active">
             							<div class="m-widget28__tab-items">                                        
-            								<div class="m-widget28__tab-item">
-            									<span>
-            										
-            									</span>
-            									<span>
-            										
-            									</span>
+            								<div class="m-widget28__tab-item m--align-center">
+            									Currently, there are no reservation.<br /><br />
+                                                <a href="{{Url::to('/')}}">Make a new reservation</a>
             								</div>
-            								<div class="m-widget28__tab-item">
-            									<span>
-            										
-            									</span>
-            									<span>
-            										
-            									</span>
-            								</div>
-            								<div class="m-widget28__tab-item">
-            									<span>
-            										
-            									</span>
-            									<span>
-            										
-            									</span>
-            								</div>
-            								
             							</div>
             						</div>
             					</div>
