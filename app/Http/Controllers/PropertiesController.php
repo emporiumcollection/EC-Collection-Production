@@ -1574,10 +1574,12 @@ class PropertiesController extends Controller {
 
             if ($request->input('edit_type_id') == '') {
                 $data['created'] = date('Y-m-d h:i:s');
+                $data['booking_policy'] =  $request->input('bookingPolicy');
                 $instype = 'add';
                 $id = \DB::table('tb_properties_category_types')->insertGetId($data);
             } else {
                 $data['updated'] = date('Y-m-d h:i:s');
+                $data['booking_policy'] =  $request->input('bookingPolicy');
                 $instype = 'update';
                 $id = \DB::table('tb_properties_category_types')->where('id', $request->input('edit_type_id'))->update($data);
             }
@@ -1650,8 +1652,10 @@ class PropertiesController extends Controller {
             $data['room_name'] = $request->input('room_name');
             if (!is_null($request->input('room_active_full'))) {
                 $data['active_full_year'] = $request->input('room_active_full');
-                $data['room_active_from'] = date('Y-m-d');
-                $data['room_active_to'] = date('Y') . '-12-31';
+                //$data['room_active_from'] = date('Y-m-d');
+                //$data['room_active_to'] = date('Y') . '-12-31';
+                $data['room_active_from'] = $request->input('room_active_from');
+                $data['room_active_to'] = $request->input('room_active_to');
             } else {
                 $data['active_full_year'] = 0;
                 $data['room_active_from'] = $request->input('room_active_from');

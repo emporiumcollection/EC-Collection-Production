@@ -569,6 +569,14 @@ class ContainerController extends Controller {
 			$showType = "thumb";
 		}
 		
+        $pid = '';
+        if(isset($_REQUEST['pid']) && trim($_REQUEST['pid'])!="")
+		{
+			$pid = trim($_REQUEST['pid']);
+		}
+		
+        $this->data['pid'] = $pid;
+        
 		$this->data['showType'] = $showType;
 		$this->data['permissions'] = $permiss;
 		//$this->data['tree'] = $this->fetchFolderTreeList('','',$wnd, $showType);

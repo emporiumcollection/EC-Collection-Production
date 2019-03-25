@@ -738,7 +738,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
 										
 									</span>
 									<span class="m-widget17__subtitle">
-										<a href="#" class="cls_preferences_1" >Preferences 1</a>
+										<a href="{{ URL::to('user/preferences')}}" class="cls_preferences_1" >Preferences 1</a>
 									</span>
 									<span class="m-widget17__desc">
 										

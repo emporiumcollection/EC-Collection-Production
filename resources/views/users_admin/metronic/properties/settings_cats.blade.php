@@ -217,7 +217,7 @@
 						@if(!empty($cat_types))
 					   {{--*/ $c=1; /*--}}
                         <div class="col-sm-12 col-md-12 col-lg-12 fun-bg-gray">
-                            <form id="add_property_type_setup-{{$c}}" class="add_property_type_setup">
+                            <form id="add_property_type_setup-{{$c}}" class="add_property_type_setup" method="post">
     							<input type="hidden" name="property_id" value="{{$pid}}" >
     							<input type="hidden" name="edit_type_id" value="" >
     							<div class="row">
@@ -272,6 +272,12 @@
     											</div>
     										</div>
     									</div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="booingPolicy">Booking Policy</label>
+                                                <textarea name="bookingPolicy" cols="4" class="form-control" ></textarea>
+                                            </div>
+                                        </div>                                        
     								</div>
     								<div class="col-lg-3  m--align-right">
     									<div class="butt">
@@ -293,7 +299,7 @@
                         <div class="content-block">
 						@foreach($cat_types as $cat)
                             <div class="alt-bg">
-							<form id="add_property_type_setup-{{$c}}" class="add_property_type_setup">
+							<form id="add_property_type_setup-{{$c}}" class="add_property_type_setup" method="post">
 								<input type="hidden" name="property_id" value="{{$pid}}" >
 								<input type="hidden" name="edit_type_id" value="{{$cat->id}}" >
 								<div class="row ">
@@ -348,6 +354,12 @@
 												</div>
 											</div>
 										</div>
+                                        <div class="row">
+                                            <div class="form-group col-lg-12">
+                                                <label for="booingPolicy">Booking Policy</label>
+                                                <textarea name="bookingPolicy" cols="4" class="form-control">{{$cat->booking_policy}}</textarea>
+                                            </div>
+                                        </div>
 									</div>
 									<div class="col-lg-3  m--align-right">
 										<div class="butt">
@@ -370,7 +382,7 @@
 						@endforeach
                         </div>	
                     @else
-						<form id="add_property_type_setup-1" class="add_property_type_setup fun-bg-gray">
+						<form id="add_property_type_setup-1" class="add_property_type_setup fun-bg-gray" method="post">
 							<input type="hidden" name="property_id" value="{{$pid}}" >
 							<input type="hidden" name="edit_type_id" value="" >
 							<div class="row">
@@ -425,6 +437,12 @@
 											</div>
 										</div>
 									</div>
+                                    <div class="row">
+                                        <div class="form-group col-lg-12">
+                                            <label for="booingPolicy">Booking Policy</label>
+                                            <textarea name="bookingPolicy" cols="4" class="form-control">{{$cat->booking_policy}}</textarea>
+                                        </div>
+                                    </div>
 								</div>
 								<div class="col-lg-3 m--align-right">
 									<div class="butt">
