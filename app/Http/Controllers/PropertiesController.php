@@ -1389,6 +1389,41 @@ class PropertiesController extends Controller {
             }
             $this->data['row'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $property_id)->first();
             return view('properties.settings_terms_and_conditions', $this->data);
+        }elseif ($active == 'custom-price') {            
+            $this->data[] = '';            
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            if($is_demo6!=''){
+                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_customprice':'properties.custom_price';                
+                return view($file_name, $this->data);
+            }
+        }elseif ($active == 'restrictions') {            
+            $this->data[] = '';            
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            if($is_demo6!=''){
+                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_restrictions':'properties.custom_price';                
+                return view($file_name, $this->data);
+            }
+        }elseif ($active == 'options') {            
+            $this->data[] = '';            
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            if($is_demo6!=''){
+                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_options':'properties.custom_price';                
+                return view($file_name, $this->data);
+            }
+        }elseif ($active == 'boards') {            
+            $this->data[] = '';            
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            if($is_demo6!=''){
+                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_boards':'properties.custom_price';                
+                return view($file_name, $this->data);
+            }
+        }elseif ($active == 'meals') {            
+            $this->data[] = '';            
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            if($is_demo6!=''){
+                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_meals':'properties.custom_price';                
+                return view($file_name, $this->data);
+            }
         }
         if ($active == 'seasons') {
             $seasonArr = array();
