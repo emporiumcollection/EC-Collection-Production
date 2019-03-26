@@ -346,7 +346,35 @@
 <script src="{{ asset('sximo/js/jquery.validate.js')}}"></script>
 <script src="{{ asset('metronic/assets/app/js/app.js ') }}"></script>
 <script>
-        $(document).ready(function(){            
+        $(document).ready(function(){
+            
+            $(".hasDatepicker").datepicker( {
+                todayHighlight:!0, orientation:"bottom left", format:"yyyy-mm-dd", templates: {
+                    leftArrow: '<i class="la la-angle-left"></i>', rightArrow: '<i class="la la-angle-right"></i>'
+                }
+            });
+            
+            $("#cal-start").change(function(){
+                var cal_start = $(this).val();
+                
+                cal_start = new Date(cal_start);
+                
+                
+                cal_start.setDate(cal_start.getDate());
+     			d = ("0" + cal_start.getDate()).slice(-2);
+        		m = ("0" + (cal_start.getMonth() + 1)).slice(-2);
+        		$('#cal-start').val(cal_start.getFullYear() + '-' + m + '-' + d);
+                
+                cal_start.setDate(cal_start.getDate()+27);
+     			d = ("0" + cal_start.getDate()).slice(-2);
+        		m = ("0" + (cal_start.getMonth() + 1)).slice(-2);
+        		$('#cal-end').val(cal_start.getFullYear() + '-' + m + '-' + d);
+                //console.log($('#cal-end').val());
+                
+                
+        		find_reservation_dates();
+            });
+            
             arrival_depart();
             $(".m_tab1_content").click(function(){
                 $(".m_tab1_content").removeClass('active');
