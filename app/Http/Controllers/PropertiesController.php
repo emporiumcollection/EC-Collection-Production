@@ -1575,11 +1575,13 @@ class PropertiesController extends Controller {
             if ($request->input('edit_type_id') == '') {
                 $data['created'] = date('Y-m-d h:i:s');
                 $data['booking_policy'] =  $request->input('bookingPolicy');
+                $data['cat_color'] =  $request->input('cat_color');
                 $instype = 'add';
                 $id = \DB::table('tb_properties_category_types')->insertGetId($data);
             } else {
                 $data['updated'] = date('Y-m-d h:i:s');
                 $data['booking_policy'] =  $request->input('bookingPolicy');
+                $data['cat_color'] =  $request->input('cat_color');
                 $instype = 'update';
                 $id = \DB::table('tb_properties_category_types')->where('id', $request->input('edit_type_id'))->update($data);
             }

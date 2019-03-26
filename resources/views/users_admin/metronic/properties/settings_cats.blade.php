@@ -227,7 +227,7 @@
     											<label for="cat_name">Suite Type </label>
     											<input name="cat_name" id="cat_name" type="text" class="form-control input-sm" value="" required="required" /> 
     										</div> 
-    										<div class="form-group col-lg-3">
+    										<div class="form-group col-lg-2">
     											<label for="cat_short_name">Short name </label>
     											<input name="cat_short_name" id="cat_short_name" type="text" class="form-control input-sm" value="" required="required" /> 
     										</div>
@@ -235,7 +235,11 @@
     											<label for="guests_base_price">Guests incl. in base price</label>
     											<input name="guests_base_price" id="guests_base_price" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
     										</div>
-    										<div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
+    											<label for="guests_base_price">Color(reset)</label>
+    											<input name="cat_color" id="cat_color" type="text" class="form-control input-sm" value="" /> 
+    										</div>
+    										<div class="form-group col-lg-2">
     											<label for="min_stay">Minimum Stay </label>
     											<input name="min_stay" type="text" class="form-control input-sm" data-rule-number="true" value="" /> 
     										</div>
@@ -309,7 +313,7 @@
 												<label for="cat_name">Suite Type </label>
 												<input name="cat_name" id="cat_name" type="text" class="form-control input-sm" value="{{$cat->category_name}}" required="required" /> 
 											</div> 
-											<div class="form-group col-lg-3">
+											<div class="form-group col-lg-2">
 												<label for="cat_short_name">Short name </label>
 												<input name="cat_short_name" id="cat_short_name" type="text" class="form-control input-sm" value="{{$cat->cat_short_name}}" required="required" /> 
 											</div>
@@ -317,7 +321,11 @@
 												<label for="guests_base_price">Guests incl. in base price</label>
 												<input name="guests_base_price" id="guests_base_price" type="text" class="form-control input-sm" value="{{$cat->guests_in_base_price}}" data-rule-number="true" required="required" /> 
 											</div>
-											<div class="form-group col-lg-3">
+                                            <div class="form-group col-lg-2">
+    											<label for="guests_base_price">Color(reset)</label>
+    											<input name="cat_color" id="cat_color" type="text" class="form-control input-sm" value="{{$cat->cat_color}}" /> 
+    										</div>
+											<div class="form-group col-lg-2">
 												<label for="min_stay">Minimum Stay </label>
 												<input name="min_stay" id="min_stay" type="text" class="form-control input-sm" value="{{$cat->minimum_stay}}" data-rule-number="true" /> 
 											</div>
@@ -392,7 +400,7 @@
 											<label for="cat_name">Suite Type </label>
 											<input name="cat_name" id="cat_name" type="text" class="form-control input-sm" value="" required="required" /> 
 										</div> 
-										<div class="form-group col-lg-3">
+										<div class="form-group col-lg-2">
 											<label for="cat_short_name">Short name </label>
 											<input name="cat_short_name" id="cat_short_name" type="text" class="form-control input-sm" value="" required="required" /> 
 										</div>
@@ -400,7 +408,11 @@
 											<label for="guests_base_price">Guests incl. in base price</label>
 											<input name="guests_base_price" id="guests_base_price" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
-										<div class="form-group col-lg-3">
+                                        <div class="form-group col-lg-2">
+											<label for="guests_base_price">Color(reset)</label>
+											<input name="cat_color" id="cat_color" type="text" class="form-control input-sm" value="" /> 
+										</div>
+										<div class="form-group col-lg-2">
 											<label for="min_stay">Minimum Stay </label>
 											<input name="min_stay" type="text" class="form-control input-sm" value="" data-rule-number="true" /> 
 										</div>

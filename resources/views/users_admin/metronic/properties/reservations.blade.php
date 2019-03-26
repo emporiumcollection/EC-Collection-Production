@@ -251,11 +251,11 @@
 					</div>
 				</form>
                 </div>
-                <?php /* <div class="col-sm-12 col-md-12 col-lg-12">
+                <div class="col-sm-12 col-md-12 col-lg-12" style="margin-top: 10px;">
                     <section>
-						<button type="button" class="b7 info new-reservation" title="New Reservation">New Reservation</button>
+						<button type="button" class="btn btn-primary" title="New Reservation">New Reservation</button>
 					</section>
-                </div> */ ?>
+                </div>
                 <div class="col-sm-12 col-md-12 col-lg-12">
 					<div style="margin-left: 150px; ; height: 13px; border-bottom: none;"></div>
 					<div class="row no_border ">
@@ -346,7 +346,7 @@
 <script src="{{ asset('sximo/js/jquery.validate.js')}}"></script>
 <script src="{{ asset('metronic/assets/app/js/app.js ') }}"></script>
 <script>
-        $(document).ready(function(){
+        $(document).ready(function(){ 
             
             $(".hasDatepicker").datepicker( {
                 todayHighlight:!0, orientation:"bottom left", format:"yyyy-mm-dd", templates: {
@@ -1125,7 +1125,7 @@
                 }
             }); 
             //end
-            console.log(bookedNumbersDetails,' final');
+            //console.log(bookedNumbersDetails,' final');
     		while (current_date.getTime() <= end_date_time) {
     			var day = current_date.getDay();
     			var iweekend = dweekend = '';
