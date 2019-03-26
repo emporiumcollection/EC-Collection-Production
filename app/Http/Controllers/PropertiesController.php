@@ -4648,7 +4648,7 @@ function property_images_wetransfer(Request $request) {
           
         $prop_id = 0;
         $property_name = '';
-        $obj_property = \DB::table('tb_properties')->where('user_id', $u_id)->first();
+        $obj_property = \DB::table('tb_properties')->where('user_id', $u_id)->orWhere('assigned_user_id', $u_id)->first();
         if(!empty($obj_property)){
             $prop_id = $obj_property->id;
             $property_name = $obj_property->property_name;
