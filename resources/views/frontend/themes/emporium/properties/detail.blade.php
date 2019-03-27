@@ -252,14 +252,13 @@
                                         <h3>{{$type->category_name}}</h3>
                                         <p>{{(strlen($type->room_desc) > 100) ? substr($type->room_desc,0,100).'...':$type->room_desc}}</p>
                                         <button class="btn btn-default moreButtonPopup" type="button" rel="{{$type->id}}">More</button>
-                                        <button class="btn btn-default" type="button" onclick="choose_room_type('{{$type->id}}');">Book Now</button>
+                                        <button class="btn btn-default bg-color" type="button" onclick="choose_room_type('{{$type->id}}');">Reservation</button>
                                         
                                         @if($type->price!='')
-                                            <a class="btn btn-default" title="{{$type->season}}"
-                                                    > {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}} </button>
+                                            <a class="btn btn-default" title="{{$type->season}}"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}}</a>
                                             @if(isset(\Auth::user()->id))
                                                 <?php /* <a  href="#" onclick="getseasonrates({{$type->id}});" class="btn btn-default" title="Rates" data-toggle="modal" data-target="#psrModal">Full Rate List</a> */ ?>
-                                                <a  href="#" data-id="{{$type->id}}" class="btn btn-default full-rate" title="Rates">Full Rate List</a>
+                                                <a  href="#" data-id="{{$type->id}}" class="btn btn-default full-rate" title="Rates">{{($currency->content!='') ? $currency->content : '$'}}/Availability</a>
                                             @endif                                           
                                         @endif
                                         
@@ -826,7 +825,7 @@
                     background-color: transparent !important;
                 }
                 .hotelBorderList .t-datepicker-day{
-                    color: #000 !important;
+                    /*color: #000 !important;*/
                 }
                 .hotelBorderList .t-arrow-top{
                     top: 65px;
