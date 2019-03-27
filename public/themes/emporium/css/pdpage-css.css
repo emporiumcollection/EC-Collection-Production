@@ -709,7 +709,7 @@ position: absolute;
 }
 .sliderContent .btn {
     font-size: 12px;
-    padding: 4px 10px;
+    padding: 4px 0px;
     margin: 2px 1px;
   }
   .carousalCaption {
