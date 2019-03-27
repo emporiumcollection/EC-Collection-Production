@@ -4028,10 +4028,10 @@ class HomeController extends Controller {
             $this->data['is_logged_in'] = 'true';
             
             $discount_apply = \DB::table('tb_user_invitee_discount')->where('user_id', \Auth::user()->id)->where('availability', 1)->first();
-            
+            $this->data['curr_user'] = \DB::table('tb_users')->where('id', \Auth::user()->id)->first();
         }
         //print_r($discount_apply);
-        $this->data['curr_user'] = \DB::table('tb_users')->where('id', \Auth::user()->id)->first();
+        
         //print_r($this->data['curr_user']); die;
         $this->data['discount_apply']=$discount_apply;
         $this->data['hotel_terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $props->id)->first();
