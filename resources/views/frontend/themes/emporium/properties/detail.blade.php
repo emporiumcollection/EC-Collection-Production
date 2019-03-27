@@ -255,7 +255,7 @@
                                         <button class="btn btn-default bg-color" type="button" onclick="choose_room_type('{{$type->id}}');">Reservation</button>
                                         
                                         @if($type->price!='')
-                                            <a class="btn btn-default" title="{{$type->season}}"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}}</a>
+                                            <a class="btn btn-default" title="{{$type->season}}" id="loginToView"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}}</a>
                                             @if(isset(\Auth::user()->id))
                                                 <?php /* <a  href="#" onclick="getseasonrates({{$type->id}});" class="btn btn-default" title="Rates" data-toggle="modal" data-target="#psrModal">Full Rate List</a> */ ?>
                                                 <a  href="#" data-id="{{$type->id}}" class="btn btn-default full-rate" title="Rates">{{($currency->content!='') ? $currency->content : '$'}}/Availability</a>
@@ -1044,10 +1044,10 @@
                 $("#cont_packages").css('display', '');        
             });
             
-            $(".btnMembershipTypeJoin").click(function(e){
+            $(document).on("click", ".btnMembershipTypeJoin", function(e){
                 e.preventDefault();
                 $(".clicktologin").trigger("click");
-                $(".signInPopupButton").trigger('click');
+                //$(".signInPopupButton").trigger('click');
             });
             
             $(".login_hotel_pms").click(function(){
@@ -1085,6 +1085,10 @@
                 //'dateCheckIn':'@if(isset($_GET['arrive']) && $_GET['arrive']!=''){{$_GET['arrive']}}@else{{'null'}}@endif',
                 //'dateCheckOut':'@if(isset($_GET['departure']) && $_GET['departure']!=''){{$_GET['departure']}}@else{{'null'}}@endif'
             });
+        });
+        
+        $(document).on('click', '#loginToView', function(e){
+            $(".clicktologin").trigger('click');
         });
         
         $(document).on('click', '.galleryImgBtn', function () {
