@@ -1382,13 +1382,16 @@ class PropertiesController extends Controller {
             if (!is_null($request->input('terms_n_conditions'))) {
                 $row = \DB::table('td_property_terms_n_conditions')->where('property_id', $property_id)->first();
                 if (!empty($row)) {
-                    \DB::table('td_property_terms_n_conditions')->where('term_id', $row->term_id)->update(array('terms_n_conditions' => $request->input('terms_n_conditions')));
+                    \DB::table('td_property_terms_n_conditions')->where('term_id', $row->term_id)->update(array('terms_n_conditions' => $request->input('terms_n_conditions'), 'applytoallroomtypes'=>$request->input('termsapplytoallroomtypes')));
                 } else {
-                    \DB::table('td_property_terms_n_conditions')->insertGetId(array('property_id' => $property_id, 'terms_n_conditions' => $request->input('terms_n_conditions')));
+                    \DB::table('td_property_terms_n_conditions')->insertGetId(array('property_id' => $property_id, 'terms_n_conditions' => $request->input('terms_n_conditions'), 'applytoallroomtypes'=>$request->input('termsapplytoallroomtypes')));
                 }
-            }
+            }            
             $this->data['row'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $property_id)->first();
-            return view('properties.settings_terms_and_conditions', $this->data);
+            
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_terms_and_conditions':'properties.settings_terms_and_conditions'; 
+            return view($file_name, $this->data);
         }elseif ($active == 'custom-price') {            
             $this->data[] = '';            
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());

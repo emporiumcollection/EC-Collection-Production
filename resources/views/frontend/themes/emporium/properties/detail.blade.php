@@ -1088,7 +1088,10 @@
         });
         
         $(document).on('click', '#loginToView', function(e){
-            $(".clicktologin").trigger('click');
+            //$(".clicktologin").trigger('click');
+            $(".popupMainDiv").addClass('openPopup');
+            var curr_link = window.location.href;
+            $("input[name=ref_page]").val(curr_link);
         });
         
         $(document).on('click', '.galleryImgBtn', function () {

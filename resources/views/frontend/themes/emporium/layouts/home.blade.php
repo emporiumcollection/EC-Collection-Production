@@ -475,9 +475,10 @@ if((isset($isfPublic)) && ($isfLoginned === false)){ $isfLoginned = (bool) $isfP
 
                 $(".ai-sign-up-form-error-msg").html('');
                 $(".ai-login-form-success-msg").html('');
-
+                var ref_url = $("input[name=ref_page]").val();
+                
                 var formData = $(this).serialize();
-
+                
                 $.ajax({
                     url: "{{URL::to('customer_ajaxPostSignin')}}",
                     type: "POST",
@@ -486,14 +487,22 @@ if((isset($isfPublic)) && ($isfLoginned === false)){ $isfLoginned = (bool) $isfP
                     success: function (data, textStatus, jqXHR) {
                         if (data.status == 'success') {
                             if(data.gid==3){
-                                console.log(data.new_user);
-                                if(data.new_user=='1'){
-                                    window.location.href = "{{URL::to('traveller')}}";
+                                if(ref_url!='undefined' && ref_url!=''){
+                                    window.location.href = ref_url;    
+                                }else{
+                                    //console.log(data.new_user);
+                                    if(data.new_user=='1'){
+                                        window.location.href = "{{URL::to('traveller')}}";
+                                    }else{
+                                        window.location.href = "{{URL::to('dashboard')}}";
+                                    }
+                                }
+                            }else{
+                                if(ref_url!='undefined' && ref_url!=''){
+                                    window.location.href = ref_url;    
                                 }else{
                                     window.location.href = "{{URL::to('dashboard')}}";
                                 }
-                            }else{
-                                window.location.href = "{{URL::to('dashboard')}}";
                             }
                         }
                         else {
