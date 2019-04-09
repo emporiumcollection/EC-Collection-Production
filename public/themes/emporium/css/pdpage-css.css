@@ -1161,6 +1161,9 @@ position: absolute;
     width: 100%;
     border-spacing: 10px;
 }
+.hotelSearchResultSection .hotelSearchResultInner .box img{
+    padding: 0px 8px;
+}
 .hotelSearchResultSection .hotelSearchResultInner .box .rw{
     display: table-row;
     width: 100%;

@@ -16,6 +16,11 @@
                 @if(!empty($roomavailability))
                     <div class="heading">
                         Search Results <br />
+                        <?php /* <span class="sub-heading">
+                            From {{date('d M Y', strtotime($arrive_new))}} to {{date('d M Y', strtotime($departure_new))}} 
+                            , {{booking_rooms}} rooms, {{booking_adults}} adults and {{booking_children}} children
+                        </span> 
+                        <br />*/ ?>
                         <span class="sub-heading">The following suites are available for the selected criteria.</span>
                     </div>
                     <?php //print_r($propertyDetail['roomimgs']);
@@ -26,7 +31,7 @@
                     ?><div class="row">
                         <div class="col-xs-8">
                     {{--*/ $req_room = (int)$booking_rooms; $total_price = 0 ; $arr_items = array(); $remianing_adult = 0; /*--}}
-                    <?php
+                    <?php 
                         $number_of_nights = '';
                         if($arrive_new != '' && $departure_new != '') {
                             $date1 = date_create(date('Y-m-d H:i:s', strtotime($departure_new)));
@@ -36,6 +41,41 @@
                             $number_of_nights;
                         }
                     ?>
+                    
+                    @if(!empty(Session::get('booking_adults'))) 
+                        {{--*/ 
+                            $rooms2 = Session::get('booking_rooms');
+                            $totalAdults = Session::get('booking_adults');
+                            $adult = Session::get('booking_adults');
+                            $child_ages=array();                          
+                        /*--}} 
+                    @else
+                        {{--*/ $totalAdults = 1; $adult = 1; /*--}} 
+                    @endif
+                    
+                    @if(!empty(Session::get('booking_children'))) 
+                        {{--*/ 
+                            $totalChild = Session::get('booking_children');
+                            $child = Session::get('booking_children'); 
+                        /*--}} 
+                    @else
+                        {{--*/ $totalChild = 0; $child = 0 /*--}} 
+                    @endif
+                    {{--*/ 
+                    if($travellerType!=''){
+                            
+                        if($travellerType==2){
+                           if(!empty(Session::get('child_2_ages'))){
+                                $child_ages = Session::get('child_2_ages');
+                           } 
+                        }else if($travellerType==3){
+                           if(!empty(Session::get('child_3_ages'))){
+                                $child_ages = Session::get('child_3_ages');
+                           } 
+                        }                               
+                            
+                    }
+                     /*--}} 
                     @foreach($roomavailability as $si)
                     
                             <div class="box">
@@ -45,14 +85,14 @@
                                     </div>
                                     <div class="col-3">
                                         <div class="inner-box">
-                                            <div class="suite-name">{{$si['rooms']}} x {{$si['cat_name']}}</div>
+                                            <div class="suite-name">{{$si['rooms']}} x {{$si['cat_name']}} <input type="hidden" name="roomType" id="available_room_type_{{$si['cat_id']}}" value="{{$si['cat_name']}}" /> </div>
                                             <div class="line"><hr /></div>
-                                            <div class="price">&euro;{{$si['price']}}</div>
+                                            <div class="price">&euro;{{$si['price']}} <input type="hidden" name="roomPrice" id="available_room_price_{{$si['cat_id']}}" value="{{$si['price']}}" /> </div>
                                             <div class="room-available">
                                                 @if($req_room > 0)
                                                     {{--*/ 
                                                     
-                                                    $arr_item['room_avail'] = $si['rooms'];
+                                                    //$arr_item['room_avail'] = $si['rooms'];
                                                     $arr_item['price'] = $si['price'];
                                                     $arr_item['type'] = $si['cat_name'];
                                                     $arr_item['cat_id'] = $si['cat_id'];
@@ -66,8 +106,8 @@
                                                         $room_av = $si['rooms'];
                                                     }  
                                                     $total_price = (int)$total_price + (int)($si['price'] * $room_av); 
+                                                    $arr_item['room_avail'] = $room_av;
                                                     
-                                                    $arr_items[] = $arr_item;
                                                     
                                                     /*--}}                                                   
                                                     
@@ -104,38 +144,66 @@
                                             @else
                                                 {{--*/ $rooms = 1 /*--}} 
                                             @endif
-                                            @if(!empty(Session::get('booking_adults'))) 
-                                                {{--*/ 
-                                                    $rooms2 = Session::get('booking_rooms');
-                                                    $totalAdults = Session::get('booking_adults');
-                                                    $adult = Session::get('booking_adults');
-                                                    $adultAssign = 0; 
-                                                    if($travellerType!=''){
-                                                        if($travellerType==0){
-                                                            $adultAssign = 1;    
-                                                        }else if($travellerType==1){
-                                                            $adultAssign = 2;    
-                                                        }else{
-                                                            $perroomadult = ceil($adult/$rooms2);
-                                                            $adultAssign = $perroomadult;
-                                                        }
-                                                    }
-                                                    
-                                                    if($totalAdults >= $adultAssign){
-                                                        //$adult = $adultAssign;
-                                                        //$remianing_adult = $remianing_adult - $adultAssign;
+                                            
+                                            
+                                            {{--*/
+                                            $adultAssign = 1;
+                                            $childAssign = 0;
+                                            if($travellerType!=''){
+                                                if($travellerType==0){
+                                                    $adultAssign = 1;  
+                                                    $childAssign = 0;  
+                                                }else if($travellerType==1){
+                                                    $adultAssign = 2;
+                                                    $childAssign = 0;    
+                                                }else{
+                                                    $perroomadult = ceil($adult/$rooms2);
+                                                    $adultAssign = $perroomadult;
+                                                    if($si['guests_child']!=''){
+                                                        $childAssign = $si['guests_child'];
                                                     }else{
-                                                        
-                                                    }
-                                                /*--}} 
-                                            @else
-                                                {{--*/ $adult = 1 /*--}} 
-                                            @endif
-                                            @if(!empty(Session::get('booking_children'))) 
-                                                {{--*/ $child = Session::get('booking_children') /*--}} 
-                                            @else
-                                                {{--*/ $child = 0 /*--}} 
-                                            @endif
+                                                        $childAssign = 0;
+                                                    } 
+                                                    
+                                                }
+                                            }                                            
+                                                                                 
+                                            if ($si === end($roomavailability)){
+                                                if($totalAdults > 0){
+                                                    $adult = (int)$totalAdults;
+                                                }else{
+                                                    $adult = $adultAssign;
+                                                }
+                                                if($totalChild >= 0){
+                                                    $child = (int)$totalChild;
+                                                }else{
+                                                    $child = $childAssign;
+                                                }
+                                            }else{                                            
+                                                if($totalAdults >= $adultAssign){
+                                                    $adult = $adultAssign;
+                                                    $totalAdults = (int)$totalAdults - (int)$adultAssign;
+                                                }else{
+                                                    $adult = $totalAdults;
+                                                }
+                                                if($totalChild > 0){
+                                                    $child = (int)$childAssign;
+                                                    $totalChild =  (int)$totalChild - (int)$childAssign;
+                                                }else{
+                                                    $child = $totalChild;
+                                                }
+                                            }
+                                            //echo $adultAssign; die;
+                                            $arr_item['room_child'] = $child;
+                                            $arr_item['room_adult'] = $adult;
+                                            
+                                            
+                                            
+                                            $arr_items[] = $arr_item;
+                                            
+                                            /*--}}                                            
+                                            
+                                            
                                             
                                             
                                             <div class="rw">
@@ -166,20 +234,23 @@
                                             
                                         </div>
                                         <div class="tbl child-age-{{$si['cat_id']}}">
-                                            @if(!empty($child_age))
-                                                {{--*/  $sr = 1;  /*--}}
-                                                @foreach($child_age as $age)
+                                            @if(!empty($child_ages))
+                                                {{--*/  $sr = 1; /*--}}
+                                                @foreach($child_ages as $age)
+                                                    @if($child >=$sr)
                                                     <div class="col-30">
-                                                        <div class="lable">Child {{$sr}}</div>
-                                                        <select name="child{{$sr}}" class="form-control child-age">
+                                                        <div class="lable">child {{$sr}}</div>
+                                                        <select name="child[]" id="child_{{$si['cat_id']}}_{{$sr}}" class="form-control child-age">
                                                             @for($i=0; $i<=14; $i++)
-                                                                <option value="$i" {{$i==$age ? 'selected="selected"' : ''}} >{{$i}}</option>
+                                                                <option value="{{$i}}" {{$i==$age ? 'selected="selected"' : ''}} >{{$i}}</option>
                                                             @endfor
                                                         </select>
                                                     </div> 
+                                                    {{--*/ array_shift($child_ages); /*--}}
+                                                    @endif
                                                     {{--*/  $sr = $sr + 1;  /*--}}   
                                                 @endforeach
-                                            @endif
+                                            @endif                                            
                                         </div>
                                         {{-- @endif --}}
                                     </div>
@@ -207,9 +278,13 @@
                                     <h5>#Nights(s)</h5>
                                     <span>
                                     {{$number_of_nights}}
+                                    <input type="hidden" name="numberofnight" id="numberofnight" value="{{$number_of_nights}}" />
                                     </span>
-                                </div>                                
-                                @if(!empty($arr_items))
+                                </div>  
+                                <div id="selected_room_type">
+                                
+                                </div>                              
+                                <?php /* @if(!empty($arr_items))
                                     @foreach($arr_items as $item)
                                         <div class="col-xs-12"><hr /></div>
                                         <div class="row">
@@ -222,19 +297,21 @@
                                                 <div class="col-xs-8 yourStayRoom-{{$item['cat_id']}}">{{$item['room_avail']}} </div>
                                                 <div class="col-xs-4">Guests</div>
                                                 <div class="col-xs-8 yourStayGuest-{{$item['cat_id']}}">
-                                                    {{($booking_adults > 1) ? $booking_adults." adults" : $booking_adults." adult"}}
-                                                    @if($booking_children > 0)
-                                                    , {{($booking_children > 1) ? $booking_children." children" : $booking_children." child"}}                                                                        @endif                                                    
+                                                    @if($item['room_child'] > 0)
+                                                        {{ ($item['room_adult'] > 1) ?  $item['room_adult']." adults" : $item['room_adult']." adult" }}
+                                                    @endif
+                                                    @if($item['room_child'] > 0)
+                                                    , {{($item['room_child'] > 1) ? $item['room_child']." children" : $item['room_child']." child"}}                                                                  @endif                                                    
                                                 </div>
                                             </div>
                                         </div>
                                     @endforeach
-                                @endif
+                                @endif */ ?>
                                 <div class="col-xs-12"><hr /></div>
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <div class="col-xs-6">Total Amount</div>
-                                        <div class="col-xs-6 text-right">{!! isset($currency->content)?$currency->content:'&euro;' !!}{{number_format($total_price*$number_of_nights, 2)}}</div>
+                                        <div class="col-xs-6">Total amount</div>
+                                        <div class="col-xs-6 text-right" id="total_amt"></div>
                                     </div>
                                 </div>
                                 <div class="col-xs-12 text-center btn-pad-20">
@@ -254,8 +331,8 @@
                             <input type="hidden" name="booking_children" id="booking_children" value="{{$booking_children}}"/>
                             <input type="hidden" name="travellerType" id="travellerType" value="{{$travellerType}}"/>
                             <input type="hidden" name="roomType" id="roomType" value=""/>
-                            <input type="hidden" name="child_age" id="child_age" value=""/>
-                            <!--<button type="submit" class="btn yellowbtn" id="make-reservation">Make Reservation</button>-->
+                            <!--<input type="hidden" name="child_age" id="child_age" value=""/>
+                            <button type="submit" class="btn yellowbtn" id="make-reservation">Make Reservation</button>-->
                         </form>
                     </div>
                 @else
@@ -404,9 +481,78 @@
             if(type=="room"){                
                 $("#noOfRooms-"+t_type).val(type_val);
             }
+            get_checked_room();
         }        
     }
+    function get_checked_room(){
+        var _html = '';
+        $total_price = 0;
+        $("input[type=checkbox]").each(function(){
+           if($(this).is(':checked')){
+                var cat_id = $(this).val();
+                var room = $("#hid-minus-plus-room-"+cat_id).val();
+                var adult = $("#hid-minus-plus-adult-"+cat_id).val();
+                var child = $("#hid-minus-plus-child-"+cat_id).val();
+                var typeName = $("#available_room_type_"+cat_id).val();
+                var price = $("#available_room_price_"+cat_id).val();
+                var noOfNight = $("#numberofnight").val();
+                //console.log(room+"/"+adult+"/"+child);                
+                
+                $total_price = $total_price + (noOfNight*price);
+                
+                _html += '<div class="col-xs-12"><hr /></div>';
+                _html += '<div class="row">';
+                    _html += '<div class="col-xs-12">';                                                                                    
+                        _html += '<div class="col-xs-6">'+typeName+'</div>';
+                        _html += '<div class="col-xs-6 text-right">{!! isset($currency->content)?$currency->content:'&euro;' !!}'+price+'<br />price per night </div>';
+                    _html += '</div>';
+                    _html += '<div class="col-xs-12">';
+                        _html += '<div class="col-xs-4">#Room(s)</div>';
+                        _html += '<div class="col-xs-8 yourStayRoom-'+cat_id+'">'+room+'</div>';
+                        _html += '<div class="col-xs-4">Guests</div>';
+                        _html += '<div class="col-xs-8 yourStayGuest-'+cat_id+'">';
+                            if(adult > 0){
+                                _html += (adult > 1) ?  adult+' adults' : adult+" adult";
+                            }
+                            if(child > 0){
+                                _html += ', '+((child > 1) ? child+" children" : child+" child");
+                                _html += '<br />';
+                                
+                                for(l=1; l<=child; l++)
+                                {                 console.log(child);       
+                                    var _age = $("#child_"+cat_id+"_"+l).val();
+                                    console.log(_age);
+                                    var str_age = '';
+                                    if(_age==0){
+                                        str_age = 'Below one year';
+                                    }else if(_age==1){
+                                        str_age = _age+' year';
+                                    }else{
+                                        str_age = _age+' years';
+                                    }
+                                    _html += 'child '+l+' age: '+ str_age; 
+                                    _html += '<input type="hidden" name="childage[]" id="child_ages_'+cat_id+'_'+l+'" class="childages" value="'+_age+'">';
+                                    _html += '<br />';   
+                                }
+                            }                                                   
+                        _html += '</div>';
+                    _html += '</div>';
+                _html += '</div>';
+           }
+        });
+        var ttl_pr = '{!! isset($currency->content)?$currency->content:'&euro;' !!}'+$total_price.toFixed(2);
+        $("#total_amt").html(ttl_pr);
+        $("#selected_room_type").html('');
+        $("#selected_room_type").html(_html);
+    }
     $(document).ready(function(){
+        
+        get_checked_room();
+        
+        $(document).on('change', '.child-age', function(){
+            get_checked_room();
+        });
+        
         $(document).on('click', '.minus-room-available', function () { 
             var t_type = $(this).attr('data-id'); 
             var room = $(".minus-plus-room-"+t_type).attr('data-room');
@@ -481,36 +627,58 @@
                     var r_avail = $("#noOfRooms-"+t_id).val();
                     var adul = $("#hid-minus-plus-adult-"+t_id).val();
                     var chd = $("#hid-minus-plus-child-"+t_id).val();
+                    var price = $("#available_room_price_"+t_id).val();
+                    var chd_ages = '';
+                    
+                    
+                    
                     if(adul == undefined){
                         adul = {{$booking_adults}};
                     }
                     if(chd == undefined){
                         chd = '{{$booking_children}}';    
                     }
+                    if(chd!='undefined' && chd > 0){
+                        for(m=1; chd >= m; m++){
+                            if(m==1){
+                                chd_ages += $("#child_"+t_id+"_"+m).val();
+                            }else{
+                                chd_ages += ","+$("#child_"+t_id+"_"+m).val();
+                            } 
+                        }
+                    }
                     if(r_val==''){
-                        r_val = t_id+"-"+r_avail+"-"+adul+"-"+chd;
+                        r_val = t_id+"-"+price+"-"+r_avail+"-"+adul+"-"+chd+"-"+chd_ages;
                     }else{
-                        r_val = r_val + '#'+t_id+"-"+r_avail+"-"+adul+"-"+chd;
+                        r_val = r_val + '#'+t_id+"-"+price+"-"+r_avail+"-"+adul+"-"+chd+"-"+chd_ages;
                     }                    
                     flag = 1;
                 }
+                //console.log(r_val);
            });
            $("#roomType").val(r_val); 
            //console.log(flag);
            if(flag){
-                $("#available-booking-form").submit();
+                @if(\Auth::check() == true)
+                    $("#available-booking-form").submit();
+                @else
+                    $(".popupMainDiv").addClass('openPopup');
+                    var curr_link = window.location.href;
+                    $("input[name=ref_page]").val(curr_link);
+                @endif               
            }else{
                 alert("Please checked at least one room");
            }
         });
         
         $(document).on('click', 'input[type="checkbox"]', function(){
-            $('input[type="checkbox"]').each(function(index, value){
+            /*$('input[type="checkbox"]').each(function(index, value){
                 console.log(index+"/"+value);
                 if($(this).is(':checked')){
                     console.log($(this).val());
                 }
-            });
+            });*/
+            get_checked_room();
         }); 
         
     });
@@ -518,8 +686,8 @@
         var _html = '';
         //_html += '<div class="rw ">';
             _html += '<div class="col-30">';
-                _html += '<div class="lable">Child '+child_no+'</div>';
-                    _html += '<select name="child'+child_no+'" class="form-control child-age">';
+                _html += '<div class="lable">child '+child_no+'</div>';
+                    _html += '<select name="child[]" id="child_'+type+'_'+child_no+'" class="form-control child-age">';
                     for(i=0; i<=14; i++){
                          _html += '<option value='+i+'>'+i+'</option>';        
                     }

@@ -423,6 +423,10 @@ Route::group(['middleware' => 'auth'], function()
     
     Route::get('ajaxnextprevmonth', 'Frontend\PropertyController@ajaxnextprevmonth');
    	Route::post('change_order_num', 'PackagesController@change_ordering');
+    
+    Route::post('pdproomavailability', 'HomeController@ajaxcheckavailability');
+    
+    Route::get('searchavailability', 'Frontend\PropertyController@propertySearchAvailability');
 });
 
 Route::post('hotel_membership', 'Frontend\HotelMembershipController@hotelMembershipSignupSave');
@@ -522,6 +526,7 @@ Route::post('resturantspabar_by_typecity_ajax', 'Frontend\RestaurantFrontControl
 Route::post('resturantspabarSearch_ajax', 'Frontend\RestaurantFrontController@resturantSpaBarSearchAjax');
 Route::get('pdp/{slug}', 'Frontend\PropertyController@getPropertyDetail');
 Route::get('search', 'Frontend\PropertyController@propertySearch');
+
 Route::get('our-collection-pages/{slug}/{page}', 'HomeController@getPropertyDetail_pages');
 Route::get('book-property/{slug}', 'HomeController@bookProperty');
 
@@ -662,3 +667,5 @@ Route::get('traveller/checkroomavailabilitybydates', 'BookingsController@checkro
 Route::get('traveller/checkcategoryavailability', 'BookingsController@checkcategoryavailability');
 
 Route::get('traveller/get_daywise_price', 'HomeController@get_daywise_price');
+
+Route::get('{slug}/room-availability', 'Frontend\PropertyController@roomavailability');

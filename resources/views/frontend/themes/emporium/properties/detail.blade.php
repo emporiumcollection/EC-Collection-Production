@@ -255,7 +255,7 @@
                                         <button class="btn btn-default bg-color" type="button" onclick="choose_room_type('{{$type->id}}');">Reservation</button>
                                         
                                         @if($type->price!='')
-                                            <a class="btn btn-default" title="{{$type->season}}" id="loginToView"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}}</a>
+                                            <a class="btn btn-default" title="{{$type->season}}" id="loginToView"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}} </a>
                                             @if(isset(\Auth::user()->id))
                                                 <?php /* <a  href="#" onclick="getseasonrates({{$type->id}});" class="btn btn-default" title="Rates" data-toggle="modal" data-target="#psrModal">Full Rate List</a> */ ?>
                                                 <a  href="#" data-id="{{$type->id}}" class="btn btn-default full-rate" title="Rates">{{($currency->content!='') ? $currency->content : '$'}}/Availability</a>
@@ -263,10 +263,8 @@
                                         @endif
                                         
                                         <div class="sliderArrow">
-                                            <a href="javascript:void(0);" class="prevClick"><i
-                                                        class="fa fa-angle-left"></i></a>
-                                            <a href="javascript:void(0);" class="nextClick"><i
-                                                        class="fa fa-angle-right"></i></a>
+                                            <a href="javascript:void(0);" class="prevClick"><i class="fa fa-angle-left"></i></a>
+                                            <a href="javascript:void(0);" class="nextClick"><i class="fa fa-angle-right"></i></a>
                                         </div>
                                     </div>
                                 </div>
@@ -343,7 +341,7 @@
                                                         <div class="panel-body">
                                                             <div class="row">
                                                                 <div  class="col-sm-12 col-md-12 col-lg-12">
-                                                                    Base rate: {{$si->rack_rate}}                                                               
+                                                                    Base rate: {{($currency->content!='') ? $currency->content : '$'}}{{$si->rack_rate}}                                                               
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -538,27 +536,56 @@
                                             <div class="t-check-out"></div>
                                         </div>
                                     </li> -->
+                                    @if(!empty(Session::get('booking_adults'))) 
+                                        {{--*/ $adult = Session::get('booking_adults') /*--}} 
+                                    @else
+                                        {{--*/ $adult = 1 /*--}} 
+                                    @endif
+                                    
                                     <li>
                                         <h3>Adults</h3>
                                         <select name="booking_adults">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                            <option>6</option>
+                                            <option {{$adult==1 ? "selected='selected'" : "" }}>1</option>
+                                            <option {{$adult==2 ? "selected='selected'" : "" }}>2</option>
+                                            <option {{$adult==3 ? "selected='selected'" : "" }}>3</option>
+                                            <option {{$adult==4 ? "selected='selected'" : "" }}>4</option>
+                                            <option {{$adult==5 ? "selected='selected'" : "" }}>5</option>
+                                            <option {{$adult==6 ? "selected='selected'" : "" }}>6</option>
+                                            <option {{$adult==7 ? "selected='selected'" : "" }}>7</option>
+                                            <option {{$adult==8 ? "selected='selected'" : "" }}>8</option>
+                                            <option {{$adult==9 ? "selected='selected'" : "" }}>9</option>
+                                            <option {{$adult==10 ? "selected='selected'" : "" }}>10</option>
+                                            <option {{$adult==11 ? "selected='selected'" : "" }}>11</option>
+                                            <option {{$adult==12 ? "selected='selected'" : "" }}>12</option>
+                                            <option {{$adult==13 ? "selected='selected'" : "" }}>13</option>
+                                            <option {{$adult==14 ? "selected='selected'" : "" }}>14</option>
+                                            <option {{$adult==15 ? "selected='selected'" : "" }}>15</option>                                            
                                         </select>
                                     </li>
+                                    @if(!empty(Session::get('booking_children'))) 
+                                        {{--*/ $child = Session::get('booking_children') /*--}} 
+                                    @else
+                                        {{--*/ $child = 0 /*--}} 
+                                    @endif
                                     <li>
                                         <h3>Children</h3>
                                         <select name="booking_children">
-                                            <option>0</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                            <option>5</option>
-                                            <option>6</option>
+                                            <option {{$child==0 ? "selected='selected'" : "" }}>0</option>
+                                            <option {{$child==1 ? "selected='selected'" : "" }}>1</option>
+                                            <option {{$child==2 ? "selected='selected'" : "" }}>2</option>
+                                            <option {{$child==3 ? "selected='selected'" : "" }}>3</option>
+                                            <option {{$child==4 ? "selected='selected'" : "" }}>4</option>
+                                            <option {{$child==5 ? "selected='selected'" : "" }}>5</option>
+                                            <option {{$child==6 ? "selected='selected'" : "" }}>6</option>                                            
+                                            <option {{$child==7 ? "selected='selected'" : "" }}>7</option>
+                                            <option {{$child==8 ? "selected='selected'" : "" }}>8</option>
+                                            <option {{$child==9 ? "selected='selected'" : "" }}>9</option>
+                                            <option {{$child==10 ? "selected='selected'" : "" }}>10</option>
+                                            <option {{$child==11 ? "selected='selected'" : "" }}>11</option>
+                                            <option {{$child==12 ? "selected='selected'" : "" }}>12</option>
+                                            <option {{$child==13 ? "selected='selected'" : "" }}>13</option>
+                                            <option {{$child==14 ? "selected='selected'" : "" }}>14</option>
+                                            <option {{$child==15 ? "selected='selected'" : "" }}>15</option>
                                         </select>
                                     </li>
                                 </ul>
@@ -755,6 +782,24 @@
     	</div>
       </div>
     </div>
+    <?php /*<!-- Rooms Availability Modal -->
+    <div class="modal fade" id="raModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" data-backdrop="static" data-keyboard="false">
+      <div class="modal-dialog" role="document">
+    	<div class="modal-content">
+    	  <div class="modal-header">
+    		<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    		<h4 class="modal-title" id="myModalLabel"></h4>
+    	  </div>
+    	  <div class="modal-body" id="ratecomm">
+    		
+    	  </div>
+    	  <div class="modal-footer">
+    		<button type="button" class="btn btn-default" data-dismiss="modal" aria-label="Close">OK</button>
+    	  </div>
+    	  </form>
+    	</div>
+      </div>
+    </div> */ ?>
 @endsection
 
 
@@ -973,8 +1018,6 @@
         ?>
         $(document).ready(function () {
             
-            
-            
             @if(array_key_exists('typedata', $propertyDetail))            
                 @foreach($propertyDetail['typedata'] as $type)
                     @if (array_key_exists($type->id, $propertyDetail['roomimgs']))
@@ -1065,6 +1108,17 @@
             
             var chk_out_date = new Date();
             
+            @if(!empty(Session::get("arrive")))
+                chk_date = '{{Session::get("arrive")}}';
+            @else 
+                chk_date = chk_date;            
+            @endif
+            
+            @if(!empty(Session::get("departure")))
+                chk_out_date = '{{Session::get("departure")}}'; 
+            @else  
+                chk_out_date = chk_out_date;
+            @endif
             
             
             $('#t-middel-picker').tDatePicker({
@@ -1093,7 +1147,7 @@
             var curr_link = window.location.href;
             $("input[name=ref_page]").val(curr_link);
         });
-        
+            
         $(document).on('click', '.galleryImgBtn', function () {
 			var params = $.extend({}, doAjax_params_default);
 			params['url'] = BaseURL + '/getpropertyroomimages/' + $(this).attr('rel');
