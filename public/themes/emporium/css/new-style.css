@@ -4507,6 +4507,7 @@ svg:not(:root) {
     padding: 5px;
     font-size: 12px;
     display: table;
+    left: -70px;
 }
 .chooseadultroom .column-1{
     width: 70%;
@@ -4556,6 +4557,11 @@ svg:not(:root) {
 .chooseadultroom .tbl .rw .traveller-type.active{
     color: #ABA07C;
     text-decoration: none;
+    font-size: 13px;
+    border-bottom: 1px solid;
+}
+.chooseadultroom .tbl .rw .traveller-type.active span span{    
+    border-bottom: 1px solid;
 }
 .chooseadultroom .tbl .rw .col-55{
     width: 55%;

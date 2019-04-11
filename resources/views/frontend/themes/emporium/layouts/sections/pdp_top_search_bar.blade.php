@@ -31,9 +31,8 @@
                     <div class="col-sm-3 col-md-2">
                         <label>&nbsp;</label>
                 	    <div class="form-group adult-room">
-                            <div class="left">
-                    		    <span class="number-of-adult">
-                                    @if(!empty(Session::get('booking_rooms'))) 
+                            
+                                @if(!empty(Session::get('booking_rooms'))) 
                                         {{--*/ $rooms = Session::get('booking_rooms') /*--}}
                                     @else
                                         {{--*/ $rooms = 1 /*--}} 
@@ -63,11 +62,7 @@
                                     @endif
                                     
                                      
-                                    @if($child > 0)
-                                        {{$adult}} adult, {{ $child == 1 ? $child." child" : $child." children"}}
-                                    @else
-                                        {{$adult}} adult
-                                    @endif
+                                    
                                     
                                     @if(!empty(Session::get('tr_2_rooms'))) 
                                         {{--*/ $tr_2_rooms = Session::get('tr_2_rooms') /*--}}
@@ -123,16 +118,26 @@
                                         {{--*/ $child_3_ages = array(); /*--}} 
                                     @endif
                                     
-                                    <br /> {{$rooms}} room                                    
-                                </span>
                                 <input type="hidden" name="booking_rooms" id="hid_room" value="{{$rooms}}" />
                                 <input type="hidden" name="booking_adults" id="hid_adult" value="{{$adult}}" />
                                 <input type="hidden" name="booking_children" id="hid_children" value="{{$child}}" {{$strdisable}} />
                                 <input type="hidden" name="travellerType" id="hid_traveller_type" value="{{$travellerType}}" />
                                 <input type="hidden" name="childrenAge" id="hid_children_age" value="" />
-                            </div>
-                            <div class="right" id="down-arrow">
-                                <i class="down"></i>
+                            
+                            <div id="down-arrow" style="cursor: pointer;">
+                                <div class="left">    
+                        		    <span class="number-of-adult">
+                                        @if($child > 0)
+                                            {{$adult}} adult, {{ $child == 1 ? $child." child" : $child." children"}}
+                                        @else
+                                            {{$adult}} adult
+                                        @endif
+                                        <br /> {{$rooms}} room                                    
+                                    </span>                                
+                                </div>
+                                <div class="right">
+                                    <i class="down"></i>
+                                </div>
                             </div>
                 	    </div>
                         <div class="chooseadultroom" style="display: none;">
@@ -151,7 +156,7 @@
                                     <div class="rw">
                                         <div class="col-55">
                                             <a href="#" class="traveller-type {{!empty(Session::get('travellerType')) ? (Session::get('travellerType')==2 ? 'active' : '') : ''}}"  id="traveller-type-2" data-id='2' data-room='{{$tr_2_rooms}}' data-adult='{{$tr_2_adults}}' data-child='{{$tr_2_child}}'>
-                                                <span class="span-left">Family travelers</span>
+                                                <span class="span-left"><span>Family travelers</span></span>
                                                 <span class="span-right"><i class="right traveller-type-arrow tta-2"></i></span>
                                             </a>
                                             <input type="hidden" name="tr_2_rooms" id="tr_2_rooms" value="{{$tr_2_rooms}}" />
@@ -165,7 +170,7 @@
                                     <div class="rw">
                                         <div class="col-55">
                                             <a href="#" class="traveller-type {{!empty(Session::get('travellerType')) ? (Session::get('travellerType')==3 ? 'active' : '') : ''}}" id="traveller-type-3" data-id='3' data-room='{{$tr_3_rooms}}' data-adult='{{$tr_3_adults}}' data-child='{{$tr_3_child}}'>
-                                                <span class="span-left">Group travelers</span>
+                                                <span class="span-left"><span>Group travelers</span></span>
                                                 <span class="span-right"><i class="right traveller-type-arrow tta-3"></i></span>
                                             </a>
                                             <input type="hidden" name="tr_3_rooms" id="tr_3_rooms" value="{{$tr_3_rooms}}" />
@@ -179,7 +184,7 @@
                                     <div class="rw">
                                         <div class="col-55">
                                             <a href="#" class="traveller-type {{!empty(Session::get('travellerType')) ? (Session::get('travellerType')==4 ? 'active' : '') : ''}}" id="traveller-type-4" data-id='4' data-room='{{$tr_4_rooms}}' data-adult='{{$tr_4_adults}}'>
-                                                <span class="span-left">Business travelers</span>
+                                                <span class="span-left"><span>Business travelers</span></span>
                                                 <span class="span-right"><i class="right traveller-type-arrow tta-4"></i></span>
                                             </a>
                                             <input type="hidden" name="tr_4_rooms" id="tr_4_rooms" value="{{$tr_4_rooms}}" />
