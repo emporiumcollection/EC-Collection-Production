@@ -112,6 +112,7 @@ class PropertiesController extends Controller {
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
 		$this->data['fetch_cat'] = \DB::table('tb_categories')->get();
+        $this->data['prop_cat'] = \DB::table('tb_packages')->where('package_status', 1)->where('package_category', 'B2C')->get();
         
         $hotelIds = array();
         foreach($this->data['rowData'] as $si_hotel){
@@ -1392,6 +1393,7 @@ class PropertiesController extends Controller {
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
             $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_terms_and_conditions':'properties.settings_terms_and_conditions'; 
             return view($file_name, $this->data);
+            
         }elseif ($active == 'custom-price') {            
             $this->data[] = '';            
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
@@ -1501,7 +1503,7 @@ class PropertiesController extends Controller {
             $c = 0;
             foreach ($cat_types as $type) {
                 $cats[$c]['data'] = $type;
-                $cat_rooms = \DB::table('tb_properties_category_rooms')->where('category_id', $property_id)->where('category_id', $type->id)->get();
+                $cat_rooms = \DB::table('tb_properties_category_rooms')->where('category_id', $property_id)->where('category_id', $type->id)->orderBy('id', 'asc')->get();
                 if (!empty($cat_rooms)) {
                     foreach ($cat_rooms as $room) {
                         $cats[$c]['rooms'][] = $room;
@@ -1522,7 +1524,7 @@ class PropertiesController extends Controller {
             $c = 0;
             foreach ($cat_types as $type) {
                 $cats[$c]['data'] = $type;
-                $cat_rooms = \DB::table('tb_properties_category_rooms')->where('property_id', $property_id)->where('category_id', $type->id)->get();
+                $cat_rooms = \DB::table('tb_properties_category_rooms')->where('property_id', $property_id)->where('category_id', $type->id)->orderBy('id', 'asc')->get();
                 if (!empty($cat_rooms)) {
                     foreach ($cat_rooms as $room) {
                         $cats[$c]['rooms'][] = $room;
@@ -1598,6 +1600,8 @@ class PropertiesController extends Controller {
             $data['guests_adults'] = $request->input('guests_adult');
             $data['guests_juniors'] = $request->input('guests_junior');
             $data['guests_babies'] = $request->input('guests_babies');
+            //$data['booking_policy'] =  $request->input('bookingPolicy');
+            
             if (!is_null($request->input('count_baby'))) {
                 $data['baby_count'] = $request->input('count_baby');
             } else {
@@ -1618,8 +1622,8 @@ class PropertiesController extends Controller {
                 $id = \DB::table('tb_properties_category_types')->insertGetId($data);
             } else {
                 $data['updated'] = date('Y-m-d h:i:s');
-                $data['booking_policy'] =  $request->input('bookingPolicy');
-                $data['cat_color'] =  $request->input('cat_color');
+                $data['booking_policy'] =  $request->input('bookingPolicy');   
+                $data['cat_color'] =  $request->input('cat_color');             
                 $instype = 'update';
                 $id = \DB::table('tb_properties_category_types')->where('id', $request->input('edit_type_id'))->update($data);
             }
@@ -5066,4 +5070,26 @@ function property_images_wetransfer(Request $request) {
 		return json_encode($res);
     }
     
+    function changeRoomStatus(Request $request) {
+        $uid = \Auth::user()->id;
+        $roomId = $request->input('room_id');
+        //print_r($roomId); die;
+        $sts = $request->input('status');
+        //$catid = $request->input('catid');
+        //$pid = $request->input('pid');
+        $checkRoom = \DB::table('tb_properties_category_rooms')->where('id', $roomId)->count();
+        //print_r($checkRoom); die;
+        if ($checkRoom > 0) {
+            //$ups = \DB::table('tb_properties_category_rooms')->uop->where('id', $roomId);
+            $ups = \DB::table('tb_properties_category_rooms')->where('id', $roomId)->update(array('status' => $sts));
+            $res['status'] = 'success';
+            //$res['pid'] = $pid;
+            //$res['catid'] = $catid;
+            return json_encode($res);
+        } else {
+            $res['status'] = 'error';
+            return json_encode($res);
+        }
+    }
+
 }
