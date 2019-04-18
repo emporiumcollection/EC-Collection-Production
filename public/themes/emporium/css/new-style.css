@@ -4613,10 +4613,51 @@ svg:not(:root) {
 .emotional-gellery-loader{
     
 }
-.emotional-gellery-loader img{
-    
+.emotional-gellery-loader .main-img{
+    height: 100vh;
+    object-fit: cover;
+    object-position: center 0px;
+    width: 100%;
+    background-color: #252525;
+}
+.emotional-gellery-loader .loader-logo{
+    position: absolute;
+    width: 320px;
+    top: 5%;
+    left: 5%;
+}
+.emotional-gellery-loader .loader-text{
+    position: absolute;
+    width: 200px;
+    top: 30%;
+    left: 35%;  
+    color: #fff;     
+    font-size: 18px;    
+}
+.emotional-gellery-loader .loader-text img{
+   width: 63%;   
+}
+.emotional-gellery-loader .loader-logo-title{
+    position: absolute;
+    width: 420px;
+    right: 9%;
+    top: 38%;
+    color: #fff;
+}
+.emotional-gellery-loader .image-overaly-bg {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(37,37,37,0.25);
 }
 /* End emotional gallery loader */
 .margin-top-90{
     margin-top: 90px;
+}
+.mobilenavheader {
+    padding: 15px 50px !important;
 }
