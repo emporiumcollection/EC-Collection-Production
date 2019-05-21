@@ -31,6 +31,8 @@
     <meta name="theme-color" content="#ffffff" />
     <!-- Favicon END -->
     
+    <script id="domain" data-name="10526498" type="text/javascript" src="https://www.visitor-analytics-seo.com/sitespy/js/analytics_js/client.js"></script>
+    
     <!-- Bootstrap -->
     <link href="{{ asset('themes/emporium/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300,400,600,700" rel="stylesheet">
