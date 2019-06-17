@@ -1272,6 +1272,14 @@ class PropertyController extends Controller {
         $this->data['slug_type'] = $slug_type;
         $this->data['mtype'] = $mtype;
         
+        $is_access = false;
+        if(isset(\Auth::user()->group_id)){
+            if(\Auth::user()->group_id==1){
+                $is_access = true;
+            }    
+        }
+        $this->data['is_access'] = $is_access;
+        
 		$this->data['featurePropertiesArr']=$featureData;
         $this->data['propertiesArr'] = $propertiesArr;
         $this->data['total_record'] = $getRec[0]->total_record;
