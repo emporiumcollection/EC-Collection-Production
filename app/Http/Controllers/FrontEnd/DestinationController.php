@@ -196,7 +196,9 @@ class DestinationController extends Controller {
                 $res['dest'] = $fetchdestinations;
             }
 			
-			$fetchcollection = DB::table('tb_properties')->select('tb_properties.id', 'tb_properties.property_name', 'tb_properties.property_slug')->join('tb_properties_category_package','tb_properties_category_package.property_id','=','tb_properties.id')->whereIn('tb_properties_category_package.package_id', explode(',',$this->pckages_ids))->where('tb_properties.property_status', 1)->where('tb_properties.property_name', 'like', '%'.$keyword.'%')->get();
+			//$fetchcollection = DB::table('tb_properties')->select('tb_properties.id', 'tb_properties.property_name', 'tb_properties.property_slug')->join('tb_properties_category_package','tb_properties_category_package.property_id','=','tb_properties.id')->whereIn('tb_properties_category_package.package_id', explode(',',$this->pckages_ids))->where('tb_properties.property_status', 1)->where('tb_properties.property_name', 'like', '%'.$keyword.'%')->get();
+            
+            $fetchcollection = DB::table('tb_properties')->select('tb_properties.id', 'tb_properties.property_name', 'tb_properties.property_slug')->join('tb_properties_category_package','tb_properties_category_package.property_id','=','tb_properties.id')->where('tb_properties.property_status', 1)->where('tb_properties.property_name', 'like', '%'.$keyword.'%')->get();
 
             if(!empty($fetchcollection))
             {

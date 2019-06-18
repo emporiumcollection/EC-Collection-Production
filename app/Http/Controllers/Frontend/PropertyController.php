@@ -667,7 +667,8 @@ class PropertyController extends Controller {
 		$relatedgridpropertiesArr = array();
         $this->data['slug'] = rtrim($request->slug,'-');
         //$props = \DB::table('tb_properties')->where('property_slug', $request->slug)->first();
-        $props = \DB::table('tb_properties')->select('tb_properties.*')->join('tb_properties_category_package','tb_properties_category_package.property_id','=','tb_properties.id')->whereIn('tb_properties_category_package.package_id', explode(',',$this->pckages_ids))->whereRaw("TRIM(TRAILING '-' FROM property_slug ) = ?", [$this->data['slug']])->first();
+        //$props = \DB::table('tb_properties')->select('tb_properties.*')->join('tb_properties_category_package','tb_properties_category_package.property_id','=','tb_properties.id')->whereIn('tb_properties_category_package.package_id', explode(',',$this->pckages_ids))->whereRaw("TRIM(TRAILING '-' FROM property_slug ) = ?", [$this->data['slug']])->first();
+        $props = \DB::table('tb_properties')->select('tb_properties.*')->whereRaw("TRIM(TRAILING '-' FROM property_slug ) = ?", [$this->data['slug']])->first();
         
         //$query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
         if (!empty($props)) {
@@ -2115,20 +2116,24 @@ class PropertyController extends Controller {
             //print_r($package_type); die;
             if($package_type!='lifestyle-membership'){
                 if (\Auth::check()){
-                    $obj_user =  \DB::table('tb_users')->where('id', \Auth::user()->id)->first();
-                    
-                    if(!empty($obj_user)){
-                        if($obj_user->member_type!=''){
-                            $member_type = trim($obj_user->member_type);
-                        }else{
-                            $member_type = 'lifestyle-membership';
-                        }
-                    //print_r($package_type);
-                    //print_r($member_type); die;
-                        if($package_type!=$member_type){
-                            $flag = false;
+                    if(\Auth::user()->group_id!=1){
+                        $obj_user =  \DB::table('tb_users')->where('id', \Auth::user()->id)->first();
+                        
+                        if(!empty($obj_user)){
+                            if($obj_user->member_type!=''){
+                                $member_type = trim($obj_user->member_type);
+                            }else{
+                                $member_type = 'lifestyle-membership';
+                            }
+                        //print_r($package_type);
+                        //print_r($member_type); die;
+                            if($package_type!=$member_type){
+                                $flag = false;
+                            }
                         }
                     }
+                }else{
+                    $flag = false;
                 }
             }
         }
