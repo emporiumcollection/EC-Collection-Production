@@ -154,6 +154,13 @@ Route::get('social-youtube/{cat}', 'Frontend\FrontendPagesController@socialYoutu
 Route::get('social-youtube/{continent}/{cat}', 'Frontend\FrontendPagesController@socialYoutube');
 Route::get('social-youtube/{continent}/{region}/{cat}', 'Frontend\FrontendPagesController@socialYoutube');
 Route::get('social-youtube/{continent}/{region}/{country}/{cat}', 'Frontend\FrontendPagesController@socialYoutube');
+
+Route::get('social-instagram', 'Frontend\FrontendPagesController@socialInstagram');
+Route::get('social-instagram/{cat}', 'Frontend\FrontendPagesController@socialInstagram');
+Route::get('social-instagram/{continent}/{cat}', 'Frontend\FrontendPagesController@socialInstagram');
+Route::get('social-instagram/{continent}/{region}/{cat}', 'Frontend\FrontendPagesController@socialInstagram');
+Route::get('social-instagram/{continent}/{region}/{country}/{cat}', 'Frontend\FrontendPagesController@socialInstagram');
+
 Route::get('social-stream', 'Frontend\FrontendPagesController@socialStreamWall');
 
 Route::resource('sximoapi', 'SximoapiController'); 
@@ -426,10 +433,26 @@ Route::group(['middleware' => 'auth'], function()
     
     Route::post('pdproomavailability', 'HomeController@ajaxcheckavailability');
     
-    Route::get('searchavailability', 'Frontend\PropertyController@propertySearchAvailability');
+
     
     Route::post('changeRoomStatus', 'PropertiesController@changeRoomStatus');
+    
+    Route::post('globalavailability', 'Frontend\PropertyController@propertyglobalavailability');
+    
+    Route::post('globalsearchavailability', 'Frontend\PropertyController@globalsearchavailability');
+    
 });
+
+Route::get('searchavailability', 'Frontend\PropertyController@propertySearchAvailability');
+    
+Route::post('getyoutubechannel', 'Frontend\FrontendPagesController@getyoutubechannel');
+Route::post('getinstagramchannel', 'Frontend\FrontendPagesController@getinstagramchannel');    
+Route::post('getDropdownBreadcrumb', 'Frontend\PropertyController@getDropdownBreadcrumb');
+
+Route::post('propcollection', 'Frontend\PropertyController@propcollection');
+Route::post('searchpropcollection', 'Frontend\PropertyController@searchpropcollection');
+Route::post('propertybycollection', 'Frontend\PropertyController@propertybycollection');
+Route::post('searchpropertybycollection', 'Frontend\PropertyController@searchpropertybycollection');
 
 Route::post('hotel_membership', 'Frontend\HotelMembershipController@hotelMembershipSignupSave');
 
@@ -527,7 +550,7 @@ Route::get('reserve_resto_table_request', 'Frontend\RestaurantFrontController@re
 Route::post('resturantspabar_by_typecity_ajax', 'Frontend\RestaurantFrontController@resturantSpaBarByTypeCityAjax');
 Route::post('resturantspabarSearch_ajax', 'Frontend\RestaurantFrontController@resturantSpaBarSearchAjax');
 Route::get('pdp/{slug}', 'Frontend\PropertyController@getPropertyDetail');
-Route::get('search', 'Frontend\PropertyController@propertySearch');
+Route::get('search', 'Frontend\PropertyController@propertySearch_latest');
 
 Route::get('our-collection-pages/{slug}/{page}', 'HomeController@getPropertyDetail_pages');
 Route::get('book-property/{slug}', 'HomeController@bookProperty');
@@ -538,10 +561,15 @@ Route::get('luxurytravel/{slug}', 'Frontend\PropertyController@getPropertyGridLi
 Route::get('ourcollections/{id}', 'HomeController@getPropertyByCategoryQuickView');
 //Route::get('search', 'HomeController@SearchLuxuryExperience');
 Route::get('luxury_experience/{cat}', 'Frontend\PropertyController@propertySearch');
+//Route::get('luxury_experience/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
 Route::get('luxury_destinations/{cat}', 'Frontend\PropertyController@propertySearch');
+//Route::get('luxury_destinations/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
 Route::get('luxury_destinations/{continent}/{cat}', 'Frontend\PropertyController@propertySearch');
+//Route::get('luxury_destinations/{continent}/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
 Route::get('luxury_destinations/{continent}/{region}/{cat}', 'Frontend\PropertyController@propertySearch');
+//Route::get('luxury_destinations/{continent}/{region}/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
 Route::get('luxury_destinations/{continent}/{region}/{country}/{cat}', 'Frontend\PropertyController@propertySearch');
+//Route::get('luxury_destinations/{continent}/{region}/{country}/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
 
 Route::get('luxury_hotels/{cat}', 'Frontend\PropertyController@propertySearch');
 Route::get('getpropertygallery/{id}/{type}', 'HomeController@getPropertyGalleryQuickView');
@@ -671,3 +699,5 @@ Route::get('traveller/checkcategoryavailability', 'BookingsController@checkcateg
 Route::get('traveller/get_daywise_price', 'HomeController@get_daywise_price');
 
 Route::get('{slug}/room-availability', 'Frontend\PropertyController@roomavailability');
+
+Route::post('topSearch', 'Frontend\PropertyController@topSearch');
