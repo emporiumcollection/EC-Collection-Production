@@ -29,15 +29,15 @@
 </div>
 
 
-<div class="custom-menu">
+<!--<div class="custom-menu">
     <ul class="cstm_menu">
        <li><a href="#" data-toggle="modal" data-target="#MenuModal">Menu</a></li>
        <li><a href="#" data-toggle="modal" data-target="#CollectModal">Collection</a></li>
        <li><a href="#" class="srch_btn"><i class="fa fa-search"></i></a></li>
-       <!-- Modal FOR SEARCH ICON-->
+       
        
     </ul>
-</div>
+</div>-->
 
 
 <div class="u-inline-block menu-bx unlog">
