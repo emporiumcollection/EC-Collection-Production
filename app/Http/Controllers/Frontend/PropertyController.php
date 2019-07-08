@@ -382,7 +382,7 @@ class PropertyController extends Controller {
             $cat_collection = \DB::table('tb_categories')->where('parent_category_id', $m_collection->id)->where('category_approved', 1)->where('category_published', 1)->orderBy('category_order_num', 'asc')->get();
         }
         $this->data['collections'] = $cat_collection;
-        
+        print_r($this->data['collections']); die;
         $parent_cat = array();
         $channel_url = '';
         $instagram_url = '';
