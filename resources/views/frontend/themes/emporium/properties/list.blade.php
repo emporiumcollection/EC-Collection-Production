@@ -262,7 +262,7 @@
                     @endif
                 </select>
                 <h5 class="margin-top-20">Your Collection</h5>  
-                <?php print_r($collections); ?>            
+                            
                 @if(!empty($collections))
                 {{--*/ $i=1; $j=1; $k=1; $l=1; $arr_key=''; /*--}}
                 <ul class="nav nav-tabs">
