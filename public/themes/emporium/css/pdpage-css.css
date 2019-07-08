@@ -209,6 +209,9 @@
   border-right: 1px solid #545454;
   border-top: 1px solid #545454;
 }
+.hotelBorderList .t-picker-width{
+    width: 45%;    
+}
 .hotelBorderList li {
   border-right: 1px solid #545454;
 }
@@ -825,6 +828,9 @@ position: absolute;
     position: relative;
     transform: none;
     -webkit-transform: none;
+  }
+  .hotelBorderList .t-picker-width{
+    width: 100%;    
   }
 }
 @media screen and (max-width: 480px) {
