@@ -1238,8 +1238,20 @@ svg:not(:root) {
   .sliderFooter ul li {
     width: auto;
   }
-
-  
+    .search-tab{
+        margin-left: 14px !important;  
+        margin-right: 0px !important;      
+    }
+    .search-tab .nav-tabs {        
+        width: 100%;
+        font-size: 10px;
+    }
+    .search-tab .nav>li>a {        
+        padding: 8px 3px;
+    }
+    .search-tab select {
+        font-size: 12px !important;    
+    }
 }
 
 @media screen and (max-width:360px) {
@@ -5456,6 +5468,9 @@ ul.item-list-bar {
 .margin-top-10{
     padding-top: 10px;
 }
+.margin-top-20{
+    padding-top: 20px;
+}
 .global-search-box .checkbox input[type=checkbox]{
     width: 25px !important;
     height: 20px !important;
@@ -5661,4 +5676,16 @@ ul.item-list-bar {
 }
 .margin-top-100{
     margin-top: 100px;
+}
+
+@media(max-width:767px)
+{    
+    .search-tab .destinatin .nav-tabs>li>a, .search-tab .destinatin .nav-tabs>li>a:focus, .search-tab .destinatin .nav-tabs>li>a:hover{       
+        padding: 10px;
+        font-size: 13px;
+    }
+    .search-tab .destinatin .nav-tabs>li.active>a, .search-tab .destinatin .nav-tabs>li.active>a:focus, .search-tab .destinatin .nav-tabs>li.active>a:hover{        
+        padding: 10px;
+        font-size: 13px;
+    }
 }

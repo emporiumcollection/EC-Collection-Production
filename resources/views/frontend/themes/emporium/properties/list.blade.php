@@ -75,8 +75,9 @@
 		@endif
     </section>
     
+    
     <?php if(!empty($search_for)){ ?>
-    <section class="search-tab {{ $search_for=='experience' ? 'tab-show' : 'tab-hide' }}  {{empty($slider) ? 'margin-top-100' : ''  }}">
+    <section class="search-tab {{ $search_for=='experience' ? 'tab-show' : 'tab-hide' }} {{empty($slider) ? 'margin-top-100' : ''  }}">
         <?php 
             $sel_collection = '';
             $sel_experience = '';
@@ -159,7 +160,7 @@
         </div>
     </section>
     
-    <section class="search-tab {{ $search_for=='destinations' ? 'tab-show' : 'tab-hide' }} {{empty($slider) ? 'margin-top-100' : ''  }}">        
+    <section class="search-tab {{ $search_for=='destinations' ? 'tab-show' : 'tab-hide' }}  {{empty($slider) ? 'margin-top-100' : ''  }}">        
         <ul class="nav nav-tabs" id="main_tab">    
             <li class=""><a href="#tab-Home" data-toggle="tab">Home</a></li>   
             <li class="dropdown">
@@ -260,12 +261,13 @@
                         <option value="0">&lt; Back to Destination</option>
                     @endif
                 </select>
-                              
+                <h5 class="margin-top-20">Your Collection</h5>              
                 @if(!empty($collections))
                 {{--*/ $i=1; $j=1; $k=1; $l=1; $arr_key=''; /*--}}
                 <ul class="nav nav-tabs">
-                    @foreach($collections as $coll)                        
-                        <li class="<?php echo ($m_type==$coll->category_alias) ? 'active' : '' ?> dest-collection" data-name="{{$coll->category_alias}}"><a href="{{URL::to('/')}}" >{{$coll->category_name}}</a></li>
+                    @foreach($collections as $coll)  
+                        <?php $exp_cat_name = explode(' ', $coll->category_name) ?>                      
+                        <li class="<?php echo ($m_type==$coll->category_alias) ? 'active' : '' ?> dest-collection" data-name="{{$coll->category_alias}}"><a href="{{URL::to('/')}}" >{{$exp_cat_name[0]}}</a></li>
                         {{--*/ $k++;  /*--}}    
                     @endforeach                            
                 </ul>                  
@@ -1186,10 +1188,10 @@ $grid.imagesLoaded().progress( function() {
                         var obj = data.mem_package;
                         popupHtml += '<div class="row">';
                         
-                            popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6">';
+                            popupHtml += '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">';
                                 popupHtml += '<img class="img-responsive object-fit-size" src="{{URL::to("uploads/category_imgs")}}/'+obj.category_image+'" style="width: 100%;">';
                             popupHtml += '</div>';
-                            popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6">';
+                            popupHtml += '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">';
                                 popupHtml += '<h2 class="popup-title">'+obj.category_name+'</h2>';
                                 popupHtml += '<p>'+(obj.category_description).replace(/\n/g,"<br>")+'</p>';
                                 //popupHtml += '<h6>{!! isset($currency->content)?$currency->content:"&euro;" !!}'+obj.package_price+'</h6>';
@@ -1207,10 +1209,10 @@ $grid.imagesLoaded().progress( function() {
                                 popupHtml += '<a class="btnMembershipTypeJoin" id="loginasa">Login as a '+str_mem+' Member</a>';
                                 
                             popupHtml += '</div>';
-                            popupHtml += '<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">';
+                            popupHtml += '<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">';
                                 popupHtml += '<a class="btnMembershipTypeBack" href="#" data-dismiss="modal" aria-hidden="true">Back</a>';
                             popupHtml += '</div>';
-                            popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6  col-xs-12">';
+                            popupHtml += '<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">';
                                 /*str_mem = '';
                                 if(memtype=="dedicated-membership"){
                                     str_mem = 'Dedicated';
