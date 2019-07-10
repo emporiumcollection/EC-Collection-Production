@@ -1322,7 +1322,7 @@ $grid.imagesLoaded().progress( function() {
                     //console.log(data.youtube_channels);  
                     var objytchannels = data.youtube_channels; 
                     $("#youtube_channel").empty();
-                    $("#youtube_channel").append('<option value="'+data.catalias+'">'+data.catname+'</option>');
+                    $("#youtube_channel").append('<option value="'+data.catalias+'">You are in '+data.catname+'</option>');
                     $.each(objytchannels, function(key, vlaue){
                         $("#youtube_channel").append(
                             $('<option></option>').val(vlaue['category_alias']).html(vlaue['category_name'])
@@ -1337,7 +1337,7 @@ $grid.imagesLoaded().progress( function() {
                     
                     var objinstachannels = data.instagram_channels; 
                     $("#instagram_channel").empty();
-                    $("#instagram_channel").append('<option value="'+data.catalias+'">'+data.catname+'</option>');
+                    $("#instagram_channel").append('<option value="'+data.catalias+'">You are in '+data.catname+'</option>');
                     $.each(objinstachannels, function(key, vlaue){
                         $("#instagram_channel").append(
                             $('<option></option>').val(vlaue['category_alias']).html(vlaue['category_name'])
@@ -1352,7 +1352,7 @@ $grid.imagesLoaded().progress( function() {
                     
                     var objdestinations = data.destinations; 
                     $("#dd-destination").empty();
-                    $("#dd-destination").append('<option value="'+data.catalias+'">'+data.catname+'</option>');
+                    $("#dd-destination").append('<option value="'+data.catalias+'">You are in '+data.catname+'</option>');
                     $.each(objdestinations, function(key, vlaue){
                         $("#dd-destination").append(
                             $('<option></option>').val(vlaue['category_alias']).html(vlaue['category_name'])
