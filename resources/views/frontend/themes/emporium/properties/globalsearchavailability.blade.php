@@ -457,7 +457,7 @@
                     				if(Request::has("departure") || Request::has("arrive"))
                     				{
              				    ?>
-                    					_url+='?arrive='+{{Request::input("arrive")}}+'&departure='+{{Request::input("departure")}};
+                    					//_url+='?arrive='+{{Request::input("arrive")}}+'&departure='+{{Request::input("departure")}};
                                 <?php
                     				}
                     			?>
@@ -500,7 +500,7 @@
                     				if(Request::has("departure") || Request::has("arrive"))
                     				{
                  				    ?>
-                   					    _url+='?arrive='+{{Request::input("arrive")}}+'&departure='+{{Request::input("departure")}};
+                   					    //_url+='?arrive='+{{Request::input("arrive")}}+'&departure='+{{Request::input("departure")}};
                                     <?php
                      				}
                         			?>
@@ -579,7 +579,7 @@
                 				if(Request::has("departure") || Request::has("arrive"))
                 				{
              				    ?>
-               					    _url+='?arrive='+{{Request::input("arrive")}}+'&departure='+{{Request::input("departure")}};
+               					    //_url+='?arrive='+{{Request::input("arrive")}}+'&departure='+{{Request::input("departure")}};
                                 <?php
                  				}
                     			?>
