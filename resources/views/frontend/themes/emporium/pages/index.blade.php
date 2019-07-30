@@ -33,9 +33,7 @@
     <ul class="cstm_menu">
        <li><a href="#" data-toggle="modal" data-target="#MenuModal">Menu</a></li>
        <li><a href="#" data-toggle="modal" data-target="#CollectModal">Collection</a></li>
-       <li><a href="#" class="srch_btn"><i class="fa fa-search"></i></a></li>
-       
-       
+       <li><a href="#" class="srch_btn"><i class="fa fa-search"></i></a></li>       
     </ul>
 </div>-->
 
@@ -74,6 +72,36 @@
         </div>
     </button>
 </div>
+
+<div class="home-search-bar">
+    <div class="home-search-bar-inner global-search-main">
+        <span class="search-input">
+        <input type="text" name="input-global-search" class="form-control" placeholder="where do you want to go?" /> 
+        </span>
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <!--<button type="button"><i class="fa fa-search"></i></button> --> 
+    </div>   
+</div>
+
+<div class="home-search-bar">
+    <div class="home-search-bar-inner global-search-main">
+        <span class="search-input">
+        <input type="text" name="input-global-search" class="form-control" placeholder="where do you want to go?" /> 
+        </span>
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <!--<button type="button"><i class="fa fa-search"></i></button> --> 
+    </div>   
+</div>
+
+<div class="home-search-bar">
+    <div class="home-search-bar-inner global-search-main">
+        <span class="search-input">
+        <input type="text" name="input-global-search" class="form-control" placeholder="Where do you want to go?" /> 
+        </span>
+        <span class="search-icon"><i class="fa fa-search"></i></span>
+        <!--<button type="button"><i class="fa fa-search"></i></button> --> 
+    </div>   
+</div>
     <!-- slider starts here -->
          <section class="sliderSection" id="home_sld">
             @if(!empty($slider))
@@ -87,19 +115,20 @@
                          <a href="{{$slider_row->slider_link}}">
                            <img src="{{url('uploads/slider_images/'.$slider_row->slider_img)}}"> alt=""/>
                          </a>
+                         
                          <div class="carousel-caption item-front">
-                          <div class="head-sec">
-                           <div class="round-crcle">
-                                  <button class="c-slide__icon-more t-btn u-inline-block u-absolute u-pos-t u-marg-l-xxs u-valign-top u-shape-circle u-marg-t-xs u-marg-t-0@sm" style="left: 20px; transform: translateX(7.14446e-25px) translateY(5.59666e-25px) scale(1) translateZ(0px);"><div class="c-slide__icon-more__container u-absolute u-pos-center"><div class="c-slide__icon-more__bar u-absolute u-bg--white"></div><div class="c-slide__icon-more__bar u-absolute u-bg--white"></div></div> <img src="{{ asset('themes/emporium/images/gradient-circle.svg')}}" class="c-slide__icon-more__gradient o-wrapper--panel u-fit"></button>
-                          </div>
-                          <h1><a href="{{$slider_row->slider_link}}">{{$slider_row->slider_title}}</a></h1>
+                            <div class="head-sec">
+                                <?php /*<div class="round-crcle">
+                                    <button class="c-slide__icon-more t-btn u-inline-block u-absolute u-pos-t u-marg-l-xxs u-valign-top u-shape-circle u-marg-t-xs u-marg-t-0@sm" style="left: 20px; transform: translateX(7.14446e-25px) translateY(5.59666e-25px) scale(1) translateZ(0px);"><div class="c-slide__icon-more__container u-absolute u-pos-center"><div class="c-slide__icon-more__bar u-absolute u-bg--white"></div><div class="c-slide__icon-more__bar u-absolute u-bg--white"></div></div> <img src="{{ asset('themes/emporium/images/gradient-circle.svg')}}" class="c-slide__icon-more__gradient o-wrapper--panel u-fit"></button> 
+                                </div>*/ ?>
+                                <h1><a href="{{$slider_row->slider_link}}">{{$slider_row->slider_title}}</a></h1>
+                            </div>
+                            <div class="cnt-box slider-cnt-box">
+                                <p><a href="{{$slider_row->slider_link}}" style="color:white;">{{$slider_row->slider_description}}</a></p>
+                            </div>
                          </div>
-
-                           <div class="cnt-box slider-cnt-box">
-                            <p><a href="{{$slider_row->slider_link}}" style="color:white;">{{$slider_row->slider_description}}</a></p>
-                         </div>
-                       </div>
-                      </div>
+                        
+                    </div>
                     @endforeach
           {{--*/ $sliderads = CommonHelper::getSliderAds('landing_slider', 'Hotel') /*--}}
           @if(!empty($sliderads['leftsidebarads']))
@@ -270,7 +299,7 @@
       });
     }
     
-    $(document).ready(function(){
+    /*$(document).ready(function(){
         var chk_date = new Date(); 
             
         var chk_out_date = new Date();
@@ -301,38 +330,14 @@
             'iconDate':'<i class="fa fa-calendar"></i>',
             'limitDateRanges':'365',
             'dateCheckIn':chk_date,
-            'dateCheckOut':chk_out_date,
-            //'dateCheckIn':'@if(isset($_GET['arrive']) && $_GET['arrive']!=''){{$_GET['arrive']}}@else{{'null'}}@endif',
-            //'dateCheckOut':'@if(isset($_GET['departure']) && $_GET['departure']!=''){{$_GET['departure']}}@else{{'null'}}@endif'
+            'dateCheckOut':chk_out_date,            
         });
-        
-        /*$(".global-search-form").submit(function(e){
-            e.preventDefault();
-            var g_arrival = $('input[name="globalarrival"]').val();
-            var g_departure = $('input[name="globaldeparture"]').val();
-            var adult = $('select[name="booking_adults"]').val();
-            var child = $('select[name="booking_children"]').val();
-            var searchfor = $('input[name="sitename"]').val();
-            $.ajax({
-              url: "{{ URL::to('globalavailability')}}"+"?arrival="+g_arrival+"&departure="+g_departure+"&adult="+adult+"&child="+child+"&sname="+searchfor,
-              type: "get",              
-              dataType: "json",
-              success: function(data){
-              var html = '';
-              if(data.status=='error')
-              {
-                
-              }
-              else{
-                
-              }
-              }
-          });
-        });*/
-        
-    });    
+        $(document).on('click', '.global-search-main', function(){
+            $(".cstm_search").toggle();    
+        });        
+    });*/    
     
-    $("#pills-home-tab").click(function(){
+    /*$("#pills-home-tab").click(function(){
         $("#sitename").val('voyage');
         $("#globalfiltersearchpopup").css('display', 'none'); 
         $('[data-action="global-search"]').val('');     
@@ -351,9 +356,9 @@
         $("#sitename").val('islands');
         $("#globalfiltersearchpopup").css('display', 'none');
         $('[data-action="global-search"]').val('');          
-    });
+    });*/
     
-    $(document).on('keyup', '[data-action="global-search"]', function () { 
+    /*$(document).on('keyup', '[data-action="global-search"]', function () { 
         var sitename = $("#sitename").val();
         $('[data-action="global-search-error"]').html('');
         if ($(this).val() == '') {
@@ -368,9 +373,9 @@
     			globalSearchForAll($(this).val(), sitename);
     		}
         }
-    });
+    });*/
     
-    $(document).on('click', '.our-collections', function(){         
+    /*$(document).on('click', '.our-collections', function(){         
          if($(this).hasClass('active')){
             $(this).removeClass('active');
             $(this).find('input[type="radio"]').attr('checked', false);
@@ -380,8 +385,7 @@
          }
     });
     
-    $(document).on('click', '.our-hotels', function(){ 
-         console.log($(this).closest('.dv').find('input[type="radio"]').attr('checked',true));
+    $(document).on('click', '.our-hotels', function(){         
          if($(this).hasClass('active')){
             $(this).removeClass('active');
             $(this).find('input[type="checkbox"]').attr('checked', false);
@@ -419,7 +423,7 @@
             $(this).addClass('active');
             $(this).find('input[type="radio"]').attr('checked', true);
          }
-    });
+    });*/
     
     
     function fun_add_remove_hotel_arr(){
@@ -430,7 +434,7 @@
     /*
 * For Global Search function
 */
-function globalSearchForAll(searcValue, sitename) {
+/*function globalSearchForAll(searcValue, sitename) {
 
     var datObj = {};
     datObj.keyword = searcValue;
@@ -538,7 +542,7 @@ function globalSearchForAll(searcValue, sitename) {
     };
     doAjax(params);
     $('[data-option="global-search"]').slideDown(300);
-}
+}*/
   </script>
 @endsection
 

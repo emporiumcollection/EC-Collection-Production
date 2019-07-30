@@ -623,7 +623,7 @@ $grid.imagesLoaded().progress( function() {
                 e.preventDefault();
                 //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
                 var d_name = $(this).attr('data-name');
-                var cat =  $("#sel_exp").val(); console.log(cat);               
+                var cat =  $("#sel_exp").val();               
                 var coll_type = 'destinations';
                 var req_for = $("#req_for").val();
                 var cobj = $(this);
