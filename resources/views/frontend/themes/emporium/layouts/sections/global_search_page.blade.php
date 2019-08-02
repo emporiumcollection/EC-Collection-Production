@@ -89,7 +89,7 @@
                             <div class="form-group search-nm">                                        
                                 <div class="mobile-leftsearch">
                                     <div class="mobile-leftsearch-error" data-action="global-search-error"></div>
-                                    <label class="lbl-search-txt">Where do you want to go?</label> 
+                                    <label class="lbl-search-txt">Where to?</label> 
                                     <input title="Search" type="text" class="form-control" placeholder="Enter your Hotel or select one or more destinations." data-action="global-search"/>                                    
                                 </div>
                                 <div id="globalfiltersearchpopup" data-option="global-search" style="display:none;">
@@ -191,7 +191,7 @@
     							
                             	
                             <div class="col-md-12 padding-0">
-                                <label class="lbl-search-txt">When do you want to go?</label> 
+                                <label class="lbl-search-txt">When?</label> 
                             </div>	
                             <div class="border-01 margin-bot-30">  
                                                                                                     
@@ -225,7 +225,7 @@
                                 
                             </div>	
                             <div class="col-md-12 padding-0">
-                                <label class="lbl-search-txt">Who will be travelling</label> 
+                                <label class="lbl-search-txt">Who?</label> 
                             </div>	
                             <div class="border-01">	
                             	<div class="col-md-12">                                
