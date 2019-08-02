@@ -6009,19 +6009,93 @@ ul.item-list-bar {
 .chooseadultroom select{
     background: rgba(44,45,51,0.5) !important;
 }
+.global-error{
+    color: #ff0000;
+}
+.remove{
+    color: #ff0000;
+    padding: 6px;
+    cursor: pointer;
+}
 @media screen and (min-width:1600px) {
     .sliderSection .carousel-caption h1{
         font-family: BodoniFLF-Roman !important;
-        font-size: 60px !important;
+        font-size: 65px !important;
     }
 }
 
-@media (max-width: 768px){
+@media (max-width: 1024px){   
+    .home-search-bar .home-search-bar-inner {
+        width: 80%;
+    } 
     .home-search-bar{        
-        top: 16%;
+        right: 5%;
+        top: 30%;
+        width: auto;
+        padding: 0px;
+        text-align: center;
+        bottom: auto;
+        max-width: 90%;
+        width: 100%;
+        left: 5%;
+    }
+    #home_sld .carousel-caption {        
+        right: 5%;
+        top: 40%;
+        width: auto;
+        padding: 0px;
+        text-align: center;
+        bottom: auto;
+        max-width: 90%;
+        width: 100%;
+        left: 5%;        
     }
     .sliderSection .carousel-caption h1{
         font-family: BodoniFLF-Roman !important;
-        font-size: 30px !important;
+        font-size: 60px !important;
+    }        
+}
+@media (max-width: 768px){
+    .home-search-bar{        
+        top: 20%;
+    }
+    .home-search-bar .home-search-bar-inner {
+        width: 90%;
+    }
+    #home_sld .carousel-caption {
+        right: 5%;
+        top: 30%;
+        width: auto;
+        padding: 0px;
+        text-align: center;
+        bottom: auto;
+        max-width: 90%;
+        width: 100%;
+        left: 5%;
+    }
+    .sliderSection .carousel-caption h1{
+        font-family: BodoniFLF-Roman !important;
+        font-size: 50px !important;
     }      
+}
+@media (max-width: 480px){   
+    .home-search-bar .home-search-bar-inner {
+        width: 98%;
+    }
+    #home_sld .carousel-caption {
+        right: 5%;
+        top: 35%;
+        width: auto;
+        padding: 0px;
+        text-align: center;
+        bottom: auto;
+        max-width: 90%;
+        width: 100%;
+        left: 5%;
+    }
+    .sliderSection .carousel-caption h1{
+        font-family: BodoniFLF-Roman !important;
+        font-size: 25px !important;
+    }   
+       
 }
