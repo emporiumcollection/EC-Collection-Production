@@ -5608,7 +5608,7 @@ ul.item-list-bar {
 }
 .global-search-box .lbl-search-txt{
     font-size: 21px;
-    margin-left: 18px;  
+/*    margin-left: 18px;  */
 }
 .global-search-box .our-collections.active{
     background: #19191B;
