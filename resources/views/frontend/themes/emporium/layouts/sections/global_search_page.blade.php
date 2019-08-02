@@ -22,7 +22,7 @@
     							<li class="nav-item active in">
     								<a class="nav-link" id="pills-home-tab" data-toggle="pill" href="#pills-home" role="tab" aria-controls="pills-home" aria-selected="true">Hotel</a>
     							</li>
-    							<li class="nav-item">
+    							<!--<li class="nav-item">
     								<a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#pills-profile" role="tab" aria-controls="pills-profile" aria-selected="false">Safari</a>
     							</li>
     							<li class="nav-item">
@@ -30,7 +30,7 @@
     							</li>
     							<li class="nav-item">
     								<a class="nav-link" id="pills-expereince-tab" data-toggle="pill" href="#pills-expereince" role="tab" aria-controls="pills-expereince" aria-selected="false">Islands</a>
-    							</li>
+    							</li> -->
     						</ul>
     						<div class="tab-content" id="pills-tabContent">
     							<div class="tab-pane fade active in" id="pills-home" role="tabpanel" aria-labelledby="pills-home-tab">
