@@ -2684,11 +2684,16 @@ class PropertyController extends Controller {
     
     function propertyglobalavailability(Request $request) {
         
-        $ourHotels = $request->input("ourHotels");
-        $ourDestinations = $request->input("ourDestinations");
+        //$ourHotels = $request->input("ourHotels");
+        //$ourDestinations = $request->input("ourDestinations");
+        $str_hotels = $request->input("hid_our_hotels");
+        $str_destinations = $request->input("hid_our_destinations");
         
-        $arrive = $request->input("arrive");
-        $departure = $request->input("departure");
+        
+        //print_r($request->all()); die;
+        
+        $arrive = $request->input("gl_arrive");
+        $departure = $request->input("gl_departure");
         
         $alternate_dates = $request->input('alternate_dates');
         $numberofdate = $request->input('numberofdate');
@@ -2748,7 +2753,7 @@ class PropertyController extends Controller {
         //$ourExperiences = $request->input("ourExperiences");
         //$ourChannels = $request->input("ourChannels");        
         
-        $arr_hotels = is_array($ourHotels) ? $ourHotels : array();
+        /*$arr_hotels = is_array($ourHotels) ? $ourHotels : array();
         $arr_destinations = is_array($ourDestinations) ? $ourDestinations : array();
         $str_hotels = '';
         if(!empty($arr_hotels)){
@@ -2758,13 +2763,13 @@ class PropertyController extends Controller {
         $str_destinations = '';
         if(!empty($arr_destinations)){
             $str_destinations = implode(',', $arr_destinations);  
-        }        
+        }*/        
         
         $site_url = '';
         if($sitename=='voyage'){
-            $site_url = 'https://emporium-voyage.com';
+            //$site_url = 'https://emporium-voyage.com';
             //$site_url = 'http://localhost:8181/emporium-staging-forge/public'; 
-            //$site_url = 'http://staging.emporium-voyage.com';  
+            $site_url = 'http://staging.emporium-voyage.com';  
         }elseif($sitename=='safari'){
             $site_url = 'https://emporium-safari.com';
         }elseif($sitename=='spa'){
@@ -2774,7 +2779,7 @@ class PropertyController extends Controller {
         }
         //echo($arrive);
         //print_r($site_url); die;
-        $querry_string = $site_url."/globalsearchavailability?arrive=".$arrive."&departure=".$departure."&hotels=".$str_hotels."&destinations=".$str_destinations."&booking_rooms=".$booking_rooms."&booking_adults=".$booking_adults."&booking_children=".$booking_children."&travellerType=".$travellerType."&childrenAge=&tr_2_rooms=".$tr_2_rooms."&tr_2_adults=".$tr_2_adults."&tr_2_child=".$tr_2_child."&tr_3_rooms=".$tr_3_rooms."&tr_3_adults=".$tr_3_adults."&tr_3_child=".$tr_3_child."&tr_4_rooms=".$tr_4_rooms."&tr_4_adults=".$tr_4_adults."&roomType=".$roomType;
+        $querry_string = $site_url."/globalsearchavailability?arrive=".$arrive."&departure=".$departure."&hotels=".$str_hotels."&destinations=".$str_destinations."&booking_rooms=".$booking_rooms."&booking_adults=".$booking_adults."&booking_children=".$booking_children."&travellerType=".$travellerType."&childrenAge=&tr_2_rooms=".$tr_2_rooms."&tr_2_adults=".$tr_2_adults."&tr_2_child=".$tr_2_child."&tr_3_rooms=".$tr_3_rooms."&tr_3_adults=".$tr_3_adults."&tr_3_child=".$tr_3_child."&tr_4_rooms=".$tr_4_rooms."&tr_4_adults=".$tr_4_adults;
         
         //room-availability?property=69&arrive=07-11-2019&departure=07-20-2019&booking_rooms=1&booking_adults=1&travellerType=0&childrenAge=&tr_2_rooms=1&tr_2_adults=1&tr_2_child=1&tr_3_rooms=1&tr_3_adults=1&tr_3_child=1&tr_4_rooms=1&tr_4_adults=1&roomType=0
         
@@ -3045,6 +3050,8 @@ class PropertyController extends Controller {
         }
         $this->data['active_tab'] = $active_tab;
         $this->data['allData'] = $allData;
+        $this->data['hotels'] = $hotels;
+        $this->data['destinations'] = $destinations;
         
         return view('frontend.themes.emporium.properties.globalsearchavailability', $this->data);
                     
@@ -5346,6 +5353,8 @@ class PropertyController extends Controller {
             
             $social_url = $cateObj->category_instagram_channel;
             $this->data['social_url'] = $social_url;
+            
+            $this->data['dest_id'] = $cateObj->id;
             
             //get all children start
             $chldIds = $this->fetchcategoryChildListIds($cateObj->id);

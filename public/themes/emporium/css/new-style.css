@@ -675,7 +675,7 @@ svg:not(:root) {
 }
 #home_sld .carousel-caption {
     right: 8.999%;
-    top: 50%;
+    top: 25%;
     width: auto;
     padding: 0 0 0 80px;
     text-align: left;
@@ -4590,11 +4590,11 @@ svg:not(:root) {
     font-family: 'HKGothicNo2-Regular', 'Helvetica Neue', Helvetica, Arial, sans-serif;
     font-size: 12px;
     display: table;
-    height: 37px;
+    height: 36px;
 }
 .adult-room .number-of-adult{
     display: block;
-    margin-left: 10px;
+    margin-left: 8px;
 }
 .adult-room i{
   border: solid #fff;
@@ -4611,14 +4611,15 @@ svg:not(:root) {
 
 .adult-room .left{
     float: left;
-    width: 80%;    
+    width: 80%;
+    margin-top: 2px;    
 }
 
 .adult-room .right{
     float: left;
     width: 20%;   
     text-align: center; 
-    height: 38px;
+    height: 35px;
     cursor: pointer;
 }
 .chooseadultroom{    
@@ -4679,7 +4680,7 @@ svg:not(:root) {
     float: right; width: 10%; text-align: right;
 }
 .chooseadultroom .tbl .rw .traveller-type.active{
-    color: #8D8C8E;
+    color: #aba00b;
     text-decoration: none;
     font-size: 13px;
     border-bottom: 1px solid;
@@ -4806,9 +4807,10 @@ svg:not(:root) {
 }
 .custom-menu{
     position: absolute;
-    z-index: 2;
-    right: 25%;
+    z-index: 100;
+    right: 16%;
     top: 9.333vh;
+    margin-top: 9px;
 }
 .custom-menu ul{
     list-style-type: none;
@@ -4816,12 +4818,16 @@ svg:not(:root) {
 .custom-menu ul li{
     list-style: none;
     display: inline;
-    margin-left: 20px;
+    /*margin-left: 20px;*/
 }
 .custom-menu ul li a{
     color: #fff;
     font-weight: 500;
     font-size: 16px;
+    margin-left: 20px;
+}
+.custom-menu ul li a img{
+    width: 12%;
 }
 .cstm_search {
     display: none;
@@ -4847,6 +4853,7 @@ svg:not(:root) {
       color: #8D8C8E;
       margin: 0px;
       padding: 0px;
+      z-index: 1;
     }
     .cstm_banner>.container{
       position: absolute;
@@ -5311,7 +5318,8 @@ ul.item-list-bar {
     list-style: none;
 }
 .text-center.hotelBookNowButton {
-    padding-top: 40px;
+    padding-top: 80px;
+    text-align: right;
 }
 .tabs-custom-id-145 .text-center.hotelBookNowButton .btn {
     background-color: transparent!important;
@@ -5392,6 +5400,7 @@ ul.item-list-bar {
     padding-top: 40px;
     margin-top: 16px;
 	padding-bottom: 70px;
+    text-align: right;
 }
 .border-style-02 {
     padding-left: 0;
@@ -5482,7 +5491,7 @@ ul.item-list-bar {
 }
 .global-search .t-check-in, .global-search .t-check-out{
     width: 98% !important;
-    font-size: 18px;
+    font-size: 14px;
     word-spacing: 3px;
 }
 .global-search .t-dates{
@@ -5495,7 +5504,7 @@ ul.item-list-bar {
 #globalfiltersearchpopup ul li{
     list-style-type: none;
     display: inline-block;
-    width: 24%;
+    width: 30%;
     vertical-align: top;
     padding: 5px;
 }
@@ -5507,6 +5516,9 @@ ul.item-list-bar {
 }
 #globalfiltersearchpopup ul li a:hover{
     background-color: transparent !important;
+}
+#globalfiltersearchpopup ul ul{    
+    padding-left: 12px;
 }
 #globalfiltersearchpopup ul ul li{    
     width: 100%;
@@ -5534,7 +5546,7 @@ ul.item-list-bar {
     margin: 40px 0 49px;
 }
 .global-search-form .chooseadultroom{    
-    top: 84px !important;
+    top: 56px !important;
 }
 .global-search-box .adult-room{
     background: transparent;
@@ -5549,7 +5561,7 @@ ul.item-list-bar {
     max-width: none;
 }
 .global-search-box .t-date-box{
-    padding: 10px;
+    padding: 10px 10px 5px 10px;
 }
 .global-search-box .t-dates{
     color: #8D8C8E !important;
@@ -5608,7 +5620,7 @@ ul.item-list-bar {
 }
 .global-search-box .lbl-search-txt{
     font-size: 21px;
-/*    margin-left: 18px;  */
+    /*margin-left: 18px;*/  
 }
 .global-search-box .our-collections.active{
     background: #19191B;
@@ -5635,7 +5647,8 @@ ul.item-list-bar {
 }
 .global-search h3{
     padding:0px 15px;
-    font-size: 20px;
+    /*font-size: 20px;*/
+    font-size: 16px;
 }
 .global-search-box .alternate-heading{
     font-size: 15px;
@@ -5710,8 +5723,33 @@ ul.item-list-bar {
 	background-position: right .7em top 50%, 0 0;
 	background-size: .65em auto, 100%;
 
-  }
+}
+.globalSearchResultSection select{    
+  display: block;
+	font-size: 16px;
+	font-family: sans-serif;
+	font-weight: 500;
+	color: #BCBCBF;
+	line-height: 1.3;
+	padding: .6em 1.4em .5em .8em;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	margin: 0;
+	border: 1px solid #2C2D33;
+	box-shadow: 0 1px 0 1px rgba(25,25,27,.04);
+	border-radius: .5em;
+	-moz-appearance: none;
+	-webkit-appearance: none;
+	appearance: none;
+	background-color: #19191B;
+	background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007CB2%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E'),
+	  linear-gradient(to bottom, #19191B 0%,#2C2D33 100%);
+	background-repeat: no-repeat, repeat;
+	background-position: right .7em top 50%, 0 0;
+	background-size: .65em auto, 100%;
 
+}
 .search-tab ul .nav-tabs>li.active>a, .search-tab ul .nav-tabs>li.active>a:focus, .search-tab ul .nav-tabs>li.active>a:hover{
     background: transparent !important;
     color:#fff !important;
@@ -5813,6 +5851,7 @@ ul.item-list-bar {
 .globalSearchResultSection{
    margin-left: 14px;
    margin-right: 85px; 
+   margin-top: 100px;
 }
 .globalSearchResultSection .nav-tabs {
     border-bottom: 1px solid #505051;
@@ -5840,6 +5879,17 @@ ul.item-list-bar {
 .globalSearchResultSection .heading{
     font-size: 16px;        
 }
+
+.globalSearchResultSection .main-nav-tab{
+    border-bottom: 0px;  
+}
+
+.globalSearchResultSection .collection-tabs>li.active>a, .globalSearchResultSection .collection-tabs>li.active>a:focus, .globalSearchResultSection .collection-tabs>li.active>a:hover{
+    background: transparent !important;
+    border-color: #8D8C8E;
+    border-bottom-color: #19191B;   
+}
+
 /*-----------  Global search tab End  --------------*/
 
 .home-search-bar{
@@ -5993,7 +6043,7 @@ ul.item-list-bar {
 }
 #home_sld .carousel-caption {
     right: 15%;
-    top: 50%;
+    top: 40%;
     width: auto;
     padding: 0px;
     text-align: center;
@@ -6017,6 +6067,30 @@ ul.item-list-bar {
     padding: 6px;
     cursor: pointer;
 }
+
+.sidebar-search-criteria{
+    color: #fff;
+    padding: 2px;
+    line-height: 25px;
+}
+.font-white{
+    color: #fff !important;
+}
+.sidebar-availability{
+    color: #fff;
+}
+.sidebar-hotel-dest{
+    padding-left: 22px;
+}
+.gs-home-search-bar .our-hotels.active{
+    background: #19191B;
+    border: 1px solid #aba00b;
+}
+.gs-home-search-bar .our-destinations.active{
+    background: #19191B;
+    border: 1px solid #aba00b;
+}
+
 @media screen and (min-width:1600px) {
     .sliderSection .carousel-caption h1{
         font-family: BodoniFLF-Roman !important;
@@ -6024,13 +6098,22 @@ ul.item-list-bar {
     }
 }
 
+@media (max-width:1366px){
+    .home-search-bar{
+        top: 34%;        
+    } 
+    #home_sld .carousel-caption {
+        top: 45%;
+    }   
+}
+    
 @media (max-width: 1024px){   
     .home-search-bar .home-search-bar-inner {
         width: 80%;
     } 
     .home-search-bar{        
         right: 5%;
-        top: 30%;
+        top: 25%;
         width: auto;
         padding: 0px;
         text-align: center;
@@ -6041,7 +6124,7 @@ ul.item-list-bar {
     }
     #home_sld .carousel-caption {        
         right: 5%;
-        top: 40%;
+        top: 35%;
         width: auto;
         padding: 0px;
         text-align: center;
@@ -6057,30 +6140,10 @@ ul.item-list-bar {
 }
 @media (max-width: 768px){
     .home-search-bar{        
-        top: 20%;
+        top: 25%;
     }
     .home-search-bar .home-search-bar-inner {
         width: 90%;
-    }
-    #home_sld .carousel-caption {
-        right: 5%;
-        top: 30%;
-        width: auto;
-        padding: 0px;
-        text-align: center;
-        bottom: auto;
-        max-width: 90%;
-        width: 100%;
-        left: 5%;
-    }
-    .sliderSection .carousel-caption h1{
-        font-family: BodoniFLF-Roman !important;
-        font-size: 50px !important;
-    }      
-}
-@media (max-width: 480px){   
-    .home-search-bar .home-search-bar-inner {
-        width: 98%;
     }
     #home_sld .carousel-caption {
         right: 5%;
@@ -6095,7 +6158,597 @@ ul.item-list-bar {
     }
     .sliderSection .carousel-caption h1{
         font-family: BodoniFLF-Roman !important;
+        font-size: 50px !important;
+    }      
+}
+@media (max-width: 767px){
+    .home-search-bar{        
+        top: 25%;
+    }
+    .home-search-bar .home-search-bar-inner {
+        width: 70%;
+        padding: 6px;
+    }
+    #home_sld .carousel-caption {
+        right: 5%;
+        top: 40%;
+        width: auto;
+        padding: 0px;
+        text-align: center;
+        bottom: auto;
+        max-width: 90%;
+        width: 100%;
+        left: 5%;
+    }
+    .sliderSection .carousel-caption h1{
+        font-family: BodoniFLF-Roman !important;
+        font-size: 30px !important;
+    }  
+    .sliderSection .carousel-caption p{
+        font-size: 12px;
+        line-height: 18px;
+        margin-top: 5px;
+    }    
+}
+@media (max-width: 480px){   
+    .home-search-bar .home-search-bar-inner {
+        width: 98%;
+    }
+    #home_sld .carousel-caption {
+        right: 5%;
+        top: 30%;
+        width: auto;
+        padding: 0px;
+        text-align: center;
+        bottom: auto;
+        max-width: 90%;
+        width: 100%;
+        left: 5%;
+    }
+    .sliderSection .carousel-caption h1{
+        font-family: BodoniFLF-Roman !important;
         font-size: 25px !important;
+    } 
+    .home-search-bar{        
+        top: 20%;
+    }  
+    .tab-width{
+        width: 100%;
+        margin: 0px auto;
     }   
+    .hotelPopupHeadings-header-title h2{
+        font-size: 16px;
+    }
+    .hotelPopupHeadings-header-title p{
+        font-size: 12px;
+    }
+    .global-search-box .lbl-search-txt{
+        font-size: 16px;
+    }
+}
+@media (max-width: 320px){   
+    .home-search-bar .home-search-bar-inner {
+        width: 98%;
+    }
+    #home_sld .carousel-caption {
+        right: 5%;
+        top: 30%;
+        width: auto;
+        padding: 0px;
+        text-align: center;
+        bottom: auto;
+        max-width: 90%;
+        width: 100%;
+        left: 5%;
+    }
+    .sliderSection .carousel-caption h1{
+        font-family: BodoniFLF-Roman !important;
+        font-size: 23px !important;
+    } 
+    .home-search-bar{        
+        top: 17%;
+    }  
        
+}
+.daterangepicker{
+    z-index: 9999;
+    background: #222326;
+    border-color: #2C2D33;
+    color: #BCBCBF;
+    margin-top: 18px;
+}
+.global-search-box input{    
+    width: 100%;
+    background: transparent;
+    border: 0px;
+    padding: 10px 20px;
+}
+.global-search-box .globaldpheading{
+    padding: 10px 0px 0px 20px;
+    font-size: 18px;   
+}
+.daterangepicker .calendar-table .next span, .daterangepicker .calendar-table .prev span{    
+    border-color: #fff;
+    color: #19191B;
+}
+.daterangepicker td.available:hover, .daterangepicker th.available:hover{
+    /*background-color: transparent;*/
+    color:#000;
+}
+.global-search-wrapper{
+    
+    height: 100vh;
+    object-fit: cover;
+    object-position: center 0px;
+    width: 100%;
+    background-color: #19191B;
+    z-index: 1;
+}
+.gs-image-overaly-bg{
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(37,37,37,0.6);
+    z-index: 2;
+}
+.global-search-wrapper:before {
+    content: "";
+    position: absolute;
+    left: 0; right: 0;
+    top: 0; bottom: 0;
+    background: rgba(37,37,37,0.6);
+}
+.gs-search-form{
+    position: absolute;
+    margin-top: 12%;
+    left: 8.333333333333334%;
+    right: 8%;
+    color:#fff;
+}
+.gs-search-form label{
+    color:#fff;
+}
+.gs-home-search-bar{
+    width: 70%;    
+}
+.gs-table{
+    display: table;
+    width: 100%;    
+}
+.gs-table .gs-table-inner{
+    background: rgba(34,35,38,0.7) !important;
+    padding: 0.5%;
+    border: 1px solid #fff;    
+}
+.gs-col{
+    display: table-cell;
+}
+.col-width:first-child{
+    margin-left: 0;    
+}
+.col-width{
+    float: left;    
+    width: 22.4%;
+    margin-left: 1.4%;
+    
+    background: rgba(34,35,38,0.7) !important;
+    padding: 0.5%;
+    border: 1px solid #fff;
+    
+}
+.gs-home-search-bar{
+    width: 84%;
+    position: absolute;
+    top: 30%;
+    z-index: 99;
+    left: 8.3333%;
+    right:7.6666%;
+    color:#fff;
+    font-size: 12px;
+}
+.gs-home-search-bar input[type=text], .gs-home-search-bar select, .gs-home-search-bar button{
+    background: transparent;
+    border: 0px;
+    caret-color: #aba00b;
+}
+.gs-home-search-bar input[type=text]{
+    margin-left: 10px;
+}
+.gs-home-search-bar select{
+    height: 35px; 
+    width: 100%;
+    width: 95%;
+    margin-left: 8px;  
+}
+.gs-home-search-bar select option{
+    background: rgba(34,35,38,0.7) !important;
+    padding: 5px;  
+}
+.gs-home-search-bar #globalfiltersearchpopup{
+    position: absolute;
+    background: #222326;
+    margin-top: 10px;
+    width: 69.5%;
+    padding: 15px 10px;
+}
+.gs-home-search-bar .adult-room{
+    background: transparent; 
+    height: 34px;   
+}
+.gs-home-search-bar .search-icon{
+    width: 10%;    
+    vertical-align: middle;
+    text-align: center;
+}
+.gs-home-search-bar .search-icon img{
+    /*width: 75%;*/
+    height: 16px;
+}
+.gs-home-search-bar .search-input{
+    width: 90%;  
+    vertical-align: middle;  
+}
+.gs-home-search-bar .btn-search-icon{
+    width: 100%;    
+    vertical-align: middle;
+    height: 50px;    
+}
+.btn-search{
+    float: left;
+    width: 50px;    
+    margin-left: 1.4%;
+    border-radius: 50%; 
+    height: 50px;
+    text-align: center;
+    /*background: rgba(34,35,38,0.7) !important; border:1px solid #fff;*/
+}
+.gs-home-search-bar .common-height{
+    height: 35px;
+}
+.gs-home-search-bar .globaldatepickerrange{
+    position: absolute;
+    margin-top: 8px;
+    /*margin-left: 8px;*/
+}
+.gs-home-search-bar .chooseadultroom{
+    left:auto;   
+    /*margin-left: -30px;*/
+    margin-top: 10px;
+    right: 5.6%;
+    width: 70%;
+}
+.gs-home-search-bar .adult-room .left{
+    display: table;   
+}
+.gs-home-search-bar .adult-room .number-of-adult{
+    display: table-cell;  
+    vertical-align: middle; 
+    height: 34px;
+    padding-left: 8px;
+}
+
+.custom-menu ul li .gs-main-collection{
+    list-style-type: none;
+    background: #222326;
+    color: #fff;
+    /*border: 1px solid #fff;*/
+    padding: 6px 0px;   
+}
+.custom-menu ul li ul .gs-dd-collection{
+    padding: 2px 2px 2px 10px;
+    display: block;
+    margin: 0px;
+}
+.custom-menu ul li ul .gs-dd-collection a{
+    margin-left: 0px;  
+    font-size: 12px;  
+}
+.custom-menu ul li ul .gs-dd-collection .active{
+    background: #aba00b;
+}
+.gs-searchbar-collection{
+    width: 100%;
+    height: 35px;
+    color: #fff;
+    margin-left: 10px;
+}
+.gs-searchbar-collection:hover{    
+    color: #fff;
+}
+.gs-searchbar-main-collection{    
+    position: absolute;
+    margin-top: 10px;
+    background: #222326;
+    padding: 10px;
+    width: 22%;
+}
+.gs-searchbar-dd-collection{
+    padding: 5px;
+    color: #fff;
+}
+.gs-searchbar-dd-collection a{
+    padding: 5px;
+    color: #fff;
+}
+.sidebar-li{
+    margin-left: 15px;
+}
+#globalfiltersearchpopup .gs-notes{
+    padding: 5px;
+}
+.gs-top-collection{
+    width: 100%;
+    color:#fff;
+    background: #505051;
+}
+.gs-result-sidebar-heading{
+    text-decoration: underline;
+}
+
+/* --- Global search top bar -----*/
+
+.gs-top-bar{
+    display: table;
+}
+.gs-top-bar-col-icon{
+    display: table-cell;
+    vertical-align: middle;    
+    width: 4%;
+    padding-right: 1%;
+}
+.gs-top-bar-col-icon img{
+    width: 50%;    
+}
+.gs-top-bar-col{
+    display: table-cell;
+    vertical-align: bottom; 
+    padding-right: 1%;   
+}
+.gs-top-bar-col-btn{
+    display: table-cell;
+    vertical-align: middle;    
+    width: 10%;
+}
+.gs-top-bar-col-10{    
+    width: 10%;
+}
+.gs-top-bar-col-20{    
+    width: 19%;
+}
+.gs-top-bar-col-30{    
+    width: 30%;
+}
+.gs-top-bar-col-40{    
+    width: 40%;
+}
+.gs-top-bar-col img{
+    width: 50%;
+}
+.gs-top-bar .btn{
+    margin-top: 0px !important;
+    padding: 8px 9px;
+}
+.gs-top-bar #globalfiltersearchpopup{
+    position: absolute;
+    background: #222326;
+    margin-top: 10px;
+    width: 69.5%;
+    padding: 15px 10px;
+}
+.gs-top-bar .chooseadultroom{
+    width: 59%;
+    right: 16.5%;
+    left: auto;
+}
+.gs-top-bar-form{
+    padding: 5px 0px 0px 0px;
+}
+#globalfiltersearchpopup ul ul li.our-hotels.active{
+    background: #19191B;
+    border: 1px solid #aba00b;
+}
+#globalfiltersearchpopup ul ul li.our-destinations.active{
+    background: #19191B;
+    border: 1px solid #aba00b;
+}
+.gs-top-bar-lbl{
+    color: #fff !important;    
+}
+.gs-top-bar input[type=text]{
+    text-transform:none !important;
+}
+.gs-top-bar .t-datepicker{
+    font-size: 12px;
+}
+
+/* ---- End Global search top bar -------*/
+
+@media screen and (min-width: 1400px){   
+    .custom-menu{
+        right:15%;
+    }
+}
+@media screen and (max-width: 1024px){   
+    .col-width{
+        margin-left: 1%;
+    }
+    .btn-search {
+        margin-left: 1%;
+    }
+    
+}
+
+@media screen and (max-width: 768px){   
+    .gs-home-search-bar {
+        width: 98%;        
+        left: 20px;
+        right: 20px;
+        
+    }
+    .custom-menu {       
+        right: 25px;
+        top: 25px;
+    }
+    .col-width{
+        width: 22%;
+        margin-left: 1%;    
+    }
+    .btn-search{
+        margin-left: 1%;
+        width: 45px;
+        height: 45px;
+    }
+    .gs-home-search-bar .btn-search-icon{
+        height: 45px;
+    }
+    .daterangepicker{        
+        margin-right: 6px;
+    }
+    .daterangepicker.opensright:before{
+        left: 120px;
+    }
+    .daterangepicker.opensright:after{
+        left: 120px;
+    }
+}
+@media screen and (max-width: 480px){   
+    .gs-home-search-bar {
+        width: 98%;        
+        left: 15px;        
+        top: 25%;
+        font-size: 10px;
+    }
+    #home_sld .carousel-caption{
+        top: 35%;
+    }
+    .gs-home-search-bar .fa-3x {
+        font-size: 2em;
+    }
+    .custom-menu {       
+        right: 25px;
+        top: 25px;
+    }
+    .col-width{
+        /*width: 21%;*/
+        width: 28%;
+        margin-left: 1%;    
+    }
+    .btn-search{
+        margin-left: 1%;
+        width: 25px;
+        height: 25px;
+    }
+    .gs-home-search-bar .btn-search-icon{
+        height: 45px;
+    }
+    .gs-home-search-bar input[type=text], .gs-home-search-bar select, .gs-home-search-bar button{
+        width: 100%;
+        margin-left: 2px; 
+        height: 25px;   
+    }
+    .gs-home-search-bar .globaldatepickerrange{
+        width: 17%;
+        margin-top: 0px;
+    }
+    .gs-home-search-bar select{
+        height: 25px;
+        margin-left: 0px;
+    }
+    .gs-home-search-bar .common-height{
+        height: 25px;    
+    }
+    .gs-home-search-bar .adult-room .number-of-adult{
+        height: 25px;
+        padding-left: 2px;
+    }
+    .gs-home-search-bar .adult-room {
+        font-size: 10px;
+        height: 25px;
+    }
+    .gs-home-search-bar .btn-search-icon {
+        height: 30px;
+    }
+    .gs-home-search-bar .search-icon img{
+        width: 100%;
+        height: auto;    
+    }
+    .gs-home-search-bar .search-icon{
+        width: 11%;
+    }
+    #globalfiltersearchpopup ul li{        
+        display: inline-block;
+        width: 100%;
+    } 
+    .gs-searchbar-main-collection{
+        width:40%;
+    }
+    .gs-searchbar-collection{
+        margin-left: 2px;        
+    }
+    .custom-menu ul li ul .gs-dd-collection a{
+        font-size: 12px;
+    }
+    .custom-menu ul li a{
+        margin-left: 15px;
+    }
+    .daterangepicker{
+        margin-top: 12px;
+        margin-right: 6px;
+    }
+    .daterangepicker.opensright:before{
+        left: 100px;
+    }
+    .daterangepicker.opensright:after{
+        left: 100px;
+    }
+    .gs-margin-left{
+        margin-left: 0px !important;
+    }
+    .collection{
+        display: none;
+    }
+}
+@media screen and (max-width: 320px){   
+    .gs-home-search-bar {
+        width: 98%;        
+        left: 15px;        
+        top: 25%;
+    }
+    #home_sld .carousel-caption{
+        top: 35%;
+    }
+    .gs-home-search-bar .fa-3x {
+        font-size: 2em;
+    }
+    .custom-menu {       
+        right: 25px;
+        top: 25px;
+    }
+    .col-width{
+        width: 20%;
+        margin-left: 1%;    
+    }
+    .btn-search{
+        margin-left: 1%;
+        width: 25px;
+        height: 25px;
+    }
+    
+    .gs-home-search-bar input[type=text], .gs-home-search-bar select, .gs-home-search-bar button{
+        width: 100%;    
+    }
+    #globalfiltersearchpopup ul li{        
+        display: inline-block;
+        width: 100%;
+    }   
+    .daterangepicker.opensright:before{
+        left: 120px;
+    }
+    .daterangepicker.opensright:after{
+        left: 120px;
+    }
 }

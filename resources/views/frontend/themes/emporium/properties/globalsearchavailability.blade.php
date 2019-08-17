@@ -9,13 +9,13 @@
 @section('content')
 <section id="globalSearchResult" class="globalSearchResultSection">
     {{-- */  $i=1; $j=1;  /* --}}
-    <div class="col-sm-12">
+    <!--<div class="col-sm-12">
         <div class="heading">
             Search Results <br />                        
             <span class="sub-heading">The following suites are available for the selected criteria.</span>
         </div>
-    </div>
-    <ul class="nav nav-tabs">
+    </div>-->
+    <ul class="nav nav-tabs main-nav-tab">
         @if(!empty($allData))
             @foreach($allData as $data) 
                 @if(count($data['ddSelected'])>0)                               
@@ -60,6 +60,15 @@
                                             @if($i==1) 
                                                 <input type="hidden" name="activeDestination" value="{{$seldd}}" />
                                             @endif
+                                            
+                                            <div class="search-breadcrum">
+                                                <ul class="s-breadcrumb destination-breadcrumb">                                                
+                                                </ul>
+                                            </div>
+                                            <select name="dd-destination" id="dd-destination">                                                
+                                            </select>
+                                            <h5 class="margin-top-20">Choose your Membership Type to make a reservation</h5>  
+                                            
                                             @if(!empty($collections))
                                                 {{--*/ $i=1; $j=1; $k=1; $l=1; $arr_key=''; /*--}}
                                                 <ul class="nav nav-tabs collection-tabs">
@@ -201,21 +210,20 @@
     @include('frontend.themes.emporium.layouts.sections.pdp_right_iconbar')
 @endsection
 
-{{-- For Include style files --}}
-@section('head')
-    @parent
-    
-@endsection
-
-
 {{-- For Include Top Bar --}}
 @section('top_search_bar')
-    
+    @include('frontend.themes.emporium.layouts.sections.global_search_top_bar')
 @endsection
 
 {{-- For Include Side Bar --}}
 @section('sidebar')
     @include('frontend.themes.emporium.layouts.sections.globalsearch_sidebar')
+@endsection
+
+{{-- For Include style files --}}
+@section('head')
+    @parent
+    
 @endsection
 
 {{-- For custom style  --}}
@@ -291,6 +299,54 @@
             }
         ?>
         
+        function changeBreadcrumbDropdown(catt){
+            $.ajax({
+                url:'{{URL::to("getDropdownBreadcrumb/")}}',
+                //dataType:'html',
+                dataType:'json',
+                data: {cat:catt},
+                type: 'post',
+                beforeSend: function(){
+                    
+                },
+                success: function(data){ 
+                    
+                    var objdestinations = data.destinations; 
+                    $("#dd-destination").empty();
+                    $("#dd-destination").append('<option value="'+data.catalias+'">You are in '+data.catname+'</option>');
+                    $.each(objdestinations, function(key, vlaue){
+                        $("#dd-destination").append(
+                            $('<option></option>').val(vlaue['category_alias']).html(vlaue['category_name'])
+                        );
+                    });
+                    var objParentCat = data.parent_cat;
+                    if(typeof objParentCat != undefined && objParentCat!=null){
+                        $("#dd-destination").append('<option data-id="'+data.parent_cat['id']+'" value="-1">&lt; Back to '+data.parent_cat['category_name']+'</option>');
+                    }else{
+                        $("#dd-destination").append('<option value="-1">&lt; Back to Destination</option>');    
+                    }  
+                    
+                    var breadcrumb = data.dest_url;
+                    //console.log(breadcrumb);
+                    var destUrl = '';
+                    $(".destination-breadcrumb").empty();
+                    $(".destination-breadcrumb").append('<li><a href="'+BaseURL+'">{{CNF_APPNAME}}</a></li>');
+                    var destpath = 'luxury_destinations';
+                    $.each(breadcrumb, function(key, vlaue){
+                        if(destUrl==''){
+                            destUrl = destUrl + vlaue['category_alias'];     
+                        }else{
+                            destUrl = destUrl +'/'+ vlaue['category_alias']; 
+                        }
+                        $("#dest_url").val(destUrl);
+                        destpath = destpath+"/"+vlaue['category_alias'];
+                        $(".destination-breadcrumb").append('<li><a href="'+BaseURL+'/'+destpath+'">'+vlaue['category_name']+'</a></li>');
+                    });
+                                  
+                }
+            });            
+        }
+        
         $(document).ready(function(){
            var active_tab = $("input[name='active_tab']").val();
            
@@ -318,6 +374,7 @@
            }else if(active_tab=="destination"){
                 active_cat = $("input[name='activeDestination']").val();
                 getDestinationPage(active_cat);  
+                
            }else{                
                 getDestinationPage(active_cat); 
            }
@@ -383,7 +440,9 @@
         function getDestinationPage(item){            
             var mtype = $("input[name='m_type']").val();                    
             var _cat = item;                      
-            getPropertyByCollection(mtype, _cat, 1, '');                
+            getPropertyByCollection(mtype, _cat, 1, '');  
+            
+            changeBreadcrumbDropdown(_cat);                        
         }
         function getPropertyByCollection(coll_type, cat, page, req_for){ 
             $.ajax({
@@ -409,6 +468,15 @@
                         $("#social_url").css('display', '');
                         $("#social_url").attr('data-url', social_url);    
                     }                   
+                    
+                    var datObj = {};
+    				datObj.catID = data.data.dest_id;
+    				var params = $.extend({}, doAjax_params_default);
+    				params['url'] = BaseURL + '/destination/destinatinos-ajax';
+    				params['data'] = datObj;
+    				params['successCallbackFunction'] = renderDestination;
+    				doAjax(params); 
+                    
                     listpagestructure(data);                    
                 }
             });
@@ -525,7 +593,7 @@
                                                 _html += '<div class="gridtext">';
                                                     _html += '<h5 class="entry-title">';
                                                         _html += '<a href="'+_url+'" rel="bookmark" style="">'+value['property_name']+' -- Featured  </a>';
-                                                        _html += '<a href="'+_url+'"><i class="fa fa-shopping-cart"></i></a>';
+                                                        //_html += '<a href="'+_url+'"><i class="fa fa-shopping-cart"></i></a>';
                                                     _html += '</h5>';
                                                     _html += '<p>'+  value['property_usp'] +'</p>';
                                                     _html += '<a class="read-more-link" href="'+_url+'"  title="Discover" ><span class="newfont"> Discover</span></a>';
@@ -627,7 +695,7 @@
             				                    _html += '<div class="gridtext">';
                                                     _html += '<h5 class="entry-title">';
                                                         _html += '<a href="'+_url+'" rel="bookmark" style="">'+value['property_name']+'</a>';
-                                                        _html += '<a href="'+_url+'"><i class="fa fa-shopping-cart"></i></a>';
+                                                        //_html += '<a href="'+_url+'"><i class="fa fa-shopping-cart"></i></a>';
                                                     _html += '</h5>';
                                                     _html += '<p>'+value['property_usp']+'</p>';
                                                     _html += '<a class="read-more-link" href="'+_url+'" title="discover"><span class="newfontsimple">Discover</span></a>';
@@ -925,7 +993,8 @@
                                 
                             popupHtml += '</div>';
                             popupHtml += '<div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">';
-                                popupHtml += '<a class="btnMembershipTypeBack" onclick="window.history.back();">Back</a>';
+                                popupHtml += '<a class="btnMembershipTypeBack" href="#" data-dismiss="modal" aria-hidden="true">Back</a>';
+                                //popupHtml += '<a class="btnMembershipTypeBack" onclick="window.history.back();">Back</a>';
                             popupHtml += '</div>';
                             //popupHtml += '<div class="col-sm-6 col-md-6 col-lg-6  col-xs-12">';
                                 
