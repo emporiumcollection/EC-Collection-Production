@@ -2693,7 +2693,17 @@ class PropertyController extends Controller {
         //print_r($request->all()); die;
         
         $arrive = $request->input("gl_arrive");
+        if($arrive!=''){
+            $arrive = $request->input("gl_arrive");    
+        }else{
+            $arrive = date('m-d-Y');    
+        }
         $departure = $request->input("gl_departure");
+        if($departure!=''){
+            $departure = $request->input("gl_departure");    
+        }else{
+            $departure = date('m-d-Y',strtotime("+1 day"));
+        }
         
         $alternate_dates = $request->input('alternate_dates');
         $numberofdate = $request->input('numberofdate');
