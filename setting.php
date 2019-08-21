@@ -1,5 +1,5 @@
 <?php 
-define('CNF_APPNAME','Emporium Voyage Membership Portal');
+define('CNF_APPNAME','Emporium-Voyage');
 define('CNF_APPDESC','Emporium Voyage Membership Portal');
 define('CNF_COMNAME','Emporium Voyage Membership Portal');
 define('CNF_EMAIL','marketing@emporium-collection.com');

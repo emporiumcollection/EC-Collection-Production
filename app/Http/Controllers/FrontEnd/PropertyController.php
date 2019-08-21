@@ -2704,7 +2704,6 @@ class PropertyController extends Controller {
         }else{
             $departure = date('m-d-Y',strtotime("+1 day"));
         }
-        
         $alternate_dates = $request->input('alternate_dates');
         $numberofdate = $request->input('numberofdate');
         
@@ -3002,7 +3001,7 @@ class PropertyController extends Controller {
         //End Number of night
         //print_r($total_guests); die;
         
-        $m_collection = \DB::table('tb_categories')->where('category_alias', 'our-collection')->first();   
+        $m_collection = \DB::table('tb_categories')->where('category_alias', 'our-collection')->where('category_approved', 1)->where('category_published', 1)->first();   
         $cat_collection = array();                
         if(!empty($m_collection)){
             $cat_collection = \DB::table('tb_categories')->where('parent_category_id', $m_collection->id)->where('category_approved', 1)->where('category_published', 1)->orderBy('category_order_num', 'asc')->get();
@@ -5365,6 +5364,10 @@ class PropertyController extends Controller {
             $this->data['social_url'] = $social_url;
             
             $this->data['dest_id'] = $cateObj->id;
+            
+            $this->data['category_image'] = $cateObj->category_image;
+            $this->data['category_instagram_tag'] = $cateObj->category_instagram_tag;
+            $this->data['category_name'] = $cateObj->category_name;
             
             //get all children start
             $chldIds = $this->fetchcategoryChildListIds($cateObj->id);
