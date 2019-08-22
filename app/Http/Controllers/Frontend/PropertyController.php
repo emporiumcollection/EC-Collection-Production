@@ -3001,7 +3001,7 @@ class PropertyController extends Controller {
         //End Number of night
         //print_r($total_guests); die;
         
-        $m_collection = \DB::table('tb_categories')->where('category_alias', 'our-collection')->where('category_approved', 1)->where('category_published', 1)->first();   
+        $m_collection = \DB::table('tb_categories')->where('category_alias', 'our-collection')->first();   
         $cat_collection = array();                
         if(!empty($m_collection)){
             $cat_collection = \DB::table('tb_categories')->where('parent_category_id', $m_collection->id)->where('category_approved', 1)->where('category_published', 1)->orderBy('category_order_num', 'asc')->get();
