@@ -842,7 +842,7 @@ $grid.imagesLoaded().progress( function() {
                                                 _html += '<div class="gridtext">';
                                                     _html += '<h5 class="entry-title">';
                                                         _html += '<a href="'+_url+'" rel="bookmark" style="">'+value['property_name']+' -- Featured  </a>';
-                                                        _html += '<a href="'+_url+'"><i class="fa fa-shopping-cart"></i></a>';
+                                                        //_html += '<a href="'+_url+'"><i class="fa fa-shopping-cart"></i></a>';
                                                     _html += '</h5>';
                                                     _html += '<p>'+  value['property_usp'] +'</p>';
                                                     _html += '<a class="read-more-link" href="'+_url+'"  title="Discover" ><span class="newfont"> Discover</span></a>';
@@ -944,7 +944,7 @@ $grid.imagesLoaded().progress( function() {
             				                    _html += '<div class="gridtext">';
                                                     _html += '<h5 class="entry-title">';
                                                         _html += '<a href="'+_url+'" rel="bookmark" style="">'+value['property_name']+'</a>';
-                                                        _html += '<a href="'+_url+'"><i class="fa fa-shopping-cart"></i></a>';
+                                                        //_html += '<a href="'+_url+'"><i class="fa fa-shopping-cart"></i></a>';
                                                     _html += '</h5>';
                                                     _html += '<p>'+value['property_usp']+'</p>';
                                                     _html += '<a class="read-more-link" href="'+_url+'" title="discover"><span class="newfontsimple">Discover</span></a>';
@@ -1100,7 +1100,7 @@ $grid.imagesLoaded().progress( function() {
 					dataGridHtml +='</figure>';
 					dataGridHtml +='<div class="title">';
 					dataGridHtml +='<h3><a href="'+BaseURL+'/'+obj.property_slug+'">'+obj.property_name+'</a></h3>';
-					dataGridHtml +='<a href="'+BaseURL+'/'+obj.property_slug+'" class="cartlink"><i class="fa fa-shopping-cart"></i></a>';
+					//dataGridHtml +='<a href="'+BaseURL+'/'+obj.property_slug+'" class="cartlink"><i class="fa fa-shopping-cart"></i></a>';
 					dataGridHtml +='</div>';
 					dataGridHtml +='</div>';
 					dataGridHtml +='</div>';
@@ -1166,7 +1166,7 @@ $grid.imagesLoaded().progress( function() {
 					dataGridHtml +='</figure>';
 					dataGridHtml +='<div class="title">';
 					dataGridHtml +='<h3><a href="'+BaseURL+'/'+obj.property_slug+'">'+obj.property_name+'</a></h3>';
-					dataGridHtml +='<a href="'+BaseURL+'/'+obj.property_slug+'" class="cartlink"><i class="fa fa-shopping-cart"></i></a>';
+					//dataGridHtml +='<a href="'+BaseURL+'/'+obj.property_slug+'" class="cartlink"><i class="fa fa-shopping-cart"></i></a>';
 					dataGridHtml +='</div>';
 					dataGridHtml +='</div>';
 					dataGridHtml +='</div>';
