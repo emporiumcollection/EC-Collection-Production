@@ -53,6 +53,18 @@ class ConfigController extends Controller {
 				$logo = 'backend-logo.'.$extension;
 				$uploadSuccess = $file->move($destinationPath, $logo);
 			}
+            
+            $front_logo = '';
+			if(!is_null(Input::file('frontlogo')))
+			{
+
+				$file2 = Input::file('frontlogo'); 
+			 	$destinationPath = public_path().'/sximo/images/'; 
+				$filename2 = $file2->getClientOriginalName();
+				$extension =$file2->getClientOriginalExtension(); //if you need extension of the file
+				$front_logo = 'front-logo.'.$extension;
+				$uploadSuccess = $file2->move($destinationPath, $front_logo);
+			}
 
 			$val  =		"<?php \n"; 
 			$val .= 	"define('CNF_APPNAME','".$request->input('cnf_appname')."');\n";
@@ -67,13 +79,14 @@ class ConfigController extends Controller {
             $val .= 	"define('CNF_SUBTRACT_FEE','".(!is_null($request->input('cnf_subtract_fee_first_booking')) ? 1 : 0 )."');\n";
 			$val .= 	"define('CNF_LANG','".$request->input('cnf_lang')."');\n";
 			$val .= 	"define('CNF_REGIST','".CNF_REGIST."');\n";	
-			$val .= 	"define('CNF_FRONT','".CNF_FRONT."');\n";		
+			$val .= 	"define('CNF_FRONT','".CNF_FRONT."');\n";            		
 			$val .= 	"define('CNF_RECAPTCHA','".CNF_RECAPTCHA."');\n";	
 			$val .= 	"define('CNF_THEME','".$request->input('cnf_theme')."');\n";		
 			$val .= 	"define('CNF_RECAPTCHAPUBLICKEY','".CNF_RECAPTCHAPUBLICKEY."');\n";
 			$val .= 	"define('CNF_RECAPTCHAPRIVATEKEY','".CNF_RECAPTCHAPRIVATEKEY."');\n";
 			$val .= 	"define('CNF_MODE','".(!is_null($request->input('cnf_mode')) ? 'production' : 'development' )."');\n";	
-			$val .= 	"define('CNF_LOGO','".($logo !=''  ? $logo : CNF_LOGO )."');\n";		
+			$val .= 	"define('CNF_LOGO','".($logo !=''  ? $logo : CNF_LOGO )."');\n";
+            $val .= 	"define('CNF_FRONTEND_LOGO','".($front_logo !=''  ? $front_logo : CNF_FRONTEND_LOGO )."');\n";		
 			$val .= 	"define('CNF_ALLOWIP','".CNF_ALLOWIP."');\n";
 			$val .= 	"define('CNF_RESTRICIP','".CNF_RESTRICIP."');\n";									
 			$val .= 	"define('CNF_YOUTUBE_API_KEY','".$request->input('cnf_youtube_api_key')."');\n";
@@ -607,6 +620,7 @@ class ConfigController extends Controller {
 		$this->data['gesamtvertrieb'] = \DB::table('tb_settings')->where('key_value', 'gesamtvertrieb')->first();
 		$this->data['presse'] = \DB::table('tb_settings')->where('key_value', 'presse')->first();
 		$this->data['footer_text'] = \DB::table('tb_settings')->where('key_value', 'footer_text')->first();
+        $this->data['about_header_text'] = \DB::table('tb_settings')->where('key_value', 'about_header_text')->first();
 		$this->data['about_text'] = \DB::table('tb_settings')->where('key_value', 'about_text')->first();
 		
 		$this->data['services_titles'] = \DB::table('tb_services')->select('id','title')->where('status', 1)->get();
@@ -646,6 +660,7 @@ class ConfigController extends Controller {
 			\DB::table('tb_settings')->where('key_value', 'gesamtvertrieb')->update(['content' => Input::get('gesamtvertrieb')]);
 			\DB::table('tb_settings')->where('key_value', 'presse')->update(['content' => Input::get('presse')]);
 			\DB::table('tb_settings')->where('key_value', 'footer_text')->update(['content' => Input::get('footerText')]);
+            \DB::table('tb_settings')->where('key_value', 'about_header_text')->update(['content' => Input::get('aboutHeaderText')]);
 			\DB::table('tb_settings')->where('key_value', 'about_text')->update(['content' => Input::get('aboutText')]);
 			if(!empty(Input::get('services_column1')))
 			{

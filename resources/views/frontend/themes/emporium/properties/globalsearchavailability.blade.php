@@ -1,6 +1,6 @@
 @extends('frontend.themes.emporium.layouts.home')
 {{--  For Title --}}
-@section('title', 'PDP Page')
+@section('title', 'Global search availability')
 {{-- For Meta Keywords --}}
 @section('meta_keywords', '')
 {{-- For Meta Description --}}

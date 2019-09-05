@@ -1,10 +1,10 @@
 @extends('frontend.themes.emporium.layouts.home')
 {{--  For Title --}}
-@section('title', 'Emporium Voyage - Your Ultimate Luxury Travel Partner')
+@section('title', 'Your Ultimate Luxury Travel Partner')
 {{-- For Meta Keywords --}}
-@section('meta_keywords', 'Emporium Voyage, Luxury Hotel Booking, Luxury 5 Star Hotels')
+@section('meta_keywords', 'Luxury Hotel Booking, Luxury 5 Star Hotels')
 {{-- For Meta Description --}}
-@section('meta_description', 'Emporium Voyage - Your Ultimate Luxury Travel Partner')
+@section('meta_description', 'Your Ultimate Luxury Travel Partner')
 {{-- For Page's Content Part --}}
 @section('content')
 <div class="logo-box">
@@ -525,7 +525,7 @@
     <!-- slider starts here -->
          <section class="sliderSection" id="home_sld">
             @if(!empty($slider))
-              <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+              <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="10000">
                  <!-- Wrapper for slides -->
                  <div class="carousel-inner wrapper">
                     @foreach($slider as $key => $slider_row)
