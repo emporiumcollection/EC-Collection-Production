@@ -510,7 +510,7 @@
         <div class="col-width-bot">
             <div class="">
                 Alternatively search by:<br />
-                <a href="#" class="gs-lnk-destination">Destination</a> or <a href="#" class="gs-lnk-experience">Experience</a>
+                <a href="#" class="gs-lnk-destination">Destination</a> or <a href="#" class="gs-lnk-experience">Experience</a> or <a href="#" class="gs-lnk-channel">Channel</a>
             </div>
         </div>
         
@@ -546,7 +546,7 @@
                                 <h1><a href="{{$slider_row->slider_link}}">{{$slider_row->slider_title}}</a></h1>
                             </div>
                             <div class="cnt-box slider-cnt-box">
-                                <p><a href="{{$slider_row->slider_link}}" style="color:white;">{{$slider_row->slider_description}}</a></p>
+                                <p><a href="{{$slider_row->slider_link}}" style="color:white;">{!! nl2br($slider_row->slider_description) !!}</a></p>
                             </div>
                             
                          </div>

@@ -1911,6 +1911,15 @@ $(document).on('click', '.gs-lnk-experience', function(e){
     $('[data-action="select-experience"]').trigger('click');
     e.stopPropagation(); 
 });
+$(document).on('click', '.gs-lnk-channel', function(e){
+    //$( this ).toggleClass( "highlight" );
+    $(".homerightmenu").addClass("me-right");
+    $(".mobilemenu").addClass("me-left");
+    $(".menu-bx").addClass( "is-nav-active"); 
+    $(".Home .logo-box").addClass( "remove-h-logo");
+    $('[data-action="select-destination"]').trigger('click');
+    e.stopPropagation(); 
+});
 $(document).on('click', '.gs-sb-calendar-from', function(e){ console.log("hello");
     $("#t-topbar-picker .t-date-check-in").trigger('click');
     e.stopPropagation();
