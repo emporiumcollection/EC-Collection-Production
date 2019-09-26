@@ -525,7 +525,7 @@
     <!-- slider starts here -->
          <section class="sliderSection" id="home_sld">
             @if(!empty($slider))
-              <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="3000">
+              <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="10000">
                  <!-- Wrapper for slides -->
                  <div class="carousel-inner wrapper">
                     @foreach($slider as $key => $slider_row)
