@@ -468,7 +468,27 @@ class PropertiesController extends Controller {
             $data['social_pinterest'] = $request->input('social_pinterest');
             $data['social_vimeo'] = $request->input('social_vimeo');
             $data['social_instagram'] = $request->input('social_instagram');
-
+            
+            $address = $request->input('address');
+            $latitude = '';
+            $longitude = '';
+            if($request->input('latitude')=='' && $request->input('longitude')==''){                
+                if($address!=''){
+                    $geo = file_get_contents("https://maps.google.com/maps/api/geocode/json?key=AIzaSyBqf2xJGZFRECA_eVTNek_Y7sxBzmcgXrs&address=".urlencode($address).'&sensor=false');
+                    $geo = json_decode($geo, true); // Convert the JSON to an array                
+                    if(isset($geo['status']) && ($geo['status'] == 'OK')) {
+                      $latitude = $geo['results'][0]['geometry']['location']['lat']; // Latitude
+                      $longitude = $geo['results'][0]['geometry']['location']['lng']; // Longitude
+                    } 
+                }   
+            }else{
+                $latitude = $request->input('latitude');
+                $longitude = $request->input('longitude');        
+            }
+            $data['latitude'] = $latitude;
+            $data['longitude'] = $longitude;
+            $data['address'] = $address;
+            
             if (!empty($request->input('assigned_amenities'))) {
                 $data['assign_amenities'] = implode(',', $request->input('assigned_amenities'));
             } else {

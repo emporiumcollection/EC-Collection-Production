@@ -2288,7 +2288,15 @@
                     </div>
 
                     <div class="tab-pane m-t " id="HotelAdress"> 
+                        <div class="form-group  " >
+                            <label for="City" class=" control-label col-md-4 text-left"> Address </label>
+                            <div class="col-md-6">
+                                {!! Form::text('address', $row['address'],array('class'=>'form-control', 'placeholder'=>'Copy the address from google map to get lat long',   )) !!} 
+                            </div> 
+                            <div class="col-md-2">
 
+                            </div>
+                        </div> 	  
                         <div class="form-group  " >
                             <label for="City" class=" control-label col-md-4 text-left"> City </label>
                             <div class="col-md-6">
@@ -2315,7 +2323,25 @@
                             <div class="col-md-2">
 
                             </div>
-                        </div> 					
+                        </div> 		
+                        <div class="form-group  " >
+                            <label for="Website" class=" control-label col-md-4 text-left"> Latitude </label>
+                            <div class="col-md-6">
+                                {!! Form::text('latitude', $row['latitude'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                        <div class="form-group  " >
+                            <label for="Website" class=" control-label col-md-4 text-left"> Longitude </label>
+                            <div class="col-md-6">
+                                {!! Form::text('longitude', $row['longitude'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>			
                         <div class="form-group  " >
                             <label for="Phone" class=" control-label col-md-4 text-left"> Phone </label>
                             <div class="col-md-6">
