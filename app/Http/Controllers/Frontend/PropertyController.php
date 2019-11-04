@@ -87,7 +87,7 @@ class PropertyController extends Controller {
         $this->data['total_record'] = $getRec[0]->total_record;
         $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
         $this->data['active_page']=$pageNumber;	
-		return view('frontend.themes.emporium.properties.list', $this->data);
+		return view('frontend.themes.emporium.properties.list_hotel', $this->data);
 	}
 	
     function propertySearch_new(Request $request) {
@@ -1133,6 +1133,16 @@ class PropertyController extends Controller {
         if (!empty($props)) {
                         
             $propertiesArr['data'] = $props;
+            
+            /* Price on Rquest */
+            $prcOnReq = false;
+            $chkseasonset = \DB::table('tb_seasons')->where('property_id', $props->id)->orderBy('season_priority', 'asc')->get();
+            if ($props->default_seasons == 1 || empty($chkseasonset)){
+                $prcOnReq = true;    
+            }                        
+            $propertiesArr['data']->prcOnReq = $prcOnReq;
+            /* End */
+            
             $propertiesArr['propimage'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
             $propertiesArr['propimage_thumbpath'] = '';
             $propertiesArr['propimage_thumbpath_dir']= '';
@@ -2776,8 +2786,8 @@ class PropertyController extends Controller {
         
         $site_url = '';
         if($sitename=='voyage'){
-            $site_url = 'https://emporium-voyage.com';
-            //$site_url = 'http://localhost:8181/emporium-staging-forge/public'; 
+            //$site_url = 'https://emporium-voyage.com';
+            $site_url = 'http://localhost:8181/emporium-staging-forge/public'; 
             //$site_url = 'http://staging.emporium-voyage.com';  
         }elseif($sitename=='safari'){
             $site_url = 'https://emporium-safari.com';
