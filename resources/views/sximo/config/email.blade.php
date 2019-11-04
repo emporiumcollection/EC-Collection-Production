@@ -97,6 +97,14 @@
 	  <li ><a href="#frontendUploadtemplate" data-toggle="tab"> Frontend upload Template </a></li>
 	  <li ><a href="#frontendDownloadtemplate" data-toggle="tab"> Frontend download Template </a></li>
 	  <li ><a href="#removalRemindertemplate" data-toggle="tab"> Removal Reminder Template </a></li>
+      <li ><a href="#refferalInvitationtemplate" data-toggle="tab"> Refferal Invitation Template </a></li>
+      
+      <li ><a href="#requestReferralEmailtoSuperAdmin" data-toggle="tab"> Request Referral Email to Super Admin   </a></li>
+      <li ><a href="#requestReferralEmailtoUser" data-toggle="tab"> Request Referral Email to User </a></li>
+      
+      <li ><a href="#priceOnRequestEmailtoSuperAdmin" data-toggle="tab"> Price On Request Email to Admin   </a></li>
+      <li ><a href="#priceOnRequestEmailtoUser" data-toggle="tab"> Price On Request Email to User </a></li>
+      
 	</ul>
 
 	<div class="tab-content">
@@ -119,7 +127,62 @@
 			</div>
 		</div>
 	  </div>
+      
+      <div class="tab-pane m-t" id="requestReferralEmailtoSuperAdmin">
+            <div class="col-sm-6 animated fadeInRight">
+            	<div class="sbox  "> 
+            		<div class="sbox-title">  {{ Lang::get('core.request_refferal_email_to_superadmin') }}</div>
+            		<div class="sbox-content"> 	
+            			  <div class="form-group">
+            				<label for="ipt" class=" control-label ">{{ Lang::get('core.tab_email') }} </label>					
+            				<textarea rows="20" name="requestReferralEmailtoSuperAdmin" class="form-control input-sm markItUp">{{ $requestReferralEmailtoSuperAdmin }}</textarea>					 
+            			  </div> 
+            
+            		  <div class="form-group">
+            				<button class="btn btn-primary" type="submit">{{ Lang::get('core.sb_savechanges') }}</button>
+            			 </div> 
+            		</div>	 
+              </div>
+            </div>
+      </div>
+        
+      <div class="tab-pane m-t" id="requestReferralEmailtoUser">
+            <div class="col-sm-6 animated fadeInRight">
+            	<div class="sbox  "> 
+            		<div class="sbox-title">  {{ Lang::get('core.request_refferal_email_to_user') }}</div>
+            		<div class="sbox-content"> 	
+            			  <div class="form-group">
+            				<label for="ipt" class=" control-label ">{{ Lang::get('core.tab_email') }} </label>					
+            				<textarea rows="20" name="requestReferralEmailtoUser" class="form-control input-sm markItUp">{{ $requestReferralEmailtoUser }}</textarea>					 
+            			  </div> 
+            
+            		  <div class="form-group">
+            				<button class="btn btn-primary" type="submit">{{ Lang::get('core.sb_savechanges') }}</button>
+            			 </div> 
+            		</div>	 
+                </div>
+            </div>
+      </div>
+      
+      <div class="tab-pane m-t" id="refferalInvitationtemplate">
+			<div class="col-sm-6 animated fadeInRight">
+				<div class="sbox  "> 
+					<div class="sbox-title">  {{ Lang::get('core.refferal_invite') }}</div>
+					<div class="sbox-content"> 	
+						  <div class="form-group">
+							<label for="ipt" class=" control-label ">{{ Lang::get('core.tab_email') }} </label>					
+							<textarea rows="20" name="refferalInvitation" class="form-control input-sm markItUp">{{ $refferalInvitation }}</textarea>					 
+						  </div> 
 
+					  <div class="form-group">
+							<button class="btn btn-primary" type="submit">{{ Lang::get('core.sb_savechanges') }}</button>
+						 </div> 
+					</div>	 
+			  </div>
+			</div>
+		</div>
+      
+        
 		<div class="tab-pane m-t" id="fpassword">
 			<div class="col-sm-6 animated fadeInRight">
 				<div class="sbox  "> 
@@ -376,6 +439,50 @@
 			  </div>	
 			</div>
 		</div>
+        
+        <div class="tab-pane m-t" id="priceOnRequestEmailtoSuperAdmin">
+            <div class="col-sm-6 animated fadeInRight">
+            	<div class="sbox  "> 
+            		<div class="sbox-title">  {{ Lang::get('core.request_refferal_email_to_superadmin') }}</div>
+            		<div class="sbox-content"> 	
+                        <div class="form-group">
+                            <label for="ipt" class=" control-label ">{{ Lang::get('core.tab_email') }} </label>					
+                            <textarea rows="20" name="priceOnRequestEmailtoSuperAdmin" class="form-control input-sm markItUp">{{ $priceOnRequestEmailtoSuperAdmin }}</textarea>					 
+                        </div> 
+                        <div class="form-group">
+                            Please use "&#123;&#33;&#33; $msg &#33;&#33;&#125;" shortcode for print massage in the template.    
+                        </div>
+                        <div class="form-group">
+                            <button class="btn btn-primary" type="submit">{{ Lang::get('core.sb_savechanges') }}</button>
+                        </div> 
+            		</div>	 
+              </div>
+            </div>
+      </div>
+        
+      <div class="tab-pane m-t" id="priceOnRequestEmailtoUser">
+            <div class="col-sm-6 animated fadeInRight">
+            	<div class="sbox  "> 
+            		<div class="sbox-title">  {{ Lang::get('core.request_refferal_email_to_user') }}</div>
+            		<div class="sbox-content"> 	
+                        <div class="form-group">
+                            <label for="ipt" class=" control-label ">{{ Lang::get('core.tab_email') }} </label>					
+                            <textarea rows="20" name="priceOnRequestEmailtoUser" class="form-control input-sm markItUp">{{ $priceOnRequestEmailtoUser }}</textarea>					 
+                        </div> 
+                            
+                        <div class="form-group">
+							Please use "&#123;&#123; $firstname &#125;&#125;" shortcode for print massage in the template.
+					    </div>
+                            
+            		    <div class="form-group">
+            				<button class="btn btn-primary" type="submit">{{ Lang::get('core.sb_savechanges') }}</button>
+            			</div> 
+            		</div>	 
+                </div>
+            </div>
+      </div>
+      
+        
 	</div>
 	</div>
  {!! Form::close() !!}
