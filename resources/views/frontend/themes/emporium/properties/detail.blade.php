@@ -263,15 +263,14 @@
                                             <button class="btn btn-default bg-color" data-id="{{$type->id}}" type="button" onclick="price_on_request('{{$type->id}}');">Price on request</button>
                                         @else
                                             <button class="btn btn-default bg-color" type="button" onclick="choose_room_type('{{$type->id}}');">Reservation</button>
-                                        @endif
-                                        
-                                        @if($type->price!='')
-                                            <a class="btn btn-default" title="{{$type->season}}" id="loginToView"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}} </a>
-                                            @if(isset(\Auth::user()->id))
-                                                <?php /* <a  href="#" onclick="getseasonrates({{$type->id}});" class="btn btn-default" title="Rates" data-toggle="modal" data-target="#psrModal">Full Rate List</a> */ ?>
-                                                <a  href="#" data-id="{{$type->id}}" class="btn btn-default full-rate" title="Rates">{{($currency->content!='') ? $currency->content : '$'}}/Availability</a>
-                                            @endif                                           
-                                        @endif
+                                            @if($type->price!='')
+                                                <a class="btn btn-default" title="{{$type->season}}" id="loginToView"> {{($currency->content!='') ? $currency->content : '$'}} {{ isset(\Auth::user()->id) ? $type->price : 'Login to view'}} </a>
+                                                @if(isset(\Auth::user()->id))
+                                                    <?php /* <a  href="#" onclick="getseasonrates({{$type->id}});" class="btn btn-default" title="Rates" data-toggle="modal" data-target="#psrModal">Full Rate List</a> */ ?>
+                                                    <a  href="#" data-id="{{$type->id}}" class="btn btn-default full-rate" title="Rates">{{($currency->content!='') ? $currency->content : '$'}}/Availability</a>
+                                                @endif                                           
+                                            @endif
+                                        @endif                                        
                                         
                                         <div class="sliderArrow">
                                             <a href="javascript:void(0);" class="prevClick"><i class="fa fa-angle-left"></i></a>
