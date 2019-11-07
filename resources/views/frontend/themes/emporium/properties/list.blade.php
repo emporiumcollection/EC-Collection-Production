@@ -1699,7 +1699,7 @@ $grid.imagesLoaded().progress( function() {
                     $(".dv-youtube-channel").html('<div class="yt-rvideos"></div>');
                     //$(".dv-youtube-channel").html('<div data-yt data-yt-channel="'+data.channel_url+'" data-yt-content-columns="4"  data-yt-content-rows="3"></div>')                    
                         $('.yt-rvideos').yottie({  
-                            key:'AIzaSyBsDZBqpY3ehznYmQnIt1ZwbDIuN0vufs8',
+                            key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
                             channel: data.channel_url,
                             content: {
                                 columns: 4,
