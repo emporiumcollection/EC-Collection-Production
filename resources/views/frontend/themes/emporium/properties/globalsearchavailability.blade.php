@@ -501,7 +501,8 @@
             $(".collection-tabs").css('display', 'none');             
             var channel_url = $(this).attr('data-url');            
             $(".load_ajax").html('<div class="yt-rvideos"></div>');                         
-            $('.yt-rvideos').yottie({                                
+            $('.yt-rvideos').yottie({  
+                key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
                 channel: channel_url,
                 content: {
                     columns: 4,
