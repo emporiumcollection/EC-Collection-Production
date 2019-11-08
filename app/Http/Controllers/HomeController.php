@@ -8862,7 +8862,7 @@ die;        */
             )
         );
         $post_json = json_encode($arr);
-        $hapikey = readline("94aa9df3-d9f7-48a5-81a3-b365fcbe7492");
+        $hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
         $endpoint = 'https://api.hubapi.com/contacts/v1/contact?hapikey=' . $hapikey;
         $ch = @curl_init();
         @curl_setopt($ch, CURLOPT_POST, true);
