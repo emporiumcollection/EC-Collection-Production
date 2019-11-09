@@ -8859,7 +8859,7 @@ die;        */
             return json_encode($res);
         
     }
-    function hubspot_api($objUser){ 
+    function hubspot_api($objUser){ echo "hhhhh"; die;
         $hapikey = \Config::get('hubspot.hsApiKey');
         if(!empty($objUser['email'])){
             $response = $this->hsGetEmailDetails($objUser['email']); 
