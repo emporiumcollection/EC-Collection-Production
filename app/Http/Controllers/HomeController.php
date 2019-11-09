@@ -8681,7 +8681,8 @@ die;        */
         die;
     }
     function getTest(Request $request){
-        $this->hubspot_api();
+        //$this->hubspot_api();
+        $this->hsGetEmailDetails('dalip.01rad@gmail.com');
         /*$prop = \DB::connection('mysql4')->table('tb_properties')->take(5)->get();
         echo "<pre>";
         print_r($prop);*/
@@ -8766,7 +8767,15 @@ die;        */
             $userData['mobile_number'] = $request->input('mobile_number');
             $userData['email'] = $request->input('email');
             $userData['prefer_communication_with'] = $request->input('prefer_communication_with');
-
+            
+            $objUser = array(
+                'email'=>$userData['email'],
+                'firstname'=>$userData['first_name'],
+                'lastname'=>$userData['last_name'],
+                'phone'=>$userData['mobile_number'],
+                //'email'=>$userData['email'],    
+            );
+            
             //$userData['card_number'] = base64_encode($request->input('card_number'));
             //$userData['card_type'] = base64_encode($request->input('card_type'));
             //$userData['expiry_month'] = base64_encode($request->input('expiry_month'));
@@ -8835,11 +8844,24 @@ die;        */
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
             
+            $this->hubspot_api($objUser);
+             
             $res['status'] = 'success';
             return json_encode($res);
         
     }
-    function hubspot_api(){    
+    function hubspot_api($objUser){ 
+        $hapikey = \Config::get('hubspot.hsApiKey');
+        if(!empty($objUser)){
+            
+        }
+        //Example GET URL:
+        
+        https://api.hubapi.com/contacts/v1/contact/email/testingapis@hubspot.com/profile?hapikey=demo
+        
+        $arr = array(
+            "vidToMerge": 1343774
+        );
         
         $arr = array(
             'properties' => array(
@@ -8862,8 +8884,8 @@ die;        */
             )
         );
         $post_json = json_encode($arr);
-        $hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
-        $endpoint = 'https://api.hubapi.com/contacts/v1/contact?hapikey=94aa9df3-d9f7-48a5-81a3-b365fcbe7492';
+        //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
+        $endpoint = 'https://api.hubapi.com/contacts/v1/contact?hapikey='.$hapikey;
         $ch = @curl_init();
         @curl_setopt($ch, CURLOPT_POST, true);
         @curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
@@ -8877,6 +8899,30 @@ die;        */
         echo "curl Errors: " . $curl_errors;
         echo "\nStatus code: " . $status_code;
         echo "\nResponse: " . $response;
+        
+        
+              
 
     }
+    
+    function hsGetEmailDetails($email){
+        $hapikey = \Config::get('hubspot.hsApiKey');
+        //$post_json = json_encode($arr);
+        //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
+        $endpoint = 'https://api.hubapi.com/contacts/v1/contact/email/'.$email.'/profile?hapikey='.$hapikey;
+        $ch = @curl_init();
+        //@curl_setopt($ch, CURLOPT_POST, true);
+        //@curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
+        @curl_setopt($ch, CURLOPT_URL, $endpoint);
+        @curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        @curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = @curl_exec($ch);
+        $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl_errors = curl_error($ch);
+        @curl_close($ch);
+        echo "curl Errors: " . $curl_errors;
+        echo "\nStatus code: " . $status_code;
+        echo "\nResponse: " . $response;    
+    }
+    
 }
