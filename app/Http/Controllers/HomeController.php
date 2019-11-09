@@ -8868,8 +8868,8 @@ die;        */
                 $obj = $response['response'];
                 if(array_key_exists('status'), $obj){ echo "hhh"; die;
                     $this->hsPostDetails($objUser);    
-                }else{  echo "hkh"; die;
-                    $this->hsPostMergeDetails($objUser);        
+                }else{ echo $obj['vid']; echo "hkh"; die;
+                    $this->hsPostMergeDetails($obj['vid']);        
                 }        
             }   
         }
@@ -8959,9 +8959,9 @@ die;        */
                 $mobj[] = $uobj;  
             }    
         }
-        $arr = array(
+        /*$arr = array(
             'properties' => array( $mobj )
-        );
+        );*/
         $post_json = json_encode($arr);
         //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
         $endpoint = 'https://api.hubapi.com/contacts/v1/contact?hapikey='.$hapikey;
@@ -8982,7 +8982,7 @@ die;        */
         
         return $data_response;
     }
-    function hsPostMergeDetails(){ echo "hh"; die;
+    function hsPostMergeDetails($vid){ echo "hh"; die;
         //https://api.hubapi.com/contacts/v1/contact/merge-vids/1343724/?hapikey=demo    
         $hapikey = \Config::get('hubspot.hsApiKey');
         $mobj = array();
@@ -8999,7 +8999,7 @@ die;        */
         );
         $post_json = json_encode($arr);
         //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
-        $endpoint = 'https://api.hubapi.com/contacts/v1/contact/merge-vids/1343724/?hapikey='.$hapikey;
+        $endpoint = 'https://api.hubapi.com/contacts/v1/contact/merge-vids/'.$vid.'/?hapikey='.$hapikey;
         $ch = @curl_init();
         @curl_setopt($ch, CURLOPT_POST, true);
         @curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
