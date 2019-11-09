@@ -8864,8 +8864,8 @@ die;        */
         if(!empty($objUser['email'])){
             $response = $this->hsGetEmailDetails($objUser['email']); 
             //print_r($response); die;
-            if($response['statusCode']==200){ print_r($response); die;
-                $obj = $response['response'];
+            if($response['statusCode']==200){ 
+                $obj = $response['response']; print_r($obj); die;
                 if($obj['status']=='error'){
                     $this->hsPostDetails($objUser);    
                 }else{
