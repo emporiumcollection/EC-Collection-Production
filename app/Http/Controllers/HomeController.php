@@ -8853,10 +8853,18 @@ die;        */
     }
     function hubspot_api($objUser){ 
         $hapikey = \Config::get('hubspot.hsApiKey');
-        if(!empty($objUser)){
-            
+        if(!empty($objUser['email'])){
+            $response = $this->hsGetEmailDetails($objUser); 
+            if($response['statusCode']==200){
+                $obj = $response['response'];
+                if($obj['status']=='error'){
+                    $this->hsPostDetails($objUser);    
+                }else{
+                    $this->hsPostMergeDetails($objUser);        
+                }        
+            }   
         }
-        //Example GET URL:
+        /*//Example GET URL:
         
         https://api.hubapi.com/contacts/v1/contact/email/testingapis@hubspot.com/profile?hapikey=demo
         
@@ -8901,7 +8909,7 @@ die;        */
         echo "\nStatus code: " . $status_code;
         echo "\nResponse: " . $response;
         
-        
+        */
               
 
     }
@@ -8921,9 +8929,82 @@ die;        */
         $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $curl_errors = curl_error($ch);
         @curl_close($ch);
-        echo "curl Errors: " . $curl_errors;
-        echo "\nStatus code: " . $status_code;
-        echo "\nResponse: " . $response;    
+        //echo "curl Errors: " . $curl_errors;
+        //echo "\nStatus code: " . $status_code;
+        //echo "\nResponse: " . $response; 
+        $data_response = array();
+        $data_response['statusCode'] = $status_code;
+        $data_response['response'] = $response;
+        
+        return $data_response;
     }
-    
+    function hsPostDetails($objUser){
+        $hapikey = \Config::get('hubspot.hsApiKey');
+        $mobj = array();
+        if(!empty($objUser)){
+            $uobj = array();
+            foreach($objUser as $key=>$value){
+                $uobj['property'] = $key;
+                $uobj['value'] = $value; 
+                $mobj[] = $uobj;  
+            }    
+        }
+        $arr = array(
+            'properties' => array( $mobj )
+        );
+        $post_json = json_encode($arr);
+        //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
+        $endpoint = 'https://api.hubapi.com/contacts/v1/contact?hapikey='.$hapikey;
+        $ch = @curl_init();
+        @curl_setopt($ch, CURLOPT_POST, true);
+        @curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
+        @curl_setopt($ch, CURLOPT_URL, $endpoint);
+        @curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        @curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = @curl_exec($ch);
+        $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl_errors = curl_error($ch);
+        @curl_close($ch);
+        
+        $data_response = array();
+        $data_response['statusCode'] = $status_code;
+        $data_response['response'] = $response;
+        
+        return $data_response;
+    }
+    function hsPostMergeDetails(){
+        //https://api.hubapi.com/contacts/v1/contact/merge-vids/1343724/?hapikey=demo    
+        $hapikey = \Config::get('hubspot.hsApiKey');
+        $mobj = array();
+        if(!empty($objUser)){
+            $uobj = array();
+            foreach($objUser as $key=>$value){
+                $uobj['property'] = $key;
+                $uobj['value'] = $value; 
+                $mobj[] = $uobj;  
+            }    
+        }
+        $arr = array(
+            'properties' => array( $mobj )
+        );
+        $post_json = json_encode($arr);
+        //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
+        $endpoint = 'https://api.hubapi.com/contacts/v1/contact/merge-vids/1343724/?hapikey='.$hapikey;
+        $ch = @curl_init();
+        @curl_setopt($ch, CURLOPT_POST, true);
+        @curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
+        @curl_setopt($ch, CURLOPT_URL, $endpoint);
+        @curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        @curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = @curl_exec($ch);
+        $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl_errors = curl_error($ch);
+        @curl_close($ch);
+        
+        $data_response = array();
+        $data_response['statusCode'] = $status_code;
+        $data_response['response'] = $response;
+        
+        return $data_response;
+    }
 }
