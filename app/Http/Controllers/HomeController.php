@@ -8682,7 +8682,7 @@ die;        */
     }
     function getTest(Request $request){
         //$this->hubspot_api();
-        echo "api"; die;
+        //echo "api"; die;
         //$this->hsGetEmailDetails('dalip.01rad@gmail.com');
         $objUser = array(
             'email'=>'dalip.01rad@gmail.com',
@@ -8859,7 +8859,7 @@ die;        */
             return json_encode($res);
         
     }
-    function hubspot_api($objUser){ echo "hhhhh"; die;
+    function hubspot_api($objUser){
         $hapikey = \Config::get('hubspot.hsApiKey');
         if(!empty($objUser['email'])){
             $response = $this->hsGetEmailDetails($objUser['email']); 
