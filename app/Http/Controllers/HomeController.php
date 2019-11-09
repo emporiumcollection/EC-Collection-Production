@@ -8682,7 +8682,7 @@ die;        */
     }
     function getTest(Request $request){
         //$this->hubspot_api();
-        //echo "api"; die;
+        echo "api"; die;
         //$this->hsGetEmailDetails('dalip.01rad@gmail.com');
         $objUser = array(
             'email'=>'dalip.01rad@gmail.com',
