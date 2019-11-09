@@ -8866,7 +8866,7 @@ die;        */
             //print_r($response); die;
             if($response['statusCode']==200){ 
                 $obj = $response['response'];
-                if(array_key_exists('status', $obj){ echo "hhh"; die;
+                if(array_key_exists('status', $obj)){ echo "hhh"; die;
                     $this->hsPostDetails($objUser);    
                 }else{ echo $obj['vid']; echo "hkh"; die;
                     $this->hsPostMergeDetails($obj['vid']);        
