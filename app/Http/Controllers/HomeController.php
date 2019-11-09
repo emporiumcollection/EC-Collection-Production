@@ -8683,7 +8683,15 @@ die;        */
     function getTest(Request $request){
         //$this->hubspot_api();
         //echo "api"; die;
-        $this->hsGetEmailDetails('dalip.01rad@gmail.com');
+        //$this->hsGetEmailDetails('dalip.01rad@gmail.com');
+        $objUser = array(
+            'email'=>'dalip.01rad@gmail.com',
+            'firstname'=>'dalip',
+            'lastname'=>'kumar',
+            'phone'=>'9874563211',
+            //'email'=>$userData['email'],    
+        );
+        $this->hubspot_api($objUser);
         /*$prop = \DB::connection('mysql4')->table('tb_properties')->take(5)->get();
         echo "<pre>";
         print_r($prop);*/
@@ -8936,8 +8944,8 @@ die;        */
         $data_response = array();
         $data_response['statusCode'] = $status_code;
         $data_response['response'] = $response;
-        print_r($data_response);
-        //return $data_response;
+        //print_r($data_response);
+        return $data_response;
     }
     function hsPostDetails($objUser){
         $hapikey = \Config::get('hubspot.hsApiKey');
