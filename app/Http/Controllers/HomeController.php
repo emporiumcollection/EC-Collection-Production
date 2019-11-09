@@ -8865,8 +8865,8 @@ die;        */
             $response = $this->hsGetEmailDetails($objUser['email']); 
             //print_r($response); die;
             if($response['statusCode']==200){ 
-                $obj = $response['response']; print_r($obj); die;
-                if($obj['status']=='error'){
+                $obj = $response['response'];
+                if(array_key_exists('status'), $obj){
                     $this->hsPostDetails($objUser);    
                 }else{
                     $this->hsPostMergeDetails($objUser);        
