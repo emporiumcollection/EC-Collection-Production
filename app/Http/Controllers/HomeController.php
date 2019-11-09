@@ -8682,6 +8682,7 @@ die;        */
     }
     function getTest(Request $request){
         //$this->hubspot_api();
+        echo "api"; die;
         $this->hsGetEmailDetails('dalip.01rad@gmail.com');
         /*$prop = \DB::connection('mysql4')->table('tb_properties')->take(5)->get();
         echo "<pre>";
