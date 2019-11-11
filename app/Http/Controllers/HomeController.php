@@ -8685,7 +8685,7 @@ die;        */
         //echo "api"; die;
         //$this->hsGetEmailDetails('dalip.01rad@gmail.com');
         $objUser = array(
-            'email'=>'dalip.01rad1@gmail.com',
+            //'email'=>'dalip.01rad1@gmail.com',
             'firstname'=>'dalip',
             'lastname'=>'kumar',
             'phone'=>'9874563211',
@@ -8841,8 +8841,8 @@ die;        */
             
             $tempe = 'price_on_request_admin';
             $emailArr['msg'] = $bookingEmailTemplate;          
-            $toouser['email'] = 'dalip.01rad@gmail.com';
-            //$toouser['email'] = 'riaan@number7even.com';            
+            //$toouser['email'] = 'dalip.01rad@gmail.com';
+            $toouser['email'] = 'riaan@number7even.com';            
 			 
             $toouser['subject'] = "Price On Request";           		
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser) {
