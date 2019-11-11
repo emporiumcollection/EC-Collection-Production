@@ -8865,14 +8865,14 @@ die;        */
             $response = $this->hsGetEmailDetails($objUser['email']); 
             //print_r($response); die;
             if($response['statusCode']==200){ 
-                $obj = $response['response']; echo "<pre>";
+                $obj = $response['response'];
                 $arrRes = json_decode($obj);
                 //echo "hh";
                 //print_r($obj); die;
-                if(array_key_exists('status', $arrRes)){ echo "hhh"; die;
+                if(array_key_exists('status', $arrRes)){
                     $this->hsPostDetails($objUser);    
-                }else{ echo $arrRes->vid; print_r($arrRes);  echo "hkh"; die;
-                    $this->hsPostMergeDetails($obj['vid']);        
+                }else{ //echo $arrRes->vid;
+                    $this->hsPostMergeDetails($arrRes->vid);        
                 }        
             }   
         }
@@ -8985,7 +8985,7 @@ die;        */
         
         return $data_response;
     }
-    function hsPostMergeDetails($vid){ echo "hh"; die;
+    function hsPostMergeDetails($vid){ print_r($vid); echo "hh"; die;
         //https://api.hubapi.com/contacts/v1/contact/merge-vids/1343724/?hapikey=demo    
         $hapikey = \Config::get('hubspot.hsApiKey');
         $mobj = array();
