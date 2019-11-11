@@ -8884,9 +8884,13 @@ die;        */
                     unset($objUser['email']);
                     //print_r($objUser); die;
                     $added_data = $this->hsPostDetails($objUser);
-                    print_r($added_data);
-                    print_r(json_decode($added_data)); die;
-                    $this->hsPostMergeDetails($arrRes->vid);        
+                    //print_r($added_data);
+                    //print_r(json_decode($added_data)); die;
+                    if($added_data['statusCode']==200){
+                        $arrAddRes = json_decode($added_data['response']);
+                        
+                        $this->hsPostMergeDetails($arrRes->vid, $arrAddRes->vid);
+                    }        
                 //}        
             }else{
                 //echo "testing2";               
@@ -9030,7 +9034,7 @@ die;        */
         
         return $data_response;
     }
-    function hsPostMergeDetails($vid){ //print_r($vid); echo "hh"; die;
+    function hsPostMergeDetails($vid, $mvid){ //print_r($vid); echo "hh"; die;
         //https://api.hubapi.com/contacts/v1/contact/merge-vids/1343724/?hapikey=demo    
         $hapikey = \Config::get('hubspot.hsApiKey');
         /*$mobj = array();
@@ -9046,7 +9050,7 @@ die;        */
             'properties' => array( $mobj )
         );*/
         $arr = array(
-            
+            "vidToMerge": $mvid    
         );
         $post_json = json_encode($arr);
         //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
