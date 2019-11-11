@@ -8879,7 +8879,7 @@ die;        */
                 }        
             }else{
                 echo "testing2";               
-                //$this->hsPostDetails($objUser);
+                print_r($this->hsPostDetails($objUser));
             }   
         }
         /*//Example GET URL:
