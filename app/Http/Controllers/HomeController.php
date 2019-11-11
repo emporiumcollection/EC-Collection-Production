@@ -8871,7 +8871,7 @@ die;        */
                 //print_r($obj); die;
                 if(array_key_exists('status', $arrRes)){ echo "hhh"; die;
                     $this->hsPostDetails($objUser);    
-                }else{ echo $obj['vid']; echo "hkh"; die;
+                }else{ echo $arrRes['vid']; echo "hkh"; die;
                     $this->hsPostMergeDetails($obj['vid']);        
                 }        
             }   
