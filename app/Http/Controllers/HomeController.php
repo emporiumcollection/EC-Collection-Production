@@ -8881,9 +8881,11 @@ die;        */
                 //if(array_key_exists('status', $arrRes)){
                 //    $this->hsPostDetails($objUser);    
                 //}else{ //echo $arrRes->vid;
-                    //$added_data = $this->hsPostDetails($objUser);
-                    //print_r('added_data'); die;
-                    //$this->hsPostMergeDetails($arrRes->vid);        
+                    unset($objUser['email']);
+                    print_r($objUser); die;
+                    $added_data = $this->hsPostDetails($objUser);
+                    print_r($added_data); die;
+                    $this->hsPostMergeDetails($arrRes->vid, );        
                 //}        
             }else{
                 //echo "testing2";               
