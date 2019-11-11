@@ -8891,6 +8891,9 @@ die;        */
                 $addRes = $this->hsPostDetails($objUser);
                 //print_r($addRes);
             }   
+        }else{
+            $addRes = $this->hsPostDetails($objUser); 
+            print_r($addRes);   
         }
         /*//Example GET URL:
         
