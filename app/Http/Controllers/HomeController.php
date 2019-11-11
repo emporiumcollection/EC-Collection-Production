@@ -8967,7 +8967,7 @@ die;        */
         $arr = array(
             'properties' => array( $mobj )
         );
-        print_r($arr); die;
+        //print_r($arr); die;
         $post_json = json_encode($arr);
         //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
         $endpoint = 'https://api.hubapi.com/contacts/v1/contact?hapikey='.$hapikey;
