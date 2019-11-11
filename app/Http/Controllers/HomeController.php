@@ -8869,8 +8869,8 @@ die;        */
         
     }
     function hubspot_api($objUser){
-        $hapikey = \Config::get('hubspot.hsApiKey');  echo "jj"; die;
-        if(!empty($objUser['email'])){ echo "jj"; die;
+        $hapikey = \Config::get('hubspot.hsApiKey');
+        if(!empty($objUser['email'])){
             $response = $this->hsGetEmailDetails($objUser['email']); 
             //print_r($response);
             if($response['statusCode']==200){ //echo("hello"); 
