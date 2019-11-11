@@ -8884,13 +8884,13 @@ die;        */
                     unset($objUser['email']);
                     //print_r($objUser); die;
                     $added_data = $this->hsPostDetails($objUser);
-                    print_r($added_data);
+                    //print_r($added_data);
                     //print_r(json_decode($added_data)); die;
                     if($added_data['statusCode']==200){
                         //print_r($added_data['response']); die;
-                        //$arrAddRes = json_decode($added_data['response']);
+                        $arrAddRes = json_decode($added_data['response']);
                         
-                        //$this->hsPostMergeDetails($arrRes->vid, $arrAddRes->vid);
+                        $this->hsPostMergeDetails($arrRes->vid, $arrAddRes->vid);
                     }        
                 //}        
             }else{
