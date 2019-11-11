@@ -8872,7 +8872,7 @@ die;        */
         $hapikey = \Config::get('hubspot.hsApiKey');
         if(!empty($objUser['email'])){
             $response = $this->hsGetEmailDetails($objUser['email']); 
-            print_r($response);
+            //print_r($response);
             if($response['statusCode']==200){ //echo("hello"); 
                 $obj = $response['response'];
                 $arrRes = json_decode($obj);
