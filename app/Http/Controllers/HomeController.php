@@ -8685,10 +8685,11 @@ die;        */
         //echo "api"; die;
         //$this->hsGetEmailDetails('dalip.01rad@gmail.com');
         $objUser = array(
-            'email'=>'dalip.01rad@gmail.com',
+            'email'=>'dalip.01rad1@gmail.com',
             'firstname'=>'dalip',
             'lastname'=>'kumar',
             'phone'=>'9874563211',
+            'contactfrom'=>'testing',
             //'email'=>$userData['email'],    
         );
         $this->hubspot_api($objUser);
