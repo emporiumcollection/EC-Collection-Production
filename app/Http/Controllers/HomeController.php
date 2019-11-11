@@ -8881,7 +8881,7 @@ die;        */
                 //if(array_key_exists('status', $arrRes)){
                 //    $this->hsPostDetails($objUser);    
                 //}else{ //echo $arrRes->vid;
-                    unset($objUser['email']);
+                    //unset($objUser['email']);
                     print_r($objUser); die;
                     $added_data = $this->hsPostDetails($objUser);
                     print_r($added_data); die;
