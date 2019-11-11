@@ -8685,7 +8685,7 @@ die;        */
         //echo "api"; die;
         //$this->hsGetEmailDetails('dalip.01rad@gmail.com');
         $objUser = array(
-            //'email'=>'dalip.01rad1@gmail.com',
+            'email'=>'dalip.01rad1@gmail.com',
             'firstname'=>'dalip',
             'lastname'=>'kumar',
             'phone'=>'9874563211',
@@ -8877,7 +8877,7 @@ die;        */
                 $obj = $response['response'];
                 $arrRes = json_decode($obj);
                 //echo "hh";
-                //print_r($obj); die;
+                print_r($arrRes); die;
                 if(array_key_exists('status', $arrRes)){
                     $this->hsPostDetails($objUser);    
                 }else{ //echo $arrRes->vid;
