@@ -8987,7 +8987,7 @@ die;        */
             }    
         }        
         $arr = array(
-            'properties' => array( $mobj )
+            'properties' => $mobj 
         );
         print_r(json_encode($arr)); die;
         $post_json = json_encode($arr);
