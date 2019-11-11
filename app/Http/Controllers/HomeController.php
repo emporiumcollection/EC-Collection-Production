@@ -8864,8 +8864,8 @@ die;        */
         $hapikey = \Config::get('hubspot.hsApiKey');
         if(!empty($objUser['email'])){
             $response = $this->hsGetEmailDetails($objUser['email']); 
-            //print_r($response); die;
-            if($response['statusCode']==200){ 
+            print_r($response);
+            if($response['statusCode']==200){ echo("hello"); 
                 $obj = $response['response'];
                 $arrRes = json_decode($obj);
                 //echo "hh";
@@ -8877,6 +8877,8 @@ die;        */
                     print_r('added_data'); die;
                     $this->hsPostMergeDetails($arrRes->vid);        
                 }        
+            }else{
+                echo "testing";
             }   
         }
         /*//Example GET URL:
