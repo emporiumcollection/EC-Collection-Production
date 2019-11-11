@@ -9050,8 +9050,8 @@ die;        */
         $arr = array(
             'properties' => array( $mobj )
         );*/
-       /* $arr = array(
-            "vidToMerge": $mvid    
+        $arr = array(
+               
         );
         $post_json = json_encode($arr);
         //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
@@ -9071,6 +9071,6 @@ die;        */
         $data_response['statusCode'] = $status_code;
         $data_response['response'] = $response;
         
-        return $data_response;*/
+        return $data_response;
     }
 }
