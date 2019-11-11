@@ -8865,7 +8865,8 @@ die;        */
             $response = $this->hsGetEmailDetails($objUser['email']); 
             //print_r($response); die;
             if($response['statusCode']==200){ 
-                $obj = $response['response'];
+                $obj = $response['response']; echo "<pre>";
+                
                 print_r($obj); die;
                 if(array_key_exists('status', $obj)){ echo "hhh"; die;
                     $this->hsPostDetails($objUser);    
