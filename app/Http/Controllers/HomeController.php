@@ -8955,6 +8955,28 @@ die;        */
     }
     function hsPostDetails($objUser){
         $hapikey = \Config::get('hubspot.hsApiKey');
+        
+        $arr2 = array(
+            'properties' => array(
+                array(
+                    'property' => 'email',
+                    'value' => 'apitest@hubspot.com'
+                ),
+                array(
+                    'property' => 'firstname',
+                    'value' => 'hubspot'
+                ),
+                array(
+                    'property' => 'lastname',
+                    'value' => 'user'
+                ),
+                array(
+                    'property' => 'phone',
+                    'value' => '555-1212'
+                )
+            )
+        );
+        print_r(json_encode($arr2)); 
         $mobj = array();
         if(!empty($objUser)){
             $uobj = array();
