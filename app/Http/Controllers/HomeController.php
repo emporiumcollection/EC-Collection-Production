@@ -8956,7 +8956,7 @@ die;        */
     function hsPostDetails($objUser){
         $hapikey = \Config::get('hubspot.hsApiKey');
         
-        $arr2 = array(
+        /*$arr2 = array(
             'properties' => array(
                 array(
                     'property' => 'email',
@@ -8975,8 +8975,8 @@ die;        */
                     'value' => '555-1212'
                 )
             )
-        );
-        print_r(json_encode($arr2)); 
+        );*/
+        //print_r(json_encode($arr2)); 
         $mobj = array();
         if(!empty($objUser)){
             $uobj = array();
@@ -8989,7 +8989,7 @@ die;        */
         $arr = array(
             'properties' => $mobj 
         );
-        print_r(json_encode($arr)); die;
+        //print_r(json_encode($arr)); die;
         $post_json = json_encode($arr);
         //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
         $endpoint = 'https://api.hubapi.com/contacts/v1/contact?hapikey='.$hapikey;
