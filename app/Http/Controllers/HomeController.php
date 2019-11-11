@@ -8882,9 +8882,10 @@ die;        */
                 //    $this->hsPostDetails($objUser);    
                 //}else{ //echo $arrRes->vid;
                     unset($objUser['email']);
-                    print_r($objUser); die;
+                    //print_r($objUser); die;
                     $added_data = $this->hsPostDetails($objUser);
-                    print_r($added_data); die;
+                    print_r($added_data);
+                    print_r(json_decode($added_data)); die;
                     $this->hsPostMergeDetails($arrRes->vid);        
                 //}        
             }else{
