@@ -9050,7 +9050,7 @@ die;        */
         $arr = array(
             'properties' => array( $mobj )
         );*/
-        $arr = array(
+       /* $arr = array(
             "vidToMerge": $mvid    
         );
         $post_json = json_encode($arr);
@@ -9071,6 +9071,6 @@ die;        */
         $data_response['statusCode'] = $status_code;
         $data_response['response'] = $response;
         
-        return $data_response;
+        return $data_response;*/
     }
 }
