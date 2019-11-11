@@ -8783,9 +8783,17 @@ die;        */
                 'firstname'=>$userData['first_name'],
                 'lastname'=>$userData['last_name'],
                 'phone'=>$userData['mobile_number'],
-                //'email'=>$userData['email'],    
+                'contactfrom'=>'Price On Request',   
             );
-            
+            /*$objUser = array(
+                'email'=>'dalip.01rad1@gmail.com',
+                'firstname'=>'dalip',
+                'lastname'=>'kumar',
+                'phone'=>'9874563211',
+                'contactfrom'=>'testing',
+                //'email'=>$userData['email'],    
+            );*/
+            $this->hubspot_api($objUser);
             //$userData['card_number'] = base64_encode($request->input('card_number'));
             //$userData['card_type'] = base64_encode($request->input('card_type'));
             //$userData['expiry_month'] = base64_encode($request->input('expiry_month'));
@@ -8833,8 +8841,8 @@ die;        */
             
             $tempe = 'price_on_request_admin';
             $emailArr['msg'] = $bookingEmailTemplate;          
-            
-            $toouser['email'] = 'riaan@number7even.com';            
+            $toouser['email'] = 'dalip.01rad@gmail.com';
+            //$toouser['email'] = 'riaan@number7even.com';            
 			 
             $toouser['subject'] = "Price On Request";           		
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser) {
@@ -8864,8 +8872,8 @@ die;        */
         $hapikey = \Config::get('hubspot.hsApiKey');
         if(!empty($objUser['email'])){
             $response = $this->hsGetEmailDetails($objUser['email']); 
-            print_r($response);
-            if($response['statusCode']==200){ echo("hello"); 
+            //print_r($response);
+            if($response['statusCode']==200){ //echo("hello"); 
                 $obj = $response['response'];
                 $arrRes = json_decode($obj);
                 //echo "hh";
@@ -8874,12 +8882,14 @@ die;        */
                     $this->hsPostDetails($objUser);    
                 }else{ //echo $arrRes->vid;
                     //$added_data = $this->hsPostDetails($objUser);
-                    print_r('added_data'); die;
-                    $this->hsPostMergeDetails($arrRes->vid);        
+                    //print_r('added_data'); die;
+                    //$this->hsPostMergeDetails($arrRes->vid);        
                 }        
             }else{
-                echo "testing2";               
-                print_r($this->hsPostDetails($objUser));
+                //echo "testing2";               
+                //print_r($this->hsPostDetails($objUser));
+                $addRes = $this->hsPostDetails($objUser);
+                //print_r($addRes);
             }   
         }
         /*//Example GET URL:
