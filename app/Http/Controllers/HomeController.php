@@ -8885,7 +8885,7 @@ die;        */
                     print_r($objUser); die;
                     $added_data = $this->hsPostDetails($objUser);
                     print_r($added_data); die;
-                    $this->hsPostMergeDetails($arrRes->vid, );        
+                    $this->hsPostMergeDetails($arrRes->vid);        
                 //}        
             }else{
                 //echo "testing2";               
