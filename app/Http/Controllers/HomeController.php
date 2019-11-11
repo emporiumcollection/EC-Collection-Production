@@ -8873,8 +8873,8 @@ die;        */
                 if(array_key_exists('status', $arrRes)){
                     $this->hsPostDetails($objUser);    
                 }else{ //echo $arrRes->vid;
-                    $added_data = $this->hsPostDetails($objUser);
-                    print_r($added_data); die;
+                    //$added_data = $this->hsPostDetails($objUser);
+                    print_r('added_data'); die;
                     $this->hsPostMergeDetails($arrRes->vid);        
                 }        
             }   
