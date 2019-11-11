@@ -8872,19 +8872,19 @@ die;        */
         $hapikey = \Config::get('hubspot.hsApiKey');
         if(!empty($objUser['email'])){
             $response = $this->hsGetEmailDetails($objUser['email']); 
-            //print_r($response);
+            print_r($response);
             if($response['statusCode']==200){ //echo("hello"); 
                 $obj = $response['response'];
                 $arrRes = json_decode($obj);
                 //echo "hh";
-                print_r($arrRes); die;
-                if(array_key_exists('status', $arrRes)){
-                    $this->hsPostDetails($objUser);    
-                }else{ //echo $arrRes->vid;
+                //print_r($arrRes); die;
+                //if(array_key_exists('status', $arrRes)){
+                //    $this->hsPostDetails($objUser);    
+                //}else{ //echo $arrRes->vid;
                     //$added_data = $this->hsPostDetails($objUser);
                     //print_r('added_data'); die;
                     //$this->hsPostMergeDetails($arrRes->vid);        
-                }        
+                //}        
             }else{
                 //echo "testing2";               
                 //print_r($this->hsPostDetails($objUser));
