@@ -8878,7 +8878,8 @@ die;        */
                     $this->hsPostMergeDetails($arrRes->vid);        
                 }        
             }else{
-                echo "testing";
+                echo "testing";               
+                $this->hsPostDetails($objUser);
             }   
         }
         /*//Example GET URL:
