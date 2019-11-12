@@ -9099,7 +9099,7 @@ die;        */
         } 
         
         $arr = array(
-            
+            "associations"=>'dd',
             "properties"=>$mobj   
         )
         print_r($arr); die;
