@@ -8693,7 +8693,6 @@ die;        */
             //'email'=>$userData['email'],    
         );
         $this->hubspot_api($objUser);*/
-        
         $this->hsDeal();
         /*$prop = \DB::connection('mysql4')->table('tb_properties')->take(5)->get();
         echo "<pre>";
@@ -9077,7 +9076,19 @@ die;        */
     }
     
     function hsDeal(){
-        echo("kl");
+        //Example URL to POST to: 
+        //https://api.hubapi.com/deals/v1/deal?hapikey=demo
+        //Example of request array 
+        $objDeal = array(
+            "dealname"=>"Test Deal",
+            "dealstage"=>"appointmentscheduled",
+            "pipeline"=>"default",
+            "closedate"=>1409443200000,
+            "amount"=>600,
+            "dealtype"=>"newbusiness",    
+        );
+        
+        print_r($objDeal);
 
    
     }    
