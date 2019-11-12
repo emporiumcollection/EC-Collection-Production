@@ -9102,7 +9102,7 @@ die;        */
             "associations"=>array("associatedVids"=>27136),
             "properties"=>$mobj   
         );
-        print_r($arr); die;
+        print_r(json_encode($arr)); die;
         /*
         $hapikey = \Config::get('hubspot.hsApiKey');
         
