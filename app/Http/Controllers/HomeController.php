@@ -8693,7 +8693,9 @@ die;        */
             //'email'=>$userData['email'],    
         );
         $this->hubspot_api($objUser);*/
-        $this->hsDeal();
+        $vids = 501;
+        $resp = $this->hsDeal($vids);
+        print_r($resp);
         /*$prop = \DB::connection('mysql4')->table('tb_properties')->take(5)->get();
         echo "<pre>";
         print_r($prop);*/
@@ -9075,7 +9077,7 @@ die;        */
         return $data_response;
     }
     
-    function hsDeal(){
+    function hsDeal($vids){
         //Example URL to POST to: 
         //https://api.hubapi.com/deals/v1/deal?hapikey=demo
         //Example of request array 
@@ -9099,7 +9101,7 @@ die;        */
         } 
         
         $arr = array(
-            "associations"=>array("associatedVids"=>array(24561)), 
+            "associations"=>array("associatedVids"=>array($vids)), 
             "properties"=>$mobj   
         );
         //print_r(json_encode($arr)); die;
