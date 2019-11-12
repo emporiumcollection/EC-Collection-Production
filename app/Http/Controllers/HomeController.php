@@ -9097,10 +9097,9 @@ die;        */
                 $mobj[] = $uobj;  
             }    
         } 
-        echo "hello";
         
         $arr = array(
-            "associations"=>'dd',
+            "associations"=>array("associatedVids"=>27136),
             "properties"=>$mobj   
         );
         print_r($arr); die;
