@@ -9110,7 +9110,7 @@ die;        */
         
         $post_json = json_encode($arr); 
         //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
-        $endpoint = 'https://api.hubapi.com/deals/v1/deal?hapikey='.$hapikey;
+        $endpoint = 'https://api.hubapi.com/deals/v1/deal?hapikey='.$hapikey; echo $endpoint; die;  
         $ch = @curl_init();
         @curl_setopt($ch, CURLOPT_POST, true);
         @curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
