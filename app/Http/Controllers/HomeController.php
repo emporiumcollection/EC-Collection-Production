@@ -9097,13 +9097,14 @@ die;        */
                 $mobj[] = $uobj;  
             }    
         } 
-        
+        echo "hello";
+        /*
         $arr = array(
             "associations"=>'dd',
             "properties"=>$mobj   
         )
         print_r($arr); die;
-        /*
+        
         $hapikey = \Config::get('hubspot.hsApiKey');
         
         print_r(json_encode($arr)); die;
