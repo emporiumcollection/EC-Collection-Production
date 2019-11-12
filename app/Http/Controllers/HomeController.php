@@ -9097,13 +9097,13 @@ die;        */
                 $mobj[] = $uobj;  
             }    
         } 
-        print_r($mobj);
-        /*$arr = array(
+        
+        $arr = array(
             "associations"=>array("associatedVids"=>27136),
             "properties"=>$mobj   
         )
-        
-        
+        print_r($arr); die;
+        /*
         $hapikey = \Config::get('hubspot.hsApiKey');
         
         print_r(json_encode($arr)); die;
