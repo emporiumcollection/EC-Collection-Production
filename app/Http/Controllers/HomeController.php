@@ -9099,7 +9099,7 @@ die;        */
         } 
         
         $arr = array(
-            "associations"=>array("associatedVids"=>27136),
+            
             "properties"=>$mobj   
         )
         print_r($arr); die;
