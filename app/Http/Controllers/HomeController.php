@@ -9080,7 +9080,7 @@ die;        */
         //https://api.hubapi.com/deals/v1/deal?hapikey=demo
         //Example of request array 
         $objDeal = array(
-            "dealname"=>"Test Deal",
+            "dealname"=>"Test Deal2",
             "dealstage"=>"appointmentscheduled",
             "pipeline"=>"default",
             "closedate"=>1409443200000,
