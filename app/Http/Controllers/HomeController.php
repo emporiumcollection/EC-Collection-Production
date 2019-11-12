@@ -8693,6 +8693,7 @@ die;        */
             //'email'=>$userData['email'],    
         );
         $this->hubspot_api($objUser);*/
+        echo "hello";
         $this->hsDeal();
         /*$prop = \DB::connection('mysql4')->table('tb_properties')->take(5)->get();
         echo "<pre>";
