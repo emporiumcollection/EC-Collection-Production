@@ -9088,7 +9088,45 @@ die;        */
             "dealtype"=>"newbusiness",    
         );
         
-        print_r($objDeal);
+        $mobj = array();
+        if(!empty($objDeal)){
+            $uobj = array();
+            foreach($objDeal as $key=>$value){
+                $uobj['name'] = $key;
+                $uobj['value'] = $value; 
+                $mobj[] = $uobj;  
+            }    
+        } 
+        print_r($mobj);
+        /*$arr = array(
+            "associations"=>array("associatedVids"=>27136),
+            "properties"=>$mobj   
+        )
+        
+        
+        $hapikey = \Config::get('hubspot.hsApiKey');
+        
+        print_r(json_encode($arr)); die;
+        
+        $post_json = json_encode($arr);
+        //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
+        $endpoint = 'https://api.hubapi.com/deals/v1/deal?hapikey='.$hapikey;
+        $ch = @curl_init();
+        @curl_setopt($ch, CURLOPT_POST, true);
+        @curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
+        @curl_setopt($ch, CURLOPT_URL, $endpoint);
+        @curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json'));
+        @curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = @curl_exec($ch);
+        $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $curl_errors = curl_error($ch);
+        @curl_close($ch);
+        
+        $data_response = array();
+        $data_response['statusCode'] = $status_code;
+        $data_response['response'] = $response;
+        
+        return $data_response;*/
 
    
     }    
