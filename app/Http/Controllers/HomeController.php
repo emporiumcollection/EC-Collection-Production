@@ -9099,7 +9099,7 @@ die;        */
         } 
         
         $arr = array(
-            "associations"=>array("associatedVids"=>array(501)),
+            "associations"=>array("associatedVids"=>array(24561)), 
             "properties"=>$mobj   
         );
         //print_r(json_encode($arr)); die;
