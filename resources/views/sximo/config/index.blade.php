@@ -144,7 +144,7 @@
           <div class="form-group">
             <label for="ipt" class=" control-label col-md-4"> Hubspot Script </label>
             <div class="col-md-8">
-                <input name="cnf_hubspot_script" type="text" id="cnf_hubspot_script" class="form-control input-sm" value="" />            	
+                <input name="cnf_hubspot_script" type="text" id="cnf_hubspot_script" class="form-control input-sm" value="{{ CNF_HUBSPOT_SCRIPT }}" />            	
             </div> 
 		  </div>
           
