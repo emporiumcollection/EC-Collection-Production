@@ -18,9 +18,11 @@ define('CNF_RECAPTCHAPUBLICKEY','');
 define('CNF_RECAPTCHAPRIVATEKEY','');
 define('CNF_MODE','production');
 define('CNF_LOGO','backend-logo.png');
+define('CNF_FRONTEND_LOGO','front-logo.png');
 define('CNF_ALLOWIP','');
 define('CNF_RESTRICIP','192.116.134 , 194.111.606.21 ');
 define('CNF_YOUTUBE_API_KEY','');
 define('CNF_SUPERADMIN_EMAIL','dalip.01rad@gmail.com');
 define('CNF_GOOGLE_ANALYTIC_KEY','UA-110391807-1');
+define('CNF_HUBSPOT_SCRIPT','<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/5278766.js"></script>');
 ?>
