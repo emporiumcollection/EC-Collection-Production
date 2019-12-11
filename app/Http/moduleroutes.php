@@ -60,4 +60,5 @@
                     Route::controller('events', 'EventsController');
                     Route::controller('eventpackages', 'EventpackagesController');
                     Route::controller('eventreservations', 'EventreservationsController');
+                    Route::controller('vatclass', 'VatclassController');
                     ?>
