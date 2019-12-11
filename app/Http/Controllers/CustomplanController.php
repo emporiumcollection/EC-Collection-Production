@@ -195,12 +195,12 @@ class CustomplanController extends Controller {
             $cplan_roomtypes = \DB::table('tb_custom_plan_roomtypes')->where('custom_plan_id', $plan_id)->get();
             $cpab = \DB::table('tb_custom_plan_available_boards')->where('custom_plan_id', $plan_id)->get();
             $cplan_tags = \DB::table('tb_custom_plan_tags')->where('custom_plan_id', $plan_id)->first(); 
-            $cplan_seasons = \DB::table('tb_property_custom_plan_seasons')->select('season_id')->where('plan_id', $plan_id)->get();
+            /*$cplan_seasons = \DB::table('tb_property_custom_plan_seasons')->select('season_id')->where('plan_id', $plan_id)->get();
             if(!empty($cplan_seasons)){
                 foreach($cplan_seasons as $se){
                     $cplan_seas[] = $se->season_id;         
                 }
-            }            
+            }*/            
             
                 
             if(!empty($cplan_roomtypes)){ //print_r($cplan_roomtypes); die;
