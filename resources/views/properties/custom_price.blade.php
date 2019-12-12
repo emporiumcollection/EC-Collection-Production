@@ -177,11 +177,11 @@
                                     </select>
                                 </div>        				                                        
                                 <div class="form-group col-lg-8">
-        							<label for="Priority">Discount</label>
+        							<label for="Priority">Price</label>
         							<input type="text" name="plan_price" id="plan_price" class="form-control" />
         						</div>
                                 <div class="form-group col-lg-4">
-                                    <label for="Type">Discount Type</label>
+                                    <label for="Type">Price Type</label>
                                     <select name="price_type" id="price_type" class="form-control">
                                         <option value="0">Percentage</option>
                                         <option value="1">Fixed</option>
