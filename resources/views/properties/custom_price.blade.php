@@ -509,11 +509,11 @@
                                     </select>
                                 </div>        				                                        
                                 <div class="form-group col-lg-8">
-        							<label for="Priority">Discount</label>
+        							<label for="Priority">Price</label>
         							<input type="text" name="eplan_price" id="eplan_price" class="form-control" />
         						</div>
                                 <div class="form-group col-lg-4">
-                                    <label for="Type">Discount Type</label>
+                                    <label for="Type">Price Type</label>
                                     <select name="eprice_type" id="eprice_type" class="form-control">
                                         <option value="0">Percentage</option>
                                         <option value="1">Fixed</option>
