@@ -206,7 +206,7 @@ $(document).on('click', '.addCustomPlan', function(){ console.log("hello");
 		}
     }); 
 });
-$(document).on('click', '.addboards', function(){
+$(document).on('click', '.addboards', function(){ console.log("hello");
     //$(".editCustomPlan").text('Update');
     $("#frm_addboard").validate({
         submitHandler: function (form) {
