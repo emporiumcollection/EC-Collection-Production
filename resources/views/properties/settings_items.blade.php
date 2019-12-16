@@ -38,7 +38,7 @@
             <div class="tab-content m-t">
     			<div class="tab-pane active use-padding" id="seasons"> 					
     				<div class="text-right" style="padding: 20px;">
-                        <button type="button" class="btn btn-danger b-btn addboards" ><i class="fa fa-plus"></i> Add</button>
+                        <button type="button" class="btn btn-danger b-btn btnaddboards" ><i class="fa fa-plus"></i> Add</button>
                     </div>	
 					@if(!empty($items))
                     <table class="table table-striped ">
@@ -206,8 +206,12 @@ $(document).on('click', '.addCustomPlan', function(){ console.log("hello");
 		}
     }); 
 });
-$(document).on('click', '.addboards', function(){ console.log("hello");
-    //$(".editCustomPlan").text('Update');
+
+$(document).on('click', '.btnaddboards', function(e){
+    $("#addboard_modal").modal('show');
+});
+
+$(document).on('click', '.addboards', function(){  
     $("#frm_addboard").validate({
         submitHandler: function (form) {
 			 addBoard();
@@ -215,9 +219,7 @@ $(document).on('click', '.addboards', function(){ console.log("hello");
 		}
     }); 
 });
-$(document).on('change', '#plan_season', function(){
-    console.log("hello");    
-});
+
 $(document).on('click', '.edititems', function(e){    
     $("#frm_editboard").validate({
         submitHandler: function (form) {
@@ -313,18 +315,16 @@ function edit_board(bId){
 		  dataType: "json",
 		  success: function(data){
 		      if(data.status=="success"){		          
-                  var objitems = data.items;
-                  console.log(objitems);
+                  var objitems = data.items;                  
                   if(typeof objitems!='undefined'){
                     $("#e_id").val(objitems.id);                    
                     $('#etitle').val(objitems.title);
                     $('#edescription').val(objitems.description);
                     $('#eprice').val(objitems.price);
                     $('#estatus').val(objitems.status);
-                    $("#e_img").attr('src', "{{Url('/')}}"+"/uploads/customplan_items/"+objitems.image)
-                    //$('#board_vat').val(objitems.status);
+                    $("#e_img").attr('src', "{{Url('/')}}"+"/uploads/customplan_items/"+objitems.image);                    
                     $(".addboards").text('Update');
-                    //$('#modal_plan_season').trigger({ type: 'select2:select', params: { data: objseason } });                   
+                                      
                   }
                   
                   $("#editboard_modal").modal('show');        
@@ -379,10 +379,8 @@ function edit_gseason_data(cseasonId){
 		  dataType: "json",
 		  success: function(data){
 		      if(data.status=="success"){
-		          console.log(data.plan);
-                  var objplan = data.plan;
-                  var objseason = data.seasons;
-                  console.log(objseason);
+		          var objplan = data.plan;
+                  var objseason = data.seasons;                  
                   if(typeof objplan!='undefined'){
                     $("#global_edit_customplan_id").val(objplan.id);                    
                     $('#global_plan_title').val(objplan.title);
@@ -394,9 +392,7 @@ function edit_gseason_data(cseasonId){
                     $('#global_price_type').val(objplan.price_type);
                     $('#global_plan_price').val(objplan.plan_price); 
                     $('#global_plan_season').val(objseason); 
-                    $('#global_plan_season').trigger('change'); 
-                    //$(".editCustomPlan").text('Update');
-                    //$('#modal_plan_season').trigger({ type: 'select2:select', params: { data: objseason } });                   
+                    $('#global_plan_season').trigger('change');                                    
                   }
                   $("#global_customplan_modal").modal('show');        
 		      }    	  
@@ -404,8 +400,7 @@ function edit_gseason_data(cseasonId){
 		});		
 	}    
 }   
-$(document).on('click', '.editGlobalCustomPlan', function(){
-    //$(".editCustomPlan").text('Update');
+$(document).on('click', '.editGlobalCustomPlan', function(){    
     $("#global_add_custom_plan").validate({
         submitHandler: function (form) {
 			 editGlobalCustomPlan();
