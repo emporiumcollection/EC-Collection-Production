@@ -1,7 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-
+<style>
+.radio-inline{ padding-left: 0px;}
+</style>
 <div class="page-content row">
     <!-- Page header -->
     <div class="page-header">
@@ -41,10 +43,10 @@
                             <li class="yachtin" style="display:none;"><a href="#yachtinfo" data-toggle="tab">Yacht Info </a></li>
                             <li class=""><a href="#rooms_suites" data-toggle="tab">Rooms & Suites</a></li>
                             <li class=""><a href="#architecture_design" data-toggle="tab">Architecture & Design</a></li>
-                            <!--<li class="" ><a href="#spas" data-toggle="tab" >Spas</a></li>
+                            <li class="" ><a href="#spas" data-toggle="tab" >Spas</a></li>
                             <li class="" ><a href="#restaurant" data-toggle="tab" >Restaurant</a></li>
                             <li class="" ><a href="#bar" data-toggle="tab" >Bar</a></li>
-                            <li class="" ><a href="#video" data-toggle="tab" >Video</a></li>-->
+                            <li class="" ><a href="#video" data-toggle="tab" >Video</a></li>
                             <li class="" ><a href="#socialmedia" data-toggle="tab" >Social Networks</a></li>
                         </ul>
                         <div class="tab-content">
@@ -78,7 +80,7 @@
 									 	
 									 </div>
 							     </div>
-                                  					 					
+                                  					
                                 <div class="form-group  " >
                                     <label for="Property Short Name" class=" control-label col-md-4 text-left"> Property Short Name </label>
                                     <div class="col-md-6">
@@ -127,7 +129,41 @@
                                 <div class="form-group  " >
                                     <label for="City Tax ( in % )" class=" control-label col-md-4 text-left"> City Tax ( in % ) </label>
                                     <div class="col-md-6">
-                                        {!! Form::text('city_tax', $row['city_tax'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+                                        <label class="radio-inline"><input type="radio" name="rdcitytax" value="no" {{$row['citytaxyesno']=='no' ? "checked='checked'" : '' }} >No</label>
+                                        <label class="radio-inline"><input type="radio" name="rdcitytax" value="yes"  {{$row['citytaxyesno']=='yes' ? "checked='checked'" : '' }}>Yes</label>
+                                        <div class="dvcitytax" style="{{$row['citytaxyesno']=='yes' ? "display: '';" : 'display: none;' }} padding: 8px 0px 0px 0px;">
+                                            <div class="col-md-3">
+                                                <label>Adult</label>
+                                                {{-- */ $adult_tax  = ($row['adult_tax']!='' and $row['adult_tax']!=NULL) ? $row['adult_tax'] : $default_adult_tax->content; /* --}}
+                                                {!! Form::text('adult_tax', $adult_tax, array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+                                            </div>                                            
+                                            <div class="col-md-3">
+                                                <label>Junior</label>
+                                                {{-- */ $junior_tax  = ($row['junior_tax']!='' and $row['junior_tax']!=NULL) ? $row['junior_tax'] : $default_junior_tax->content; /* --}}
+                                                {!! Form::text('junior_tax', $junior_tax, array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label>Infant</label>
+                                                {{-- */ $baby_tax  = ($row['baby_tax']!='' and $row['baby_tax']!=NULL) ? $row['baby_tax'] : $default_baby_tax->content; /* --}}
+                                                {!! Form::text('baby_tax', $baby_tax, array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+                                            </div>
+                                        </div>
+                                    </div> 
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
+                                <div class="form-group  " >
+                                    <label for="Hotel Unit Tax" class="control-label col-md-4 text-left">Hotel Unit Tax </label>
+                                    <div class="col-md-6">
+                                        <select name="hotel_unit_tax" class="select2">
+                                            <option>Select</option>
+                                            @if(!empty($vat_classes))
+                                                @foreach($vat_classes as $si)
+                                                    <option value="{{$si->id}}" {{($row['hotel_unit_tax'] == $si->id) ? " selected='selected' " : '' }} >{{$si->vat_tax_name}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>
                                     </div> 
                                     <div class="col-md-2">
 
@@ -166,7 +202,7 @@
                                 <div class="form-group  " >
                                     <label for="Assign User" class=" control-label col-md-4 text-left"> Assign User <span class="asterix"> * </span></label>
                                     <div class="col-md-6">
-                                        <select name='assigned_user_id' rows='5' id='assigned_user_id' class='select2 ' required  ></select> 
+                                        <select name='assigned_user_id[]' rows='5' id='assigned_user_id' class='select2 ' required  multiple="multiple" ></select> 
                                     </div> 
                                     <div class="col-md-2">
 
@@ -2296,7 +2332,7 @@
                             <div class="col-md-2">
 
                             </div>
-                        </div> 	  
+                        </div> 	    
                         <div class="form-group  " >
                             <label for="City" class=" control-label col-md-4 text-left"> City </label>
                             <div class="col-md-6">
@@ -2323,7 +2359,8 @@
                             <div class="col-md-2">
 
                             </div>
-                        </div> 		
+                        </div> 
+                        
                         <div class="form-group  " >
                             <label for="Website" class=" control-label col-md-4 text-left"> Latitude </label>
                             <div class="col-md-6">
@@ -2341,7 +2378,8 @@
                             <div class="col-md-2">
 
                             </div>
-                        </div>			
+                        </div>
+                        					
                         <div class="form-group  " >
                             <label for="Phone" class=" control-label col-md-4 text-left"> Phone </label>
                             <div class="col-md-6">
@@ -2853,7 +2891,7 @@
             });
 
             $("#assigned_user_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_users:id:first_name|last_name') }}",
-                    {selected_value: '{{ $row["assigned_user_id"] }}'});
+                    {selected_value: '{{ $property_user }}'});
 
 
             $('.removeCurrentFiles').on('click', function () {
@@ -2891,5 +2929,15 @@
                 $('.yachtin').hide();
             }
         }
+        $('input[type="radio"][name="rdcitytax"]').on('ifChecked', function (event) {
+            var _val = event.target.value;
+            if(_val=='yes'){
+                $(".dvcitytax").show();    
+            }else{
+                $(".dvcitytax").hide();
+            }
+        });
+        
+        
     </script>		 
     @stop

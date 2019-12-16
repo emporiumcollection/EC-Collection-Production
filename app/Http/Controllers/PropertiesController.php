@@ -358,6 +358,12 @@ class PropertiesController extends Controller {
         
         $this->data['active_tab']=0;
         
+        $this->data['default_adult_tax'] = \DB::table('tb_settings')->where('key_value', 'adult_citytax')->first();
+        $this->data['default_baby_tax'] = \DB::table('tb_settings')->where('key_value', 'baby_citytax')->first();
+        $this->data['default_junior_tax'] = \DB::table('tb_settings')->where('key_value', 'junior_citytax')->first();
+        
+        $this->data['vat_classes'] = \DB::table('tb_vat_taxes')->where('vat_tax_status', 1)->get();
+        
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
         $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.form':'properties.form'; 
         
@@ -468,6 +474,8 @@ class PropertiesController extends Controller {
             $data['social_pinterest'] = $request->input('social_pinterest');
             $data['social_vimeo'] = $request->input('social_vimeo');
             $data['social_instagram'] = $request->input('social_instagram');
+            
+            $data['hotel_unit_tax'] = $request->input('hotel_unit_tax');
             
             $address = $request->input('address');
             $latitude = '';
@@ -1430,6 +1438,7 @@ class PropertiesController extends Controller {
             $this->data['cattypes'] = \DB::table('tb_properties_category_types')->where('property_id', $property_id)->get();
             
             $this->data['boards'] = \DB::table('tb_boards')->where('property_id', $property_id)->get();
+            $this->data['cp_items'] = \DB::table('tb_custom_plan_items')->where('property_id', $property_id)->where('status', 1)->get();
             
             $globalcustomplan = \DB::table('tb_global_custom_plan_assined')->join('tb_global_custom_plan', 'tb_global_custom_plan_assined.global_plan_id', '=', 'tb_global_custom_plan.id')->select('tb_global_custom_plan.*')->where('property_id', $property_id)->get();
             
@@ -1482,6 +1491,12 @@ class PropertiesController extends Controller {
             $this->data['vattaxes'] = $vattaxes;   
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());      
             $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_boards':'properties.settings_boards';                
+            return view($file_name, $this->data);            
+        }elseif ($active == 'items') {  
+            $items = \DB::table('tb_custom_plan_items')->where('property_id', $property_id)->get();            
+            $this->data['items'] = $items;            
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());      
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_items':'properties.settings_items';                
             return view($file_name, $this->data);            
         }elseif ($active == 'meals') {            
             $this->data[] = '';            

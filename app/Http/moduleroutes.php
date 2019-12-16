@@ -63,4 +63,5 @@
                     Route::controller('vatclass', 'VatclassController');
                     Route::controller('globalcustomplan', 'GlobalcustomplanController');
                     Route::controller('customplan', 'CustomplanController');
+                    Route::controller('customplanitems', 'CustomplanitemsController');
                     ?>
