@@ -307,7 +307,7 @@ class CustomplanitemsController extends Controller {
 	{		
 		$bId = $request->input('bId');
         if($bId > 0){
-            $deleteB = \DB::table('tb_boards')->where('id', $bId)->delete();            
+            $deleteB = \DB::table('tb_custom_plan_items')->where('id', $bId)->delete();            
         }
 		if($deleteB >0 )
 		{			
