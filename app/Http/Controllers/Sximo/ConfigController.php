@@ -896,4 +896,48 @@ class ConfigController extends Controller {
 		}
 	
 	}
+    public function getCitytax()
+	{
+		$this->data = array(
+			'pageTitle'	=> 'Help Manual',
+			'pageNote'	=> 'Documentation',
+			'active'	=> 'designer'
+		);	
+		
+		$this->data['adult_citytax'] = \DB::table('tb_settings')->where('key_value', 'adult_citytax')->first();
+		$this->data['adult_citytax_eng'] = \DB::table('tb_settings')->where('key_value', 'adult_citytax_eng')->first();
+		$this->data['baby_citytax'] = \DB::table('tb_settings')->where('key_value', 'baby_citytax')->first();
+		$this->data['baby_citytax_eng'] = \DB::table('tb_settings')->where('key_value', 'baby_citytax_eng')->first();
+        $this->data['junior_citytax'] = \DB::table('tb_settings')->where('key_value', 'junior_citytax')->first();
+		$this->data['junior_citytax_eng'] = \DB::table('tb_settings')->where('key_value', 'junior_citytax_eng')->first();
+		
+		return view('sximo.config.citytax',$this->data);	
+	}	
+	
+	function postCitytax( Request $request)
+	{
+		
+		//print_r($_POST);exit;
+		$rules = array(
+			'adult_citytax'		=> 'required',			
+		);	
+		$validator = Validator::make($request->all(), $rules);	
+		if ($validator->passes()) 
+		{
+			\DB::table('tb_settings')->where('key_value', 'adult_citytax')->update(['content' => Input::get('adult_citytax')]);			
+			\DB::table('tb_settings')->where('key_value', 'adult_citytax_eng')->update(['content' => Input::get('adult_citytax_eng')]);			
+			\DB::table('tb_settings')->where('key_value', 'baby_citytax')->update(['content' => Input::get('baby_citytax')]);			
+			\DB::table('tb_settings')->where('key_value', 'baby_citytax_eng')->update(['content' => Input::get('baby_citytax_eng')]);            
+            \DB::table('tb_settings')->where('key_value', 'junior_citytax')->update(['content' => Input::get('junior_citytax')]);			
+			\DB::table('tb_settings')->where('key_value', 'junior_citytax_eng')->update(['content' => Input::get('junior_citytax_eng')]);
+			
+			return Redirect::to('sximo/config/citytax')->with('messagetext', 'City tax settings has been updated')->with('msgstatus','success');	
+			
+		}	else {
+
+			return Redirect::to('sximo/config/citytax')->with('messagetext', 'The following errors occurred')->with('msgstatus','success')
+			->withErrors($validator)->withInput();
+		}
+	
+	}
 }

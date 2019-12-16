@@ -11,7 +11,8 @@ $tabs = array(
 		'kontakte'			=> 'Kontakte',
 		'container'			=> 'Container',
 		'designer'			=> 'Designer',
-        'contract'			=> 'Contract'
+        'contract'			=> 'Contract',
+        'citytax'			=> 'City Tax',
 	);
 
 ?>
