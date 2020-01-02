@@ -150,13 +150,13 @@ class SitemapController extends Controller
                 //print_r($data['row']); die;  
             break;
             case 'pages':
-                echo "<pre>";
+                //echo "<pre>";
                 $footer_menus = \SiteHelpers::menus('footer');
                 $data['category'] = 'pages';
                 $data['parent'] = '';
                 $data['row'] = $footer_menus;  
                 
-                print_r($footer_menus);
+                //print_r($footer_menus);
             break;
         }
         //print_r($data['row']); die;
@@ -166,10 +166,11 @@ class SitemapController extends Controller
     }
     function checkchilds($parent_id=0, $tree_array=''){
         
+        $except_id = array(8, 627, 672, 713, 714);
         if(!is_array($tree_array)){
             $tree_array = array();
         }  
-        $fetchchilds = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_alias', 'category_youtube_channel_url', 'created')->where('category_published', 1)->where('parent_category_id', $parent_id)->where('id', '!=', 8)->get();
+        $fetchchilds = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_alias', 'category_youtube_channel_url', 'created')->where('category_published', 1)->where('parent_category_id', $parent_id)->whereNotIn('id', $except_id)->get();
         // "<pre>";
         //print_r($fetchchilds); die;
         //$parent = (new DestinationController())->fetchcategoryaliaspath(101); 
