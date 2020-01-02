@@ -129,7 +129,7 @@
                         </div>
                         <div class="col-md-6">
                             <div class="rightPaddingSec">
-                                <p>We make immense pride in our dense network of luxury associates who help make our members experiences exceptional whereever of contracts ensures that our members get the very best life has to offer -no matter where they are in the world.</p>  
+                                <p>We take immense pride in our dense network of luxury associates who help make our member's experiences exceptional wherever of contracts ensures that our members get the very best life has to offer -no matter where they are in the world.</p>  
                                 <div>
                                     <div class="colMembershipType">                                        
                                         <div class="dropdown show">
