@@ -34,6 +34,32 @@
                         </url>
                     @endif
                 @endforeach                    
+            @endif  
+        @elseif($data['category']=='pages')
+            @if (!empty($data['row']))            
+                @foreach ($data['row'] as $fmenu)
+                    
+                    @if(count($fmenu['childs']) > 0)
+                        
+                            @foreach ($fmenu['childs'] as $fmenu2)
+                                <url>
+                                    <loc>
+                                        @if($fmenu2['menu_type'] =='external')
+                                            {{ URL::to($fmenu2['url'])}} 
+                                        @else 
+                                            {{ URL::to($fmenu2['module'])}}
+                                        @endif     
+                                    </loc>
+                                    <lastmod></lastmod>
+                                    <changefreq>weekly</changefreq>
+                                    <priority>0.9</priority>
+                                </url>                            
+                                
+                            @endforeach
+                        
+                    @endif
+                        
+                @endforeach           
             @endif                  
         @else
             @if(!empty($data['parent']))
