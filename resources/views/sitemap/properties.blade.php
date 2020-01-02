@@ -39,7 +39,7 @@
             @if(!empty($data['parent']))
                 @foreach ($data['row'] as $single)
                     <url>
-                        <loc>http://localhost:8181/emporium-staging-forge/public/{{$data['parent']}}/{{ $single->slug }}</loc>
+                        <loc>{{url('/')}}/{{$data['parent']}}/{{ $single->slug }}</loc>
                         <lastmod>{{ $single->created }}</lastmod>
                         <changefreq>weekly</changefreq>
                         <priority>0.9</priority>
@@ -48,7 +48,7 @@
             @else
                 @foreach ($data['row'] as $single)
                     <url>
-                        <loc>http://localhost:8181/emporium-staging-forge/public/{{ $single->slug }}</loc>
+                        <loc>{{url('/')}}/{{ $single->slug }}</loc>
                         <lastmod>{{ $single->created }}</lastmod>
                         <changefreq>weekly</changefreq>
                         <priority>0.9</priority>
