@@ -3,7 +3,7 @@
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     @foreach ($allsitemap as $key)
         <sitemap>
-            <loc>{{url('/')}}/sitemap/{{$key}}.xml</loc>
+            <loc>{{url('/')}}/sitemap1/{{$key}}.xml</loc>
         </sitemap> 
     @endforeach   
 </sitemapindex>
