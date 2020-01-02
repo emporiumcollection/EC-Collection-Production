@@ -26,8 +26,8 @@ Route::get('press', 'ContainerController@media_relations');
 Route::get('presssearch', 'ContainerController@pressSearchAjax');
 Route::get('getPressFolderListAjaxonload/{id}', 'ContainerController@getPressFolderListAjaxonload');
 
-Route::get('/sitemap.xml', 'SitemapController@index');
-Route::get('/sitemap/{type}.xml', 'SitemapController@properties');
+Route::get('/sitemap1.xml', 'SitemapController@index');
+Route::get('/sitemap1/{type}.xml', 'SitemapController@properties');
 
 Route::group(['middleware' => 'auth'], function()
 {
