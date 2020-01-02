@@ -202,7 +202,7 @@
                                 <div class="form-group  " >
                                     <label for="Assign User" class=" control-label col-md-4 text-left"> Assign User <span class="asterix"> * </span></label>
                                     <div class="col-md-6">
-                                        <select name='assigned_user_id[]' rows='5' id='assigned_user_id' class='select2 ' required  multiple="multiple" ></select> 
+                                        <select name='assigned_user_id' rows='5' id='assigned_user_id' class='select2 ' required   ></select> 
                                     </div> 
                                     <div class="col-md-2">
 
