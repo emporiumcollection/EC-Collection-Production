@@ -2890,9 +2890,10 @@
                 $(".bar_videotypelink").show();
             });
 
+            /*$("#assigned_user_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_users:id:first_name|last_name') }}",
+                    {selected_value: '{{ $property_user }}'});*/
             $("#assigned_user_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_users:id:first_name|last_name') }}",
-                    {selected_value: '{{ $property_user }}'});
-
+                    {selected_value: '{{ $row->assigned_user_id }}'});
 
             $('.removeCurrentFiles').on('click', function () {
                 var removeUrl = $(this).attr('href');
