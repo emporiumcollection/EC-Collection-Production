@@ -56,6 +56,7 @@ class RestaurantFrontController extends Controller {
 						}
 						
 						$fetchresgalleryfolder = \DB::table('tb_container')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container.id')->select('tb_container.id')->where('tb_container.parent_id', $resfile->folder_id)->where('tb_container.name', 'gallery')->where('tb_frontend_container.container_type', 'folder')->first();
+                        print_r($fetchresgalleryfolder);
 						if(!empty($fetchresgalleryfolder))
 						{
 							$fetchresgalleryfiles = \DB::table('tb_container_files')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container_files.id')->where('tb_container_files.folder_id', $fetchresgalleryfolder->id)->where('tb_frontend_container.container_type', 'file')->orderBy('tb_container_files.file_sort_num','asc')->get();
