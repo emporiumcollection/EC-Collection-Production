@@ -60,7 +60,7 @@ class RestaurantFrontController extends Controller {
 						if(!empty($fetchresgalleryfolder))
 						{
 							$fetchresgalleryfiles = \DB::table('tb_container_files')->join('tb_frontend_container', 'tb_frontend_container.container_id', '=', 'tb_container_files.folder_id')->where('tb_container_files.folder_id', $fetchresgalleryfolder->id)->where('tb_frontend_container.container_type', 'file')->orderBy('tb_container_files.file_sort_num','asc')->get();
-                            print_r(); die;
+                            print_r($fetchresgalleryfiles); die;
 							if(!empty($fetchresgalleryfiles))
 							{
 								$resturantArr[$rf]->datagallery = $fetchresgalleryfiles;
