@@ -4,6 +4,7 @@
 <link href="{{ asset('sximo/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet">
 <style>
 .radio-inline{ padding-left: 0px;}
+.bootstrap-tagsinput{ width: 100%; }
 </style>
 <div class="page-content row">
     <!-- Page header -->
