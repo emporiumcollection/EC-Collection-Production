@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
+<link href="{{ asset('sximo/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.css')}}" rel="stylesheet">
 <style>
 .radio-inline{ padding-left: 0px;}
 </style>
@@ -34,6 +35,7 @@
                     <li class=""><a href="#HotelAdress" data-toggle="tab">Hotel Adress</a></li>
                     <li class=""><a href="#Owner" data-toggle="tab">Owner</a></li>
                     <li class=""><a href="#reports" data-toggle="tab">Reports</a></li>
+                    <li class=""><a href="#seo" data-toggle="tab">SEO</a></li>
                     <!--<li class="AgentAgency" ><a href="#AgentAgency" data-toggle="tab" >Agents</a></li>-->
                 </ul>
                 <div class="tab-content">
@@ -408,7 +410,17 @@
 										<a href="{{URL::to('spa')}}" >Add Spas</a>
                                     </div>
                                 </div>
+                                
+                                <div class="form-group  " >
+                                    <label for="back_link" class=" control-label col-md-4 text-left"> Back Link </label>
+                                    <div class="col-md-6">
+                                        <input name="back_link" id="back_link" type="text" class="form-control" value="{{$row['back_link']}}" /> 
+                                    </div> 
+                                    <div class="col-md-2">
 
+                                    </div>
+                                </div>
+                                
                             </div>
 
                             <div class="tab-pane m-t" id="yachtinfo">
@@ -2539,7 +2551,239 @@
                         </div>
 
                     </div>
+                    <div class="tab-pane m-t " id="seo"> 
 
+                        <div class="form-group  " >
+                            <label for="meta_title" class=" control-label col-md-4 text-left"> Meta Title <span class="asterix"> * </span></label>
+                            <div class="col-md-6">                                
+                                {!! Form::text('meta_title', (!empty($metatags)) ? $metatags->meta_title : '', array('class'=>'form-control', 'placeholder'=>'' )) !!}                                
+                             </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                         					
+                        <div class="form-group  " >
+                            <label for="meta_description" class=" control-label col-md-4 text-left"> Meta Description <span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::textarea('meta_description', (!empty($metatags)) ? $metatags->meta_description : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                         
+                        <div class="form-group  " >
+                            <label for="meta_keywords" class=" control-label col-md-4 text-left"> Meta Keywords <span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::text('meta_keywords', (!empty($metatags)) ? $metatags->meta_keywords : '',array('class'=>'form-control', 'placeholder'=>'', 'data-role'=>'tagsinput'  )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                         
+                        <div class="form-group hidden" >
+                            <label for="canonical_link" class=" control-label col-md-4 text-left"> Canonical link<span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::text('canonical_link', (!empty($metatags)) ? $metatags->canonical_link : '',array('class'=>'form-control', 'placeholder'=>''  )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                        
+                        <div class="form-group  " >
+                            <label for="og_title" class=" control-label col-md-4 text-left"> OG Title <span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::text('og_title', (!empty($metatags)) ? $metatags->og_title : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                        
+                        <div class="form-group  " >
+                            <label for="og_description" class=" control-label col-md-4 text-left"> OG Description <span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::text('og_description', (!empty($metatags)) ? $metatags->og_description : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                        
+                        <div class="form-group  " >
+                            <label for="og_url" class=" control-label col-md-4 text-left"> OG url <span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::text('og_url', (!empty($metatags)) ? $metatags->og_url : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                         
+                        <div class="form-group  " >
+                            <label for="type" class=" control-label col-md-4 text-left"> OG type <span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::text('og_type', (!empty($metatags)) ? $metatags->og_type : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group  " >
+                            <label for="og_image" class=" control-label col-md-4 text-left"> OG Image <span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::text('og_image', (!empty($metatags)) ? $metatags->og_image : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                        
+                        <div class="form-group  " >
+                            <label for="og_image_width" class=" control-label col-md-4 text-left"> OG Image Width <span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::text('og_image_width', (!empty($metatags)) ? $metatags->og_image_width : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                         
+                        <div class="form-group  " >
+                            <label for="og_image_height" class=" control-label col-md-4 text-left"> OG Image Height </label>
+                            <div class="col-md-6">
+                                {!! Form::text('og_image_height', (!empty($metatags)) ? $metatags->og_image_height : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                        
+                        <div class="form-group  " >
+                            <label for="og_sitename" class=" control-label col-md-4 text-left"> OG Sitename <span class="asterix"> * </span></label>
+                            <div class="col-md-6">
+                                {!! Form::text('og_sitename', (!empty($metatags)) ? $metatags->og_sitename : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div> 
+
+                        <div class="form-group  " >
+                            <label for="og_locale" class=" control-label col-md-4 text-left"> OG Locale </label>
+                            <div class="col-md-6">
+                                {!! Form::text('og_locale', (!empty($metatags)) ? $metatags->og_locale : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div> 
+
+                        <div class="form-group  " >
+                            <label for="article_section" class=" control-label col-md-4 text-left"> Article section </label>
+                            <div class="col-md-6">
+                                {!! Form::text('article_section', (!empty($metatags)) ? $metatags->article_section : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div> 
+
+                        <div class="form-group  " >
+                            <label for="article_tags" class=" control-label col-md-4 text-left"> Article tags </label>
+                            <div class="col-md-6">
+                                {!! Form::text('article_tags', (!empty($metatags)) ? $metatags->article_tags : '',array('class'=>'form-control', 'placeholder'=>'', 'data-role'=>'tagsinput' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group  " >
+                            <label for="twitter_url" class=" control-label col-md-4 text-left">Twitter url </label>
+                            <div class="col-md-6">
+                                {!! Form::text('twitter_url', (!empty($metatags)) ? $metatags->twitter_url : '',array('class'=>'form-control', 'placeholder'=>''  )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group  " >
+                            <label for="twitter_title" class=" control-label col-md-4 text-left"> Twitter title </label>
+                            <div class="col-md-6">
+                                {!! Form::text('twitter_title', (!empty($metatags)) ? $metatags->twitter_title : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group  " >
+                            <label for="twitter_description" class=" control-label col-md-4 text-left"> Twitter description </label>
+                            <div class="col-md-6">
+                                {!! Form::text('twitter_description', (!empty($metatags)) ? $metatags->twitter_description : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                        
+                        <div class="form-group  " >
+                            <label for="twitter_image" class=" control-label col-md-4 text-left">Twitter image</label>
+                            <div class="col-md-6">
+                                {!! Form::text('twitter_image', (!empty($metatags)) ? $metatags->twitter_image : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group  " >
+                            <label for="twitter_domain" class=" control-label col-md-4 text-left"> Twitter domain </label>
+                            <div class="col-md-6">
+                                {!! Form::text('twitter_domain', (!empty($metatags)) ? $metatags->twitter_domain : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div> 
+                        
+                        <div class="form-group  " >
+                            <label for="twitter_card" class=" control-label col-md-4 text-left"> Twitter card </label>
+                            <div class="col-md-6">
+                                {!! Form::text('twitter_card', (!empty($metatags)) ? $metatags->twitter_card : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>
+                        
+                        <div class="form-group  " >
+                            <label for="twitter_creator" class=" control-label col-md-4 text-left">Twitter creator</label>
+                            <div class="col-md-6">
+                                {!! Form::text('twitter_creator', (!empty($metatags)) ? $metatags->twitter_creator : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>      
+                        
+                        <div class="form-group  " >
+                            <label for="twitter_site" class=" control-label col-md-4 text-left">Twitter Site</label>
+                            <div class="col-md-6">
+                                {!! Form::text('twitter_site', (!empty($metatags)) ? $metatags->twitter_site : '',array('class'=>'form-control', 'placeholder'=>'')) !!} 
+                            </div> 
+                            <div class="col-md-2">
+
+                            </div>
+                        </div>                          
+
+                    </div>
                     <!--<div class="tab-pane m-t" id="AgentAgency" >
                                                                     
                       <div class="form-group  " >
@@ -2676,10 +2920,17 @@
                 </div>
             </div>		 
         </div>	
-    </div>			 
+    </div>
+    <script src="{{ asset('sximo/js/typeahead.min.js')}}"></script>
+    <script src="{{ asset('sximo/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')}}"></script>			 
     <script type="text/javascript">
         $(document).ready(function () {
-
+            
+             $('input[name="meta_keywords"]').tagsinput({
+              itemText: 'label'
+            });
+            $('input[name="article_tags"]').tagsinput();
+            
             $("#property_cat_ids").jCombo("{{ URL::to('properties/comboselect?filter=tb_packages:id:package_title') }}",
             {  input_param: 'allow_user_groups', parent_value: '{{\CommonHelper::getusertype("users-b2c")}}', selected_value : '{{ $property_category }}', condition_param: 'find_in_set' });
 
