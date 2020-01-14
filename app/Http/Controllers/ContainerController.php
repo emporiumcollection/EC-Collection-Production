@@ -5896,7 +5896,7 @@ class ContainerController extends Controller {
 		foreach ($folderList as $r) {
 			echo $r;
 		} */
-        
+        print_r("ggg"); die;
         $tree = '';
         $main_folder = \DB::table('tb_container')->where('name', 'media-relations')->first();
         if(!empty($main_folder)){
