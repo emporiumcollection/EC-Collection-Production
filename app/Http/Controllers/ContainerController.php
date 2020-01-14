@@ -6034,7 +6034,568 @@ class ContainerController extends Controller {
 	}
     public function getPressFoldersAjax( $id = 0, $wnd = '' )
 	{
-		echo "heloo";
+		$record_per_page = 50;
+		$page_number = 1;
+		if(isset($_GET['page'])){
+			$page_number = $_GET['page'];
+		}
+		
+		/*if($this->access['is_view'] ==0) 
+			return Redirect::to('dashboard')
+				->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus','error');
+		$uid = \Auth::user()->id;*/
+		
+		$filter = " AND parent_id='".$id."'";
+		/*if(\Auth::user()->group_id==3 && $wnd!='iframe')
+		{
+			$filter .= " AND (id in (select folder_id from tb_permissions where user_id='".$uid."' and no_permission='0') or global_permission='1')";
+		}
+		if(\Auth::user()->group_id==2 && $wnd!='iframe')
+		{
+			//$filter .= " AND (user_id='".$uid."' or (user_id!='".$uid."' and global_permission='1'))";
+		}*/
+		$params = array(
+			'params'	=> $filter,
+			'page'=> $page_number,
+			'limit' => $record_per_page
+		);
+
+		$params1 = array(
+			'params'	=> $filter
+		);
+		// Get Query 
+		$results = $this->model->getRows( $params );
+
+		$resultsTotal = $this->model->getRows($params1 );
+
+
+		
+		$foldername = DB::table('tb_container')->where('id',$id);
+		$this->data['foldername'] = $foldername->select('display_name','parent_id','user_id', 'global_permission', 'title', 'description','display_name_eng','title_eng','description_eng')->first();
+		
+		$this->data['parentArr'] = array_reverse($this->fetchFolderParentListArray($id));
+
+		$filess_temp = DB::table('tb_container_files')->select('id','file_name','folder_id','file_title','file_description','file_display_name','file_sort_num','file_type')->where('folder_id',$id);
+		$filess_temp_full = DB::table('tb_container_files')->select('id')->where('folder_id',$id);
+		
+		/*if(\Auth::user()->group_id==2 && (!empty($this->data['foldername'] && $this->data['foldername']->global_permission==0)) && $wnd!='iframe')
+		{
+			//$filess_temp->where('user_id',$uid);
+		}*/
+		$filessTotal = $filess_temp_full->get();
+
+		$totalRecord = $resultsTotal['total'] + count($filessTotal);
+		$this->data['pagination']['total_folder'] = $totalRecord;
+		$this->data['pagination']['total_page'] = ($totalRecord>0)?(ceil($totalRecord/$record_per_page)):0;
+		$this->data['pagination']['current_page'] = $page_number;
+		$this->data['pagination']['prev_page'] = ($page_number>0)?($page_number - 1):0;
+		$this->data['pagination']['next_page'] = ($page_number>0)?($page_number + 1):0;
+		$filess = array();
+		if(count($results['rows'])<$record_per_page){
+			if($resultsTotal['total']>0){
+				$startOffset = 0;
+				$limitFiles = count($results['rows']) - $record_per_page;
+			}else{
+				$startOffset = ($page_number - 1) * $record_per_page;
+				$limitFiles = $record_per_page;
+			}
+			$filess = $filess_temp->get();
+		}
+
+
+		$ct=0; 
+		$this->data['rowData'] = array();
+		
+		foreach($results['rows'] as $folderObj ){
+			if($wnd=='iframe')
+			{
+				/*$childs = $this->fetchFolderChildListIds(30);
+				if($folderObj->id==30 || in_array($folderObj->id,$childs))
+				{*/
+					$totfiles = DB::table('tb_container_files')->select('id')->where('folder_id',$folderObj->id)->count();
+					$totfolders = DB::table('tb_container')->select('id')->where('parent_id',$folderObj->id)->count();
+					$this->data['rowData'][$ct]['id'] = $folderObj->id;
+					$this->data['rowData'][$ct]['name'] = $folderObj->display_name;
+					$this->data['rowData'][$ct]['ftype'] = 'folder';
+					$this->data['rowData'][$ct]['imgsrc'] = '';
+					$this->data['rowData'][$ct]['foldercount'] = $totfolders;
+					$this->data['rowData'][$ct]['filecount'] = $totfiles;
+					$this->data['rowData'][$ct]['tiff_files'] = '';
+					$this->data['rowData'][$ct]['title'] = $folderObj->title;
+					$this->data['rowData'][$ct]['description'] = $folderObj->description;
+					$this->data['rowData'][$ct]['file_display_name'] = '';
+					$this->data['rowData'][$ct]['cover_img'] = $folderObj->cover_img;
+					$this->data['rowData'][$ct]['sort_num'] = $folderObj->sort_num;
+					$this->data['rowData'][$ct]['imgpath'] = '';
+					$this->data['rowData'][$ct]['hotel_help_update'] = $folderObj->hotel_help_update;
+					$ct++;
+				//}
+			}
+			else
+			{
+				$totfiles = DB::table('tb_container_files')->select('id')->where('folder_id',$folderObj->id)->count();
+				$totfolders = DB::table('tb_container')->select('id')->where('parent_id',$folderObj->id)->count();
+				$frontend = DB::table('tb_frontend_container')->select('id')->where('container_id',$folderObj->id)->where('container_type','folder')->first();
+				$this->data['rowData'][$ct]['id'] = $folderObj->id;
+				$this->data['rowData'][$ct]['name'] = $folderObj->display_name;
+				$this->data['rowData'][$ct]['ftype'] = 'folder';
+				$this->data['rowData'][$ct]['imgsrc'] = '';
+				$this->data['rowData'][$ct]['foldercount'] = $totfolders;
+				$this->data['rowData'][$ct]['filecount'] = $totfiles;
+				$this->data['rowData'][$ct]['tiff_files'] = '';
+				$this->data['rowData'][$ct]['title'] = $folderObj->title;
+				$this->data['rowData'][$ct]['description'] = $folderObj->description;
+				$this->data['rowData'][$ct]['file_display_name'] = '';
+				$this->data['rowData'][$ct]['sort_num'] = $folderObj->sort_num;
+				$this->data['rowData'][$ct]['assign_front'] = 'no';
+				$this->data['rowData'][$ct]['assign_lightbox'] = 'no';
+				$this->data['rowData'][$ct]['hotel_help_update'] = $folderObj->hotel_help_update;
+				if(!empty($frontend))
+				{
+					$this->data['rowData'][$ct]['assign_front'] = 'yes';
+				}
+				
+				if($folderObj->cover_img=="" && $folderObj->temp_cover_img=="")
+				{
+					$default_front_design = \DB::table('tb_settings')->select('content')->where('key_value', 'frontend_design')->first();
+					
+					// Set main image first image in folder
+					$checkfile = DB::table('tb_container_files')->select('file_name')->where('folder_id', $folderObj->id)->where(function ($query) { $query->where('file_type', 'image/jpeg')->orWhere('file_type', 'image/png')->orWhere('file_type', 'image/gif');})->orderBy('file_sort_num', 'asc')->first();
+					if(!empty($checkfile))
+					{
+						$destinationPath = $this->getContainerUserPath($folderObj->id);
+						$copytofolder = public_path().'/uploads/folder_cover_imgs/';
+						$find_prd=false;
+						$this->data['rowData'][$ct]['cover_img'] = '';
+						$fileName = $checkfile->file_name;
+													
+						$find_actualsize = getimagesize($destinationPath.$fileName);
+						if($find_actualsize[0]>$find_actualsize[1])
+						{
+							// image for backend
+							if (! \File::exists($copytofolder.'thumb_'.$fileName))
+							{
+								$bkimg = \Image::make($destinationPath.$fileName);
+								$bkimg->resize(128, 130);
+								$bkimgfile = 'thumb_'. $fileName;
+								$bkimg->save($copytofolder.$bkimgfile);
+							}
+							
+							if (! \File::exists($copytofolder.'format_'.$fileName))
+							{
+								$mdimg = \Image::make($destinationPath.$fileName);
+								$thactualsize = getimagesize($destinationPath.$fileName);
+								if($thactualsize[0]>$thactualsize[1])
+								{
+									$mdimg->resize(320, null, function ($constraint) {
+										$constraint->aspectRatio();
+									});
+								}
+								else
+								{
+									$mdimg->resize(null, 320, function ($constraint) {
+										$constraint->aspectRatio();
+									});
+								}
+								$thumbfile = 'format_'.$fileName;
+								$mdimg->save($copytofolder.$thumbfile);
+							}
+							
+							$tcmdata['temp_cover_img'] = $fileName;
+							$tcmdata['updated'] = date('y-m-d');
+							DB::table('tb_container')->where('id', $folderObj->id)->update($tcmdata);
+							
+							if(!empty($default_front_design) && $default_front_design->content=="grid")
+							{
+								$this->data['rowData'][$ct]['cover_img'] = $fileName;
+							}
+							$find_prd=true;
+						}
+					}
+					else{
+						$this->data['rowData'][$ct]['cover_img'] = '';
+					}
+				}
+				else
+				{
+					$this->data['rowData'][$ct]['cover_img'] = ($folderObj->cover_img!='') ? $folderObj->cover_img : $folderObj->temp_cover_img ;
+				}
+				
+				$ct++;
+			}
+			
+		}
+
+		if(!empty($filess))
+		{
+			$imgsrc = $this->getThumbpath($filess[0]->folder_id);
+			$imgpath = $this->getContainerUserPath($filess[0]->folder_id);
+			if(\Auth::user()->group_id!=3 || (!empty($this->data['foldername'] && $this->data['foldername']->global_permission==1)) || $wnd=='iframe')
+			{
+				foreach($filess as $filesObj ){
+					$this->data['rowData'][$ct]['id'] = $filesObj->id;
+					$this->data['rowData'][$ct]['name'] = $filesObj->file_name;
+					$this->data['rowData'][$ct]['ftype'] = 'file';
+					$this->data['rowData'][$ct]['imgsrc'] = $imgsrc;
+					$this->data['rowData'][$ct]['filecount'] = '';
+					$this->data['rowData'][$ct]['foldercount'] = '';
+					$this->data['rowData'][$ct]['tiff_files'] = '';
+					$this->data['rowData'][$ct]['title'] = $filesObj->file_title;
+					$this->data['rowData'][$ct]['description'] = $filesObj->file_description;
+					$this->data['rowData'][$ct]['file_display_name'] = $filesObj->file_display_name;
+					$this->data['rowData'][$ct]['cover_img'] = '';
+					$this->data['rowData'][$ct]['sort_num'] = $filesObj->file_sort_num;
+					$this->data['rowData'][$ct]['assign_front'] = 'no';
+					$this->data['rowData'][$ct]['imgpath'] = $imgpath;
+					$this->data['rowData'][$ct]['assign_lightbox'] = 'no';
+					$this->data['rowData'][$ct]['hotel_help_update'] = '';
+					
+					$frontend_files = DB::table('tb_frontend_container')->select('id')->where('container_id',$filesObj->id)->where('container_type','file')->first();
+					if(!empty($frontend_files))
+					{
+						$this->data['rowData'][$ct]['assign_front'] = 'yes';
+					}
+					$frontend_lightbox = DB::table('tb_frontend_lightbox')->select('id')->where('container_id',$filesObj->id)->where('container_type','file')->first();
+					if(!empty($frontend_lightbox))
+					{
+						$this->data['rowData'][$ct]['assign_lightbox'] = 'yes';
+					}
+					
+					$exFtype = explode('/',$filesObj->file_type);
+					if($exFtype[1]=="tiff")
+					{
+						$this->data['rowData'][$ct]['tiff_files'] = DB::table('tb_container_tiff_files')->select('id','file_name')->where('file_id', $filesObj->id)->get();
+					}
+					if($exFtype[0]=="image")
+					{
+						if (!File::exists(public_path(). '/uploads/thumbs/thumb_'.$filesObj->folder_id.'_'.$filesObj->file_name))
+						{
+							$mdimg = \Image::make($imgpath.$filesObj->file_name);
+							$mdimg->resize(128, 130);
+							$thumbfile = 'thumb_'.$filesObj->folder_id.'_'.$filesObj->file_name;
+							$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+						}
+						
+						if (!File::exists(public_path(). '/uploads/thumbs/format_'.$filesObj->folder_id.'_'.$filesObj->file_name))
+						{
+							$mdimg = \Image::make($imgpath.$filesObj->file_name);
+							$actualsize = getimagesize($imgpath.$filesObj->file_name);
+							if($actualsize[0]>$actualsize[1])
+							{
+								$mdimg->resize(320, null, function ($constraint) {
+									$constraint->aspectRatio();
+								});
+							}
+							else
+							{
+								$mdimg->resize(null, 320, function ($constraint) {
+									$constraint->aspectRatio();
+								});
+							}
+							$thumbfile = 'format_'.$filesObj->folder_id.'_'.$filesObj->file_name;
+							$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+						}
+						if (!File::exists(public_path(). '/uploads/thumbs/highflip_'.$filesObj->folder_id.'_'.$filesObj->file_name))
+						{
+							$mdimg = \Image::make($imgpath.$filesObj->file_name);
+							$actualsize = getimagesize($imgpath.$filesObj->file_name);
+							if($actualsize[0]>$actualsize[1])
+							{
+								$mdimg->resize(1000, null, function ($constraint) {
+									$constraint->aspectRatio();
+								});
+							}
+							else
+							{
+								$mdimg->resize(null, 1000, function ($constraint) {
+									$constraint->aspectRatio();
+								});
+							}
+							$thumbfile = 'highflip_'.$filesObj->folder_id.'_'.$filesObj->file_name;
+							$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+						}
+					}
+					
+					// delete landing_info view
+					if( File::exists(public_path() . '/uploads/thumbs/landing_info_'. $filesObj->folder_id.'_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/thumbs/landing_info_'. $filesObj->folder_id.'_'.$filesObj->file_name);
+					}
+					
+					// delete front_slider view
+					if( File::exists(public_path() . '/uploads/thumbs/front_slider_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/thumbs/front_slider_'.$filesObj->file_name);
+					}
+					
+					// delete product_detail_list 
+					if( File::exists(public_path() . '/uploads/thumbs/product_detail_list_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/thumbs/product_detail_list_'.$filesObj->file_name);
+					}
+					
+					// delete product file
+					if( File::exists(public_path() . '/uploads/folder_cover_imgs/product_file_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/folder_cover_imgs/product_file_'.$filesObj->file_name);
+					}
+					
+					// delete material file
+					if( File::exists(public_path() . '/uploads/folder_cover_imgs/material_file_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/folder_cover_imgs/material_file_'.$filesObj->file_name);
+					}
+					
+					// delete masonry_product_file
+					if( File::exists(public_path() . '/uploads/folder_cover_imgs/masonry_product_file_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/folder_cover_imgs/masonry_product_file_'.$filesObj->file_name);
+					}
+					
+					// delete product file
+					if( File::exists(public_path() . '/uploads/folder_cover_imgs/product_file_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/folder_cover_imgs/product_file_'.$filesObj->file_name);
+					}
+					
+					// delete folder cover front file
+					if( File::exists(public_path() . '/uploads/folder_cover_imgs/front_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/folder_cover_imgs/front_'.$filesObj->file_name);
+					}
+					
+					// delete folder cover product file
+					if( File::exists(public_path() . '/uploads/folder_cover_imgs/product_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/folder_cover_imgs/product_'.$filesObj->file_name);
+					}
+					
+					// delete folder cover masonry_product file
+					if( File::exists(public_path() . '/uploads/folder_cover_imgs/masonry_product_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/folder_cover_imgs/masonry_product_'.$filesObj->file_name);
+					}
+					
+					// delete folder cover product_detail_cover file
+					if( File::exists(public_path() . '/uploads/folder_cover_imgs/product_detail_cover_'.$filesObj->file_name))
+					{
+						File::delete(public_path() . '/uploads/folder_cover_imgs/product_detail_cover_'.$filesObj->file_name);
+					}
+					$ct++;
+				}
+			}
+			else{
+				$selfiles = DB::table('tb_permissions')->select('view','inherit')->where('folder_id',$id)->where('user_id',$uid)->first();
+				if(!empty($selfiles))
+				{
+					if($selfiles->view==1 || $selfiles->inherit==1)
+					{
+						foreach($filess as $filesObj ){
+							$this->data['rowData'][$ct]['id'] = $filesObj->id;
+							$this->data['rowData'][$ct]['name'] = $filesObj->file_name;
+							$this->data['rowData'][$ct]['ftype'] = 'file';
+							$this->data['rowData'][$ct]['imgsrc'] = $imgsrc;
+							$this->data['rowData'][$ct]['filecount'] = '';
+							$this->data['rowData'][$ct]['foldercount'] = '';
+							$this->data['rowData'][$ct]['tiff_files'] = '';
+							$this->data['rowData'][$ct]['title'] = $filesObj->file_title;
+							$this->data['rowData'][$ct]['description'] = $filesObj->file_description;
+							$this->data['rowData'][$ct]['file_display_name'] = $filesObj->file_display_name;
+							$this->data['rowData'][$ct]['cover_img'] = '';
+							$this->data['rowData'][$ct]['sort_num'] = $filesObj->file_sort_num;
+							$this->data['rowData'][$ct]['hotel_help_update'] = '';
+							
+							$exFtype = explode('/',$filesObj->file_type);
+							if($exFtype[1]=="tiff")
+							{
+								$this->data['rowData'][$ct]['tiff_files'] = DB::table('tb_container_tiff_files')->select('id','file_name')->where('file_id', $filesObj->id)->get();
+							}
+							if($exFtype[0]=="image")
+							{
+								if (!File::exists(public_path(). '/uploads/thumbs/thumb_'.$filesObj->folder_id.'_'.$filesObj->file_name))
+								{
+									$mdimg = \Image::make($imgpath.$filesObj->file_name);
+									$mdimg->resize(128, 130);
+									$thumbfile = 'thumb_'.$filesObj->folder_id.'_'.$filesObj->file_name;
+									$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+								}
+								
+								if (!File::exists(public_path(). '/uploads/thumbs/format_'.$filesObj->folder_id.'_'.$filesObj->file_name))
+								{
+									$mdimg = \Image::make($imgpath.$filesObj->file_name);
+									$actualsize = getimagesize($imgpath.$filesObj->file_name);
+									if($actualsize[0]>$actualsize[1])
+									{
+										$mdimg->resize(320, null, function ($constraint) {
+											$constraint->aspectRatio();
+										});
+									}
+									else
+									{
+										$mdimg->resize(null, 320, function ($constraint) {
+											$constraint->aspectRatio();
+										});
+									}
+									$thumbfile = 'format_'.$filesObj->folder_id.'_'.$filesObj->file_name;
+									$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+								}
+								if (!File::exists(public_path(). '/uploads/thumbs/highflip_'.$filesObj->folder_id.'_'.$filesObj->file_name))
+								{
+									$mdimg = \Image::make($imgpath.$filesObj->file_name);
+									$actualsize = getimagesize($imgpath.$filesObj->file_name);
+									if($actualsize[0]>$actualsize[1])
+									{
+										$mdimg->resize(1000, null, function ($constraint) {
+											$constraint->aspectRatio();
+										});
+									}
+									else
+									{
+										$mdimg->resize(null, 1000, function ($constraint) {
+											$constraint->aspectRatio();
+										});
+									}
+									$thumbfile = 'highflip_'.$filesObj->folder_id.'_'.$filesObj->file_name;
+									$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+								}
+							}
+							
+							// delete landing_info view
+							if( File::exists(public_path() . '/uploads/thumbs/landing_info_'. $filesObj->folder_id.'_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/thumbs/landing_info_'. $filesObj->folder_id.'_'.$filesObj->file_name);
+							}
+							
+							// delete front_slider view
+							if( File::exists(public_path() . '/uploads/thumbs/front_slider_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/thumbs/front_slider_'.$filesObj->file_name);
+							}
+							
+							// delete product_detail_list 
+							if( File::exists(public_path() . '/uploads/thumbs/product_detail_list_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/thumbs/product_detail_list_'.$filesObj->file_name);
+							}
+							
+							// delete product file
+							if( File::exists(public_path() . '/uploads/folder_cover_imgs/product_file_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/folder_cover_imgs/product_file_'.$filesObj->file_name);
+							}
+							
+							// delete material file
+							if( File::exists(public_path() . '/uploads/folder_cover_imgs/material_file_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/folder_cover_imgs/material_file_'.$filesObj->file_name);
+							}
+							
+							// delete masonry_product_file
+							if( File::exists(public_path() . '/uploads/folder_cover_imgs/masonry_product_file_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/folder_cover_imgs/masonry_product_file_'.$filesObj->file_name);
+							}
+							
+							// delete product file
+							if( File::exists(public_path() . '/uploads/folder_cover_imgs/product_file_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/folder_cover_imgs/product_file_'.$filesObj->file_name);
+							}
+							
+							// delete folder cover front file
+							if( File::exists(public_path() . '/uploads/folder_cover_imgs/front_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/folder_cover_imgs/front_'.$filesObj->file_name);
+							}
+							
+							// delete folder cover product file
+							if( File::exists(public_path() . '/uploads/folder_cover_imgs/product_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/folder_cover_imgs/product_'.$filesObj->file_name);
+							}
+							
+							// delete folder cover masonry_product file
+							if( File::exists(public_path() . '/uploads/folder_cover_imgs/masonry_product_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/folder_cover_imgs/masonry_product_'.$filesObj->file_name);
+							}
+							
+							// delete folder cover product_detail_cover file
+							if( File::exists(public_path() . '/uploads/folder_cover_imgs/product_detail_cover_'.$filesObj->file_name))
+							{
+								File::delete(public_path() . '/uploads/folder_cover_imgs/product_detail_cover_'.$filesObj->file_name);
+							}
+							$ct++;
+						}
+					}
+				}
+			}
+		}
+		print "<pre>";
+		print_r($this->data['rowData']); die;
+		if(!empty($this->data['rowData']))
+		{
+			usort($this->data['rowData'], function($a, $b) {
+				return $a['sort_num'] - $b['sort_num']; 
+			});
+		}
+		
+		$subfoldertotal = DB::table('tb_container')->select('id')->where('parent_id',$id);
+		$this->data['subfoldertotal'] = $subfoldertotal->count();
+				
+		$subfilestotal = DB::table('tb_container_files')->select('id')->where('folder_id',$id);
+				$this->data['subfilestotal'] = $subfilestotal->count();
+		
+		$subfileBytes_temp = DB::table('tb_container_files')->where('folder_id',$id);
+		$subfileBytes = $subfileBytes_temp->sum('file_size');
+		
+		$subfileMb = ($subfileBytes/(1000*1000));
+		$this->data['subfileSpace'] = round($subfileMb,2,PHP_ROUND_HALF_UP);
+		
+		
+		if(isset($_REQUEST['show']) && trim($_REQUEST['show'])!="")
+		{
+			$showType = trim($_REQUEST['show']);
+		}
+		else
+		{
+			$showType = "thumb";
+		}
+		
+		$this->data['showType'] = $showType;
+		$this->data['parent_tags'] = (new TagmanagerController)->fetchTagTree();
+		$this->data['fid'] = $id;
+		$this->data['group'] = \Auth::user()->group_id;
+		
+		$sel_attributes = DB::table('tb_attributes')->where('attr_status',1);
+		/*if(\Auth::user()->group_id==2 || \Auth::user()->group_id==3)
+		{
+			$sel_attributes->where('attr_permission',1);
+		}*/
+		$this->data['sel_attributes'] = $sel_attributes->get();
+		
+		$this->data['sel_tags'] = DB::table('tb_tags_manager')->where('tag_status',1)->get();
+		
+		$this->data['sel_designer'] = DB::table('tb_designers')->where('designer_status',1)->get();
+		
+		/*if(\Auth::user()->group_id==3 && $wnd!='iframe')
+		{
+			$this->data['userpermissions'] = DB::table('tb_permissions')->where('user_id',$uid)->where('folder_id',$id)->first();
+			return view('container.user_index_ajax',$this->data);
+		}
+		else
+		{*/
+			if($wnd=='iframe')
+			{
+				return view('container.iframe_ajax',$this->data);
+			}
+			else
+			{
+			    $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'frontend.themes.emporium.press.media_relation_ajax':'frontend.themes.emporium.press.media_relation_ajax';  
+				return view('frontend.themes.emporium.press.media_relation_ajax',$this->data);
+			}
+		/*}*/
 	}
     
     function PressDownloadZipSelected()
