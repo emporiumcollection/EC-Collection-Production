@@ -5928,7 +5928,7 @@ class ContainerController extends Controller {
         $user_tree_array = '<ul class="folders parent'.$fid.'" rel="pr_'.$fid.'" style="display:block;">';
         
 		$results = $this->model->getRows( $params );
-		
+		print_r($results); die;
         if ($results) {
 			
 			foreach($results['rows'] as $row) {
