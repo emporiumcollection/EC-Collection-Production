@@ -6040,20 +6040,20 @@ class ContainerController extends Controller {
 			$page_number = $_GET['page'];
 		}
 		
-		if($this->access['is_view'] ==0) 
+		/*if($this->access['is_view'] ==0) 
 			return Redirect::to('dashboard')
 				->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus','error');
-		$uid = \Auth::user()->id;
+		$uid = \Auth::user()->id;*/
 		
 		$filter = " AND parent_id='".$id."'";
-		if(\Auth::user()->group_id==3 && $wnd!='iframe')
+		/*if(\Auth::user()->group_id==3 && $wnd!='iframe')
 		{
 			$filter .= " AND (id in (select folder_id from tb_permissions where user_id='".$uid."' and no_permission='0') or global_permission='1')";
 		}
 		if(\Auth::user()->group_id==2 && $wnd!='iframe')
 		{
 			//$filter .= " AND (user_id='".$uid."' or (user_id!='".$uid."' and global_permission='1'))";
-		}
+		}*/
 		$params = array(
 			'params'	=> $filter,
 			'page'=> $page_number,
@@ -6568,23 +6568,23 @@ class ContainerController extends Controller {
 		$this->data['group'] = \Auth::user()->group_id;
 		
 		$sel_attributes = DB::table('tb_attributes')->where('attr_status',1);
-		if(\Auth::user()->group_id==2 || \Auth::user()->group_id==3)
+		/*if(\Auth::user()->group_id==2 || \Auth::user()->group_id==3)
 		{
 			$sel_attributes->where('attr_permission',1);
-		}
+		}*/
 		$this->data['sel_attributes'] = $sel_attributes->get();
 		
 		$this->data['sel_tags'] = DB::table('tb_tags_manager')->where('tag_status',1)->get();
 		
 		$this->data['sel_designer'] = DB::table('tb_designers')->where('designer_status',1)->get();
 		
-		if(\Auth::user()->group_id==3 && $wnd!='iframe')
+		/*if(\Auth::user()->group_id==3 && $wnd!='iframe')
 		{
 			$this->data['userpermissions'] = DB::table('tb_permissions')->where('user_id',$uid)->where('folder_id',$id)->first();
 			return view('container.user_index_ajax',$this->data);
 		}
 		else
-		{
+		{*/
 			if($wnd=='iframe')
 			{
 				return view('container.iframe_ajax',$this->data);
@@ -6595,7 +6595,7 @@ class ContainerController extends Controller {
                 $file_name = (strlen($is_demo6) > 0)?$is_demo6.'frontend.themes.emporium.press.media_relation_ajax':'frontend.themes.emporium.press.media_relation_ajax';  
 				return view('frontend.themes.emporium.press.media_relation_ajax',$this->data);
 			}
-		}
+		/*}*/
 	}
     
     function PressDownloadZipSelected()
