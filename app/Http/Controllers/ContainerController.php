@@ -5792,7 +5792,7 @@ class ContainerController extends Controller {
 		
 		$this->data['tree'] = array();
 		$this->data['fid'] = $id;
-		$this->data['group'] = \Auth::user()->group_id;
+		//$this->data['group'] = \Auth::user()->group_id;
 		$sel_attributes = DB::table('tb_attributes')->select('attr_type','id','attr_title','attr_cat')->where('attr_status',1);
 		
 		$this->data['sel_attributes'] = $sel_attributes->get();
@@ -5801,7 +5801,8 @@ class ContainerController extends Controller {
 		
 		$this->data['sel_designer'] = DB::table('tb_designers')->select('id','designer_name')->where('designer_status',1)->get();
 		
-		$this->data['lightboxes'] = \DB::table('tb_lightbox')->select('id','box_name')->where('user_id', $uid)->get();
+		//$this->data['lightboxes'] = \DB::table('tb_lightbox')->select('id','box_name')->where('user_id', $uid)->get();
+        $this->data['lightboxes'] = \DB::table('tb_lightbox')->select('id','box_name')->where('user_id', 1)->get();
 		
 		$this->data['parent_tags'] = (new TagmanagerController)->fetchTagTree();
 		
@@ -5811,7 +5812,8 @@ class ContainerController extends Controller {
         
         $this->data['destination_category'] =0;
                                                                                                                                                                                                                                                                                                                                                                                               
-		$boxcontent = \DB::table('tb_lightbox_content')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_lightbox_content.file_id')->select('tb_lightbox_content.id', 'tb_container_files.file_name', 'tb_container_files.folder_id', 'tb_container_files.file_display_name', 'tb_container_files.file_title','tb_lightbox_content.lightbox_id')->where('tb_lightbox_content.user_id', $uid)->get();
+		//$boxcontent = \DB::table('tb_lightbox_content')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_lightbox_content.file_id')->select('tb_lightbox_content.id', 'tb_container_files.file_name', 'tb_container_files.folder_id', 'tb_container_files.file_display_name', 'tb_container_files.file_title','tb_lightbox_content.lightbox_id')->where('tb_lightbox_content.user_id', $uid)->get();
+        $boxcontent = \DB::table('tb_lightbox_content')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_lightbox_content.file_id')->select('tb_lightbox_content.id', 'tb_container_files.file_name', 'tb_container_files.folder_id', 'tb_container_files.file_display_name', 'tb_container_files.file_title','tb_lightbox_content.lightbox_id')->where('tb_lightbox_content.user_id', 1)->get();
 		$boxcont = array();
 		if(!empty($boxcontent))
 		{
