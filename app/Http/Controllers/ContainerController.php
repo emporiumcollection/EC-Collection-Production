@@ -6587,11 +6587,11 @@ class ContainerController extends Controller {
 		else
 		{*/
 			if($wnd=='iframe')
-			{ echo "helo"; die;
+			{ 
 				return view('container.iframe_ajax',$this->data);
 			}
 			else
-			{    echo "hjjkk"; die;
+			{    
 			    $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
                 $file_name = (strlen($is_demo6) > 0)?$is_demo6.'frontend.themes.emporium.press.media_relation_ajax':'frontend.themes.emporium.press.media_relation_ajax';  
 				return view('frontend.themes.emporium.press.media_relation_ajax',$this->data);
