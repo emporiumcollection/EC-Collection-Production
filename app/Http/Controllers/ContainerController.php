@@ -5586,7 +5586,7 @@ class ContainerController extends Controller {
 			$ct++;
 			
 			
-		} echo "<pre>"; print_r($this->data['rowData']); die;
+		} 
 		if(!empty($filess))
 		{
 			$imgsrc = $this->getThumbpath($filess[0]->folder_id);
@@ -5738,7 +5738,7 @@ class ContainerController extends Controller {
 			}
 			
 		}
-        		
+        echo "<pre>"; print_r($this->data['rowData']); die;		
 		if(!empty($this->data['rowData']))
 		{
 			usort($this->data['rowData'], function($a, $b) {
