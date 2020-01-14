@@ -3601,7 +3601,7 @@ class ContainerController extends Controller {
         	  }
            }
       }else{
-           foreach($results['rows'] as $row) {
+          foreach($results['rows'] as $row) {
     			$parent_folders_array[] = $row;    			
     	   }    
       }
@@ -5461,7 +5461,7 @@ class ContainerController extends Controller {
     
     public function media_relations( Request $request, $id = 0, $wnd = '' )
 	{
-		/*if($this->access['is_view'] ==0) 
+		if($this->access['is_view'] ==0) 
 			return Redirect::to('dashboard')
 				->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus','error');
 		$uid = \Auth::user()->id;
@@ -5477,7 +5477,7 @@ class ContainerController extends Controller {
 		);
 		// Get Query 
 		$results = $this->model->getRows( $params );
-		*/
+		
 		$foldername = DB::table('tb_container')->where('name','media-relations');
         
 		$this->data['foldername'] = $foldername->select('id', 'display_name','parent_id','user_id', 'global_permission', 'title', 'description','display_name_eng','title_eng','description_eng')->first();
