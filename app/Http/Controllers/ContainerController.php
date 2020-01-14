@@ -5469,10 +5469,10 @@ class ContainerController extends Controller {
 		$uid = \Auth::user()->id;*/
 		
 		$filter = " AND parent_id='".$id."'";
-		if(\Auth::user()->group_id==3 && $wnd!='iframe')
-		{
+		//if(\Auth::user()->group_id==3 && $wnd!='iframe')
+		//{
 			//$filter .= " AND (id in (select folder_id from tb_permissions where user_id='".$uid."' and no_permission='0') or global_permission='1')";
-		}
+		//}
 		
 		$params = array(
 			'params'	=> $filter
