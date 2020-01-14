@@ -5477,7 +5477,7 @@ class ContainerController extends Controller {
 		);
 		// Get Query 
 		$results = $this->model->getRows( $params );
-		print_r($results); die;
+		
 		$foldername = DB::table('tb_container')->where('name','media-relations');
         
 		$this->data['foldername'] = $foldername->select('id', 'display_name','parent_id','user_id', 'global_permission', 'title', 'description','display_name_eng','title_eng','description_eng')->first();
@@ -5492,7 +5492,7 @@ class ContainerController extends Controller {
 	
 		$ct=0; 
 		$this->data['rowData'] = array();
-		print_r($this->data['rowData']); die;
+		echo "<pre>"; print_r($results['rows']); die;
 		foreach($results['rows'] as $folderObj ){
 			
 			$totfiles = DB::table('tb_container_files')->select('id')->where('folder_id',$folderObj->id)->count();
