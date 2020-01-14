@@ -6531,8 +6531,8 @@ class ContainerController extends Controller {
 				}
 			}
 		}
-		print "<pre>";
-		print_r($this->data['rowData']); die;
+		//print "<pre>";
+		//print_r($this->data['rowData']); die;
 		if(!empty($this->data['rowData']))
 		{
 			usort($this->data['rowData'], function($a, $b) {
@@ -6563,7 +6563,8 @@ class ContainerController extends Controller {
 		}
 		
 		$this->data['showType'] = $showType;
-		$this->data['parent_tags'] = (new TagmanagerController)->fetchTagTree();
+		//$this->data['parent_tags'] = (new TagmanagerController)->fetchTagTree();
+        $this->data['parent_tags'] = array();
 		$this->data['fid'] = $id;
 		$this->data['group'] = \Auth::user()->group_id;
 		
