@@ -5494,7 +5494,7 @@ class ContainerController extends Controller {
 	
 		$ct=0; 
 		$this->data['rowData'] = array();
-		print_r($results['rows']); die;
+		
 		foreach($results['rows'] as $folderObj ){
 			
 			$totfiles = DB::table('tb_container_files')->select('id')->where('folder_id',$folderObj->id)->count();
@@ -5595,6 +5595,7 @@ class ContainerController extends Controller {
 			$imgpath = $this->getContainerUserPath($filess[0]->folder_id);
 			
 			$selfiles = DB::table('tb_permissions')->select('view','inherit')->where('folder_id',$id)->where('user_id',$uid)->first();
+            print_r($selfiles); die;
 			if(!empty($selfiles))
 			{
 				if($selfiles->view==1 || $selfiles->inherit==1)
