@@ -5836,7 +5836,7 @@ class ContainerController extends Controller {
 		if (!is_array($user_tree_array))
 		$user_tree_array = array();
 	
-		$uid = \Auth::user()->id;
+		//$uid = \Auth::user()->id;
 		$filter = " AND parent_id='".$parent."'";
 		
 		$params = array(
