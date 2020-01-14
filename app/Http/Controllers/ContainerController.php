@@ -5492,7 +5492,7 @@ class ContainerController extends Controller {
 	
 		$ct=0; 
 		$this->data['rowData'] = array();
-		
+		print_r($this->data['rowData']); die;
 		foreach($results['rows'] as $folderObj ){
 			
 			$totfiles = DB::table('tb_container_files')->select('id')->where('folder_id',$folderObj->id)->count();
