@@ -6566,7 +6566,7 @@ class ContainerController extends Controller {
 		//$this->data['parent_tags'] = (new TagmanagerController)->fetchTagTree();
         $this->data['parent_tags'] = array();
 		$this->data['fid'] = $id;
-		$this->data['group'] = \Auth::user()->group_id;
+		//$this->data['group'] = \Auth::user()->group_id;
 		
 		$sel_attributes = DB::table('tb_attributes')->where('attr_status',1);
 		/*if(\Auth::user()->group_id==2 || \Auth::user()->group_id==3)
