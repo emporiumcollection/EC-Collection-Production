@@ -6230,7 +6230,8 @@ class ContainerController extends Controller {
 		{
 			$imgsrc = $this->getThumbpath($filess[0]->folder_id);
 			$imgpath = $this->getContainerUserPath($filess[0]->folder_id);
-			if(\Auth::user()->group_id!=3 || (!empty($this->data['foldername'] && $this->data['foldername']->global_permission==1)) || $wnd=='iframe')
+			//if(\Auth::user()->group_id!=3 || (!empty($this->data['foldername'] && $this->data['foldername']->global_permission==1)) || $wnd=='iframe')
+            if((!empty($this->data['foldername'] && $this->data['foldername']->global_permission==1)) || $wnd=='iframe')
 			{
 				foreach($filess as $filesObj ){
 					$this->data['rowData'][$ct]['id'] = $filesObj->id;
@@ -6385,7 +6386,7 @@ class ContainerController extends Controller {
 				}
 			}
 			else{
-				$selfiles = DB::table('tb_permissions')->select('view','inherit')->where('folder_id',$id)->where('user_id',$uid)->first();
+				$selfiles = DB::table('tb_permissions')->select('view','inherit')->where('folder_id',$id)->where('user_id',1)->first();
 				if(!empty($selfiles))
 				{
 					if($selfiles->view==1 || $selfiles->inherit==1)
