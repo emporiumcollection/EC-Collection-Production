@@ -5738,7 +5738,7 @@ class ContainerController extends Controller {
 			}
 			
 		}
-        echo "<pre>"; print_r($this->data['rowData']); die;		
+        	
 		if(!empty($this->data['rowData']))
 		{
 			usort($this->data['rowData'], function($a, $b) {
@@ -5769,7 +5769,7 @@ class ContainerController extends Controller {
 			$this->data['crmusers'] = $emp;
 		}
 		$permiss = array();
-		$permission = DB::table('tb_permissions')->where('folder_id',$id)->get();
+		/*$permission = DB::table('tb_permissions')->where('folder_id',$id)->get();
 		foreach($permission as $permit)
 		{
 			$permiss[$permit->user_id] = $permit;
@@ -5781,9 +5781,9 @@ class ContainerController extends Controller {
 		}
 		else
 		{
-			$showType = "thumb";
-		}
-		
+			
+		}*/
+		$showType = "thumb";
 		$this->data['showType'] = $showType;
 		$this->data['permissions'] = $permiss;
 		
@@ -5802,7 +5802,7 @@ class ContainerController extends Controller {
 		$this->data['lightboxes'] = \DB::table('tb_lightbox')->select('id','box_name')->get();
         
 		//$this->data['parent_tags'] = (new TagmanagerController)->fetchTagTree();
-		
+		echo "<pre>"; print_r($this->data['rowData']); die;	
         
 		$this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', 'Hotel')->where('slider_status',1)->orderBy('sort_num','asc')->get();
         $this->data['slug'] = '';
