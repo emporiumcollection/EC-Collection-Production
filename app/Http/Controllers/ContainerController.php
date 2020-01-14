@@ -3584,21 +3584,29 @@ class ContainerController extends Controller {
 		);
 		// Get Query 
 		$results = $this->model->getRows( $params );
-        
-      if(\Auth::user()->group_id==5)
-	  {  
-	       foreach($results['rows'] as $row) {
-    			$parent_folders_array[] = $row;    			
-    	   }
-      }else{
-    	  if ($results) {
-    		foreach($results['rows'] as $row) {
-    			$parent_folders_array[] = $row;
-    			$parent_folders_array = $this->fetchFolderParentListArray($row->parent_id, $parent_folders_array);
-    		}
-    	  }
-       }
       
+      if(\Auth::check() == true)
+      {   
+          if(\Auth::user()->group_id==5)
+    	  {  
+    	       foreach($results['rows'] as $row) {
+        			$parent_folders_array[] = $row;    			
+        	   }
+          }else{
+        	  if ($results) {
+        		foreach($results['rows'] as $row) {
+        			$parent_folders_array[] = $row;
+        			$parent_folders_array = $this->fetchFolderParentListArray($row->parent_id, $parent_folders_array);
+        		}
+        	  }
+           }
+      }else{
+          foreach($results['rows'] as $row) {
+    			$parent_folders_array[] = $row;    			
+    	   }    
+              
+              
+      }
 	  return $parent_folders_array;
 	}
 	
@@ -5455,15 +5463,15 @@ class ContainerController extends Controller {
     
     public function media_relations( Request $request, $id = 0, $wnd = '' )
 	{
-		if($this->access['is_view'] ==0) 
+		/*if($this->access['is_view'] ==0) 
 			return Redirect::to('dashboard')
 				->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus','error');
-		$uid = \Auth::user()->id;
+		$uid = \Auth::user()->id;*/
 		
 		$filter = " AND parent_id='".$id."'";
 		if(\Auth::user()->group_id==3 && $wnd!='iframe')
 		{
-			$filter .= " AND (id in (select folder_id from tb_permissions where user_id='".$uid."' and no_permission='0') or global_permission='1')";
+			//$filter .= " AND (id in (select folder_id from tb_permissions where user_id='".$uid."' and no_permission='0') or global_permission='1')";
 		}
 		
 		$params = array(
@@ -5486,7 +5494,7 @@ class ContainerController extends Controller {
 	
 		$ct=0; 
 		$this->data['rowData'] = array();
-		
+		print_r($results['rows']); die;
 		foreach($results['rows'] as $folderObj ){
 			
 			$totfiles = DB::table('tb_container_files')->select('id')->where('folder_id',$folderObj->id)->count();
