@@ -5802,7 +5802,7 @@ class ContainerController extends Controller {
 		$this->data['lightboxes'] = \DB::table('tb_lightbox')->select('id','box_name')->get();
         
 		//$this->data['parent_tags'] = (new TagmanagerController)->fetchTagTree();
-		echo "<pre>"; print_r($this->data['rowData']); die;	
+		//echo "<pre>"; print_r($this->data['rowData']); die;	
         
 		$this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', 'Hotel')->where('slider_status',1)->orderBy('sort_num','asc')->get();
         $this->data['slug'] = '';
