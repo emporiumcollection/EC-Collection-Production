@@ -5492,7 +5492,7 @@ class ContainerController extends Controller {
 	
 		$ct=0; 
 		$this->data['rowData'] = array();
-		echo "<pre>"; print_r($results['rows']); die;
+		
 		foreach($results['rows'] as $folderObj ){
 			
 			$totfiles = DB::table('tb_container_files')->select('id')->where('folder_id',$folderObj->id)->count();
@@ -5586,7 +5586,7 @@ class ContainerController extends Controller {
 			$ct++;
 			
 			
-		}
+		} echo "<pre>"; print_r($this->data['rowData']); die;
 		if(!empty($filess))
 		{
 			$imgsrc = $this->getThumbpath($filess[0]->folder_id);
