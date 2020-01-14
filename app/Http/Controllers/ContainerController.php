@@ -3604,6 +3604,7 @@ class ContainerController extends Controller {
           foreach($results['rows'] as $row) {
     			$parent_folders_array[] = $row;    			
     	   }    
+              
       }
 	  return $parent_folders_array;
 	}
@@ -5460,17 +5461,17 @@ class ContainerController extends Controller {
     
     
     public function media_relations( Request $request, $id = 0, $wnd = '' )
-	{
-		/*if($this->access['is_view'] ==0) 
+	{/*
+		if($this->access['is_view'] ==0) 
 			return Redirect::to('dashboard')
-				->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus','error');
-		$uid = \Auth::user()->id;*/
+				->with('messagetext', \*/Lang::get('core.note_restric'))->with('msgstatus','error');
+		$uid = \Auth::user()->id;
 		
-		$filter = " AND parent_id='".$id."'";
-		/*if(\Auth::user()->group_id==3 && $wnd!='iframe')
+		/*$filter = " AND parent_id='".$id."'";
+		if(\Auth::user()->group_id==3 && $wnd!='iframe')
 		{
-			$filter .= " AND (id in (select folder_id from tb_permissions where user_id='".$uid."' and no_permission='0') or global_permission='1')";
-		}*/
+			*/$filter .= " AND (id in (select folder_id from tb_permissions where user_id='".$uid."' and no_permission='0') or global_permission='1')";
+		}
 		
 		$params = array(
 			'params'	=> $filter
@@ -5585,8 +5586,8 @@ class ContainerController extends Controller {
 			
 			$ct++;
 			
-			
-		} 
+			 
+		}
 		if(!empty($filess))
 		{
 			$imgsrc = $this->getThumbpath($filess[0]->folder_id);
@@ -5737,8 +5738,8 @@ class ContainerController extends Controller {
 				}
 			}
 			
-		}
-        	
+		}     
+        		
 		if(!empty($this->data['rowData']))
 		{
 			usort($this->data['rowData'], function($a, $b) {
@@ -5768,8 +5769,8 @@ class ContainerController extends Controller {
 		{
 			$this->data['crmusers'] = $emp;
 		}
-		$permiss = array();
-		/*$permission = DB::table('tb_permissions')->where('folder_id',$id)->get();
+		/*$permiss = array();
+		$permission = DB::table('tb_permissions')->where('folder_id',$id)->get();
 		foreach($permission as $permit)
 		{
 			$permiss[$permit->user_id] = $permit;
@@ -5781,15 +5782,15 @@ class ContainerController extends Controller {
 		}
 		else
 		{
-			
-		}*/
-		$showType = "thumb";
+			*/$showType = "thumb";
+		$showType = "thumb";}
+		
 		$this->data['showType'] = $showType;
 		$this->data['permissions'] = $permiss;
 		
 		$this->data['tree'] = array();
-		$this->data['fid'] = $id;
-		//$this->data['group'] = \Auth::user()->group_id;
+		//$this->data['fid'] = $id;
+		$this->data['group'] = \Auth::user()->group_id;
 		$sel_attributes = DB::table('tb_attributes')->select('attr_type','id','attr_title','attr_cat')->where('attr_status',1);
 		
 		$this->data['sel_attributes'] = $sel_attributes->get();
@@ -5797,21 +5798,21 @@ class ContainerController extends Controller {
 		$this->data['sel_tags'] = DB::table('tb_tags_manager')->select('id','tag_title')->where('tag_status',1)->get();
 		
 		$this->data['sel_designer'] = DB::table('tb_designers')->select('id','designer_name')->where('designer_status',1)->get();
-		
-		//$this->data['lightboxes'] = \DB::table('tb_lightbox')->select('id','box_name')->where('user_id', $uid)->get();
+		//
 		$this->data['lightboxes'] = \DB::table('tb_lightbox')->select('id','box_name')->get();
-        
-		//$this->data['parent_tags'] = (new TagmanagerController)->fetchTagTree();
-		//echo "<pre>"; print_r($this->data['rowData']); die;	
+                $this->data['lightboxes'] = \DB::table('tb_lightbox')->select('id','box_name')->where('user_id', $uid)->get();
+		//
+		//echo "<pre>"; print_r($this->data['rowData']); die;	$this->data['parent_tags'] = (new TagmanagerController)->fetchTagTree();
+		
         
 		$this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', 'Hotel')->where('slider_status',1)->orderBy('sort_num','asc')->get();
         $this->data['slug'] = '';
         
         $this->data['destination_category'] =0;
-        
-		$boxcontent = \DB::table('tb_lightbox_content')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_lightbox_content.file_id')->select('tb_lightbox_content.id', 'tb_container_files.file_name', 'tb_container_files.folder_id', 'tb_container_files.file_display_name', 'tb_container_files.file_title','tb_lightbox_content.lightbox_id')->where('tb_lightbox_content.user_id', 1)->get();
+                                                                                                                                                                                                                                                                                                                                                                                              1
         //$boxcontent = \DB::table('tb_lightbox_content')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_lightbox_content.file_id')->select('tb_lightbox_content.id', 'tb_container_files.file_name', 'tb_container_files.folder_id', 'tb_container_files.file_display_name', 'tb_container_files.file_title','tb_lightbox_content.lightbox_id')->get();
-        
+                  
+		$boxcontent = \DB::table('tb_lightbox_content')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_lightbox_content.file_id')->select('tb_lightbox_content.id', 'tb_container_files.file_name', 'tb_container_files.folder_id', 'tb_container_files.file_display_name', 'tb_container_files.file_title','tb_lightbox_content.lightbox_id')->where('tb_lightbox_content.user_id', $uid)->get();
 		$boxcont = array();
 		if(!empty($boxcontent))
 		{
@@ -5915,7 +5916,7 @@ class ContainerController extends Controller {
 
     function fetchPressFolderTreeListonload($fid, $sel=0) {
 		
-        $uid = \Auth::user()->id;
+        //$uid = \Auth::user()->id;
 		$filter = " AND parent_id=".$fid;
 		
 		$params = array(
