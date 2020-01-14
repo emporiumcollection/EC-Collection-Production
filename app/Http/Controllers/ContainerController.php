@@ -6065,7 +6065,7 @@ class ContainerController extends Controller {
 		);
 		// Get Query 
 		$results = $this->model->getRows( $params );
-
+        print_r($results); die;
 		$resultsTotal = $this->model->getRows($params1 );
 
 
