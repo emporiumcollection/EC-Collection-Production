@@ -3584,21 +3584,27 @@ class ContainerController extends Controller {
 		);
 		// Get Query 
 		$results = $this->model->getRows( $params );
-        
-      if(\Auth::user()->group_id==5)
-	  {  
-	       foreach($results['rows'] as $row) {
-    			$parent_folders_array[] = $row;    			
-    	   }
-      }else{
-    	  if ($results) {
-    		foreach($results['rows'] as $row) {
-    			$parent_folders_array[] = $row;
-    			$parent_folders_array = $this->fetchFolderParentListArray($row->parent_id, $parent_folders_array);
-    		}
-    	  }
-       }
       
+      if(\Auth::check() == true)
+      {   
+          if(\Auth::user()->group_id==5)
+    	  {  
+    	       foreach($results['rows'] as $row) {
+        			$parent_folders_array[] = $row;    			
+        	   }
+          }else{
+        	  if ($results) {
+        		foreach($results['rows'] as $row) {
+        			$parent_folders_array[] = $row;
+        			$parent_folders_array = $this->fetchFolderParentListArray($row->parent_id, $parent_folders_array);
+        		}
+        	  }
+           }
+      }else{
+           foreach($results['rows'] as $row) {
+    			$parent_folders_array[] = $row;    			
+    	   }    
+      }
 	  return $parent_folders_array;
 	}
 	
