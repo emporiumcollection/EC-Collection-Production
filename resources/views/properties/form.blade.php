@@ -2699,7 +2699,7 @@
                                         
                                 <!-- End upload or link section --!>
                                 
-                                <div class="form-group  " >
+                                <div class="form-group" style="display: none;">
                                     <label for="og_image_width" class=" control-label col-md-4 text-left"> OG Image Width </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_image_width', (!empty($metatags)) ? $metatags->og_image_width : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
@@ -2709,7 +2709,7 @@
                                     </div>
                                 </div>
                                  
-                                <div class="form-group  " >
+                                <div class="form-group" style="display: none;" >
                                     <label for="og_image_height" class=" control-label col-md-4 text-left"> OG Image Height </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_image_height', (!empty($metatags)) ? $metatags->og_image_height : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
@@ -2719,8 +2719,8 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group  " >
-                                    <label for="og_sitename" class=" control-label col-md-4 text-left"> OG Sitename <span class="asterix"> * </span></label>
+                                <div class="form-group">
+                                    <label for="og_sitename" class=" control-label col-md-4 text-left"> OG Sitename </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_sitename', (!empty($metatags)) ? $metatags->og_sitename : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                     </div> 
