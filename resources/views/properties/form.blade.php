@@ -2563,7 +2563,7 @@
                             <div class="tab-pane m-t active" id="MetaTags">                        
                         
                                 <div class="form-group  " >
-                                    <label for="meta_title" class=" control-label col-md-4 text-left"> Meta Title <span class="asterix"> * </span></label>
+                                    <label for="meta_title" class=" control-label col-md-4 text-left"> Meta Title </label>
                                     <div class="col-md-6">                                
                                         {!! Form::text('meta_title', (!empty($metatags)) ? $metatags->meta_title : '', array('class'=>'form-control', 'placeholder'=>'' )) !!}                                
                                      </div> 
@@ -2573,7 +2573,7 @@
                                 </div>
                                  					
                                 <div class="form-group  " >
-                                    <label for="meta_description" class=" control-label col-md-4 text-left"> Meta Description <span class="asterix"> * </span></label>
+                                    <label for="meta_description" class=" control-label col-md-4 text-left"> Meta Description </label>
                                     <div class="col-md-6">
                                         {!! Form::textarea('meta_description', (!empty($metatags)) ? $metatags->meta_description : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                     </div> 
@@ -2583,7 +2583,7 @@
                                 </div>
                                  
                                 <div class="form-group  " >
-                                    <label for="meta_keywords" class=" control-label col-md-4 text-left"> Meta Keywords <span class="asterix"> * </span></label>
+                                    <label for="meta_keywords" class=" control-label col-md-4 text-left"> Meta Keywords </label>
                                     <div class="col-md-6">
                                         {!! Form::text('meta_keywords', (!empty($metatags)) ? $metatags->meta_keywords : '',array('class'=>'form-control', 'placeholder'=>'', 'data-role'=>'tagsinput'  )) !!} 
                                     </div> 
@@ -2593,7 +2593,7 @@
                                 </div>
                                  
                                 <div class="form-group hidden" >
-                                    <label for="canonical_link" class=" control-label col-md-4 text-left"> Canonical link<span class="asterix"> * </span></label>
+                                    <label for="canonical_link" class=" control-label col-md-4 text-left"> Canonical link </label>
                                     <div class="col-md-6">
                                         {!! Form::text('canonical_link', (!empty($metatags)) ? $metatags->canonical_link : '',array('class'=>'form-control', 'placeholder'=>''  )) !!} 
                                     </div> 
@@ -2605,7 +2605,7 @@
                             </div>
                             <div class="tab-pane m-t" id="OpenGraph"> 
                                 <div class="form-group  " >
-                                    <label for="og_title" class=" control-label col-md-4 text-left"> OG Title <span class="asterix"> * </span></label>
+                                    <label for="og_title" class=" control-label col-md-4 text-left"> OG Title </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_title', (!empty($metatags)) ? $metatags->og_title : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                     </div> 
@@ -2615,7 +2615,7 @@
                                 </div>
                                 
                                 <div class="form-group  " >
-                                    <label for="og_description" class=" control-label col-md-4 text-left"> OG Description <span class="asterix"> * </span></label>
+                                    <label for="og_description" class=" control-label col-md-4 text-left"> OG Description </label>
                                     <div class="col-md-6">
                                         {!! Form::textarea('og_description', (!empty($metatags)) ? $metatags->og_description : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                     </div> 
@@ -2625,7 +2625,7 @@
                                 </div>
                                 
                                 <div class="form-group  " >
-                                    <label for="og_url" class=" control-label col-md-4 text-left"> OG url <span class="asterix"> * </span></label>
+                                    <label for="og_url" class=" control-label col-md-4 text-left"> OG url </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_url', (!empty($metatags)) ? $metatags->og_url : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                     </div> 
@@ -2635,7 +2635,7 @@
                                 </div>
                                  
                                 <div class="form-group  " >
-                                    <label for="type" class=" control-label col-md-4 text-left"> OG type <span class="asterix"> * </span></label>
+                                    <label for="type" class=" control-label col-md-4 text-left"> OG type </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_type', (!empty($metatags)) ? $metatags->og_type : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                     </div> 
@@ -2645,7 +2645,7 @@
                                 </div> 
                                 
                                 <div class="form-group" style="display: none;">
-                                    <label for="og_image" class=" control-label col-md-4 text-left"> OG Image <span class="asterix"> * </span></label>
+                                    <label for="og_image" class=" control-label col-md-4 text-left"> OG Image </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_image', (!empty($metatags)) ? $metatags->og_image : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                     </div> 
@@ -2700,7 +2700,7 @@
                                 <!-- End upload or link section --!>
                                 
                                 <div class="form-group  " >
-                                    <label for="og_image_width" class=" control-label col-md-4 text-left"> OG Image Width <span class="asterix"> * </span></label>
+                                    <label for="og_image_width" class=" control-label col-md-4 text-left"> OG Image Width </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_image_width', (!empty($metatags)) ? $metatags->og_image_width : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                     </div> 
