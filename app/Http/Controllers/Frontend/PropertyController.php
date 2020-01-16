@@ -1300,7 +1300,8 @@ class PropertyController extends Controller {
     		$this->data['propertyEvents'] = \DB::table('tb_events')->where('property_id', $props->id)->get();
             
             $this->data['packages'] = \DB::table('tb_packages')->where('package_category', 'B2C')->where('package_status', 1)->get();            
-    
+            
+            $this->data['metatags'] = \DB::table('tb_property_metatags')->where('property_id',  $props->id)->first();
     		//dd($this->data['propertyEvents']);
             return view('frontend.themes.emporium.properties.detail', $this->data);
 

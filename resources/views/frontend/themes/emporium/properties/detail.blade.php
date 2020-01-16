@@ -1,16 +1,73 @@
 @extends('frontend.themes.emporium.layouts.home')
-{{--  For Title --}}
-@section('title')
-@if(!empty($propertyDetail))
-    {{$propertyDetail['data']->property_name}}    
+@if(!empty($metatags))
+    @section('robots', "index,follow")
+    {{--  For Title --}}
+    @section('meta_title') {{$metatags->meta_title}} @endsection
+    {{-- For Meta Keywords --}}
+    @section('meta_keywords', $metatags->meta_keywords)
+    {{-- For Meta Description --}}
+    @section('meta_description', $metatags->meta_description)
+    
+    @section('meta_link_sitemap')
+    @if(!empty($propertyDetail))
+    <link rel="canonical" href="{{url('/')}}/{{$propertyDetail['data']->property_slug}}" />          
+    @endif        
+    <link rel="alternate" type="application/rss+xml" href="{{url('/')}}/sitemap.xml" />
+    @endsection  
+    
+    @section('property="og:url" content="', $metatags->canonical_link)
+    
+    @section('og_url', $metatags->og_url)
+    @section('og_title', $metatags->og_title)
+    @section('og_description', $metatags->og_description)
+    @section('og_type', $metatags->og_type)
+    @section('og_image', $metatags->og_image)
+    @section('og_image_width', $metatags->og_image_width)
+    @section('og_image_height', $metatags->og_image_height)
+    @section('og_sitename', $metatags->og_sitename)
+    @section('og_locale', $metatags->og_locale)
+    
+    @section('article_section', $metatags->article_section)
+    
+    @section('article_tags')
+        @if($metatags->article_tags!='')
+            {{--*/ 
+                $arrAT = explode(',', $metatags->article_tags);
+                if(!empty($arrAT)){
+                    for($j=0; $j < count($arrAT); $j++){
+            /*--}}
+                        <meta property="article:tag" content="{{$arrAT[$j]}}"/>        
+            {{--*/  
+                    }    
+                }
+            /*--}}    
+        @endif
+    @endsection
+     
+    @section('twitter_url', $metatags->twitter_url)    
+    @section('twitter_title', $metatags->twitter_title)
+    @section('twitter_description', $metatags->twitter_description)
+    @section('twitter_image', $metatags->twitter_image)
+    @section('twitter_domain', $metatags->twitter_domain)
+    @section('twitter_card', $metatags->twitter_card)
+    @section('twitter_creator', $metatags->twitter_creator)
+    @section('created', $metatags->created)
+        
 @else
-    PDP Page   
+    {{--  For Title --}}
+    @section('title')
+    @if(!empty($propertyDetail))
+        {{$propertyDetail['data']->property_name}}    
+    @else
+        PDP Page   
+    @endif
+    @endsection
+    {{-- For Meta Keywords --}}
+    @section('meta_keywords', '')
+    {{-- For Meta Description --}}
+    @section('meta_description', '')
+    {{-- For Page's Content Part --}}
 @endif
-@endsection
-{{-- For Meta Keywords --}}
-@section('meta_keywords', '')
-{{-- For Meta Description --}}
-@section('meta_description', '')
 {{-- For Page's Content Part --}}
 @section('content')
 
