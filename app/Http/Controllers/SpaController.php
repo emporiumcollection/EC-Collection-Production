@@ -140,7 +140,20 @@ class SpaController extends Controller {
         }
 
         $this->data['categories'] = $parent_cat;
-
+        /** Images **/
+        $res_gallery = array();
+        $res_slider = array();
+        $res_menu = array();
+        if($id !='')
+		{
+            $res_gallery = $this->get_spa_files($id, 'spa', 'gallery');
+            $res_slider = $this->get_spa_files($id, 'spa', 'slider');
+            $res_menu = $this->get_spa_files($id, 'spa', 'menu');
+        }
+        $this->data['res_gallery'] = $res_gallery;
+        $this->data['res_slider'] = $res_slider;
+        $this->data['res_menu'] = $res_menu;
+        /** End images **/
         $this->data['designers'] = \DB::table('tb_designers')->where('designer_status', '1')->get();
 
 		return view('spa.form',$this->data);
@@ -217,6 +230,36 @@ class SpaController extends Controller {
 			
 			$id = $this->model->insertRow($data , $request->input('id'));
 			
+            if($request->input('id')==''){
+			    $checkDir = \DB::table('tb_container')->select('id')->where('name', 'spas')->first();
+                if (!empty($checkDir)) {
+                	$foldVal = $data['alias'];
+                    if ($foldVal != "") {
+                        $foldName = trim($foldVal);
+                        $slug = \SiteHelpers::seoUrl(trim($foldName));
+                        
+                        $dirPath = (new ContainerController)->getContainerUserPath($checkDir->id);
+    
+                        $checkPropFold = \DB::table('tb_container')->select('id')->where('name', $slug)->where('parent_id', $checkDir->id)->first();
+                        //print_r($checkPropFold); die;
+                        if (!empty($checkPropFold)) {
+                            $propFoldId = $checkPropFold->id;
+                        } else {
+                            $newPropFolder = $this->createNewFolder($foldName, $checkDir->id);
+                            if ($newPropFolder !== false) {
+                                $propFoldId = $newPropFolder;
+                            }
+                        }
+                        if(!empty($propFoldId)){
+                            $galleryID = $this->createNewFolder('gallery',$propFoldId);
+        					$sliderID = $this->createNewFolder('slider',$propFoldId);
+        					$menuID = $this->createNewFolder('menu',$propFoldId);
+        					\DB::table('tb_images_res_spa_bar')->insertGetId(['parent_id'=>$id,'folder_id'=>$propFoldId,'type'=>'res']);
+                        }
+            		}
+                }     
+			}
+            
 			if(!is_null($request->input('apply')))
 			{
 				$return = 'spa/update/'.$id.'?return='.self::returnUrl();
@@ -411,6 +454,305 @@ class SpaController extends Controller {
 		
 		return view('spa.spareservationlist',$this->data);
 	}
+    
+    
+    function spa_images_uploads(Request $request) {
+        $checkRest = \DB::table('tb_spas')->select('alias')->where('id', $request->input('propId'))->first();        
+        if (!empty($checkRest)) {
+            $checkDir = \DB::table('tb_container')->select('id')->where('name', 'spas')->first();
+            if (!empty($checkDir)) {
+                $foldVal = trim($checkRest->alias);
+                if ($foldVal != "") {
+                    $foldName = trim($foldVal);
+                    $slug = \SiteHelpers::seoUrl(trim($foldName));
+                    
+                    $dirPath = (new ContainerController)->getContainerUserPath($checkDir->id);
 
+                    $checkPropFold = \DB::table('tb_container')->select('id')->where('name', $slug)->where('parent_id', $checkDir->id)->first();
+                    //print_r($checkPropFold); die;
+                    if (!empty($checkPropFold)) {
+                        $propFoldId = $checkPropFold->id;
+                    } else {
+                        $newPropFolder = $this->createNewFolder($foldName, $checkDir->id);
+                        if ($newPropFolder !== false) {
+                            $propFoldId = $newPropFolder;
+                        }
+                    }
+                    
+                    $imgFold = $request->input('uploadType');
+                    $PropImgfoldName = trim($imgFold);
+                    $PropImgslug = \SiteHelpers::seoUrl(trim($PropImgfoldName));
+                    $checkPropImgFold = \DB::table('tb_container')->select('id')->where('name', $PropImgslug)->where('parent_id', $propFoldId)->first();
+                    if (!empty($checkPropImgFold)) {
+                        $newpropImgFoldId = $checkPropImgFold->id;
+                    } else {
+                        $newPropImgFolder = $this->createNewFolder($PropImgfoldName, $propFoldId);
+                        if ($newPropImgFolder !== false) {
+                            $newpropImgFoldId = $newPropImgFolder;
+                        }
+                    }                    
+                    
+                    $propImgFoldId  = $newpropImgFoldId;
+                    // SET UPLOAD PATH
+                    $destinationPath = (new ContainerController)->getContainerUserPath($propImgFoldId);
+                    $file = $request->file('files');
+                    // GET THE FILE EXTENSION
+                    $extension = $file[0]->getClientOriginalExtension();
+                    // RENAME THE UPLOAD WITH RANDOM NUMBER
+                    $fileName = rand(11111111111, 99999999999) . '-' .rand(11111111111, 99999999999) . '.' . $extension;
+                    $fileNamedis = $file[0]->getClientOriginalName();
+                    $ftname = explode('.', $fileName);
+                    $exha = false;
+
+                    for ($f = 1; $exha != true; $f++) {
+                        if (\File::exists($destinationPath . $fileName)) {
+                            $fileName = $ftname[0] . '(' . $f . ').' . $extension;
+                        } else {
+                            $fileName = $fileName;
+                            $exha = true;
+                        }
+                    }
+                    // MOVE THE UPLOADED FILES TO THE DESTINATION DIRECTORY
+                    $upload_success = $file[0]->move($destinationPath, $fileName);
+                    $ftype = $file[0]->getClientMimeType();
+                    $exFtype = explode('/', $ftype);
+                    if ($exFtype[0] == "image") {
+                        // open an image file
+                        $thimg = \Image::make($destinationPath . $fileName);
+                        // now you are able to resize the instance
+                        $thimg->resize(128, 130);
+                        // finally we save the image as a new file
+                        $thumbfile = 'thumb_' . $propImgFoldId . '_' . $fileName;
+                        $thimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
+
+                        // open an image file
+                        $mdimg = \Image::make($destinationPath . $fileName);
+                        // now you are able to resize the instance
+                        $thactualsize = getimagesize($destinationPath . $fileName);
+                        if ($thactualsize[0] > $thactualsize[1]) {
+                            $mdimg->resize(320, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                        } else {
+                            $mdimg->resize(null, 320, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                        }
+                        // finally we save the image as a new file
+                        $thumbfile = 'format_' . $propImgFoldId . '_' . $fileName;
+                        $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
+
+                        // open an image file
+                        $mdimg = \Image::make($destinationPath . $fileName);
+                        // now you are able to resize the instance
+                        $hfactualsize = getimagesize($destinationPath . $fileName);
+                        if ($hfactualsize[0] > $hfactualsize[1]) {
+                            $mdimg->resize(1000, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                        } else {
+                            $mdimg->resize(null, 1000, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
+                        }
+                        // finally we save the image as a new file
+                        $thumbfile = 'highflip_' . $propImgFoldId . '_' . $fileName;
+                        $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
+
+                        // Set main image if uploaded file is first in folder
+                        $countfile = \DB::table('tb_container_files')->where('folder_id', $propImgFoldId)->where(function ($query) {
+                                    $query->where('file_type', 'image/jpeg')->orWhere('file_type', 'image/png')->orWhere('file_type', 'image/gif');
+                                })->count();
+                        if ($countfile == 0) {
+                            $copytofolder = public_path() . '/uploads/folder_cover_imgs/';
+                            // image for backend
+                            $bkimg = \Image::make($destinationPath . $fileName);
+                            $bkimg->resize(128, 130);
+                            $bkimgfile = 'thumb_' . $fileName;
+                            $bkimg->save($copytofolder . $bkimgfile);
+
+                            // open an image file
+                            $mdimg = \Image::make($destinationPath . $fileName);
+                            $thactualsize = getimagesize($destinationPath . $fileName);
+                            if ($thactualsize[0] > $thactualsize[1]) {
+                                $mdimg->resize(320, null, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                });
+                            } else {
+                                $mdimg->resize(null, 320, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                });
+                            }
+                            $thumbfile = 'format_' . $fileName;
+                            $mdimg->save($copytofolder . $thumbfile);
+
+                            $cmdata['temp_cover_img'] = $fileName;
+                            $cmdata['temp_cover_img_masonry'] = $fileName;
+                            $cmdata['updated'] = date('y-m-d');
+                            \DB::table('tb_container')->where('id', $propImgFoldId)->update($cmdata);
+                        }
+                    }
+
+                    $data['folder_id'] = $propImgFoldId;
+                    $data['file_name'] = $fileName;
+					$data['file_display_name'] = $fileNamedis;
+                    $data['file_type'] = $file[0]->getClientMimeType();
+                    $data['file_size'] = $file[0]->getClientSize();
+                    $data['user_id'] = \Auth::user()->id;
+                    $data['created'] = date('y-m-d h:i:s');
+                    $data['path'] = $destinationPath;
+                    $fileID = \DB::table('tb_container_files')->insertGetId($data);                    
+
+                    $getupfile = \DB::table('tb_container_files')->where('id', $fileID)->first();
+                    if (!empty($getupfile)) {
+                        $getfilejson['files'][0]['id'] = $fileID;
+                        $getfilejson['files'][0]['name'] = ($getupfile->file_display_name!='') ? $getupfile->file_display_name : $getupfile->file_name;
+                        $getfilejson['files'][0]['size'] = $getupfile->file_size;
+                        if ($getupfile->file_type == "application/pdf") {
+                            $getfilejson['files'][0]['thumbnailUrl'] = \URL::to('uploads/images/bigpage_white_acrobat.png');
+                        } elseif ($getupfile->file_type == "application/vnd.openxmlformats-officedocument.word") {
+                            $getfilejson['files'][0]['thumbnailUrl'] = \URL::to('uploads/images/doc.png');
+                        } elseif ($getupfile->file_type == "application/vnd.openxmlformats-officedocument.spre") {
+                            $getfilejson['files'][0]['thumbnailUrl'] = \URL::to('uploads/images/xls.png');
+                        } else {
+                            $getfilejson['files'][0]['thumbnailUrl'] = \URL::to('uploads/thumbs/thumb_'.$propImgFoldId.'_'.$getupfile->file_name);
+                        }
+                        $getfilejson['files'][0]['type'] = $getupfile->file_type;
+                        $getfilejson['files'][0]['url'] = (new ContainerController)->getThumbpath($getupfile->folder_id) . $getupfile->file_name;
+                    }
+                    return json_encode($getfilejson);
+                }
+            }
+        }
+    }
+    function createNewFolder($Foldername, $ParentfolderId) {
+        if ($Foldername != '') {
+            $dirPath = (new ContainerController)->getContainerUserPath($ParentfolderId);
+            $slug = \SiteHelpers::seoUrl(trim($Foldername));
+            $result = \File::makeDirectory($dirPath . $slug, 0777, true);
+            $fdata['parent_id'] = $ParentfolderId;
+            $fdata['name'] = $slug;
+            $fdata['display_name'] = $Foldername;
+            $fdata['file_type'] = 'folder';
+            $fdata['user_id'] = \Auth::user()->id;
+            $fdata['created'] = date('y-m-d h:i:s');
+            $fID = \DB::table('tb_container')->insertGetId($fdata);
+            return $fID;
+        } else {
+            return false;
+        }
+    }
+    
+    function get_spa_files($r_id, $filetype, $foldertype='gallery') {        
+        $filen = array();
+        $fetchresgalleryfolder = array();
+		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', $filetype)->first();
+        if($foldertype=="menu"){
+            if(!empty($resfileArr)){
+                $fetchresgalleryfolder = \DB::table('tb_container_files')->select('tb_container_files.id', 'tb_container_files.file_display_name', 'tb_container_files.file_name', 'tb_container_files.folder_id', 'tb_restaurant_menu_title.title', 'tb_container_files.file_size', 'tb_container_files.file_type')->leftJoin('tb_restaurant_menu_title', 'tb_container_files.id', '=', 'tb_restaurant_menu_title.container_id')->join('tb_container', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', $foldertype)->get();
+            }
+            //print_r($fetchresgalleryfolder); die;
+            if (!empty($fetchresgalleryfolder)) {
+                $f = 0;
+                foreach ($fetchresgalleryfolder as $file) {
+                    $filen[$f] = $file;
+                    $filen[$f]->imgsrc = (new ContainerController)->getThumbpath($file->folder_id);
+                    $f++;
+                }
+            }    
+        }else{
+            if(!empty($resfileArr)){
+                $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', $foldertype)->get();
+            }
+            if (!empty($fetchresgalleryfolder)) {
+                $f = 0;
+                foreach ($fetchresgalleryfolder as $file) {
+                    $filen[$f] = $file;
+                    $filen[$f]->imgsrc = (new ContainerController)->getThumbpath($file->folder_id);
+                    $f++;
+                }
+            }
+        }
+        return $filen;        
+    }
+    
+    function postDeletespaimage(Request $request) {
+        $uid = \Auth::user()->id;
+        $img_id = $request->input('img_id');
+        //$checkImg = \DB::table('tb_properties_images')->where('id', $img_id)->first();
+        if ($img_id!='') {
+            //$deleteEfile = (new ContainerController)->delete_allextra_files($checkImg->file_id, 'file');
+            $deleteFile = \DB::table('tb_container_files')->where('id', $img_id)->delete();
+            //$deleteImg = \DB::table('tb_properties_images')->where('id', $img_id)->delete();
+
+            $res['status'] = 'success';
+            return json_encode($res);
+        } else {
+            $res['status'] = 'error';
+            return json_encode($res);
+        }
+    }
+    
+    function postDeletespaselectedimage(Request $request) {
+        $uid = \Auth::user()->id;
+        $items = explode(',',$request->input('items'));
+		if(!empty($items))
+		{
+			foreach($items as $item) 
+			{
+				//$checkImg = \DB::table('tb_properties_images')->where('id', $item)->first();
+				//if (!empty($checkImg)) {
+					//$deleteEfile = (new ContainerController)->delete_allextra_files($checkImg->file_id, 'file');
+					$deleteFile = \DB::table('tb_container_files')->where('id', $item)->delete();
+					//$deleteImg = \DB::table('tb_properties_images')->where('id', $item)->delete();
+				//}
+			}
+			$res['status'] = 'success';
+			$res['imgs'] = $items;
+		}
+		else {
+			$res['status'] = 'error';
+		}
+		return json_encode($res);
+    }
+    
+    function postAddmenutitle(Request $request){
+        $mid = $request->input('mID');  
+        $menuTitle = $request->input('menuTitle');
+        
+        if($mid!=''){
+            $mdata['container_id'] = $mid;
+            $mdata['title'] = $menuTitle;
+            $mdata['created'] = date('Y-m-d H:i:s');
+            $objMenu = \DB::table('tb_restaurant_menu_title')->where('container_id', $mid)->first();
+            if(!empty($objMenu)){
+                \DB::table('tb_restaurant_menu_title')->where('container_id', $mid)->update($mdata);    
+            }else{            
+                $id = \DB::table('tb_restaurant_menu_title')->insertGetId($mdata);
+            }
+            $result['status']='success';
+            $result['mid'] = $mid;
+            $result['menutitle'] = $menuTitle;
+            $result['message'] ='Title Added Successfully';
+        }else{
+            $result['status']='error';
+            $result['message'] ='Error! While adding title';
+        }    
+        echo json_encode($result);
+    }
+    
+    function getMenutitle(Request $request){
+        $mid = $request->input('mid');       
+        
+        if($mid!=''){
+            $objMenu = \DB::table('tb_restaurant_menu_title')->where('container_id', $mid)->first();            
+            $result['status']='success';
+            $result['objmenu'] =$objMenu;
+        }else{
+            $result['status']='error';            
+        }    
+        echo json_encode($result);
+        
+    }
 
 }

@@ -437,6 +437,15 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('pdproomavailability', 'HomeController@ajaxcheckavailability');
     
     Route::post('changeRoomStatus', 'PropertiesController@changeRoomStatus');
+    
+    Route::post('resturant_images_uploads', 'RestaurantController@resturant_images_uploads');
+    Route::post('delete_restaurant_image', 'RestaurantController@delete_restaurant_image');
+    Route::post('delete_rest_selected_image', 'RestaurantController@delete_selected_image');
+    
+    Route::post('addmenutitle', 'RestaurantController@addmenutitle');
+    
+    Route::post('spa_images_uploads', 'SpaController@spa_images_uploads');
+    Route::post('bar_images_uploads', 'BarController@bar_images_uploads');
 });
 Route::post('globalavailability', 'Frontend\PropertyController@propertyglobalavailability');
 Route::get('globalsearchavailability', 'Frontend\PropertyController@globalsearchavailability');
