@@ -679,7 +679,7 @@
             <span class="size">{%=o.formatFileSize(parseInt(file.size))%}</span>
         </td>
         <td>
-            <button type="button" class="btn btn-danger" onclick="delete_restaurant_image({%=file.id%});">
+            <button type="button" class="btn btn-danger" onclick="delete_bar_image({%=file.id%});">
 				<i class="glyphicon glyphicon-trash"></i>
 				<span>Delete</span>
 			</button>

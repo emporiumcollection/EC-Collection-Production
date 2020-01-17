@@ -372,7 +372,7 @@
 												</span>
 											</td>
 											<td>
-												<button type="button" class="btn btn-danger" onclick="delete_restaurant_image({{$img->id}});" >
+												<button type="button" class="btn btn-danger" onclick="delete_spa_image({{$img->id}});" >
 													<i class="glyphicon glyphicon-trash"></i>
 													<span>Delete</span>
 												</button>
@@ -467,7 +467,7 @@
 												</span>
 											</td>
 											<td>
-												<button type="button" class="btn btn-danger" onclick="delete_restaurant_image({{$img->id}});" >
+												<button type="button" class="btn btn-danger" onclick="delete_spa_image({{$img->id}});" >
 													<i class="glyphicon glyphicon-trash"></i>
 													<span>Delete</span>
 												</button>
@@ -707,7 +707,7 @@
             <span class="size">{%=o.formatFileSize(parseInt(file.size))%}</span>
         </td>
         <td>
-            <button type="button" class="btn btn-danger" onclick="delete_restaurant_image({%=file.id%});">
+            <button type="button" class="btn btn-danger" onclick="delete_spa_image({%=file.id%});">
 				<i class="glyphicon glyphicon-trash"></i>
 				<span>Delete</span>
 			</button>
