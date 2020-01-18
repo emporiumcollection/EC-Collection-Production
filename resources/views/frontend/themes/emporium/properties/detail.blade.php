@@ -36,13 +36,13 @@
             ?>
             @endif    
         @else
-            @if($metatags->og_image!='')
-                <meta property="og:image" content="{{$metatags->og_image}}" />
+            @if($metatags->og_image!='')                
             <?php 
                 $oipath = url('/').'/uploads/properties_subtab_imgs/'.$metatags->og_image;
                 $arr_img = getimagesize($oipath);
                 if(!empty($arr_img)){
             ?>
+                    <meta property="og:image" content="{{$oipath}}" />
                     <meta property="og:image:width" content="{{$arr_img[0]}}" />
                     <meta property="og:image:height" content="{{$arr_img[1]}}" />
             <?php                    
@@ -81,6 +81,7 @@
             @if($metatags->twitter_image_link!='')
                 <meta property="twitter:image" content="{{$metatags->twitter_image_link}}" />
             <?php 
+                        
                 $arr_img = getimagesize($metatags->twitter_image_link);
                 if(!empty($arr_img)){
             ?>
@@ -92,12 +93,13 @@
             @endif    
         @else
             @if($metatags->twitter_image!='')
-                <meta property="twitter:image" content="{{$metatags->twitter_image}}" />
+                
             <?php 
                 $tipath = url('/').'/uploads/properties_subtab_imgs/'.$metatags->twitter_image;
                 $arr_img = getimagesize($tipath);
                 if(!empty($arr_img)){
             ?>
+                    <meta property="twitter:image" content="{{$tipath}}" />                        
                     <meta property="twitter:width" content="{{$arr_img[0]}}" />
                     <meta property="twitter:height" content="{{$arr_img[1]}}" />
             <?php                    
