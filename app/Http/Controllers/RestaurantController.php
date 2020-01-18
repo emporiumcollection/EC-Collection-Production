@@ -208,13 +208,35 @@ class RestaurantController extends Controller {
             $data['reservation_email'] = $request->input('reservation_email');
             $data['reservation_contact'] = $request->input('reservation_contact');
             $data['website'] = $request->input('website');
+            $data['opening_hrs'] = $request->input('opening_hrs');
+            $data['instagram_id'] = $request->input('instagram_id');
             //$data['menu'] = $request->input('menu');
 			$data['url'] = $request->input('url');
 			$data['location'] = $request->input('location');
+            /** Lat Long **/
+            $address = $request->input('location');
+            $latitude = '';
+            $longitude = '';
+            if($request->input('latitude')=='' && $request->input('longitude')==''){                
+                if($address!=''){
+                    $geo = file_get_contents("https://maps.google.com/maps/api/geocode/json?key=AIzaSyBqf2xJGZFRECA_eVTNek_Y7sxBzmcgXrs&address=".urlencode($address).'&sensor=false');
+                    $geo = json_decode($geo, true); // Convert the JSON to an array                
+                    if(isset($geo['status']) && ($geo['status'] == 'OK')) {
+                      $latitude = $geo['results'][0]['geometry']['location']['lat']; // Latitude
+                      $longitude = $geo['results'][0]['geometry']['location']['lng']; // Longitude
+                    } 
+                }   
+            }else{
+                $latitude = $request->input('latitude');
+                $longitude = $request->input('longitude');        
+            }
+            $data['latitude'] = $latitude;
+            $data['longitude'] = $longitude;            
+            /** End Lat Long **/
 			$data['usp_text'] = $request->input('usp_text');
 			$data['usp_person'] = $request->input('usp_person');
-            $data['meta_keyword'] = $request->input('meta_keyword');
-			$data['meta_description'] = $request->input('meta_description');
+            //$data['meta_keyword'] = $request->input('meta_keyword');
+			//$data['meta_description'] = $request->input('meta_description');
 			$destinationPath = public_path() . '/uploads/properties_subtab_imgs/';
 			if (!is_null($request->file('video'))) {
                 $room_suites_vfile = $request->file('video');
@@ -230,6 +252,57 @@ class RestaurantController extends Controller {
 			if (!is_null($request->input('part_of_hotel'))) {
 				$data['part_of_hotel'] = 1;
 			}
+            
+            /** Start Meta tags **/            
+            $data['meta_title'] = $request->input('meta_title');
+            $data['meta_description'] = $request->input('meta_description');
+            $data['meta_keyword'] = $request->input('meta_keyword');            
+            $data['og_title'] = $request->input('og_title');
+            $data['og_description'] = $request->input('og_description');
+            $data['og_url'] = $request->input('og_url');
+            $data['og_type'] = $request->input('og_type');            
+            $data['og_sitename'] = $request->input('og_sitename');
+            $data['og_locale'] = $request->input('og_locale');
+            $data['article_section'] = $request->input('article_section');
+            $data['article_tags'] = $request->input('article_tags');
+            $data['twitter_url'] = $request->input('twitter_url');
+            $data['twitter_title'] = $request->input('twitter_title');
+            $data['twitter_description'] = $request->input('twitter_description');
+            $data['twitter_image'] = $request->input('twitter_image');
+            $data['twitter_domain'] = $request->input('twitter_domain');
+            $data['twitter_card'] = $request->input('twitter_card');
+            $data['twitter_creator'] = $request->input('twitter_creator');
+            $data['twitter_site'] = $request->input('twitter_site');                       
+            $data['og_upload_type'] =  $request->input('og_image_type');
+            if (!is_null($request->file('og_image_type_upload'))) {
+                $og_image_type_file = $request->file('og_image_type_upload');
+                $og_image_type_filename = $og_image_type_file->getClientOriginalName();
+                $og_image_type_extension = $og_image_type_file->getClientOriginalExtension(); //if you need extension of the file
+                $og_image_type_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $og_image_type_extension;
+                $og_image_type_uploadSuccess = $og_image_type_file->move($destinationPath, $og_image_type_filename);
+                if ($og_image_type_uploadSuccess) {
+                    $data['og_image'] = $og_image_type_filename;
+                    //$meta_data['og_image_width'] = $request->input('og_image_width');
+                    //$meta_data['og_image_height'] = $request->input('og_image_height');
+                }
+            }
+            $data['og_image_link'] =  $request->input('og_image_type_link');
+            
+            $data['twitter_upload_type'] =  $request->input('twitter_image_type');
+            if (!is_null($request->file('twitter_image_type_upload'))) {
+                $twitter_image_type_file = $request->file('twitter_image_type_upload');
+                $twitter_image_type_filename = $twitter_image_type_file->getClientOriginalName();
+                $twitter_image_type_extension = $twitter_image_type_file->getClientOriginalExtension(); //if you need extension of the file
+                $twitter_image_type_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $twitter_image_type_extension;
+                $twitter_image_type_uploadSuccess = $twitter_image_type_file->move($destinationPath, $twitter_image_type_filename);
+                if ($twitter_image_type_uploadSuccess) {
+                    $data['twitter_image'] = $twitter_image_type_filename;
+                    //$meta_data['twitter_image_width'] = $request->input('twitter_image_width');
+                    //$meta_data['twitter_image_height'] = $request->input('twitter_image_height');
+                }
+            }
+            $data['twitter_image_link'] =  $request->input('twitter_image_type_link');
+            /** End Meta tags **/
 				
 			$id = $this->model->insertRow($data , $request->input('id'));
 			if($request->input('id')==''){
@@ -260,7 +333,8 @@ class RestaurantController extends Controller {
                         }
             		}
                 }     
-			}
+			}            
+            
 			if(!is_null($request->input('apply')))
 			{
 				$return = 'restaurant/update/'.$id.'?return='.self::returnUrl();
