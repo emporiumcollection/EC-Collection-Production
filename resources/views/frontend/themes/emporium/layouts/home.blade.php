@@ -17,9 +17,7 @@
     <meta property="og:title" content="@yield('og_title')" />
     <meta property="og:description" content="@yield('og_description')" />
     <meta property="og:type" content="@yield('og_type')" />
-    <meta property="og:image" content="@yield('og_image')" />
-    <meta property="og:image:width" content="@yield('og_image_width')" />
-    <meta property="og:image:height" content="@yield('og_image_height')" />
+    @yield('og_image')
     <meta property="og:site_name" content="@yield('og_sitename')" />
     <meta property="og:locale" content="@yield('og_locale')" />
     
@@ -29,7 +27,7 @@
     <meta property="twitter:url" content="@yield('twitter_url')" />
     <meta property="twitter:title" content="@yield('twitter_title')" />
     <meta property="twitter:description" content="@yield('twitter_description')" />
-    <meta property="twitter:image" content="@yield('twitter_image')" />
+    @yield('twitter_image')
     <meta property="twitter:domain" content="@yield('twitter_domain')" />
     <meta property="twitter:card" content="@yield('twitter_card')" />
     <meta property="twitter:creator" content="@yield('twitter_creator')" />

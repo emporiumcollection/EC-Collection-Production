@@ -21,7 +21,36 @@
     @section('og_title', $metatags->og_title)
     @section('og_description', $metatags->og_description)
     @section('og_type', $metatags->og_type)
-    @section('og_image', $metatags->og_image)
+    @section('og_image')
+        @if($metatags->og_upload_type=='link')
+            @if($metatags->og_image_link!='')
+                <meta property="og:image" content="{{$metatags->og_image_link}}" />
+            <?php 
+                $arr_img = getimagesize($metatags->og_image_link);
+                if(!empty($arr_img)){
+            ?>
+                    <meta property="og:image:width" content="{{$arr_img[0]}}" />
+                    <meta property="og:image:height" content="{{$arr_img[1]}}" />
+            <?php                    
+                }
+            ?>
+            @endif    
+        @else
+            @if($metatags->og_image!='')
+                <meta property="og:image" content="{{$metatags->og_image}}" />
+            <?php 
+                $oipath = url('/').'/uploads/properties_subtab_imgs/'.$metatags->og_image;
+                $arr_img = getimagesize($oipath);
+                if(!empty($arr_img)){
+            ?>
+                    <meta property="og:image:width" content="{{$arr_img[0]}}" />
+                    <meta property="og:image:height" content="{{$arr_img[1]}}" />
+            <?php                    
+                }
+            ?>   
+            @endif 
+        @endif
+    @endsection
     @section('og_image_width', $metatags->og_image_width)
     @section('og_image_height', $metatags->og_image_height)
     @section('og_sitename', $metatags->og_sitename)
@@ -47,7 +76,36 @@
     @section('twitter_url', $metatags->twitter_url)    
     @section('twitter_title', $metatags->twitter_title)
     @section('twitter_description', $metatags->twitter_description)
-    @section('twitter_image', $metatags->twitter_image)
+    @section('twitter_image')
+        @if($metatags->twitter_upload_type=='link')
+            @if($metatags->twitter_image_link!='')
+                <meta property="twitter:image" content="{{$metatags->twitter_image_link}}" />
+            <?php 
+                $arr_img = getimagesize($metatags->twitter_image_link);
+                if(!empty($arr_img)){
+            ?>
+                    <meta property="twitter:width" content="{{$arr_img[0]}}" />
+                    <meta property="twitter:height" content="{{$arr_img[1]}}" />
+            <?php                    
+                }
+            ?>
+            @endif    
+        @else
+            @if($metatags->twitter_image!='')
+                <meta property="twitter:image" content="{{$metatags->twitter_image}}" />
+            <?php 
+                $tipath = url('/').'/uploads/properties_subtab_imgs/'.$metatags->twitter_image;
+                $arr_img = getimagesize($tipath);
+                if(!empty($arr_img)){
+            ?>
+                    <meta property="twitter:width" content="{{$arr_img[0]}}" />
+                    <meta property="twitter:height" content="{{$arr_img[1]}}" />
+            <?php                    
+                }
+            ?>   
+            @endif 
+        @endif
+    @endsection 
     @section('twitter_domain', $metatags->twitter_domain)
     @section('twitter_card', $metatags->twitter_card)
     @section('twitter_creator', $metatags->twitter_creator)
