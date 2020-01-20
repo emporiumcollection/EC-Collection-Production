@@ -566,7 +566,9 @@ class PropertyController extends Controller {
         $this->data['catalias'] = $catalias;
         $this->data['catid'] = $catid;
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
-        
+        if(!empty($cateObj)){
+            $this->data['metatags'] = \DB::table('tb_category_metatags')->where('category_id', $cateObj->id)->first();
+        }
 		return view('frontend.themes.emporium.properties.list', $this->data);
                     
     }
