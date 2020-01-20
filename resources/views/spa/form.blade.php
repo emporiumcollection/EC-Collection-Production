@@ -339,17 +339,7 @@
                                         <div class="col-md-2">
             
                                         </div>
-                                    </div>
-                                     
-                                    <div class="form-group hidden" >
-                                        <label for="canonical_link" class=" control-label col-md-4 text-left"> Canonical link </label>
-                                        <div class="col-md-6">
-                                            {!! Form::text('canonical_link', $row['canonical_link'], array('class'=>'form-control', 'placeholder'=>''  )) !!} 
-                                        </div> 
-                                        <div class="col-md-2">
-            
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                     
                                 </div>
                                 <div class="tab-pane m-t" id="OpenGraph"> 
@@ -443,27 +433,7 @@
                                         
                                     </div>
                                             
-                                    <!-- End upload or link section --!>
-                                    
-                                    <div class="form-group" style="display: none;">
-                                        <label for="og_image_width" class=" control-label col-md-4 text-left"> OG Image Width </label>
-                                        <div class="col-md-6">
-                                            {!! Form::text('og_image_width', $row['og_image_width'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
-                                        </div> 
-                                        <div class="col-md-2">
-            
-                                        </div>
-                                    </div>
-                                     
-                                    <div class="form-group" style="display: none;">
-                                        <label for="og_image_height" class=" control-label col-md-4 text-left"> OG Image Height </label>
-                                        <div class="col-md-6">
-                                            {!! Form::text('og_image_height', $row['og_image_height'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
-                                        </div> 
-                                        <div class="col-md-2">
-            
-                                        </div>
-                                    </div>
+                                    <!-- End upload or link section --!>                                    
                                     
                                     <div class="form-group  " >
                                         <label for="og_sitename" class=" control-label col-md-4 text-left"> OG Sitename </label>
