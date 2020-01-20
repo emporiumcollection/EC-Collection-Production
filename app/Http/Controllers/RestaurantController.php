@@ -193,12 +193,13 @@ class RestaurantController extends Controller {
     		if($request->input('id')==''){
     			$data['alias'] = str_slug($request->input('title'));
     		}
-			if (!empty($request->input('designer'))) {
+			/*if (!empty($request->input('designer'))) {
                 $data['designer'] = implode(',', $request->input('designer'));
             } else {
                 $data['designer'] = '';
-            }
-           if (!empty($request->input('category_id'))) {
+            }*/
+            $data['chefname'] = $request->input('chefname');
+            if (!empty($request->input('category_id'))) {
                 $data['category_id'] = implode(',', $request->input('category_id'));
             } else {
                 $data['category_id'] = '';
