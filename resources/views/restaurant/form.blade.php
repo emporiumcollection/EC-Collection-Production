@@ -321,17 +321,7 @@
                                         <div class="col-md-2">
             
                                         </div>
-                                    </div>
-                                     
-                                    <div class="form-group hidden" >
-                                        <label for="canonical_link" class=" control-label col-md-4 text-left"> Canonical link </label>
-                                        <div class="col-md-6">
-                                            {!! Form::text('canonical_link', $row['canonical_link'], array('class'=>'form-control', 'placeholder'=>''  )) !!} 
-                                        </div> 
-                                        <div class="col-md-2">
-            
-                                        </div>
-                                    </div>
+                                    </div>                                    
                                     
                                 </div>
                                 <div class="tab-pane m-t" id="OpenGraph"> 
