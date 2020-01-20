@@ -190,31 +190,7 @@
                 						<div class="col-md-2">
                 							
                 						</div>
-                					</div>
-                					<div class="form-group  " >
-                						<label for="Designer" class=" control-label col-md-4 text-left"> Designer </label>
-                						<div class="col-md-6">
-                							<select name='designer[]' rows='5' id='restaurant_designer' class='select2 ' multiple="multiple"  >
-                                                                    @if(!empty($designers))
-                                                                    @foreach($designers as $designer)
-                                                                    <option value="{{$designer->id}}" {{(isset($row['designer']) && in_array($designer->id,explode(',',$row['designer']))) ? " selected='selected' " : '' }}>{{$designer->designer_name}}</option>
-                                                                    @endforeach
-                                                                    @endif
-                                                                </select>
-                						</div>
-                						<div class="col-md-2">
-                							
-                						</div>
-                					</div>
-                					<div class="form-group  " >
-                						<label for="Url" class=" control-label col-md-4 text-left"> Url </label>
-                						<div class="col-md-6">
-                							{!! Form::text('url', $row['url'],array('class'=>'form-control', 'placeholder'=>'',   )) !!}
-                						</div>
-                						<div class="col-md-2">
-                							
-                						</div>
-                					</div>
+                					</div>                					
                 					<div class="form-group  " >
                 						<label for="Bar location" class=" control-label col-md-4 text-left"> Bar Location </label>
                 						<div class="col-md-6">

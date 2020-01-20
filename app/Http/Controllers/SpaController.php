@@ -195,11 +195,11 @@ class SpaController extends Controller {
 			//$data = $this->validatePost('tb_spa');
     	
 
-			if (!empty($request->input('designer'))) {
+			/*if (!empty($request->input('designer'))) {
                 $data['designer'] = implode(',', $request->input('designer'));
             } else {
                 $data['designer'] =  '';
-            }
+            }*/
             if (!empty($request->input('category_id'))) {
                 $data['category_id'] = implode(',', $request->input('category_id'));
             } else {
@@ -210,7 +210,8 @@ class SpaController extends Controller {
             $data['title'] = $request->input('title');
             $data['description'] = $request->input('description');
             $data['video_link'] = $request->input('video_link');
-            $data['url'] = $request->input('url');
+            //$data['url'] = $request->input('url');
+            $data['spa_manager'] = $request->input('spa_manager');
             //$data['menu'] = $request->input('menu');
             $data['usp_person'] = $request->input('usp_person');
             $data['usp_text'] = $request->input('usp_text');
