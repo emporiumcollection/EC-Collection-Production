@@ -661,14 +661,34 @@ class CustomplanController extends Controller {
 			//$data['user_id'] = $uid;
             
             $destinationPath = public_path() . '/uploads/properties_customplan_imgs/';
-            if (!is_null($request->file('plan_image'))) {
-                $cplan_file = $request->file('plan_image');
+            if (!is_null($request->file('plan_image1'))) {
+                $cplan_file = $request->file('plan_image1');
                 $cplan_filename = $cplan_file->getClientOriginalName();
                 $cplan_extension = $cplan_file->getClientOriginalExtension(); //if you need extension of the file
                 $cplan_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $cplan_extension;
                 $cplan_uploadSuccess = $cplan_file->move($destinationPath, $cplan_filename);
                 if ($cplan_uploadSuccess) {
-                    $data['plan_img'] = $cplan_filename;
+                    $data['plan_img1'] = $cplan_filename;
+                }
+            }  
+            if (!is_null($request->file('plan_image2'))) {
+                $cplan_file = $request->file('plan_image2');
+                $cplan_filename = $cplan_file->getClientOriginalName();
+                $cplan_extension = $cplan_file->getClientOriginalExtension(); //if you need extension of the file
+                $cplan_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $cplan_extension;
+                $cplan_uploadSuccess = $cplan_file->move($destinationPath, $cplan_filename);
+                if ($cplan_uploadSuccess) {
+                    $data['plan_img2'] = $cplan_filename;
+                }
+            }  
+            if (!is_null($request->file('plan_image3'))) {
+                $cplan_file = $request->file('plan_image3');
+                $cplan_filename = $cplan_file->getClientOriginalName();
+                $cplan_extension = $cplan_file->getClientOriginalExtension(); //if you need extension of the file
+                $cplan_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $cplan_extension;
+                $cplan_uploadSuccess = $cplan_file->move($destinationPath, $cplan_filename);
+                if ($cplan_uploadSuccess) {
+                    $data['plan_img3'] = $cplan_filename;
                 }
             }  
             $data['youtube_url'] = $request->input('plan_youtube_url');          
@@ -1069,14 +1089,34 @@ class CustomplanController extends Controller {
 			$data['description'] = $request->input('eplan_description');
             
             $destinationPath = public_path() . '/uploads/properties_customplan_imgs/';
-            if (!is_null($request->file('eplan_image'))) {
-                $cplan_file = $request->file('eplan_image');
+            if (!is_null($request->file('eplan_image1'))) {
+                $cplan_file = $request->file('eplan_image1');
                 $cplan_filename = $cplan_file->getClientOriginalName();
                 $cplan_extension = $cplan_file->getClientOriginalExtension(); //if you need extension of the file
                 $cplan_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $cplan_extension;
                 $cplan_uploadSuccess = $cplan_file->move($destinationPath, $cplan_filename);
                 if ($cplan_uploadSuccess) {
-                    $data['plan_img'] = $cplan_filename;
+                    $data['plan_img1'] = $cplan_filename;
+                }
+            }  
+            if (!is_null($request->file('eplan_image2'))) {
+                $cplan_file = $request->file('eplan_image2');
+                $cplan_filename = $cplan_file->getClientOriginalName();
+                $cplan_extension = $cplan_file->getClientOriginalExtension(); //if you need extension of the file
+                $cplan_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $cplan_extension;
+                $cplan_uploadSuccess = $cplan_file->move($destinationPath, $cplan_filename);
+                if ($cplan_uploadSuccess) {
+                    $data['plan_img2'] = $cplan_filename;
+                }
+            }  
+            if (!is_null($request->file('eplan_image3'))) {
+                $cplan_file = $request->file('eplan_image3');
+                $cplan_filename = $cplan_file->getClientOriginalName();
+                $cplan_extension = $cplan_file->getClientOriginalExtension(); //if you need extension of the file
+                $cplan_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $cplan_extension;
+                $cplan_uploadSuccess = $cplan_file->move($destinationPath, $cplan_filename);
+                if ($cplan_uploadSuccess) {
+                    $data['plan_img3'] = $cplan_filename;
                 }
             }  
             $data['youtube_url'] = $request->input('eplan_youtube_url');         
