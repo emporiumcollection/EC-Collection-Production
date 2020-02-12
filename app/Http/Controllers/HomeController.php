@@ -27,6 +27,7 @@ class HomeController extends Controller {
      * @return Response
      */
     public function index(Request $request) {
+        //echo bcrypt('buatapasih79');exit();
 
         $this->data['landingads'] = \DB::table('tb_advertisement')->select('adv_img', 'adv_link')->where('adv_type', 'sidebar')->where('adv_position', 'landing')->get();
         $this->data['slider'] = \DB::table('tb_sliders')->select('slider_category', 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('slider_category', 'Landing')->where('slider_status',1)->orderBy('sort_num','asc')->get();

@@ -1357,7 +1357,7 @@ function globalSearchForAll(searcValue, sitename) {
         if(data.data.sitename!=undefined){
             var sitenm = data.data.sitename;
             if(sitenm=='voyage'){
-                BaseURL1 = 'https://emporium-voyage.com';
+                BaseURL1 = 'http://ev.local';
             }else if(sitenm=='safari'){
                 BaseURL1 = 'https://emporium-safari.com';
             }else if(sitenm=='spa'){
