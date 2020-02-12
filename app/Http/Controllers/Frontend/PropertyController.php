@@ -566,7 +566,9 @@ class PropertyController extends Controller {
         $this->data['catalias'] = $catalias;
         $this->data['catid'] = $catid;
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
-        
+        if(!empty($cateObj)){
+            $this->data['metatags'] = \DB::table('tb_category_metatags')->where('category_id', $cateObj->id)->first();
+        }
 		return view('frontend.themes.emporium.properties.list', $this->data);
                     
     }
@@ -1300,7 +1302,8 @@ class PropertyController extends Controller {
     		$this->data['propertyEvents'] = \DB::table('tb_events')->where('property_id', $props->id)->get();
             
             $this->data['packages'] = \DB::table('tb_packages')->where('package_category', 'B2C')->where('package_status', 1)->get();            
-    
+            
+            $this->data['metatags'] = \DB::table('tb_property_metatags')->where('property_id',  $props->id)->first();
     		//dd($this->data['propertyEvents']);
             return view('frontend.themes.emporium.properties.detail', $this->data);
 
@@ -1344,7 +1347,7 @@ class PropertyController extends Controller {
             }
             if (!empty($checkseason)) {
                 $foundsean = false;
-                for ($sc = 0; $foundsean != true; $sc++) {
+                for ($sc = 0; $foundsean != true && $sc < count($checkseason) ; $sc++) {
                     $checkseasonDate = \DB::table('tb_seasons_dates')->where('season_id', $checkseason[$sc]->id)->where('season_from_date', '>=', $curnDate)->where('season_to_date', '<=', $curnDate)->count();
                     if ($checkseasonDate > 0) {
                         $checkseasonPrice = \DB::table('tb_properties_category_rooms_price')->where('season_id', $checkseason[$sc]->id)->where('property_id', $props->id)->where('category_id', $cat_types->id)->first();

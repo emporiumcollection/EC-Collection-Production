@@ -364,6 +364,8 @@ class PropertiesController extends Controller {
         
         $this->data['vat_classes'] = \DB::table('tb_vat_taxes')->where('vat_tax_status', 1)->get();
         
+        $this->data['metatags'] = \DB::table('tb_property_metatags')->where('property_id', $id)->first();
+        
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
         $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.form':'properties.form'; 
         
@@ -403,6 +405,13 @@ class PropertiesController extends Controller {
         $rules['owner_phone_primary'] = 'required';
         $rules['owner_email_primary'] = 'required';
         $rules['assigned_user_id'] = 'required';
+        
+        $rules['meta_title'] = 'max:75';
+        $rules['meta_description'] = 'max:320';
+        $rules['og_title'] = 'max:75';
+        $rules['og_description'] = 'max:110';
+        $rules['twitter_title'] = 'max:75';
+        $rules['twitter_description'] = 'max:280';
         /* if($request->input('owner_contact_person')!='Owner')
           {
           $rules['agent_name'] = 'required';
@@ -453,6 +462,9 @@ class PropertiesController extends Controller {
             $data['about_property'] = $request->input('about_property');
             $data['property_usp'] = $request->input('property_usp');
             
+            /** Back link **/
+            $data['back_link'] = $request->input('back_link');    
+            /** End back link**/
             $assigned_users = array();
             if (is_array($request->input('assigned_user_id'))) {
                 $assigned_users = $request->input('assigned_user_id');
@@ -1234,6 +1246,73 @@ class PropertiesController extends Controller {
             if(count($final_assigned_users)){ \DB::table('tb_properties_users')->insert($final_assigned_users); }
             /** insert property packages relation end **/
             
+            /** Start Meta tags **/
+            $meta_data['property_id'] = $id;
+            $meta_data['meta_title'] = $request->input('meta_title');
+            $meta_data['meta_description'] = $request->input('meta_description');
+            $meta_data['meta_keywords'] = $request->input('meta_keywords');
+            $meta_data['canonical_link'] = $request->input('canonical_link');
+            
+            $meta_data['og_title'] = $request->input('og_title');
+            $meta_data['og_description'] = $request->input('og_description');
+            $meta_data['og_url'] = $request->input('og_url');
+            
+            $meta_data['og_type'] = $request->input('og_type');
+            //$meta_data['og_image'] = $request->input('og_image');
+            //$meta_data['og_image_width'] = $request->input('og_image_width');
+            //$meta_data['og_image_height'] = $request->input('og_image_height');
+            $meta_data['og_sitename'] = $request->input('og_sitename');
+            $meta_data['og_locale'] = $request->input('og_locale');
+            $meta_data['article_section'] = $request->input('article_section');
+            $meta_data['article_tags'] = $request->input('article_tags');
+            $meta_data['twitter_url'] = $request->input('twitter_url');
+            $meta_data['twitter_title'] = $request->input('twitter_title');
+            $meta_data['twitter_description'] = $request->input('twitter_description');
+            $meta_data['twitter_image'] = $request->input('twitter_image');
+            $meta_data['twitter_domain'] = $request->input('twitter_domain');
+            $meta_data['twitter_card'] = $request->input('twitter_card');
+            $meta_data['twitter_creator'] = $request->input('twitter_creator');
+            $meta_data['twitter_site'] = $request->input('twitter_site');                       
+            
+            $meta_data['og_upload_type'] =  $request->input('og_image_type');
+            if (!is_null($request->file('og_image_type_upload'))) {
+                $og_image_type_file = $request->file('og_image_type_upload');
+                $og_image_type_filename = $og_image_type_file->getClientOriginalName();
+                $og_image_type_extension = $og_image_type_file->getClientOriginalExtension(); //if you need extension of the file
+                $og_image_type_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $og_image_type_extension;
+                $og_image_type_uploadSuccess = $og_image_type_file->move($destinationPath, $og_image_type_filename);
+                if ($og_image_type_uploadSuccess) {
+                    $meta_data['og_image'] = $og_image_type_filename;
+                    $meta_data['og_image_width'] = $request->input('og_image_width');
+                    $meta_data['og_image_height'] = $request->input('og_image_height');
+                }
+            }
+            $meta_data['og_image_link'] =  $request->input('og_image_type_link');
+            
+            $meta_data['twitter_upload_type'] =  $request->input('twitter_image_type');
+            if (!is_null($request->file('twitter_image_type_upload'))) {
+                $twitter_image_type_file = $request->file('twitter_image_type_upload');
+                $twitter_image_type_filename = $twitter_image_type_file->getClientOriginalName();
+                $twitter_image_type_extension = $twitter_image_type_file->getClientOriginalExtension(); //if you need extension of the file
+                $twitter_image_type_filename = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $twitter_image_type_extension;
+                $twitter_image_type_uploadSuccess = $twitter_image_type_file->move($destinationPath, $twitter_image_type_filename);
+                if ($twitter_image_type_uploadSuccess) {
+                    $meta_data['twitter_image'] = $twitter_image_type_filename;
+                    //$meta_data['twitter_image_width'] = $request->input('twitter_image_width');
+                    //$meta_data['twitter_image_height'] = $request->input('twitter_image_height');
+                }
+            }
+            $meta_data['twitter_image_link'] =  $request->input('twitter_image_type_link');
+            
+            $check_meta = \DB::table('tb_property_metatags')->where('property_id', $id)->get();
+            if(!empty($check_meta)){
+                \DB::table('tb_property_metatags')->where('property_id', $id)->update($meta_data);
+            }else{
+                $meta_data['created'] = date('Y-m-d H:i:s');
+                \DB::table('tb_property_metatags')->insertGetId($meta_data);    
+            }
+              
+            /** End Meta tags **/
             
             if (!is_null($request->input('apply'))) {
                 $return = 'properties/update/' . $id . '?return=' . self::returnUrl();

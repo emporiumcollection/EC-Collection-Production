@@ -436,8 +436,16 @@
                                     <textarea name="plan_description" id="plan_description" class="form-control"></textarea> 
         						</div> 
                                 <div class="form-group col-lg-12">
-        							<label for="Name">Image </label>        							
-                                    <input type="file" name="plan_image" class="form-control" />  
+        							<label for="Name">Image1 </label>        							
+                                    <input type="file" name="plan_image1" class="form-control" />  
+        						</div>
+                                <div class="form-group col-lg-12">
+        							<label for="Name">Image2 </label>        							
+                                    <input type="file" name="plan_image2" class="form-control" />  
+        						</div>
+                                <div class="form-group col-lg-12">
+        							<label for="Name">Image3 </label>        							
+                                    <input type="file" name="plan_image3" class="form-control" />  
         						</div>
                                 <div class="form-group col-lg-12">
         							<label for="Name">Youtube Url </label>        							
@@ -795,10 +803,22 @@
                                     <textarea name="eplan_description" id="eplan_description" class="form-control"></textarea> 
         						</div>
                                 <div class="form-group col-lg-12">
-        							<label for="Image">Image </label>        							
-                                    <input type="file" name="eplan_image" class="form-control" /> 
+        							<label for="Image">Image 1 </label>        							
+                                    <input type="file" name="eplan_image1" class="form-control" /> 
                                     <br />
-                                    <img id="eplan_image_preview" width="100px" /> 
+                                    <img id="eplan_image_preview1" width="100px" /> 
+        						</div>
+                                <div class="form-group col-lg-12">
+        							<label for="Image">Image 2 </label>        							
+                                    <input type="file" name="eplan_image2" class="form-control" /> 
+                                    <br />
+                                    <img id="eplan_image_preview2" width="100px" /> 
+        						</div>
+                                <div class="form-group col-lg-12">
+        							<label for="Image">Image 3 </label>        							
+                                    <input type="file" name="eplan_image3" class="form-control" /> 
+                                    <br />
+                                    <img id="eplan_image_preview3" width="100px" /> 
         						</div>
                                 <div class="form-group col-lg-12">
         							<label for="Name">Youtube Url </label>        							
@@ -1229,7 +1249,27 @@ function edit_cseason_data(cseasonId){
                     //$('input[name="estaying_available_days"]').val(objplan.price_type);
                     
                     $('#eplan_description').val(objplan.description);
-                    $('#eplan_image_preview').attr('src', "{{Url('/')}}"+"/uploads/properties_customplan_imgs/"+objplan.plan_img);
+                    if(objplan.plan_img1!=null){
+                        $('#eplan_image_preview1').attr('src', "{{Url('/')}}"+"/uploads/properties_customplan_imgs/"+objplan.plan_img1);
+                        $('#eplan_image_preview1').css('display', '');
+                    }else{
+                        $('#eplan_image_preview1').attr('src', "");
+                        $('#eplan_image_preview1').css('display', 'none');
+                    }
+                    if(objplan.plan_img2!=null){
+                        $('#eplan_image_preview2').attr('src', "{{Url('/')}}"+"/uploads/properties_customplan_imgs/"+objplan.plan_img2);
+                        $('#eplan_image_preview2').css('display', '');
+                    }else{
+                        $('#eplan_image_preview2').attr('src', "");
+                        $('#eplan_image_preview2').css('display', 'none');
+                    }
+                    if(objplan.plan_img3!=null){
+                        $('#eplan_image_preview3').attr('src', "{{Url('/')}}"+"/uploads/properties_customplan_imgs/"+objplan.plan_img3);
+                        $('#eplan_image_preview3').css('display', '');
+                    }else{
+                        $('#eplan_image_preview3').attr('src', "");
+                        $('#eplan_image_preview3').css('display', 'none');
+                    }
                     $('#eplan_youtube_url').val(objplan.youtube_url);
                     $('#eplan_terms_and_conditions').val(objplan.terms_and_condition);
                      

@@ -6660,8 +6660,10 @@ die;        */
 			//$toouser['subject'] = "Booking Confirmation"; 
             $toouser['subject'] = "Booking Request";           		
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser) {
-              $message->to($toouser['email'])
+              $message->to($toouser['email'])                               
                 ->subject($toouser['subject'])
+                ->cc('riaan@emporium-collection.com')
+                ->bcc('astrid@emporium-collection.com') 
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
             
