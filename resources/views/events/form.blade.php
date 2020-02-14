@@ -199,7 +199,7 @@
                                       <div id="dvaddmoretime"></div>
                                       <div class="form-group"> 
                                             <div class="col-md-4"></div> 
-                                            <div class="col-md-4"><button class="btn btn-success" id="btnAddMoreTime">Add More Time</button></div>
+                                            <div class="col-md-4"><button class="btn btn-success" id="btnAddMoreTime">Add More Time Slot</button></div>
                                       </div>
                                       
                                       <div class="form-group">
