@@ -45,7 +45,7 @@
                                     <label for="Contract Category" class=" control-label col-md-4 text-left"> Contract Category <span class="asterix"> * </span></label>
 									<div class="col-md-6">
 									  
-					                   {{--*/ $contracts_category_opt = array( 'general' => 'General' ,  'sign-up' => 'Sign up' , 'packages' => 'Packages' , 'hotels' => 'Hotels', 'commission' => 'Commission' ); /*--}}
+					                   {{--*/ $contracts_category_opt = array( 'general' => 'General' ,  'sign-up' => 'Sign up' , 'packages' => 'Packages' , 'hotels' => 'Hotels', 'commission' => 'Commission', 'supplier' => 'Supplier', 'supplier_commission' => 'Supplier Commission' ); /*--}}
 					                         <select name='contract_type' rows='5' required  class='select2  select2-offscreen'  >
                                                 <option value="">Select Type</option>
                         						{{--*/
@@ -91,9 +91,22 @@
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div>
+								  </div> 
                                   
                                   <div class="form-group  " >
+									<label for="is_required" class=" control-label col-md-4 text-left"> Required <span class="asterix"> * </span></label>
+									<div class="col-md-6">									  
+                    					<label class='radio radio-inline'>
+                    					<input type='radio' name='is_required' value ='0' required @if($row['is_required'] == '0') checked="checked" @endif > No </label>
+                    					<label class='radio radio-inline'>
+                    					<input type='radio' name='is_required' value ='1' required @if($row['is_required'] == '1') checked="checked" @endif > Yes </label> 
+									 </div> 
+									 <div class="col-md-2">
+									 	
+									 </div>
+								  </div>
+                                  
+                                  <div class="form-group  groups_checkboxes" >
 									<label class=" control-label col-md-4 text-left"></label>
 									<div class="col-md-6">									  
                     					<label class='checkbox checkbox-inline all_hotels'>
@@ -288,12 +301,12 @@
             }else if(thisval == 'commission'){
                 //$("#revised_commission_div").fadeIn();
                 
-                $(".all_hotels").fadeIn(); 
+                $(".all_hotels").fadeOut(); 
                 $(".all_packages").fadeOut(); 
-                $(".all_user_groups").fadeIn();
-                $(".all_hotels").removeClass('hide');  
+                $(".all_user_groups").fadeOut();
+                $(".all_hotels").addClass('hide');  
                 $(".all_packages").addClass('hide'); 
-                $(".all_user_groups").removeClass('hide');
+                $(".all_user_groups").addClass('hide');
                 
                 $("#full_availability_commission_div").fadeIn(); 
                 $("#partial_availability_commission_div").fadeIn(); 
