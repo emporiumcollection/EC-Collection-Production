@@ -96,7 +96,7 @@
 	<div class="col-xl-9 col-lg-8">        
         <div class="row">
             <div class="col-xl-12 col-lg-12">                                
-                <div class="m-portlet m-portlet--full-height m-portlet--tabs  ">
+                <div class="m-portlet m-portlet--full-height m-portlet--tabs">
                     <div class="tab-content">
             			<div class="tab-pane active" id="myprofile">
                         	<div class="m-portlet__head">

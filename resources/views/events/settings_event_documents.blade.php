@@ -112,7 +112,7 @@
 																		<img src="{{URL::to('uploads/images/xls.png')}}">
 																		
 																	@else
-																		<img src="{{URL::to('uploads/property_imgs_thumbs/'.$img->file_name)}}">
+																		<img src="{{URL::to('uploads/thumbs/thumb_'.$img->folder_id.'_'.$img->file_name)}}">
 																	@endif
 																	
 																</a>
@@ -400,7 +400,7 @@
 														<td>
 															<span class="preview">
 																<a href="{{$img->imgsrc.$img->file_name}}" title="{{$img->file_name}}" download="{{$img->file_name}}" data-gallery="#data-gallery-contracts" >
-																	<img src="{{URL::to('uploads/property_imgs_thumbs/'.$img->file_name)}}">
+																	<img src="{{URL::to('uploads/thumbs/thumb_'.$img->folder_id.'_'.$img->file_name)}}">
 																</a>
 															</span>
 														</td>

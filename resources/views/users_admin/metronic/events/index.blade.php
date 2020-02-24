@@ -164,7 +164,8 @@
                         }else{
                             stss = 0
                         }
-                        return'\n<span class="dropdown">\n<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">\n<i class="la la-ellipsis-h"></i>\n</a>\n<div class="dropdown-menu dropdown-menu-right">\n<a class="dropdown-item" href="{{url("/")}}/events/update/'+t.id+'"><i class="la la-edit"></i> Edit Details</a>\n<a class="dropdown-item" href="{{url("/")}}/events/changestatus/'+t.id+'/'+stss+'" id="ev_status"><i class="la la-leaf"></i> Update Status</a>\n<a class="dropdown-item" href="{{url("/")}}/events/eventsettings/'+t.id+'/types"><i class="la la-cog"></i> Configration</a>\n<a class="dropdown-item" href="{{url("/")}}/events/copy/'+t.id+'" id="ev_copy"><i class="la la-copy"></i> Copy</a>\n</div>\n</span>\n'      
+                        return'\n<span class="dropdown">\n<a href="#" class="btn m-btn m-btn--hover-brand m-btn--icon m-btn--icon-only m-btn--pill" data-toggle="dropdown" aria-expanded="true">\n<i class="la la-ellipsis-h"></i>\n</a>\n<div class="dropdown-menu dropdown-menu-right">\n<a class="dropdown-item" href="{{url("/")}}/events/update/'+t.id+'"><i class="la la-edit"></i> Edit Details</a>\n<a class="dropdown-item" href="{{url("/")}}/events/changestatus/'+t.id+'/'+stss+'" id="ev_status"><i class="la la-leaf"></i> Update Status</a>\n<a class="dropdown-item" href="{{url("/")}}/events/eventsettings/'+t.id+'/types"><i class="la la-cog"></i> Configration</a>\n<a class="dropdown-item" href="{{url("/")}}/events/copy/'+t.id+'" id="ev_copy"><i class="la la-copy"></i> Copy</a>\n</div>\n</span>\n'
+                        
                     }
                     
                  },
@@ -176,14 +177,15 @@
                             return 'Inactive';
                         } 
                     }
-                 }                              
+                 }                ,
+                                
                 ]
             }
             )            
         }
     };
     $(document).ready(function() {                        
-        DatatablesDataSourceAjaxClient.init();
+        DatatablesDataSourceAjaxClient.init();        
     });    
 $(document).ready(function () {
     
@@ -355,24 +357,14 @@ function change_option(row,filed_name,row_id,act)
 }
 $(document).on('click', '#ev_copy', function(e){
     e.preventDefault();
-    var url = $(this).attr('href');
-    //console.log(url);
+    var url = $(this).attr('href');    
     $.ajax({
 	  url: url,
 	  type: "post",
       dataType: "json",
 	  //data: { eid:eid },
 	  success: function(data){
-        if(data.status=="success"){
-            //var $this = $(this); 
-            //$parentTR = $this.closest('tr');
-            //$parentTR.clone().insertAfter($parentTR);
-            
-            //var cln = $(this).closest('.tr').clone();
-            //console.log(cln);
-            //console.log($this);
-            //console.log($parentTR);
-            //console.log();#tbl_events
+        if(data.status=="success"){            
             var objev = data.obj;
             var table = $('#tbl_events').DataTable();
             table.row.add({
@@ -386,11 +378,7 @@ $(document).on('click', '#ev_copy', function(e){
                 "status": objev.status,
                 "category_name": objev.category_name,
                 "id": objev.id,
-            }).draw();
-             
-            console.log()
-            // you'll need a reference to your DataTable here
-            //table.row.add(row_data).draw();
+            }).draw();            
             toastr.success(data.message);
         }else{
             toastr.error(data.message);

@@ -1097,21 +1097,21 @@
                                     <div class="form-group col-lg-12  " >
                                         <label for="meta_title" > Meta Title </label>
                                                                        
-                                            {!! Form::text('pop_meta_title', '', array('class'=>'form-control', 'placeholder'=>'' )) !!}                                
+                                            {!! Form::text('pop_meta_title', $row['meta_title'], array('class'=>'form-control', 'placeholder'=>'' )) !!}                                
                                         
                                     </div>
                                      					
                                     <div class="form-group  col-lg-12 " >
                                         <label for="meta_description"> Meta Description </label>
                                         
-                                            {!! Form::textarea('pop_meta_description', '' ,array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::textarea('pop_meta_description', $row['meta_description'] ,array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div>
                                      
                                     <div class="form-group  col-lg-12 " >
                                         <label for="meta_keywords"> Meta Keywords </label>
                                         
-                                            {!! Form::text('pop_meta_keyword', '',array('class'=>'form-control', 'placeholder'=>'', 'data-role'=>'tagsinput'  )) !!} 
+                                            {!! Form::text('pop_meta_keyword', $row['meta_keyword'],array('class'=>'form-control', 'placeholder'=>'', 'data-role'=>'tagsinput'  )) !!} 
                                         
                                     </div>
                                 </div>    
@@ -1121,35 +1121,35 @@
                                     <div class="form-group   col-lg-12" >
                                         <label for="og_title"> OG Title </label>
                                         
-                                            {!! Form::text('pop_og_title', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_og_title', $row['og_title'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div>
                                     
                                     <div class="form-group   col-lg-12" >
                                         <label for="og_description"> OG Description </label>
                                         
-                                            {!! Form::textarea('pop_og_description', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::textarea('pop_og_description', $row['og_description'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div>
                                     
                                     <div class="form-group  col-lg-12 " >
                                         <label for="og_url"> OG url </label>
                                         
-                                            {!! Form::text('pop_og_url', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_og_url', $row['og_url'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div>
                                      
                                     <div class="form-group  col-lg-12 " >
                                         <label for="type"> OG type </label>
                                         
-                                            {!! Form::text('pop_og_type','',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_og_type', $row['og_type'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div> 
                                     
                                     <div class="form-group col-lg-12" style="display: none;">
                                         <label for="og_image"> OG Image </label>
                                         
-                                            {!! Form::text('pop_og_image', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_og_image', $row['og_image'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div>
                                     <!-- upload or link section --!>
@@ -1158,10 +1158,10 @@
                                     
                                         <div>     
                                             <label class='radio radio-inline'>
-                                                <input type='radio' name='pop_og_image_type' value ='upload' id='pop_og_image_upload' /> Upload 
+                                                <input type='radio' name='pop_og_image_type' value ='upload' id='pop_og_image_upload' <?php echo ($row['og_upload_type'] == 'upload') ? 'checked="checked"' : '';  ?> /> Upload 
                                             </label>
                                             <label class='radio radio-inline'>
-                                                <input type='radio' name='pop_og_image_type' value ='link' id='pop_og_image_type_link' /> Link 
+                                                <input type='radio' name='pop_og_image_type' value ='link' id='pop_og_image_type_link' <?php echo($row['og_upload_type'] == 'link') ?  'checked="checked"' : ''; ?> /> Link 
                                             </label> 
                                         
                                         </div>
@@ -1170,7 +1170,10 @@
                                     <div class="form-group col-lg-12 pop_og-image-type-upload" style="display:none;" >
                                         <label for="og_image" > Image </label>
                                         
-                                            <input  type='file' name='pop_og_image_type_upload' id='pop_og_image_type_upload'  />                                             
+                                            <input  type='file' name='pop_og_image_type_upload' id='pop_og_image_type_upload'  />
+                                            <div >                                            
+                                                {!! SiteHelpers::showUploadedFile($row['og_image'],'/uploads/venue_meta_imgs/') !!}                 
+                                            </div>    
                                         
                                     </div>
     
@@ -1179,7 +1182,7 @@
                                         <div class="form-group col-lg-12" >
                                             <label for="og image Link"> Link </label>
                                             
-                                                <input type='text' name='pop_og_image_type_link' id='pop_og_image_type_link' class="form-control" value="" />
+                                                <input type='text' name='pop_og_image_type_link' id='pop_og_image_type_link' class="form-control" value="<?php echo $row['og_image_link']; ?>" />
                                                                                             
                                             
     
@@ -1192,14 +1195,14 @@
                                     <div class="form-group col-lg-12  " >
                                         <label for="og_sitename"> OG Sitename </label>
                                         
-                                            {!! Form::text('pop_og_sitename', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_og_sitename', $row['og_sitename'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div> 
             
                                     <div class="form-group col-lg-12  " >
                                         <label for="og_locale"> OG Locale </label>
                                         
-                                            {!! Form::text('pop_og_locale', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_og_locale', $row['og_locale'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div>
                                 </div>
@@ -1209,42 +1212,42 @@
                                     <div class="form-group col-lg-12  " >
                                         <label for="article_section"> Article section </label>
                                         
-                                            {!! Form::text('pop_article_section', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_article_section', $row['article_section'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div> 
             
                                     <div class="form-group col-lg-12  " >
                                         <label for="article_tags"> Article tags </label>
                                         
-                                            {!! Form::text('pop_article_tags', '',array('class'=>'form-control', 'placeholder'=>'', 'data-role'=>'tagsinput' )) !!} 
+                                            {!! Form::text('pop_article_tags', $row['article_tags'],array('class'=>'form-control', 'placeholder'=>'', 'data-role'=>'tagsinput' )) !!} 
                                         
                                     </div> 
                                     
                                     <div class="form-group col-lg-12  " >
                                         <label for="twitter_url" >Twitter url </label>
                                         
-                                            {!! Form::text('pop_twitter_url', '',array('class'=>'form-control', 'placeholder'=>''  )) !!} 
+                                            {!! Form::text('pop_twitter_url', $row['twitter_url'],array('class'=>'form-control', 'placeholder'=>''  )) !!} 
                                         
                                     </div> 
                                     
                                     <div class="form-group col-lg-12  " >
                                         <label for="twitter_title"> Twitter title </label>
                                         
-                                            {!! Form::text('pop_twitter_title', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_twitter_title', $row['twitter_title'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div> 
                                     
                                     <div class="form-group col-lg-12  " >
                                         <label for="twitter_description"> Twitter description </label>
                                         
-                                            {!! Form::textarea('pop_twitter_description', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::textarea('pop_twitter_description', $row['twitter_description'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div>
                                     
                                     <div class="form-group col-lg-12" style="display: none;">
                                         <label for="twitter_image">Twitter image</label>
                                         
-                                            {!! Form::text('pop_twitter_image', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_twitter_image', $row['twitter_image'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div> 
                                     
@@ -1255,10 +1258,10 @@
                                         <div>
                                            
                                             <label class='radio radio-inline'>
-                                                <input type='radio' name='pop_twitter_image_type' value ='upload' id='pop_twitter_image_upload'  /> Upload 
+                                                <input type='radio' name='pop_twitter_image_type' value ='upload' id='pop_twitter_image_upload' @if($row['twitter_upload_type'] == 'upload') checked="checked" @endif /> Upload 
                                             </label>
                                             <label class='radio radio-inline'>
-                                                <input type='radio' name='pop_twitter_image_type' value ='link' id='pop_twitter_image_link'   /> Link 
+                                                <input type='radio' name='pop_twitter_image_type' value ='link' id='pop_twitter_image_link' @if($row['twitter_upload_type'] == 'link') checked="checked" @endif  /> Link 
                                             </label> 
                                         </div>    
     
@@ -1268,7 +1271,9 @@
                                         <label for="twitter_image"> Image </label>
                                         
                                             <input  type='file' name='pop_twitter_image_type_upload' id='pop_twitter_image_type_upload'  />
-                                            					
+                                            <div>                                                
+                                                {!! SiteHelpers::showUploadedFile($row['twitter_image'],'/uploads/venue_meta_imgs/') !!}                   
+                                            </div>					
     
                                         
                                     </div>
@@ -1278,7 +1283,7 @@
                                         <div class="form-group" >
                                             <label for="twitter image Link"> Link </label>
                                             
-                                                <input type='text' name='pop_twitter_image_type_link' id='pop_twitter_image_type_link' class="form-control" value="" />
+                                                <input type='text' name='pop_twitter_image_type_link' id='pop_twitter_image_type_link' class="form-control" value="<?php echo ($row['twitter_image_link']); ?>" />
                                                                                             
                                             
     
@@ -1291,28 +1296,28 @@
                                     <div class="form-group col-lg-12  " >
                                         <label for="twitter_domain"> Twitter domain </label>
                                         
-                                            {!! Form::text('pop_twitter_domain', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_twitter_domain', $row['twitter_domain'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div> 
                                     
                                     <div class="form-group col-lg-12  " >
                                         <label for="twitter_card"> Twitter card </label>
                                         
-                                            {!! Form::text('pop_twitter_card', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_twitter_card', $row['twitter_card'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div>
                                     
                                     <div class="form-group col-lg-12  " >
                                         <label for="twitter_creator">Twitter creator</label>
                                         
-                                            {!! Form::text('pop_twitter_creator', '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
+                                            {!! Form::text('pop_twitter_creator', $row['twitter_creator'],array('class'=>'form-control', 'placeholder'=>'' )) !!} 
                                         
                                     </div>      
                                     
                                     <div class="form-group col-lg-12  " >
                                         <label for="twitter_site">Twitter Site</label>
                                         
-                                            {!! Form::text('pop_twitter_site', '',array('class'=>'form-control', 'placeholder'=>'')) !!} 
+                                            {!! Form::text('pop_twitter_site', $row['twitter_site'],array('class'=>'form-control', 'placeholder'=>'')) !!} 
                                         
                                     </div>
                                 </div>
@@ -1552,6 +1557,7 @@
         $(".timepicker").datetimepicker({
             format: 'hh:ii',
             autoclose: true,
+            pickTime: true,
             // todayHighlight: true,
             //showMeridian: true,
             startView: 1,
