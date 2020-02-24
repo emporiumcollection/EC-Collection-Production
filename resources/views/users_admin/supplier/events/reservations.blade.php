@@ -1,4 +1,4 @@
-@extends('users_admin.metronic.layouts.app')
+@extends('users_admin.supplier.layouts.app')
 
 @section('page_name')
     
