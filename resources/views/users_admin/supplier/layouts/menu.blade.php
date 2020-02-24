@@ -56,7 +56,7 @@
                                             <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
                                                 <a href="{{ URL::to('events')}}" class="m-menu__link">                           
                                                     <i class="m-menu__link-icon flaticon-cogwheel-2"></i>
-                                                    <span class="m-menu__link-text">Events</span>
+                                                    <span class="m-menu__link-text">Events</span> 
                                                 </a>
                                             </li>
                                             <li class="m-menu__item " aria-haspopup="true" m-menu-link-redirect="1">
