@@ -529,13 +529,13 @@
 									   <div class="side-nav-next-hotel-img Sidenavimg">
 											<div class="side-next-and-perivious-hotel-arrow">
 												<div class="arrows-commom  next-arrow">
-													<a href="http://www.emporium-voyage.com/hotel-zoo-berlin-">
+													<a href="/hotel-zoo-berlin-">
 														<span>New Hotels</span>
 													</a>
 												</div>
 											</div>
 											
-											<div class="new-hotel-image" style="background-image:url(http://www.emporium-voyage.com/uploads/property_imgs_thumbs/xfront_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg.pagespeed.ic.nY-effTxow.jpg)">
+											<div class="new-hotel-image" style="background-image:url(/uploads/property_imgs_thumbs/xfront_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg.pagespeed.ic.nY-effTxow.jpg)">
 																			<div class="new-hotels-image-tittle">
 																					<h2 class="new-hotel-name">Hotel Zoo Berlin </h2>
 																					<div class=" new-hotel-add">
@@ -545,13 +545,13 @@
 																			</div>
 																			<div class="clearfix"></div>
 																			<div class="new-hotel-view-more-btn">
-																					<a class="" href="http://www.emporium-voyage.com/hotel-zoo-berlin-" tabindex="0">
+																					<a class="" href="/hotel-zoo-berlin-" tabindex="0">
 																							View Hotel
 																					</a>
 																			</div>
 																	</div>
 											
-											<a class="bootom-view-next-btn" href="http://www.emporium-voyage.com/hotel-zoo-berlin-">
+											<a class="bootom-view-next-btn" href="/hotel-zoo-berlin-">
 												Visit All Hotels DOI
 											</a>
 										</div>

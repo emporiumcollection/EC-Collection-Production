@@ -369,10 +369,10 @@
                 </div>
                 <div class="hotel-next-previous-outer">
                     <div class="previous-btn previous-next-pannel"> 
-                        <img class="img-responsive next-hotel-arrow" src="http://www.emporium-voyage.com/sximo/assets/images/editorial-left-arrow.png" alt="">
-                        <a href="http://www.emporium-voyage.com/luxury-hotel-luxury-vander-urbani-resort">
+                        <img class="img-responsive next-hotel-arrow" src="/sximo/assets/images/editorial-left-arrow.png" alt="">
+                        <a href="/luxury-hotel-luxury-vander-urbani-resort">
                             <div class="next-hotel-show-pannel">
-                                <img class="img-responsive" src="http://www.emporium-voyage.com/uploads/property_imgs_thumbs/front_property_4567_27731137764-82283525500.jpg" alt="">
+                                <img class="img-responsive" src="/uploads/property_imgs_thumbs/front_property_4567_27731137764-82283525500.jpg" alt="">
                                 <div class="next-hotel-tittle">
                                     <h2>VANDER URBANI RESORT</h2>
                                 </div>
@@ -382,10 +382,10 @@
                 </div>
                 <div class="hotel-next-previous-outer">
                     <div class="next-hotel-btn previous-next-pannel"> 
-                        <img class="img-responsive next-hotel-arrow" src="http://www.emporium-voyage.com/sximo/assets/images/editorial-right-arrow.png" alt="">
-                        <a href="http://www.emporium-voyage.com/luxury-hotel-hotel-zoo-berlin-">
+                        <img class="img-responsive next-hotel-arrow" src="/sximo/assets/images/editorial-right-arrow.png" alt="">
+                        <a href="/luxury-hotel-hotel-zoo-berlin-">
                             <div class="next-hotel-show-pannel">
-                                <img class="img-responsive" src="http://www.emporium-voyage.com/uploads/property_imgs_thumbs/front_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg" alt="">
+                                <img class="img-responsive" src="/uploads/property_imgs_thumbs/front_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg" alt="">
                                 <div class="next-hotel-tittle">
                                     <h2>Hotel Zoo Berlin </h2>
                                 </div>
@@ -504,7 +504,7 @@
                             <div class="swiper-button-prev swiper-prev-style4"><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
                         </div>
                         <div class="scroll-button">
-                            <a href="#align-to-top" class="align-to-top-arrow"><img src="http://www.emporium-voyage.com/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
+                            <a href="#align-to-top" class="align-to-top-arrow"><img src="/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
                         </div>
                     </div>
                 </section>
@@ -543,7 +543,7 @@
                                                                 </div>
                                                             </div>
                                                             <div>
-                                                                <img class="slider-next-image-btn img-responsive" src="http://www.emporium-voyage.com/uploads/properties_subtab_imgs/69726129-32146277.jpg" alt="">
+                                                                <img class="slider-next-image-btn img-responsive" src="/uploads/properties_subtab_imgs/69726129-32146277.jpg" alt="">
                                                                 <a href="#" style="margin-left:100px;" rel="{{$package->id}}" class="book-button open-show_more-page hotel-btn ClickButton">Show More</a>
                                                             </div>
                                                         </div>
@@ -629,12 +629,12 @@
                                                     <div class="side-nav-next-hotel-img Sidenavimg">
                                                         <div class="side-next-and-perivious-hotel-arrow">
                                                             <div class="arrows-commom  next-arrow">
-                                                                <a href="http://www.emporium-voyage.com/luxury-hotel-the-mira-hong-kong" tabindex="0">
+                                                                <a href="/luxury-hotel-the-mira-hong-kong" tabindex="0">
                                                                     <span>New Hotels</span>
                                                                 </a>
                                                             </div>
                                                         </div>
-                                                        <div class="new-hotel-image" style="background-image:url(http://www.emporium-voyage.com/uploads/property_imgs_thumbs/xfront_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg.pagespeed.ic.nY-effTxow.jpg)">
+                                                        <div class="new-hotel-image" style="background-image:url(/uploads/property_imgs_thumbs/xfront_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg.pagespeed.ic.nY-effTxow.jpg)">
                                                             <div class="new-hotels-image-tittle">
                                                                 <h2 class="new-hotel-name">Hotel Zoo Berlin </h2>
                                                                 <div class=" new-hotel-add">
@@ -644,13 +644,13 @@
                                                             </div>
                                                             <div class="clearfix"></div>
                                                             <div class="new-hotel-view-more-btn">
-                                                                <a class="" href="http://www.emporium-voyage.com/hotel-zoo-berlin-" tabindex="0">
+                                                                <a class="" href="/hotel-zoo-berlin-" tabindex="0">
                                                                     View Hotel
                                                                 </a>
                                                             </div>
                                                         </div>
 
-                                                        <a class="bootom-view-next-btn" href="http://www.emporium-voyage.com/luxury-hotel-the-mira-hong-kong" tabindex="0">
+                                                        <a class="bootom-view-next-btn" href="/luxury-hotel-the-mira-hong-kong" tabindex="0">
                                                             Visit All Hotels DOI
                                                         </a>
                                                     </div>
@@ -666,7 +666,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row masonry-grid vegasgalleryimg"><div class="col-md-6 col-lg-4 masonry-column">  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="http://www.emporium-voyage.com/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/41767802254-78148460470.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="http://www.emporium-voyage.com/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/45103475203-77197756287.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="http://www.emporium-voyage.com/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/46301073746-59684422322.jpg"></a>  </div> </div><div class="col-md-6 col-lg-4 masonry-column">  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="http://www.emporium-voyage.com/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/33058154168-34094477237.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="http://www.emporium-voyage.com/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/35361925388-86451894872.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="http://www.emporium-voyage.com/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/16323879650-11779554560.jpg"></a>  </div> </div><div class="col-md-6 col-lg-4 masonry-column">  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="http://www.emporium-voyage.com/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/69281205576-51989796012.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="http://www.emporium-voyage.com/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/18040249289-17359995303.jpg"></a>  </div> </div></div>
+                                    <div class="row masonry-grid vegasgalleryimg"><div class="col-md-6 col-lg-4 masonry-column">  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/41767802254-78148460470.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/45103475203-77197756287.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/46301073746-59684422322.jpg"></a>  </div> </div><div class="col-md-6 col-lg-4 masonry-column">  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/33058154168-34094477237.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/35361925388-86451894872.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/16323879650-11779554560.jpg"></a>  </div> </div><div class="col-md-6 col-lg-4 masonry-column">  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/69281205576-51989796012.jpg"></a>  </div>  <div>	<a href="#" class="thumbnail vogasThumbnail"><img class="img-responsive" src="/uploads/container_user_files/locations/hotel-zoo-berlin/restrurants-gallery-images/18040249289-17359995303.jpg"></a>  </div> </div></div>
                                 </div>
                             </div><!--
                           <div class="modal-footer vegasModelFooter">

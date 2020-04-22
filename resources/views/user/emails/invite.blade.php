@@ -78,14 +78,14 @@
     .img-box {
         height: 300px;
         color: #fff;
-        background: url(http://staging.emporium-voyage.com/images/bg-map.png) no-repeat center bottom;
+        background: url(/images/bg-map.png) no-repeat center bottom;
         background-size: cover;
         padding: 30px;
         position: relative;
     }
 
   .bg-city.img-box {
-     background: url(http://staging.emporium-voyage.com/images/bg-city.png) no-repeat center bottom;
+     background: url(/images/bg-city.png) no-repeat center bottom;
     background-size: cover;
   }
   .rounds {

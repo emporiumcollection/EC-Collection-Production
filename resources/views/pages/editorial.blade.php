@@ -621,7 +621,7 @@
                             }
                             
                             .hotels-showcase-right-side {
-                                background-image: url('http://www.emporium-voyage.com/uploads/container_user_files/locations/phum-baitang/property-images/Phum Baitang (3).jpg');
+                                background-image: url('/uploads/container_user_files/locations/phum-baitang/property-images/Phum Baitang (3).jpg');
                                 height: 980px;
                                 margin-top: 0px;
                                 position: absolute;
@@ -2105,11 +2105,11 @@
                                         <button type="submit">BOOK NOW</button>
                                     </div>
                                     <div class="view-modify-cancel-booking">
-                                        <a href="https://www.emporium-voyage.com/customer/login">View, Modify or Cancel your Booking</a>
+                                        <a href="/customer/login">View, Modify or Cancel your Booking</a>
                                     </div>
                                     <ul class="booking-page-footer-section editorial-book-align" >
                                         <li>
-                                            <a href="https://www.emporium-voyage.com/membership_hotel" target="_blank">
+                                            <a href="/membership_hotel" target="_blank">
                                                 <span>Join the worlds leading luxury club</span>
                                                 <h6 class="center">Enjoy exclusive members only benefits</h6>
                                             </a>
@@ -2123,7 +2123,7 @@
                                             <div class="white-border-bottom"></div>
                                         </li>
                                         <li>
-                                            <a href="https://www.emporium-voyage.com/user/login" target="_blank">
+                                            <a href="/user/login" target="_blank">
                                                 <span>View or Modify Reserveration</span>
                                                 <h6 class="center">Login to Hotel PMS</h6>
                                             </a>
@@ -2161,7 +2161,7 @@
                             <div class="row">
                                 <div class="right-menu-align">
                                     <div class="hotels-logo">
-                                        <h3 class="title"><a href="https://www.emporium-voyage.com"> <img class="img-responsive" src="https://www.emporium-voyage.com/sximo/assets/images/design-location-logo.png" alt=""></a></h3>
+                                        <h3 class="title"><a href="/"> <img class="img-responsive" src="/sximo/assets/images/design-location-logo.png" alt=""></a></h3>
                                         
                                     </div>
                                     <ul class="nav nav-pills nav-stacked">

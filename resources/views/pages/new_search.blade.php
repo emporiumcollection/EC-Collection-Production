@@ -530,16 +530,16 @@
 <!--                    <div class="go-back-button-container">
                         <button class="go-back-button" onclick="goBack()">Go Back</button>
                         <div class="previous-page-screen-short-container">
-                                                            <img src="http://www.emporium-voyage.com/sximo/previous_page_image/7b58aa5e612660d887cb8569a5685109.jpg">
+                                                            <img src="/sximo/previous_page_image/7b58aa5e612660d887cb8569a5685109.jpg">
                                                     </div>
                     </div>-->
                 </div>
                                                             <div class="hotel-next-previous-outer">
                             <div class="previous-btn previous-next-pannel"> 
-                                  <img class="img-responsive next-hotel-arrow" src="http://www.emporium-voyage.com/sximo/assets/images/editorial-left-arrow.png" alt="">
-                                <a href="http://www.emporium-voyage.com/standart-hotel-moscow">
+                                  <img class="img-responsive next-hotel-arrow" src="/sximo/assets/images/editorial-left-arrow.png" alt="">
+                                <a href="/standart-hotel-moscow">
                                     <div class="next-hotel-show-pannel">
-                                        <img class="img-responsive" src="http://www.emporium-voyage.com/uploads/property_imgs_thumbs/front_property_4565_15531396286-46934943356.jpg" alt="">
+                                        <img class="img-responsive" src="/uploads/property_imgs_thumbs/front_property_4565_15531396286-46934943356.jpg" alt="">
                                         <div class="next-hotel-tittle">
                                             <h2>StandArt Hotel Moscow</h2>
                                         </div>
@@ -549,10 +549,10 @@
                         </div>
                                                                 <div class="hotel-next-previous-outer">
                             <div class="next-hotel-btn previous-next-pannel"> 
-                                <img class="img-responsive next-hotel-arrow" src="http://www.emporium-voyage.com/sximo/assets/images/editorial-right-arrow.png" alt="">
-                                <a href="http://www.emporium-voyage.com/the-mira-hong-kong">
+                                <img class="img-responsive next-hotel-arrow" src="/sximo/assets/images/editorial-right-arrow.png" alt="">
+                                <a href="/the-mira-hong-kong">
                                     <div class="next-hotel-show-pannel">
-                                        <img class="img-responsive" src="http://www.emporium-voyage.com/uploads/property_imgs_thumbs/front_property_4612_THE MIRA HONG KONG (2).jpg" alt="">
+                                        <img class="img-responsive" src="/uploads/property_imgs_thumbs/front_property_4612_THE MIRA HONG KONG (2).jpg" alt="">
                                         <div class="next-hotel-tittle">
                                             <h2>The Mira Hong Kong</h2>
                                         </div>

@@ -27,7 +27,7 @@
 				<div class="swiper-button-prev swiper-prev-style4"><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
 			</div>
 			<div class="scroll-button">
-				<a href="#align-to-top" class="align-to-top-arrow"><img src="http://www.emporium-voyage.com/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
+				<a href="#align-to-top" class="align-to-top-arrow"><img src="/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
 			</div>
 		</div>
 	</section>
@@ -44,7 +44,7 @@
 						@foreach($packages as $key=>$package)
 						<li class="{{($k==1) ? 'active' : ''}}">
 							<a href="#">
-								<img class="img-responsive object-fit-size" src="http://www.emporium-voyage.com/uploads/properties_subtab_imgs/69726129-32146277.jpg" alt="{{$package->space_title}}" style="height:580px; width: 100%;">
+								<img class="img-responsive object-fit-size" src="/uploads/properties_subtab_imgs/69726129-32146277.jpg" alt="{{$package->space_title}}" style="height:580px; width: 100%;">
 							</a>
 							<div class="col-md-12 col-sm-12">
 								<div class="col-md-6 col-sm-6">
@@ -66,7 +66,7 @@
 													</div>
 												</div>
 												<div>
-													<img class="slider-next-image-btn img-responsive" src="http://www.emporium-voyage.com/uploads/properties_subtab_imgs/69726129-32146277.jpg" alt="">
+													<img class="slider-next-image-btn img-responsive" src="/uploads/properties_subtab_imgs/69726129-32146277.jpg" alt="">
 													<a href="#" style="margin-left:100px;" rel="{{$package->id}}" class="book-button open-show_more-page hotel-btn ClickButton">Show More</a>
 												</div>
 											</div>

@@ -250,7 +250,7 @@
 								</div>
 							</div>
 							{{--*/ $relatimg = URL::to('uploads/property_imgs_thumbs/front_property_'.$relatedproperties[0]->folder_id.'_'.$relatedproperties[0]->file_name); /*--}}
-							<div class="new-hotel-image" style="background-image:url(http://www.emporium-voyage.com/uploads/property_imgs_thumbs/xfront_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg.pagespeed.ic.nY-effTxow.jpg)">
+							<div class="new-hotel-image" style="background-image:url(/uploads/property_imgs_thumbs/xfront_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg.pagespeed.ic.nY-effTxow.jpg)">
                                                             <div class="new-hotels-image-tittle">
                                                                     <h2 class="new-hotel-name">Hotel Zoo Berlin </h2>
                                                                     <div class=" new-hotel-add">
@@ -260,7 +260,7 @@
                                                             </div>
                                                             <div class="clearfix"></div>
                                                             <div class="new-hotel-view-more-btn">
-                                                                    <a class="" href="http://www.emporium-voyage.com/hotel-zoo-berlin-" tabindex="0">
+                                                                    <a class="" href="/hotel-zoo-berlin-" tabindex="0">
                                                                             View Hotel
                                                                     </a>
                                                             </div>

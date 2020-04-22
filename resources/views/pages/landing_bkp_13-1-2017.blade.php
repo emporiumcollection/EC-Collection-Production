@@ -1893,7 +1893,7 @@
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="destinSearchMob">
-                                                <form action="http://www.emporium-voyage.com/search" method="get">
+                                                <form action="/search" method="get">
                                                         <input name="s" value="" type="hidden">
                                                         <input name="ref" value="sbd" type="hidden">
                                                         

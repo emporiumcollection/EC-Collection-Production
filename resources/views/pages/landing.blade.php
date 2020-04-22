@@ -1610,11 +1610,11 @@
                         </div>
                     </form>
                     <div class="view-modify-cancel-booking">
-                        <a href="https://www.emporium-voyage.com/customer/login">View, Modify or Cancel your Booking</a>
+                        <a href="/customer/login">View, Modify or Cancel your Booking</a>
                     </div>
                     <ul class="booking-page-footer-section">
                         <li>
-                            <a href="https://www.emporium-voyage.com/membership_hotel" target="_blank">
+                            <a href="/membership_hotel" target="_blank">
                                 <span>Join the worlds leading luxury club</span>
                                 <h6 class="center">Enjoy exclusive members only benefits</h6>
                             </a>
@@ -1628,7 +1628,7 @@
                             <div class="white-border-bottom"></div>
                         </li>
                         <li>
-                            <a href="https://www.emporium-voyage.com/user/login" target="_blank">
+                            <a href="/user/login" target="_blank">
                                 <span>View or Modify Reserveration</span>
                                 <h6 class="center">Login to Hotel PMS</h6>
                             </a>
@@ -2415,7 +2415,7 @@
                                             </div>
                                             <div class="clearfix"></div>
                                             <div class="destinSearchMob">
-                                                <form action="http://www.emporium-voyage.com/search" method="get">
+                                                <form action="/search" method="get">
                                                         <div class="form-group post-filter-inputs">
                                                             <label>Arrivel</label>
                                                             <input id="filter-date-mobile" class="ai-arrive-date" data-format="DD-MM-YYYY" data-template="DD MMM YYYY" name="arrive" value="01-01-1970" style="display: none;" type="text"><span class="combodate"><select class="day " style="width: auto;"><option value="1">01</option><option value="2">02</option><option value="3">03</option><option value="4">04</option><option value="5">05</option><option value="6">06</option><option value="7">07</option><option value="8">08</option><option value="9">09</option><option value="10">10</option><option value="11">11</option><option value="12">12</option><option value="13">13</option><option value="14">14</option><option value="15">15</option><option value="16">16</option><option value="17">17</option><option value="18">18</option><option value="19">19</option><option value="20">20</option><option value="21">21</option><option value="22">22</option><option value="23">23</option><option value="24">24</option><option value="25">25</option><option value="26">26</option><option value="27">27</option><option value="28">28</option><option value="29">29</option><option value="30">30</option><option value="31">31</option></select>&nbsp;<select class="month " style="width: auto;"><option value="0">Jan</option><option value="1">Feb</option><option value="2">Mar</option><option value="3">Apr</option><option value="4">May</option><option value="5">Jun</option><option value="6">Jul</option><option value="7">Aug</option><option value="8">Sep</option><option value="9">Oct</option><option value="10">Nov</option><option value="11">Dec</option></select>&nbsp;<select class="year " style="width: auto;"><option value="2019">2019</option><option value="2018">2018</option></select></span>

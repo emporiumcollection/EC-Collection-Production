@@ -797,11 +797,11 @@
                                             </div>
 
                                             <div class="navigation-area">
-                                                <div class="swiper-button-next swiper-next-style4 bg-primary text-white"><img src="http://www.emporium-voyage.com/sximo/assets/images/editorial-left-arrow.png"></div>
-                                                <div class="swiper-button-prev swiper-prev-style4"><img src="http://www.emporium-voyage.com/sximo/assets/images/editorial-right-arrow.png"></div>
+                                                <div class="swiper-button-next swiper-next-style4 bg-primary text-white"><img src="/sximo/assets/images/editorial-left-arrow.png"></div>
+                                                <div class="swiper-button-prev swiper-prev-style4"><img src="/sximo/assets/images/editorial-right-arrow.png"></div>
                                             </div>
                                             <div class="scroll-button">
-                                                <a href="#align-to-top" class="align-to-top-arrow"><img src="http://www.emporium-voyage.com/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
+                                                <a href="#align-to-top" class="align-to-top-arrow"><img src="/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
                                             </div>
                                         </div>
                                     </section>

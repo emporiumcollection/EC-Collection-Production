@@ -221,10 +221,10 @@
                 </div>
                 <div class="hotel-next-previous-outer">
                     <div class="previous-btn previous-next-pannel"> 
-                        <img class="img-responsive next-hotel-arrow" src="http://www.emporium-voyage.com/sximo/assets/images/editorial-left-arrow.png" alt="">
-                        <a href="http://www.emporium-voyage.com/luxury-hotel-luxury-vander-urbani-resort">
+                        <img class="img-responsive next-hotel-arrow" src="/sximo/assets/images/editorial-left-arrow.png" alt="">
+                        <a href="/luxury-hotel-luxury-vander-urbani-resort">
                             <div class="next-hotel-show-pannel">
-                                <img class="img-responsive" src="http://www.emporium-voyage.com/uploads/property_imgs_thumbs/front_property_4567_27731137764-82283525500.jpg" alt="">
+                                <img class="img-responsive" src="/uploads/property_imgs_thumbs/front_property_4567_27731137764-82283525500.jpg" alt="">
                                 <div class="next-hotel-tittle">
                                     <h2>VANDER URBANI RESORT</h2>
                                 </div>
@@ -234,10 +234,10 @@
                 </div>
                 <div class="hotel-next-previous-outer">
                     <div class="next-hotel-btn previous-next-pannel"> 
-                        <img class="img-responsive next-hotel-arrow" src="http://www.emporium-voyage.com/sximo/assets/images/editorial-right-arrow.png" alt="">
-                        <a href="http://www.emporium-voyage.com/luxury-hotel-hotel-zoo-berlin-">
+                        <img class="img-responsive next-hotel-arrow" src="/sximo/assets/images/editorial-right-arrow.png" alt="">
+                        <a href="/luxury-hotel-hotel-zoo-berlin-">
                             <div class="next-hotel-show-pannel">
-                                <img class="img-responsive" src="http://www.emporium-voyage.com/uploads/property_imgs_thumbs/front_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg" alt="">
+                                <img class="img-responsive" src="/uploads/property_imgs_thumbs/front_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg" alt="">
                                 <div class="next-hotel-tittle">
                                     <h2>Hotel Zoo Berlin </h2>
                                 </div>
@@ -356,7 +356,7 @@
 									<div class="swiper-button-prev swiper-prev-style4"><i class="fa fa-arrow-down" aria-hidden="true"></i></div>
 								</div>
 								<div class="scroll-button">
-									<a href="#align-to-top" class="align-to-top-arrow"><img src="http://www.emporium-voyage.com/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
+									<a href="#align-to-top" class="align-to-top-arrow"><img src="/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
 								</div>
 							</div>
 						</section>

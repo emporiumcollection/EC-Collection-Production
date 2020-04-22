@@ -162,10 +162,10 @@
                 </div>
                 <div class="hotel-next-previous-outer">
                     <div class="previous-btn previous-next-pannel"> 
-                        <img class="img-responsive next-hotel-arrow" src="http://www.emporium-voyage.com/sximo/assets/images/editorial-left-arrow.png" alt="">
-                        <a href="http://www.emporium-voyage.com/luxury-hotel-luxury-vander-urbani-resort">
+                        <img class="img-responsive next-hotel-arrow" src="/sximo/assets/images/editorial-left-arrow.png" alt="">
+                        <a href="/luxury-hotel-luxury-vander-urbani-resort">
                             <div class="next-hotel-show-pannel">
-                                <img class="img-responsive" src="http://www.emporium-voyage.com/uploads/property_imgs_thumbs/front_property_4567_27731137764-82283525500.jpg" alt="">
+                                <img class="img-responsive" src="/uploads/property_imgs_thumbs/front_property_4567_27731137764-82283525500.jpg" alt="">
                                 <div class="next-hotel-tittle">
                                     <h2>VANDER URBANI RESORT</h2>
                                 </div>
@@ -175,10 +175,10 @@
                 </div>
                 <div class="hotel-next-previous-outer">
                     <div class="next-hotel-btn previous-next-pannel"> 
-                        <img class="img-responsive next-hotel-arrow" src="http://www.emporium-voyage.com/sximo/assets/images/editorial-right-arrow.png" alt="">
-                        <a href="http://www.emporium-voyage.com/luxury-hotel-hotel-zoo-berlin-">
+                        <img class="img-responsive next-hotel-arrow" src="/sximo/assets/images/editorial-right-arrow.png" alt="">
+                        <a href="/luxury-hotel-hotel-zoo-berlin-">
                             <div class="next-hotel-show-pannel">
-                                <img class="img-responsive" src="http://www.emporium-voyage.com/uploads/property_imgs_thumbs/front_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg" alt="">
+                                <img class="img-responsive" src="/uploads/property_imgs_thumbs/front_property_4505_Emporium-Voyage-Hotel-Zoo-Berlin00017.jpg" alt="">
                                 <div class="next-hotel-tittle">
                                     <h2>Hotel Zoo Berlin </h2>
                                 </div>
@@ -288,12 +288,12 @@
                     <div class=" right-menus ">
                         <div class="row-">
 <!--                            <div class="hotels-logo">
-                                <h3 class="title"><a href="https://www.emporium-voyage.com">The Dwell Hotel</a><hr class="star-light"></h3>
+                                <h3 class="title"><a href="/">The Dwell Hotel</a><hr class="star-light"></h3>
 
                             </div>-->
                             <ul>
 <!--                                <li>
-                                    <form autocomplete="off" method="get" id="searchform-navbar" class="searchform-navbar" action="https://www.emporium-voyage.com/search">
+                                    <form autocomplete="off" method="get" id="searchform-navbar" class="searchform-navbar" action="/search">
                                         <span class="twitter-typeahead" style="position: relative; display: inline-block;"><input class="bh-search-input typeahead search-navbar search-box tt-hint" style="position: absolute; top: 0px; left: 0px; border-color: transparent; box-shadow: none; opacity: 1; background: rgb(255, 255, 255) none repeat scroll 0% 0%;" readonly="" autocomplete="off" spellcheck="false" tabindex="-1" dir="ltr" type="text"><input class="bh-search-input typeahead search-navbar search-box tt-input" name="s" id="search-navbar" placeholder="Search" autocomplete="off" spellcheck="false" dir="auto" style="position: relative; vertical-align: top; background-color: transparent;" type="text"><pre aria-hidden="true" style="position: absolute; visibility: hidden; white-space: pre; font-family: Geomanist-Regular; font-size: 14px; font-style: normal; font-variant: normal; font-weight: 400; word-spacing: 0px; letter-spacing: 0px; text-indent: 0px; text-rendering: optimizelegibility; text-transform: uppercase;"></pre><div class="tt-menu" style="position: absolute; top: 100%; left: 0px; z-index: 100; display: none;"><div class="tt-dataset tt-dataset-states"></div></div></span>
                                     </form>
                                 </li>-->
@@ -303,12 +303,12 @@
                                 </li>
                                 
                                                                 <li>
-                                    <a href="https://www.emporium-voyage.com/Terms-and-Conditions" data-hotel-option="deisgn_architecture">TERMS AND CONDITIONS</a>
+                                    <a href="/Terms-and-Conditions" data-hotel-option="deisgn_architecture">TERMS AND CONDITIONS</a>
                                 </li>
               
                                 
                                                                 <li>
-                                    <a href="https://www.emporium-voyage.com/Impressum" data-hotel-option="restaurant_bar">IMPRINT</a>
+                                    <a href="/Impressum" data-hotel-option="restaurant_bar">IMPRINT</a>
                                 </li>
                                 
                             </ul>
@@ -343,7 +343,7 @@
 								</div>
 							</div>
 																					<div class="slick-cstm-width">
-								<a href="http://www.bocadolobo.com/en/landing-page/de-market/"><img src="https://www.emporium-voyage.com/uploads/users/advertisement/1.png"></a>
+								<a href="http://www.bocadolobo.com/en/landing-page/de-market/"><img src="/uploads/users/advertisement/1.png"></a>
 							</div>
 														                        </section>
                 </div>
@@ -377,11 +377,11 @@
 								</div>
 
 								<div class="navigation-area">
-									<div class="swiper-button-next swiper-next-style4 bg-primary text-white"><img src="http://www.emporium-voyage.com/sximo/assets/images/editorial-left-arrow.png"></div>
-									<div class="swiper-button-prev swiper-prev-style4"><img src="http://www.emporium-voyage.com/sximo/assets/images/editorial-right-arrow.png"></div>
+									<div class="swiper-button-next swiper-next-style4 bg-primary text-white"><img src="/sximo/assets/images/editorial-left-arrow.png"></div>
+									<div class="swiper-button-prev swiper-prev-style4"><img src="/sximo/assets/images/editorial-right-arrow.png"></div>
 								</div>
 								<div class="scroll-button">
-									<a href="#align-to-top" class="align-to-top-arrow"><img src="http://www.emporium-voyage.com/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
+									<a href="#align-to-top" class="align-to-top-arrow"><img src="/sximo/assets/images/scroll-down.png" class="down-arrow-align animate-arrow" alt=""> </a>
 								</div>
 							</div>
 						</section>
