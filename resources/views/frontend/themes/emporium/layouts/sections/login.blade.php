@@ -53,6 +53,7 @@
                      <option value="{!! CommonHelper::getusertype('hotel-b2b') !!}">Luxury Hotel</option>
                      <option value="{!! CommonHelper::getusertype('users-b2c') !!}">Luxury Traveler</option>
                      <option value="{!! CommonHelper::getusertype('advertiser-b2b') !!}">Bespoke Advertiser</option>
+                     <option value="{!! CommonHelper::getusertype('supplier') !!}">Supplier</option>
                   </select>
                   </div>
                   

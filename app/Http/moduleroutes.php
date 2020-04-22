@@ -64,4 +64,5 @@
                     Route::controller('globalcustomplan', 'GlobalcustomplanController');
                     Route::controller('customplan', 'CustomplanController');
                     Route::controller('customplanitems', 'CustomplanitemsController');
+                    Route::controller('venue', 'VenueController');
                     ?>
