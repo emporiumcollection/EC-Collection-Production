@@ -1828,7 +1828,7 @@ class ContainerController extends Controller {
 		{
 			File::delete(public_path() . '/uploads/zip/'.$downFileName);
 		}
-		$items = Input::get('selectedfiles');
+		$items = Input::get('selectedfiles'); print_r($items); die;
 		if($items!='')
 		{
 			$comsep = explode(',',$items);
