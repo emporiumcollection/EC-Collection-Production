@@ -1837,7 +1837,7 @@ class ContainerController extends Controller {
 				$undsep = explode('-',$sepr);
 				if($undsep[0]=='folder')
 				{
-					$folderdirPath = $this->getContainerUserPath($undsep[1]);  print_r($folderdirPath); die;
+					$folderdirPath = $this->getContainerUserPath($undsep[1]);
 					$files[] = $folderdirPath;
 				}
 				if($undsep[0]=='file')
@@ -1846,7 +1846,7 @@ class ContainerController extends Controller {
 					$filedirPath = $this->getContainerUserPath($file->folder_id);
 					$files[] = $filedirPath.$file->file_name;
 				}
-			}
+			} print_r($files); die;
 			Zipper::make('uploads/zip/'.$downFileName)->add($files);
 			
 			$headers = array(
