@@ -1853,11 +1853,11 @@ class ContainerController extends Controller {
 				'Content-Type' => 'application/octet-stream',
 			);
 			
-			$dopath = Zipper::getFilePath();  print_r($dopath); die;
+			$dopath = Zipper::getFilePath();  //print_r($dopath); die;
 			Zipper::close();
 			// Download .zip file.
-			return Redirect::away(\URL::to($dopath));
-			//return \Response::download( public_path() . '/'.$dopath, $downFileName, $headers );
+			//return Redirect::away(\URL::to($dopath));
+			return \Response::download( public_path() . '/'.$dopath, $downFileName, $headers );
 		}
 		else
 		{
