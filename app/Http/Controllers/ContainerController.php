@@ -1846,14 +1846,14 @@ class ContainerController extends Controller {
 					$filedirPath = $this->getContainerUserPath($file->folder_id);
 					$files[] = $filedirPath.$file->file_name;
 				}
-			} print_r($files); die;
+			}
 			Zipper::make('uploads/zip/'.$downFileName)->add($files);
 			
 			$headers = array(
 				'Content-Type' => 'application/octet-stream',
 			);
 			
-			$dopath = Zipper::getFilePath();
+			$dopath = Zipper::getFilePath();  print_r($dopath); die;
 			Zipper::close();
 			// Download .zip file.
 			return Redirect::away(\URL::to($dopath));
