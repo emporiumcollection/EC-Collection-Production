@@ -1828,7 +1828,7 @@ class ContainerController extends Controller {
 		{
 			File::delete(public_path() . '/uploads/zip/'.$downFileName);
 		}
-		$items = Input::get('selectedfiles'); print_r($items); die;
+		$items = Input::get('selectedfiles');
 		if($items!='')
 		{
 			$comsep = explode(',',$items);
@@ -1837,7 +1837,7 @@ class ContainerController extends Controller {
 				$undsep = explode('-',$sepr);
 				if($undsep[0]=='folder')
 				{
-					$folderdirPath = $this->getContainerUserPath($undsep[1]);
+					$folderdirPath = $this->getContainerUserPath($undsep[1]);  print_r($folderdirPath); die;
 					$files[] = $folderdirPath;
 				}
 				if($undsep[0]=='file')
