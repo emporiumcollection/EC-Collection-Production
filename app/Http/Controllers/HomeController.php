@@ -26,7 +26,7 @@ class HomeController extends Controller {
      *
      * @return Response
      */
-    public function index(Request $request) {
+    public function index(Request $request) { echo "hello"; die;
         //echo bcrypt('buatapasih79');exit();
 
         $this->data['landingads'] = \DB::table('tb_advertisement')->select('adv_img', 'adv_link')->where('adv_type', 'sidebar')->where('adv_position', 'landing')->get();
