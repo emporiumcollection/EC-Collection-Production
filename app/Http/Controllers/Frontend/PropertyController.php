@@ -346,7 +346,7 @@ class PropertyController extends Controller {
             }
         }else{
             if (\Auth::check() == true) {
-                if(\Auth::user()->group_id!=1){
+                if(\Auth::user()->group_id!=1 || \Auth::user()->group_id!=2){
                     $uid = \Auth::user()->id;
                     $memtype = str_replace('-', ' ', \Auth::user()->member_type); 
                     $arr_membershiptype = explode('-', \Auth::user()->member_type); 
