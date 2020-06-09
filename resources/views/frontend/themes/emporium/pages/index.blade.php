@@ -1,6 +1,6 @@
 @extends('frontend.themes.emporium.layouts.home')
 {{--  For Title --}}
-@section('title', 'Your Ultimate Luxury Travel Partner')
+@section('meta_title', 'Your Ultimate Luxury Travel Partner')
 {{-- For Meta Keywords --}}
 @section('meta_keywords', 'Luxury Hotel Booking, Luxury 5 Star Hotels')
 {{-- For Meta Description --}}
