@@ -510,7 +510,7 @@ class ContainerController extends Controller {
 		if(\Auth::user()->group_id!=3 || $wnd=='iframe')
 		{
 			$spaceAllowed = \Auth::user()->storage_space;
-			if($spaceAllowed==0){ $spaceAllowed = 2; }
+			if($spaceAllowed==0){ $spaceAllowed = 1; }
 			$usedSpaceBytes_temp = DB::table('tb_container_files');
 			if(\Auth::user()->group_id==2)
 			{
