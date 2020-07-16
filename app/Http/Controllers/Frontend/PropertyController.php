@@ -355,8 +355,10 @@ class PropertyController extends Controller {
                     }    
                     //print_r($membershiptype);      
                     $mem_package = \DB::table('tb_packages')->select('id')->where('package_title', $memtype)->first();
-                    //print_r($mem_package); die;  
-                    $pckages_ids = $mem_package->id;    
+                    if(!empty($mem_package)){
+                        //print_r($mem_package); die;  
+                        $pckages_ids = $mem_package->id;
+                    }    
                 }
             }            
         }
