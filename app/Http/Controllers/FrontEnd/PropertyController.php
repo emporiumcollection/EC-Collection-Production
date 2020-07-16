@@ -279,7 +279,7 @@ class PropertyController extends Controller {
                     
     }
     
-    function propertySearch(Request $request) {        
+    function propertySearch(Request $request) {      
         $membershiptype =  $request->membershiptype;
                 
 		$selCurrency=$request->input("currencyOption");
@@ -346,7 +346,7 @@ class PropertyController extends Controller {
             }
         }else{
             if (\Auth::check() == true) {
-                if(\Auth::user()->group_id!=1){
+                if(\Auth::user()->group_id!=1 || \Auth::user()->group_id!=2){
                     $uid = \Auth::user()->id;
                     $memtype = str_replace('-', ' ', \Auth::user()->member_type); 
                     $arr_membershiptype = explode('-', \Auth::user()->member_type); 
@@ -2789,7 +2789,8 @@ class PropertyController extends Controller {
         
         $site_url = '';
         if($sitename=='voyage'){
-            $site_url = 'https://emporium-voyage.com';
+            //$site_url = 'http://ev.local';
+            $site_url = 'https://emporium-voyage.com'; 
             //$site_url = 'http://localhost:8181/emporium-staging-forge/public'; 
             //$site_url = 'http://staging.emporium-voyage.com';  
         }elseif($sitename=='safari'){
