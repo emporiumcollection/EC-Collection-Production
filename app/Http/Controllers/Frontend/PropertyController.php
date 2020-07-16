@@ -279,7 +279,7 @@ class PropertyController extends Controller {
                     
     }
     
-    function propertySearch(Request $request) {  echo "hello"; die;      
+    function propertySearch(Request $request) {      
         $membershiptype =  $request->membershiptype;
                 
 		$selCurrency=$request->input("currencyOption");
@@ -2789,8 +2789,8 @@ class PropertyController extends Controller {
         
         $site_url = '';
         if($sitename=='voyage'){
-            $site_url = 'http://ev.local';
-            //$site_url = 'https://emporium-voyage.com';
+            //$site_url = 'http://ev.local';
+            $site_url = 'https://emporium-voyage.com'; 
             //$site_url = 'http://localhost:8181/emporium-staging-forge/public'; 
             //$site_url = 'http://staging.emporium-voyage.com';  
         }elseif($sitename=='safari'){
