@@ -5,53 +5,7 @@
 @stop
     
 @section('subheader_search')
-    <div class="m-subheader-search">
-        <h2 class="m-subheader-search__title">
-    		Discover Ultra Luxury Experiences Worldwide 
-    	</h2>
-    	<form class="m-form reservation-form" action="{{URL::to('search')}}" method="get" id="reservationForm" name="reservationform">
-    		<div class="m-grid m-grid--ver-desktop m-grid--desktop">
-    			<div class="m-grid__item m-grid__item--middle">
-    				<div class="m-input-icon m-input-icon--fixed m-input-icon--right">
-    					<input type="text" name="s" data-action="auto-suggestion" class="form-control" placeholder="Enter your hotel or destination"/>
-    				</div>
-    				<div class="m-input-icon m-input-icon--fixed-large m-input-icon--fixed-md m-input-icon--right search-cal-top">
-    					<div class="calendarbox">
-                    	   <div class="row">
-                                <div id="t-topbar-picker" class="col-xs-12 col-md-12 t-datepicker">
-                                    <div class="t-check-in"></div>
-                                    <div class="t-check-out"></div>
-                                </div>
-                    	   </div>
-                    	</div>
-    				</div>
-                    <div class="m-input-icon m-input-icon--fixed-small m-input-icon--fixed-md m-input-icon--right">
-    					<input name="adult" type="number" class="form-control " placeholder="Adult children">
-    				</div>
-                    <div class="m-input-icon m-input-icon--fixed-small m-input-icon--fixed-md m-input-icon--right">
-    					
-                        <?php  $currencyList=(CommonHelper::getCurrencyList()); if(empty($currencyList)){ $currencyList = array(); } ?>
-                        <select name='currencyOption' class="form-control form-control-height">
-                            <option value="EUR">Currency</option>
-                            @foreach($currencyList as $currencyCode => $currencyName)
-                
-                                <option value="{{ $currencyCode }}" title="{{ $currencyName }}">{{ $currencyName }}
-                            </option>
-                
-                            @endforeach                
-                        </select>
-                        
-    				</div>
-    			</div>
-    			<div class="m-grid__item m-grid__item--middle search-btn-top-margin">
-    				<div class="m--margin-top-20 m--visible-tablet-and-mobile"></div>
-    				<button type="submit" class="btn m-btn--pill m-subheader-search__submit-btn">
-    					Search Hotels
-    				</button>
-    			</div>
-    		</div>
-    	</form>
-    </div>
+       
 @stop
 
 @section('breadcrumb')
@@ -264,7 +218,8 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
         				</div>
         			</div>
                     <?php 
-                        
+                        //$latest_reservation = array();
+                        $img = "";
                         $latest_reservation = \DB::table('tb_reservations')->where('client_id', $logged_user->id)->orderBy('id', 'DESC')->first();
                         $arrival_day = '';
                         $arrival_month = '';
@@ -272,7 +227,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
                         $departure_day = '';
                         $departure_month = '';
                         $departure_year = '';
-                        if(!empty($latest_reservation)>0){
+                        if(count($latest_reservation)>0){
                             $arrival = $latest_reservation->checkin_date;
                             $arrival_day = date('j', strtotime($arrival));
                             $arrival_month = date('M', strtotime($arrival));
@@ -304,13 +259,13 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
                                 
                                 $room_type_id= $reserved_rooms[0]->type_id;
                             }
-                            $category = \DB::table('tb_properties_category_types')->where('id', $latest_reservation->type_id)->where('status', 0)->where('show_on_booking', 1)->first();
+                            //$category = \DB::table('tb_properties_category_types')->where('id', $latest_reservation->type_id)->where('status', 0)->where('show_on_booking', 1)->first();
                             
-                            $category_image = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $category->property_id)->where('tb_properties_images.category_id', $latest_reservation->type_id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
+                            //$category_image = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $category->property_id)->where('tb_properties_images.category_id', $latest_reservation->type_id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
                             
-                            $imgsrc = $container->getThumbpath($category_image->folder_id);
+                            //$imgsrc = $container->getThumbpath($category_image->folder_id);
                             
-                            $img = $imgsrc.'/'.$category_image->file_name;
+                            //$img = $imgsrc.'/'.$category_image->file_name;
                             $book_again = '';
                             if($room_type_id!=''){
                                 $book_again = 'book-property/'.$obj_properties->property_slug.'?property='.$obj_properties->id.'&roomType='.$room_type_id.'&arrive=&departure=&booking_adults=1&booking_children=0';
@@ -322,7 +277,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
         				<ul class="m-portlet__nav">
         					<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
         						<a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill m-btn btn-outline-light m-btn--hover-light a_white">
-        							2018
+        							<?php echo date('yy'); ?>
         						</a>
         						<div class="m-dropdown__wrapper" style="display: none;">
         							<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
@@ -499,7 +454,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
         				<ul class="m-portlet__nav">
         					<li class="m-portlet__nav-item m-dropdown m-dropdown--inline m-dropdown--arrow m-dropdown--align-right m-dropdown--align-push" m-dropdown-toggle="hover">
         						<a href="#" class="m-portlet__nav-link m-dropdown__toggle dropdown-toggle btn btn--sm m-btn--pill m-btn btn-outline-light m-btn--hover-light">
-        							2018
+        							<?php echo date('yy'); ?>
         						</a>
         						<div class="m-dropdown__wrapper" style="display: none;">
         							<span class="m-dropdown__arrow m-dropdown__arrow--right m-dropdown__arrow--adjust"></span>
@@ -1246,7 +1201,8 @@ background: #428bca;
     <script src="{{ asset('lib/jquery-ui/jquery-ui.min.js') }}"></script>
     <script src="{{ asset('themes/emporium/js/custom/do_ajax.js') }}"></script>
     <script src="{{ asset('themes/emporium/js/custom/common.js') }}"></script>
-    <script src="{{ asset('themes/emporium/daterangepicker/js/t-datepicker.js') }}"></script>   
+    <script src="{{ asset('themes/emporium/daterangepicker/js/t-datepicker.js') }}"></script>  
+    
     <script>
         $(document).ready(function(){
             // settings
@@ -1312,33 +1268,81 @@ background: #428bca;
                 interval: 5000
             })
             
-            $('#t-topbar-picker').tDatePicker({
-                'numCalendar':'2',
-                'autoClose':true,
-                'durationArrowTop':'200',
-                'formatDate':'mm-dd-yyyy',
-                'titleCheckIn':'Arrival',
-                'titleCheckOut':'Departure',
-                'inputNameCheckIn':'arrive',
-                'inputNameCheckOut':'departure',
-                'titleDateRange':'days',
-                'titleDateRanges':'days',
-                'iconDate':'<i class="fa fa-calendar"></i>',
-                'limitDateRanges':'365',
-                'dateCheckIn':'@if(isset($_GET['arrive']) && $_GET['arrive']!=''){{$_GET['arrive']}}@else{{'null'}}@endif',
-                'dateCheckOut':'@if(isset($_GET['departure']) && $_GET['departure']!=''){{$_GET['departure']}}@else{{'null'}}@endif'
-            }).on('afterCheckOut',function(e, dateCO) {
-                if(((typeof $(this).closest('form').find('[name="adult"]').val()) != 'undefined') && ((typeof $(this).closest('form').find('[name="adult"]').val()) != undefined)){
-                    $(this).closest('form').find('[name="adult"]').focus();
-                }
-            });
-
+            
+            
+            
+            
             /*$(".cls_preferences_1").click(function(e){
                 e.preventDefault();                
                 window.location.href = "{{Url::to('user/profile')}}";
                 $("#tab_preferences").trigger('click');
             });*/
+            
+            
+            var gl_check_in = new Date(); // check-in
+            //var check_out = new Date(dateCO[1]) // check-out
+            var gl_check_out_date = new Date();
+            
+            var gl_check_in_year = gl_check_in.getFullYear(); 
+            var gl_check_in_month = gl_check_in.getMonth()+1; 
+            var gl_check_in_day = gl_check_in.getDate();
+            var gl_check_in_date = gl_check_in_month+"/"+gl_check_in_day+"/"+gl_check_in_year;
+            //console.log(gl_check_in_date);
+            gl_check_out_date.setDate(gl_check_out_date.getDate()+1);
+            var gl_check_out_year = gl_check_out_date.getFullYear(); 
+            var gl_check_out_month = gl_check_out_date.getMonth()+1; 
+            var gl_check_out_day = gl_check_out_date.getDate();
+            gl_check_out_date = gl_check_out_month+"/"+gl_check_out_day+"/"+gl_check_out_year;
+        
+            $('input[name="daterange"]').daterangepicker({
+                opens: 'right',
+                autoApply: true,
+                autoUpdateInput: false,
+                startDate: gl_check_in_date, 
+                endDate: gl_check_out_date                
+            }, function(start, end, label) {
+                $('input[name="daterange"]').val(start.format('MM/DD/YYYY') + ' - ' +end.format('MM/DD/YYYY'));
+                $('input[name="gl_arrive"]').val(start.format('MM-DD-YYYY'));
+                $('input[name="gl_departure"]').val(end.format('MM-DD-YYYY'));
+                $("#down-arrow").trigger('click');
+                //console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+            });
+            
+            
+             $('.dates-cs').click(function(){
+                $('.whenpopup').show();
+                var picker = $('#daterangepicker-inline').daterangepicker({
+                    parentEl: "#daterangepicker-inline-container",
+                    autoApply: true,
+                    autoUpdateInput: false,
+                    locale:{
+                        format: 'MMM DD',
+                        cancelLabel: 'Clear',
+                    }
+                });
+               
+                picker.on('apply.daterangepicker', function(ev, picker) {
+                    $('.filter-date').addClass('show');
+                    $(this).val(picker.startDate.format('MMM DD') + ' - ' + picker.endDate.format('MMM DD'));
+                    $('.whenpopup').hide();
+                });
+                picker.data('daterangepicker').hide = function () {};
+                picker.data('daterangepicker').show();
+            });
+        
+            $(document).mouseup(function(event){
+                var $trigger = $(".whenpopup");
+                if($trigger !== event.target && !$trigger.has(event.target).length){
+                $('.whenpopup').hide();
+                }            
+            });
+
+                    
+                
         });
+        
+        
+        
     </script>
 @endsection
 @section('script')
@@ -1351,5 +1355,6 @@ background: #428bca;
 	<script src="//www.amcharts.com/lib/3/plugins/animate/animate.min.js" type="text/javascript"></script>
 	<script src="//www.amcharts.com/lib/3/plugins/export/export.min.js" type="text/javascript"></script>
 	<script src="//www.amcharts.com/lib/3/themes/light.js" type="text/javascript"></script>
-    <script src="{{ asset('metronic/assets/app/js/charts.js') }}"></script>    
+    <script src="{{ asset('metronic/assets/app/js/charts.js') }}"></script> 
+       
 @stop
