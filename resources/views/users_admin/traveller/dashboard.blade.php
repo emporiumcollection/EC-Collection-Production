@@ -227,7 +227,7 @@ Emporium Voyage is a prestige organisation seeking to serve your every need. Nav
                         $departure_day = '';
                         $departure_month = '';
                         $departure_year = '';
-                        if(count($latest_reservation)>0){
+                        if(!empty($latest_reservation)>0){
                             $arrival = $latest_reservation->checkin_date;
                             $arrival_day = date('j', strtotime($arrival));
                             $arrival_month = date('M', strtotime($arrival));
