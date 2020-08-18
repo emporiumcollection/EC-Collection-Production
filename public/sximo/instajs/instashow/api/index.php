@@ -270,7 +270,8 @@ function serve_user_media_recent($username) {
         }
     }
 
-    $stored_data = storage_get($cache_key, false, true);
+    //$stored_data = storage_get($cache_key, false, true);
+    $stored_data = storage_get($cache_key, $formatted_data, true);
 
     if ($stored_data) {
         list($pagination, $stored_data) = paginate($stored_data, 'max_id', $count, $max_id);
