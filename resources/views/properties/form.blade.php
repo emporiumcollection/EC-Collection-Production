@@ -313,6 +313,12 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
+                                    <label for="children_policy" class="control-label col-md-4 text-left">Always included in this hotel</label>
+                                    <div class="col-md-6">
+                                        <textarea name="always_included" class="form-control">{{$row['always_included']}}</textarea>        
+                                    </div>
+                                </div>
+                                <div class="form-group">
                                     <label for="Pets" class="control-label col-md-4 text-left">Pets</label>
                                     <div class="col-md-6">
                                         <input type="text" name="pets" class="form-control" value="{{$row['pets']}}" />          

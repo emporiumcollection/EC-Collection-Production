@@ -569,7 +569,8 @@ class PropertiesController extends Controller {
             $data['transfer'] = $request->input('transfer');
             $data['smookingpolicy'] = $request->input('smookingpolicy');
             $data['smookingrooms'] = $request->input('rdsmookingrooms');
-            $data['numberofrooms'] = $request->input('numberofrooms');            
+            $data['numberofrooms'] = $request->input('numberofrooms'); 
+            $data['always_included'] = $request->input('always_included');           
             //$data['roomamenities'] = $request->input('roomamenities');
             if (!empty($request->input('roomamenities'))) {
                 $data['roomamenities'] = implode(',', $request->input('roomamenities'));
