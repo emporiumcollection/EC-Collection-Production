@@ -65,4 +65,6 @@
                     Route::controller('customplan', 'CustomplanController');
                     Route::controller('customplanitems', 'CustomplanitemsController');
                     Route::controller('venue', 'VenueController');
+                    Route::controller('propertyusp', 'PropertyuspController');
+                    Route::controller('availableservices', 'AvailableservicesController');
                     ?>

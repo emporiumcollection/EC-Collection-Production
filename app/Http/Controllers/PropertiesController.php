@@ -363,9 +363,17 @@ class PropertiesController extends Controller {
         $this->data['default_junior_tax'] = \DB::table('tb_settings')->where('key_value', 'junior_citytax')->first();
         
         $this->data['vat_classes'] = \DB::table('tb_vat_taxes')->where('vat_tax_status', 1)->get();
+        //echo "<pre>";
+        //print_r($this->data); die;
         
         $this->data['metatags'] = \DB::table('tb_property_metatags')->where('property_id', $id)->first();
         
+        /** Property USP **/
+        $this->data['propertyusp'] = \DB::table('tb_property_usp')->where('status', 1)->get();
+        /** **/
+        /** available services **/
+        $this->data['availableservices'] = \DB::table('tb_available_services')->where('status', 1)->get();
+        /** **/
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
         $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.form':'properties.form'; 
         
@@ -508,6 +516,8 @@ class PropertiesController extends Controller {
             $data['latitude'] = $latitude;
             $data['longitude'] = $longitude;
             $data['address'] = $address;
+            /*$data['latitude'] = $request->input('latitude');
+            $data['longitude'] = $request->input('longitude');*/
             
             if (!empty($request->input('assigned_amenities'))) {
                 $data['assign_amenities'] = implode(',', $request->input('assigned_amenities'));
@@ -545,6 +555,39 @@ class PropertiesController extends Controller {
                 $data['property_category_id'] = '';
             }
 			
+            if (!empty($request->input('propertyusp'))) {
+                $data['property_usp_id'] = implode(',', $request->input('propertyusp'));
+            } else {
+                $data['property_usp_id'] = '';
+            }
+            
+            /** Hotel info ***/            
+            $data['internetpublic'] = $request->input('rdinternetpublic');
+            $data['internetroom'] = $request->input('rdinternetroom');            
+            $data['checkin'] = $request->input('checkin');
+            $data['checkout'] = $request->input('checkout');            
+            $data['transfer'] = $request->input('transfer');
+            $data['smookingpolicy'] = $request->input('smookingpolicy');
+            $data['smookingrooms'] = $request->input('rdsmookingrooms');
+            $data['numberofrooms'] = $request->input('numberofrooms');            
+            //$data['roomamenities'] = $request->input('roomamenities');
+            if (!empty($request->input('roomamenities'))) {
+                $data['roomamenities'] = implode(',', $request->input('roomamenities'));
+            } else {
+                $data['roomamenities'] = '';
+            }
+            //$data['availableservices'] = $request->input('availableservices');
+            if (!empty($request->input('availableservices'))) {
+                $data['availableservices'] = implode(',', $request->input('availableservices'));
+            } else {
+                $data['availableservices'] = '';
+            }
+            
+            $data['pets'] = $request->input('pets');
+            $data['carpark'] = $request->input('carpark');
+            $data['children_policy'] = $request->input('children_policy');
+            /** Hotel info End ***/
+            
 			if (!empty($request->input('spaids'))) {
                 $data['spa_ids'] = implode(',', $request->input('spaids'));
             } else {
@@ -648,6 +691,74 @@ class PropertiesController extends Controller {
             // Architechure 
             $data['architecture_title'] = $request->input('architecture_title');
             $data['architecture_desciription'] = $request->input('architecture_desciription');
+            
+            if (!is_null($request->file('architecture_portraite_image1'))) {
+                $architecture_mainfile1 = $request->file('architecture_portraite_image1');
+                $architecture_mainfilename1 = $architecture_mainfile1->getClientOriginalName();
+                $architecture_mainextension1 = $architecture_mainfile1->getClientOriginalExtension(); //if you need extension of the file
+                $architecture_mainfilename1 = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $architecture_mainextension1;
+                $architecture_mainuploadSuccess1 = $architecture_mainfile1->move($destinationPath, $architecture_mainfilename1);
+                if ($architecture_mainuploadSuccess1) {
+                    $data['architecture_portraite_image1'] = $architecture_mainfilename1;
+                }
+            }
+            if (!is_null($request->file('architecture_portraite_image2'))) {
+                $architecture_mainfile2 = $request->file('architecture_portraite_image2');
+                $architecture_mainfilename2 = $architecture_mainfile2->getClientOriginalName();
+                $architecture_mainextension2 = $architecture_mainfile2->getClientOriginalExtension(); //if you need extension of the file
+                $architecture_mainfilename2 = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $architecture_mainextension2;
+                $architecture_mainuploadSuccess2 = $architecture_mainfile2->move($destinationPath, $architecture_mainfilename2);
+                if ($architecture_mainuploadSuccess2) {
+                    $data['architecture_portraite_image2'] = $architecture_mainfilename2;
+                }
+            }
+            if (!is_null($request->file('architecture_portraite_image3'))) {
+                $architecture_mainfile3 = $request->file('architecture_portraite_image3');
+                $architecture_mainfilename3 = $architecture_mainfile3->getClientOriginalName();
+                $architecture_mainextension3 = $architecture_mainfile3->getClientOriginalExtension(); //if you need extension of the file
+                $architecture_mainfilename3 = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $architecture_mainextension3;
+                $architecture_mainuploadSuccess3 = $architecture_mainfile3->move($destinationPath, $architecture_mainfilename3);
+                if ($architecture_mainuploadSuccess3) {
+                    $data['architecture_portraite_image3'] = $architecture_mainfilename3;
+                }
+            }
+            if (!is_null($request->file('architecture_portraite_image4'))) {
+                $architecture_mainfile4 = $request->file('architecture_portraite_image4');
+                $architecture_mainfilename4 = $architecture_mainfile4->getClientOriginalName();
+                $architecture_mainextension4 = $architecture_mainfile4->getClientOriginalExtension(); //if you need extension of the file
+                $architecture_mainfilename4 = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $architecture_mainextension4;
+                $architecture_mainuploadSuccess4 = $architecture_mainfile4->move($destinationPath, $architecture_mainfilename4);
+                if ($architecture_mainuploadSuccess4) {
+                    $data['architecture_portraite_image4'] = $architecture_mainfilename4;
+                }
+            }
+            if (!is_null($request->file('architecture_landscape_image1'))) {
+                $architecture_mainfile5 = $request->file('architecture_landscape_image1');
+                $architecture_mainfilename5 = $architecture_mainfile5->getClientOriginalName();
+                $architecture_mainextension5 = $architecture_mainfile5->getClientOriginalExtension(); //if you need extension of the file
+                $architecture_mainfilename5 = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $architecture_mainextension5;
+                $architecture_mainuploadSuccess5 = $architecture_mainfile5->move($destinationPath, $architecture_mainfilename5);
+                if ($architecture_mainuploadSuccess5) {
+                    $data['architecture_landscape_image1'] = $architecture_mainfilename5;
+                }
+            }
+            if (!is_null($request->file('architecture_landscape_image2'))) {
+                $architecture_mainfile6 = $request->file('architecture_landscape_image2');
+                $architecture_mainfilename6 = $architecture_mainfile6->getClientOriginalName();
+                $architecture_mainextension6 = $architecture_mainfile6->getClientOriginalExtension(); //if you need extension of the file
+                $architecture_mainfilename6 = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $architecture_mainextension6;
+                $architecture_mainuploadSuccess6 = $architecture_mainfile6->move($destinationPath, $architecture_mainfilename6);
+                if ($architecture_mainuploadSuccess6) {
+                    $data['architecture_landscape_image2'] = $architecture_mainfilename6;
+                }
+            }
+            
+            $data['architecture_landscapehovertext_image1'] = $request->input('architecture_landscapehovertext_image1');
+            $data['architecture_landscapehovertext_image2'] = $request->input('architecture_landscapehovertext_image2');
+            
+            $data['architecture_sub_title'] = $request->input('architecture_sub_title');
+            $data['architecture_sub_desciription'] = $request->input('architecture_sub_desciription');
+            
             if ($request->input('architecture_video_type') != '') {
                 $data['architecture_video_type'] = $request->input('architecture_video_type');
             }
@@ -668,6 +779,18 @@ class PropertiesController extends Controller {
                     $data['architecture_image'] = $architecture_filename;
                 }
             }
+            
+            if (!is_null($request->file('architecture_image2'))) {
+                $architecture_file2 = $request->file('architecture_image2');
+                $architecture_filename2 = $architecture_file2->getClientOriginalName();
+                $architecture_extension2 = $architecture_file2->getClientOriginalExtension(); //if you need extension of the file
+                $architecture_filename2 = rand(11111111, 99999999) . '-' . rand(11111111, 99999999) . '.' . $architecture_extension2;
+                $architecture_uploadSuccess2 = $architecture_file2->move($destinationPath, $architecture_filename2);
+                if ($architecture_uploadSuccess2) {
+                    $data['architecture_image2'] = $architecture_filename2;
+                }
+            }
+
 
             if (!is_null($request->file('architecture_video'))) {
                 $architecture_vfile = $request->file('architecture_video');
@@ -1188,14 +1311,13 @@ class PropertiesController extends Controller {
                     $data['video_video'] = $video_videofilename;
                 }
             }
-            
             $data['citytaxyesno'] = $request->input('rdcitytax');
             $data['adult_tax'] = $request->input('adult_tax');
             $data['junior_tax'] = $request->input('junior_tax');
             $data['baby_tax'] = $request->input('baby_tax');
             
             $id = $this->model->insertRow($data, $request->input('id'));
-
+            
             if (!is_null($request->input('copy_amenities_rooms')) && !empty($request->input('assigned_amenities'))) {
                 $check_pcats = \DB::table('tb_properties_category_types')->where('property_id', $id)->get();
                 if (!empty($check_pcats)) {
@@ -1214,7 +1336,7 @@ class PropertiesController extends Controller {
                         }
                     }
                 }
-            }
+            }            
             
             /** insert property packages relation start **/
             $finproperty_package_relation = array();
@@ -1245,6 +1367,7 @@ class PropertiesController extends Controller {
             }            
             if(count($final_assigned_users)){ \DB::table('tb_properties_users')->insert($final_assigned_users); }
             /** insert property packages relation end **/
+            
             
             /** Start Meta tags **/
             $meta_data['property_id'] = $id;
@@ -1457,7 +1580,7 @@ class PropertiesController extends Controller {
         } elseif ($active == 'property_images') {
             $this->data['imgs'] = $this->get_property_files($property_id, 'Property Images');
             $this->data['slider_imgs'] = $this->get_property_files($property_id, 'Property Slider Images');
-            
+            $this->data['grid_imgs'] = $this->get_property_files($property_id, 'Property Grid');
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
             $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_property_images':'properties.settings_property_images';
             
@@ -1506,8 +1629,8 @@ class PropertiesController extends Controller {
             $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_terms_and_conditions':'properties.settings_terms_and_conditions'; 
             return view($file_name, $this->data);
             
-        } elseif ($active == 'custom-price') {  
-                       
+        }elseif ($active == 'custom-price') {  
+                      
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
             //if($is_demo6!=''){
             $seasons = \DB::table('tb_seasons')->where('property_id', $property_id)->get();
@@ -1584,7 +1707,20 @@ class PropertiesController extends Controller {
                 $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_meals':'properties.custom_price';                
                 return view($file_name, $this->data);
             }
+        }elseif ($active == 'property-info') {  
+            $info = \DB::table('tb_properties_info')->where('property_id', $property_id)->get();            
+            $this->data['info'] = $info;            
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());      
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.info':'properties.info';                
+            return view($file_name, $this->data);            
+        }elseif ($active == 'property-usp') {  
+            $usp = \DB::table('tb_property_usp')->where('property_id', $property_id)->get();            
+            $this->data['usp'] = $usp;            
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());      
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.usp':'properties.usp';                
+            return view($file_name, $this->data);            
         }
+        
         if ($active == 'seasons') {
             $seasonArr = array();
             $checkseason = \DB::table('tb_seasons')->where('property_id', $property_id)->get();
@@ -1941,6 +2077,7 @@ class PropertiesController extends Controller {
 
     function property_images_uploads(Request $request) {
         $checkProp = \DB::table('tb_properties')->select('property_name')->where('id', $request->input('propId'))->first();
+        //print_r($checkProp); die;
         if (!empty($checkProp)) {
             $checkDir = \DB::table('tb_container')->select('id')->where('name', 'locations')->first();
             if (!empty($checkDir)) {
@@ -5426,5 +5563,4 @@ function property_images_wetransfer(Request $request) {
 			return json_encode($res);
 		}    
     }
-
 }

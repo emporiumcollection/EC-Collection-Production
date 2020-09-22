@@ -44,15 +44,36 @@
                         <ul class="nav nav-tabs">
                             <li class="active"><a href="#propertyinfo" data-toggle="tab">Property Info</a></li>
                             <li class="yachtin" style="display:none;"><a href="#yachtinfo" data-toggle="tab">Yacht Info </a></li>
-                            <li class=""><a href="#rooms_suites" data-toggle="tab">Rooms & Suites</a></li>
+                            <!--<li class=""><a href="#rooms_suites" data-toggle="tab">Rooms & Suites</a></li>-->
                             <li class=""><a href="#architecture_design" data-toggle="tab">Architecture & Design</a></li>
-                            <li class="" ><a href="#spas" data-toggle="tab" >Spas</a></li>
+                            <!--<li class="" ><a href="#spas" data-toggle="tab" >Spas</a></li>
                             <li class="" ><a href="#restaurant" data-toggle="tab" >Restaurant</a></li>
-                            <li class="" ><a href="#bar" data-toggle="tab" >Bar</a></li>
+                            <li class="" ><a href="#bar" data-toggle="tab" >Bar</a></li>-->
                             <li class="" ><a href="#video" data-toggle="tab" >Video</a></li>
                             <li class="" ><a href="#socialmedia" data-toggle="tab" >Social Networks</a></li>
+                            
+                            <li class="" ><a href="#propertyusp" data-toggle="tab" >Property USP</a></li>                            
+                            
                         </ul>
                         <div class="tab-content">
+                            <div class="tab-pane m-t" id="propertyusp">
+                                <div class="form-group  " >
+                                    <label for="Property usp" class=" control-label col-md-4 text-left"> Property USP</label>
+                                    <div class="col-md-6">
+
+                                        <select name='propertyusp[]' id="propertyusp" rows='5'   class='select2 ' multiple="multiple"   > 
+                                            <option  value ="0">-- Select property usp --</option> 
+                                            @foreach($propertyusp as $val)
+                                                <option  value ="{{$val->id}}" {{(isset($row['property_usp_id']) && in_array($val->id,explode(',',$row['property_usp_id']))) ? " selected='selected' " : '' }}>{{$val->title}}</option> 						
+                                            @endforeach						
+                                        </select> 
+                                    </div> 
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
+                            </div>
+                            
                             <div class="tab-pane m-t active" id="propertyinfo">
 
                                 <div class="form-group hidethis " style="display:none;">
@@ -74,7 +95,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group  " >
+                                <div class="form-group  ">
 									<label for="Property Category" class=" control-label col-md-4 text-left"> Property Category <span class="asterix"> * </span></label>
 									<div class="col-md-6">
 									  <select name='property_category[]' multiple rows='5' id='property_cat_ids' class='select2 ' required  ></select> 
@@ -82,7 +103,7 @@
 									 <div class="col-md-2">
 									 	
 									 </div>
-							     </div>
+							    </div>
                                   					
                                 <div class="form-group  " >
                                     <label for="Property Short Name" class=" control-label col-md-4 text-left"> Property Short Name </label>
@@ -105,7 +126,8 @@
                                             foreach ($property_type_opt as $key => $val) {
                                                 echo "<option  value ='$key' " . ($row['property_type'] == $key ? " selected='selected' " : '' ) . ">$val</option>";
                                             }
-                                            ?></select> 
+                                            ?>
+                                        </select> 
                                     </div> 
                                     <div class="col-md-2">
 
@@ -205,13 +227,110 @@
                                 <div class="form-group  " >
                                     <label for="Assign User" class=" control-label col-md-4 text-left"> Assign User <span class="asterix"> * </span></label>
                                     <div class="col-md-6">
-                                        <select name='assigned_user_id' rows='5' id='assigned_user_id' class='select2 ' required   ></select> 
+                                        <select name='assigned_user_id[]' rows='5' id='assigned_user_id' class='select2 ' required  multiple="multiple" ></select> 
                                     </div> 
                                     <div class="col-md-2">
 
                                     </div>
                                 </div> 
-
+                                <div class="form-group">
+                                    <label for="internet" class="control-label col-md-4 text-left">Internet in public areas free</label>
+                                    <div class="col-md-6">
+                                        <label class="radio-inline"><input type="radio" name="rdinternetpublic" value="1"  {{$row['internetpublic']==1 ? "checked='checked'" : '' }}>Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="rdinternetpublic" value="0" {{$row['internetpublic']==0 ? "checked='checked'" : '' }} >No</label>                                                    
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="internet" class="control-label col-md-4 text-left">Internet in room free</label>
+                                    <div class="col-md-6">
+                                        <label class="radio-inline"><input type="radio" name="rdinternetroom" value="1"  {{$row['internetroom']==1 ? "checked='checked'" : '' }}>Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="rdinternetroom" value="0" {{$row['internetroom']==0 ? "checked='checked'" : '' }} >No</label>           
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="Check in" class="control-label col-md-4 text-left">Check in</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="checkin" class="form-control" value="{{$row['checkin']}}" />          
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Check out" class="control-label col-md-4 text-left">Check out</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="checkout" class="form-control" value="{{$row['checkout']}}" />          
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="transfer" class="control-label col-md-4 text-left">Transportation and Transfer</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="transfer" class="form-control" value="{{$row['transfer']}}" />          
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Smooking policy" class="control-label col-md-4 text-left">Smooking policy</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="smookingpolicy" class="form-control" value="{{$row['smookingpolicy']}}" />          
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Smooking rooms" class="control-label col-md-4 text-left">Smooking rooms</label>
+                                    <div class="col-md-6">                                        
+                                        <label class="radio-inline"><input type="radio" name="rdsmookingrooms" value="1"  {{$row['smookingrooms']=='1' ? "checked='checked'" : '' }}>Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="rdsmookingrooms" value="0" {{$row['smookingrooms']=='0' ? "checked='checked'" : '' }} >No</label>          
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="Number of rooms" class="control-label col-md-4 text-left">Number of rooms</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="numberofrooms" class="form-control" value="{{$row['numberofrooms']}}" />          
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Number of rooms" class="control-label col-md-4 text-left">Room amenities</label>
+                                    <div class="col-md-6">                                        
+                                        <select name='roomamenities[]' rows='5' id='roomamenities' class='select2 ' multiple="multiple"  >
+                                            @if(!empty($amenties))
+                                                @foreach($amenties as $amenty)
+                                                <option value="{{$amenty->id}}" {{(isset($row['roomamenities']) && in_array($amenty->id,explode(',',$row['roomamenities']))) ? " selected='selected' " : '' }}>{{$amenty->amenity_title}}</option>
+                                                @endforeach
+                                            @endif
+                                        </select>          
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Available services" class="control-label col-md-4 text-left">Available services</label>
+                                    <div class="col-md-6">
+                                        
+                                        <select name='availableservices[]' rows='5' id='availableservices' class='select2 ' multiple="multiple"  >
+                                            @if(!empty($availableservices))
+                                            @foreach($availableservices as $avs)
+                                            <option value="{{$avs->id}}" {{(isset($row['availableservices']) && in_array($avs->id,explode(',',$row['availableservices']))) ? " selected='selected' " : '' }}>{{$avs->title}}</option>
+                                            @endforeach
+                                            @endif
+                                        </select>           
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="Pets" class="control-label col-md-4 text-left">Pets</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="pets" class="form-control" value="{{$row['pets']}}" />          
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="carpark" class="control-label col-md-4 text-left">Car park / valet service</label>
+                                    <div class="col-md-6">
+                                        <input type="text" name="carpark" class="form-control" value="{{$row['carpark']}}" />          
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="children_policy" class="control-label col-md-4 text-left">Children Policy</label>
+                                    <div class="col-md-6">
+                                        <textarea name="children_policy" class="form-control">{{$row['children_policy']}}</textarea>        
+                                    </div>
+                                </div>
                                 <div class="form-group  " >
                                     <label for="Assign Amenities" class=" control-label col-md-4 text-left"> Assign Amenities </label>
                                     <div class="col-md-6">
@@ -226,8 +345,7 @@
                                     <div class="col-md-2">
 
                                     </div>
-                                </div> 
-
+                                </div>                                
                                 <div class="form-group  " >
                                     <label for="Copy Amenities" class=" control-label col-md-4 text-left"> Copy Amenities to Rooms </label>
                                     <div class="col-md-6">
@@ -686,7 +804,125 @@
 
                                             </div>
                                         </div> 
+                                        
+                                        <div class="form-group">
+                                            <label for="main_image1" class=" control-label col-md-4 text-left"> Portraite Image1 </label>
+                                            <div class="col-md-6">
+                                                <input  type='file' name='architecture_portraite_image1' id='architecture_portraite_image1'  />
+                                                <div >
+                                                    {!! SiteHelpers::showUploadedFile($row['architecture_portraite_image1'],'/uploads/properties_subtab_imgs/') !!}
+                                                </div>
+                                            </div> 
+                                            <div class="col-md-2">
 
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="main_image2" class=" control-label col-md-4 text-left"> Portraite Image2 </label>
+                                            <div class="col-md-6">
+                                                <input  type='file' name='architecture_portraite_image2' id='architecture_portraite_image2'  />
+                                                <div >
+                                                    {!! SiteHelpers::showUploadedFile($row['architecture_portraite_image2'],'/uploads/properties_subtab_imgs/') !!}
+                                                </div>
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="main_image3" class=" control-label col-md-4 text-left"> Portraite Image3 </label>
+                                            <div class="col-md-6">
+                                                <input  type='file' name='architecture_portraite_image3' id='architecture_portraite_image3'  />
+                                                <div >
+                                                    {!! SiteHelpers::showUploadedFile($row['architecture_portraite_image3'],'/uploads/properties_subtab_imgs/') !!}
+                                                </div>
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="main_image4" class=" control-label col-md-4 text-left"> Portraite Image4 </label>
+                                            <div class="col-md-6">
+                                                <input  type='file' name='architecture_portraite_image4' id='architecture_portraite_image4'  />
+                                                <div >
+                                                    {!! SiteHelpers::showUploadedFile($row['architecture_portraite_image4'],'/uploads/properties_subtab_imgs/') !!}
+                                                </div>
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="main_image5" class=" control-label col-md-4 text-left"> Landscape Image1 </label>
+                                            <div class="col-md-6">
+                                                <input  type='file' name='architecture_landscape_image1' id='architecture_landscape_image1'  />
+                                                <div >
+                                                    {!! SiteHelpers::showUploadedFile($row['architecture_landscape_image1'],'/uploads/properties_subtab_imgs/') !!}
+                                                </div>
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="main_image6" class=" control-label col-md-4 text-left"> Landscape Image2 </label>
+                                            <div class="col-md-6">
+                                                <input  type='file' name='architecture_landscape_image2' id='architecture_landscape_image2'  />
+                                                <div >
+                                                    {!! SiteHelpers::showUploadedFile($row['architecture_landscape_image2'],'/uploads/properties_subtab_imgs/') !!}
+                                                </div>
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="form-group">
+                                            <label for="Title" class="control-label col-md-4 text-left"> Landscape Image1 hover text </label>
+                                            <div class="col-md-6">
+                                                {!! Form::text('architecture_hovertext_image1', $row['architecture_landscapehovertext_image1'],array('class'=>'form-control', 'placeholder'=>''  )) !!} 
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div> 
+                                        
+                                        <div class="form-group  " >
+                                            <label for="Title" class=" control-label col-md-4 text-left"> Landscape Image2 hover text </label>
+                                            <div class="col-md-6">
+                                                {!! Form::text('architecture_hovertext_image2', $row['architecture_landscapehovertext_image2'],array('class'=>'form-control', 'placeholder'=>''  )) !!} 
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div> 
+                                        
+                                        <div class="form-group  " >
+                                            <label for="Title" class=" control-label col-md-4 text-left"> Sub-title </label>
+                                            <div class="col-md-6">
+                                                {!! Form::text('architecture_sub_title', $row['architecture_sub_title'],array('class'=>'form-control', 'placeholder'=>''  )) !!} 
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div> 
+
+                                        <div class="form-group  " >
+                                            <label for="Description" class=" control-label col-md-4 text-left"> Sub-description </label>
+                                            <div class="col-md-6">
+                                                <textarea name="architecture_sub_desciription" class="form-control">{{$row['architecture_sub_desciription']}}</textarea> 
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div> 
+                                        
                                         <div class="form-group  " >
                                             <label for="Image" class=" control-label col-md-4 text-left"> Image </label>
                                             <div class="col-md-6">
@@ -701,7 +937,23 @@
 
                                             </div>
                                         </div>
+                                        
+                                        <div class="form-group  " >
+                                            <label for="Image" class=" control-label col-md-4 text-left"> Image 2 </label>
+                                            <div class="col-md-6">
+                                                <input  type='file' name='architecture_image2' id='architecture_image2'  />
+                                                <div >
+                                                    {!! SiteHelpers::showUploadedFile($row['architecture_image'],'/uploads/properties_subtab_imgs/') !!}
 
+                                                </div>					
+
+                                            </div> 
+                                            <div class="col-md-2">
+
+                                            </div>
+                                        </div>
+
+                                        
                                         <div class="form-group">
                                             <label for="Video Type" class=" control-label col-md-4 text-left"> Video Type </label>
                                             <div class="col-md-6"> 
@@ -2552,6 +2804,8 @@
                         </div>
 
                     </div>
+                    
+                    
                     <div class="tab-pane m-t " id="seo"> 
                         
                         <ul class="nav nav-tabs">
@@ -2709,7 +2963,7 @@
                                     </div>
                                 </div>
                                  
-                                <div class="form-group" style="display: none;" >
+                                <div class="form-group" style="display: none;">
                                     <label for="og_image_height" class=" control-label col-md-4 text-left"> OG Image Height </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_image_height', (!empty($metatags)) ? $metatags->og_image_height : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
@@ -2719,7 +2973,7 @@
                                     </div>
                                 </div>
                                 
-                                <div class="form-group">
+                                <div class="form-group  " >
                                     <label for="og_sitename" class=" control-label col-md-4 text-left"> OG Sitename </label>
                                     <div class="col-md-6">
                                         {!! Form::text('og_sitename', (!empty($metatags)) ? $metatags->og_sitename : '',array('class'=>'form-control', 'placeholder'=>'' )) !!} 
@@ -2888,6 +3142,8 @@
                         </div>                          
 
                     </div>
+                    
+                    
                     <!--<div class="tab-pane m-t" id="AgentAgency" >
                                                                     
                       <div class="form-group  " >
@@ -3024,13 +3280,13 @@
                 </div>
             </div>		 
         </div>	
-    </div>
+    </div>		
     <script src="{{ asset('sximo/js/typeahead.min.js')}}"></script>
-    <script src="{{ asset('sximo/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')}}"></script>			 
+    <script src="{{ asset('sximo/js/plugins/bootstrap-tagsinput/bootstrap-tagsinput.js')}}"></script>	 
     <script type="text/javascript">
         $(document).ready(function () {
             
-             $('input[name="meta_keywords"]').tagsinput({
+            $('input[name="meta_keywords"]').tagsinput({
               itemText: 'label'
             });
             $('input[name="article_tags"]').tagsinput();
@@ -3294,15 +3550,10 @@
                 $(".bar_videotypelink").show();
             });
 
-            /*$("#assigned_user_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_users:id:first_name|last_name') }}",
-                    {selected_value: '{{ $property_user }}'});*/
-            @if(isset($row->assigned_user_id))
-                $("#assigned_user_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_users:id:first_name|last_name') }}",
-                    {selected_value: '{{ $row->assigned_user_id }}'});
-            @else
-                $("#assigned_user_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_users:id:first_name|last_name') }}",
+            $("#assigned_user_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_users:id:first_name|last_name') }}",
                     {selected_value: '{{ $property_user }}'});
-            @endif
+
+
             $('.removeCurrentFiles').on('click', function () {
                 var removeUrl = $(this).attr('href');
                 $.get(removeUrl, function (response) {});
