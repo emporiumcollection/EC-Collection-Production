@@ -35,24 +35,24 @@ class HomeController extends Controller {
         $this->data['pageTitle'] = 'Home';
         $this->data['pageMetakey'] = CNF_METAKEY;
         $this->data['pageMetadesc'] = CNF_METADESC;
-        
+
         if(!((bool) \auth()->check())){
             $package_cond = (array) $this->getPackagesIdsAccordingMembership();
             $this->data['isfPublic'] = ((count($package_cond) > 0)?true:false);
-        }   
-        
-        return view('frontend.themes.emporium.pages.index', $this->data);
+        }
+         //return view('frontend.themes.emporium.pages.index', $this->data);
+        return view('frontend.themes.EC.pages.index', $this->data);
     }
-    
+
      public function evpages(Request $request) {
 
         if (CNF_FRONT == 'false' && $request->segment(1) == '') :
             return Redirect::to('dashboard');
         endif;
-        
+
         $page = $request->segment(1);
         $pageSlug = $request->segment(1);
-        
+
         if ($page != '') :
             $content = \DB::table('tb_pages')->where('alias', '=', $page)->where('status', '=', 'enable')->get();
             //print_r($content); die;
@@ -72,7 +72,7 @@ class HomeController extends Controller {
                     $access = array();
                 }
 
-                // If guest not allowed 
+                // If guest not allowed
                 if ($row->allow_guest != 1) {
                     $group_id = \Session::get('gid');
                     $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -158,9 +158,9 @@ class HomeController extends Controller {
                                             $preprops = DB::select(DB::raw("SELECT COUNT(*) AS total_rows FROM tb_properties WHERE property_status = '1' $getcats"));
                                             if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
                                                 $destts[$ctt]['child'][$sd] = $subdestt;
-												
+
 												$subchilddest = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name')->where('parent_category_id', $subdestt->id)->get();
-												
+
 												$getcats = '';
 												$chldIds = array();
 												if (!empty($subchilddest)) {
@@ -169,7 +169,7 @@ class HomeController extends Controller {
 												} else {
 													$chldIds[] = $subdestt->id;
 												}
-                                                                                                
+
                                                                                                 $temp = array();
 												if (!empty($chldIds)) {
                                                                                                     foreach ($chldIds as $chldId) {
@@ -207,7 +207,7 @@ class HomeController extends Controller {
                                                                                                     $destts[$ctt]['child'][$sd]->subchild = $temp;
                                                                                                     /*return array('$subchilddest' => $subchilddest, '$temp' => $temp);*/
                                                                                                 }
-                                                                                                                                                                                                
+
 												/*$cpreprops = DB::select(DB::raw("SELECT COUNT(*) AS total_rows FROM tb_properties WHERE property_status = '1' $getcats"));
                                                                                                 if (isset($cpreprops[0]->total_rows) && $cpreprops[0]->total_rows > 0) {
 													$destts[$ctt]['child'][$sd]->subchild = $subchilddest;
@@ -221,7 +221,7 @@ class HomeController extends Controller {
                                 // }
                             }
                         }
-                        
+
                         $mainArrdestts = array();
                         $maindest = \DB::table('tb_categories')->where('parent_category_id', 0)->where('id', '!=', 8)->get();
                         if (!empty($maindest)) {
@@ -313,7 +313,7 @@ class HomeController extends Controller {
                                 $d++;
                             }
                         }
-                        
+
                         $this->data['ourdesitnation'] = $destts;
                         $this->data['social_links'] = \DB::table('tb_social')->where('status', 1)->get();
                         $this->data['landing_menus'] = array();
@@ -343,7 +343,7 @@ class HomeController extends Controller {
                                     $landinggridpropertiesArr[$pr]['image'] = $fileArr;
                                     $landinggridpropertiesArr[$pr]['image']->imgsrc = (new ContainerController)->getThumbpath($fileArr->folder_id);
                                 }
-                                
+
                                 $cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $ldprop->id)->where('status', 0)->where('show_on_booking', 1)->get();
                                 if (!empty($cat_types)) {
                                     $c = 0;
@@ -390,11 +390,11 @@ class HomeController extends Controller {
                     }elseif($pageslug=="membership_hotel"){
 						//$this->data['designer'] = \DB::table('tb_designers')->where('designer_status', 1)->orderBy('id', 'desc')->first();
 					}else{
-						
+
 					}
-					
-					return view($page,$this->data);                  
-                     
+
+					return view($page,$this->data);
+
                     //return view('pages.landing_new', $this->data);
                 } else {
                     return Redirect::to('')
@@ -420,7 +420,7 @@ class HomeController extends Controller {
             return view($page, $this->data);
         endif;
     }
-    
+
     public function landing(Request $request) {
 
         if (CNF_FRONT == 'false' && $request->segment(1) == '') :
@@ -447,7 +447,7 @@ class HomeController extends Controller {
                     $access = array();
                 }
 
-                // If guest not allowed 
+                // If guest not allowed
                 if ($row->allow_guest != 1) {
                     $group_id = \Session::get('gid');
                     $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -532,9 +532,9 @@ class HomeController extends Controller {
                                             $preprops = DB::select(DB::raw("SELECT COUNT(*) AS total_rows FROM tb_properties WHERE property_status = '1' $getcats"));
                                             if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
                                                 $destts[$ctt]['child'][$sd] = $subdestt;
-												
+
 												$subchilddest = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name')->where('parent_category_id', $subdestt->id)->get();
-												
+
 												$getcats = '';
 												$chldIds = array();
 												if (!empty($subchilddest)) {
@@ -543,7 +543,7 @@ class HomeController extends Controller {
 												} else {
 													$chldIds[] = $subdestt->id;
 												}
-                                                                                                
+
                                                                                                 $temp = array();
 												if (!empty($chldIds)) {
                                                                                                     foreach ($chldIds as $chldId) {
@@ -581,7 +581,7 @@ class HomeController extends Controller {
                                                                                                     $destts[$ctt]['child'][$sd]->subchild = $temp;
                                                                                                     /*return array('$subchilddest' => $subchilddest, '$temp' => $temp);*/
                                                                                                 }
-                                                                                                                                                                                                
+
 												/*$cpreprops = DB::select(DB::raw("SELECT COUNT(*) AS total_rows FROM tb_properties WHERE property_status = '1' $getcats"));
                                                                                                 if (isset($cpreprops[0]->total_rows) && $cpreprops[0]->total_rows > 0) {
 													$destts[$ctt]['child'][$sd]->subchild = $subchilddest;
@@ -595,7 +595,7 @@ class HomeController extends Controller {
                                 // }
                             }
                         }
-                        
+
                         $mainArrdestts = array();
                         $maindest = \DB::table('tb_categories')->where('parent_category_id', 0)->where('id', '!=', 8)->get();
                         if (!empty($maindest)) {
@@ -687,7 +687,7 @@ class HomeController extends Controller {
                                 $d++;
                             }
                         }
-                        
+
                         $this->data['ourdesitnation'] = $destts;
                         $this->data['social_links'] = \DB::table('tb_social')->where('status', 1)->get();
                         $this->data['landing_menus'] = array();
@@ -717,7 +717,7 @@ class HomeController extends Controller {
                                     $landinggridpropertiesArr[$pr]['image'] = $fileArr;
                                     $landinggridpropertiesArr[$pr]['image']->imgsrc = (new ContainerController)->getThumbpath($fileArr->folder_id);
                                 }
-                                
+
                                 $cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $ldprop->id)->where('status', 0)->where('show_on_booking', 1)->get();
                                 if (!empty($cat_types)) {
                                     $c = 0;
@@ -802,7 +802,7 @@ class HomeController extends Controller {
                             $pr = 0;
                             foreach ($props as $prop) {
                                 $propertiesArr[$pr]['data'] = $prop;
-                                //$fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $prop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->toSql(); 
+                                //$fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $prop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->toSql();
                                 $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $prop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
 
                                 if (!empty($fileArr)) {
@@ -1155,7 +1155,7 @@ class HomeController extends Controller {
             $headers = 'MIME-Version: 1.0' . "\r\n";
             $headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
             $headers .= 'From: ' . $request->input('name') . ' <' . $request->input('sender') . '>' . "\r\n";
-            //mail($to, $subject, $message, $headers);			
+            //mail($to, $subject, $message, $headers);
 
             return Redirect::to($request->input('redirect'))->with('message', \SiteHelpers::alert('success', 'Thank You , Your message has been sent !'));
         } else {
@@ -1193,7 +1193,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -1256,7 +1256,7 @@ class HomeController extends Controller {
             return Redirect::to('dashboard');
         endif;
 
-        //$page = $request->segment(1); 
+        //$page = $request->segment(1);
         $page = 'subproduct';
         if ($page != '') :
             $content = \DB::table('tb_pages')->where('alias', '=', $page)->where('status', '=', 'enable')->get();
@@ -1278,7 +1278,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -1509,7 +1509,7 @@ class HomeController extends Controller {
             return Redirect::to('dashboard');
         endif;
 
-        //$page = $request->segment(1); 
+        //$page = $request->segment(1);
         $page = 'feature';
         if ($page != '') :
             $content = \DB::table('tb_pages')->where('alias', '=', $page)->where('status', '=', 'enable')->get();
@@ -1532,7 +1532,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -1737,7 +1737,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -1808,7 +1808,7 @@ class HomeController extends Controller {
     }
 
     function propertiesSearch(Request $request) {
-        
+
         if (CNF_FRONT == 'false' && $request->segment(1) == '') :
             return Redirect::to('dashboard');
         endif;
@@ -1817,10 +1817,10 @@ class HomeController extends Controller {
         $show = 'asc';
 
         if ($keyword!='') {
-            $CityArrdestts = array();  
+            $CityArrdestts = array();
             $categoryObj = \DB::table('tb_categories')->where('category_name', $keyword)->first();
-            
-           
+
+
             if(!empty($categoryObj)){
                 $citydest = \DB::table('tb_categories')->where('parent_category_id', $categoryObj->id)->get();
                 if (!empty($citydest)) {
@@ -1863,7 +1863,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -1995,12 +1995,12 @@ class HomeController extends Controller {
                             }
                         }
 
-                        
+
                         echo count($propertiesArr);
                         $this->data['propertiesArr'] = $propertiesArr;
 
                         $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
-                       
+
                         $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
                         $tagsArr = array();
                         if (!empty($tags_Arr)) {
@@ -2009,12 +2009,12 @@ class HomeController extends Controller {
                             }
                         }
 
-                       
+
 
                         $this->data['categoryslider'] = \DB::table('tb_sliders')->where('slider_category', Input::get('s', false))->get();
-						
+
 						$this->data['experiences'] = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 8)->get();
-						
+
 						$this->data['whybookwithus'] = \DB::table('tb_whybookwithus')->select('id', 'title', 'sub_title')->where('status', 0)->get();
 
                         $adscateObj = \DB::table('tb_categories')->where('category_name', Input::get('s', false))->where('category_published', 1)->first();
@@ -2080,7 +2080,7 @@ class HomeController extends Controller {
         if (!is_array($child_category_array))
             $child_category_array = array();
         //$uid = \Auth::user()->id;
-        // Get Query 
+        // Get Query
         $results = \DB::table('tb_categories')->where('parent_category_id', $id)->get();
         if ($results) {
             foreach ($results as $row) {
@@ -2117,7 +2117,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -2433,7 +2433,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -2556,7 +2556,7 @@ class HomeController extends Controller {
 		$rules['phone'] = 'required';
 		$rules['fax'] = 'required';
 		$rules['message'] = 'required';
-		$validator = Validator::make($request->all(), $rules);	
+		$validator = Validator::make($request->all(), $rules);
 		if ($validator->passes()) {
 			$data['department'] = $request->input('department');
 			$data['vorname'] = $request->input('first_name');
@@ -2572,7 +2572,7 @@ class HomeController extends Controller {
 			$data['nachricht'] = $request->input('message');
 			$data['created'] = date('Y-m-d h:i:s');
 			\DB::table('tb_contact_queries')->insertGetId($data);
-			
+
 			$emlData['to'] 	 = 'info@emporium-voyage.com';
 			$emlData['frmemail'] = $request->input('email');
 			$emlData['subject'] = 'Contact from Southafricaphotolocation';
@@ -2589,15 +2589,15 @@ class HomeController extends Controller {
 			$emessage .= '<p><b>E-Mail : '.$request->input('email').'</b></p>';
 			$emessage .= '<p><b>Message : '.$request->input('message').'</b></p>';
 			$edata['emessage'] = $emessage;
-			
+
 			\Mail::send('user.emails.contact', $edata, function($message) use ($emlData)
 			{
 				$message->from($emlData['frmemail'], CNF_APPNAME);
 
 				$message->to( $emlData['to']);
-				
+
 				$message->subject($emlData['subject']);
-			});	
+			});
 			$rep['status'] = 'success';
 			return json_encode($rep);
 		}
@@ -2636,7 +2636,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -2760,7 +2760,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -3421,7 +3421,7 @@ class HomeController extends Controller {
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -3991,7 +3991,7 @@ class HomeController extends Controller {
         }
     }
 
-    //for quick view for inner propery listing 
+    //for quick view for inner propery listing
     public function getPropertyQuickView(Request $request) {
         $propertiesArr = array();
         $props = \DB::table('tb_properties')->where('id', $request->id)->where('property_status', 1)->first();
@@ -4027,9 +4027,9 @@ class HomeController extends Controller {
             $propertiesArr['propimage'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
 
             $propertiesArr['propimage_thumbpath'] = (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id);
-	    $propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id))); 
+	    $propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id)));
             $propertiesArr['propimage_containerpath'] = (new ContainerController)->getContainerUserPath($propertiesArr['propimage'][0]->folder_id);
-				
+
             $cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $props->id)->where('status', 0)->where('show_on_booking', 1)->get();
             if (!empty($cat_types)) {
                 $c = 0;
@@ -4070,10 +4070,10 @@ class HomeController extends Controller {
                                         return sprintf("FIND_IN_SET('%s', tb_properties.property_category_id)", $v);
                                     }, array_values($catss))) . ")";
                 }
-				
+
                 $crpropertiesArr = DB::select(DB::raw("SELECT tb_properties.property_name, tb_properties.property_slug, tb_container_files.file_name, tb_container_files.folder_id FROM tb_properties JOIN tb_properties_images ON tb_properties_images.property_id = tb_properties.id JOIN tb_container_files ON tb_container_files.id = tb_properties_images.file_id WHERE tb_properties.property_type='" . $props->property_type . "' AND tb_properties.property_status = '1' AND tb_properties.id!='" . $props->id . "' AND tb_properties_images.type = 'Property Images'  $getcats GROUP BY  tb_properties.property_slug ORDER BY tb_properties.id desc, tb_container_files.file_sort_num asc LIMIT 2"));
-				
-				
+
+
 				$relatedgridquery = "SELECT editor_choice_property,feature_property,id,property_name,property_slug,property_category_id FROM tb_properties WHERE property_type='Hotel' AND tb_properties.assign_detail_city = '".$props->assign_detail_city."' AND property_status = '1' ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price WHERE tb_properties_category_rooms_price.property_id = tb_properties.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, editor_choice_property desc, feature_property desc LIMIT 4";
 
 				$relatedgridprops = DB::select(DB::raw($relatedgridquery));
@@ -4124,11 +4124,11 @@ class HomeController extends Controller {
             }
         }
         $this->data['lightcontent'] = $boxcont;
-		
+
 		$this->data['restaurant_gallery'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Restrurants Gallery Images')->orderBy('tb_container_files.file_sort_num', 'asc')->count();
-		
+
 		$this->data['bar_gallery'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Bar Gallery Images')->orderBy('tb_container_files.file_sort_num', 'asc')->count();
-		
+
 		$this->data['spa_gallery'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Spa Gallery Images')->orderBy('tb_container_files.file_sort_num', 'asc')->count();
 
         //print "<pre>";
@@ -4150,13 +4150,13 @@ class HomeController extends Controller {
         $this->data['slug'] = $request->slug;
         if (!empty($props)) {
             $propertiesArr['data'] = $props;
-				
+
             $cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $props->id)->where('status', 0)->where('show_on_booking', 1)->get();
             if (!empty($cat_types)) {
                 $c = 0;
                 foreach ($cat_types as $type) {
                     $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-					
+
                     $filen = array();
                     if (!empty($roomfileArr)) {
 						$propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
@@ -4167,11 +4167,11 @@ class HomeController extends Controller {
                         $curnDate = date('Y-m-d');
                         if ($props->default_seasons != 1) {
 							$checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '>=', $curnDate)->where('tb_seasons_dates.season_to_date', '<=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
-							
+
                         } else {
                             $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '>=', $curnDate)->where('tb_seasons_dates.season_to_date', '<=', $curnDate)->first();
                         }
-						
+
 						if (!empty($checkseason)) {
 							 $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
                         } else {
@@ -4190,7 +4190,7 @@ class HomeController extends Controller {
             }
 
             $this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
-			
+
 			if ($props->property_category_id != '') {
                 $catss = explode(',', $props->property_category_id);
                 if (!empty($catss)) {
@@ -4201,7 +4201,7 @@ class HomeController extends Controller {
 				$crpropertiesArr = DB::select(DB::raw("SELECT tb_properties.property_name, tb_properties.property_slug, tb_container_files.file_name, tb_container_files.folder_id FROM tb_properties JOIN tb_properties_images ON tb_properties_images.property_id = tb_properties.id JOIN tb_container_files ON tb_container_files.id = tb_properties_images.file_id WHERE tb_properties.property_type='" . $props->property_type . "' AND tb_properties.property_status = '1' AND tb_properties.id!='" . $props->id . "' AND tb_properties_images.type = 'Property Images'  $getcats GROUP BY  tb_properties.property_slug ORDER BY tb_properties.id desc, tb_container_files.file_sort_num asc LIMIT 2"));
 			}
         }
-		
+
 		$this->data['sidebardetailAds'] = \DB::table('tb_advertisement')->select('adv_link','adv_img')->where('adv_type', 'sidebar')->where('adv_position', 'detail')->get();
 
         $this->data['propertyDetail'] = $propertiesArr;
@@ -4211,23 +4211,23 @@ class HomeController extends Controller {
         $this->data['pages'] = 'pages.editorial_' . $request->page;
         return view($page, $this->data);
     }
-    public function bookProperty(Request $request) {        
+    public function bookProperty(Request $request) {
         $propertiesArr = array();
-        $crpropertiesArr = array();        
+        $crpropertiesArr = array();
         /* $hotels = \DB::table('tb_properties')->where('property_type', 'Hotel')->get();
           $villas = \DB::table('tb_properties')->where('property_type', 'Villas')->get();
           $yachts = \DB::table('tb_properties')->where('property_type', 'Yachts')->get(); */
 
         $props = \DB::table('tb_properties')->where('property_slug', $request->slug)->first();
-        
+
         $arrive_date = '';
         $book_arrive_date = '';
         $dt_check_in = '';
-        $dt_check_out = '';                
+        $dt_check_out = '';
         if (!is_null($request->input('arrive')) && $request->input('arrive') != '' && $request->input('arrive') != 'null') {
             \Session::put('arrive_date', $request->input('arrive'));
             $arrive = trim($request->input('arrive'));
-                $arrive_array=explode("-",$arrive); 
+                $arrive_array=explode("-",$arrive);
                 $t=$arrive_array[0];
                 $arrive_array[0]=$arrive_array[1];
                 $arrive_array[1]=$t;
@@ -4235,16 +4235,16 @@ class HomeController extends Controller {
 
             //$book_arrive_date = $arrive_array[2]."/".$arrive_array[1]."/".$arrive_array[0];
             $book_arrive_date = $arrive_array[2]."-".$arrive_array[1]."-".$arrive_array[0];
-            $dt_check_in = $arrive_array[2]."-".$arrive_array[1]."-".$arrive_array[0];            
+            $dt_check_in = $arrive_array[2]."-".$arrive_array[1]."-".$arrive_array[0];
         }
         $this->data['arrive_date']=$arrive_date;
         $this->data['book_arrive_date']=$book_arrive_date;
-        
+
         $book_departure_date ='';
         $departure_date ='';
         if (!is_null($request->input('departure')) && $request->input('departure') != '' && $request->input('arrive') != 'null') {
             \Session::put('departure', $request->input('departure'));
-            
+
 
              $departure = trim($request->input('departure'));
                 $departure_array=explode("-",$departure);
@@ -4259,10 +4259,10 @@ class HomeController extends Controller {
         }
         $this->data['departure'] = $departure_date;
         $this->data['book_departure'] = $book_departure_date;
-        
+
         //echo ($request->input('roomType')); die;
         $roomType = ($request->input('roomType'));
-        
+
 		$this->data['adults'] = '';
         $this->data['rooms'] = '';
 		$this->data['childs'] = '';
@@ -4271,37 +4271,37 @@ class HomeController extends Controller {
             \Session::put('adults', $request->input('booking_adults'));
             $this->data['adults'] = $request->input('booking_adults');
         }
-        
+
         if (!is_null($request->input('booking_children')) && $request->input('booking_children') != '') {
             \Session::put('childs', $request->input('booking_children'));
             $this->data['childs'] = $request->input('booking_children');
         }
-        
+
         if (!is_null($request->input('booking_rooms')) && $request->input('booking_rooms') != '') {
             \Session::put('rooms', $request->input('booking_rooms'));
             $this->data['rooms'] = $request->input('booking_rooms');
         }
-        
+
         $arr_items = array();
-        if(!is_null($request->input('roomType')) && $request->input('roomType') != ''){ 
+        if(!is_null($request->input('roomType')) && $request->input('roomType') != ''){
             $all_rec = $request->input('roomType');
             $arr_exp = explode('#', $all_rec);
-            
-            if(!empty($arr_exp)){ 
-                foreach($arr_exp as $si){ 
-                    if($si!=''){ 
-                        $si_arr_exp = explode('-', $si); 
+
+            if(!empty($arr_exp)){
+                foreach($arr_exp as $si){
+                    if($si!=''){
+                        $si_arr_exp = explode('-', $si);
                         if(count($si_arr_exp) > 4 ){
                             //print_r($si_arr_exp);
                             $obj_cat = \DB::table('tb_properties_category_types')->where('id', $si_arr_exp[0])->first();
-                            
+
                             $roomfileArr1 = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $si_arr_exp[0])->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-                                    
+
                             if(!empty($roomfileArr1)) {
                                 $imgsrc = (new ContainerController)->getThumbpath($roomfileArr1[0]->folder_id);
                                 $arr_item["img_url"] = $imgsrc.$roomfileArr1[0]->file_name;
                             }
-                            
+
                             $arr_item['property_terms_cond'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $props->id)->first();
                             $arr_item['cat_id'] = $obj_cat;
                             $arr_item['price'] = $si_arr_exp[1];
@@ -4316,17 +4316,17 @@ class HomeController extends Controller {
                             }
                             $arr_items[] = $arr_item;
                         }else{
-                            $rmty = (int) $si_arr_exp[0]; 
+                            $rmty = (int) $si_arr_exp[0];
                             if($rmty > 0){
                                 $obj_cat = \DB::table('tb_properties_category_types')->where('id', $rmty)->first();
-                            
+
                                 $roomfileArr1 = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $si_arr_exp[0])->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-                                        
+
                                 if(!empty($roomfileArr1)) {
                                     $imgsrc = (new ContainerController)->getThumbpath($roomfileArr1[0]->folder_id);
                                     $arr_item["img_url"] = $imgsrc.$roomfileArr1[0]->file_name;
                                 }
-                                
+
                                 $arr_item['property_terms_cond'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $props->id)->first();
                                 $arr_item['cat_id'] = $obj_cat;
                                 $arr_item['price'] = "Price on Request";
@@ -4334,15 +4334,15 @@ class HomeController extends Controller {
                                 $arr_item['avail_adult'] = $this->data['adults'];
                                 $arr_item['avail_child'] = $this->data['childs'];
                                 $ch_ages = array();
-                                
+
                                 $arr_item['avail_ages'] = $ch_ages;
-                                
-                                $arr_items[] = $arr_item;    
-                            }     
+
+                                $arr_items[] = $arr_item;
+                            }
                         }
-                    }    
+                    }
                 }
-            }   
+            }
         }
         $this->data['obj_item'] = $arr_items;
         //print_r($arr_items); die;
@@ -4372,7 +4372,7 @@ class HomeController extends Controller {
                     $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
                     $filen = array();
                     if (!empty($roomfileArr)) {
-                        
+
                         $ret_flag = $this->checkNoOfReservationInType($props->id, $dt_check_in, $dt_check_out, $type->id);
                         if($ret_flag){
                             $propertiesArr['typedata'][$c] = $type;
@@ -4384,7 +4384,7 @@ class HomeController extends Controller {
                                 $checkseason = \DB::table('tb_seasons')->where('property_id', 0)->orderBy('season_priority', 'asc')->get();
                             }
                             //print_r($checkseason);
-                            if (!empty($checkseason)) { 
+                            if (!empty($checkseason)) {
                                 $foundsean = false;
                                 for ($sc = 0; ($sc < count($checkseason) && $foundsean != true); $sc++) {
                                     //echo $checkseason[$sc]->id;
@@ -4411,7 +4411,7 @@ class HomeController extends Controller {
                                     $propertiesArr['typedata'][$c]->price = $checkseasonPrice_ifnotanyseason->rack_rate;
                                 }
                             }
-    
+
                             $f = 0;
                             foreach ($roomfileArr as $rfile) {
                                 $propertiesArr['roomimgs'][$type->id][$f] = $rfile;
@@ -4428,9 +4428,9 @@ class HomeController extends Controller {
                     });
                 }
             }
-            
-            
-            
+
+
+
             //print_r($arr_res_rooms);
             //die;
             $this->data['resgalleryArr'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Restrurants Gallery Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
@@ -4439,7 +4439,7 @@ class HomeController extends Controller {
 
             $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
 
-            
+
             if ($props->property_category_id != '') {
                 $catss = explode(',', $props->property_category_id);
                 if (!empty($catss)) {
@@ -4479,21 +4479,21 @@ class HomeController extends Controller {
         $discount_apply = '';
         if (\Auth::check()) {
             $this->data['is_logged_in'] = 'true';
-            
+
             $discount_apply = \DB::table('tb_user_invitee_discount')->where('user_id', \Auth::user()->id)->where('availability', 1)->first();
-            
+
             $this->data['curr_user'] = \DB::table('tb_users')->where('id', \Auth::user()->id)->first();
         }
         //print_r($discount_apply);
-        
+
         //print_r($this->data['curr_user']); die;
-        
+
         $membership_tpe = '';
         if (\Auth::check()) {
             if(\Auth::user()->member_type != ''){
                 $membership_tpe =str_replace('-', " ", \Auth::user()->member_type);
             }
-        }   
+        }
         $this->data['member_type'] = $membership_tpe;
         $this->data['discount_apply']=$discount_apply;
         $this->data['hotel_terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $props->id)->first();
@@ -4509,39 +4509,39 @@ class HomeController extends Controller {
         }
         return view($page, $this->data);
     }
-    public function bookProperty_old(Request $request) { 
+    public function bookProperty_old(Request $request) {
         $propertiesArr = array();
-        $crpropertiesArr = array();        
+        $crpropertiesArr = array();
         /* $hotels = \DB::table('tb_properties')->where('property_type', 'Hotel')->get();
           $villas = \DB::table('tb_properties')->where('property_type', 'Villas')->get();
           $yachts = \DB::table('tb_properties')->where('property_type', 'Yachts')->get(); */
 
         $props = \DB::table('tb_properties')->where('property_slug', $request->slug)->first();
-        
+
         $arrive_date = '';
         $book_arrive_date = '';
         $dt_check_in = '';
-        $dt_check_out = '';                
+        $dt_check_out = '';
         if (!is_null($request->input('arrive')) && $request->input('arrive') != '' && $request->input('arrive') != 'null') {
             \Session::put('arrive_date', $request->input('arrive'));
             $arrive = trim($request->input('arrive'));
-                $arrive_array=explode("-",$arrive); 
+                $arrive_array=explode("-",$arrive);
                 $t=$arrive_array[0];
                 $arrive_array[0]=$arrive_array[1];
                 $arrive_array[1]=$t;
                 $arrive_date=implode(".",$arrive_array);
 
             $book_arrive_date = $arrive_array[2]."/".$arrive_array[1]."/".$arrive_array[0];
-            $dt_check_in = $arrive_array[2]."-".$arrive_array[1]."-".$arrive_array[0];            
+            $dt_check_in = $arrive_array[2]."-".$arrive_array[1]."-".$arrive_array[0];
         }
         $this->data['arrive_date']=$arrive_date;
         $this->data['book_arrive_date']=$book_arrive_date;
-        
+
         $book_departure_date ='';
         $departure_date ='';
         if (!is_null($request->input('departure')) && $request->input('departure') != '' && $request->input('arrive') != 'null') {
             \Session::put('departure', $request->input('departure'));
-            
+
 
              $departure = trim($request->input('departure'));
                 $departure_array=explode("-",$departure);
@@ -4555,7 +4555,7 @@ class HomeController extends Controller {
         }
         $this->data['departure'] = $departure_date;
         $this->data['book_departure'] = $book_departure_date;
-        
+
 		$this->data['adults'] = '';
         $this->data['rooms'] = '';
 		$this->data['childs'] = '';
@@ -4564,12 +4564,12 @@ class HomeController extends Controller {
             \Session::put('adults', $request->input('booking_adults'));
             $this->data['adults'] = $request->input('booking_adults');
         }
-        
+
         if (!is_null($request->input('booking_children')) && $request->input('booking_children') != '') {
             \Session::put('childs', $request->input('booking_children'));
             $this->data['childs'] = $request->input('booking_children');
         }
-        
+
         if (!is_null($request->input('booking_rooms')) && $request->input('booking_rooms') != '') {
             \Session::put('rooms', $request->input('booking_rooms'));
             $this->data['rooms'] = $request->input('booking_rooms');
@@ -4600,7 +4600,7 @@ class HomeController extends Controller {
                     $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
                     $filen = array();
                     if (!empty($roomfileArr)) {
-                        
+
                         $ret_flag = $this->checkNoOfReservationInType($props->id, $dt_check_in, $dt_check_out, $type->id);
                         if($ret_flag){
                             $propertiesArr['typedata'][$c] = $type;
@@ -4612,7 +4612,7 @@ class HomeController extends Controller {
                                 $checkseason = \DB::table('tb_seasons')->where('property_id', 0)->orderBy('season_priority', 'asc')->get();
                             }
                             //print_r($checkseason);
-                            if (!empty($checkseason)) { 
+                            if (!empty($checkseason)) {
                                 $foundsean = false;
                                 for ($sc = 0; ($sc < count($checkseason) && $foundsean != true); $sc++) {
                                     //echo $checkseason[$sc]->id;
@@ -4639,7 +4639,7 @@ class HomeController extends Controller {
                                     $propertiesArr['typedata'][$c]->price = $checkseasonPrice_ifnotanyseason->rack_rate;
                                 }
                             }
-    
+
                             $f = 0;
                             foreach ($roomfileArr as $rfile) {
                                 $propertiesArr['roomimgs'][$type->id][$f] = $rfile;
@@ -4656,9 +4656,9 @@ class HomeController extends Controller {
                     });
                 }
             }
-            
-            
-            
+
+
+
             //print_r($arr_res_rooms);
             //die;
             $this->data['resgalleryArr'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Restrurants Gallery Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
@@ -4667,7 +4667,7 @@ class HomeController extends Controller {
 
             $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
 
-            
+
             if ($props->property_category_id != '') {
                 $catss = explode(',', $props->property_category_id);
                 if (!empty($catss)) {
@@ -4707,13 +4707,13 @@ class HomeController extends Controller {
         $discount_apply = '';
         if (\Auth::check()) {
             $this->data['is_logged_in'] = 'true';
-            
+
             $discount_apply = \DB::table('tb_user_invitee_discount')->where('user_id', \Auth::user()->id)->where('availability', 1)->first();
-            
+
             $this->data['curr_user'] = \DB::table('tb_users')->where('id', \Auth::user()->id)->first();
         }
         //print_r($discount_apply);
-        
+
         //print_r($this->data['curr_user']); die;
         $this->data['discount_apply']=$discount_apply;
         $this->data['hotel_terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $props->id)->first();
@@ -4749,19 +4749,19 @@ class HomeController extends Controller {
             $this->data['prev_category'] = \DB::table('sh_product_categories')->where('id', '<', $cat_id)->where('status', 'Enabled')->orderBy("id", 'ASC')->first();
             $this->data['next_category'] = \DB::table('sh_product_categories')->where('id', '>', $cat_id)->where('status', 'Enabled')->orderBy("id", 'ASC')->first();
         }
-        
+
         if(empty($this->data['prev_category']) || $cat_id == '') {
             $this->data['prev_category'] = \DB::table('sh_product_categories')->where('status', 'Enabled')->orderBy("id", 'ASC')->first();
         }
-        
+
         if(empty($this->data['prev_category']) && $cat_id != '') {
             $this->data['prev_category'] = \DB::table('sh_product_categories')->where('status', 'Enabled')->orderBy("id", 'DESC')->first();
         }
-        
+
         if(empty($this->data['next_category']) || $cat_id == '') {
             $this->data['next_category'] = \DB::table('sh_product_categories')->where('status', 'Enabled')->orderBy("id", 'DESC')->first();
         }
-        
+
         $this->data['categories'] = DB::select(DB::raw("SELECT * FROM sh_product_categories WHERE parent_id = '0' AND status = 'Enabled' ORDER BY category_title ASC"));
         $this->data['featured_products'] = DB::select(DB::raw("SELECT sh_products.id,sh_products.featured_slider_image,sh_products.titile,sh_products.description,sh_products.slug, sh_product_categories.category_title FROM sh_products join sh_product_categories on sh_product_categories.id = sh_products.category WHERE sh_products.featured_products = 'Yes' AND sh_products.status = 'Enabled' AND sh_products.featured_slider_image != '' ORDER BY sh_products.id DESC LIMIT 5 "));
         $this->data['editors_choice_products'] = DB::select(DB::raw("SELECT * FROM sh_products WHERE editors_choice = 'Yes' AND status = 'Enabled' ORDER BY id DESC LIMIT {$this->data['editors_choice_limit']} "));
@@ -4818,10 +4818,10 @@ class HomeController extends Controller {
         $af_search = Input::get('af_search');
         $af_start = Input::get('af_start');
         $af_start = ($af_start != '')? $af_start : 0;
-        
+
         $this->data['articles_limit'] = 6;
         $this->data['editors_choice_limit'] = 1;
-        
+
         $query = "SELECT * FROM tb_post_articles WHERE 1 ";
         if ($af_search != '') {
             $query .= "AND title_pos_1 LIKE '%{$af_search}%' ";
@@ -4831,10 +4831,10 @@ class HomeController extends Controller {
         }
         $query .= "ORDER BY id DESC ";
         $query .= "LIMIT {$af_start}, {$this->data['articles_limit']} ";
-        
+
         $this->data['articles'] = DB::select(DB::raw($query));
         $this->data['editors_choice_article'] = \DB::table('tb_post_articles')->where('editor_choice', '1')->orderBy('id', 'DESC')->first();
-        
+
         $this->data['new_hotels'] = DB::select(DB::raw("SELECT tb_properties.* FROM tb_properties WHERE property_type = 'Hotel' ORDER BY id DESC LIMIT 4"));
         if(!empty($this->data['new_hotels'])) {
             foreach ($this->data['new_hotels'] as $key => $hotel) {
@@ -4845,18 +4845,18 @@ class HomeController extends Controller {
                 }
             }
         }
-        
+
         $this->data['featured_articles'] = DB::select(DB::raw("SELECT * FROM tb_post_articles WHERE featured_article = 1"));
         $this->data['categories'] = DB::select(DB::raw("SELECT * FROM tb_news_categories WHERE (SELECT COUNT(*) FROM tb_post_articles WHERE tb_post_articles.cat_id = tb_news_categories.cat_id) > 0 AND cat_status = '1' ORDER BY cat_name ASC"));
-        
+
         $page = 'layouts.' . CNF_THEME . '.index';
         $this->data['pages'] = 'pages.content-grid-shuffle';
         $this->data['pageTitle'] = 'Content';
         return view($page, $this->data);
     }
-    
+
     function ajax_contentGridShuffle(Request $requests) {
-        
+
         $af_category = Input::get('af_category');
         $af_search = Input::get('af_search');
         $af_load_slider = Input::get('af_load_slider');
@@ -4875,14 +4875,14 @@ class HomeController extends Controller {
         }
         $query .= "ORDER BY id DESC ";
         $query .= "LIMIT {$af_start}, {$this->data['articles_limit']} ";
-        
+
         $data['articles'] = DB::select(DB::raw($query));
         $data['editors_choice_article'] = DB::select(DB::raw("SELECT * FROM tb_post_articles WHERE editor_choice = 1 ORDER BY id DESC LIMIT {$af_editors_choice_start}, {$this->data['editors_choice_limit']} "));
         $data['new_hotels'] = DB::select(DB::raw("SELECT tb_properties.* FROM tb_properties WHERE property_type = 'Hotel' ORDER BY id DESC LIMIT 4"));
-        
+
         return json_encode($data);
     }
-    
+
     function viewArticleDetails(Request $request) {
         $this->data['row'] = \DB::table('tb_post_articles')->where('id', $request->id)->where('status', '1')->first();
 
@@ -4892,13 +4892,13 @@ class HomeController extends Controller {
 
         $this->data['category'] = \DB::table('tb_news_categories')->where('cat_id', $this->data['row']->cat_id)->first();
         $this->data['categories'] = DB::select(DB::raw("SELECT * FROM tb_news_categories WHERE (SELECT COUNT(*) FROM tb_post_articles WHERE tb_post_articles.cat_id = tb_news_categories.cat_id) > 0 AND cat_status = '1' ORDER BY cat_name ASC"));
-        
+
         $page = 'layouts.' . CNF_THEME . '.index';
         $this->data['pages'] = 'pages.article_detail';
         $this->data['pageTitle'] = $this->data['row']->title_pos_1;
         return view($page, $this->data);
     }
-    
+
     function getArticleByTitle(Request $request) {
 
         $title = Input::get('title');
@@ -4908,7 +4908,7 @@ class HomeController extends Controller {
 
         return json_encode($data);
     }
-    
+
     function getProductByTitle(Request $request) {
 
         $title = Input::get('title');
@@ -4950,7 +4950,7 @@ class HomeController extends Controller {
         if ($this->data['row']->related_products != '') {
             $this->data['related_products'] = DB::select(DB::raw("SELECT * FROM sh_products WHERE id IN({$this->data['row']->related_products}) AND status = 'Enabled' ORDER BY id DESC LIMIT 4 "));
         }
-		
+
 		$this->data['related_cat_products'] = DB::select(DB::raw("SELECT * FROM sh_products WHERE id!='".$this->data['row']->id."' AND category='".$this->data['row']->category."' AND status = 'Enabled' ORDER BY id DESC LIMIT 2 "));
 
         $this->data['activeCat'] = '';
@@ -4964,12 +4964,12 @@ class HomeController extends Controller {
     }
 
     public function getPropertyByCategory(Request $request) {
-        
+
         $this->data['segment_1'] = $request->segment(1);
-        
+
         $this->data['slug'] = $request->slug;
         $propertiesArr = array();
-        
+
         if (isset($request->type)) {
             $type = $request->type;
         }
@@ -4981,7 +4981,7 @@ class HomeController extends Controller {
         }
         $pageStart = ($pageNumber -1) * $perPage;
 
-        $query = "SELECT pr.editor_choice_property,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,"; 
+        $query = "SELECT pr.editor_choice_property,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,";
         $query .= " (SELECT rack_rate FROM tb_properties_category_rooms_price pcrp where pr.id=pcrp.property_id order by rack_rate DESC limit 0,1 ) as price ," ;
         $query .= " (SELECT category_name FROM tb_categories ct where pr.property_category_id=ct.id limit 0,1 ) as category_name ";
         $query .= " FROM tb_properties  pr";
@@ -4992,7 +4992,7 @@ class HomeController extends Controller {
         $getRec = DB::select($CountRecordQry);
         $propertiesArr = DB::select($fianlQry);
        // print_r($propertiesArr); die;
-                        
+
 
         $this->data['propertiesArr'] = $propertiesArr;
         $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
@@ -5013,12 +5013,12 @@ class HomeController extends Controller {
         $this->data['reultsgridAds'] = $resultads;
 
         $this->data['sidebargridAds'] = \DB::table('tb_advertisement')->where('adv_type', 'sidebar')->where('ads_cat_id', $request->slug)->where('adv_position', 'grid_sidebar')->get();
-		
+
 		$this->data['experiences'] = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('parent_category_id', 8)->where('category_published', 1)->get();
-		
+
 		$this->data['whybookwithus'] = \DB::table('tb_whybookwithus')->select('id', 'title', 'sub_title')->where('status', 0)->get();
 
-       
+
         $this->data['pagecate'] = $request->slug;
         $this->data['uid'] = $uid;
         $this->data['group_id'] = \Session::get('gid');
@@ -5034,7 +5034,7 @@ class HomeController extends Controller {
         return view($page, $this->data);
     }
 
-    //For our collection 
+    //For our collection
     public function getPropertyByCategoryQuickView(Request $request) {
         $propertiesArr = array();
 
@@ -5122,7 +5122,7 @@ class HomeController extends Controller {
                 $propertiesArr['roomimgs'] = $roomfileArr;
                 $propertiesArr['roomimgs']->imgsrc = (new ContainerController)->getThumbpath($roomfileArr->folder_id);
                 $propertiesArr['roomimgs']->imgsrc_cache = ImageCache::make(public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr->folder_id).$roomfileArr->file_name)),100,1000,null);
-                
+
             }
 
             $cat_amenities = \DB::table('tb_properties_category_amenities')->where('cat_id', $cat_types->id)->first();
@@ -5148,7 +5148,7 @@ class HomeController extends Controller {
         if (!is_null($request->dest)) {
             $categoryObj = \DB::table('tb_categories')->where('id', $request->dest)->get();
             $cateObj = \DB::table('tb_categories')->where('parent_category_id', $request->dest)->where('category_published', 1)->get();
-                        
+
             $chldIds = array();
             if (!empty($cateObj)) {
                 $chldIds = $this->fetchcategoryChildListIds($request->dest);
@@ -5256,7 +5256,7 @@ class HomeController extends Controller {
 //            usort($propertiesArr, function($a, $b) {
 //                return trim($a['pdata']->price) < trim($b['pdata']->price);
 //            });
-            
+
             if (!is_null($request->dest)) {
                 $cateObjtm = \DB::table('tb_categories')->where('id', $request->dest)->where('category_published', 1)->first();
                 if (!empty($cateObjtm)) {
@@ -5340,7 +5340,7 @@ class HomeController extends Controller {
             }
         }
         /******* Comment Cdoe byRavinder ********/
-        //Note: No Body has information we are using tags for search 
+        //Note: No Body has information we are using tags for search
         /*
         $TagsObj = \DB::table('tb_tags_manager')->where('tag_title', Input::get('s', false))->where('tag_status', 1)->first();
         $TagsConId = array();
@@ -5358,7 +5358,7 @@ class HomeController extends Controller {
                                 $ConObjs = \DB::table('tb_container')->select('display_name')->where('id', $getfoldd->parent_id)->first();
 
                                 if (!empty($ConObjs)) {
-                                    
+
 
                                     $preprops = DB::select(DB::raw("SELECT id,property_name,property_slug FROM tb_properties WHERE tb_properties.property_type = 'Hotel' AND property_name='" . $ConObjs->display_name . "' AND property_status = '1' $getcats GROUP BY tb_properties.id ORDER BY id asc LIMIT 1"));
 
@@ -5409,7 +5409,7 @@ class HomeController extends Controller {
                         $ConObjs = \DB::table('tb_container')->select('display_name')->where('id', $TagsConObj->container_id)->first();
 
                         if (!empty($ConObjs)) {
-                            
+
                             $preprops = DB::select(DB::raw("SELECT id,property_name,property_slug FROM tb_properties WHERE tb_properties.property_type = 'Hotel' AND property_name='" . $ConObjs->display_name . "' AND property_status = '1' $getcats ORDER BY id asc  LIMIT 1"));
 
                             if (!empty($preprops)) {
@@ -5454,7 +5454,7 @@ class HomeController extends Controller {
         /****** New Query By Ravinder *********/
 
         if ($filter_min_price != '' && $filter_max_price != '') {
-             
+
             $getPriceQry =" , (SELECT pcrp.rack_rate FROM tb_properties_category_rooms_price pcrp   where pr.id=pcrp.property_id and pcrp.rack_rate between '".$filter_min_price."' and '".$filter_max_price."' order by pcrp.rack_rate DESC limit 0,1 ) as price , " ;
             $filterPriceQry = " and pr.id in(SELECT pr.id FROM tb_properties_category_rooms_price pcrp, tb_properties pr   where pr.id=pcrp.property_id and pcrp.rack_rate between '".$filter_min_price."' and '".$filter_max_price."' group by pr.id order by pcrp.rack_rate DESC) ";
         }else{
@@ -5468,10 +5468,10 @@ class HomeController extends Controller {
         $query .= " FROM tb_properties pr  ";
         $whereClause = " WHERE pr.property_type = 'Hotel' AND (pr.property_name like '%".$keyword."%'".$getcats.") AND pr.property_status = '1'".$filterPriceQry;
         $orderBy = " ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price pcrp WHERE pcrp.property_id = pr.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, pr.editor_choice_property desc, pr.feature_property desc ";
-        $limit = " LIMIT ". $pageStart.",".$perPage; 
+        $limit = " LIMIT ". $pageStart.",".$perPage;
         $finalQry = $query.$whereClause.$orderBy.$limit ;
         $CountRecordQry = "Select count(*) as total_record from tb_properties pr ".$whereClause ;
-                
+
         $property = DB::select($finalQry);
         $getRec = DB::select($CountRecordQry);
         $propertiesArr = array();
@@ -5482,20 +5482,20 @@ class HomeController extends Controller {
             $images = \CustomQuery::getPropertyImages($prObj->id);
             if(!empty($images) && count($images)>0){
                 if(isset($images[0])){
-                    
+
                     $propertiesArr[$key]->image = $images[0];
                 }
             }
-            
+
         }
 
-        
+
 
         // Comment code by Ravinder
         /*
             $__currentPage = ($currentPage > 0)? $currentPage : 1;
             $start = ($perPage * $__currentPage);
-                    
+
             $seaprops = DB::select(DB::raw("SELECT id,property_name,property_slug FROM tb_properties WHERE tb_properties.property_type = 'Hotel' AND property_name like '%$keyword%' AND property_status = '1' $getcats GROUP BY id ORDER BY id asc LIMIT $start, $perPage "));
             if (!empty($seaprops)) {
                 foreach ($seaprops as $sprop) {
@@ -5531,7 +5531,7 @@ class HomeController extends Controller {
                     }
                 }
             }
-        
+
          if (isset($request->dest) && $request->dest!='') {
             $catprops = DB::select(DB::raw("SELECT id,property_name,property_slug FROM tb_properties WHERE tb_properties.property_type = 'Hotel' AND property_status = '1' $getcats ORDER BY id asc"));
             if (!empty($catprops)) {
@@ -5623,15 +5623,15 @@ class HomeController extends Controller {
                 }
             }
         }
-    
+
         usort($propertiesArr, function($a, $b) {
             return trim($a['pdata']->property_name) > trim($b['pdata']->property_name);
         });
         usort($propertiesArr, function($a, $b) {
             return trim($a['pdata']->price) < trim($b['pdata']->price);
         });
-        
-        
+
+
 
         //echo count($propertiesArr);
         $pagedData = array_slice($propertiesArr, $currentPage * $perPage, $perPage);
@@ -5639,7 +5639,7 @@ class HomeController extends Controller {
 
         //print_r($pagination);
     */
-        if (isset($request->area) && $request->area!='') { 
+        if (isset($request->area) && $request->area!='') {
             $citydest = \DB::table('tb_categories')->where('parent_category_id', $request->dest)->get();
             if (!empty($citydest)) {
                 $d = 0;
@@ -5653,7 +5653,7 @@ class HomeController extends Controller {
                 }
             }
         }
-    
+
         if (!empty($property)) {
            /* $tempproperties = array();
             foreach ($pagination as $pag) {
@@ -5690,7 +5690,7 @@ class HomeController extends Controller {
      * AI booking function
      */
 
-    function new_room_booking(Request $request) {        
+    function new_room_booking(Request $request) {
         //$reserved_rooms = \DB::table('td_reserved_rooms')->join('tb_properties_category_types', 'tb_properties_category_types.id', '=', 'td_reserved_rooms.type_id')->join('tb_properties_category_rooms_price', 'tb_properties_category_rooms_price.category_id', '=', 'td_reserved_rooms.type_id')->where('reservation_id', 36)->get();
         //print_r($reserved_rooms); die;
         $uid = 0;
@@ -5698,99 +5698,99 @@ class HomeController extends Controller {
         //$rules['roomType'] = 'required';
         //$validator = Validator::make($request->all(), $rules);
         //if ($validator->passes()) {
-            
+
             $discount_apply = '';
             if (\Auth::check()) {
                 $uid = \Auth::user()->id;
                 $userdet = \DB::table('tb_users')->where('id', $uid)->first();
-                
+
                 $discount_apply = \DB::table('tb_user_invitee_discount')->where('user_id', \Auth::user()->id)->where('availability', 1)->first();
             }
             $props = \DB::table('tb_properties')->where('id', $request->input('property'))->first();
             $curnDate = date('Y-m-d');
             $price = 0;
-            
+
             $extra_adult = 0;
             $extra_junior = 0;
-            
+
             $single_price = 0;
-            $monday_price = 0;   
-            $tuesday_price = 0;   
-            $wednesday_price = 0;     
-            $thursday_price = 0;   
-            $friday_price = 0;    
-            $saturday_price = 0;   
+            $monday_price = 0;
+            $tuesday_price = 0;
+            $wednesday_price = 0;
+            $thursday_price = 0;
+            $friday_price = 0;
+            $saturday_price = 0;
             $sunday_price = 0;
-            
-            
+
+
             $data['property_id'] = $request->input('property');
-            
+
             //print_r($request->input('booking_arrive')); die;
-            
+
             $arrive_date = '';
             $book_arrive_date = '';
             if (!is_null($request->input('booking_arrive')) && $request->input('booking_arrive') != '' && $request->input('booking_arrive') != 'null') {
-                
+
                 $arrive = trim($request->input('booking_arrive'));
-                /*    $arrive_array=explode("-",$arrive); 
+                /*    $arrive_array=explode("-",$arrive);
                     $t=$arrive_array[0];
                     $arrive_array[0]=$arrive_array[1];
                     $arrive_array[1]=$t;
                     $arrive_date=implode(".",$arrive_array);
-    
+
                 $book_arrive_date = $arrive_array[2]."-".$arrive_array[1]."-".$arrive_array[0];*/
                 $book_arrive_date = trim($request->input('booking_arrive'));
             }
-            
+
             $checkout_date = '';
             $book_checkout_date = '';
             if (!is_null($request->input('booking_destination')) && $request->input('booking_destination') != '' && $request->input('booking_destination') != 'null') {
-                
+
                 $checkout_date = trim($request->input('booking_destination'));
-                /*    $checkout_date_array=explode("-",$checkout_date); 
+                /*    $checkout_date_array=explode("-",$checkout_date);
                     $t=$checkout_date_array[0];
                     $checkout_date_array[0]=$checkout_date_array[1];
                     $checkout_date_array[1]=$t;
                     $checkout_date_date=implode(".",$checkout_date_array);
-    
+
                 $book_checkout_date = $checkout_date_array[2]."-".$checkout_date_array[1]."-".$checkout_date_array[0];*/
                 $book_checkout_date = trim($request->input('booking_destination'));
             }
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
             if ($props->default_seasons != 1) {
                 $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $request->input('roomType'))->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->orderBy('tb_seasons.season_priority', 'asc')->first();
             } else {
                 $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $request->input('roomType'))->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->first();
             }
-            
+
             if (!empty($checkseason)) {
 			     $price = $checkseason->rack_rate;
                  //$extra_adult = $checkseason->extra_adult;
-                 //$extra_junior = $checkseason->extra_junior;  
+                 //$extra_junior = $checkseason->extra_junior;
             } else {
                 $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $request->input('roomType'))->first();
                 if (!empty($checkseasonPrice_ifnotanyseason)) {
                     $price = $checkseasonPrice_ifnotanyseason->rack_rate;
                     //$extra_adult = $checkseason->extra_adult;
-                    //$extra_junior = $checkseason->extra_junior; 
+                    //$extra_junior = $checkseason->extra_junior;
                 }
             }
-            
-            
-            
-            
+
+
+
+
 
             /*
              * Save reservation data
              */
 
-            
-            
+
+
             $data['checkin_date'] = $book_arrive_date;
             $data['checkout_date'] = $book_checkout_date;
             //$data['type_id'] = $request->input('roomType');
@@ -5832,95 +5832,95 @@ class HomeController extends Controller {
             $booking_children = $request->input('booking_children');
             $booking_Room_type = $request->input('booking_Room_type');
             $booking_Rooms = $request->input('booking_Rooms');
-            
+
             //print_r($booking_adults); die;
             $f_reserved_rooms = array();
             $flag = true;
             $return = array();
             $arr_type = array();
-            if (!empty($booking_Room_type)) { 
+            if (!empty($booking_Room_type)) {
                 for($j=0; $j<count($booking_Room_type); $j++){
                     //$type_id = $booking_Room_type[$j]==0 ? $request->input('roomType') : $booking_Room_type[$j];
                     $type_id = $booking_Room_type[$j];
                     $total_booking_room = $booking_Rooms[$j];
                     $rmid = '';
                     //$query = "select pct.*, pcr.id as roomid  from tb_properties_category_rooms pcr inner join tb_properties_category_types pct on pct.id=pcr.category_id where pcr.room_active_from <= '".$book_arrive_date."' and pcr.room_active_to >='".$book_checkout_date."' and pcr.category_id=".$type_id." and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$book_arrive_date."' BETWEEN checkin_date and checkout_date or '".$book_checkout_date."' BETWEEN checkin_date and checkout_date)";
-                    
+
                     //$rooms = DB::select($query);
-                    //if(count($rooms)>0){                        
-                    //    $rmid = $rooms[0]->roomid;                    
+                    //if(count($rooms)>0){
+                    //    $rmid = $rooms[0]->roomid;
                     //}
-                    
+
                     //print_r($rooms); die;
-                                       
+
                     if ($props->default_seasons != 1) {
                         $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type_id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->orderBy('tb_seasons.season_priority', 'asc')->first();
                     } else {
                         $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type_id)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->first();
                     }
-                    
-                    if (!empty($checkseason)) { 
+
+                    if (!empty($checkseason)) {
         			     $price = $checkseason->rack_rate;
                          $extra_adult = $checkseason->extra_adult;
-                         $extra_junior = $checkseason->extra_junior; 
-                         
+                         $extra_junior = $checkseason->extra_junior;
+
                          $single_price = $checkseason->single_price;
-                         $monday_price = ($checkseason->monday_price > 0) ? $checkseason->monday_price : $price;   
-                         $tuesday_price = ($checkseason->tuesday_price > 0) ? $checkseason->tuesday_price : $price;   
-                         $wednesday_price = ($checkseason->wednesday_price > 0) ? $checkseason->wednesday_price : $price;     
-                         $thursday_price = ($checkseason->thursday_price > 0) ? $checkseason->thursday_price : $price;   
-                         $friday_price = ($checkseason->friday_price > 0) ? $checkseason->friday_price : $price;    
-                         $saturday_price = ($checkseason->saturday_price > 0) ? $checkseason->saturday_price : $price;   
-                         $sunday_price = ($checkseason->sunday_price > 0) ? $checkseason->sunday_price : $price;                       
-                         
+                         $monday_price = ($checkseason->monday_price > 0) ? $checkseason->monday_price : $price;
+                         $tuesday_price = ($checkseason->tuesday_price > 0) ? $checkseason->tuesday_price : $price;
+                         $wednesday_price = ($checkseason->wednesday_price > 0) ? $checkseason->wednesday_price : $price;
+                         $thursday_price = ($checkseason->thursday_price > 0) ? $checkseason->thursday_price : $price;
+                         $friday_price = ($checkseason->friday_price > 0) ? $checkseason->friday_price : $price;
+                         $saturday_price = ($checkseason->saturday_price > 0) ? $checkseason->saturday_price : $price;
+                         $sunday_price = ($checkseason->sunday_price > 0) ? $checkseason->sunday_price : $price;
+
                     } else {
                         $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('tb_properties_category_rooms_price.*')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $type_id)->first();
-                        if (!empty($checkseasonPrice_ifnotanyseason)) { 
+                        if (!empty($checkseasonPrice_ifnotanyseason)) {
                             $price = $checkseasonPrice_ifnotanyseason->rack_rate;
                             $extra_adult = $checkseasonPrice_ifnotanyseason->extra_adult;
-                            $extra_junior = $checkseasonPrice_ifnotanyseason->extra_junior;  
-                            
+                            $extra_junior = $checkseasonPrice_ifnotanyseason->extra_junior;
+
                             $single_price = $checkseasonPrice_ifnotanyseason->single_price;
-                            $monday_price = ($checkseasonPrice_ifnotanyseason->monday_price > 0) ? $checkseasonPrice_ifnotanyseason->monday_price : $price;   
-                            $tuesday_price = ($checkseasonPrice_ifnotanyseason->tuesday_price > 0) ? $checkseasonPrice_ifnotanyseason->tuesday_price : $price;   
-                            $wednesday_price = ($checkseasonPrice_ifnotanyseason->wednesday_price > 0) ? $checkseasonPrice_ifnotanyseason->wednesday_price : $price;     
-                            $thursday_price = ($checkseasonPrice_ifnotanyseason->thursday_price > 0) ? $checkseasonPrice_ifnotanyseason->thursday_price : $price;   
-                            $friday_price = ($checkseasonPrice_ifnotanyseason->friday_price > 0) ? $checkseasonPrice_ifnotanyseason->friday_price : $price;    
-                            $saturday_price = ($checkseasonPrice_ifnotanyseason->saturday_price > 0) ? $checkseasonPrice_ifnotanyseason->saturday_price : $price;   
-                            $sunday_price = ($checkseasonPrice_ifnotanyseason->sunday_price > 0) ? $checkseasonPrice_ifnotanyseason->sunday_price : $price; 
+                            $monday_price = ($checkseasonPrice_ifnotanyseason->monday_price > 0) ? $checkseasonPrice_ifnotanyseason->monday_price : $price;
+                            $tuesday_price = ($checkseasonPrice_ifnotanyseason->tuesday_price > 0) ? $checkseasonPrice_ifnotanyseason->tuesday_price : $price;
+                            $wednesday_price = ($checkseasonPrice_ifnotanyseason->wednesday_price > 0) ? $checkseasonPrice_ifnotanyseason->wednesday_price : $price;
+                            $thursday_price = ($checkseasonPrice_ifnotanyseason->thursday_price > 0) ? $checkseasonPrice_ifnotanyseason->thursday_price : $price;
+                            $friday_price = ($checkseasonPrice_ifnotanyseason->friday_price > 0) ? $checkseasonPrice_ifnotanyseason->friday_price : $price;
+                            $saturday_price = ($checkseasonPrice_ifnotanyseason->saturday_price > 0) ? $checkseasonPrice_ifnotanyseason->saturday_price : $price;
+                            $sunday_price = ($checkseasonPrice_ifnotanyseason->sunday_price > 0) ? $checkseasonPrice_ifnotanyseason->sunday_price : $price;
                         }
                     }
-                    
+
                     $day_w_price = array($sunday_price, $monday_price, $tuesday_price, $wednesday_price, $thursday_price, $friday_price, $saturday_price);
-                    
+
                     $diff = strtotime($book_checkout_date) - strtotime($book_arrive_date);
                     $staytime = ($diff/86400);
-                    
+
                     $amt = $this->get_daywise_price($book_arrive_date, $staytime, $day_w_price);
-                    
+
                     $total_amount = $total_amount + $amt; //($staytime*$price);
                     //echo $total_amount;
-                    /*if($staytime < $rooms[0]->minimum_stay){                        
+                    /*if($staytime < $rooms[0]->minimum_stay){
                         $flag = false;
                         $return['status'] = "error";
                         $return['minimumstay'] = true;
                         $arr_type[] = array('category'=>$rooms[0]->category_name, 'min_stay'=>$rooms[0]->minimum_stay);
                         //$return[] =
                     }else{*/
-                    //if(count($rooms)>0){  
+                    //if(count($rooms)>0){
                         if($total_booking_room >= 1){
-                            
+
                             $total_amount = $total_amount * $total_booking_room;
-                            
+
                             for($l=1; $l<=$total_booking_room; $l++){
-                                
+
                                 $query = "select pct.*, pcr.id as roomid  from tb_properties_category_rooms pcr inner join tb_properties_category_types pct on pct.id=pcr.category_id where pcr.room_active_from <= '".$book_arrive_date."' and pcr.room_active_to >='".$book_checkout_date."' and pcr.category_id=".$type_id." and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$book_arrive_date."' BETWEEN checkin_date and checkout_date or '".$book_checkout_date."' BETWEEN checkin_date and checkout_date)";
-                    
+
                                 $rooms = DB::select($query);
-                                if(count($rooms)>0){                        
-                                    $rmid = $rooms[0]->roomid;                    
+                                if(count($rooms)>0){
+                                    $rmid = $rooms[0]->roomid;
                                 }
-                                
+
                                 $rooms_data['reservation_id'] = $resid;
                                 $rooms_data['type_id'] = $type_id;
                                 $rooms_data['room_id'] = $rmid;
@@ -5953,8 +5953,8 @@ class HomeController extends Controller {
                                     $rooms_data['booking_children'] = '';
                                     $rooms_data['ages'] = '';
                                 }
-                                $rooms_data['price'] = $price; 
-                                $f_reserved_rooms[] = $rooms_data; 
+                                $rooms_data['price'] = $price;
+                                $f_reserved_rooms[] = $rooms_data;
                                 \DB::table('td_reserved_rooms')->insertGetId($rooms_data);
                             }
                         }
@@ -5984,12 +5984,12 @@ class HomeController extends Controller {
                             }
                         }
                         $rooms_data['ages'] = $c_ages;
-                        $rooms_data['price'] = $price; 
-                        $f_reserved_rooms[] = $rooms_data; 
+                        $rooms_data['price'] = $price;
+                        $f_reserved_rooms[] = $rooms_data;
                         \DB::table('td_reserved_rooms')->insertGetId($rooms_data);*/
                     //}
                     /*}*/
-                    
+
                 }
                 //print_r($total_amount);
                 //die;
@@ -5999,8 +5999,8 @@ class HomeController extends Controller {
                     $rmid = '';
                     $query = "select * from tb_properties_category_rooms pcr inner join tb_properties_category_types pct on pct.id=pcr.category_id where pcr.room_active_from <= '".$book_arrive_date."' and pcr.room_active_to >='".$book_checkout_date."' and pcr.category_id=".$type_id." and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$book_arrive_date."' BETWEEN checkin_date and checkout_date or '".$book_checkout_date."' BETWEEN checkin_date and checkout_date)";
                     $rooms = DB::select($query);
-                    if(count($rooms)>0){                        
-                        $rmid = $rooms[0]->id;                    
+                    if(count($rooms)>0){
+                        $rmid = $rooms[0]->id;
                     }
                     print_r($rooms);
                     if ($props->default_seasons != 1) {
@@ -6008,7 +6008,7 @@ class HomeController extends Controller {
                     } else {
                         $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $request->input('roomType'))->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->first();
                     }
-                    
+
                     if (!empty($checkseason)) {
         			     $price = $checkseason->rack_rate;
                     } else {
@@ -6017,12 +6017,12 @@ class HomeController extends Controller {
                             $price = $checkseasonPrice_ifnotanyseason->rack_rate;
                         }
                     }
-                    
-                    
+
+
                     $diff = strtotime($book_checkout_date) - strtotime($book_arrive_date);
                     $staytime = ($diff/86400)+1;
-                    
-                    
+
+
                     //$rooms_data['reservation_id'] = $resid;
                     $rooms_data['type_id'] = $booking_Room_type[$key]==0 ? $request->input('roomType') : $booking_Room_type[$key];
                     $rooms_data['room_id'] = $rmid;
@@ -6047,7 +6047,7 @@ class HomeController extends Controller {
                     $msg = '';
                     foreach($arr_type as $s_type){
                         $msg.="This ".$s_type['category']." allowed mininum ".$s_type['min_stay']." days stay <br />";
-                    }                    
+                    }
                     $return['message'] = "There are following error <br>";
                 }
             }
@@ -6179,16 +6179,16 @@ die;        */
             } else {
                 \DB::table('tb_users')->where('id', $uid)->update($userData);
             }*/
-            
+
             $booking_number = '101'.str_pad($resid, 5, 0, STR_PAD_LEFT);
             \DB::table('tb_reservations')->where('id', $resid)->update(array('booking_number' => $booking_number, 'total_price'=>$total_amount, 'discount'=>$_discount, 'total_commission'=>$commision_amt));
-            
-            
-            
-            
+
+
+
+
             /*
              * Send email notification
-             */             
+             */
 
             $reservation = \DB::table('tb_reservations')->where('id', $resid)->first();
             $preferences = \DB::table('td_booking_preferences')->where('reservation_id', $reservation->id)->first();
@@ -6204,7 +6204,7 @@ die;        */
 
             $bookingEmail = base_path() . "/resources/views/user/emails/booking_notification.blade.php";
             $bookingEmailTemplate = file_get_contents($bookingEmail);
-            
+
             $reservation_price = $reservation->price;
             //print_r($reservation_price); die;
             if($discount_apply!=''){
@@ -6629,18 +6629,18 @@ die;        */
             $bookingEmailTemplate = str_replace('{total_price}', '€' . $total_price, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{commission_due}', '€' . $commission_due, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{grand_total}', '€' . $grand_total, $bookingEmailTemplate);
-            
+
             $hotel_term_and_condition = '';
             if(!empty($hotel_terms_n_conditions)){
                 if(isset($hotel_terms_n_conditions->terms_n_conditions)){
                     $hotel_term_and_condition = $hotel_terms_n_conditions->terms_n_conditions;
                 }
             }
-            
+
             $bookingEmailTemplate = str_replace('{hotel_terms_n_conditions}', $hotel_term_and_condition, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{property_email}', $property->email, $bookingEmailTemplate);
-            
-            
+
+
             //view('user.emails.'.$tempe, $emailArr);
             //print_r($bookingEmailTemplate); die;
             //$headers = "MIME-Version: 1.0" . "\r\n";
@@ -6652,36 +6652,36 @@ die;        */
             //mail('dalip.01rad@gmail.com', "Booking Confirmation", $bookingEmailTemplate, $headers);
             $tempe = 'blank';
             $emailArr['msg'] = $bookingEmailTemplate;
-            
+
             //echo view('user.emails.'.$tempe, $emailArr);
             //die;
-            
-            $toouser['email'] = $property->email;            
-			//$toouser['subject'] = "Booking Confirmation"; 
-            $toouser['subject'] = "Booking Request";           		
+
+            $toouser['email'] = $property->email;
+			//$toouser['subject'] = "Booking Confirmation";
+            $toouser['subject'] = "Booking Request";
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser) {
-              $message->to($toouser['email'])                               
+              $message->to($toouser['email'])
                 ->subject($toouser['subject'])
                 ->cc('riaan@emporium-collection.com')
-                ->bcc('astrid@emporium-collection.com') 
+                ->bcc('astrid@emporium-collection.com')
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
-            
+
             $toouser1['email'] = $user_info->email;
-			//$toouser1['subject'] = "Booking Confirmation";	
+			//$toouser1['subject'] = "Booking Confirmation";
             $toouser1['subject'] = "Booking Request";
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser1) {
               $message->to($toouser1['email'])
                 ->subject($toouser1['subject'])
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
-            
+
             /*             * ******************* Email notification end here **************************** */
 
             /*
              * Log in user
              */
-            
+
             if (!\Auth::check()) {
 
                 $temp = \Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')), 'false');
@@ -6701,7 +6701,7 @@ die;        */
                     }
                 }
             }else{
-                if($discount_apply!=''){  
+                if($discount_apply!=''){
                     \DB::table('tb_user_invitee_discount')->where('id', $discount_apply->id)->update(array('availability' => 0));
                 }
             }
@@ -6715,9 +6715,9 @@ die;        */
         //    return json_encode($res);
         //}
     }
-    
-    function new_room_booking_old(Request $request) {        
-        
+
+    function new_room_booking_old(Request $request) {
+
         //$reserved_rooms = \DB::table('td_reserved_rooms')->join('tb_properties_category_types', 'tb_properties_category_types.id', '=', 'td_reserved_rooms.type_id')->join('tb_properties_category_rooms_price', 'tb_properties_category_rooms_price.category_id', '=', 'td_reserved_rooms.type_id')->where('reservation_id', 36)->get();
         //print_r($reserved_rooms); die;
         $uid = 0;
@@ -6725,97 +6725,97 @@ die;        */
         $rules['roomType'] = 'required';
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
-            
+
             $discount_apply = '';
             if (\Auth::check()) {
                 $uid = \Auth::user()->id;
                 $userdet = \DB::table('tb_users')->where('id', $uid)->first();
-                
+
                 $discount_apply = \DB::table('tb_user_invitee_discount')->where('user_id', \Auth::user()->id)->where('availability', 1)->first();
             }
             $props = \DB::table('tb_properties')->where('id', $request->input('property'))->first();
             $curnDate = date('Y-m-d');
             $price = 0;
-            
+
             $extra_adult = 0;
             $extra_junior = 0;
-            
+
             $single_price = 0;
-            $monday_price = 0;   
-            $tuesday_price = 0;   
-            $wednesday_price = 0;     
-            $thursday_price = 0;   
-            $friday_price = 0;    
-            $saturday_price = 0;   
+            $monday_price = 0;
+            $tuesday_price = 0;
+            $wednesday_price = 0;
+            $thursday_price = 0;
+            $friday_price = 0;
+            $saturday_price = 0;
             $sunday_price = 0;
-            
-            
+
+
             $data['property_id'] = $request->input('property');
-            
-            
-            
+
+
+
             $arrive_date = '';
             $book_arrive_date = '';
             if (!is_null($request->input('booking_arrive')) && $request->input('booking_arrive') != '' && $request->input('booking_arrive') != 'null') {
-                
+
                 $arrive = trim($request->input('booking_arrive'));
-                    $arrive_array=explode("-",$arrive); 
+                    $arrive_array=explode("-",$arrive);
                     $t=$arrive_array[0];
                     $arrive_array[0]=$arrive_array[1];
                     $arrive_array[1]=$t;
                     $arrive_date=implode(".",$arrive_array);
-    
+
                 $book_arrive_date = $arrive_array[2]."-".$arrive_array[1]."-".$arrive_array[0];
             }
-            
+
             $checkout_date = '';
             $book_checkout_date = '';
             if (!is_null($request->input('booking_destination')) && $request->input('booking_destination') != '' && $request->input('booking_destination') != 'null') {
-                
+
                 $checkout_date = trim($request->input('booking_destination'));
-                    $checkout_date_array=explode("-",$checkout_date); 
+                    $checkout_date_array=explode("-",$checkout_date);
                     $t=$checkout_date_array[0];
                     $checkout_date_array[0]=$checkout_date_array[1];
                     $checkout_date_array[1]=$t;
                     $checkout_date_date=implode(".",$checkout_date_array);
-    
+
                 $book_checkout_date = $checkout_date_array[2]."-".$checkout_date_array[1]."-".$checkout_date_array[0];
             }
-            
-            
-            
-            
-            
-            
+
+
+
+
+
+
             if ($props->default_seasons != 1) {
                 $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $request->input('roomType'))->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->orderBy('tb_seasons.season_priority', 'asc')->first();
             } else {
                 $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $request->input('roomType'))->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->first();
             }
-            
+
             if (!empty($checkseason)) {
 			     $price = $checkseason->rack_rate;
                  //$extra_adult = $checkseason->extra_adult;
-                 //$extra_junior = $checkseason->extra_junior;  
+                 //$extra_junior = $checkseason->extra_junior;
             } else {
                 $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $request->input('roomType'))->first();
                 if (!empty($checkseasonPrice_ifnotanyseason)) {
                     $price = $checkseasonPrice_ifnotanyseason->rack_rate;
                     //$extra_adult = $checkseason->extra_adult;
-                    //$extra_junior = $checkseason->extra_junior; 
+                    //$extra_junior = $checkseason->extra_junior;
                 }
             }
-            
-            
-            
-            
+
+
+
+
 
             /*
              * Save reservation data
              */
 
-            
-            
+
+
             $data['checkin_date'] = $book_arrive_date;
             $data['checkout_date'] = $book_checkout_date;
             $data['type_id'] = $request->input('roomType');
@@ -6844,7 +6844,7 @@ die;        */
                 $discount = ($price*10/100);
                 $data['discount'] = $discount;
             }
-            
+
 
             $resid = \DB::table('tb_reservations')->insertGetId($data);
 
@@ -6855,79 +6855,79 @@ die;        */
             $booking_adults = $request->input('booking_adults');
             $booking_children = $request->input('booking_children');
             $booking_Room_type = $request->input('booking_Room_type');
-            
+
             $f_reserved_rooms = array();
             $flag = true;
             $return = array();
             $arr_type = array();
-            if (!empty($booking_adults)) { 
+            if (!empty($booking_adults)) {
                 for($j=0; $j<count($booking_adults); $j++){
                     $type_id = $booking_Room_type[$j]==0 ? $request->input('roomType') : $booking_Room_type[$j];
                     $rmid = '';
                     $query = "select pct.*, pcr.id as roomid  from tb_properties_category_rooms pcr inner join tb_properties_category_types pct on pct.id=pcr.category_id where pcr.room_active_from <= '".$book_arrive_date."' and pcr.room_active_to >='".$book_checkout_date."' and pcr.category_id=".$type_id." and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$book_arrive_date."' BETWEEN checkin_date and checkout_date or '".$book_checkout_date."' BETWEEN checkin_date and checkout_date)";
-                    
+
                     $rooms = DB::select($query);
-                    if(count($rooms)>0){                        
-                        $rmid = $rooms[0]->roomid;                    
+                    if(count($rooms)>0){
+                        $rmid = $rooms[0]->roomid;
                     }
-                    
+
                     //print_r($rooms); die;
-                                       
+
                     if ($props->default_seasons != 1) {
                         $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type_id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->orderBy('tb_seasons.season_priority', 'asc')->first();
                     } else {
                         $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type_id)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->first();
                     }
-                    
+
                     if (!empty($checkseason)) { print_r($checkseason); die;
         			     $price = $checkseason->rack_rate;
                          $extra_adult = $checkseason->extra_adult;
-                         $extra_junior = $checkseason->extra_junior; 
-                         
+                         $extra_junior = $checkseason->extra_junior;
+
                          $single_price = $checkseason->single_price;
-                         $monday_price = ($checkseason->monday_price > 0) ? $checkseason->monday_price : $price;   
-                         $tuesday_price = ($checkseason->tuesday_price > 0) ? $checkseason->tuesday_price : $price;   
-                         $wednesday_price = ($checkseason->wednesday_price > 0) ? $checkseason->wednesday_price : $price;     
-                         $thursday_price = ($checkseason->thursday_price > 0) ? $checkseason->thursday_price : $price;   
-                         $friday_price = ($checkseason->friday_price > 0) ? $checkseason->friday_price : $price;    
-                         $saturday_price = ($checkseason->saturday_price > 0) ? $checkseason->saturday_price : $price;   
-                         $sunday_price = ($checkseason->sunday_price > 0) ? $checkseason->sunday_price : $price;                       
-                         
+                         $monday_price = ($checkseason->monday_price > 0) ? $checkseason->monday_price : $price;
+                         $tuesday_price = ($checkseason->tuesday_price > 0) ? $checkseason->tuesday_price : $price;
+                         $wednesday_price = ($checkseason->wednesday_price > 0) ? $checkseason->wednesday_price : $price;
+                         $thursday_price = ($checkseason->thursday_price > 0) ? $checkseason->thursday_price : $price;
+                         $friday_price = ($checkseason->friday_price > 0) ? $checkseason->friday_price : $price;
+                         $saturday_price = ($checkseason->saturday_price > 0) ? $checkseason->saturday_price : $price;
+                         $sunday_price = ($checkseason->sunday_price > 0) ? $checkseason->sunday_price : $price;
+
                     } else {
                         $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('tb_properties_category_rooms_price.*')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $type_id)->first();
-                        if (!empty($checkseasonPrice_ifnotanyseason)) { 
+                        if (!empty($checkseasonPrice_ifnotanyseason)) {
                             $price = $checkseasonPrice_ifnotanyseason->rack_rate;
                             $extra_adult = $checkseasonPrice_ifnotanyseason->extra_adult;
-                            $extra_junior = $checkseasonPrice_ifnotanyseason->extra_junior;  
-                            
+                            $extra_junior = $checkseasonPrice_ifnotanyseason->extra_junior;
+
                             $single_price = $checkseasonPrice_ifnotanyseason->single_price;
-                            $monday_price = ($checkseasonPrice_ifnotanyseason->monday_price > 0) ? $checkseasonPrice_ifnotanyseason->monday_price : $price;   
-                            $tuesday_price = ($checkseasonPrice_ifnotanyseason->tuesday_price > 0) ? $checkseasonPrice_ifnotanyseason->tuesday_price : $price;   
-                            $wednesday_price = ($checkseasonPrice_ifnotanyseason->wednesday_price > 0) ? $checkseasonPrice_ifnotanyseason->wednesday_price : $price;     
-                            $thursday_price = ($checkseasonPrice_ifnotanyseason->thursday_price > 0) ? $checkseasonPrice_ifnotanyseason->thursday_price : $price;   
-                            $friday_price = ($checkseasonPrice_ifnotanyseason->friday_price > 0) ? $checkseasonPrice_ifnotanyseason->friday_price : $price;    
-                            $saturday_price = ($checkseasonPrice_ifnotanyseason->saturday_price > 0) ? $checkseasonPrice_ifnotanyseason->saturday_price : $price;   
-                            $sunday_price = ($checkseasonPrice_ifnotanyseason->sunday_price > 0) ? $checkseasonPrice_ifnotanyseason->sunday_price : $price; 
+                            $monday_price = ($checkseasonPrice_ifnotanyseason->monday_price > 0) ? $checkseasonPrice_ifnotanyseason->monday_price : $price;
+                            $tuesday_price = ($checkseasonPrice_ifnotanyseason->tuesday_price > 0) ? $checkseasonPrice_ifnotanyseason->tuesday_price : $price;
+                            $wednesday_price = ($checkseasonPrice_ifnotanyseason->wednesday_price > 0) ? $checkseasonPrice_ifnotanyseason->wednesday_price : $price;
+                            $thursday_price = ($checkseasonPrice_ifnotanyseason->thursday_price > 0) ? $checkseasonPrice_ifnotanyseason->thursday_price : $price;
+                            $friday_price = ($checkseasonPrice_ifnotanyseason->friday_price > 0) ? $checkseasonPrice_ifnotanyseason->friday_price : $price;
+                            $saturday_price = ($checkseasonPrice_ifnotanyseason->saturday_price > 0) ? $checkseasonPrice_ifnotanyseason->saturday_price : $price;
+                            $sunday_price = ($checkseasonPrice_ifnotanyseason->sunday_price > 0) ? $checkseasonPrice_ifnotanyseason->sunday_price : $price;
                         }
                     }
-                    
+
                     $day_w_price = array($sunday_price, $monday_price, $tuesday_price, $wednesday_price, $thursday_price, $friday_price, $saturday_price);
-                    
+
                     $diff = strtotime($book_checkout_date) - strtotime($book_arrive_date);
                     $staytime = ($diff/86400)+1;
-                    
+
                     $amt = $this->get_daywise_price($book_arrive_date, $staytime, $day_w_price);
-                    
+
                     $total_amount = $total_amount + $amt; //($staytime*$price);
                     //echo $total_amount;
-                    /*if($staytime < $rooms[0]->minimum_stay){                        
+                    /*if($staytime < $rooms[0]->minimum_stay){
                         $flag = false;
                         $return['status'] = "error";
                         $return['minimumstay'] = true;
                         $arr_type[] = array('category'=>$rooms[0]->category_name, 'min_stay'=>$rooms[0]->minimum_stay);
                         //$return[] =
                     }else{*/
-                    if(count($rooms)>0){     
+                    if(count($rooms)>0){
                         $rooms_data['reservation_id'] = $resid;
                         $rooms_data['type_id'] = $type_id;
                         $rooms_data['room_id'] = $rmid;
@@ -6943,12 +6943,12 @@ die;        */
                             $total_amount = $total_amount + ($noof_extra_child * $extra_junior * $staytime);
                         }
                         $rooms_data['booking_children'] = $booking_children[$j];
-                        $rooms_data['price'] = $price; 
-                        $f_reserved_rooms[] = $rooms_data; 
+                        $rooms_data['price'] = $price;
+                        $f_reserved_rooms[] = $rooms_data;
                         \DB::table('td_reserved_rooms')->insertGetId($rooms_data);
                     }
                     /*}*/
-                    
+
                 }
                 //print_r($total_amount);
                 //die;
@@ -6958,8 +6958,8 @@ die;        */
                     $rmid = '';
                     $query = "select * from tb_properties_category_rooms pcr inner join tb_properties_category_types pct on pct.id=pcr.category_id where pcr.room_active_from <= '".$book_arrive_date."' and pcr.room_active_to >='".$book_checkout_date."' and pcr.category_id=".$type_id." and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$book_arrive_date."' BETWEEN checkin_date and checkout_date or '".$book_checkout_date."' BETWEEN checkin_date and checkout_date)";
                     $rooms = DB::select($query);
-                    if(count($rooms)>0){                        
-                        $rmid = $rooms[0]->id;                    
+                    if(count($rooms)>0){
+                        $rmid = $rooms[0]->id;
                     }
                     print_r($rooms);
                     if ($props->default_seasons != 1) {
@@ -6967,7 +6967,7 @@ die;        */
                     } else {
                         $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $request->input('roomType'))->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $book_arrive_date)->where('tb_seasons_dates.season_to_date', '>=', $book_checkout_date)->first();
                     }
-                    
+
                     if (!empty($checkseason)) {
         			     $price = $checkseason->rack_rate;
                     } else {
@@ -6976,12 +6976,12 @@ die;        */
                             $price = $checkseasonPrice_ifnotanyseason->rack_rate;
                         }
                     }
-                    
-                    
+
+
                     $diff = strtotime($book_checkout_date) - strtotime($book_arrive_date);
                     $staytime = ($diff/86400)+1;
-                    
-                    
+
+
                     //$rooms_data['reservation_id'] = $resid;
                     $rooms_data['type_id'] = $booking_Room_type[$key]==0 ? $request->input('roomType') : $booking_Room_type[$key];
                     $rooms_data['room_id'] = $rmid;
@@ -7006,7 +7006,7 @@ die;        */
                     $msg = '';
                     foreach($arr_type as $s_type){
                         $msg.="This ".$s_type['category']." allowed mininum ".$s_type['min_stay']." days stay <br />";
-                    }                    
+                    }
                     $return['message'] = "There are following error <br>";
                 }
             }
@@ -7138,12 +7138,12 @@ die;        */
             } else {
                 \DB::table('tb_users')->where('id', $uid)->update($userData);
             }*/
-            
+
             $booking_number = '101'.str_pad($resid, 5, 0, STR_PAD_LEFT);
             \DB::table('tb_reservations')->where('id', $resid)->update(array('booking_number' => $booking_number, 'total_price'=>$total_amount, 'discount'=>$_discount, 'total_commission'=>$commision_amt));
             /*
              * Send email notification
-             */             
+             */
 
             $reservation = \DB::table('tb_reservations')->where('id', $resid)->first();
             $preferences = \DB::table('td_booking_preferences')->where('reservation_id', $reservation->id)->first();
@@ -7159,7 +7159,7 @@ die;        */
 
             $bookingEmail = base_path() . "/resources/views/user/emails/booking_notification.blade.php";
             $bookingEmailTemplate = file_get_contents($bookingEmail);
-            
+
             $reservation_price = $reservation->price;
             if($discount_apply!=''){
                 $discount_price = ($reservation->price*10/100);
@@ -7581,18 +7581,18 @@ die;        */
             $bookingEmailTemplate = str_replace('{total_price}', '€' . $total_price, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{commission_due}', '€' . $commission_due, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{grand_total}', '€' . $grand_total, $bookingEmailTemplate);
-            
+
             $hotel_term_and_condition = '';
             if(!empty($hotel_terms_n_conditions)){
                 if(isset($hotel_terms_n_conditions->terms_n_conditions)){
                     $hotel_term_and_condition = $hotel_terms_n_conditions->terms_n_conditions;
                 }
             }
-            
+
             $bookingEmailTemplate = str_replace('{hotel_terms_n_conditions}', $hotel_term_and_condition, $bookingEmailTemplate);
             $bookingEmailTemplate = str_replace('{property_email}', $property->email, $bookingEmailTemplate);
-            
-            
+
+
             //view('user.emails.'.$tempe, $emailArr);
             //print_r($bookingEmailTemplate); die;
             //$headers = "MIME-Version: 1.0" . "\r\n";
@@ -7604,34 +7604,34 @@ die;        */
             //mail('dalip.01rad@gmail.com', "Booking Confirmation", $bookingEmailTemplate, $headers);
             $tempe = 'blank';
             $emailArr['msg'] = $bookingEmailTemplate;
-            
+
             //echo view('user.emails.'.$tempe, $emailArr);
             //die;
-            
-            $toouser['email'] = $property->email;            
-			//$toouser['subject'] = "Booking Confirmation"; 
-            $toouser['subject'] = "Booking Request";           		
+
+            $toouser['email'] = $property->email;
+			//$toouser['subject'] = "Booking Confirmation";
+            $toouser['subject'] = "Booking Request";
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser) {
               $message->to($toouser['email'])
                 ->subject($toouser['subject'])
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
-            
+
             $toouser1['email'] = $user_info->email;
-			//$toouser1['subject'] = "Booking Confirmation";	
+			//$toouser1['subject'] = "Booking Confirmation";
             $toouser1['subject'] = "Booking Request";
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser1) {
               $message->to($toouser1['email'])
                 ->subject($toouser1['subject'])
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
-            
+
             /*             * ******************* Email notification end here **************************** */
 
             /*
              * Log in user
              */
-            
+
             if (!\Auth::check()) {
 
                 $temp = \Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')), 'false');
@@ -7651,7 +7651,7 @@ die;        */
                     }
                 }
             }else{
-                if($discount_apply!=''){  
+                if($discount_apply!=''){
                     \DB::table('tb_user_invitee_discount')->where('id', $discount_apply->id)->update(array('availability' => 0));
                 }
             }
@@ -7679,7 +7679,7 @@ die;        */
                 $row = User::find(\Auth::user()->id);
 
                 if ($row->active == '0') {
-                    // inactive 
+                    // inactive
                     \Auth::logout();
                     return "user_not_active";
                 } else if ($row->active == '2') {
@@ -7782,10 +7782,10 @@ die;        */
             return json_encode($rep);
         }
     }
-	
+
 	public function getPropertyRoomimageGalleryView(Request $request) {
         $propertiesArr = array();
-        
+
 		if ($request->id!='') {
             $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.category_id', $request->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
             //print_r($fileArr);
@@ -7802,9 +7802,9 @@ die;        */
         return response()->json($propertiesArr);
         exit;
     }
-	
+
 	function SearchLuxuryExperience(Request $request) {
-       
+
         if (CNF_FRONT == 'false' && $request->segment(1) == '') :
             return Redirect::to('dashboard');
         endif;
@@ -7825,10 +7825,10 @@ die;        */
            $keyword = $request->s ;
         }
         if ($keyword!='') {
-            $CityArrdestts = array();  
+            $CityArrdestts = array();
             $categoryObj = \DB::table('tb_categories')->where('category_name', $keyword)->first();
-            
-           
+
+
             if(!empty($categoryObj)){
                 $citydest = \DB::table('tb_categories')->where('parent_category_id', $categoryObj->id)->get();
                 if (!empty($citydest)) {
@@ -7873,7 +7873,7 @@ die;        */
                         $access = array();
                     }
 
-                    // If guest not allowed 
+                    // If guest not allowed
                     if ($row->allow_guest != 1) {
                         $group_id = \Session::get('gid');
                         $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -7918,7 +7918,7 @@ die;        */
 
                         $currentPage = Input::get('page', 1) - 1;
                         $TagsObj = \DB::table('tb_tags_manager')->select('id')->where('tag_title', $keyword)->where('tag_status', 1)->first();
-                      
+
                         $TagsConId = array();
                         $TagsFileConId = array();
                         $pr = 0;
@@ -8008,13 +8008,13 @@ die;        */
                             }
                         }
 
-                        
-                        /******* New Query by Ravinder ********/ 
-                        $catprops = '';   
+
+                        /******* New Query by Ravinder ********/
+                        $catprops = '';
                         $arriveQry = '';
                         if ($arrive != '') {
 
-                                $arriveQry = "SELECT pr.id "; 
+                                $arriveQry = "SELECT pr.id ";
                                 $arriveQry .=" from tb_properties pr, tb_properties_category_rooms pctr ";
                                 $arriveQry .=" WHERE pctr.property_id=pr.id AND pctr.room_active_from <= ".$arrive;
                                 $arriveQry .=" AND  pr.property_name like '%". $keyword."%' ";
@@ -8024,9 +8024,9 @@ die;        */
                                     $arriveQry .=" AND  pctr.room_active_to >= ".$destination;
                                 }
 
-                            
+
                         }
-                           
+
                         $cateObj = \DB::table('tb_categories')->where('category_name', $keyword)->where('category_published', 1)->first();
                         $chldIds = array();
                         if (!empty($cateObj)) {
@@ -8075,10 +8075,10 @@ die;        */
                         $query .= " FROM tb_properties pr ";
                         $whereClause =" WHERE ((pr.property_name LIKE '%$keyword%'AND pr.property_type = 'Hotel') OR city LIKE '%$keyword%' ".$catprops." ) AND pr.property_status = 1  ";
                         $orderBy = "ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price pcrp WHERE pcrp.property_id = pr.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, pr.editor_choice_property desc, pr.feature_property desc ";
-                        $limit = " LIMIT ". $pageStart.",".$perPage; 
-                        $finalQry = $query.$whereClause.$orderBy.$limit ; 
+                        $limit = " LIMIT ". $pageStart.",".$perPage;
+                        $finalQry = $query.$whereClause.$orderBy.$limit ;
                         $CountRecordQry = "Select count(*) as total_record from tb_properties pr ".$whereClause ;
-                        
+
                         $property = DB::select($finalQry);
                         $getRec = DB::select($CountRecordQry);
 
@@ -8088,7 +8088,7 @@ die;        */
                         $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
 
                         $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
-                        
+
                         $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
                         $tagsArr = array();
                         if (!empty($tags_Arr)) {
@@ -8096,12 +8096,12 @@ die;        */
                                 $tagsArr[$tags->parent_tag_id][] = $tags;
                             }
                         }
-                        
-                        
+
+
                         $this->data['categoryslider'] = \DB::table('tb_sliders')->where('slider_category', $keyword)->get();
-						
+
 						$this->data['experiences'] = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 8)->get();
-						
+
 						$this->data['whybookwithus'] = \DB::table('tb_whybookwithus')->select('id', 'title', 'sub_title')->where('status', 0)->get();
 
                         $adscateObj = \DB::table('tb_categories')->where('category_name', $keyword)->where('category_published', 1)->first();
@@ -8121,7 +8121,7 @@ die;        */
                         } else {
                             $this->data['sidebargridAds'] = '';
                         }
-                        
+
                         $this->data['continent'] = $request->continent;
                         $this->data['region'] = $request->region;
                         $this->data['cat'] = $request->cat;
@@ -8160,7 +8160,7 @@ die;        */
             return view($page, $this->data);
         endif;
     }
-	
+
 	public function addHotelInfoFrontend(Request $request) {
 
         //$uid = \Auth::user()->id;
@@ -8195,7 +8195,7 @@ die;        */
 		$rules['hotel_contactprsn_password_confirmation'] = 'required';
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
-			
+
 			$code = rand(10000, 10000000);
 			$authen = new User;
             $authen->first_name = $request->input('hotel_contactprsn_firstname');
@@ -8220,7 +8220,7 @@ die;        */
             $authen->password = \Hash::make($request->input('hotel_contactprsn_password'));
             $authen->active = '0';
             $authen->save();
-			
+
 			$data['property_name'] = $request->input('hotelinfo_name');
 			$data['property_short_name'] = $request->input('hotelinfo_name');
 			$alias = \SiteHelpers::seoUrl(Input::get('hotelinfo_name'));
@@ -8256,7 +8256,7 @@ die;        */
 			$data['hotelinfo_daysopen'] = $request->input('hotelinfo_daysopen');
 			$data['hotelinfo_avg_daily_rate'] = $request->input('hotelinfo_avg_daily_rate');
 			$data['hotelinfo_avg_occupancy'] = $request->input('hotelinfo_avg_occupancy');
-			
+
 			$data['hotelfac_num_rooms'] = $request->input('hotelfac_num_rooms');
 			$data['hotelfac_num_suites'] = $request->input('hotelfac_num_suites');
 			if (!empty($request->input('hotelfac_fb_outlets'))) {
@@ -8272,7 +8272,7 @@ die;        */
 			$data['hotelfac_meeting_area'] = $request->input('hotelfac_meeting_area');
 			$data['hotelfac_meeting_fac'] = $request->input('hotelfac_meeting_fac');
 			$data['hotelfac_comments'] = $request->input('hotelfac_comments');
-			
+
 			$data['hoteldesc_concept'] = $request->input('hoteldesc_concept');
 			$data['architecture_desciription'] = $request->input('hoteldesc_architecture_design');
 			$data['architecture_title'] = $request->input('hoteldesc_architecture_name');
@@ -8287,13 +8287,13 @@ die;        */
 			$data['hoteldesc_brand_agency_website'] = $request->input('hoteldesc_brand_agency_website');
 			$data['hoteldesc_brand_linkdin_profile'] = $request->input('hoteldesc_brand_linkdin_profile');
 			$data['social_instagram'] = $request->input('hoteldesc_brand_instagram_profile');
-			
+
 			$data['hotel_contactinfo_name'] = $request->input('hotel_contactinfo_name');
 			$data['owner_address'] = $request->input('hotel_contactinfo_address');
 			$data['owner_city'] = $request->input('hotel_contactinfo_city');
 			$data['owner_country'] = $request->input('hotel_contactinfo_country');
 			$data['owner_postal_code'] = $request->input('hotel_contactinfo_postal');
-			
+
 			$data['owner_name'] = $request->input('hotel_contactprsn_firstname');
 			$data['owner_last_name'] = $request->input('hotel_contactprsn_lastname');
 			$data['hotel_contactprsn_companyname'] = $request->input('hotel_contactprsn_companyname');
@@ -8307,7 +8307,7 @@ die;        */
 				$data['hotel_contactprsn_agree'] = 0;
 			}
 			$propertyquery = \DB::table('tb_properties')->insertGetId($data);
-			
+
 			$res['status'] = 'success';
             return json_encode($res);
         } else {
@@ -8316,9 +8316,9 @@ die;        */
             $res['errors'] = $validator->errors()->all();
             return json_encode($res);
         }
-        
+
     }
-	
+
 	function fetchpackagedetails($pckid)
 	{
 		if($pckid!='')
@@ -8332,9 +8332,9 @@ die;        */
 			exit;
 		}
 	}
-	
+
 	public function barspage(Request $request) {
-       
+
         $this->data['pageTitle'] = 'Bars';
 		$this->data['pageMetakey'] = CNF_METAKEY;
 		$this->data['pageMetadesc'] = CNF_METADESC;
@@ -8349,14 +8349,14 @@ die;        */
 		}
 
 		$this->data['propertiesArr'] = $propertiesArr;
-		
+
 		$this->data['sidebardetailAds'] = \DB::table('tb_advertisement')->select('adv_link','adv_img')->where('adv_type', 'sidebar')->where('adv_position', 'detail')->get();
-		
+
         return view('pages.bars', $this->data);
     }
-	
+
 	public function spaspage(Request $request) {
-       
+
         $this->data['pageTitle'] = 'Spas';
 		$this->data['pageMetakey'] = CNF_METAKEY;
 		$this->data['pageMetadesc'] = CNF_METADESC;
@@ -8371,17 +8371,17 @@ die;        */
 		}
 
 		$this->data['propertiesArr'] = $propertiesArr;
-		
+
 		$this->data['sidebardetailAds'] = \DB::table('tb_advertisement')->select('adv_link','adv_img')->where('adv_type', 'sidebar')->where('adv_position', 'detail')->get();
-		
+
         return view('pages.spas', $this->data);
     }
-    
+
     public function membershiptypes(Request $request){
         $mem_types = \DB::table('tb_packages')->select('id', 'package_title')->where('package_category', 'B2C')->where('package_status', 1)->get();
         if(!empty($mem_types)){
-            $res['status'] =  "success"; 
-            $res['objmember'] =  $mem_types; 
+            $res['status'] =  "success";
+            $res['objmember'] =  $mem_types;
         }else{
             $res['status'] =  "error";
         }
@@ -8408,7 +8408,7 @@ die;        */
                     $f_str_query = "Lifestyle Membership";
                 }
             }
-        }        
+        }
         $this->data['mem_type'] = $f_str_query;
         $this->data['packages'] = \DB::table('tb_packages')->where('package_category', 'B2C')->where('package_status', 1)->orderby('order_num', 'asc')->get();
         return view('frontend.themes.emporium.pages.memberships', $this->data);
@@ -8422,26 +8422,26 @@ die;        */
             $res['status'] = 'success';
             $res['mem_package'] = $packages;
         }else{
-            $res['status'] = 'error';            
+            $res['status'] = 'error';
         }
         /*$packages = \DB::table('tb_packages')->where('package_category', 'B2C')->where('package_status', 1)->where('package_title', $f_mem_type)->first();
         if(count($packages)>0){
             $res['status'] = 'success';
             $res['mem_package'] = $packages;
         }else{
-            $res['status'] = 'error';            
+            $res['status'] = 'error';
         }*/
         echo json_encode($res);
         //print_r($packages); die;
     }
-    
+
     function checkNoOfReservationInType($pid, $dt_check_in, $dt_check_out, $type_id){
         $noof_reservations = \DB::table('tb_reservations')->join('td_reserved_rooms', 'td_reserved_rooms.reservation_id', '=', 'tb_reservations.id')->where('property_id', $pid)->where('td_reserved_rooms.type_id', $type_id)->where('checkin_date', '<=', $dt_check_in)->where('checkout_date', '>=', $dt_check_out)->count();
         //return count($reservations);
         $noof_cat_rooms = \DB::table('tb_properties_category_rooms')->where('property_id', $pid)->where('category_id', $type_id)->count();
         $flag = 0;
         if($noof_cat_rooms > $noof_reservations){
-            $flag = 1;    
+            $flag = 1;
         }
         return $flag;
         /*$arr_res_rooms = array();
@@ -8453,7 +8453,7 @@ die;        */
                         $arr_res_rooms[] = $si_room;
                     }
                 }
-            }                
+            }
         }*/
     }
     function get_daywise_price($dt, $no0fdays, $arr_price){
@@ -8467,9 +8467,9 @@ die;        */
                         $total = $total + $arr_price[$weekday];
                         if($weekday==6){
                             $weekday = 0;
-                        } 
-                   } 
-                   $weekday++;    
+                        }
+                   }
+                   $weekday++;
                 }
             }
         }
@@ -8481,8 +8481,8 @@ die;        */
         $dayNumber = date('w', strtotime($current_date));
         $year = date('Y', strtotime($current_date));
         $month = date('m', strtotime($current_date));
-        $numberOfDayInMonth = date('t', strtotime($current_date)); 
-        echo $current_date."-".$dayNumber."-".$year."-".$month."-".$numberOfDayInMonth."<br />";        
+        $numberOfDayInMonth = date('t', strtotime($current_date));
+        echo $current_date."-".$dayNumber."-".$year."-".$month."-".$numberOfDayInMonth."<br />";
         $flag = 0;
         $html = "<table>";
         $html .= "<tr><td>Sun</td><td>Mon</td><td>Tue</td><td>Wed</td><td>Thu</td><td>Fri</td><td>Sat</td></tr>";
@@ -8496,22 +8496,22 @@ die;        */
                     }
                 }else{
                    $html .= '<td></td>';
-                   $i--;  
+                   $i--;
                 }
                 if($j==6){
                     //echo "<br />";
-                    $i--; 
-                }                
-                $i++;               
+                    $i--;
+                }
+                $i++;
             }
             $html .= "</tr>";
         }
         $html .= "</table>";
         echo $html;
     }
-    
-    public function ajaxcheckavailability(Request $request) { 
-        
+
+    public function ajaxcheckavailability(Request $request) {
+
         $pid = $request->input('pid');
         $arrive = $request->input('arrive');
         $departure = $request->input('departure');
@@ -8519,38 +8519,38 @@ die;        */
         $booking_adults = $request->input('booking_adults');
         $booking_children = $request->input('booking_children');
         $roomType = $request->input('roomType');
-        
+
         //echo $pid."-".$arrive."-".$departure."-".$booking_rooms."-".$booking_adults."-".$booking_children."-".$roomType; die;
-        
+
         $propertiesArr = array();
         $crpropertiesArr = array();
-        
+
         $props = \DB::table('tb_properties')->where('id', $pid)->first();
-                
+
         $arrive_date = '';
-        
+
         if (!is_null($arrive) && $arrive != '' && $arrive != 'null') {
             $arrive_date = \CommonHelper::dateformat(trim($arrive));
         }
         $this->data['arrive_date']=$arrive_date;
-        
+
         $departure_date ='';
         if (!is_null($departure) && $departure != '' && $departure != 'null') {
             $departure_date = \CommonHelper::dateformat(trim($departure));
         }
         $this->data['departure'] = $departure_date;
-        
-        $rooms = ''; 
+
+        $rooms = '';
         $adults = '';
-        $child = ''; 
-        if (!is_null($booking_rooms) && $booking_rooms != '') {            
+        $child = '';
+        if (!is_null($booking_rooms) && $booking_rooms != '') {
             $rooms = $booking_rooms;
-        }          
+        }
         if (!is_null($booking_adults) && $booking_adults != '') {
             $adults = $booking_adults;
-        }        
+        }
         if (!is_null($booking_children) && $booking_children != '') {
-            $child = $booking_children;            
+            $child = $booking_children;
         }
         $result = array();
         $new_result = array();
@@ -8561,9 +8561,9 @@ die;        */
             $query = "SELECT COUNT(id) as noOfRooms, property_id, category_id FROM tb_properties_category_rooms where 1=1 and (CASE WHEN active_full_year = 0 THEN ";
             $query .="( room_active_from <= '".$arrive_date."' AND room_active_to >= '".$departure_date."')";
             $query .=" ELSE active_full_year = 1 END) and property_id=".$pid." GROUP BY category_id";
-            
+
             $result = DB::SELECT($query);
-            
+
             if(!empty($request)){
                 foreach($result as $si){
                     $new_result[$si->category_id]=$si;
@@ -8584,12 +8584,12 @@ die;        */
                                     $available["rooms"] = $new_result[$si->id]->noOfRooms;
                                     $available["cat_id"] = $si->id;
                                     $available["cat_name"] = $si->category_name;
-                                    
+
                                     $available_cat[] = $available;
                                 }
                             }
                         }
-                    }        
+                    }
                 }
                 if(empty($available_cat)){
                     foreach($category as $si){
@@ -8598,20 +8598,20 @@ die;        */
                                 $available["rooms"] = $new_result[$si->id]->noOfRooms;
                                 $available["cat_id"] = $si->id;
                                 $available["cat_name"] = $si->category_name;
-                                
+
                                 $available_cat[] = $available;
                             }
                         }
                     }
                 }
-                $retun_array = array('status'=>'success', 'room_available'=>$available_cat); 
+                $retun_array = array('status'=>'success', 'room_available'=>$available_cat);
             }else{
                 $retun_array = array('status'=>'error', 'message'=>'Unfortunately we have no rooms available for you date range, Please change you dates or we can suggest the following hotels');
-            }           
-        }            
+            }
+        }
         else{
-            
-            
+
+
             $query = "SELECT COUNT(tb_properties_category_rooms.id) as noOfRooms, tb_properties_category_types.total_guests, tb_properties_category_types.category_name, tb_properties_category_rooms.property_id, tb_properties_category_rooms.category_id FROM tb_properties_category_rooms";
             $query .= " inner join tb_properties_category_types on tb_properties_category_types.id=tb_properties_category_rooms.category_id";
             $query .=" where 1=1 and (CASE WHEN tb_properties_category_rooms.active_full_year = 0 THEN ";
@@ -8620,38 +8620,38 @@ die;        */
             //echo $query; die;
             $result = DB::SELECT($query)[0];
             //print_r($result); die;
-            if(!empty($result)){                   
+            if(!empty($result)){
                 $total_available_room = (int) $total_available_room + (int) $result->noOfRooms;
                 if( $total_available_room >= $rooms){
                     $maximum_guest = $rooms * $result->total_guests;
                     $total_guest = (int)$adults + (int)(($child=='') ? 0 : $child);
                     if($maximum_guest >= $total_guest){
-                        $available["rooms"] = $result->noOfRooms;                        
+                        $available["rooms"] = $result->noOfRooms;
                         $available["cat_name"] = $result->category_name;
-                        
+
                         $available_cat[] = $available;
                     }
-                    $retun_array = array('status'=>'success', 'room_available'=>$available_cat); 
+                    $retun_array = array('status'=>'success', 'room_available'=>$available_cat);
                 }else{
                     $retun_array = array('status'=>'error', 'message'=>'Unfortunately we have no rooms available for you date range, Please change you dates or we can suggest the following hotels');
                 }
-                
+
             }else{
                 $retun_array = array('status'=>'error', 'message'=>'Unfortunately we have no rooms available for you date range, Please change you dates or we can suggest the following hotels');
-            }     
-                      
+            }
+
         }
-        
+
         echo json_encode($retun_array);
-        
+
     }
     function propcollection(Request $request){
         $data_name = $request->input('d_name');
         $exper = $request->input('exper');
         //echo $data_name."/".$exper;
-        
+
         $coll_name = '';
-        $arr_mem_tab = explode('-', $data_name);     
+        $arr_mem_tab = explode('-', $data_name);
         if(!empty($arr_mem_tab)){
             $coll_name = $arr_mem_tab[0];
         }
@@ -8661,14 +8661,14 @@ die;        */
         if (\Auth::check() == true) {
             $uid = \Auth::user()->id;
             $mem_type = \Auth::user()->member_type;
-            
+
             if($mem_type=="lifestyle-membership"){
-                $mem_types[] = '1';    
+                $mem_types[] = '1';
             }elseif($mem_type=="dedicated-membership"){
-                $mem_types[] = '1';  
+                $mem_types[] = '1';
                 $mem_types[] = '2';
             }elseif($mem_type=="bespoke-membership"){
-                $mem_types[] = '1';  
+                $mem_types[] = '1';
                 $mem_types[] = '2';
                 $mem_types[] = '3';
             }
@@ -8677,9 +8677,9 @@ die;        */
                 $mem_types[] = 1;
             }
         }
-        //$res['status']= 'error';  
-        $res['type']= $data_name;   
-        $res['mem_types']= $mem_types;       
+        //$res['status']= 'error';
+        $res['type']= $data_name;
+        $res['mem_types']= $mem_types;
         echo json_encode($res);
         die;
     }
@@ -8693,7 +8693,7 @@ die;        */
             'lastname'=>'kumar',
             'phone'=>'9874563211',
             'contactfrom'=>'testing',
-            //'email'=>$userData['email'],    
+            //'email'=>$userData['email'],
         );
         $this->hubspot_api($objUser);*/
         $vids = 501;
@@ -8703,43 +8703,43 @@ die;        */
         echo "<pre>";
         print_r($prop);*/
     }
-    
+
     /*
      * AI booking function
      */
 
     function price_on_request(Request $request) {
-        
+
         $property = \DB::table('tb_properties')->where('id', $request->input('property'))->first();
         $curnDate = date('Y-m-d');
-        
+
         $data['property_id'] = $request->input('property');
-        
+
         $arrive_date = '';
         $book_arrive_date = '';
         if (!is_null($request->input('booking_arrive')) && $request->input('booking_arrive') != '' && $request->input('booking_arrive') != 'null') {
-            
+
             $arrive = trim($request->input('booking_arrive'));
-            
+
             $book_arrive_date = trim($request->input('booking_arrive'));
         }
-        
+
         $checkout_date = '';
         $book_checkout_date = '';
         if (!is_null($request->input('booking_destination')) && $request->input('booking_destination') != '' && $request->input('booking_destination') != 'null') {
-            
+
             $checkout_date = trim($request->input('booking_destination'));
-            
+
             $book_checkout_date = trim($request->input('booking_destination'));
         }
-        
+
         /*
          * Save reservation data
          */
-        
+
         $data['checkin_date'] = $book_arrive_date;
         $data['checkout_date'] = $book_checkout_date;
-        
+
         $data['number_of_nights'] = $request->input('number_of_nights');
         //$data['organizing_transfers'] = (!is_null($request->input('organizing_transfers')) && $request->input('organizing_transfers') != '') ? 'Yes' : 'No';
         //$data['client_id'] = $uid;
@@ -8760,15 +8760,15 @@ die;        */
         //$data['price_mode'] = 'daily';
         //$data['created_by'] = $uid;
         //$data['created_date'] = date('Y-m-d h:i:s');
-        
+
 
         $booking_adults = $request->input('booking_adults');
         $booking_children = $request->input('booking_children');
         $booking_Room_type = $request->input('booking_Room_type');
         $booking_Rooms = $request->input('booking_Rooms');
-        
-              
-            
+
+
+
             $userData['title'] = $request->input('title');
             $userData['first_name'] = $request->input('first_name');
             $userData['last_name'] = $request->input('last_name');
@@ -8783,13 +8783,13 @@ die;        */
             $userData['mobile_number'] = $request->input('mobile_number');
             $userData['email'] = $request->input('email');
             $userData['prefer_communication_with'] = $request->input('prefer_communication_with');
-            
+
             $objUser = array(
                 'email'=>$userData['email'],
                 'firstname'=>$userData['first_name'],
                 'lastname'=>$userData['last_name'],
                 'phone'=>$userData['mobile_number'],
-                'contactfrom'=>'Price On Request',   
+                'contactfrom'=>'Price On Request',
             );
             /*$objUser = array(
                 'email'=>'dalip.01rad1@gmail.com',
@@ -8797,7 +8797,7 @@ die;        */
                 'lastname'=>'kumar',
                 'phone'=>'9874563211',
                 'contactfrom'=>'testing',
-                //'email'=>$userData['email'],    
+                //'email'=>$userData['email'],
             );*/
             //$this->hubspot_api($objUser);
             //$userData['card_number'] = base64_encode($request->input('card_number'));
@@ -8811,81 +8811,81 @@ die;        */
             $bookingEmailTemplate .= 'Checkin : '.date('M d, Y', strtotime($data['checkin_date'])).'<br />';
             $bookingEmailTemplate .= 'Checkout : '.date('M d, Y', strtotime($data['checkout_date'])).'<br />';
             $ct = array();
-            if (!empty($booking_Room_type)) { 
+            if (!empty($booking_Room_type)) {
                 for($j=0; $j<count($booking_Room_type); $j++){
-                    $objct =  \DB::table('tb_properties_category_types')->where('id', $booking_Room_type[$j])->first();   
-                    if(!empty($objct)){                          
+                    $objct =  \DB::table('tb_properties_category_types')->where('id', $booking_Room_type[$j])->first();
+                    if(!empty($objct)){
                         $bookingEmailTemplate .= 'Room Type : '.$objct->category_name.'<br />';
                         $bookingEmailTemplate .= '#Rooms : '.($booking_Rooms[$j] ? $booking_Rooms[$j] : 1 ).'<br />';
                         $bookingEmailTemplate .= 'Adult : '.$booking_adults[$j].'<br />';
-                        $bookingEmailTemplate .= 'Child : '.$booking_children[$j].'<br />';     
+                        $bookingEmailTemplate .= 'Child : '.$booking_children[$j].'<br />';
                     }
-                                        
+
                 }
-                
+
             }
-            
+
             //$bookingEmailTemplate .= str_replace('{property_name}', $property->property_name, $bookingEmailTemplate);
             //$bookingEmailTemplate .= str_replace('{property_city}', $property->city, $bookingEmailTemplate);
             //$bookingEmailTemplate .= str_replace('{property_country}', $property->country, $bookingEmailTemplate);
             //$bookingEmailTemplate .= str_replace('{property_website}', $property->website, $bookingEmailTemplate);
             //$bookingEmailTemplate .= str_replace('{property_phone}', $property->phone, $bookingEmailTemplate);
             //$bookingEmailTemplate .= str_replace('{property_email}', $property->email, $bookingEmailTemplate);
-            
+
             $bookingEmailTemplate .= 'Title : '.$userData['title'].'<br />';
-            $bookingEmailTemplate .= 'Name : '.trim($userData['first_name'] . ' ' . $userData['last_name']).'<br />'; 
-            $bookingEmailTemplate .= 'Email : '.$userData['email'].'<br />';           
+            $bookingEmailTemplate .= 'Name : '.trim($userData['first_name'] . ' ' . $userData['last_name']).'<br />';
+            $bookingEmailTemplate .= 'Email : '.$userData['email'].'<br />';
             //$bookingEmailTemplate .= 'birthday:'.date("d/m/Y", strtotime($userData['birthday']));
             $bookingEmailTemplate .= 'Landline Nmber:'.$userData['landline_code'] . '-' . $userData['landline_number'].'<br />';
             $bookingEmailTemplate .= 'Mobile Number:'.$userData['mobile_code']. '-' .$userData['mobile_number'].'<br />';
             $bookingEmailTemplate .= 'Prefered Communication : '.$userData['prefer_communication_with'];
-            
-            
-           // print_r($bookingEmailTemplate); die;            
-            
-            $html = '';                       
-            
+
+
+           // print_r($bookingEmailTemplate); die;
+
+            $html = '';
+
             $tempe = 'price_on_request_admin';
-            $emailArr['msg'] = $bookingEmailTemplate;          
+            $emailArr['msg'] = $bookingEmailTemplate;
             //$toouser['email'] = 'dalip.01rad@gmail.com';
-            $toouser['email'] = 'riaan@number7even.com';            
-			 
-            $toouser['subject'] = "Price On Request";           		
+            $toouser['email'] = 'riaan@number7even.com';
+
+            $toouser['subject'] = "Price On Request";
             \Mail::send('user.emails.'.$tempe, $emailArr, function ($message) use ($toouser) {
               $message->to($toouser['email'])
                 ->subject($toouser['subject'])
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
-            
+
             $template2 = 'price_on_request_user';
             $toouser1['email'] = trim($userData['email']);
             $emailArr2['firstname'] = trim($userData['first_name'] . ' ' . $userData['last_name']);
-			//$toouser1['subject'] = "Booking Confirmation";	
+			//$toouser1['subject'] = "Booking Confirmation";
             $toouser1['subject'] = "Booking Request";
             \Mail::send('user.emails.'.$template2, $emailArr2, function ($message) use ($toouser1) {
               $message->to($toouser1['email'])
                 ->subject($toouser1['subject'])
                 ->from('marketing@emporium-voyage.com', CNF_APPNAME);
             });
-            
+
             $this->hubspot_api($objUser);
-             
+
             $res['status'] = 'success';
             return json_encode($res);
-        
+
     }
     function hubspot_api($objUser){
         $hapikey = \Config::get('hubspot.hsApiKey');
         if(!empty($objUser['email'])){
-            $response = $this->hsGetEmailDetails($objUser['email']); 
+            $response = $this->hsGetEmailDetails($objUser['email']);
             //print_r($response);
-            if($response['statusCode']==200){ //echo("hello"); 
+            if($response['statusCode']==200){ //echo("hello");
                 $obj = $response['response'];
                 $arrRes = json_decode($obj);
                 //echo "hh";
                 //print_r($arrRes); die;
                 //if(array_key_exists('status', $arrRes)){
-                //    $this->hsPostDetails($objUser);    
+                //    $this->hsPostDetails($objUser);
                 //}else{ //echo $arrRes->vid;
                     unset($objUser['email']);
                     //print_r($objUser); die;
@@ -8895,28 +8895,28 @@ die;        */
                     if($added_data['statusCode']==200){
                         //print_r($added_data['response']); die;
                         $arrAddRes = json_decode($added_data['response']);
-                        
+
                         $this->hsPostMergeDetails($arrRes->vid, $arrAddRes->vid);
-                    }        
-                //}        
+                    }
+                //}
             }else{
-                //echo "testing2";               
+                //echo "testing2";
                 //print_r($this->hsPostDetails($objUser));
                 $addRes = $this->hsPostDetails($objUser);
                 //print_r($addRes);
-            }   
+            }
         }else{
-            $addRes = $this->hsPostDetails($objUser); 
-            //print_r($addRes);   
+            $addRes = $this->hsPostDetails($objUser);
+            //print_r($addRes);
         }
         /*//Example GET URL:
-        
+
         https://api.hubapi.com/contacts/v1/contact/email/testingapis@hubspot.com/profile?hapikey=demo
-        
+
         $arr = array(
             "vidToMerge": 1343774
         );
-        
+
         $arr = array(
             'properties' => array(
                 array(
@@ -8953,12 +8953,12 @@ die;        */
         echo "curl Errors: " . $curl_errors;
         echo "\nStatus code: " . $status_code;
         echo "\nResponse: " . $response;
-        
+
         */
-              
+
 
     }
-    
+
     function hsGetEmailDetails($email){
         $hapikey = \Config::get('hubspot.hsApiKey');
         //$post_json = json_encode($arr);
@@ -8977,7 +8977,7 @@ die;        */
         @curl_close($ch);
         //echo "curl Errors: " . $curl_errors;
         //echo "\nStatus code: " . $status_code;
-        //echo "\nResponse: " . $response; 
+        //echo "\nResponse: " . $response;
         $data_response = array();
         $data_response['statusCode'] = $status_code;
         $data_response['response'] = $response;
@@ -8986,7 +8986,7 @@ die;        */
     }
     function hsPostDetails($objUser){
         $hapikey = \Config::get('hubspot.hsApiKey');
-        
+
         /*$arr2 = array(
             'properties' => array(
                 array(
@@ -9007,18 +9007,18 @@ die;        */
                 )
             )
         );*/
-        //print_r(json_encode($arr2)); 
+        //print_r(json_encode($arr2));
         $mobj = array();
         if(!empty($objUser)){
             $uobj = array();
             foreach($objUser as $key=>$value){
                 $uobj['property'] = $key;
-                $uobj['value'] = $value; 
-                $mobj[] = $uobj;  
-            }    
-        }        
+                $uobj['value'] = $value;
+                $mobj[] = $uobj;
+            }
+        }
         $arr = array(
-            'properties' => $mobj 
+            'properties' => $mobj
         );
         //print_r(json_encode($arr)); die;
         $post_json = json_encode($arr);
@@ -9034,30 +9034,30 @@ die;        */
         $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $curl_errors = curl_error($ch);
         @curl_close($ch);
-        
+
         $data_response = array();
         $data_response['statusCode'] = $status_code;
         $data_response['response'] = $response;
-        
+
         return $data_response;
     }
     function hsPostMergeDetails($vid, $mvid){ //print_r($vid); echo "hh"; die;
-        //https://api.hubapi.com/contacts/v1/contact/merge-vids/1343724/?hapikey=demo    
+        //https://api.hubapi.com/contacts/v1/contact/merge-vids/1343724/?hapikey=demo
         $hapikey = \Config::get('hubspot.hsApiKey');
         /*$mobj = array();
         if(!empty($objUser)){
             $uobj = array();
             foreach($objUser as $key=>$value){
                 $uobj['property'] = $key;
-                $uobj['value'] = $value; 
-                $mobj[] = $uobj;  
-            }    
+                $uobj['value'] = $value;
+                $mobj[] = $uobj;
+            }
         }
         $arr = array(
             'properties' => array( $mobj )
         );*/
         $arr = array(
-            "vidToMerge"=> $mvid    
+            "vidToMerge"=> $mvid
         );
         $post_json = json_encode($arr);
         //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
@@ -9072,50 +9072,50 @@ die;        */
         $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $curl_errors = curl_error($ch);
         @curl_close($ch);
-        
+
         $data_response = array();
         $data_response['statusCode'] = $status_code;
         $data_response['response'] = $response;
-        
+
         return $data_response;
     }
-    
+
     function hsDeal($vids){
-        //Example URL to POST to: 
+        //Example URL to POST to:
         //https://api.hubapi.com/deals/v1/deal?hapikey=demo
-        //Example of request array 
+        //Example of request array
         $objDeal = array(
             "dealname"=>"Test Deal2",
             "dealstage"=>"appointmentscheduled",
             "pipeline"=>"default",
             "closedate"=>1409443200000,
             "amount"=>600,
-            "dealtype"=>"newbusiness",    
+            "dealtype"=>"newbusiness",
         );
-        
+
         $mobj = array();
         if(!empty($objDeal)){
             $uobj = array();
             foreach($objDeal as $key=>$value){
                 $uobj['name'] = $key;
-                $uobj['value'] = $value; 
-                $mobj[] = $uobj;  
-            }    
-        } 
-        
+                $uobj['value'] = $value;
+                $mobj[] = $uobj;
+            }
+        }
+
         $arr = array(
-            "associations"=>array("associatedVids"=>array($vids)), 
-            "properties"=>$mobj   
+            "associations"=>array("associatedVids"=>array($vids)),
+            "properties"=>$mobj
         );
         //print_r(json_encode($arr)); die;
-        
+
         $hapikey = \Config::get('hubspot.hsApiKey');
-        
+
         //print_r(json_encode($arr)); die;
-        
-        $post_json = json_encode($arr); 
+
+        $post_json = json_encode($arr);
         //$hapikey = readline("Enter hapikey: 94aa9df3-d9f7-48a5-81a3-b365fcbe7492: ");
-        $endpoint = 'https://api.hubapi.com/deals/v1/deal?hapikey='.$hapikey; //echo $endpoint; die;  
+        $endpoint = 'https://api.hubapi.com/deals/v1/deal?hapikey='.$hapikey; //echo $endpoint; die;
         $ch = @curl_init();
         @curl_setopt($ch, CURLOPT_POST, true);
         @curl_setopt($ch, CURLOPT_POSTFIELDS, $post_json);
@@ -9126,14 +9126,14 @@ die;        */
         $status_code = @curl_getinfo($ch, CURLINFO_HTTP_CODE);
         $curl_errors = curl_error($ch);
         @curl_close($ch);
-        
+
         $data_response = array();
         $data_response['statusCode'] = $status_code;
         $data_response['response'] = $response;
-        
+
         return $data_response;
 
-   
-    }    
-    
+
+    }
+
 }
