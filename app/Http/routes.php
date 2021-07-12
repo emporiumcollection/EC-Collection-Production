@@ -471,6 +471,7 @@ Route::group(['middleware' => 'auth'], function()
 });
 Route::post('globalavailability', 'Frontend\PropertyController@propertyglobalavailability');
 Route::get('globalsearchavailability', 'Frontend\PropertyController@globalsearchavailability');
+Route::get('mapsearchavailability', 'Frontend\PropertyController@mapsearchavailability');
 Route::post('getpdppage', 'Frontend\PropertyController@getpdppage');
 Route::post('getdestinationpage', 'Frontend\PropertyController@getdestinationpage');
 

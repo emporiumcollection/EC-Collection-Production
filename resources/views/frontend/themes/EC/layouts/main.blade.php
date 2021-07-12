@@ -327,7 +327,7 @@ $(function() {
     var _day = '';
     var _month = '';
     var _year = '';
-    var sp_arr = arriveDt1.split('-');
+    var sp_arr = typeof arriveDt1 !== 'undefined' ? arriveDt1.split('-') : [];
     if(sp_arr.length > 2){
         _year = sp_arr[0];
         _month = sp_arr[2];
@@ -338,7 +338,7 @@ $(function() {
     var _dday = '';
     var _dmonth = '';
     var _dyear = '';
-    var sp_darr = depDt1.split('-');
+    var sp_darr = typeof depDt1 !== 'undefined' ? depDt1.split('-') : [];
     if(sp_darr.length > 2){
         _dyear = sp_darr[0];
         _dmonth = sp_darr[2];

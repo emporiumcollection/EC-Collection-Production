@@ -2904,6 +2904,12 @@ class PropertyController extends Controller {
 
     }
 
+    function mapsearchavailability(Request $request) {
+        // return 'mapsearchavailability';
+        // return response()->json(['name' => 'Abigail', 'state' => 'CA']);
+        return  view('frontend.themes.EC.properties.mapsearchavailability');
+    }
+
     function globalsearchavailability_old_latest(Request $request) {
         $allData = array();
         $hotels = $request->input('hotels');
