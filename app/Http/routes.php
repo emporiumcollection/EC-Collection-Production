@@ -16,6 +16,12 @@
 
 Route::get('/', 'HomeController@index');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
+
+/**
+ * New routes.
+ */
+Route::get('hotel/{title}', 'PhaseOne\HotelController@index');
+
 /*
  * AIC: CRM Layout Module
  */
