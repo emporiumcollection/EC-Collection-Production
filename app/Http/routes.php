@@ -22,6 +22,7 @@ Route::get('wetransfer', 'PropertiesController@show_wetransfer');
  */
 Route::get('hotel/{title}', 'PhaseOne\HotelController@index');
 Route::get('mapsearchavailability', 'PhaseOne\MapBoxController@index');
+Route::get('book/reservation', 'PhaseOne\ReservationController@index');
 
 /*
  * AIC: CRM Layout Module
