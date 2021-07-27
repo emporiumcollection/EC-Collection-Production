@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG'),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'SomeRandomString'),
+    'key' => env('APP_KEY', 'ysb21TmFfkIhUAhBFQDK6XVvWmSMjyMj'),
 
     'cipher' => 'AES-256-CBC',
 
@@ -145,7 +145,7 @@ return [
         App\Providers\RouteServiceProvider::class,
         Mews\Captcha\CaptchaServiceProvider::class,
         Laravel\Socialite\SocialiteServiceProvider::class,
-        GrahamCampbell\Markdown\MarkdownServiceProvider::class,  
+        GrahamCampbell\Markdown\MarkdownServiceProvider::class,
         Collective\Html\HtmlServiceProvider::class,
 		Chumper\Zipper\ZipperServiceProvider::class,
 		Barryvdh\DomPDF\ServiceProvider::class,
