@@ -14,7 +14,7 @@
 
 
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 
 /**

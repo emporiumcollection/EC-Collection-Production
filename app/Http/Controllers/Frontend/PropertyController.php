@@ -2698,96 +2698,63 @@ class PropertyController extends Controller {
     }
 
     function propertyglobalavailability(Request $request) {
+        $destination = $request->input("destination");
 
-        //$ourHotels = $request->input("ourHotels");
-        //$ourDestinations = $request->input("ourDestinations");
-        $str_hotels = $request->input("hid_our_hotels");
-        $str_destinations = $request->input("hid_our_destinations");
-
-
-        //print_r($request->all()); die;
-
-        $arrive = $request->input("gl_arrive");
+        $arrive = $request->input("arrive");
         if($arrive!=''){
-            $arrive = $request->input("gl_arrive");
+            $arrive = $request->input("arrive");
         }else{
             $arrive = date('m-d-Y');
         }
-        $departure = $request->input("gl_departure");
+
+        $departure = $request->input("departure");
         if($departure!=''){
-            $departure = $request->input("gl_departure");
+            $departure = $request->input("departure");
         }else{
             $departure = date('m-d-Y',strtotime("+1 day"));
         }
-        $alternate_dates = $request->input('alternate_dates');
-        $numberofdate = $request->input('numberofdate');
 
-        $booking_rooms = $request->input('booking_rooms');
-        $booking_adults = $request->input('booking_adults');
-        $booking_children = $request->input('booking_children');
-        $roomType = $request->input('roomType');
-        $travellerType = $request->input('travellerType');
+        $flexibledate = '';
+        $include_flight = '';
+        $flight_departing = '';
+        $flight_airport = '';
+        $flight_guest = '';
+        $include_yacht = '';
+        $yacht_departing = '';
+        $yacht_airport = '';
+        $yacht_guest = '';
+        $include_lamosine = '';
+        $lamosine_departing = '';
+        $lamosine_airport = '';
+        $lamosine_guest = '';
 
-        $child_age = $request->input('childrenAge');
 
-        $tr_2_rooms = $request->input('tr_2_rooms');
-        $tr_2_adults = $request->input('tr_2_adults');
-        $tr_2_child = $request->input('tr_2_child');
-        $child_2_ages = array();
-
-        if($tr_2_child != ''){
-            if($tr_2_child >0 ){
-                for($k=0; $tr_2_child > $k; $k++){
-                   // echo 'tr_2_ca_'.$k;
-                   //echo $request->input('tr_2_ca_'.$k);
-                   $child_2_ages[] = $request->input('tr_2_ca_'.$k);
-                }
-            }
+        if ($request->has('flexibledate')) {
+            $flexibledate = 'yes';
         }
-        //print_r($child_2_ages); die;
-        $tr_3_rooms = $request->input('tr_3_rooms');
-        $tr_3_adults = $request->input('tr_3_adults');
-        $tr_3_child = $request->input('tr_3_child');
-        $child_3_ages = array();
 
-        if($tr_3_child != ''){
-            if($tr_3_child >0 ){
-                for($k=0; $tr_3_child > $k; $k++){
-                   $child_3_ages[] = $request->input('tr_3_ca_'.$k);
-                }
-            }
+        if ($request->has('include_flight')) {
+            $include_flight = 'yes';
+            $flight_departing = $request->input('flight_departing');
+            $flight_airport = $request->input('flight_airport');
+            $flight_guest = $request->input('flight_guest');
         }
-        $tr_4_rooms = $request->input('tr_4_rooms');
-        $tr_4_adults = $request->input('tr_4_adults');
 
-        $child_age = array();
-        if($travellerType==2 || $travellerType==3){
-            if($booking_children > 0){
-                for($i=1; $i <=$booking_children; $i++){
-                    $child_age[] = $request->input('child_'.$travellerType."_".$i);
-                }
-            }
+        if ($request->has('include_yacht')) {
+            $include_yacht = 'yes';
+            $yacht_departing = $request->input('yacht_departing');
+            $yacht_airport = $request->input('yacht_airport');
+            $yacht_guest = $request->input('yacht_guest');
+        }
+
+        if ($request->has('include_lamosine')) {
+            $include_lamosine = 'yes';
+            $lamosine_departing = $request->input('lamosine_departing');
+            $lamosine_airport = $request->input('lamosine_airport');
+            $lamosine_guest = $request->input('lamosine_guest');
         }
 
         $sitename = $request->input("sitename");
-
-        //$ourCollections = $request->input("ourCollections");
-
-
-        //$ourExperiences = $request->input("ourExperiences");
-        //$ourChannels = $request->input("ourChannels");
-
-        /*$arr_hotels = is_array($ourHotels) ? $ourHotels : array();
-        $arr_destinations = is_array($ourDestinations) ? $ourDestinations : array();
-        $str_hotels = '';
-        if(!empty($arr_hotels)){
-            $str_hotels = implode(',', $arr_hotels);
-        }
-
-        $str_destinations = '';
-        if(!empty($arr_destinations)){
-            $str_destinations = implode(',', $arr_destinations);
-        }*/
 
         $site_url = '';
         if($sitename=='voyage'){
@@ -2802,9 +2769,20 @@ class PropertyController extends Controller {
         }elseif($sitename=='islands'){
             $site_url = 'https://emporium-islands.com';
         }
-        //echo($arrive);
-        //print_r($site_url); die;
-        $querry_string = $site_url."/globalsearchavailability?arrive=".$arrive."&departure=".$departure."&hotels=".$str_hotels."&destinations=".$str_destinations."&booking_rooms=".$booking_rooms."&booking_adults=".$booking_adults."&booking_children=".$booking_children."&travellerType=".$travellerType."&childrenAge=&tr_2_rooms=".$tr_2_rooms."&tr_2_adults=".$tr_2_adults."&tr_2_child=".$tr_2_child."&tr_3_rooms=".$tr_3_rooms."&tr_3_adults=".$tr_3_adults."&tr_3_child=".$tr_3_child."&tr_4_rooms=".$tr_4_rooms."&tr_4_adults=".$tr_4_adults;
+
+        $suites_query = '';
+        if ($request->input('suites_data')) {
+            $suites_data = $request->input('suites_data');
+            $suites_data = json_decode($suites_data, true);
+            $suites = count($suites_data);
+            $suites_query = '&suites='.$suites;
+            foreach($suites_data as $key => $sd) {
+                $suites_query .= '&adult_'.($key+1).'='.$sd['adult'].'&child_'.($key+1).'='.$sd['children'];
+            }
+        }
+     
+        $querry_string = $site_url."/globalsearchavailability?arrive=".$arrive."&departure=".$departure."&destination=".$destination."&flexibledate=".$flexibledate."&include_flight=".$include_flight."&flight_departing=".$flight_departing."&flight_airport=".$flight_airport."&flight_guest=".$flight_guest."&include_yacht=".$include_yacht."&yacht_departing=".$yacht_departing."&yacht_airport=".$yacht_airport."&yacht_guest=".$yacht_guest."&include_lamosine=".$include_lamosine."&lamosine_departing=".$lamosine_departing."&lamosine_airport=".$lamosine_airport."&lamosine_guest=".$lamosine_guest.$suites_query;
+        // $querry_string = $site_url."/globalsearchavailability?arrive=".$arrive."&departure=".$departure."&hotels=".$str_hotels."&destinations=".$str_destinations."&booking_rooms=".$booking_rooms."&booking_adults=".$booking_adults."&booking_children=".$booking_children."&travellerType=".$travellerType."&childrenAge=&tr_2_rooms=".$tr_2_rooms."&tr_2_adults=".$tr_2_adults."&tr_2_child=".$tr_2_child."&tr_3_rooms=".$tr_3_rooms."&tr_3_adults=".$tr_3_adults."&tr_3_child=".$tr_3_child."&tr_4_rooms=".$tr_4_rooms."&tr_4_adults=".$tr_4_adults;
 
         //room-availability?property=69&arrive=07-11-2019&departure=07-20-2019&booking_rooms=1&booking_adults=1&travellerType=0&childrenAge=&tr_2_rooms=1&tr_2_adults=1&tr_2_child=1&tr_3_rooms=1&tr_3_adults=1&tr_3_child=1&tr_4_rooms=1&tr_4_adults=1&roomType=0
 
@@ -5652,7 +5630,6 @@ class PropertyController extends Controller {
             $timplod = implode(',',$getcatsID);
             //$catprops = " OR pr.id in(".$timplod.") ";
             $catprops = " AND pr.id in(".$timplod.") ";
-
 
             $countquery = "SELECT COUNT(id) as noOfRooms, property_id, category_id FROM tb_properties_category_rooms where 1=1 and ";
             $countquery .=" (CASE WHEN tb_properties_category_rooms.active_full_year = 0 THEN ";

@@ -847,6 +847,25 @@
   });
 
   $(document).on('click', '.field-count-guest .plus', function () {
+    var type = $(this).data('type');
+    if(type == "adult"){
+      var value = parseInt($(this).prev().find('span.adult-val').html());
+      value += 1;
+      $(this).prev().find('span.adult-val').html(value);
+      var index = $(this).data('id');
+      suites[index]['adult'] = value;
+      json_suites = JSON.stringify(suites)
+      $('.suites_data').val(json_suites);
+    }else{ //children
+      var value = parseInt($(this).prev().find('span.child-val').html());
+      value += 1;
+      $(this).prev().find('span.child-val').html(value);
+      var index = $(this).data('id');
+      suites[index]['children'] = value;
+      json_suites = JSON.stringify(suites)
+      $('.suites_data').val(json_suites);
+    }
+    return;
     $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
     var obj_adult = $(this).prev().find('.inp-adult');
     if (obj_adult.length > 0) {
@@ -865,6 +884,25 @@
     $(this).closest('.field-count-guest').find('.min').removeClass('disable');
   });
   $(document).on('click', '.field-count-guest .min', function () {
+    var type = $(this).data('type');
+    if(type == "adult"){
+      var value = parseInt($(this).next().find('span.adult-val').html());
+      value -= 1;
+      $(this).next().find('span.adult-val').html(value);
+      var index = $(this).data('id');
+      suites[index]['adult'] = value;
+      json_suites = JSON.stringify(suites)
+      $('.suites_data').val(json_suites);
+    }else{ //children
+      var value = parseInt($(this).next().find('span.child-val').html());
+      value -= 1;
+      $(this).next().find('span.child-val').html(value);
+      var index = $(this).data('id');
+      suites[index]['children'] = value;
+      json_suites = JSON.stringify(suites)
+      $('.suites_data').val(json_suites);
+    }
+    return;
     console.log('min');
     if ($(this).next().find('.mr-1').html() > 0) {
       console.log('min in');
@@ -1151,12 +1189,20 @@
     }
   });
 
+  var suites = [
+    {"adult": 1, "children": 1}
+  ];
+  var json_suites;
   $('.field-count-guest .plus-room').click(function () {
     if ($(this).prev().find('.mr-1').html() != 4) {
       $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
+      $(this).prev().find('.room-input-val').val(function (i, val) { return val * 1 + 1 });
       $(this).closest('.field-count-guest').find('.min-room').removeClass('disable');
       var curr = $(".col-ews");
       //console.log(curr);
+      suites[curr.length] = {"adult" : 1, "children" : 1};
+      json_suites = JSON.stringify(suites)
+      $('.suites_data').val(json_suites);
       var currLength = curr.length + 1;
       var temp = '<div class="col-6 col-ews mb-3" id="room-' + currLength + '">' +
         '<p><b>Suite ' + currLength + '</b></p>' +
@@ -1166,13 +1212,11 @@
         '</div>' +
         '<div class="col-5">' +
         '<div class="row field-count-guest align-items-center">' +
-        '<button type="button" class="min">-</button>' +
+        '<button type="button" class="min" data-id="'+(currLength -1)+'" data-type="adult">-</button>' +
         '<div class="col text-center">' +
         '<span class="mr-1 adult-val" >1 </span>' +
-        '<input type="hidden" name="rooms[]"  />' +
-        '<input type="hidden" name="adult[]" class="inp-adult" value="1" />' +
         '</div>' +
-        '<button type="button" class="plus mr-3">+</button>' +
+        '<button type="button" class="plus mr-3" data-id="'+(currLength -1)+'" data-type="adult">+</button>' +
         '</div>' +
         '</div>' +
         '</div>' +
@@ -1182,12 +1226,11 @@
         '</div>' +
         '<div class="col-5">' +
         '<div class="row field-count-guest align-items-center">' +
-        '<button type="button" class="min">-</button>' +
+        '<button type="button" class="min" data-id="'+(currLength -1)+'" data-type="child">-</button>' +
         '<div class="col text-center">' +
         '<span class="mr-1 child-val">1 </span>' +
-        '<input type="hidden" name="child[]" class="inp-child" value="1" />' +
         '</div>' +
-        '<button type="button" class="plus mr-3">+</button>' +
+        '<button type="button" class="plus mr-3" data-id="'+(currLength -1)+'" data-type="child">+</button>' +
         '</div>' +
         '</div>' +
         '</div>' +
@@ -1203,6 +1246,14 @@
   $('.field-count-guest ').on('click', '.min-room', function () {
     $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
 
+    $(this).prev().find('.room-input-val').val(function (i, val) { return val * 1 - 1 });
+
+    var curr = $(".col-ews");
+    suites.splice(curr.length, 1);
+    // delete suites[curr.length];
+    console.log(suites);
+    json_suites = JSON.stringify(suites)
+    $('.suites_data').val(json_suites);
     if ($(this).next().find('.mr-1').html() > 1) {
       $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
     }

@@ -158,8 +158,8 @@
 
     picker.on('apply.daterangepicker', function (ev, picker) {
       $('.onrange').html(picker.startDate.format('DD-MM-YYYY') + ' -> ' + picker.endDate.format('DD-MM-YYYY'));
-      $('input[name="gl_arrive"]').val(picker.startDate.format('DD-MM-YYYY'));
-      $('input[name="gl_departure"]').val(picker.endDate.format('DD-MM-YYYY'));
+      $('input[name="arrive"]').val(picker.startDate.format('DD-MM-YYYY'));
+      $('input[name="departure"]').val(picker.endDate.format('DD-MM-YYYY'));
       $('.include-form').fadeIn("fast");
     });
     picker.data('daterangepicker').hide = function () { };
