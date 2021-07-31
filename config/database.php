@@ -58,7 +58,6 @@ return [
             'database'  => env('DB_DATABASE', 'desigr_db3'),
             'username'  => env('DB_USERNAME', 'root'),
             'password'  => env('DB_PASSWORD', 'n7Bh2XjQbAh7UxWM'),
-            'port' => 3390,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
@@ -70,7 +69,6 @@ return [
             'database'  => 'EmporiumVoyage',
             'username'  => 'voyage',
             'password'  => '!!Voyage2020%%',
-            'port' => 3390,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
@@ -107,7 +105,6 @@ return [
             'database'  => 'EmporiumSpa',
             'username'  => 'spa',
             'password'  => '!!Spa2020%%',
-            'port' => 3390,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
@@ -120,7 +117,6 @@ return [
             'database'  => 'EmporiumSafari',
             'username'  => 'safari',
             'password'  => '!!Safari2020%%',
-            'port' => 3390,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
@@ -187,7 +183,7 @@ return [
             'strict'    => false,
             'options'   => [ PDO::ATTR_EMULATE_PREPARES => true ],
         ],*/
-
+        
         'pgsql' => [
             'driver'   => 'pgsql',
             'host'     => env('DB_HOST', 'localhost'),
