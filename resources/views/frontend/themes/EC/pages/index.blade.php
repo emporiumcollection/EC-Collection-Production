@@ -13,7 +13,7 @@
               <div class="input-group-ico"><i class="ico ico-search"></i></div>
             </div>
             <input type="text" class="form-control form-control-em border-0 where" id="inlineFormInputGroup"
-              placeholder="Where">
+              placeholder="Where" name="destination">
             <div class="input-group-prepend">
               <div class="input-group-ico color-search"> <span style="background-color: #00a000;"></span> Create
                 Itinerary ->
@@ -122,6 +122,8 @@
               <div class="title-with-icon">
                 <i class="ico ico-calendar"></i>
                 <h2>When</h2>
+                <input type="hidden" name="arrive">
+                <input type="hidden" name="departure">
               </div>
               <div class="range-calendar range-date-9127013" id="calendar-pick">
                 <div id="daterangepicker-inline-container" class="daterangepicker-inline"></div>
@@ -133,7 +135,7 @@
                 <p>New York . -> <span class="onrange"></span></p>
               </div>
               <div class="custom-control custom-checkbox">
-                <input type="checkbox" class="custom-control-input" id="flexibledate">
+                <input type="checkbox" class="custom-control-input" id="flexibledate" name="flexibledate">
                 <label class="custom-control-label" for="flexibledate">
                   <div class="d-flex align-items-center text-20">
                     <div>Flexible</div>
@@ -168,7 +170,7 @@
                         <div class="col text-center">
                           <label class="container-checkbox mb-0 collapsed" data-toggle="collapse"
                             data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            <input type="checkbox">
+                            <input type="checkbox" name="include_flight">
                             <span class="checkmark"></span>
                           </label>
                         </div>
@@ -182,7 +184,7 @@
                             <div class="form-asd">Departing From :</div>
                           </div>
                           <div class="pl-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="flight_departing">
                           </div>
                         </div>
                         <div class="d-flex align-items-center">
@@ -190,7 +192,7 @@
                             <div class="form-asd">Select Airport :</div>
                           </div>
                           <div class="pl-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="flight_airport">
                           </div>
                         </div>
                         <div class="d-flex align-items-center">
@@ -198,7 +200,7 @@
                             <div class="form-asd">Select Guest :</div>
                           </div>
                           <div class="pl-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="flight_guest">
                           </div>
                         </div>
                       </div>
@@ -220,7 +222,7 @@
                         <div class="col text-center">
                           <label class="container-checkbox mb-0 collapsed" data-toggle="collapse"
                             data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <input type="checkbox">
+                            <input type="checkbox" name="include_yacht">
                             <span class="checkmark"></span>
                           </label>
                         </div>
@@ -233,7 +235,7 @@
                             <div class="form-asd">Departing From :</div>
                           </div>
                           <div class="pl-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="yacht_departing">
                           </div>
                         </div>
                         <div class="d-flex align-items-center">
@@ -241,7 +243,7 @@
                             <div class="form-asd">Select Airport :</div>
                           </div>
                           <div class="pl-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="yacht_airport">
                           </div>
                         </div>
                         <div class="d-flex align-items-center">
@@ -249,7 +251,7 @@
                             <div class="form-asd">Select Guest :</div>
                           </div>
                           <div class="pl-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="yacht_guest">
                           </div>
                         </div>
                       </div>
@@ -271,7 +273,7 @@
                         <div class="col text-center">
                           <label class="container-checkbox mb-0 collapsed" data-toggle="collapse"
                             data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            <input type="checkbox">
+                            <input type="checkbox" name="include_limosine">
                             <span class="checkmark"></span>
                           </label>
                         </div>
@@ -284,7 +286,7 @@
                             <div class="form-asd">Departing From :</div>
                           </div>
                           <div class="pl-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="limosine_departing">
                           </div>
                         </div>
                         <div class="d-flex align-items-center">
@@ -292,7 +294,7 @@
                             <div class="form-asd">Select Airport :</div>
                           </div>
                           <div class="pl-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="limosine_airport">
                           </div>
                         </div>
                         <div class="d-flex align-items-center">
@@ -300,7 +302,7 @@
                             <div class="form-asd">Select Guest :</div>
                           </div>
                           <div class="pl-3">
-                            <input type="text" class="form-control">
+                            <input type="text" class="form-control" name="limosine_guest">
                           </div>
                         </div>
                       </div>
@@ -349,6 +351,7 @@
               <i class="ico ico-profile-pp"></i>
               <h2>WHO</h2>
             </div>
+
             <div class="filter-container-fl filter-guest-2 ml-0" id="guest-pick" style="display: block;">
               <div class="guest-pick-container">
                 <div class="guest-pick-header">
@@ -377,11 +380,11 @@
                         </div>
                         <div class="col-5">
                           <div class="row field-count-guest align-items-center">
-                            <button type="button" class="min">-</button>
+                            <button type="button" class="min" data-id="0" data-type="adult">-</button>
                             <div class="col text-center">
                               <span class="mr-1 adult-val">1 </span>
                             </div>
-                            <button type="button" class="plus mr-3">+</button>
+                            <button type="button" class="plus mr-3" data-id="0" data-type="adult">+</button>
                           </div>
                         </div>
                       </div>
@@ -391,11 +394,11 @@
                         </div>
                         <div class="col-5">
                           <div class="row field-count-guest align-items-center">
-                            <button type="button" class="min">-</button>
+                            <button type="button" class="min" data-id="0" data-type="children">-</button>
                             <div class="col text-center">
                               <span class="mr-1 child-val">1 </span>
                             </div>
-                            <button type="button" class="plus mr-3">+</button>
+                            <button type="button" class="plus mr-3" data-id="0" data-type="children">+</button>
                           </div>
                         </div>
                       </div>
@@ -449,6 +452,7 @@
                 <div class="guest-pick-footer">
                   <div class="text-right">
                     <!-- <a href="main-page.html" class="confirm-room">View "New York Collection"</a> -->
+                    <input type="hidden" name="suites_data" class="suites_data">
                     <input type="submit" class="confirm-room" value="View Collection" />
                   </div>
                 </div>

@@ -6,7 +6,7 @@
           
         </div>
         <div class="col-6 text-center">
-          <a href="#">
+          <a href="{{route('homepage')}}">
             <i class="t-logo logo-2"></i>
           </a>
         </div>

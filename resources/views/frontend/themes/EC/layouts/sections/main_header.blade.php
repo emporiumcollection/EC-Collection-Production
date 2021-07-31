@@ -34,7 +34,7 @@
           </div>
         </div>
         <div class="col-2 text-center">
-          <a href="#">
+          <a href="{{route('homepage')}}">
             <i class="t-logo logo-2"></i>
           </a>
         </div>
@@ -291,7 +291,7 @@
     <div class="px-4 pt-2">
       <div class="row">
         <div class="col-4">
-          <a href="#">
+          <a href="{{route('homepage')}}">
             <i class="t-logo logo-2"></i>
           </a>
         </div>

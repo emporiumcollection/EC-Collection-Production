@@ -108,7 +108,7 @@
             <input type="hidden" name="hid_propid" />
           </div>
           <div class="load_ajax"></div>
-          <!-- <div class="row">
+          <div class="row">
             <div class="col-8 ">
               <div class="content-img">
                 <a href="suite.html" class="dtl-link">
@@ -577,13 +577,13 @@
                 </div>
               </a>
             </div>
-          </div> -->
+          </div>
         </div>
 
         </div>
         <div class="row">
         <div class="col-lg-3"></div>
-        <!-- <div class="col-lg-9">
+        <div class="col-lg-9">
             <ul class="nav nav-tabs tabs-w3" id="myTab" role="tablist">
             <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="lifestyle-tab" data-toggle="tab" href="#lifestyle" role="tab"
@@ -1296,7 +1296,7 @@
             </div>
             </div>
 
-        </div> -->
+        </div>
             <div class="col-lg-9">
               @if(!empty($collections))
                   {{--*/ $i=1; $j=1; $k=1; $l=1; $arr_key=''; /*--}}
