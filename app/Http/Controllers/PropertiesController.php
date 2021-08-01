@@ -33,11 +33,11 @@ class PropertiesController extends Controller {
             'return' => self::returnUrl()
         );
     }
-    
+
     public function getRadsetdefaultpackagetohotel(Request $request){
         $publicPakages_results = \DB::table('tb_packages')->select('id')->where('is_public',true)->first();
         $getproperises = \DB::table('tb_properties')->select('tb_properties.id')->leftJoin('tb_properties_category_package','tb_properties.id','=','tb_properties_category_package.property_id')->whereNull('tb_properties_category_package.id')->get();
-        
+
         $batchInsert = array();
         foreach($getproperises as $sipro){
             $batchInsert[] = array('property_id'=>$sipro->id,'package_id'=>$publicPakages_results->id);
@@ -54,8 +54,8 @@ class PropertiesController extends Controller {
 
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : (!is_null($request->input('search')) ? 'id' : 'property_status'));
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'desc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+        // End Filter sort and order for query
+        // Filter Search for query
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 		$this->data['curntcat'] =  '';
 		$this->data['curstatus'] =  '';
@@ -86,47 +86,47 @@ class PropertiesController extends Controller {
             'params' => $filter,
             'global' => (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
         );
-        // Get Query 
+        // Get Query
         $results = $this->model->getRows($params);
 
         // Build pagination setting
         $page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;
         $pagination = new Paginator($results['rows'], $results['total'], $params['limit']);
         $pagination->setPath('properties');
-		
+
         $this->data['rowData'] = $results['rows'];
-        // Build Pagination 
+        // Build Pagination
         $this->data['pagination'] = $pagination;
         // Build pager number and append current param GET
         $this->data['pager'] = $this->injectPaginate();
-        // Row grid Number 
+        // Row grid Number
         $this->data['i'] = ($page * $params['limit']) - $params['limit'];
-        // Grid Configuration 
+        // Grid Configuration
         $this->data['tableGrid'] = $this->info['config']['grid'];
         $this->data['tableForm'] = $this->info['config']['forms'];
         $this->data['colspan'] = \SiteHelpers::viewColSpan($this->info['config']['grid']);
         // Group users permission
         $this->data['access'] = $this->access;
         // Detail from master if any
-        // Master detail link if any 
+        // Master detail link if any
         $this->data['subgrid'] = (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
         // Render into template
 		$this->data['fetch_cat'] = \DB::table('tb_categories')->get();
         $this->data['prop_cat'] = \DB::table('tb_packages')->where('package_status', 1)->where('package_category', 'B2C')->get();
-        
+
         $hotelIds = array();
         foreach($this->data['rowData'] as $si_hotel){
             $hotelIds[] = $si_hotel->id;
         }
-        
+
         $commission_contracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description','tb_users_contracts.hotel_id')->where('tb_users_contracts.contract_type','commission')->where('tb_users_contracts.is_commission_set',1)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
-        
+
         $this->data['commission_contracts'] = array();
         foreach($commission_contracts as $si_commcon){
             $this->data['commission_contracts'][$si_commcon->hotel_id] = $si_commcon;
         }
         //echo "<pre>";print_r($this->data['commission_contracts']);die;
-        
+
         $this->data['hotels_commission_contracts'] = array();
         $this->data['common_commission_contract'] = array();
         $this->data['hotels_contracts'] = array();
@@ -139,47 +139,47 @@ class PropertiesController extends Controller {
                 if(!isset($resetContracts[$si_contract->hotel_id])){ $resetContracts[$si_contract->hotel_id] = array(); }
                 $resetContracts[$si_contract->hotel_id][$si_contract->contract_id] = $si_contract;
             }
-            $this->data['userContracts'] = $resetContracts;            
-            
+            $this->data['userContracts'] = $resetContracts;
+
             //get commission contracts from db for hotels
             $commission_contract = \CommonHelper::get_default_contracts('commission','default',0,$hotelIds);
             $this->data['hotels_commission_contracts'] = $commission_contract['hotels_wise'];
             $this->data['common_commission_contract'] = $commission_contract['common'];
             //echo "<pre>";print_r($commission_contract);die;
             //End
-            
+
             //get commission contracts from db for hotels
             $hotels_contract = \CommonHelper::get_default_contracts('hotels','default',0,$hotelIds);
             $this->data['hotels_contracts'] = $hotels_contract['hotels_wise'];
             $this->data['common_contracts'] = $hotels_contract['common'];
             //echo "<pre>";print_r($hotels_contract);die;
-            //End 
-            
-            
+            //End
+
+
             $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id', 'tb_container_files.file_title', 'tb_container_files.file_description')->whereIn('tb_properties_images.property_id', $hotelIds)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
             //print_r($fileArr); die;
             $propertiesArr =array();
             $pr = 0;
             foreach ($fileArr as $file) {
-                
+
                 if(!isset($propertiesArr[$file->property_id])){ $propertiesArr[$file->property_id] = array(); }
                 //$propertiesArr[$file->property_id][$file->id] = $file;
-                
+
                 $propertiesArr[$file->property_id]['propimage'][$pr] = $file;
                 $propertiesArr[$file->property_id]['propimage'][$pr]->imgsrc = (new ContainerController)->getThumbpath($file->folder_id);
                 $propertiesArr[$file->property_id]['propimage'][$pr]->imgsrccon = (new ContainerController)->getContainerUserPath($file->folder_id);
                 $pr++;
             }
-            $this->data['propertiesImgArr'] = $propertiesArr;                                            
-                      
+            $this->data['propertiesImgArr'] = $propertiesArr;
+
         }
         //print_r($this->data['userContracts']);die;
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.index':'properties.index'; 
-        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.index':'properties.index';
+
         return view($file_name, $this->data);
     }
-    
+
     function postSavehotelcontract(Request $request){
         $return_array = array();
         if (!\Auth::check()){$return_array['status'] = 'error'; $return_array['message'] = 'Errors occurred during save contract!'; $return_array['errors'] = array("Please login first before saving contract!");}
@@ -187,13 +187,13 @@ class PropertiesController extends Controller {
             'hotel_id' => 'required|numeric',
             'contract_id' => 'required',
         );
-        
+
         $validator = Validator::make($request->all(), $rules);
-        
+
         if ($validator->passes()) {
             $hotelId = (int) $request->input('hotel_id');
             $contractId = $request->input('contract_id');
-            
+
             if(($hotelId > 0) && (strlen(trim($contractId)) > 0)){
                 $contractIDS = explode(',',trim($contractId));
                 $contract = \DB::table('tb_contracts')->select('tb_contracts.*')->whereIn('tb_contracts.contract_id',$contractIDS)->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->orderBy('tb_contracts.contract_id','DESC')->get();
@@ -201,7 +201,7 @@ class PropertiesController extends Controller {
                     //insert contracts
                     \CommonHelper::submit_contracts($contract,'hotels',$hotelId);
                     //End
-                    
+
                     $return_array['status'] = 'success';
                     $return_array['message'] = 'Hotel contracts has been saved!';
                 }else{
@@ -214,7 +214,7 @@ class PropertiesController extends Controller {
                 $tarr = array();
                 if($hotelId <= 0){ $tarr[] = "Invalid hotel id!"; }
                 if(strlen(trim($contractId)) <= 0){ $tarr[] = "Invalid contract id!"; }
-                
+
                 $return_array['status'] = 'error';
                 $return_array['message'] = 'Errors occurred during save hotel contracts!';
                 $return_array['errors'] = $tarr;
@@ -224,11 +224,11 @@ class PropertiesController extends Controller {
             $return_array['message'] = 'Errors occurred during save hotel contracts!';
             $return_array['errors'] = $validator->errors()->all();
         }
-        
+
         echo json_encode($return_array);
         exit;
     }
-    
+
     function postSavecommissioncontract(Request $request){
         $return_array = array();
         if (!\Auth::check()){$return_array['status'] = 'error'; $return_array['message'] = 'Errors occurred during save commission contract!'; $return_array['errors'] = array("Please login first before saving contract!");}
@@ -237,14 +237,14 @@ class PropertiesController extends Controller {
             'contract_id' => 'required|numeric',
             'commission_type' => 'required|alpha',
         );
-        
+
         $validator = Validator::make($request->all(), $rules);
-        
+
         if ($validator->passes()) {
             $hotelId = (int) $request->input('hotel_id');
             $contractId = (int) $request->input('contract_id');
             $commissionType = $request->input('commission_type');
-            
+
             if(($hotelId > 0) && ($contractId > 0) && (strlen(trim($commissionType)) > 0)){
                 $contract = \DB::table('tb_contracts')->select('tb_contracts.*')->where('tb_contracts.contract_id',$contractId)->where('tb_contracts.status',1)->where('tb_contracts.deleted',0)->orderBy('tb_contracts.contract_id','DESC')->first();
                 //print_r($contract); die;
@@ -253,7 +253,7 @@ class PropertiesController extends Controller {
                     //insert contracts
                     \CommonHelper::submit_contracts(array($contract),'commission',$hotelId,$commissionType);
                     //End
-                    
+
                     $return_array['status'] = 'success';
                     $return_array['message'] = 'Commission contract has been saved!';
                 }else{
@@ -267,7 +267,7 @@ class PropertiesController extends Controller {
                 if($hotelId <= 0){ $tarr[] = "Invalid hotel id!"; }
                 if($contractId <= 0){ $tarr[] = "Invalid contract id!"; }
                 if(strlen(trim($commissionType)) <= 0){ $tarr[] = "Invalid availability!"; }
-                
+
                 $return_array['status'] = 'error';
                 $return_array['message'] = 'Errors occurred during save commission contract!';
                 $return_array['errors'] = $tarr;
@@ -277,7 +277,7 @@ class PropertiesController extends Controller {
             $return_array['message'] = 'Errors occurred during save commission contract!';
             $return_array['errors'] = $validator->errors()->all();
         }
-        
+
         echo json_encode($return_array);
         exit;
     }
@@ -330,7 +330,7 @@ class PropertiesController extends Controller {
         $row_reservations = \DB::select(\DB::raw("SELECT COUNT(*) AS total_reservations FROM tb_reservations WHERE property_id = '$id' "));
         $row_reserved_rooms = \DB::select(\DB::raw("SELECT COUNT(*) AS total_reserved_rooms FROM td_reserved_rooms LEFT JOIN tb_reservations ON tb_reservations.id = td_reserved_rooms.reservation_id WHERE tb_reservations.property_id = '$id' "));
         $row_turnover = \DB::select(\DB::raw("SELECT SUM(number_of_nights * tb_reservations.price) AS total_turnover FROM td_reserved_rooms LEFT JOIN tb_reservations ON tb_reservations.id = td_reserved_rooms.reservation_id WHERE tb_reservations.property_id = '$id' "));
-		
+
 		$this->data['total_turnover'] = 0;
 		$this->data['total_reservations'] = 0;
 		$this->data['total_commissions'] =0;
@@ -341,33 +341,33 @@ class PropertiesController extends Controller {
 			//$this->data['total_commissions'] = (isset($row_turnover[0]->total_turnover))? ($row_turnover[0]->total_turnover * ($this->data['row']->commission / 100)) : 0;
 			$this->data['total_rooms_booked'] = (isset($row_reserved_rooms[0]->total_reserved_rooms))? $row_reserved_rooms[0]->total_reserved_rooms : 0;
 		}
-        
+
         /** get property and package relations start **/
         $prop_package_rel = \DB::table('tb_properties_category_package')->where('property_id', $id)->get();
         $rest_arr = array();
         foreach($prop_package_rel as $si_prop){ $rest_arr[] = $si_prop->package_id; }
         $this->data['property_category'] = implode(',',$rest_arr);
         /** get property and package relations end **/
-        
+
         /** get property and user relations start **/
         $prop_user_rel = \DB::table('tb_properties_users')->where('property_id', $id)->get();
         $rest_user_arr = array();
         foreach($prop_user_rel as $si_user){ $rest_user_arr[] = $si_user->user_id; }
         $this->data['property_user'] = implode(',',$rest_user_arr);
         /** get property and user relations end **/
-        
+
         $this->data['active_tab']=0;
-        
+
         $this->data['default_adult_tax'] = \DB::table('tb_settings')->where('key_value', 'adult_citytax')->first();
         $this->data['default_baby_tax'] = \DB::table('tb_settings')->where('key_value', 'baby_citytax')->first();
         $this->data['default_junior_tax'] = \DB::table('tb_settings')->where('key_value', 'junior_citytax')->first();
-        
+
         $this->data['vat_classes'] = \DB::table('tb_vat_taxes')->where('vat_tax_status', 1)->get();
         //echo "<pre>";
         //print_r($this->data); die;
-        
+
         $this->data['metatags'] = \DB::table('tb_property_metatags')->where('property_id', $id)->first();
-        
+
         /** Property USP **/
         $this->data['propertyusp'] = \DB::table('tb_property_usp')->where('status', 1)->get();
         /** **/
@@ -375,8 +375,8 @@ class PropertiesController extends Controller {
         $this->data['availableservices'] = \DB::table('tb_available_services')->where('status', 1)->get();
         /** **/
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.form':'properties.form'; 
-        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.form':'properties.form';
+
         return view($file_name, $this->data);
     }
 
@@ -413,7 +413,7 @@ class PropertiesController extends Controller {
         $rules['owner_phone_primary'] = 'required';
         $rules['owner_email_primary'] = 'required';
         $rules['assigned_user_id'] = 'required';
-        
+
         $rules['meta_title'] = 'max:75';
         $rules['meta_description'] = 'max:320';
         $rules['og_title'] = 'max:75';
@@ -460,7 +460,7 @@ class PropertiesController extends Controller {
             } else {
                 $data['updated'] = date('Y-m-d h:i:s');
             }
-            
+
             $property_packages = array();
             if(is_array($request->input('property_category'))){
                 $property_packages = $request->input('property_category');
@@ -469,15 +469,15 @@ class PropertiesController extends Controller {
             $data['commission'] = $request->input('commission');
             $data['about_property'] = $request->input('about_property');
             $data['property_usp'] = $request->input('property_usp');
-            
+
             /** Back link **/
-            $data['back_link'] = $request->input('back_link');    
+            $data['back_link'] = $request->input('back_link');
             /** End back link**/
             $assigned_users = array();
             if (is_array($request->input('assigned_user_id'))) {
                 $assigned_users = $request->input('assigned_user_id');
             }
-            
+
             $data['detail_section1_title'] = $request->input('detail_section1_title');
             $data['detail_section1_description_box1'] = $request->input('detail_section1_description_box1');
             $data['detail_section1_description_box2'] = $request->input('detail_section1_description_box2');
@@ -494,31 +494,31 @@ class PropertiesController extends Controller {
             $data['social_pinterest'] = $request->input('social_pinterest');
             $data['social_vimeo'] = $request->input('social_vimeo');
             $data['social_instagram'] = $request->input('social_instagram');
-            
+
             $data['hotel_unit_tax'] = $request->input('hotel_unit_tax');
-            
+
             $address = $request->input('address');
             $latitude = '';
             $longitude = '';
-            if($request->input('latitude')=='' && $request->input('longitude')==''){                
+            if($request->input('latitude')=='' && $request->input('longitude')==''){
                 if($address!=''){
                     $geo = file_get_contents("https://maps.google.com/maps/api/geocode/json?key=AIzaSyBqf2xJGZFRECA_eVTNek_Y7sxBzmcgXrs&address=".urlencode($address).'&sensor=false');
-                    $geo = json_decode($geo, true); // Convert the JSON to an array                
+                    $geo = json_decode($geo, true); // Convert the JSON to an array
                     if(isset($geo['status']) && ($geo['status'] == 'OK')) {
                       $latitude = $geo['results'][0]['geometry']['location']['lat']; // Latitude
                       $longitude = $geo['results'][0]['geometry']['location']['lng']; // Longitude
-                    } 
-                }   
+                    }
+                }
             }else{
                 $latitude = $request->input('latitude');
-                $longitude = $request->input('longitude');        
+                $longitude = $request->input('longitude');
             }
             $data['latitude'] = $latitude;
             $data['longitude'] = $longitude;
             $data['address'] = $address;
             /*$data['latitude'] = $request->input('latitude');
             $data['longitude'] = $request->input('longitude');*/
-            
+
             if (!empty($request->input('assigned_amenities'))) {
                 $data['assign_amenities'] = implode(',', $request->input('assigned_amenities'));
             } else {
@@ -536,13 +536,13 @@ class PropertiesController extends Controller {
             } else {
                 $data['default_seasons'] = 0;
             }
-			
+
 			if (!is_null($request->input('feature_property'))) {
                 $data['feature_property'] = $request->input('feature_property');
             } else {
                 $data['feature_property'] = 0;
             }
-			
+
 			if (!is_null($request->input('editor_choice_property'))) {
                 $data['editor_choice_property'] = $request->input('editor_choice_property');
             } else {
@@ -554,23 +554,23 @@ class PropertiesController extends Controller {
             } else {
                 $data['property_category_id'] = '';
             }
-			
+
             if (!empty($request->input('propertyusp'))) {
                 $data['property_usp_id'] = implode(',', $request->input('propertyusp'));
             } else {
                 $data['property_usp_id'] = '';
             }
-            
-            /** Hotel info ***/            
+
+            /** Hotel info ***/
             $data['internetpublic'] = $request->input('rdinternetpublic');
-            $data['internetroom'] = $request->input('rdinternetroom');            
+            $data['internetroom'] = $request->input('rdinternetroom');
             $data['checkin'] = $request->input('checkin');
-            $data['checkout'] = $request->input('checkout');            
+            $data['checkout'] = $request->input('checkout');
             $data['transfer'] = $request->input('transfer');
             $data['smookingpolicy'] = $request->input('smookingpolicy');
             $data['smookingrooms'] = $request->input('rdsmookingrooms');
-            $data['numberofrooms'] = $request->input('numberofrooms'); 
-            $data['always_included'] = $request->input('always_included');           
+            $data['numberofrooms'] = $request->input('numberofrooms');
+            $data['always_included'] = $request->input('always_included');
             //$data['roomamenities'] = $request->input('roomamenities');
             if (!empty($request->input('roomamenities'))) {
                 $data['roomamenities'] = implode(',', $request->input('roomamenities'));
@@ -583,24 +583,24 @@ class PropertiesController extends Controller {
             } else {
                 $data['availableservices'] = '';
             }
-            
+
             $data['pets'] = $request->input('pets');
             $data['carpark'] = $request->input('carpark');
             $data['children_policy'] = $request->input('children_policy');
             /** Hotel info End ***/
-            
+
 			if (!empty($request->input('spaids'))) {
                 $data['spa_ids'] = implode(',', $request->input('spaids'));
             } else {
                 $data['spa_ids'] = '';
             }
-			
+
 			if (!empty($request->input('restaurantids'))) {
                 $data['restaurant_ids'] = implode(',', $request->input('restaurantids'));
             } else {
                 $data['restaurant_ids'] = '';
             }
-			
+
 			if (!empty($request->input('barids'))) {
                 $data['bar_ids'] = implode(',', $request->input('barids'));
             } else {
@@ -689,10 +689,10 @@ class PropertiesController extends Controller {
                 }
             }
             //room & suites end
-            // Architechure 
+            // Architechure
             $data['architecture_title'] = $request->input('architecture_title');
             $data['architecture_desciription'] = $request->input('architecture_desciription');
-            
+
             if (!is_null($request->file('architecture_portraite_image1'))) {
                 $architecture_mainfile1 = $request->file('architecture_portraite_image1');
                 $architecture_mainfilename1 = $architecture_mainfile1->getClientOriginalName();
@@ -753,13 +753,13 @@ class PropertiesController extends Controller {
                     $data['architecture_landscape_image2'] = $architecture_mainfilename6;
                 }
             }
-            
+
             $data['architecture_landscapehovertext_image1'] = $request->input('architecture_landscapehovertext_image1');
             $data['architecture_landscapehovertext_image2'] = $request->input('architecture_landscapehovertext_image2');
-            
+
             $data['architecture_sub_title'] = $request->input('architecture_sub_title');
             $data['architecture_sub_desciription'] = $request->input('architecture_sub_desciription');
-            
+
             if ($request->input('architecture_video_type') != '') {
                 $data['architecture_video_type'] = $request->input('architecture_video_type');
             }
@@ -780,7 +780,7 @@ class PropertiesController extends Controller {
                     $data['architecture_image'] = $architecture_filename;
                 }
             }
-            
+
             if (!is_null($request->file('architecture_image2'))) {
                 $architecture_file2 = $request->file('architecture_image2');
                 $architecture_filename2 = $architecture_file2->getClientOriginalName();
@@ -804,7 +804,7 @@ class PropertiesController extends Controller {
                 }
             }
 
-            // Design 
+            // Design
             $data['architecture_design_title'] = $request->input('architecture_design_title');
             $data['architecture_design_desciription'] = $request->input('architecture_design_desciription');
             $data['architecture_design_url'] = $request->input('architecture_design_url');
@@ -1046,7 +1046,7 @@ class PropertiesController extends Controller {
                     $data['restaurant2_video'] = $restaurant2_videofilename;
                 }
             }
-			
+
 			//resturant 3
 
             $data['restaurant3_title'] = $request->input('restaurant3_title');
@@ -1157,7 +1157,7 @@ class PropertiesController extends Controller {
                     $data['bar_video'] = $bar_videofilename;
                 }
             }
-			
+
 			// bar 2
             $data['bar2_title'] = $request->input('bar2_title');
             $data['bar2_sub_title'] = $request->input('bar2_sub_title');
@@ -1218,7 +1218,7 @@ class PropertiesController extends Controller {
                     $data['bar2_video'] = $bar2_videofilename;
                 }
             }
-			
+
 			// bar 3
             $data['bar3_title'] = $request->input('bar3_title');
             $data['bar3_sub_title'] = $request->input('bar3_sub_title');
@@ -1316,9 +1316,9 @@ class PropertiesController extends Controller {
             $data['adult_tax'] = $request->input('adult_tax');
             $data['junior_tax'] = $request->input('junior_tax');
             $data['baby_tax'] = $request->input('baby_tax');
-            
+
             $id = $this->model->insertRow($data, $request->input('id'));
-            
+
             if (!is_null($request->input('copy_amenities_rooms')) && !empty($request->input('assigned_amenities'))) {
                 $check_pcats = \DB::table('tb_properties_category_types')->where('property_id', $id)->get();
                 if (!empty($check_pcats)) {
@@ -1337,8 +1337,8 @@ class PropertiesController extends Controller {
                         }
                     }
                 }
-            }            
-            
+            }
+
             /** insert property packages relation start **/
             $finproperty_package_relation = array();
             $upproperty_package_relation = array();
@@ -1347,40 +1347,40 @@ class PropertiesController extends Controller {
             foreach($prop_package_rel as $si_prop){ $rest_arr[$si_prop->package_id] = $si_prop; }
             $prop_package_rel = $rest_arr;
             \DB::table('tb_properties_category_package')->where('property_id', $id)->delete();
-            if((count($property_packages) > 0)){                
-                foreach($property_packages as $si_prop){ 
+            if((count($property_packages) > 0)){
+                foreach($property_packages as $si_prop){
                     if(isset($prop_package_rel[$si_prop])){ $finproperty_package_relation[] = array("property_id"=>$id,"package_id"=>$si_prop,"id"=>$prop_package_rel[$si_prop]->id); }
                     else{ $finproperty_package_relation[] = array("property_id"=>$id,"package_id"=>$si_prop,"id"=>NULL); }
                 }
             }
-            
+
             if(count($finproperty_package_relation)){ \DB::table('tb_properties_category_package')->insert($finproperty_package_relation); }
             /** insert property packages relation end **/
-            
-            
+
+
             /** insert property packages relation start **/
-            $final_assigned_users = array();            
-            \DB::table('tb_properties_users')->where('property_id', $id)->delete();            
-            if((count($assigned_users) > 0)){                
-                foreach($assigned_users as $si_user){ 
-                    $final_assigned_users[] = array("property_id"=>$id,"user_id"=>$si_user); 
+            $final_assigned_users = array();
+            \DB::table('tb_properties_users')->where('property_id', $id)->delete();
+            if((count($assigned_users) > 0)){
+                foreach($assigned_users as $si_user){
+                    $final_assigned_users[] = array("property_id"=>$id,"user_id"=>$si_user);
                 }
-            }            
+            }
             if(count($final_assigned_users)){ \DB::table('tb_properties_users')->insert($final_assigned_users); }
             /** insert property packages relation end **/
-            
-            
+
+
             /** Start Meta tags **/
             $meta_data['property_id'] = $id;
             $meta_data['meta_title'] = $request->input('meta_title');
             $meta_data['meta_description'] = $request->input('meta_description');
             $meta_data['meta_keywords'] = $request->input('meta_keywords');
             $meta_data['canonical_link'] = $request->input('canonical_link');
-            
+
             $meta_data['og_title'] = $request->input('og_title');
             $meta_data['og_description'] = $request->input('og_description');
             $meta_data['og_url'] = $request->input('og_url');
-            
+
             $meta_data['og_type'] = $request->input('og_type');
             //$meta_data['og_image'] = $request->input('og_image');
             //$meta_data['og_image_width'] = $request->input('og_image_width');
@@ -1396,8 +1396,8 @@ class PropertiesController extends Controller {
             $meta_data['twitter_domain'] = $request->input('twitter_domain');
             $meta_data['twitter_card'] = $request->input('twitter_card');
             $meta_data['twitter_creator'] = $request->input('twitter_creator');
-            $meta_data['twitter_site'] = $request->input('twitter_site');                       
-            
+            $meta_data['twitter_site'] = $request->input('twitter_site');
+
             $meta_data['og_upload_type'] =  $request->input('og_image_type');
             if (!is_null($request->file('og_image_type_upload'))) {
                 $og_image_type_file = $request->file('og_image_type_upload');
@@ -1412,7 +1412,7 @@ class PropertiesController extends Controller {
                 }
             }
             $meta_data['og_image_link'] =  $request->input('og_image_type_link');
-            
+
             $meta_data['twitter_upload_type'] =  $request->input('twitter_image_type');
             if (!is_null($request->file('twitter_image_type_upload'))) {
                 $twitter_image_type_file = $request->file('twitter_image_type_upload');
@@ -1427,17 +1427,17 @@ class PropertiesController extends Controller {
                 }
             }
             $meta_data['twitter_image_link'] =  $request->input('twitter_image_type_link');
-            
+
             $check_meta = \DB::table('tb_property_metatags')->where('property_id', $id)->get();
             if(!empty($check_meta)){
                 \DB::table('tb_property_metatags')->where('property_id', $id)->update($meta_data);
             }else{
                 $meta_data['created'] = date('Y-m-d H:i:s');
-                \DB::table('tb_property_metatags')->insertGetId($meta_data);    
+                \DB::table('tb_property_metatags')->insertGetId($meta_data);
             }
-              
+
             /** End Meta tags **/
-            
+
             if (!is_null($request->input('apply'))) {
                 $return = 'properties/update/' . $id . '?return=' . self::returnUrl();
             } else {
@@ -1464,7 +1464,7 @@ class PropertiesController extends Controller {
         if ($this->access['is_remove'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-        // delete multipe rows 
+        // delete multipe rows
         if (count($request->input('ids')) >= 1) {
             $selids = $request->input('ids');
             $checkDir = \DB::table('tb_container')->where('name', 'locations')->first();
@@ -1541,10 +1541,10 @@ class PropertiesController extends Controller {
         $this->data['tabss'] = $tabdata;
         if ($active == 'types') {
             $this->data['cat_types'] = $this->find_categories($property_id);
-            
+
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_cats':'properties.settings_cats'; 
-            
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_cats':'properties.settings_cats';
+
             return view($file_name, $this->data);
         } elseif ($active == 'rooms') {
             $this->data['cat_types'] = $this->find_categories_room($property_id);
@@ -1558,10 +1558,10 @@ class PropertiesController extends Controller {
                 $this->data['room_amenties_desc'] = $rooms_desc;
             }
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_rooms':'properties.settings_rooms'; 
-            
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_rooms':'properties.settings_rooms';
+
             return view($file_name, $this->data);
-            
+
         } elseif ($active == 'price') {
             $seasonArr = array();
             if ($this->data['property_data']->default_seasons != 1) {
@@ -1573,10 +1573,10 @@ class PropertiesController extends Controller {
             $this->data['Seasons'] = $checkseason;
             $this->data['room_prices'] = $this->find_categories_room_price($property_id);
             //print "<pre>"; print_r($this->data['room_prices']);
-            
+
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
             $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_price':'properties.settings_price';
-            
+
             return view($file_name, $this->data);
         } elseif ($active == 'property_images') {
             $this->data['imgs'] = $this->get_property_files($property_id, 'Property Images');
@@ -1584,35 +1584,35 @@ class PropertiesController extends Controller {
             $this->data['grid_imgs'] = $this->get_property_files($property_id, 'Property Grid');
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
             $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_property_images':'properties.settings_property_images';
-            
+
             return view($file_name, $this->data);
         } elseif ($active == 'property_documents') {
             $this->data['hotel_broch'] = $this->get_property_files($property_id, 'Hotel Brochure');
     	    $this->data['restru_menu'] = $this->get_property_files($property_id, 'Restaurant Menu');
     	    $this->data['spa_broch'] = $this->get_property_files($property_id, 'Spa Brochure');
     		$this->data['hotelcontacts'] = $this->get_property_files($property_id, 'Hotel Contracts');
-            
+
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
             $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_property_documents':'properties.settings_property_documents';
-            
+
             return view($file_name, $this->data);
         } elseif ($active == 'gallery_images') {
             $this->data['spaimgs'] = $this->get_property_files($property_id, 'Spa Gallery Images');
             $this->data['resturan_imgs'] = $this->get_property_files($property_id, 'Restrurants Gallery Images');
             $this->data['bar_imgs'] = $this->get_property_files($property_id, 'Bar Gallery Images');
-            
+
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
             $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_gallery_images':'properties.settings_gallery_images';
-            
+
             return view($file_name, $this->data);
         } elseif ($active == 'calendar') {
             $this->data['cat_types'] = $this->find_categories_room($property_id);
-            
+
             $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-            
+
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_calendar':'properties.settings_calendar'; 
-            
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_calendar':'properties.settings_calendar';
+
             return view($file_name, $this->data);
             //return view('properties.settings_calendar', $this->data);
         } elseif ($active == 'terms_and_conditions') {
@@ -1623,28 +1623,28 @@ class PropertiesController extends Controller {
                 } else {
                     \DB::table('td_property_terms_n_conditions')->insertGetId(array('property_id' => $property_id, 'terms_n_conditions' => $request->input('terms_n_conditions'), 'applytoallroomtypes'=>$request->input('termsapplytoallroomtypes')));
                 }
-            }            
+            }
             $this->data['row'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $property_id)->first();
-            
+
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_terms_and_conditions':'properties.settings_terms_and_conditions'; 
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_terms_and_conditions':'properties.settings_terms_and_conditions';
             return view($file_name, $this->data);
-            
-        }elseif ($active == 'custom-price') {  
-                      
+
+        }elseif ($active == 'custom-price') {
+
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
             //if($is_demo6!=''){
             $seasons = \DB::table('tb_seasons')->where('property_id', $property_id)->get();
             $this->data['seasons'] = $seasons;
             $this->data['customseasons'] = \DB::table('tb_properties_custom_plan')->where('property_id', $property_id)->get();
-            
+
             $this->data['cattypes'] = \DB::table('tb_properties_category_types')->where('property_id', $property_id)->get();
-            
+
             $this->data['boards'] = \DB::table('tb_boards')->where('property_id', $property_id)->get();
             $this->data['cp_items'] = \DB::table('tb_custom_plan_items')->where('property_id', $property_id)->where('status', 1)->get();
-            
+
             $globalcustomplan = \DB::table('tb_global_custom_plan_assined')->join('tb_global_custom_plan', 'tb_global_custom_plan_assined.global_plan_id', '=', 'tb_global_custom_plan.id')->select('tb_global_custom_plan.*')->where('property_id', $property_id)->get();
-            
+
             $override_plans = \DB::table('tb_global_custom_plan_override')->where('property_id', $property_id)->get();
             $over_arr = array();
             $over_plan_obj = array();
@@ -1658,70 +1658,87 @@ class PropertiesController extends Controller {
             if(!empty($globalcustomplan)){
                 foreach($globalcustomplan as $sip){
                     if(in_array($sip->id, $over_arr)){
-                        $gl_plans[] = $over_plan_obj[$sip->id];        
+                        $gl_plans[] = $over_plan_obj[$sip->id];
                     }else{
-                        $gl_plans[] = $sip;    
+                        $gl_plans[] = $sip;
                     }
                 }
             }
             //echo "<pre>";
             //print_r($gl_plans); die;
             $this->data['globalcustomplan'] = $gl_plans;
-            
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_customprice':'properties.custom_price';                
+
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_customprice':'properties.custom_price';
             return view($file_name, $this->data);
             //}
-        }elseif ($active == 'restrictions') {            
-            $this->data[] = '';            
+        }elseif ($active == 'restrictions') {
+            $this->data[] = '';
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
             if($is_demo6!=''){
-                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_restrictions':'properties.custom_price';                
+                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_restrictions':'properties.custom_price';
                 return view($file_name, $this->data);
             }
-        }elseif ($active == 'options') {            
+        }elseif ($active == 'options') {
             $vattaxes = \DB::table('tb_vat_taxes')->get();
-            $this->data['vattaxes'] = $vattaxes;       
+            $this->data['vattaxes'] = $vattaxes;
             $prop_vatid = \DB::table('tb_properties')->select('vattax_id')->where('id', $property_id)->get();
-            $this->data['prop_vatid'] = $prop_vatid;                         
-            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());            
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_options':'properties.settings_options';                
-            return view($file_name, $this->data);
-            
-        }elseif ($active == 'boards') {  
-            $boards = \DB::table('tb_boards')->where('property_id', $property_id)->get();            
-            $this->data['boards'] = $boards;                                
-            $vattaxes = \DB::table('tb_vat_taxes')->get();
-            $this->data['vattaxes'] = $vattaxes;   
-            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());      
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_boards':'properties.settings_boards';                
-            return view($file_name, $this->data);            
-        }elseif ($active == 'items') {  
-            $items = \DB::table('tb_custom_plan_items')->where('property_id', $property_id)->get();            
-            $this->data['items'] = $items;            
-            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());      
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_items':'properties.settings_items';                
-            return view($file_name, $this->data);            
-        }elseif ($active == 'meals') {            
-            $this->data[] = '';            
+            $this->data['prop_vatid'] = $prop_vatid;
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            if($is_demo6!=''){
-                $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_meals':'properties.custom_price';                
-                return view($file_name, $this->data);
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_options':'properties.settings_options';
+            return view($file_name, $this->data);
+
+        }elseif ($active == 'boards') {
+            $boards = \DB::table('tb_boards')->where('property_id', $property_id)->get();
+            $this->data['boards'] = $boards;
+            $vattaxes = \DB::table('tb_vat_taxes')->get();
+            $this->data['vattaxes'] = $vattaxes;
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_boards':'properties.settings_boards';
+            return view($file_name, $this->data);
+        }elseif ($active == 'items') {
+            $items = \DB::table('tb_custom_plan_items')->where('property_id', $property_id)->get();
+            $this->data['items'] = $items;
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_items':'properties.settings_items';
+            return view($file_name, $this->data);
+
+        } elseif ($active == 'meals') {
+
+            $this->data[] = '';
+
+            $tb_meals_config = \DB::table('tb_meals_config')->where('property_id', $property_id)->get();
+            $tb_meals = \DB::table('tb_meals')->where('property_id', $property_id)->get();
+
+            $allboards = \DB::table('tb_boards')->where('property_id', $property_id)->get();
+            $boards_data = [];
+            if (count($allboards) > 0) {
+                foreach ($allboards as $key => $value) {
+                    $boards_data[$value->id] = $value->board_name;
+                }
             }
-        }elseif ($active == 'property-info') {  
-            $info = \DB::table('tb_properties_info')->where('property_id', $property_id)->get();            
-            $this->data['info'] = $info;            
-            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());      
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.info':'properties.info';                
-            return view($file_name, $this->data);            
-        }elseif ($active == 'property-usp') {  
-            $usp = \DB::table('tb_property_usp')->where('property_id', $property_id)->get();            
-            $this->data['usp'] = $usp;            
-            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());      
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.usp':'properties.usp';                
-            return view($file_name, $this->data);            
+            $this->data['pageTitle'] = "Manage Meals";
+            $this->data['pageNote'] = '';
+            $this->data['property_id'] = $property_id;
+            $this->data['meals_config'] = $tb_meals_config;
+            $this->data['meals'] = $tb_meals;
+            $this->data['boards_data'] = $boards_data;
+            $file_name = 'properties.settings_meals';
+            return view($file_name, $this->data);
+
+        }elseif ($active == 'property-info') {
+            $info = \DB::table('tb_properties_info')->where('property_id', $property_id)->get();
+            $this->data['info'] = $info;
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.info':'properties.info';
+            return view($file_name, $this->data);
+        }elseif ($active == 'property-usp') {
+            $usp = \DB::table('tb_property_usp')->where('property_id', $property_id)->get();
+            $this->data['usp'] = $usp;
+            $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.usp':'properties.usp';
+            return view($file_name, $this->data);
         }
-        
+
         if ($active == 'seasons') {
             $seasonArr = array();
             $checkseason = \DB::table('tb_seasons')->where('property_id', $property_id)->get();
@@ -1737,21 +1754,21 @@ class PropertiesController extends Controller {
                 }
             }
             $this->data['Seasons'] = $seasonArr;
-            
+
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_seasons':'properties.settings_seasons'; 
-            
+            $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.settings_seasons':'properties.settings_seasons';
+
             return view($file_name, $this->data);
         }
     }
-    
+
     public function ajax_show_settings() {
-        
+
         $property_id = $_REQUEST['id'];
         $property_cat_id = $_REQUEST['cid'];
         $this->data['pid'] = $property_id;
         //$this->data['property_data'] = \DB::table('tb_properties')->where('id', $property_id)->first();
-        
+
         $this->data['cat_types'] = $this->find_categories_room_ajax($property_cat_id);
         //$this->data['amenties'] = \DB::table('tb_amenities')->where('amenity_status', '1')->get();
         //$this->data['room_amenties_desc'] = array();
@@ -1763,12 +1780,12 @@ class PropertiesController extends Controller {
         //    $this->data['room_amenties_desc'] = $rooms_desc;
         //}
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.ajax_settings_rooms':'properties.settings_rooms'; 
-        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.ajax_settings_rooms':'properties.settings_rooms';
+
         echo view($file_name, $this->data);
-        
+
     }
-    
+
     function get_property_files($property_id, $filetype) {
         $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*',  \DB::raw("(CASE WHEN (tb_container_files.file_display_name = '') THEN tb_container_files.file_name ELSE tb_container_files.file_display_name END) as file_display_name"), 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $property_id)->where('tb_properties_images.type', $filetype)->get();
         $filen = array();
@@ -1787,7 +1804,7 @@ class PropertiesController extends Controller {
         $cat_types = \DB::table('tb_properties_category_types')->where('property_id', $property_id)->where('status', 0)->get();
         return $cat_types;
     }
-    
+
     function find_categories_room_ajax($property_id) {
         $cats = array();
         $cat_types = \DB::table('tb_properties_category_types')->where('id', $property_id)->where('status', 0)->get();
@@ -1801,14 +1818,14 @@ class PropertiesController extends Controller {
                         $cats[$c]['rooms'][] = $room;
                     }
                 }
-                
+
                 $c++;
             }
         }
 
         return $cats;
     }
-    
+
     function find_categories_room($property_id) {
         $cats = array();
         $cat_types = \DB::table('tb_properties_category_types')->where('property_id', $property_id)->where('status', 0)->get();
@@ -1893,7 +1910,7 @@ class PropertiesController extends Controller {
             $data['guests_juniors'] = $request->input('guests_junior');
             $data['guests_babies'] = $request->input('guests_babies');
             //$data['booking_policy'] =  $request->input('bookingPolicy');
-            
+
             if (!is_null($request->input('count_baby'))) {
                 $data['baby_count'] = $request->input('count_baby');
             } else {
@@ -1914,8 +1931,8 @@ class PropertiesController extends Controller {
                 $id = \DB::table('tb_properties_category_types')->insertGetId($data);
             } else {
                 $data['updated'] = date('Y-m-d h:i:s');
-                $data['booking_policy'] =  $request->input('bookingPolicy');   
-                $data['cat_color'] =  $request->input('cat_color');             
+                $data['booking_policy'] =  $request->input('bookingPolicy');
+                $data['cat_color'] =  $request->input('cat_color');
                 $instype = 'update';
                 $id = \DB::table('tb_properties_category_types')->where('id', $request->input('edit_type_id'))->update($data);
             }
@@ -2026,7 +2043,7 @@ class PropertiesController extends Controller {
             return json_encode($res);
         }
     }
-    
+
     function delete_property_room(Request $request) {
         $uid = \Auth::user()->id;
         $roomId = $request->input('room_id');
@@ -2477,14 +2494,14 @@ class PropertiesController extends Controller {
                             $cats[$c]['rooms'][] = $room;
                             //$arrrooms['room'] = $room;
                             //$reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_properties_category_rooms.room_name')->leftJoin('tb_properties_category_rooms', 'tb_reservations.room_id', '=', 'tb_properties_category_rooms.id')->where('tb_reservations.property_id', $property_id)->where('tb_reservations.room_id', $room->id)->get();
-                            
+
                             //$arrrooms['reservation'] = $reservations;
-                            
+
                             //$cats[$c]['rooms'][] = $arrrooms;
                         }
-                        
+
                     }
-                    
+
                     /* $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $property_id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->get();
                       $filen = array();
                       if(!empty($fileArr))
@@ -2592,13 +2609,13 @@ class PropertiesController extends Controller {
             return json_encode($res);
         }
     }
-	
+
 	function delete_selectedproperty_image(Request $request) {
         $uid = \Auth::user()->id;
         $items = explode(',',$request->input('items'));
 		if(!empty($items))
 		{
-			foreach($items as $item) 
+			foreach($items as $item)
 			{
 				$checkImg = \DB::table('tb_properties_images')->where('id', $item)->first();
 				if (!empty($checkImg)) {
@@ -2615,7 +2632,7 @@ class PropertiesController extends Controller {
 		}
 		return json_encode($res);
     }
-	
+
 	function getPropertyRates(Request $request) {
         $uid = \Auth::user()->id;
         $propty = $request->input('propid');
@@ -2643,7 +2660,7 @@ class PropertiesController extends Controller {
         $this->data['active'] = "";
         $this->data['pid'] = "43";
         $this->data['property_data'] = "";
-   
+
         $this->data['spaimgs'] = "";
         return view('properties.wetest', $this->data);
       }
@@ -2651,9 +2668,9 @@ class PropertiesController extends Controller {
 function property_images_wetransfer(Request $request) {
 
                     $checkDir = \DB::table('tb_container')->select('id')->where('name', 'locations')->first();
-                
+
                     $propImgFoldId = "wetransfer";
-                        
+
                     $destinationPath = (new ContainerController)->getContainerUserPath($propImgFoldId);
                     $file = $request->file('files');
                     // GET THE FILE EXTENSION
@@ -2697,7 +2714,7 @@ function property_images_wetransfer(Request $request) {
                     return json_encode($getfilejson);
 
              }
-             
+
     function enable_diable_hotelApproval() {
         $uid = \Auth::user()->id;
         $items = Input::get('row_id');
@@ -2709,20 +2726,20 @@ function property_images_wetransfer(Request $request) {
             if (!empty($exist)) {
                 $usr_id= $exist->user_id;
                 \DB::table('tb_properties')->where('id', $items)->update([$filed_name => $action]);
-                
+
                 $email_user = \DB::table('tb_users')->where('id', $usr_id)->first();
-                                
+
                 $edata = array();
-                $emlData['frmemail'] = 'marketing@emporium-voyage.com';                
+                $emlData['frmemail'] = 'marketing@emporium-voyage.com';
                 $emlData['email'] = $email_user->email;
-                $emlData['subject'] = 'Property Approval';                
-                
-                if($action==1){                     
+                $emlData['subject'] = 'Property Approval';
+
+                if($action==1){
                     $file_name = 'user.emails.hotel_approval';
-                }else{                      
+                }else{
                     $file_name = 'user.emails.hotel_unapproval';
                 }
-                
+
                 \Mail::send($file_name, $edata, function($message) use ($emlData) {
                     $message->from($emlData['frmemail'], CNF_APPNAME);
 
@@ -2730,7 +2747,7 @@ function property_images_wetransfer(Request $request) {
 
                     $message->subject($emlData['subject']);
                 });
-                
+
                 return "success";
             } else {
                 return "error";
@@ -2739,21 +2756,21 @@ function property_images_wetransfer(Request $request) {
             return "error";
         }
     }
-                                       
+
     public function updateHotelInfo(Request $request){
         $uid = \Auth::user()->id;
         $id = $request->input('id');
-        
+
         $rules = array(
             'property_name' => 'required',
             'property_type' => 'required',
-            'booking_type' => 'required',         
+            'booking_type' => 'required',
         );
-        //        
+        //
         $validator = Validator::make($request->all(), $rules);
 
-        //print_r($validator);        
-        if ($validator->passes()) { 
+        //print_r($validator);
+        if ($validator->passes()) {
             //$data = $this->validatePost('tb_properties');
             $alias = \SiteHelpers::seoUrl(Input::get('property_short_name'));
             $exha = false;
@@ -2782,20 +2799,20 @@ function property_images_wetransfer(Request $request) {
             $data['property_short_name'] = $request->input('property_short_name');
             $data['property_type'] = $request->input('property_type');
             $data['booking_type'] = $request->input('booking_type');
-            
+
             $data['city_tax'] = $request->input('city_tax');
             $data['commission'] = $request->input('commission');
             $data['about_property'] = $request->input('about_property');
             $data['property_usp'] = $request->input('property_usp');
             $data['assigned_user_id'] = $request->input('assigned_user_id');
-            
-            
-            
+
+
+
             $data['commission'] = $request->input('commission');
             $data['about_property'] = $request->input('about_property');
             $data['property_usp'] = $request->input('property_usp');
-            $data['assigned_user_id'] = $request->input('assigned_user_id');            
-            
+            $data['assigned_user_id'] = $request->input('assigned_user_id');
+
 
             if (!empty($request->input('assigned_amenities'))) {
                 $data['assign_amenities'] = implode(',', $request->input('assigned_amenities'));
@@ -2821,7 +2838,7 @@ function property_images_wetransfer(Request $request) {
             } else {
                 $data['default_seasons'] = 0;
             }
-            
+
             $data['detail_section1_title'] = $request->input('detail_section1_title');
             $data['detail_section1_description_box1'] = $request->input('detail_section1_description_box1');
             $data['detail_section1_description_box2'] = $request->input('detail_section1_description_box2');
@@ -2830,35 +2847,35 @@ function property_images_wetransfer(Request $request) {
             $data['detail_section2_description_box2'] = $request->input('detail_section2_description_box2');
             $data['assign_detail_city'] = $request->input('assign_detail_city');
 
-            
-            
-			
+
+
+
 			if (!is_null($request->input('feature_property'))) {
                 $data['feature_property'] = $request->input('feature_property');
             } else {
                 $data['feature_property'] = 0;
             }
-			
+
 			if (!is_null($request->input('editor_choice_property'))) {
                 $data['editor_choice_property'] = $request->input('editor_choice_property');
             } else {
                 $data['editor_choice_property'] = 0;
             }
 
-            
-			
+
+
 			if (!empty($request->input('spaids'))) {
                 $data['spa_ids'] = implode(',', $request->input('spaids'));
             } else {
                 $data['spa_ids'] = '';
             }
-			
+
 			if (!empty($request->input('restaurantids'))) {
                 $data['restaurant_ids'] = implode(',', $request->input('restaurantids'));
             } else {
                 $data['restaurant_ids'] = '';
             }
-			
+
 			if (!empty($request->input('barids'))) {
                 $data['bar_ids'] = implode(',', $request->input('barids'));
             } else {
@@ -2918,7 +2935,7 @@ function property_images_wetransfer(Request $request) {
                 }
             }
             //room & suites end
-            // Architechure 
+            // Architechure
             $data['architecture_title'] = $request->input('architecture_title');
             $data['architecture_desciription'] = $request->input('architecture_desciription');
             if ($request->input('architecture_video_type') != '') {
@@ -2953,7 +2970,7 @@ function property_images_wetransfer(Request $request) {
                 }
             }
 
-            // Design 
+            // Design
             $data['architecture_design_title'] = $request->input('architecture_design_title');
             $data['architecture_design_desciription'] = $request->input('architecture_design_desciription');
             $data['architecture_design_url'] = $request->input('architecture_design_url');
@@ -3195,7 +3212,7 @@ function property_images_wetransfer(Request $request) {
                     $data['restaurant2_video'] = $restaurant2_videofilename;
                 }
             }
-			
+
 			//resturant 3
 
             $data['restaurant3_title'] = $request->input('restaurant3_title');
@@ -3306,7 +3323,7 @@ function property_images_wetransfer(Request $request) {
                     $data['bar_video'] = $bar_videofilename;
                 }
             }
-			
+
 			// bar 2
             $data['bar2_title'] = $request->input('bar2_title');
             $data['bar2_sub_title'] = $request->input('bar2_sub_title');
@@ -3367,7 +3384,7 @@ function property_images_wetransfer(Request $request) {
                     $data['bar2_video'] = $bar2_videofilename;
                 }
             }
-			
+
 			// bar 3
             $data['bar3_title'] = $request->input('bar3_title');
             $data['bar3_sub_title'] = $request->input('bar3_sub_title');
@@ -3506,14 +3523,14 @@ function property_images_wetransfer(Request $request) {
             //                ->withErrors($validator)->withInput();
         }
     }
-    
+
     function contract_upload(Request $request) {
         $form_wizard = (int) $request->input('form_wizard');
         if (!is_null(Input::file('signedcontract')) || !is_null(Input::file('signedcontract')))
         {
             $propId = (int) $request->input('propId');
             if($propId > 0){
-                $checkProp = \DB::table('tb_properties')->select('property_name')->where('id', $propId)->first(); 
+                $checkProp = \DB::table('tb_properties')->select('property_name')->where('id', $propId)->first();
                 if (!empty($checkProp)) {
                     $checkDir = \DB::table('tb_container')->select('id')->where('name', 'locations')->first();
                     if (!empty($checkDir)) {
@@ -3522,7 +3539,7 @@ function property_images_wetransfer(Request $request) {
                             $foldName = trim($foldVal);
                             $slug = \SiteHelpers::seoUrl(trim($foldName));
                             $dirPath = (new ContainerController)->getContainerUserPath($checkDir->id);
-            
+
                             $checkPropFold = \DB::table('tb_container')->select('id')->where('name', $slug)->where('parent_id', $checkDir->id)->first();
                             if (!empty($checkPropFold)) {
                                 $propFoldId = $checkPropFold->id;
@@ -3532,9 +3549,9 @@ function property_images_wetransfer(Request $request) {
                                     $propFoldId = $newPropFolder;
                                 }
                             }
-                            
+
                             if (!is_null(Input::file('signedcontract'))){
-                                
+
                                 $imgFold = $request->input('uploadType');
                                 $PropImgfoldName = trim($imgFold);
                                 $PropImgslug = \SiteHelpers::seoUrl(trim($PropImgfoldName));
@@ -3582,7 +3599,7 @@ function property_images_wetransfer(Request $request) {
                                 $fileNamedis = $file->getClientOriginalName();
                                 $ftname = explode('.', $fileName);
                                 $exha = false;
-            
+
                                 for ($f = 1; $exha != true; $f++) {
                                     if (\File::exists($destinationPath . $fileName)) {
                                         $fileName = $ftname[0] . '(' . $f . ').' . $extension;
@@ -3603,7 +3620,7 @@ function property_images_wetransfer(Request $request) {
                                     // finally we save the image as a new file
                                     $thumbfile = 'thumb_' . $propImgFoldId . '_' . $fileName;
                                     $thimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
-            
+
                                     // open an image file
                                     $mdimg = \Image::make($destinationPath . $fileName);
                                     // now you are able to resize the instance
@@ -3620,7 +3637,7 @@ function property_images_wetransfer(Request $request) {
                                     // finally we save the image as a new file
                                     $thumbfile = 'format_' . $propImgFoldId . '_' . $fileName;
                                     $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
-            
+
                                     // open an image file
                                     $mdimg = \Image::make($destinationPath . $fileName);
                                     // now you are able to resize the instance
@@ -3637,7 +3654,7 @@ function property_images_wetransfer(Request $request) {
                                     // finally we save the image as a new file
                                     $thumbfile = 'highflip_' . $propImgFoldId . '_' . $fileName;
                                     $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
-            
+
                                     // open an image file
                                     $pthimg = \Image::make($destinationPath . $fileName);
                                     // now you are able to resize the instance
@@ -3645,7 +3662,7 @@ function property_images_wetransfer(Request $request) {
                                     // finally we save the image as a new file
                                     $pthumbfile = $fileName;
                                     $pthimg->save(public_path() . '/uploads/property_imgs_thumbs/' . $pthumbfile);
-            
+
                                     $fpimg = \Image::make($destinationPath . $fileName);
                                     $thactualsize = getimagesize($destinationPath . $fileName);
                                     if ($thactualsize[0] > $thactualsize[1]) {
@@ -3655,7 +3672,7 @@ function property_images_wetransfer(Request $request) {
                                     }
                                     $thumbfile = 'front_property_' . $propImgFoldId . '_' . $fileName;
                                     $fpimg->save(public_path() . '/uploads/property_imgs_thumbs/' . $thumbfile);
-            
+
                                     // Set main image if uploaded file is first in folder
                                     $countfile = \DB::table('tb_container_files')->where('folder_id', $propImgFoldId)->where(function ($query) {
                                                 $query->where('file_type', 'image/jpeg')->orWhere('file_type', 'image/png')->orWhere('file_type', 'image/gif');
@@ -3667,7 +3684,7 @@ function property_images_wetransfer(Request $request) {
                                         $bkimg->resize(128, 130);
                                         $bkimgfile = 'thumb_' . $fileName;
                                         $bkimg->save($copytofolder . $bkimgfile);
-            
+
                                         // open an image file
                                         $mdimg = \Image::make($destinationPath . $fileName);
                                         $thactualsize = getimagesize($destinationPath . $fileName);
@@ -3682,14 +3699,14 @@ function property_images_wetransfer(Request $request) {
                                         }
                                         $thumbfile = 'format_' . $fileName;
                                         $mdimg->save($copytofolder . $thumbfile);
-            
+
                                         $cmdata['temp_cover_img'] = $fileName;
                                         $cmdata['temp_cover_img_masonry'] = $fileName;
                                         $cmdata['updated'] = date('y-m-d');
                                         \DB::table('tb_container')->where('id', $propImgFoldId)->update($cmdata);
                                     }
                                 }
-            
+
                                 $data['folder_id'] = $propImgFoldId;
                                 $data['file_name'] = $fileName;
             					$data['file_display_name'] = $fileNamedis;
@@ -3699,7 +3716,7 @@ function property_images_wetransfer(Request $request) {
                                 $data['created'] = date('y-m-d h:i:s');
                                 $data['path'] = $destinationPath;
                                 $fileID = \DB::table('tb_container_files')->insertGetId($data);
-            
+
                                 $imgdata['property_id'] = $request->input('propId');
                                 $imgdata['type'] = $imgFold;
                                 $imgdata['file_id'] = $fileID;
@@ -3709,7 +3726,7 @@ function property_images_wetransfer(Request $request) {
                                 $imgdata['user_id'] = \Auth::user()->id;
                                 $imgdata['created'] = date('y-m-d h:i:s');
                                 $imgID = \DB::table('tb_properties_images')->insertGetId($imgdata);
-            
+
                                 $getupfile = \DB::table('tb_container_files')->where('id', $fileID)->first();
                                 if (!empty($getupfile)) {
                                     $getfilejson['files'][0]['id'] = $imgID;
@@ -3727,9 +3744,9 @@ function property_images_wetransfer(Request $request) {
                                     $getfilejson['files'][0]['type'] = $getupfile->file_type;
                                     $getfilejson['files'][0]['url'] = (new ContainerController)->getThumbpath($getupfile->folder_id) . $getupfile->file_name;
                                 }
-                                
+
                             }
-                            
+
                             if (!is_null(Input::file('hotelbrochure'))){
                                 $imgFold = 'Hotel Brochure';
                                 $PropImgfoldName = trim($imgFold);
@@ -3743,7 +3760,7 @@ function property_images_wetransfer(Request $request) {
                                         $newpropImgFoldId = $newPropImgFolder;
                                     }
                                 }
-            
+
                                 if ($imgFold == 'Rooms Images') {
                                     $cat_id = $request->input('category_id');
                                     $getcat = \DB::table('tb_properties_category_types')->select('category_name')->where('id', $cat_id)->where('status', 0)->first();
@@ -3779,7 +3796,7 @@ function property_images_wetransfer(Request $request) {
                                 $fileNamedis = $file->getClientOriginalName();
                                 $ftname = explode('.', $fileName);
                                 $exha = false;
-            
+
                                 for ($f = 1; $exha != true; $f++) {
                                     if (\File::exists($destinationPath . $fileName)) {
                                         $fileName = $ftname[0] . '(' . $f . ').' . $extension;
@@ -3800,7 +3817,7 @@ function property_images_wetransfer(Request $request) {
                                     // finally we save the image as a new file
                                     $thumbfile = 'thumb_' . $propImgFoldId . '_' . $fileName;
                                     $thimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
-            
+
                                     // open an image file
                                     $mdimg = \Image::make($destinationPath . $fileName);
                                     // now you are able to resize the instance
@@ -3817,7 +3834,7 @@ function property_images_wetransfer(Request $request) {
                                     // finally we save the image as a new file
                                     $thumbfile = 'format_' . $propImgFoldId . '_' . $fileName;
                                     $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
-            
+
                                     // open an image file
                                     $mdimg = \Image::make($destinationPath . $fileName);
                                     // now you are able to resize the instance
@@ -3834,7 +3851,7 @@ function property_images_wetransfer(Request $request) {
                                     // finally we save the image as a new file
                                     $thumbfile = 'highflip_' . $propImgFoldId . '_' . $fileName;
                                     $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
-            
+
                                     // open an image file
                                     $pthimg = \Image::make($destinationPath . $fileName);
                                     // now you are able to resize the instance
@@ -3842,7 +3859,7 @@ function property_images_wetransfer(Request $request) {
                                     // finally we save the image as a new file
                                     $pthumbfile = $fileName;
                                     $pthimg->save(public_path() . '/uploads/property_imgs_thumbs/' . $pthumbfile);
-            
+
                                     $fpimg = \Image::make($destinationPath . $fileName);
                                     $thactualsize = getimagesize($destinationPath . $fileName);
                                     if ($thactualsize[0] > $thactualsize[1]) {
@@ -3852,7 +3869,7 @@ function property_images_wetransfer(Request $request) {
                                     }
                                     $thumbfile = 'front_property_' . $propImgFoldId . '_' . $fileName;
                                     $fpimg->save(public_path() . '/uploads/property_imgs_thumbs/' . $thumbfile);
-            
+
                                     // Set main image if uploaded file is first in folder
                                     $countfile = \DB::table('tb_container_files')->where('folder_id', $propImgFoldId)->where(function ($query) {
                                                 $query->where('file_type', 'image/jpeg')->orWhere('file_type', 'image/png')->orWhere('file_type', 'image/gif');
@@ -3864,7 +3881,7 @@ function property_images_wetransfer(Request $request) {
                                         $bkimg->resize(128, 130);
                                         $bkimgfile = 'thumb_' . $fileName;
                                         $bkimg->save($copytofolder . $bkimgfile);
-            
+
                                         // open an image file
                                         $mdimg = \Image::make($destinationPath . $fileName);
                                         $thactualsize = getimagesize($destinationPath . $fileName);
@@ -3879,14 +3896,14 @@ function property_images_wetransfer(Request $request) {
                                         }
                                         $thumbfile = 'format_' . $fileName;
                                         $mdimg->save($copytofolder . $thumbfile);
-            
+
                                         $cmdata['temp_cover_img'] = $fileName;
                                         $cmdata['temp_cover_img_masonry'] = $fileName;
                                         $cmdata['updated'] = date('y-m-d');
                                         \DB::table('tb_container')->where('id', $propImgFoldId)->update($cmdata);
                                     }
                                 }
-            
+
                                 $data['folder_id'] = $propImgFoldId;
                                 $data['file_name'] = $fileName;
             					$data['file_display_name'] = $fileNamedis;
@@ -3896,7 +3913,7 @@ function property_images_wetransfer(Request $request) {
                                 $data['created'] = date('y-m-d h:i:s');
                                 $data['path'] = $destinationPath;
                                 $fileID = \DB::table('tb_container_files')->insertGetId($data);
-            
+
                                 $imgdata['property_id'] = $request->input('propId');
                                 $imgdata['type'] = $imgFold;
                                 $imgdata['file_id'] = $fileID;
@@ -3906,7 +3923,7 @@ function property_images_wetransfer(Request $request) {
                                 $imgdata['user_id'] = \Auth::user()->id;
                                 $imgdata['created'] = date('y-m-d h:i:s');
                                 $imgID = \DB::table('tb_properties_images')->insertGetId($imgdata);
-            
+
                                 $getupfile = \DB::table('tb_container_files')->where('id', $fileID)->first();
                                 if (!empty($getupfile)) {
                                     $getfilejson['files'][0]['id'] = $imgID;
@@ -3923,11 +3940,11 @@ function property_images_wetransfer(Request $request) {
                                     }
                                     $getfilejson['files'][0]['type'] = $getupfile->file_type;
                                     $getfilejson['files'][0]['url'] = (new ContainerController)->getThumbpath($getupfile->folder_id) . $getupfile->file_name;
-                                }                                   
-                            } 
-                            \DB::table('tb_users')->where('id', \Auth::user()->id)->update(array('form_wizard'=>$form_wizard));                           
+                                }
+                            }
+                            \DB::table('tb_users')->where('id', \Auth::user()->id)->update(array('form_wizard'=>$form_wizard));
                             $return_array['status'] = 'success';
-                            $return_array['message'] = 'Contract uploaded successfully';     
+                            $return_array['message'] = 'Contract uploaded successfully';
                         }else{
                             $return_array['status'] = 'error';
                             $return_array['message'] = 'Folder does not exist';
@@ -3935,8 +3952,8 @@ function property_images_wetransfer(Request $request) {
                     }else{
                         $return_array['status'] = 'error';
                         $return_array['message'] = 'Hotel not found to upload contract';
-                    }                    
-                }  
+                    }
+                }
             }
         }else{
             \DB::table('tb_users')->where('id', \Auth::user()->id)->update(array('form_wizard'=>$form_wizard));
@@ -3946,13 +3963,13 @@ function property_images_wetransfer(Request $request) {
         echo json_encode($return_array); exit;
        /* if (!is_null(Input::file('signedcontract'))){
             $propId = (int) $request->input('propId');
-            
+
             if($propId > 0){
-            
+
                 $checkProp = \DB::table('tb_properties')->select('property_name')->where('id', $propId)->first();
-                
+
                 //print_r($checkProp); die;
-                
+
                 if (!empty($checkProp)) {
                     $checkDir = \DB::table('tb_container')->select('id')->where('name', 'locations')->first();
                     if (!empty($checkDir)) {
@@ -3961,7 +3978,7 @@ function property_images_wetransfer(Request $request) {
                             $foldName = trim($foldVal);
                             $slug = \SiteHelpers::seoUrl(trim($foldName));
                             $dirPath = (new ContainerController)->getContainerUserPath($checkDir->id);
-        
+
                             $checkPropFold = \DB::table('tb_container')->select('id')->where('name', $slug)->where('parent_id', $checkDir->id)->first();
                             if (!empty($checkPropFold)) {
                                 $propFoldId = $checkPropFold->id;
@@ -3971,7 +3988,7 @@ function property_images_wetransfer(Request $request) {
                                     $propFoldId = $newPropFolder;
                                 }
                             }
-        
+
                             $imgFold = $request->input('uploadType');
                             $PropImgfoldName = trim($imgFold);
                             $PropImgslug = \SiteHelpers::seoUrl(trim($PropImgfoldName));
@@ -3984,7 +4001,7 @@ function property_images_wetransfer(Request $request) {
                                     $newpropImgFoldId = $newPropImgFolder;
                                 }
                             }
-        
+
                             if ($imgFold == 'Rooms Images') {
                                 $cat_id = $request->input('category_id');
                                 $getcat = \DB::table('tb_properties_category_types')->select('category_name')->where('id', $cat_id)->where('status', 0)->first();
@@ -4020,7 +4037,7 @@ function property_images_wetransfer(Request $request) {
                             $fileNamedis = $file->getClientOriginalName();
                             $ftname = explode('.', $fileName);
                             $exha = false;
-        
+
                             for ($f = 1; $exha != true; $f++) {
                                 if (\File::exists($destinationPath . $fileName)) {
                                     $fileName = $ftname[0] . '(' . $f . ').' . $extension;
@@ -4041,7 +4058,7 @@ function property_images_wetransfer(Request $request) {
                                 // finally we save the image as a new file
                                 $thumbfile = 'thumb_' . $propImgFoldId . '_' . $fileName;
                                 $thimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
-        
+
                                 // open an image file
                                 $mdimg = \Image::make($destinationPath . $fileName);
                                 // now you are able to resize the instance
@@ -4058,7 +4075,7 @@ function property_images_wetransfer(Request $request) {
                                 // finally we save the image as a new file
                                 $thumbfile = 'format_' . $propImgFoldId . '_' . $fileName;
                                 $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
-        
+
                                 // open an image file
                                 $mdimg = \Image::make($destinationPath . $fileName);
                                 // now you are able to resize the instance
@@ -4075,7 +4092,7 @@ function property_images_wetransfer(Request $request) {
                                 // finally we save the image as a new file
                                 $thumbfile = 'highflip_' . $propImgFoldId . '_' . $fileName;
                                 $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
-        
+
                                 // open an image file
                                 $pthimg = \Image::make($destinationPath . $fileName);
                                 // now you are able to resize the instance
@@ -4083,7 +4100,7 @@ function property_images_wetransfer(Request $request) {
                                 // finally we save the image as a new file
                                 $pthumbfile = $fileName;
                                 $pthimg->save(public_path() . '/uploads/property_imgs_thumbs/' . $pthumbfile);
-        
+
                                 $fpimg = \Image::make($destinationPath . $fileName);
                                 $thactualsize = getimagesize($destinationPath . $fileName);
                                 if ($thactualsize[0] > $thactualsize[1]) {
@@ -4093,7 +4110,7 @@ function property_images_wetransfer(Request $request) {
                                 }
                                 $thumbfile = 'front_property_' . $propImgFoldId . '_' . $fileName;
                                 $fpimg->save(public_path() . '/uploads/property_imgs_thumbs/' . $thumbfile);
-        
+
                                 // Set main image if uploaded file is first in folder
                                 $countfile = \DB::table('tb_container_files')->where('folder_id', $propImgFoldId)->where(function ($query) {
                                             $query->where('file_type', 'image/jpeg')->orWhere('file_type', 'image/png')->orWhere('file_type', 'image/gif');
@@ -4105,7 +4122,7 @@ function property_images_wetransfer(Request $request) {
                                     $bkimg->resize(128, 130);
                                     $bkimgfile = 'thumb_' . $fileName;
                                     $bkimg->save($copytofolder . $bkimgfile);
-        
+
                                     // open an image file
                                     $mdimg = \Image::make($destinationPath . $fileName);
                                     $thactualsize = getimagesize($destinationPath . $fileName);
@@ -4120,14 +4137,14 @@ function property_images_wetransfer(Request $request) {
                                     }
                                     $thumbfile = 'format_' . $fileName;
                                     $mdimg->save($copytofolder . $thumbfile);
-        
+
                                     $cmdata['temp_cover_img'] = $fileName;
                                     $cmdata['temp_cover_img_masonry'] = $fileName;
                                     $cmdata['updated'] = date('y-m-d');
                                     \DB::table('tb_container')->where('id', $propImgFoldId)->update($cmdata);
                                 }
                             }
-        
+
                             $data['folder_id'] = $propImgFoldId;
                             $data['file_name'] = $fileName;
         					$data['file_display_name'] = $fileNamedis;
@@ -4137,7 +4154,7 @@ function property_images_wetransfer(Request $request) {
                             $data['created'] = date('y-m-d h:i:s');
                             $data['path'] = $destinationPath;
                             $fileID = \DB::table('tb_container_files')->insertGetId($data);
-        
+
                             $imgdata['property_id'] = $request->input('propId');
                             $imgdata['type'] = $imgFold;
                             $imgdata['file_id'] = $fileID;
@@ -4147,7 +4164,7 @@ function property_images_wetransfer(Request $request) {
                             $imgdata['user_id'] = \Auth::user()->id;
                             $imgdata['created'] = date('y-m-d h:i:s');
                             $imgID = \DB::table('tb_properties_images')->insertGetId($imgdata);
-        
+
                             $getupfile = \DB::table('tb_container_files')->where('id', $fileID)->first();
                             if (!empty($getupfile)) {
                                 $getfilejson['files'][0]['id'] = $imgID;
@@ -4181,16 +4198,16 @@ function property_images_wetransfer(Request $request) {
                     $return_array['message'] = 'Hotel not found to upload contract';
                 }
             }
-            
-                        
-                                    
-        }else{            
+
+
+
+        }else{
             $return_array['status'] = 'success';
             $return_array['message'] = 'Move ahead without upload contract';
         }
         echo json_encode($return_array); exit; */
     }
-    
+
     public function getViewcontract($property_id){
         $hotelcontacts = $this->get_property_files($property_id, 'Hotel Contracts');
         $filepath = '';
@@ -4199,59 +4216,59 @@ function property_images_wetransfer(Request $request) {
                 $filepath = $img->imgsrc.$img->file_name;
             }
         }
-        
+
         if($filepath!='')
 		{
-		    $path = $filepath;			
+		    $path = $filepath;
 				$flipimgs = array();
 				$fl=0;
-					
+
 					$flipimgs[$fl]['imgpath'] = $path;
 					$flipimgs[$fl]['imgname'] = '';
 					$flipimgs[$fl]['file_type'] = 'application/pdf';
 					$flipimgs[$fl]['folder'] = '';
-					
+
 				$this->data['flips'] = $flipimgs;
 				$this->data['fliptype'] = 'high';
-                
+
 				return view('properties.flipbook', $this->data);
-			
+
 		}
 		else
-		{ 
+		{
 		    $return = 'properties/?return=' . self::returnUrl();
 			return Redirect::to($return)->with('messagetext','Contract has not uploaded yet.')->with('msgstatus','error');
 		}
     }
-    
+
     public function addhotel(Request $request){
-        
+
         if ($this->access['is_view'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
 
-        
+
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.addhotel':'properties.addhotel'; 
-        
-        return view($file_name, $this->data);    
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.addhotel':'properties.addhotel';
+
+        return view($file_name, $this->data);
     }
-    
+
     public function saveHotelInfo(Request $request){
         $uid = \Auth::user()->id;
         $id = $request->input('id');
-        
+
         $rules['property_name'] = 'required';
         $rules['property_short_name'] = 'required';
         $rules['property_type'] = 'required';
         $rules['booking_type'] = 'required';
         /*$rules['assigned_user_id'] = 'required';*/
-        
+
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
             //$data = $this->validatePost('tb_properties');
             $alias = \SiteHelpers::seoUrl(Input::get('property_short_name'));
-            
+
             $exha = false;
             for ($f = 1; $exha != true; $f++) {
                 if ($request->input('id') == '') {
@@ -4274,18 +4291,18 @@ function property_images_wetransfer(Request $request) {
             } else {
                 $data['updated'] = date('Y-m-d h:i:s');
             }
-            
-            $property_packages = array();            
+
+            $property_packages = array();
 
             //$data['commission'] = $request->input('commission');
             $data['property_short_name'] = $request->input('property_short_name');
             $data['about_property'] = $request->input('about_property');
             $data['property_usp'] = $request->input('property_usp');
-            
+
             $assigned_users = array();
             //print_r($request->input('assigned_user_id'));
             /*$assigned_ids = $request->input('assigned_user_id');
-            if(strlen(trim($assigned_ids))>0){                
+            if(strlen(trim($assigned_ids))>0){
                 //if (is_array($request->input('assigned_user_id'))) {
                     $assigned_users = explode(',', $assigned_ids);
                 //}
@@ -4298,7 +4315,7 @@ function property_images_wetransfer(Request $request) {
             $data['detail_section2_title'] = $request->input('detail_section2_title');
             $data['detail_section2_description_box1'] = $request->input('detail_section2_description_box1');
             $data['detail_section2_description_box2'] = $request->input('detail_section2_description_box2');
-            $data['assign_detail_city'] = $request->input('assign_detail_city');            
+            $data['assign_detail_city'] = $request->input('assign_detail_city');
 
             if (!empty($request->input('assigned_amenities'))) {
                 $data['assign_amenities'] = implode(',', $request->input('assigned_amenities'));
@@ -4323,44 +4340,44 @@ function property_images_wetransfer(Request $request) {
             } else {
                 $data['property_category_id'] = '';
             }
-            			
+
 			$data['primary_airport'] = $request->input('primary_airport');
-            $data['secondary_airport'] = $request->input('secondary_airport');  
-            
+            $data['secondary_airport'] = $request->input('secondary_airport');
+
             $data['hotel_generic_email_address'] = $request->input('hotel_generic_email_address');
-            $data['general_manager_name'] = $request->input('general_manager_name');  
+            $data['general_manager_name'] = $request->input('general_manager_name');
             $data['hotel_time_zone'] = $request->input('hotel_time_zone');
-            $data['hotel_currency'] = $request->input('hotel_currency');  
+            $data['hotel_currency'] = $request->input('hotel_currency');
             $data['hotel_telephone_country_code'] = $request->input('hotel_telephone_country_code');
-            $data['hotel_telephone_area_code'] = $request->input('hotel_telephone_area_code');  
+            $data['hotel_telephone_area_code'] = $request->input('hotel_telephone_area_code');
             $data['hotel_telephone_no'] = $request->input('hotel_telephone_no');
-            $data['general_fax_country_code'] = $request->input('general_fax_country_code');  
+            $data['general_fax_country_code'] = $request->input('general_fax_country_code');
             $data['general_fax_area_code'] = $request->input('general_fax_area_code');
-            $data['general_fax_no'] = $request->input('general_fax_no');  
+            $data['general_fax_no'] = $request->input('general_fax_no');
             $data['reservations_direct_telephone_country_code'] = $request->input('reservations_direct_telephone_country_code');
-            $data['reservations_direct_telephone_area_code'] = $request->input('reservations_direct_telephone_area_code');  
+            $data['reservations_direct_telephone_area_code'] = $request->input('reservations_direct_telephone_area_code');
             $data['reservations_direct_telephone_no'] = $request->input('reservations_direct_telephone_no');
-            $data['reservations_toll_free_country_code'] = $request->input('reservations_toll_free_country_code');  
+            $data['reservations_toll_free_country_code'] = $request->input('reservations_toll_free_country_code');
             $data['reservations_toll_free_area_code'] = $request->input('reservations_toll_free_area_code');
-            $data['reservations_toll_free_no'] = $request->input('reservations_toll_free_no');  
+            $data['reservations_toll_free_no'] = $request->input('reservations_toll_free_no');
             $data['reservations_department_fax_country_code'] = $request->input('reservations_department_fax_country_code');
-            $data['reservations_department_fax_area_code'] = $request->input('reservations_department_fax_area_code');  
+            $data['reservations_department_fax_area_code'] = $request->input('reservations_department_fax_area_code');
             $data['reservations_department_fax_no'] = $request->input('reservations_department_fax_no');
-            $data['reservations_alternate_fax_country_code'] = $request->input('reservations_alternate_fax_country_code');  
+            $data['reservations_alternate_fax_country_code'] = $request->input('reservations_alternate_fax_country_code');
             $data['reservations_alternate_fax_area_code'] = $request->input('reservations_alternate_fax_area_code');
-            $data['reservations_alternate_fax_no'] = $request->input('reservations_alternate_fax_no');  
+            $data['reservations_alternate_fax_no'] = $request->input('reservations_alternate_fax_no');
             $data['reservations_general_email_address'] = $request->input('reservations_general_email_address');
             $data['primary_city'] = $request->input('primary_city');
-            $data['secondary_city'] = $request->input('secondary_city');  
+            $data['secondary_city'] = $request->input('secondary_city');
             $data['amadeus'] = $request->input('amadeus');
-            $data['galileo'] = $request->input('galileo');            
-            $data['sabre'] = $request->input('sabre');  
+            $data['galileo'] = $request->input('galileo');
+            $data['sabre'] = $request->input('sabre');
             $data['worldspan'] = $request->input('worldspan');
-            $data['vat_tax'] = $request->input('vat_tax');  
+            $data['vat_tax'] = $request->input('vat_tax');
             $data['occupancy_tax'] = $request->input('occupancy_tax');
-            $data['service_charge'] = $request->input('service_charge');  
-            $data['travel_agent_commission'] = $request->input('travel_agent_commission');             
-            
+            $data['service_charge'] = $request->input('service_charge');
+            $data['travel_agent_commission'] = $request->input('travel_agent_commission');
+
             // Yachts info tab
             if ($request->input('property_type') == 'Yachts') {
                 $yacht_category = $request->input('yacht_category');
@@ -4379,13 +4396,13 @@ function property_images_wetransfer(Request $request) {
                 $data['yacht_for_sale'] = $request->input('yacht_for_sale');
                 $data['yacht_for_charter'] = $request->input('yacht_for_charter');
             }
-            
-            
+
+
             //print_r($assigned_users); die;
             //$id = $this->model->insertRow($data, $request->input('id'));
-            
+
             \DB::table('tb_properties')->where('id', $id)->update($data);
-            
+
             if (!is_null($request->input('copy_amenities_rooms')) && !empty($request->input('assigned_amenities'))) {
                 $check_pcats = \DB::table('tb_properties_category_types')->where('property_id', $id)->get();
                 if (!empty($check_pcats)) {
@@ -4405,7 +4422,7 @@ function property_images_wetransfer(Request $request) {
                     }
                 }
             }
-            
+
             /** insert property packages relation start **/
             $finproperty_package_relation = array();
             $upproperty_package_relation = array();
@@ -4414,29 +4431,29 @@ function property_images_wetransfer(Request $request) {
             foreach($prop_package_rel as $si_prop){ $rest_arr[$si_prop->package_id] = $si_prop; }
             $prop_package_rel = $rest_arr;
             \DB::table('tb_properties_category_package')->where('property_id', $id)->delete();
-            if((count($property_packages) > 0)){                
-                foreach($property_packages as $si_prop){ 
+            if((count($property_packages) > 0)){
+                foreach($property_packages as $si_prop){
                     if(isset($prop_package_rel[$si_prop])){ $finproperty_package_relation[] = array("property_id"=>$id,"package_id"=>$si_prop,"id"=>$prop_package_rel[$si_prop]->id); }
                     else{ $finproperty_package_relation[] = array("property_id"=>$id,"package_id"=>$si_prop,"id"=>NULL); }
                 }
             }
-            
+
             if(count($finproperty_package_relation)){ \DB::table('tb_properties_category_package')->insert($finproperty_package_relation); }
             /** insert property packages relation end **/
-            
-            
+
+
             /** insert property packages relation start **/
-            /*$final_assigned_users = array();            
-            \DB::table('tb_properties_users')->where('property_id', $id)->delete();            
-            if((count($assigned_users) > 0)){                
-                foreach($assigned_users as $si_user){ 
-                    $final_assigned_users[] = array("property_id"=>$id,"user_id"=>$si_user); 
+            /*$final_assigned_users = array();
+            \DB::table('tb_properties_users')->where('property_id', $id)->delete();
+            if((count($assigned_users) > 0)){
+                foreach($assigned_users as $si_user){
+                    $final_assigned_users[] = array("property_id"=>$id,"user_id"=>$si_user);
                 }
-            }            
+            }
             if(count($final_assigned_users)){ \DB::table('tb_properties_users')->insert($final_assigned_users); }*/
             /** insert property packages relation end **/
-            
-            
+
+
             if (!is_null($request->input('apply'))) {
                 $return = 'properties/update/' . $id . '?return=' . self::returnUrl();
             } else {
@@ -4452,7 +4469,7 @@ function property_images_wetransfer(Request $request) {
 
             $return_array['status'] = 'success';
             $return_array['message'] = 'Property has been saved!';
-            
+
         } else {
 
             $return_array['status'] = 'error';
@@ -4461,15 +4478,15 @@ function property_images_wetransfer(Request $request) {
         echo json_encode($return_array);
         exit;
     }
-    
+
     public function saveHotelArchitectInfo(Request $request){
         $uid = \Auth::user()->id;
         $id = $request->input('id');
-        
+
         if ($id > 0) {
-            
+
             $destinationPath = public_path() . '/uploads/properties_subtab_imgs/';
-            // Architechure 
+            // Architechure
             $data['architecture_title'] = $request->input('architecture_title');
             $data['architecture_desciription'] = $request->input('architecture_desciription');
             if ($request->input('architecture_video_type') != '') {
@@ -4492,7 +4509,7 @@ function property_images_wetransfer(Request $request) {
                     $data['architecture_image'] = $architecture_filename;
                 }
             }
-            
+
             if (!is_null($request->file('architecture_video'))) {
                 $architecture_vfile = $request->file('architecture_video');
                 $architecture_vfilename = $architecture_vfile->getClientOriginalName();
@@ -4503,8 +4520,8 @@ function property_images_wetransfer(Request $request) {
                     $data['architecture_video'] = $architecture_videofilename;
                 }
             }
-            
-            // Design 
+
+            // Design
             $data['architecture_design_title'] = $request->input('architecture_design_title');
             $data['architecture_design_desciription'] = $request->input('architecture_design_desciription');
             $data['architecture_design_url'] = $request->input('architecture_design_url');
@@ -4525,7 +4542,7 @@ function property_images_wetransfer(Request $request) {
                     $data['architecture_design_image'] = $architecture_design_filename;
                 }
             }
-            
+
             if (!is_null($request->file('architecture_design_video'))) {
                 $architecture_design_vfile = $request->file('architecture_design_video');
                 $architecture_design_vfilename = $architecture_design_vfile->getClientOriginalName();
@@ -4536,7 +4553,7 @@ function property_images_wetransfer(Request $request) {
                     $data['architecture_design_video'] = $architecture_design_videofilename;
                 }
             }
-            
+
             // Designer
             $data['architecture_designer_title'] = $request->input('architecture_designer_title');
             $data['architecture_designer_desciription'] = $request->input('architecture_designer_desciription');
@@ -4551,7 +4568,7 @@ function property_images_wetransfer(Request $request) {
                 $data['architecture_designer_video_link_type'] = $request->input('architecture_designer_video_link_type');
             }
             $data['architecture_designer_video_link'] = $request->input('architecture_designer_video_link');
-            
+
             if (!is_null($request->file('architecture_designer_image'))) {
                 $architecture_designer_file = $request->file('architecture_designer_image');
                 $architecture_designer_filename = $architecture_designer_file->getClientOriginalName();
@@ -4562,7 +4579,7 @@ function property_images_wetransfer(Request $request) {
                     $data['architecture_designer_image'] = $architecture_designer_filename;
                 }
             }
-            
+
             if (!is_null($request->file('architecture_designer_video'))) {
                 $architecture_designer_vfile = $request->file('architecture_designer_video');
                 $architecture_designer_vfilename = $architecture_designer_vfile->getClientOriginalName();
@@ -4573,14 +4590,14 @@ function property_images_wetransfer(Request $request) {
                     $data['architecture_designer_video'] = $architecture_designer_videofilename;
                 }
             }
-            
+
             //print_r($data); die;
-            
+
             \DB::table('tb_properties')->where('id', $id)->update($data);
-            
+
             $return_array['status'] = 'success';
             $return_array['message'] = 'Property has been saved!';
-            
+
         } else {
 
             $return_array['status'] = 'error';
@@ -4589,13 +4606,13 @@ function property_images_wetransfer(Request $request) {
         echo json_encode($return_array);
         exit;
     }
-    
+
     public function saveHotelSocialInfo(Request $request){
         $uid = \Auth::user()->id;
         $id = $request->input('id');
-        
+
         if ($id > 0) {
-            
+
             $data['social_status'] = $request->input('social_status');
             $data['social_facebook'] = $request->input('social_facebook');
             $data['social_twitter'] = $request->input('social_twitter');
@@ -4604,16 +4621,16 @@ function property_images_wetransfer(Request $request) {
             $data['social_pinterest'] = $request->input('social_pinterest');
             $data['social_vimeo'] = $request->input('social_vimeo');
             $data['social_instagram'] = $request->input('social_instagram');
-            
+
             //print_r($data); die;
-            
+
             \DB::table('tb_properties')->where('id', $id)->update($data);
-            
+
             $return_array['status'] = 'success';
             $return_array['message'] = 'Property has been saved!';
-            
+
             \DB::table('tb_users')->where('id', $uid)->update(array('property_info_setup'=>1));
-            
+
         } else {
 
             $return_array['status'] = 'error';
@@ -4622,7 +4639,7 @@ function property_images_wetransfer(Request $request) {
         echo json_encode($return_array);
         exit;
     }
-    
+
     public function confirmreservation(Request $request){
         $id = (int) $request->input('id');
         //if($id > 0)
@@ -4639,22 +4656,22 @@ function property_images_wetransfer(Request $request) {
                 $cat_types_temp->where('id', $caltype);
             }
             $cat_types = $cat_types_temp->get();
-            
+
             if (!empty($cat_types)) {
                 $c = 0;
                 foreach ($cat_types as $type) {
                     $cats[$c]['data'] = $type;
-                     
+
                     $reservations = \DB::table('tb_reservations')->select('*', \DB::raw('COUNT(td_reserved_rooms.type_id) as total_rooms'))->join('td_reserved_rooms','tb_reservations.id','=','td_reserved_rooms.reservation_id')->where('property_id', $property_id)->where('td_reserved_rooms.type_id', $type->id)->where('tb_reservations.checkin_date','>=', $cal_start)->where('tb_reservations.checkin_date','<=', $cal_end)->groupBy('td_reserved_rooms.reservation_id','td_reserved_rooms.type_id')->get();
-                    
+
                     $cats[$c]['reservation'] = $reservations;
-                    
+
                     $c++;
                 }
             }
-            
-            
-            
+
+
+
             if (empty($cats)) {
                 $res['status'] = 'error';
                 $res['errors'] = 'No Room Added For This Property.';
@@ -4670,7 +4687,7 @@ function property_images_wetransfer(Request $request) {
             return json_encode($res);
         }
     }
-    
+
     function get_reservation_details(Request $request){
         $ids = (array) $request->input('ids');
         //print_r($ids);
@@ -4679,19 +4696,19 @@ function property_images_wetransfer(Request $request) {
         $arr_reser = array();
         $arr_reserved = array();
         $cnt = 0;
-        if(count($ids) > 0){            
-            $reservations = \DB::table('tb_reservations')->whereIn('tb_reservations.id', $ids)->get();  
+        if(count($ids) > 0){
+            $reservations = \DB::table('tb_reservations')->whereIn('tb_reservations.id', $ids)->get();
             foreach($reservations as $res){
                 $t_array = array();
                 $t_array["details"] = $res;
-                
+
                 //get all booked rooms of every reservation
                 $rid = $res->id;
                 $reserved_rooms = \DB::table('td_reserved_rooms')->where('td_reserved_rooms.reservation_id', $rid)->get();
                 foreach($reserved_rooms as $si_room){
                     $tc_array = array();
                     $tc_array = $si_room;
-                    
+
                     //get available rooms from db
                     $cid = $si_room->type_id;
                     $cat_rooms = \DB::table('tb_properties_category_rooms')->where('tb_properties_category_rooms.category_id', $cid)->get();
@@ -4705,46 +4722,46 @@ function property_images_wetransfer(Request $request) {
                         $tc_array->is_room_availabe = 0;
                     }
                     //End
-                    
+
                     $t_array["rooms"][] = $tc_array;
-                }                
+                }
                 //End
-                
-                
+
+
                 $final_array[] = $t_array;
             }
-            
+
             /*echo "<pre>";
             print_r($final_array);
             die;
             foreach($ids as $id){
-                $reservations = \DB::table('tb_reservations')->where('tb_reservations.id', $id)->get();  
-                 
+                $reservations = \DB::table('tb_reservations')->where('tb_reservations.id', $id)->get();
+
                 if(!empty($reservations)){
                     foreach($reservations as $res){
                         $arr_reser['reservation'] = $res;
                         $rid = $res->id;
-                        
+
                         $reserved_rooms = \DB::table('td_reserved_rooms')->where('td_reserved_rooms.reservation_id', $rid)->get();
                         if(!empty($reserved_rooms)){
                             foreach($reserved_rooms as $rooms){
                                 $arr_reserved['room'][] = $rooms;
-                                
+
                                 $cid = $rooms->type_id;
                                 $cat_rooms = \DB::table('tb_properties_category_rooms')->where('tb_properties_category_rooms.category_id', $cid)->get();
-                                $arr_reserved['cat_rooms'][] = $cat_rooms; 
+                                $arr_reserved['cat_rooms'][] = $cat_rooms;
                             }
                             $arr_reser['category_room'][] = $arr_reserved;
                         }
                         $arr_reservation['reservations'][] = $arr_reser;
                         $cnt++;
                     }
-                    
+
                 }
-                
+
                 $final_array[] = $arr_reservation;
             }*/
-            
+
         }
         if (empty($final_array)) {
             $response['status'] = 'error';
@@ -4757,7 +4774,7 @@ function property_images_wetransfer(Request $request) {
         }
         //return json_encode($final_array);
     }
-    
+
     function get_b2ccategory_rooms_reservations_old(Request $request) {
         $property_id = $request->input('pid');
         $caltype = $request->input('caltype');
@@ -4786,25 +4803,25 @@ function property_images_wetransfer(Request $request) {
                                 foreach($reservations as $reserv){
                                     $rid = $reserv->id;
                                     $reserved_rooms = \DB::table('td_reserved_rooms')->join('tb_properties_category_types','tb_properties_category_types.id','=','td_reserved_rooms.type_id')->where('td_reserved_rooms.reservation_id', $rid)->get();
-                                    
-                                    if(!empty($reserved_rooms)){  
+
+                                    if(!empty($reserved_rooms)){
                                         foreach($reserved_rooms as $res_rm){
                                             $cat_res_rooms = \DB::table('tb_properties_category_rooms')->where('category_id', $res_rm->id)->get();
                                         }
                                     }
-                                    
-                                    $new_array['reserved_rooms'] = $reserved_rooms; 
-                                    $new_array['booking'] =  $reserv;  
-                                    $final_array[] = $new_array;                            
+
+                                    $new_array['reserved_rooms'] = $reserved_rooms;
+                                    $new_array['booking'] =  $reserv;
+                                    $final_array[] = $new_array;
                                 }
                             }
                             $cats[$c]['reservation'] = $final_array;
-                            
+
                             $cats[$c]['rooms'] = $cat_rooms;
                         //}
-                        
+
                     //}
-                    
+
                     /* $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $property_id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->get();
                       $filen = array();
                       if(!empty($fileArr))
@@ -4849,10 +4866,10 @@ function property_images_wetransfer(Request $request) {
         }
     }
     function user_arrival_departure(Request $request){
-        
+
         $reportfor = $request->input('reportfor');
         $arrival_departure =  $request->input('arrival_departure');
-        
+
         $uid = \Session::get('uid');
         $property_ids = array();
         if($uid > 0){
@@ -4868,57 +4885,57 @@ function property_images_wetransfer(Request $request) {
             $current_date = date('Y-m-d');
             //$arrival_dep_arr = \DB::table('')
             if(!empty($property_ids)){
-                
+
                 if($arrival_departure=="arrival"){
                     $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.checkin_date', $current_date)->get();
                 }elseif($arrival_departure=="cancel"){
-                    $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.created_date', $current_date)->where('booking_status', 2)->get();                    
+                    $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.created_date', $current_date)->where('booking_status', 2)->get();
                 }else{
-                    $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.checkout_date', $current_date)->get();                    
-                }                   
-                                
+                    $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.checkout_date', $current_date)->get();
+                }
+
             }
         }elseif(trim($reportfor)=='month'){
-            
-            $from_date = date('Y-m-01');            
+
+            $from_date = date('Y-m-01');
             $to_date = date("Y-m-t", strtotime($current_date));
             $to_from=array($from_date, $to_date);
-            
-                       
+
+
             if($arrival_departure=="arrival"){
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.checkin_date', $to_from)->get(); 
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.checkin_date', $to_from)->get();
             }elseif($arrival_departure=="cancel"){
                 $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->where('booking_status', 2)->get();
             }else{
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.checkout_date', $to_from)->get(); 
-            }            
-            
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.checkout_date', $to_from)->get();
+            }
+
         }else{
-            
-            //$from_date = date('Y-m-01');            
+
+            //$from_date = date('Y-m-01');
             //$to_date = date("Y-m-t", strtotime($current_date));
             //$to_from=array($from_date, $to_date);
-            
-                       
+
+
             if($arrival_departure=="arrival"){
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get(); 
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();
             }elseif($arrival_departure=="cancel"){
                 $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('booking_status', 2)->get();
             }else{
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get(); 
-            }            
-            
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();
+            }
+
         }
         $res['status'] = 'success';
         $res['reservations'] = $reservations;
-        
+
         return json_encode($res);
     }
     function user_arrival_departure_cancelations(Request $request){
-        
+
         $reportfor = $request->input('reportfor');
         $arrival_departure =  $request->input('arrival_departure');
-        
+
         $uid = \Session::get('uid');
         $property_ids = array();
         if($uid > 0){
@@ -4934,55 +4951,55 @@ function property_images_wetransfer(Request $request) {
             $current_date = date('Y-m-d');
             //$arrival_dep_arr = \DB::table('')
             if(!empty($property_ids)){
-                
+
                 if($arrival_departure=="arrival"){
                     $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.checkin_date', $current_date)->get();
                 }elseif($arrival_departure=="cancel"){
-                    $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.created_date', $current_date)->where('booking_status', 2)->get();                    
+                    $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.created_date', $current_date)->where('booking_status', 2)->get();
                 }else{
-                    $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.checkout_date', $current_date)->get();                    
-                }                   
-                                
+                    $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.checkout_date', $current_date)->get();
+                }
+
             }
         }elseif(trim($reportfor)=='month'){
-            
-            $from_date = date('Y-m-01');            
+
+            $from_date = date('Y-m-01');
             $to_date = date("Y-m-t", strtotime($current_date));
             $to_from=array($from_date, $to_date);
-            
-                       
+
+
             if($arrival_departure=="arrival"){
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.checkin_date', $to_from)->get(); 
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.checkin_date', $to_from)->get();
             }elseif($arrival_departure=="cancel"){
                 $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->where('booking_status', 2)->get();
             }else{
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.checkout_date', $to_from)->get(); 
-            }            
-            
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.checkout_date', $to_from)->get();
+            }
+
         }else{
-            
-            //$from_date = date('Y-m-01');            
+
+            //$from_date = date('Y-m-01');
             //$to_date = date("Y-m-t", strtotime($current_date));
             //$to_from=array($from_date, $to_date);
-            
-                       
+
+
             if($arrival_departure=="arrival"){
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get(); 
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();
             }elseif($arrival_departure=="cancel"){
                 $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('booking_status', 2)->get();
             }else{
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get(); 
-            }            
-            
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();
+            }
+
         }
         $res['status'] = 'success';
         $res['data'] = $reservations;
-        
+
         return json_encode($res);
     }
     function reservations(Request $request){
         $u_id = \Session::get('uid');
-          
+
         $prop_id = 0;
         $property_name = '';
         $obj_property = \DB::table('tb_properties')->where('user_id', $u_id)->orWhere('assigned_user_id', $u_id)->first();
@@ -4991,21 +5008,21 @@ function property_images_wetransfer(Request $request) {
             $property_name = $obj_property->property_name;
         }
         $this->data['pid'] = $prop_id;
-        
+
         $this->data['hotel_name'] = $property_name;
-        
+
         $this->data['cat_types'] = $this->find_categories_room($prop_id);
-            
+
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-        
+
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.reservations':'properties.reservations'; 
-        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.reservations':'properties.reservations';
+
         return view($file_name, $this->data);
     }
     function qualityassurances(Request $request){
         $u_id = \Session::get('uid');
-          
+
         $prop_id = 0;
         $property_name = '';
         $obj_property = \DB::table('tb_properties')->where('user_id', $u_id)->first();
@@ -5014,19 +5031,19 @@ function property_images_wetransfer(Request $request) {
             $property_name = $obj_property->property_name;
         }
         $this->data['pid'] = $prop_id;
-        
+
         $this->data['hotel_name'] = $property_name;
-            
+
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-        
+
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.qualityassurance':'properties.qualityassurance'; 
-        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.qualityassurance':'properties.qualityassurance';
+
         return view($file_name, $this->data);
     }
     function salesreport(Request $request){
         $u_id = \Session::get('uid');
-          
+
         $prop_id = 0;
         $property_name = '';
         $obj_property = \DB::table('tb_properties')->where('user_id', $u_id)->first();
@@ -5035,23 +5052,23 @@ function property_images_wetransfer(Request $request) {
             $property_name = $obj_property->property_name;
         }
         $this->data['pid'] = $prop_id;
-        
+
         $this->data['hotel_name'] = $property_name;
-            
+
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-        
+
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
         if(strlen($is_demo6) > 0){
-            $file_name = $is_demo6.'.properties.salesreport';         
+            $file_name = $is_demo6.'.properties.salesreport';
             return view($file_name, $this->data);
-        }else{            
+        }else{
             return Redirect::to('dashboard')
-                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');        
-        }        
+                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
+        }
     }
     function arrivaldeparture(Request $request){
         $u_id = \Session::get('uid');
-          
+
         $prop_id = 0;
         $property_name = '';
         $obj_property = \DB::table('tb_properties')->where('user_id', $u_id)->first();
@@ -5060,23 +5077,23 @@ function property_images_wetransfer(Request $request) {
             $property_name = $obj_property->property_name;
         }
         $this->data['pid'] = $prop_id;
-        
+
         $this->data['hotel_name'] = $property_name;
-            
+
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-        
+
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
         if(strlen($is_demo6) > 0){
-            $file_name = $is_demo6.'.properties.arrivaldeparture';         
+            $file_name = $is_demo6.'.properties.arrivaldeparture';
             return view($file_name, $this->data);
-        }else{            
+        }else{
             return Redirect::to('dashboard')
-                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');        
+                            ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
         }
     }
     function advertising(Request $request){
         $u_id = \Session::get('uid');
-          
+
         $prop_id = 0;
         $property_name = '';
         $obj_property = \DB::table('tb_properties')->where('user_id', $u_id)->first();
@@ -5085,19 +5102,19 @@ function property_images_wetransfer(Request $request) {
             $property_name = $obj_property->property_name;
         }
         $this->data['pid'] = $prop_id;
-        
+
         $this->data['hotel_name'] = $property_name;
-            
+
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-        
+
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.advertising':'properties.advertising'; 
-        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.advertising':'properties.advertising';
+
         return view($file_name, $this->data);
     }
     function hotelcontainer(Request $request){
         $u_id = \Session::get('uid');
-          
+
         $prop_id = 0;
         $property_name = '';
         $obj_property = \DB::table('tb_properties')->where('user_id', $u_id)->first();
@@ -5106,86 +5123,86 @@ function property_images_wetransfer(Request $request) {
             $property_name = $obj_property->property_name;
         }
         $this->data['pid'] = $prop_id;
-        
+
         $this->data['hotel_name'] = $property_name;
-            
+
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-        
+
         $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*',  \DB::raw("(CASE WHEN (tb_container_files.file_display_name = '') THEN tb_container_files.file_name ELSE tb_container_files.file_display_name END) as file_display_name"), 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $prop_id)->get();
-        
-        
-        
+
+
+
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.hotelcontainer':'properties.hotelcontainer'; 
-        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.properties.hotelcontainer':'properties.hotelcontainer';
+
         return view($file_name, $this->data);
     }
     public function flipview(Request $request, $id){
-        
+
         $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*',  \DB::raw("(CASE WHEN (tb_container_files.file_display_name = '') THEN tb_container_files.file_name ELSE tb_container_files.file_display_name END) as file_display_name"), 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.id', $id)->get();
         $filepath = '';
         if(!empty($fileArr)){
-            foreach($fileArr as $img){                
+            foreach($fileArr as $img){
                 $filepath = (new ContainerController)->getThumbpath($img->folder_id).$img->file_name;
             }
         }
-        
+
         if($filepath!='')
 		{
-		    $path = $filepath;			
+		    $path = $filepath;
 				$flipimgs = array();
 				$fl=0;
-					
+
 					$flipimgs[$fl]['imgpath'] = $path;
 					$flipimgs[$fl]['imgname'] = '';
 					$flipimgs[$fl]['file_type'] = 'application/pdf';
 					$flipimgs[$fl]['folder'] = '';
-					
+
 				$this->data['flips'] = $flipimgs;
 				$this->data['fliptype'] = 'high';
-                
+
 				return view('users_admin.metronic.properties.flipbook', $this->data);
-			
+
 		}
 		else
-		{ 
+		{
 		    $return = 'properties/?return=' . self::returnUrl();
 			return Redirect::to($return)->with('messagetext','Contract has not uploaded yet.')->with('msgstatus','error');
 		}
     }
     public function conatinerflip(Request $request, $id){
-        
+
         //$fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*',  \DB::raw("(CASE WHEN (tb_container_files.file_display_name = '') THEN tb_container_files.file_name ELSE tb_container_files.file_display_name END) as file_display_name"), 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_container_files.id', $id)->get();
-        
+
         $fileArr = \DB::table('tb_container_files')->where('tb_container_files.id', $id)->get();
-        
+
         //print_r($fileArr); die;
         $filepath = '';
         if(!empty($fileArr)){
-            foreach($fileArr as $img){                
+            foreach($fileArr as $img){
                 $filepath = (new ContainerController)->getThumbpath($img->folder_id).$img->file_name;
             }
         }
-        
+
         if($filepath!='')
 		{
-		    $path = $filepath;			
+		    $path = $filepath;
 				$flipimgs = array();
 				$fl=0;
-					
+
 					$flipimgs[$fl]['imgpath'] = $path;
 					$flipimgs[$fl]['imgname'] = '';
 					$flipimgs[$fl]['file_type'] = 'application/pdf';
 					$flipimgs[$fl]['folder'] = '';
-					
+
 				$this->data['flips'] = $flipimgs;
 				$this->data['fliptype'] = 'high';
-                
+
 				return view('users_admin.metronic.properties.flipbook', $this->data);
-			
+
 		}
 		else
-		{ 
+		{
 		    $return = 'properties/?return=' . self::returnUrl();
 			return Redirect::to($return)->with('messagetext','Contract has not uploaded yet.')->with('msgstatus','error');
 		}
@@ -5193,9 +5210,9 @@ function property_images_wetransfer(Request $request) {
     function salesoverview(Request $request){
         /*$pagination = $request->input('pagination');
         $sort = $request->input('sort');
-        
+
         $page = $pagination['page'];
-        $perpage = $pagination['perpage']; 
+        $perpage = $pagination['perpage'];
         $perpage = $pagination['total']; */
         $reportfor = $request->input('reportfor');
         $uid = \Session::get('uid');
@@ -5209,46 +5226,46 @@ function property_images_wetransfer(Request $request) {
             }
         }
         if(!empty($property_ids)){
-            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();                
+            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();
         }
-        
+
         $current_date = date('Y-m-d');
         if(trim($reportfor)=='today'){
             $current_date = date('Y-m-d');
             //$arrival_dep_arr = \DB::table('')
             if(!empty($property_ids)){
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.created_date', $current_date)->get();                 
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.created_date', $current_date)->get();
             }
         }elseif(trim($reportfor)=='Week'){
-            
+
             $ts = strtotime($current_date);
             $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
             $from_date = date('Y-m-d', $start);
             $to_date = date('Y-m-d', strtotime('next saturday', $start));
-            
-            //$from_date = date('Y-m-01');            
+
+            //$from_date = date('Y-m-01');
             //$to_date = date("Y-m-t", strtotime($current_date));
             $to_from=array($from_date, $to_date);
             //print_r($to_from); die;
-            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->get(); 
+            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->get();
         }elseif(trim($reportfor)=='month'){
-            
-            $from_date = date('Y-m-01');            
+
+            $from_date = date('Y-m-01');
             $to_date = date("Y-m-t", strtotime($current_date));
             $to_from=array($from_date, $to_date);
-            
-            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->get(); 
+
+            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->get();
         }else{
-            
-            //$from_date = date('Y-m-01');            
+
+            //$from_date = date('Y-m-01');
             //$to_date = date("Y-m-t", strtotime($current_date));
             //$to_from=array($from_date, $to_date);
-            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();         
-            
+            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();
+
         }
-        
+
         /*if(!empty($property_ids)){
-            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select CASE commission_type WHEN 'partial' THEN tb_users_contracts.partial_availability_commission ELSE tb_users_contracts.full_availability_commission END from tb_users_contracts where accepted_by=$uid and contract_type='commission') as comm"), \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();                
+            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select CASE commission_type WHEN 'partial' THEN tb_users_contracts.partial_availability_commission ELSE tb_users_contracts.full_availability_commission END from tb_users_contracts where accepted_by=$uid and contract_type='commission') as comm"), \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();
         }
         $hotel_com = 0;
         $commision = \DB::table('tb_users_contracts')->where('accepted_by', $uid)->where('contract_type', 'commission')->first();
@@ -5258,19 +5275,19 @@ function property_images_wetransfer(Request $request) {
             }else{
                 $hotel_com = $commision->full_availability_commission;
             }
-        }         
+        }
         $reservations['commission'] = $hotel_com;*/
-        
+
         $total = count($reservations);
-        
+
         $res['status'] = 'success';
         $res['data'] = $reservations;
-        
+
         return json_encode($res);
     }
-    
+
     function salesstats(Request $request){
-        
+
         $reportfor = $request->input('reportfor');
         $uid = \Session::get('uid');
         $property_ids = array();
@@ -5286,46 +5303,46 @@ function property_images_wetransfer(Request $request) {
         $arr_sales = array();
         $arr_commission = array();
         /*if(!empty($property_ids)){
-            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();   
+            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();
             foreach($reservations as $reserv){
                 $arr_bookings[] = $reserv->booking_number;
                 $arr_sales[] = $reserv->total_price;
                 $arr_commission[] = $reserv->total_commission;
-            }             
+            }
         }*/
         $current_date = date('Y-m-d');
         if(trim($reportfor)=='today'){
             $current_date = date('Y-m-d');
             //$arrival_dep_arr = \DB::table('')
             if(!empty($property_ids)){
-                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.created_date', $current_date)->get();                 
+                $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->where('tb_reservations.created_date', $current_date)->get();
             }
         }elseif(trim($reportfor)=='Week'){
-            
+
             $ts = strtotime($current_date);
             $start = (date('w', $ts) == 0) ? $ts : strtotime('last sunday', $ts);
             $from_date = date('Y-m-d', $start);
             $to_date = date('Y-m-d', strtotime('next saturday', $start));
-            
-            //$from_date = date('Y-m-01');            
+
+            //$from_date = date('Y-m-01');
             //$to_date = date("Y-m-t", strtotime($current_date));
             $to_from=array($from_date, $to_date);
             //print_r($to_from); die;
-            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->get(); 
+            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->get();
         }elseif(trim($reportfor)=='month'){
-            
-            $from_date = date('Y-m-01');            
+
+            $from_date = date('Y-m-01');
             $to_date = date("Y-m-t", strtotime($current_date));
             $to_from=array($from_date, $to_date);
-            
-            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->get(); 
+
+            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->whereBetween('tb_reservations.created_date', $to_from)->get();
         }else{
-            
-            //$from_date = date('Y-m-01');            
+
+            //$from_date = date('Y-m-01');
             //$to_date = date("Y-m-t", strtotime($current_date));
             //$to_from=array($from_date, $to_date);
-            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();         
-            
+            $reservations = \DB::table('tb_reservations')->select('tb_reservations.*', 'tb_users.first_name', 'tb_users.last_name', \DB::raw("(Select count(td_reserved_rooms.reserved_room_id) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_rooms"), \DB::raw("(Select sum(td_reserved_rooms.booking_adults) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_adults"), \DB::raw("(Select sum(td_reserved_rooms.booking_children) from td_reserved_rooms where td_reserved_rooms.reservation_id=tb_reservations.id) as total_child"))->join('tb_users', 'tb_reservations.client_id', '=', 'tb_users.id')->whereIn('tb_reservations.property_id', $property_ids)->get();
+
         }
         $arr_bookings = array();
         $arr_sales = array();
@@ -5334,15 +5351,15 @@ function property_images_wetransfer(Request $request) {
             $arr_bookings[] = $reserv->booking_number;
             $arr_sales[] = $reserv->total_price;
             $arr_commission[] = $reserv->total_commission;
-        }   
+        }
         $bookings = implode(',', $arr_sales);
         $res['status'] = $bookings;
         $res['status'] = 'success';
         $res['data'] = array('bookings'=>$arr_bookings, 'sales'=>$arr_sales, 'commission'=>$arr_commission);
-        
+
         return json_encode($res);
     }
-    
+
     function getPropertyTypeRates(Request $request) {
         $uid = \Auth::user()->id;
         $propty = $request->input('propid');
@@ -5362,7 +5379,7 @@ function property_images_wetransfer(Request $request) {
 		}
 		return json_encode($res);
     }
-    
+
     function changeRoomStatus(Request $request) {
         $uid = \Auth::user()->id;
         $roomId = $request->input('room_id');
@@ -5384,15 +5401,15 @@ function property_images_wetransfer(Request $request) {
             return json_encode($res);
         }
     }
-    
+
     function postAddvattax( Request $request){
         $uid = \Auth::user()->id;
 		$rules['name'] = 'required';
-		$validator = Validator::make($request->all(), $rules);	
+		$validator = Validator::make($request->all(), $rules);
 		if ($validator->passes()) {
 			$data['vat_tax_name'] = $request->input('name');
 			$data['vat_tax_amount'] = $request->input('amount');
-            
+
             $data['vat_tax_status'] = 1;
 			//$data['user_id'] = $uid;
 			if(!is_null($request->input('property_id')))
@@ -5403,7 +5420,7 @@ function property_images_wetransfer(Request $request) {
 			{
 				$data['created'] = date('Y-m-d h:i:s');
 				$instype = 'add';
-				$id = \DB::table('tb_vat_taxes')->insertGetId($data);                
+				$id = \DB::table('tb_vat_taxes')->insertGetId($data);
 			}
 			else
 			{
@@ -5411,49 +5428,49 @@ function property_images_wetransfer(Request $request) {
 				$instype = 'update';
 				$id = \DB::table('tb_vat_taxes')->where('id', $request->input('edit_id'))->update($data);
 			}
-			
+
 			/*$cplandata = array();
 			$customplan = \DB::table('tb_properties_custom_plan')->where('id', $id)->first();
 			if(!empty($customplan))
 			{
 				$cplandata = $customplan;
 			}*/
-			
+
 			$res['status'] = 'success';
 			//$res['season'] = $cplandata;
 			$res['type'] = $instype;
 			return json_encode($res);
-			
+
 		} else {
 			$res['status'] = 'error';
 			$res['errors'] = $validator->errors()->all();
 			return json_encode($res);
-		}    
+		}
     }
     function getEditvattax(Request $request){
-        $vt_id = $request->input('pid');        
-        $vattax = array();        
-        if($vt_id > 0){ 
-            $vattax = \DB::table('tb_vat_taxes')->where('id', $vt_id)->first();            
+        $vt_id = $request->input('pid');
+        $vattax = array();
+        if($vt_id > 0){
+            $vattax = \DB::table('tb_vat_taxes')->where('id', $vt_id)->first();
         }
-        
+
         if(!empty($vattax)){
             $res['status'] = 'success';
-            $res['vattax'] = $vattax;                       
+            $res['vattax'] = $vattax;
         }else{
-            $res['status'] = 'error';            
+            $res['status'] = 'error';
         }
-        
+
         echo json_encode($res);
     }
     public function postDeletevattax( Request $request)
-	{		
+	{
 		$vtId = $request->input('vtId');
         if($vtId > 0){
-            $deleteVT = \DB::table('tb_vat_taxes')->where('id', $vtId)->delete();            
+            $deleteVT = \DB::table('tb_vat_taxes')->where('id', $vtId)->delete();
         }
 		if($deleteVT >0 )
-		{			
+		{
 			$res['status'] = 'success';
 			return json_encode($res);
 		}
@@ -5463,18 +5480,18 @@ function property_images_wetransfer(Request $request) {
 			return json_encode($res);
 		}
 	}
-    
+
     function postAddboard( Request $request){
         $uid = \Auth::user()->id;
 		$rules['board_name'] = 'required';
-		$validator = Validator::make($request->all(), $rules);	
+		$validator = Validator::make($request->all(), $rules);
 		if ($validator->passes()) {
 			$data['board_name'] = $request->input('board_name');
 			$data['board_shortname'] = $request->input('board_shortname');
             $data['board_rackrate'] = $request->input('board_rackrate');
 			$data['board_vat'] = $request->input('board_vat');
-            
-            $data['board_status'] = 1;			
+
+            $data['board_status'] = 1;
 			if(!is_null($request->input('property_id')))
 			{
 				$data['property_id'] = $request->input('property_id');
@@ -5483,50 +5500,50 @@ function property_images_wetransfer(Request $request) {
 			{
 				$data['created'] = date('Y-m-d h:i:s');
 				$instype = 'add';
-				$id = \DB::table('tb_boards')->insertGetId($data);                
+				$id = \DB::table('tb_boards')->insertGetId($data);
 			}
 			else
 			{
 				$data['updated'] = date('Y-m-d h:i:s');
 				$instype = 'update';
 				$id = \DB::table('tb_boards')->where('id', $request->input('edit_id'))->update($data);
-			}		
-			
+			}
+
 			$res['status'] = 'success';
 			//$res['season'] = $cplandata;
 			$res['type'] = $instype;
 			return json_encode($res);
-			
+
 		} else {
 			$res['status'] = 'error';
 			$res['errors'] = $validator->errors()->all();
 			return json_encode($res);
-		}    
+		}
     }
     function getEditboard(Request $request){
-        $bid = $request->input('bid');        
-        $boards = array();        
-        if($bid > 0){ 
-            $boards = \DB::table('tb_boards')->where('id', $bid)->first();            
+        $bid = $request->input('bid');
+        $boards = array();
+        if($bid > 0){
+            $boards = \DB::table('tb_boards')->where('id', $bid)->first();
         }
-        
+
         if(!empty($boards)){
             $res['status'] = 'success';
-            $res['board'] = $boards;                       
+            $res['board'] = $boards;
         }else{
-            $res['status'] = 'error';            
+            $res['status'] = 'error';
         }
-        
+
         echo json_encode($res);
     }
     public function postDeleteboard( Request $request)
-	{		
+	{
 		$bId = $request->input('bId');
         if($bId > 0){
-            $deleteB = \DB::table('tb_boards')->where('id', $bId)->delete();            
+            $deleteB = \DB::table('tb_boards')->where('id', $bId)->delete();
         }
 		if($deleteB >0 )
-		{			
+		{
 			$res['status'] = 'success';
 			return json_encode($res);
 		}
@@ -5536,32 +5553,32 @@ function property_images_wetransfer(Request $request) {
 			return json_encode($res);
 		}
 	}
-    
+
     function postAddroomsvat( Request $request){
         $uid = \Auth::user()->id;
 		$rules['rooms_vat'] = 'required';
-		$validator = Validator::make($request->all(), $rules);	
+		$validator = Validator::make($request->all(), $rules);
 		if ($validator->passes()) {
 			$data['vattax_id'] = $request->input('rooms_vat');
-					
+
 			if(!is_null($request->input('property_id')))
 			{
 				//$data['property_id'] = $request->input('property_id');
-			
+
 				$data['updated'] = date('Y-m-d h:i:s');
 				$instype = 'update';
 				$id = \DB::table('tb_properties')->where('id', $request->input('property_id'))->update($data);
-			}		
-			
+			}
+
 			$res['status'] = 'success';
 			//$res['season'] = $cplandata;
 			$res['type'] = $instype;
 			return json_encode($res);
-			
+
 		} else {
 			$res['status'] = 'error';
 			$res['errors'] = $validator->errors()->all();
 			return json_encode($res);
-		}    
+		}
     }
 }
