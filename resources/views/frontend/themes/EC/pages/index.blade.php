@@ -27,8 +27,8 @@
           <div class="row">
             <div class="col-6">
               <h2 style="text-transform: uppercase; color: #FFF;">Destinations</h2>
-              <ul class="nav flex-column">
-                <li class="nav-item">
+              <ul class="nav flex-column where-destination">
+<!--                 <li class="nav-item">
                   <a class="nav-link pl-0" href="#">
                     <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
                   </a>
@@ -58,44 +58,13 @@
                     <span class="city-l">New York</span> <span class="cat-l">Experiences</span>
                   </a>
                 </li>
-              </ul>
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Map</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Private Jet</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Cuisine</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Channel</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Experiences</span>
-                  </a>
-                </li>
-              </ul>
+ -->              </ul>
+
             </div>
             <div class="col-6">
               <h2 style="text-transform: uppercase; color: #FFF;">Hotels</h2>
-              <ul class="nav flex-column">
-                <li class="nav-item">
+              <ul class="nav flex-column where-hotel">
+<!--                 <li class="nav-item">
                   <a class="nav-link pl-0" href="#">
                     <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
                   </a>
@@ -104,7 +73,7 @@
                   <a class="nav-link pl-0" href="#">
                     <span class="city-l">New York</span> <span class="cat-l">Map</span>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -153,7 +122,7 @@
                 </label>
               </div>
               <div class="mt-5 include-form">
-                <div id="accordion">
+<!--                 <div id="accordion">
                   <div class="accor">
                     <div class="accor-header" id="headingOne">
                       <div class="row align-items-center include-list">
@@ -308,7 +277,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="guest-pick-footer mb-5 mt-4 pr-3">
                   <div class="text-right">
                     <a href="#" class="confirm-room step-3">Submit</a>
