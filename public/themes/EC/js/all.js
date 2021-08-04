@@ -438,33 +438,34 @@
 
   $(document).on('keyup', '.where', function () {
 
-    //var sitename = $("#sitename").val();
-    var sitename = "voyage";
-    $('[data-action="global-search-error"]').html('');
+        //var sitename = $("#sitename").val();
+        var sitename = "voyage";
+        $('[data-action="global-search-error"]').html('');
 
-    if ($(this).val() == '') {
-      $('.wherepopup').hide();
-      $('.wherepopup').slideUp(300);
-    } else {
+        if ($(this).val() == '') {
+            $('.wherepopup').hide();
+            $('.wherepopup').slideUp(300);
+        } else {
 
-      //console.log(BaseURL);
+                //console.log(BaseURL);
 
-      var fvalue = $(this).val();
-      //console.log(fvalue);
+            var fvalue = $(this).val();
+                //console.log(fvalue);
 
-      if (fvalue.length > 2) {
-        //clearTimeout(timeout);
-        //timeout = setTimeout(function () {
-        globalSearchForAll(fvalue, sitename);
-        //$('input[name="hote_or_dest_has_value"]').val(1);
-        //}, 500);
-      } else {
-        //$('input[name="hote_or_dest_has_value"]').val('');
-      }
+            if(fvalue.length > 2)
+            {
+                    //clearTimeout(timeout);
+                    //timeout = setTimeout(function () {
+                  globalSearchForAll(fvalue, sitename);
+                        //$('input[name="hote_or_dest_has_value"]').val(1);
+                    //}, 500);
+            }else{
+                //$('input[name="hote_or_dest_has_value"]').val('');
+            }
 
 
-      $('.wherepopup').show();
-    }
+            $('.wherepopup').show();
+        }
 
   });
 
@@ -472,112 +473,112 @@
   function globalSearchForAll(searcValue, sitename) {
     var _token = $('meta[name="csrf-token"]').attr('content');
     $.ajax({
-      url: BaseURL + '/destination/global-search',
-      type: "get",
-      dataType: "json",
-      data: { 'keyword': searcValue, 'sitename': sitename, '_token': _token },
-      success: function (data) {
+        url: BaseURL + '/destination/global-search',
+        type: "get",
+        dataType: "json",
+        data: {'keyword':searcValue, 'sitename':sitename, '_token':_token},
+        success: function (data){
 
-        if (data.status == 'success') {
-          var obj = data.data;
-          var voyage = obj.voyage;
-          var spa = obj.spa;
-          var safari = obj.safari;
-          var island = obj.island;
+            if(data.status=='success'){
+                var obj = data.data;
+                var voyage = obj.voyage;
+                var spa = obj.spa;
+                var safari = obj.safari;
+                var island = obj.island;
 
-          var html_hotel = "";
-          var html_destination = "";
+                var html_hotel = "";
+                var html_destination = "";
 
-          if (voyage.collection != undefined) {
-            $(voyage.collection).each(function (key, val) {
-              html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="voyage"><span class="city-l">' + val.property_name + '</span> <span class="cat-l">Voyage</span></a></li>';
-            });
-          }
-          if (voyage.dest != undefined) {
-            $(voyage.dest).each(function (key, val) {
-              html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="voyage"><span class="city-l">' + val.category_name + '</span> <span class="cat-l">Voyage</span></a></li>';
-            });
-          }
-          if (spa.collection != undefined) {
-            $(spa.collection).each(function (key, val) {
-              html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="spa"><span class="city-l">' + val.property_name + '</span> <span class="cat-l">Spa</span></a></li>';
-            });
-          }
-          if (spa.dest != undefined) {
-            $(spa.dest).each(function (key, val) {
-              html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="spa"><span class="city-l">' + val.category_name + '</span> <span class="cat-l">Spa</span></a></li>';
-            });
-          }
-          if (safari.collection != undefined) {
-            $(safari.collection).each(function (key, val) {
-              html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="safari"><span class="city-l">' + val.property_name + '</span> <span class="cat-l">Safari</span></a></li>';
-            });
-          }
-          if (safari.dest != undefined) {
-            $(safari.dest).each(function (key, val) {
-              html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="safari"><span class="city-l">' + val.category_name + '</span> <span class="cat-l">Safari</span></a></li>';
-            });
-          }
-          if (island.collection != undefined) {
-            $(island.collection).each(function (key, val) {
-              html_hotel += '<li class="nav-item"><a class="nav-link" href="#"  data-type="hotel" data-collection="islands"><span class="city-l">' + val.property_name + '</span> <span class="cat-l">Islands</span></a></li>';
-            });
-          }
-          if (island.dest != undefined) {
-            $(island.dest).each(function (key, val) {
-              html_destination += '<li class="nav-item"><a class="nav-link" data-type="destination"  data-collection="islands" href="#"><span class="city-l">' + val.category_name + '</span> <span class="cat-l">Islands</span></a></li>';
-            });
-          }
-          //}
-        }
-        $('.wherepopup .where-destination').html(html_destination);
-        $('.wherepopup .where-hotel').html(html_hotel);
-        /*if (data.data.collection == undefined) {
-            console.log("no record found");
-        }else{
-            console.log(data.data.collection);
-            //console.log(html);
-            var BaseURL1 = '';
-            if(data.data.sitename!=undefined){
-                var sitenm = data.data.sitename;
-                if(sitenm=='voyage'){
-                    BaseURL1 = 'https://emporium-voyage.com';
-                }else if(sitenm=='safari'){
-                    BaseURL1 = 'https://emporium-safari.com';
-                }else if(sitenm=='spa'){
-                    BaseURL1 = 'https://emporium-spa.com';
-                }else if(sitenm=='islands'){
-                    BaseURL1 = 'https://emporium-islands.com';
+                if(voyage.collection != undefined){
+                    $(voyage.collection).each(function(key, val){
+                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="voyage"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Voyage</span></a></li>';
+                    });
                 }
+                if(voyage.dest != undefined){
+                    $(voyage.dest).each(function(key, val){
+                       html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="voyage"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Voyage</span></a></li>';
+                    });
+                }
+                if(spa.collection != undefined){
+                    $(spa.collection).each(function(key, val){
+                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="spa"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Spa</span></a></li>';
+                    });
+                }
+                if(spa.dest != undefined){
+                    $(spa.dest).each(function(key, val){
+                       html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="spa"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Spa</span></a></li>';
+                    });
+                }
+                if(safari.collection != undefined){
+                    $(safari.collection).each(function(key, val){
+                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="safari"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Safari</span></a></li>';
+                    });
+                }
+                if(safari.dest != undefined){
+                    $(safari.dest).each(function(key, val){
+                       html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="safari"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Safari</span></a></li>';
+                    });
+                }
+                if(island.collection != undefined){
+                    $(island.collection).each(function(key, val){
+                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#"  data-type="hotel" data-collection="islands"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Islands</span></a></li>';
+                    });
+                }
+                if(island.dest != undefined){
+                    $(island.dest).each(function(key, val){
+                       html_destination += '<li class="nav-item"><a class="nav-link" data-type="destination"  data-collection="islands" href="#"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Islands</span></a></li>';
+                    });
+                }
+                //}
             }
-
-            var html ='';
-            //var collString = (data.data.collection.length > 1) ? "Our Hotels" : "Our Hotel";
-            //$('[data-action="global-search-collections"] span').html(collString + ' ('+data.data.collection.length+')');
-            $(data.data.collection).each(function (i, val) {
-                var  linkMenu = BaseURL1+'/'+val.property_slug;
-                //html += '<li><a class="cursor menu_item" href="'+linkMenu+'">' + val.property_name + '</a></li>';
-
-                var cat_name = val.property_name;
-                var cname = searcValue;
-                var arr_str = cname.split(',');
-                $.each(arr_str, function(key, value){
-                    if($.trim(value)!=''){
-                        var regExp = new RegExp("" + $.trim(value) + "", 'gi');
-                        cat_name = cat_name.replace(regExp,'<span style="text-decoration:underline;">'+$.trim(value)+'</span>');
+            $('.wherepopup .where-destination').html(html_destination);
+            $('.wherepopup .where-hotel').html(html_hotel);
+            /*if (data.data.collection == undefined) {
+                console.log("no record found");
+            }else{
+                console.log(data.data.collection);
+                //console.log(html);
+                var BaseURL1 = '';
+                if(data.data.sitename!=undefined){
+                    var sitenm = data.data.sitename;
+                    if(sitenm=='voyage'){
+                        BaseURL1 = 'https://emporium-voyage.com';
+                    }else if(sitenm=='safari'){
+                        BaseURL1 = 'https://emporium-safari.com';
+                    }else if(sitenm=='spa'){
+                        BaseURL1 = 'https://emporium-spa.com';
+                    }else if(sitenm=='islands'){
+                        BaseURL1 = 'https://emporium-islands.com';
                     }
+                }
+
+                var html ='';
+                //var collString = (data.data.collection.length > 1) ? "Our Hotels" : "Our Hotel";
+                //$('[data-action="global-search-collections"] span').html(collString + ' ('+data.data.collection.length+')');
+                $(data.data.collection).each(function (i, val) {
+                    var  linkMenu = BaseURL1+'/'+val.property_slug;
+                    //html += '<li><a class="cursor menu_item" href="'+linkMenu+'">' + val.property_name + '</a></li>';
+
+                    var cat_name = val.property_name;
+                    var cname = searcValue;
+                    var arr_str = cname.split(',');
+                    $.each(arr_str, function(key, value){
+                        if($.trim(value)!=''){
+                            var regExp = new RegExp("" + $.trim(value) + "", 'gi');
+                            cat_name = cat_name.replace(regExp,'<span style="text-decoration:underline;">'+$.trim(value)+'</span>');
+                        }
+                    });
+                    var h_cat_name = val.property_name;
+                    var r_h_cat_name = h_cat_name.replace(/ /gi, '-');
+                    //html += '<li class="our-hotels our-hotels-'+r_h_cat_name+'" data-name="'+ val.property_name +'">' + cat_name + '<input type="checkbox" name="ourHotels[]" value="'+ val.property_name +'" class="invisible"></li>';
+
+                    html += '<li class="nav-item"><a class="nav-link" href="#"><span class="city-l">'+ val.property_name +'</span> <span class="cat-l">' + cat_name + '</span></a></li>';
+
                 });
-                var h_cat_name = val.property_name;
-                var r_h_cat_name = h_cat_name.replace(/ /gi, '-');
-                //html += '<li class="our-hotels our-hotels-'+r_h_cat_name+'" data-name="'+ val.property_name +'">' + cat_name + '<input type="checkbox" name="ourHotels[]" value="'+ val.property_name +'" class="invisible"></li>';
-
-                html += '<li class="nav-item"><a class="nav-link" href="#"><span class="city-l">'+ val.property_name +'</span> <span class="cat-l">' + cat_name + '</span></a></li>';
-
-            });
-            $('.wherepopup .whereul').html(html);
-            //$('[data-action="global-collections"]').parent().show();
-        } */
-      }
+                $('.wherepopup .whereul').html(html);
+                //$('[data-action="global-collections"]').parent().show();
+            } */
+        }
     });
 
     /*var datObj = {};
@@ -725,11 +726,11 @@
     };
     doAjax(params);
     $('[data-option="global-search"]').slideDown(300);*/
-  }
+}
 
 
 
-  $('.wherepopup .nav-link').click(function () {
+  $('.wherepopup .nav-link').click(function(){
     var asd = $(this).find('.city-l').html();
     $('.where').val(asd);
     $(this).closest('.where-container').removeClass('show');
@@ -737,7 +738,7 @@
     $('.wherepopup').hide();
   });
 
-  $(document).on('click', '.wherepopup .nav-link', function () {
+  $(document).on('click', '.wherepopup .nav-link', function(){
     var asd = $(this).find('.city-l').html();
     $('.where').val(asd);
     $("#where_selection").html('');
@@ -751,244 +752,204 @@
     $("#coll_type").val(_type);
     get_featured_prop(_type, _collection);
     $('.quick-prev-when1').slick({
-      slidesToShow: 1,
-      prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-      nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-    });
+                    slidesToShow: 1,
+                    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+                    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+                });
   });
 
-  function get_featured_prop(_type, _collection) {
+  function get_featured_prop(_type, _collection){
     var _token = $('meta[name="csrf-token"]').attr('content');
     //console.log(BaseURL);
     $.ajax({
-      url: BaseURL + '/property/featuredproperties',
-      type: "get",
-      dataType: "json",
-      data: { 'type': _type, 'collection': _collection, '_token': _token },
-      success: function (data) {
-        if (data.status == "success") {
-          var obj1 = data.data[0];
-          var objproppath = obj1.thumb;
-          var objpropimg = obj1.propimage;
-          var img1_path = objproppath + '/' + objpropimg[0].file_name;
-          var img2_path = objproppath + '/' + objpropimg[1].file_name;
-          //console.log(img1_path);
-          $("#left-when-featured-img1").attr('src', img1_path);
-          $("#left-when-featured-img2").attr('src', img2_path);
-          var objprop = obj1.objprop;
-          $("#left-when-featured-text").html(objprop.property_usp);
-          $(".when-hotel-name").html(objprop.property_name);
-          var whensimage = '';
-          for (var i = 1; i < 4; i++) {
-            var ipath = objproppath + '/' + objpropimg[i].file_name;
-            whensimage += '<div><img src="' + ipath + '" class="img-fluid" alt=""></div>';
-          }  //console.log(whensimage);
-          $(".when-quick-prev").html(whensimage);
+        url: BaseURL + '/property/featuredproperties',
+        type: "get",
+        dataType: "json",
+        data: {'type':_type, 'collection':_collection, '_token':_token},
+        success: function (data){
+            if(data.status == "success"){
+                var obj1 = data.data[0];
+                var objproppath = obj1.thumb;
+                var objpropimg = obj1.propimage;
+                var img1_path = objproppath +'/'+ objpropimg[0].file_name;
+                var img2_path = objproppath +'/'+ objpropimg[1].file_name;
+                //console.log(img1_path);
+                $("#left-when-featured-img1").attr('src', img1_path);
+                $("#left-when-featured-img2").attr('src', img2_path);
+                var objprop = obj1.objprop;
+                $("#left-when-featured-text").html(objprop.property_usp);
+                $(".when-hotel-name").html(objprop.property_name);
+                var whensimage = '';
+                for(var i=1; i<4; i++){
+                    var ipath = objproppath +'/'+ objpropimg[i].file_name;
+                    whensimage += '<div><img src="'+ipath+'" class="img-fluid" alt=""></div>';
+                }  //console.log(whensimage);
+                $(".when-quick-prev").html(whensimage);
 
-          var obj2 = data.data[1];
-          var objproppathwho = obj2.thumb;
-          var objpropimgwho = obj2.propimage;
-          var img2_path = objproppathwho + '/' + objpropimgwho[0].file_name;
-          $("#left-who-featured-img1").attr('src', img2_path);
-          var objprop2 = obj2.objprop;
-          $("#left-who-featured-text").html(objprop2.property_usp);
-          $(".who-hotel-name").html(objprop2.property_name);
+                var obj2 = data.data[1];
+                var objproppathwho = obj2.thumb;
+                var objpropimgwho = obj2.propimage;
+                var img2_path = objproppathwho +'/'+ objpropimgwho[0].file_name;
+                $("#left-who-featured-img1").attr('src', img2_path);
+                var objprop2 = obj2.objprop;
+                $("#left-who-featured-text").html(objprop2.property_usp);
+                $(".who-hotel-name").html(objprop2.property_name);
 
-          var whosimage = '';
-          for (var i = 1; i < 4; i++) {
-            var ipath2 = objproppathwho + '/' + objpropimgwho[i].file_name;
-            whosimage += '<div><img src="' + ipath2 + '" class="img-fluid" alt=""></div>';
-          }  //console.log(whosimage);
-          $(".who-quick-prev").html(whosimage);
+                var whosimage = '';
+                for(var i=1; i<4; i++){
+                    var ipath2 = objproppathwho +'/'+ objpropimgwho[i].file_name;
+                    whosimage += '<div><img src="'+ipath2+'" class="img-fluid" alt=""></div>';
+                }  //console.log(whosimage);
+                $(".who-quick-prev").html(whosimage);
 
-          $('.quick-prev-when1').slick('unslick');
-          $('.quick-prev-when1').slick({
-            slidesToShow: 1,
-            prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-            nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-          });
+                $('.quick-prev-when1').slick('unslick');
+                $('.quick-prev-when1').slick({
+                    slidesToShow: 1,
+                    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+                    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+                });
+            }
         }
-      }
     });
   }
 
-  $(document).mouseup(function (event) {
+  $(document).mouseup(function(event){
     var $trigger = $(".wherepopup");
-    if ($trigger !== event.target && !$trigger.has(event.target).length) {
+    if($trigger !== event.target && !$trigger.has(event.target).length){
       $('.wherepopup').hide();
     }
   });
 
-  $('.step-3').click(function () {
+  $('.step-3').click(function(){
     $(this).closest('.when-container').removeClass('show');
 
     $('.who-container').addClass('show');
   });
 
-  $('.all-drop').click(function (e) {
+  $('.all-drop').click(function(e){
     e.preventDefault();
     $('.all-result').fadeIn();
   });
 
-  $(document).mouseup(function (event) {
+  $(document).mouseup(function(event){
     var $trigger = $(".all-result");
-    if ($trigger !== event.target && !$trigger.has(event.target).length) {
+    if($trigger !== event.target && !$trigger.has(event.target).length){
       $('.all-result').fadeOut();
     }
   });
 
   $('.field-count .plus').click(function () {
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
   });
   $('.field-count .min').click(function () {
-    if ($(this).next().find('.mr-1').html() > 1) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-    }
+      if($(this).next().find('.mr-1').html() > 1){
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+      }
   });
 
   $(document).on('click', '.field-count-guest .plus', function () {
-    var type = $(this).data('type');
-    if(type == "adult"){
-      var value = parseInt($(this).prev().find('span.adult-val').html());
-      value += 1;
-      $(this).prev().find('span.adult-val').html(value);
-      var index = $(this).data('id');
-      suites[index]['adult'] = value;
-      json_suites = JSON.stringify(suites)
-      $('.suites_data').val(json_suites);
-    }else{ //children
-      var value = parseInt($(this).prev().find('span.child-val').html());
-      value += 1;
-      $(this).prev().find('span.child-val').html(value);
-      var index = $(this).data('id');
-      suites[index]['children'] = value;
-      json_suites = JSON.stringify(suites)
-      $('.suites_data').val(json_suites);
-    }
-    return;
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
     var obj_adult = $(this).prev().find('.inp-adult');
-    if (obj_adult.length > 0) {
-      var _adval = $(this).prev().find('.inp-adult').val();
-      $(this).prev().find('.inp-adult').val(parseInt(_adval) + 1)
-      //        console.log(_adval);
-      //        console.log('_adval');
+    if(obj_adult.length > 0){
+        var _adval = $(this).prev().find('.inp-adult').val();
+        $(this).prev().find('.inp-adult').val(parseInt(_adval)+1)
+//        console.log(_adval);
+//        console.log('_adval');
     }
     var obj_child = $(this).prev().find('.inp-child');
-    if (obj_child.length > 0) {
-      var _chval = $(this).prev().find('.inp-child').val();
-      $(this).prev().find('.inp-child').val(parseInt(_chval) + 1)
-      //console.log(_chval);
-      //console.log('_chval');
+    if(obj_child.length > 0){
+        var _chval = $(this).prev().find('.inp-child').val();
+        $(this).prev().find('.inp-child').val(parseInt(_chval)+1)
+        //console.log(_chval);
+        //console.log('_chval');
     }
     $(this).closest('.field-count-guest').find('.min').removeClass('disable');
   });
-  $(document).on('click', '.field-count-guest .min', function () {
-    var type = $(this).data('type');
-    if(type == "adult"){
-      var value = parseInt($(this).next().find('span.adult-val').html());
-      value -= 1;
-      $(this).next().find('span.adult-val').html(value);
-      var index = $(this).data('id');
-      suites[index]['adult'] = value;
-      json_suites = JSON.stringify(suites)
-      $('.suites_data').val(json_suites);
-    }else{ //children
-      var value = parseInt($(this).next().find('span.child-val').html());
-      value -= 1;
-      $(this).next().find('span.child-val').html(value);
-      var index = $(this).data('id');
-      suites[index]['children'] = value;
-      json_suites = JSON.stringify(suites)
-      $('.suites_data').val(json_suites);
-    }
-    return;
-    console.log('min');
-    if ($(this).next().find('.mr-1').html() > 0) {
-      console.log('min in');
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
+  $(document).on('click', '.field-count-guest .min', function () { console.log('min');
+      if($(this).next().find('.mr-1').html() > 0){ console.log('min in');
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
 
-      var obj_adult = $(this).next().find('.inp-adult');
-      if (obj_adult.length > 0) {
-        var _adval = $(this).next().find('.inp-adult').val();
-        $(this).next().find('.inp-adult').val(parseInt(_adval) - 1)
-        //console.log(_adval);
-        //console.log('_adval');
-      }
-      var obj_child = $(this).next().find('.inp-child');
-      if (obj_child.length > 0) {
-        var _chval = $(this).next().find('.inp-child').val();
-        $(this).next().find('.inp-child').val(parseInt(_chval) - 1)
-        //console.log(_chval);
-        //console.log('_chval');
-      }
+        var obj_adult = $(this).next().find('.inp-adult');
+        if(obj_adult.length > 0){
+            var _adval = $(this).next().find('.inp-adult').val();
+            $(this).next().find('.inp-adult').val(parseInt(_adval)-1)
+            //console.log(_adval);
+            //console.log('_adval');
+        }
+        var obj_child = $(this).next().find('.inp-child');
+        if(obj_child.length > 0){
+            var _chval = $(this).next().find('.inp-child').val();
+            $(this).next().find('.inp-child').val(parseInt(_chval)-1)
+            //console.log(_chval);
+            //console.log('_chval');
+        }
 
-    }
-    if ($(this).next().find('.mr-1').html() < 1) {
-      $(this).closest('.field-count-guest').find('.min').addClass('disable');
-    }
+      }
+      if($(this).next().find('.mr-1').html() < 1){
+        $(this).closest('.field-count-guest').find('.min').addClass('disable');
+      }
   });
-  $(document).mouseup(function (event) {
+  $(document).mouseup(function(event){
     var $trigger = $(".dropped");
-    if ($trigger !== event.target && !$trigger.has(event.target).length) {
+    if($trigger !== event.target && !$trigger.has(event.target).length){
       $('.dropped').removeClass('active');
     }
   });
-  $('.data-drop').click(function (e) {
+  $('.data-drop').click(function(e){
     e.preventDefault();
     $('.dropped').addClass('active');
   })
 
-  $('.save-filter-guest').click(function (e) {
+  $('.save-filter-guest').click(function(e){
     e.preventDefault();
     $('.dropped').removeClass('active');
     $('.dropdown-menu').removeClass('show');
   })
 
-  $('.gallerylink').click(function (e) {
+  $('.gallerylink').click(function(e){
     e.preventDefault();
     var g = $(this).attr('data-popup');
     $(g).addClass('active animated fadeIn');
   })
 
-  $('.popup-close').click(function (e) {
+  $('.popup-close').click(function(e){
     e.preventDefault();
     $('.popup').removeClass('active animated fadeIn');
   })
 
-  $('.page-closeslide').click(function (e) {
+  $('.page-closeslide').click(function(e){
     e.preventDefault();
     $(this).parent().removeClass('active');
   })
 
   $('select').niceSelect();
 
-  $('.my-tooltip .ico').hover(function () {
+  $('.my-tooltip .ico').hover(function(){
     var dt = $(this).attr('data-tool');
     $(dt).toggleClass('active');
   })
-  $('.dropprice').click(function (e) {
+  $('.dropprice').click(function(e) {
     e.stopPropagation();
   });
-  $('.list-prs .btn-prc-title').click(function (e) {
+  $('.list-prs .btn-prc-title').click(function(e){
     e.preventDefault();
     var pp = $(this).attr('data-price');
     $(pp).toggleClass('active');
     $(this).find('.arrow-down').toggleClass('toup');
   })
 
-  $('.filter-tag').on('click', '.close-tag', function (e) {
+  $('.filter-tag').on('click', '.close-tag', function(e){
     e.preventDefault();
     $(this).closest('.filter-tag').remove();
     console.log('clicked');
 
   })
-  $('.popup-close').click(function (e) {
+  $('.popup-close').click(function(e){
     e.preventDefault();
     $(this).closest('.compare-row').removeClass('active animated fadeIn');
   })
 
-  $('.header-main').on('click', '.oncl', function () {
+  $('.header-main').on('click', '.oncl', function(){
     $('.filter-container-fl').hide();
     var filterEl = $(this).attr('data-filter');
     $(filterEl).show();
@@ -1003,12 +964,12 @@
   });
 
 
-  $('.heading-collsp').click(function () {
+  $('.heading-collsp').click(function(){
     $(this).closest('.collsp').toggleClass('show');
   })
 
 
-  $('.first-option .nav-link').click(function (e) {
+  $('.first-option .nav-link').click(function(e){
     e.preventDefault();
     $('.arrow--12').addClass('arrow-right');
     $('.nav-link').removeClass('active');
@@ -1028,241 +989,228 @@
   var bussiness = $('[data-guest=".bussiness-option"]');
   var bussinessInput = $('.bussiness-option');
   $('.field-count-search .plus-room').click(function () {
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
     // family.find('.room-count').html(function(i, val) { return val*1+1 });
-    family.find('.room-count').html(function (i, val) { return val * 1 + 1 });
-    $(familyInput).find('.room-count').html(function (i, val) { return val * 1 + 1 });
+    family.find('.room-count').html(function(i, val) { return val*1+1 });
+    $(familyInput).find('.room-count').html(function(i, val) { return val*1+1 });
     $(this).closest('.field-count-search').find('.min-room').removeClass('disable');
   });
   $('.field-count-search .min-room').click(function () {
-    if ($(this).next().find('.mr-1').html() > 1) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      family.find('.room-count').html(function (i, val) { return val * 1 - 1 });
-      $(familyInput).find('.room-count').html(function (i, val) { return val * 1 - 1 });
-    }
-    if ($(this).next().find('.mr-1').html() < 2) {
-      $(this).closest('.field-count-search').find('.min-room').addClass('disable');
-    }
+      if($(this).next().find('.mr-1').html() > 1){
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+        family.find('.room-count').html(function(i, val) { return val*1-1 });
+        $(familyInput).find('.room-count').html(function(i, val) { return val*1-1 });
+      }
+      if($(this).next().find('.mr-1').html() < 2){
+        $(this).closest('.field-count-search').find('.min-room').addClass('disable');
+      }
   });
 
   // ----------
 
   $('.field-count-search .plus-adult').click(function () {
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
-    family.find('.adult-count').html(function (i, val) { return val * 1 + 1 });
-    $(familyInput).find('.adult-count').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
+    family.find('.adult-count').html(function(i, val) { return val*1+1 });
+    $(familyInput).find('.adult-count').html(function(i, val) { return val*1+1 });
     $(this).closest('.field-count-search').find('.min-adult').removeClass('disable');
 
   });
   $('.field-count-search .min-adult').click(function () {
-    if ($(this).next().find('.mr-1').html() > 1) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      family.find('.adult-count').html(function (i, val) { return val * 1 - 1 });
-      $(familyInput).find('.adult-count').html(function (i, val) { return val * 1 - 1 });
-    }
-    if ($(this).next().find('.mr-1').html() < 2) {
-      $(this).closest('.field-count-search').find('.min-adult').addClass('disable');
-    }
+      if($(this).next().find('.mr-1').html() > 1){
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+        family.find('.adult-count').html(function(i, val) { return val*1-1 });
+        $(familyInput).find('.adult-count').html(function(i, val) { return val*1-1 });
+      }
+      if($(this).next().find('.mr-1').html() < 2){
+        $(this).closest('.field-count-search').find('.min-adult').addClass('disable');
+      }
   });
 
   // ----------
 
   $('.field-count-search .plus-child').click(function () {
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
-    family.find('.child-count').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
+    family.find('.child-count').html(function(i, val) { return val*1+1 });
     family.find('.child-before').addClass('show');
     $(familyInput).find('.child-before').addClass('show');
-    $(familyInput).find('.child-count').html(function (i, val) { return val * 1 + 1 });
+    $(familyInput).find('.child-count').html(function(i, val) { return val*1+1 });
     $(this).closest('.field-count-search').find('.min-child').removeClass('disable');
   });
   $('.field-count-search .min-child').click(function () {
-    if ($(this).next().find('.mr-1').html() > 0) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      $(familyInput).find('.child-count').html(function (i, val) { return val * 1 - 1 });
-      family.find('.child-count').html(function (i, val) { return val * 1 - 1 });
-    }
-    if ($(this).next().find('.mr-1').html() < 1) {
-      $(this).closest('.field-count-search').find('.min-child').addClass('disable');
-      family.find('.child-before').removeClass('show');
-      $(familyInput).find('.child-before').removeClass('show');
+      if($(this).next().find('.mr-1').html() > 0){
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+        $(familyInput).find('.child-count').html(function(i, val) { return val*1-1 });
+        family.find('.child-count').html(function(i, val) { return val*1-1 });
+      }
+      if($(this).next().find('.mr-1').html() < 1){
+        $(this).closest('.field-count-search').find('.min-child').addClass('disable');
+        family.find('.child-before').removeClass('show');
+        $(familyInput).find('.child-before').removeClass('show');
 
-    }
+      }
   });
 
   $('.field-count-search .plus-group-room').click(function () {
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
     // family.find('.room-count').html(function(i, val) { return val*1+1 });
-    group.find('.room-count').html(function (i, val) { return val * 1 + 1 });
-    $(groupInput).find('.room-count').html(function (i, val) { return val * 1 + 1 });
+    group.find('.room-count').html(function(i, val) { return val*1+1 });
+    $(groupInput).find('.room-count').html(function(i, val) { return val*1+1 });
     $(this).closest('.field-count-search').find('.min-group-room').removeClass('disable');
   });
   $('.field-count-search .min-group-room').click(function () {
-    if ($(this).next().find('.mr-1').html() > 1) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      group.find('.room-count').html(function (i, val) { return val * 1 - 1 });
-      $(groupInput).find('.room-count').html(function (i, val) { return val * 1 - 1 });
-    }
-    if ($(this).next().find('.mr-1').html() < 2) {
-      $(this).closest('.field-count-search').find('.min-group-room').addClass('disable');
-    }
+      if($(this).next().find('.mr-1').html() > 1){
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+        group.find('.room-count').html(function(i, val) { return val*1-1 });
+        $(groupInput).find('.room-count').html(function(i, val) { return val*1-1 });
+      }
+      if($(this).next().find('.mr-1').html() < 2){
+        $(this).closest('.field-count-search').find('.min-group-room').addClass('disable');
+      }
   });
 
   // ----------
 
   $('.field-count-search .plus-group-adult').click(function () {
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
-    group.find('.adult-count').html(function (i, val) { return val * 1 + 1 });
-    $(groupInput).find('.adult-count').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
+    group.find('.adult-count').html(function(i, val) { return val*1+1 });
+    $(groupInput).find('.adult-count').html(function(i, val) { return val*1+1 });
     $(this).closest('.field-count-search').find('.min-group-adult').removeClass('disable');
 
   });
   $('.field-count-search .min-group-adult').click(function () {
-    if ($(this).next().find('.mr-1').html() > 1) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      group.find('.adult-count').html(function (i, val) { return val * 1 - 1 });
-      $(groupInput).find('.adult-count').html(function (i, val) { return val * 1 - 1 });
-    }
-    if ($(this).next().find('.mr-1').html() < 2) {
-      $(this).closest('.field-count-search').find('.min-group-adult').addClass('disable');
-    }
+      if($(this).next().find('.mr-1').html() > 1){
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+        group.find('.adult-count').html(function(i, val) { return val*1-1 });
+        $(groupInput).find('.adult-count').html(function(i, val) { return val*1-1 });
+      }
+      if($(this).next().find('.mr-1').html() < 2){
+        $(this).closest('.field-count-search').find('.min-group-adult').addClass('disable');
+      }
   });
 
   // ----------
 
   $('.field-count-search .plus-group-child').click(function () {
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
-    group.find('.child-count').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
+    group.find('.child-count').html(function(i, val) { return val*1+1 });
     group.find('.child-before').addClass('show');
     $(groupInput).find('.child-before').addClass('show');
-    $(groupInput).find('.child-count').html(function (i, val) { return val * 1 + 1 });
+    $(groupInput).find('.child-count').html(function(i, val) { return val*1+1 });
     $(this).closest('.field-count-search').find('.min-group-child').removeClass('disable');
   });
   $('.field-count-search .min-group-child').click(function () {
-    if ($(this).next().find('.mr-1').html() > 0) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      $(groupInput).find('.child-count').html(function (i, val) { return val * 1 - 1 });
-      group.find('.child-count').html(function (i, val) { return val * 1 - 1 });
-    }
-    if ($(this).next().find('.mr-1').html() < 1) {
-      $(this).closest('.field-count-search').find('.min-group-child').addClass('disable');
-      group.find('.child-before').removeClass('show');
-      $(groupInput).find('.child-before').removeClass('show');
-    }
+      if($(this).next().find('.mr-1').html() > 0){
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+        $(groupInput).find('.child-count').html(function(i, val) { return val*1-1 });
+        group.find('.child-count').html(function(i, val) { return val*1-1 });
+      }
+      if($(this).next().find('.mr-1').html() < 1){
+        $(this).closest('.field-count-search').find('.min-group-child').addClass('disable');
+        group.find('.child-before').removeClass('show');
+        $(groupInput).find('.child-before').removeClass('show');
+      }
   });
 
 
   $('.bussiness-option .field-count-search .plus-bussiness-room').click(function () {
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
-    bussiness.find('.room-count').html(function (i, val) { return val * 1 + 1 });
-    $(bussinessInput).find('.room-count').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
+    bussiness.find('.room-count').html(function(i, val) { return val*1+1 });
+    $(bussinessInput).find('.room-count').html(function(i, val) { return val*1+1 });
     $(this).closest('.bussiness-option .field-count-search').find('.min-bussiness-room').removeClass('disable');
 
   });
   $('.bussiness-option .field-count-search .min-bussiness-room').click(function () {
-    if ($(this).next().find('.mr-1').html() > 1) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      bussiness.find('.room-count').html(function (i, val) { return val * 1 - 1 });
-      $(bussinessInput).find('.room-count').html(function (i, val) { return val * 1 - 1 });
-    }
-    if ($(this).next().find('.mr-1').html() < 1) {
-      $(this).closest('.bussiness-option .field-count-search').find('.min-bussiness-room').addClass('disable');
-    }
+      if($(this).next().find('.mr-1').html() > 1){
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+        bussiness.find('.room-count').html(function(i, val) { return val*1-1 });
+        $(bussinessInput).find('.room-count').html(function(i, val) { return val*1-1 });
+      }
+      if($(this).next().find('.mr-1').html() < 1){
+        $(this).closest('.bussiness-option .field-count-search').find('.min-bussiness-room').addClass('disable');
+      }
   });
 
   // ----------
 
   $('.bussiness-option .field-count-search .plus-bussiness-adult').click(function () {
-    $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
-    bussiness.find('.adult-count').html(function (i, val) { return val * 1 + 1 });
-    $(bussinessInput).find('.adult-count').html(function (i, val) { return val * 1 + 1 });
+    $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
+    bussiness.find('.adult-count').html(function(i, val) { return val*1+1 });
+    $(bussinessInput).find('.adult-count').html(function(i, val) { return val*1+1 });
     $(this).closest('.bussiness-option .field-count-search').find('.min-bussiness-adult').removeClass('disable');
 
   });
   $('.bussiness-option .field-count-search .min-bussiness-adult').click(function () {
-    if ($(this).next().find('.mr-1').html() > 1) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      bussiness.find('.adult-count').html(function (i, val) { return val * 1 - 1 });
-      $(bussinessInput).find('.adult-count').html(function (i, val) { return val * 1 - 1 });
-    }
-    if ($(this).next().find('.mr-1').html() < 1) {
-      $(this).closest('.bussiness-option .field-count-search').find('.min-bussiness-adult').addClass('disable');
-    }
+      if($(this).next().find('.mr-1').html() > 1){
+        $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+        bussiness.find('.adult-count').html(function(i, val) { return val*1-1 });
+        $(bussinessInput).find('.adult-count').html(function(i, val) { return val*1-1 });
+      }
+      if($(this).next().find('.mr-1').html() < 1){
+        $(this).closest('.bussiness-option .field-count-search').find('.min-bussiness-adult').addClass('disable');
+      }
   });
 
-  var suites = [
-    {"adult": 1, "children": 1}
-  ];
-  var json_suites;
-  $('.field-count-guest .plus-room').click(function () {
-    if ($(this).prev().find('.mr-1').html() != 4) {
-      $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
-      $(this).prev().find('.room-input-val').val(function (i, val) { return val * 1 + 1 });
+  $('.field-count-guest .plus-room').click(function(){
+    if($(this).prev().find('.mr-1').html() != 4 ){
+      $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
       $(this).closest('.field-count-guest').find('.min-room').removeClass('disable');
       var curr = $(".col-ews");
       //console.log(curr);
-      suites[curr.length] = {"adult" : 1, "children" : 1};
-      json_suites = JSON.stringify(suites)
-      $('.suites_data').val(json_suites);
       var currLength = curr.length + 1;
-      var temp = '<div class="col-6 col-ews mb-3" id="room-' + currLength + '">' +
-        '<p><b>Suite ' + currLength + '</b></p>' +
-        '<div class="row align-items-center py-2">' +
-        '<div class="col-7">' +
-        '<p class="mb-0"><b>Adults</b></p>' +
-        '</div>' +
-        '<div class="col-5">' +
-        '<div class="row field-count-guest align-items-center">' +
-        '<button type="button" class="min" data-id="'+(currLength -1)+'" data-type="adult">-</button>' +
-        '<div class="col text-center">' +
-        '<span class="mr-1 adult-val" >1 </span>' +
-        '</div>' +
-        '<button type="button" class="plus mr-3" data-id="'+(currLength -1)+'" data-type="adult">+</button>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '<div class="row align-items-center py-2">' +
-        '<div class="col-7">' +
-        '<p class="mb-0"><b>Children</b></p>' +
-        '</div>' +
-        '<div class="col-5">' +
-        '<div class="row field-count-guest align-items-center">' +
-        '<button type="button" class="min" data-id="'+(currLength -1)+'" data-type="child">-</button>' +
-        '<div class="col text-center">' +
-        '<span class="mr-1 child-val">1 </span>' +
-        '</div>' +
-        '<button type="button" class="plus mr-3" data-id="'+(currLength -1)+'" data-type="child">+</button>' +
-        '</div>' +
-        '</div>' +
-        '</div>' +
-        '</div>';
+      var temp = '<div class="col-6 col-ews mb-3" id="room-'+ currLength +'">'+
+          '<p><b>Suite '+ currLength +'</b></p>'+
+          '<div class="row align-items-center py-2">'+
+              '<div class="col-7">'+
+                  '<p class="mb-0"><b>Adults</b></p>'+
+              '</div>'+
+              '<div class="col-5">'+
+                  '<div class="row field-count-guest align-items-center">'+
+                      '<button type="button" class="min">-</button>'+
+                      '<div class="col text-center">'+
+                          '<span class="mr-1 adult-val" >1 </span>'+
+                          '<input type="hidden" name="rooms[]"  />'+
+                          '<input type="hidden" name="adult[]" class="inp-adult" value="1" />'+
+                     '</div>'+
+                      '<button type="button" class="plus mr-3">+</button>'+
+                  '</div>'+
+              '</div>'+
+          '</div>'+
+          '<div class="row align-items-center py-2">'+
+              '<div class="col-7">'+
+                  '<p class="mb-0"><b>Children</b></p>'+
+              '</div>'+
+              '<div class="col-5">'+
+                  '<div class="row field-count-guest align-items-center">'+
+                      '<button type="button" class="min">-</button>'+
+                      '<div class="col text-center">'+
+                          '<span class="mr-1 child-val">1 </span>'+
+                          '<input type="hidden" name="child[]" class="inp-child" value="1" />'+
+                      '</div>'+
+                      '<button type="button" class="plus mr-3">+</button>'+
+                  '</div>'+
+              '</div>'+
+          '</div>'+
+      '</div>';
       $('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
       $('.guest-pick-body .list-eoom').append(temp);
     }
-    if ($(this).prev().find('.mr-1').html() > 3) {
+    if($(this).prev().find('.mr-1').html() > 3 ){
       $(this).closest('.field-count-guest').find('.plus-room').addClass('disable');
     }
   });
 
-  $('.field-count-guest ').on('click', '.min-room', function () {
+  $('.field-count-guest ').on('click', '.min-room', function(){
     $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
 
-    $(this).prev().find('.room-input-val').val(function (i, val) { return val * 1 - 1 });
-
-    var curr = $(".col-ews");
-    suites.splice(curr.length, 1);
-    // delete suites[curr.length];
-    console.log(suites);
-    json_suites = JSON.stringify(suites)
-    $('.suites_data').val(json_suites);
-    if ($(this).next().find('.mr-1').html() > 1) {
-      $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
+    if($(this).next().find('.mr-1').html() > 1){
+      $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
     }
-    if ($(this).next().find('.mr-1').html() < 2) {
+    if($(this).next().find('.mr-1').html() < 2){
       $(this).closest('.field-count-guest').find('.min-room').addClass('disable');
       $('.guest-pick-body').find('.col-ews').addClass('col-12').removeClass('col-6');
 
     }
-    if ($(this).prev().find('.mr-1').html() != 4) {
+    if($(this).prev().find('.mr-1').html() != 4 ){
       $(this).closest('.field-count-guest').find('.plus-room').removeClass('disable');
     }
   });
@@ -1286,13 +1234,13 @@
   //   $('.filter-guest').addClass('show');
   // });
 
-  $(document).on('click', '.confirm-room-when', function () {
+  $(document).on('click', '.confirm-room-when', function(){
     var adultCount = 0;
     var childCount = 0;
-    $('.adult-val').each(function () {
+    $('.adult-val').each(function(){
       adultCount += parseFloat($(this).html());
     });
-    $('.child-val').each(function () {
+    $('.child-val').each(function(){
       childCount += parseFloat($(this).html());
     });
     var totalGuest = parseFloat(adultCount + childCount);
@@ -1312,13 +1260,13 @@
 
   });
 
-  $(document).on('click', '.confirm-room-submit', function (e) {
+  $(document).on('click', '.confirm-room-submit', function(e){
     e.preventDefault();
     $("#collection_search").submit();
   });
 
 
-  $('.whereinner').on('click', '.nav-link', function (e) {
+  $('.whereinner').on('click', '.nav-link', function(e){
     e.preventDefault();
     var result = $(this).find('span').html();
     $('.where').val(result);
