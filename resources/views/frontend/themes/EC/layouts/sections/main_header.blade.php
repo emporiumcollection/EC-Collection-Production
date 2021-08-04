@@ -1,3 +1,11 @@
+<?php
+
+  $mapsearch = URL::to("mapsearchavailability?" . Request::getQueryString());
+  $videourl = URL::to("social-youtube?" . Request::getQueryString());
+  $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
+
+?>
+
   <header>
   <div class="top-header">
     <div class="px-4 pt-2">
@@ -222,17 +230,17 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="location-page.html">
+              <a class="nav-link" href="{{ $mapsearch }}">
                 <i class="ico ico-place"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{ $videourl }}">
                 <i class="ico ico-video"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{ $instagramurl }}">
                 <i class="ico ico-instagram"></i>
               </a>
             </li>
@@ -243,7 +251,7 @@
                 Restaurants & Bars
               </a>
             </li>
-            <li class="nav-item">
+<!--             <li class="nav-item">
               <a class="nav-link" href="#">
                 Yachts
               </a>
@@ -252,7 +260,7 @@
               <a class="nav-link" href="#">
                 Jet
               </a>
-            </li>
+            </li> -->
           </ul>
           <ul class="nav nav-right ml-auto">
             <li class="nav-item">

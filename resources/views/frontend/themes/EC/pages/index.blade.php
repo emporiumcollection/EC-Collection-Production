@@ -14,6 +14,8 @@
             </div>
             <input type="text" class="form-control form-control-em border-0 where" id="inlineFormInputGroup"
               placeholder="Where" name="destination">
+            <input type="hidden" name="sitename" id="sitename"  />
+            <input type="hidden" name="coll_type" id="coll_type" />
             <div class="input-group-prepend">
               <div class="input-group-ico color-search"> <span style="background-color: #00a000;"></span> Create
                 Itinerary ->
@@ -91,12 +93,12 @@
               <div class="title-with-icon">
                 <i class="ico ico-calendar"></i>
                 <h2>When</h2>
-                <input type="hidden" name="arrive">
-                <input type="hidden" name="departure">
               </div>
               <div class="range-calendar range-date-9127013" id="calendar-pick">
                 <div id="daterangepicker-inline-container" class="daterangepicker-inline"></div>
                 <input type="hidden" id="daterangepicker-inline">
+                <input type="hidden" name="arrive" id="arrive" />
+                <input type="hidden" name="departure" id="departure" />
                 <div class="clearfix"></div>
               </div>
               <div class="search-results mb-2">
@@ -352,6 +354,8 @@
                             <button type="button" class="min" data-id="0" data-type="adult">-</button>
                             <div class="col text-center">
                               <span class="mr-1 adult-val">1 </span>
+                              <input type="hidden" name="rooms[]" id="rooms" />
+                              <input type="hidden" name="adult[]" class="inp-adult" id="adult" value="1" />
                             </div>
                             <button type="button" class="plus mr-3" data-id="0" data-type="adult">+</button>
                           </div>
@@ -366,6 +370,7 @@
                             <button type="button" class="min" data-id="0" data-type="children">-</button>
                             <div class="col text-center">
                               <span class="mr-1 child-val">1 </span>
+                              <input type="hidden" name="child[]" id="child" class="inp-child" value="1" />
                             </div>
                             <button type="button" class="plus mr-3" data-id="0" data-type="children">+</button>
                           </div>
@@ -421,7 +426,7 @@
                 <div class="guest-pick-footer">
                   <div class="text-right">
                     <!-- <a href="main-page.html" class="confirm-room">View "New York Collection"</a> -->
-                    <input type="hidden" name="suites_data" class="suites_data">
+                    <!-- <input type="hidden" name="suites_data" class="suites_data"> -->
                     <input type="submit" class="confirm-room" value="View Collection" />
                   </div>
                 </div>
