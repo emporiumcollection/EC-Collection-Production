@@ -17,7 +17,7 @@
       <div class="title-main offset-381 mt-5 wow fadeInUp">
         <div class="row align-items-end">
           <div class="col-9">
-            <h2>New York <a href="index.html"><i class="ico ico-reload reload-offset"></i></a></h2>
+            <h2> {{ $city }} <!-- <a href="index.html"><i class="ico ico-reload reload-offset"></i></a> --></h2>
           </div>
           <div class="col-3 text-right">
             <a href="main-page.html">
@@ -45,14 +45,13 @@
                 <div class="pr-lst result-grid">
                 @for ($i = 0; $i < 3 && $i < count($hotel['images']); $i++)
                   <div>
-                    <!-- <img src="{{ $hotel['images'][$i]->imgsrc.$hotel['images'][$i]->file_name}}" class="w-100" alt=""> -->
-                    <img src="https://develio.us/ec2-html/images/53511811337-49267444221.jpg" class="w-100" alt="">
+                    <img src="{{ $hotel['images'][$i]->imgsrc . $hotel['images'][$i]->file_name }}" class="w-100" alt="">
                   </div>
                 @endfor
 
 
                 </div>
-                <div class="my-dropdown">
+<!--                 <div class="my-dropdown">
                   <div class="btn-group dropleft">
                     <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                       <i class="ico ico-diamon diamon-label"></i>
@@ -66,8 +65,8 @@
                     </div>
                   </div>
 
-                </div>
-                <div class="hotel-meta full-width is-small">
+                </div> -->
+<!--                 <div class="hotel-meta full-width is-small">
                   <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
                     Reviews
                   </a>
@@ -94,7 +93,7 @@
                     </div>
 
                   </div>
-                </div>
+                </div> -->
               </div>
               <a href="#">
                 <div class="mb-3 mt-2 ">
@@ -710,7 +709,7 @@
     //   },
     //   ]
     // };
-    
+
 
     map.on('load', function () {
       geojsonFeatures.features.forEach(function (marker) {
