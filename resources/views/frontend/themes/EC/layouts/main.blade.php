@@ -117,7 +117,7 @@
     @endif
 </head>
 <body>
-    @if($header_type == 'new')
+    @if($layout_type == 'new')
         @section('header')
             @parent
             @include('frontend.themes.EC.layouts.sections.new_header')
@@ -137,10 +137,14 @@
 
     @yield('content')
 
-    @section('loader')
-        @parent
-        @include('frontend.themes.EC.layouts.sections.loader')
-    @show
+    @if($layout_type == 'new')
+
+    @else
+        @section('loader')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.loader')
+        @show
+    @endif
 
     @section('footer')
         @parent
@@ -299,13 +303,6 @@ $(function() {
     var arriveDt = new Date();
     var depDt = new Date();
 
-    @if(!empty($arrive_date))
-        var arriveDt1 = '{{$arrive_date}}';
-    @endif
-
-    @if(!empty($departure_date))
-        var  depDt1 = '{{$departure_date}}';
-    @endif
 
     var _day = '';
     var _month = '';

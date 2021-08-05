@@ -481,6 +481,7 @@ Route::post('globalavailability', 'Frontend\PropertyController@propertyglobalava
 Route::get('globalsearchavailability', 'Frontend\PropertyController@globalsearchavailability');
 Route::get('landing_view', 'Frontend\PropertyController@landing_view');
 Route::get('hotel_details', 'Frontend\PropertyController@hotel_details');
+Route::get('get_inspired', 'Frontend\PropertyController@get_inspired');
 Route::post('getpdppage', 'Frontend\PropertyController@getpdppage');
 Route::post('getdestinationpage', 'Frontend\PropertyController@getdestinationpage');
 

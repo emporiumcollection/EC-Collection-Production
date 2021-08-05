@@ -5,7 +5,7 @@
         <div class="col-md-5 col-4">
         </div>
         <div class="col-md-2 col-4 text-center">
-          <a href="#">
+          <a href="{{ route('homepage') }}">
             <i class="t-logo logo-2"></i>
           </a>
         </div>
