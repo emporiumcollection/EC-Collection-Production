@@ -2928,9 +2928,25 @@ class PropertyController extends Controller {
         $this->data['childs'] = $childs;
         $this->data['number_of_nights'] = $number_of_nights;
         $this->data['query_str'] = $query_str;
+        $this->data['layout_type'] = 'old';
         // dump($this->data); die;
         return view('frontend.themes.EC.properties.globalsearchavailability', $this->data);
 
+    }
+
+    function hotel_details(Request $request) {
+        $this->data['layout_type'] = 'old';
+        return view('frontend.themes.EC.properties.hotel_details', $this->data);
+    }
+
+    function landing_view() {
+        $this->data['layout_type'] = 'new';
+        return view('frontend.themes.EC.properties.landing_view', $this->data);
+    }
+
+    function get_inspired() {
+        $this->data['layout_type'] = 'new';
+        return view('frontend.themes.EC.properties.get_inspired', $this->data);
     }
 
     function globalsearchavailability_old_latest(Request $request) {
