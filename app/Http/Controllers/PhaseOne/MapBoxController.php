@@ -45,8 +45,10 @@ class MapBoxController extends Controller {
 
             $images = $hcontroller->get_property_files($hotel->id, 'Property Images');
             $hotel_images = [];
-            for($i = 0; $i < 3; $i++){
-                $hotel_images[] = $images[$i]->imgsrc . $images[$i]->file_name;
+            if (count($images) > 0) {
+                for($i = 0; $i < 3; $i++){
+                    $hotel_images[] = $images[$i]->imgsrc . $images[$i]->file_name;
+                }
             }
 
             $data['hotels'][] = [
