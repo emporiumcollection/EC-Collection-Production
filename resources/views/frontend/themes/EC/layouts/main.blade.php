@@ -140,10 +140,10 @@
     @if($layout_type == 'new')
 
     @else
-        @section('loader')
+        {{-- @section('loader')
             @parent
             @include('frontend.themes.EC.layouts.sections.loader')
-        @show
+        @show --}}
     @endif
 
     @section('footer')
