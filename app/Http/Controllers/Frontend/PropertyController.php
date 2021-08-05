@@ -2882,6 +2882,10 @@ class PropertyController extends Controller {
 
     }
 
+    function hotel_details(Request $request) {
+        return view('frontend.themes.EC.properties.hotel_details');
+    }
+
     function globalsearchavailability_old_latest(Request $request) {
         $allData = array();
         $hotels = $request->input('hotels');
