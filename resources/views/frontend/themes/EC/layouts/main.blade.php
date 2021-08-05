@@ -117,15 +117,23 @@
     @endif
 </head>
 <body>
-    @section('header')
-        @parent
-        @include('frontend.themes.EC.layouts.sections.main_header')
-    @show
+    @if($header_type == 'new')
+        @section('header')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.new_header')
+        @show
 
-    @section('leftsidebar')
-        @parent
-        @include('frontend.themes.EC.layouts.sections.main_sidebar')
-    @show
+    @else
+        @section('header')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.main_header')
+        @show
+
+        @section('leftsidebar')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.main_sidebar')
+        @show
+    @endif
 
     @yield('content')
 

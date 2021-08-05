@@ -2886,6 +2886,11 @@ class PropertyController extends Controller {
         return view('frontend.themes.EC.properties.hotel_details');
     }
 
+    function landing_view() {
+        $this->data['header_type'] = 'new';
+        return view('frontend.themes.EC.properties.landing_view', $this->data);
+    }
+
     function globalsearchavailability_old_latest(Request $request) {
         $allData = array();
         $hotels = $request->input('hotels');
