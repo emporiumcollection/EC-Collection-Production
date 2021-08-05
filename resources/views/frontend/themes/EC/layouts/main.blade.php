@@ -117,7 +117,7 @@
     @endif
 </head>
 <body>
-    @if($layout_type == 'new')
+    @if(isset($layout_type) && $layout_type == 'new')
         @section('header')
             @parent
             @include('frontend.themes.EC.layouts.sections.new_header')
@@ -137,7 +137,7 @@
 
     @yield('content')
 
-    @if($layout_type == 'new')
+    @if(isset($layout_type) && $layout_type == 'new')
 
     @else
         {{-- @section('loader')
@@ -327,7 +327,7 @@ $(function() {
         _dmonth = sp_darr[2];
         _dday = sp_darr[1];
     }
-    
+
     var newDepDt = new Date(_dyear, _dmonth, _dday);
 
     var defStartDay = moment(newArrDt).format('DD');
