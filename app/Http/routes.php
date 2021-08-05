@@ -18,11 +18,18 @@ Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 
 /**
- * New routes.
+ * New frontend routes.
  */
 Route::get('hotel/{title}', 'PhaseOne\HotelController@index');
 Route::get('mapsearchavailability', 'PhaseOne\MapBoxController@index');
 Route::get('book/reservation', 'PhaseOne\ReservationController@index');
+
+/**
+ * New Admin backend routes.
+ */
+Route::post('properties/configmeals', 'MealsController@configMeals');
+Route::post('properties/resetmeals', 'MealsController@resetConfigMeals');
+Route::post('properties/addmeals', 'MealsController@addMeals');
 
 /*
  * AIC: CRM Layout Module

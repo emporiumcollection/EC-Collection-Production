@@ -2697,7 +2697,58 @@ class PropertyController extends Controller {
         //print_r($prop_package);
     }
 
+
     function propertyglobalavailability(Request $request) {
+        $coll_type = $request->input("coll_type");
+        $coll_where = $request->input("destination");
+
+        $arrive = $request->input("arrive");
+        if($arrive!=''){
+            $arrive = $request->input("arrive");
+        }else{
+            $arrive = date('d-m-Y');
+        }
+        $departure = $request->input("departure");
+        if($departure!=''){
+            $departure = $request->input("departure");
+        }else{
+            $departure = date('d-m-Y',strtotime("+1 day"));
+        }
+
+
+        $rooms = $request->input('rooms');
+        $adults = $request->input('adult');
+        $childs = $request->input('child');
+
+        $rac = '';
+        if(count($rooms)>0){
+            for($j=0; $j<count($rooms); $j++){
+                $rac .= 'r'.$j.'a'.$adults[$j].'c'.$childs[$j];
+            }
+        }
+
+        $sitename = $request->input("sitename");
+
+        $site_url = url('/');
+        // if($sitename=='voyage'){
+        //     $site_url = 'https://emporium-voyage.com';
+        // }elseif($sitename=='safari'){
+        //     $site_url = 'https://emporium-safari.com';
+        // }elseif($sitename=='spa'){
+        //     $site_url = 'https://emporium-spa.com';
+        // }elseif($sitename=='islands'){
+        //     $site_url = 'https://emporium-islands.com';
+        // }
+
+        // dump($request->all()); exit;
+
+        $querry_string = $site_url."/globalsearchavailability?s=".$coll_where."&arrive=".$arrive."&departure=".$departure."&type=".$coll_type."&rac=".$rac;
+
+        return Redirect::to($querry_string);
+    }
+
+
+    function propertyglobalavailability_latest(Request $request) {
         $destination = $request->input("destination");
 
         $arrive = $request->input("arrive");
@@ -2780,7 +2831,7 @@ class PropertyController extends Controller {
                 $suites_query .= '&adult_'.($key+1).'='.$sd['adult'].'&child_'.($key+1).'='.$sd['children'];
             }
         }
-     
+
         $querry_string = $site_url."/globalsearchavailability?arrive=".$arrive."&departure=".$departure."&destination=".$destination."&flexibledate=".$flexibledate."&include_flight=".$include_flight."&flight_departing=".$flight_departing."&flight_airport=".$flight_airport."&flight_guest=".$flight_guest."&include_yacht=".$include_yacht."&yacht_departing=".$yacht_departing."&yacht_airport=".$yacht_airport."&yacht_guest=".$yacht_guest."&include_lamosine=".$include_lamosine."&lamosine_departing=".$lamosine_departing."&lamosine_airport=".$lamosine_airport."&lamosine_guest=".$lamosine_guest.$suites_query;
         // $querry_string = $site_url."/globalsearchavailability?arrive=".$arrive."&departure=".$departure."&hotels=".$str_hotels."&destinations=".$str_destinations."&booking_rooms=".$booking_rooms."&booking_adults=".$booking_adults."&booking_children=".$booking_children."&travellerType=".$travellerType."&childrenAge=&tr_2_rooms=".$tr_2_rooms."&tr_2_adults=".$tr_2_adults."&tr_2_child=".$tr_2_child."&tr_3_rooms=".$tr_3_rooms."&tr_3_adults=".$tr_3_adults."&tr_3_child=".$tr_3_child."&tr_4_rooms=".$tr_4_rooms."&tr_4_adults=".$tr_4_adults;
 

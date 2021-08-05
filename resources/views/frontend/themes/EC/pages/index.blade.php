@@ -14,6 +14,8 @@
             </div>
             <input type="text" class="form-control form-control-em border-0 where" id="inlineFormInputGroup"
               placeholder="Where" name="destination">
+            <input type="hidden" name="sitename" id="sitename"  />
+            <input type="hidden" name="coll_type" id="coll_type" />
             <div class="input-group-prepend">
               <div class="input-group-ico color-search"> <span style="background-color: #00a000;"></span> Create
                 Itinerary ->
@@ -27,8 +29,8 @@
           <div class="row">
             <div class="col-6">
               <h2 style="text-transform: uppercase; color: #FFF;">Destinations</h2>
-              <ul class="nav flex-column">
-                <li class="nav-item">
+              <ul class="nav flex-column where-destination">
+<!--                 <li class="nav-item">
                   <a class="nav-link pl-0" href="#">
                     <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
                   </a>
@@ -58,44 +60,13 @@
                     <span class="city-l">New York</span> <span class="cat-l">Experiences</span>
                   </a>
                 </li>
-              </ul>
-              <ul class="nav flex-column">
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Map</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Private Jet</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Cuisine</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Channel</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Experiences</span>
-                  </a>
-                </li>
-              </ul>
+ -->              </ul>
+
             </div>
             <div class="col-6">
               <h2 style="text-transform: uppercase; color: #FFF;">Hotels</h2>
-              <ul class="nav flex-column">
-                <li class="nav-item">
+              <ul class="nav flex-column where-hotel">
+<!--                 <li class="nav-item">
                   <a class="nav-link pl-0" href="#">
                     <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
                   </a>
@@ -104,7 +75,7 @@
                   <a class="nav-link pl-0" href="#">
                     <span class="city-l">New York</span> <span class="cat-l">Map</span>
                   </a>
-                </li>
+                </li> -->
               </ul>
             </div>
           </div>
@@ -122,12 +93,12 @@
               <div class="title-with-icon">
                 <i class="ico ico-calendar"></i>
                 <h2>When</h2>
-                <input type="hidden" name="arrive">
-                <input type="hidden" name="departure">
               </div>
               <div class="range-calendar range-date-9127013" id="calendar-pick">
                 <div id="daterangepicker-inline-container" class="daterangepicker-inline"></div>
                 <input type="hidden" id="daterangepicker-inline">
+                <input type="hidden" name="arrive" id="arrive" />
+                <input type="hidden" name="departure" id="departure" />
                 <div class="clearfix"></div>
               </div>
               <div class="search-results mb-2">
@@ -153,7 +124,7 @@
                 </label>
               </div>
               <div class="mt-5 include-form">
-                <div id="accordion">
+<!--                 <div id="accordion">
                   <div class="accor">
                     <div class="accor-header" id="headingOne">
                       <div class="row align-items-center include-list">
@@ -308,7 +279,7 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div> -->
                 <div class="guest-pick-footer mb-5 mt-4 pr-3">
                   <div class="text-right">
                     <a href="#" class="confirm-room step-3">Submit</a>
@@ -383,6 +354,8 @@
                             <button type="button" class="min" data-id="0" data-type="adult">-</button>
                             <div class="col text-center">
                               <span class="mr-1 adult-val">1 </span>
+                              <input type="hidden" name="rooms[]" id="rooms" />
+                              <input type="hidden" name="adult[]" class="inp-adult" id="adult" value="1" />
                             </div>
                             <button type="button" class="plus mr-3" data-id="0" data-type="adult">+</button>
                           </div>
@@ -397,6 +370,7 @@
                             <button type="button" class="min" data-id="0" data-type="children">-</button>
                             <div class="col text-center">
                               <span class="mr-1 child-val">1 </span>
+                              <input type="hidden" name="child[]" id="child" class="inp-child" value="1" />
                             </div>
                             <button type="button" class="plus mr-3" data-id="0" data-type="children">+</button>
                           </div>
@@ -452,7 +426,7 @@
                 <div class="guest-pick-footer">
                   <div class="text-right">
                     <!-- <a href="main-page.html" class="confirm-room">View "New York Collection"</a> -->
-                    <input type="hidden" name="suites_data" class="suites_data">
+                    <!-- <input type="hidden" name="suites_data" class="suites_data"> -->
                     <input type="submit" class="confirm-room" value="View Collection" />
                   </div>
                 </div>

@@ -245,29 +245,22 @@
                <li>Access to 24 hour business centre</li>
             </ul>
          </div>
+
+
+         @foreach($suits as $suit)
          <div class="suite-list section-shadow mb-5">
             <div class="suite-tumb">
                <div class="row align-items">
                   <div class="col-lg-6">
                      <div class="img-offset-slide">
+                        @foreach($suit['suites_media']['imgs'] as $suit_image)
                         <div>
                            <a href="detail-page.html">
-                           <img src="images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg"
+                           <img src="{{ $suit_image }}"
                               class="img-full" alt="">
                            </a>
                         </div>
-                        <div>
-                           <a href="detail-page.html">
-                           <img src="images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg"
-                              class="img-full" alt="">
-                           </a>
-                        </div>
-                        <div>
-                           <a href="detail-page.html">
-                           <img src="images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg"
-                              class="img-full" alt="">
-                           </a>
-                        </div>
+                        @endforeach
                      </div>
                   </div>
                   <div class="col-lg-6">
@@ -552,7 +545,10 @@
                </div>
             </div>
          </div>
-         <div class="suite-list section-shadow mb-5">
+         @endforeach
+
+
+<!--          <div class="suite-list section-shadow mb-5">
             <div class="suite-tumb">
                <div class="row align-items">
                   <div class="col-lg-6">
@@ -858,9 +854,10 @@
                   </div>
                </div>
             </div>
-         </div>
+         </div> -->
       </div>
-      <div class="col-lg-3 col-md-4">
+
+<!--       <div class="col-lg-3 col-md-4">
          <div class="reservation-summary">
             <h4>YOUR RESERVATION</h4>
             <p><b>Belmond Jimbaran Puri</b></p>
@@ -891,7 +888,7 @@
                </tr>
             </table>
          </div>
-      </div>
+      </div> -->
    </div>
 </div>
 <div id="step-3" class="tab-pane" role="tabpanel">
