@@ -38,10 +38,12 @@ class MapBoxController extends Controller {
             ->get();
 
         foreach($hotels as $hotel) {
-            $query = "SELECT MIN(single_price) as price FROM empo_voyage.tb_properties_category_rooms_price
-            where property_id = " . $hotel->id;
-            $query_results = \DB::select($query);
-            $price = $query_results[0]->price ?? '';
+            // $query = "SELECT MIN(single_price) as price FROM empo_voyage.tb_properties_category_rooms_price
+            // where property_id = " . $hotel->id;
+            // $query_results = \DB::select($query);
+            // $price = $query_results[0]->price ?? '';
+
+            $price = 0;
 
             $images = $hcontroller->get_property_files($hotel->id, 'Property Images');
             $hotel_images = [];
