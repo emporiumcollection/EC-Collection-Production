@@ -38,6 +38,11 @@ class MapBoxController extends Controller {
             ->get();
 
         foreach($hotels as $hotel) {
+
+            if (empty($hotel->longitude) || empty($hotel->latitude)) {
+                continue;
+            }
+
             // $query = "SELECT MIN(single_price) as price FROM empo_voyage.tb_properties_category_rooms_price
             // where property_id = " . $hotel->id;
             // $query_results = \DB::select($query);
@@ -48,7 +53,7 @@ class MapBoxController extends Controller {
             $images = $hcontroller->get_property_files($hotel->id, 'Property Images');
             $hotel_images = [];
             if (count($images) > 0) {
-                for($i = 0; $i < 3; $i++){
+                for($i = 0; $i < 2; $i++){
                     $hotel_images[] = $images[$i]->imgsrc . $images[$i]->file_name;
                 }
             }
@@ -59,11 +64,17 @@ class MapBoxController extends Controller {
                 'images' => $images,
             ];
 
+            $lang = doubleval($hotel->longitude);
+            $lat = doubleval($hotel->latitude);
+
+            $coordinates[] = $lang;
+            $coordinates[] = $lat;
+
             $data['anchors'][] = [
                 'type' => 'Feature',
                 'geometry' => [
                     'type' => 'Point',
-                    'coordinates' => [$hotel->longitude, $hotel->latitude]
+                    'coordinates' => [$lang, $lat]
                 ],
                 'properties' => [
                     'dataId' => 'hotel_' . $hotel->id,
@@ -76,8 +87,15 @@ class MapBoxController extends Controller {
         }
 
         $data['city'] = $city;
+        $min_coordinates = min($coordinates);
+        $max_coordinates = max($coordinates);
+        $min_coordinates = number_format((float)$min_coordinates, 2, '.', '');
+        $max_coordinates = number_format((float)$max_coordinates, 2, '.', '');
 
-        // dump($data['anchors']); die;
+        $data['min_coordinates'] = $min_coordinates;
+        $data['max_coordinates'] = $max_coordinates;
+
+        // dump($max_coordinates); die;
 
         return view('frontend.themes.EC.phaseone.mapbox', $data);
     }
