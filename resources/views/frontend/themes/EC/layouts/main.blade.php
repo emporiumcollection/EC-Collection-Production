@@ -138,13 +138,12 @@
     @yield('content')
 
     @if(isset($layout_type) && $layout_type == 'new')
-
-    @else
-        {{-- @section('loader')
-            @parent
-            @include('frontend.themes.EC.layouts.sections.loader')
-        @show --}}
     @endif
+
+    @section('loader')
+        @parent
+        @include('frontend.themes.EC.layouts.sections.loader')
+    @show
 
     @section('footer')
         @parent
@@ -307,7 +306,7 @@ $(function() {
     var _day = '';
     var _month = '';
     var _year = '';
-    var sp_arr = arriveDt1.split('-');
+    var sp_arr = arriveDt.toDateString().split('-');
 
     if(sp_arr.length > 2){
         _year = sp_arr[0];
@@ -320,7 +319,7 @@ $(function() {
     var _dday = '';
     var _dmonth = '';
     var _dyear = '';
-    var sp_darr = depDt1.split('-');
+    var sp_darr = depDt.toDateString().split('-');
 
     if(sp_darr.length > 2){
         _dyear = sp_darr[0];

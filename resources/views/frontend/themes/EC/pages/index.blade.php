@@ -16,11 +16,11 @@
               placeholder="Where" name="destination">
             <input type="hidden" name="sitename" id="sitename"  />
             <input type="hidden" name="coll_type" id="coll_type" />
-            <div class="input-group-prepend">
+<!--             <div class="input-group-prepend">
               <div class="input-group-ico color-search"> <span style="background-color: #00a000;"></span> Create
                 Itinerary ->
               </div>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
@@ -432,7 +432,7 @@
                 </div>
               </div>
 
-              <div class="oldo-o">
+<!--               <div class="oldo-o">
                 <div class="quick-prev">
                   <div>
                     <img src="images/d9710383434639.5d3c346168dd3.jpg" class="img-fluid" alt="">
@@ -445,7 +445,7 @@
                     <img src="images/d9710383434639.5d3c346168dd3.jpg" class="img-fluid" alt="">
                   </div>
                 </div>
-              </div>
+              </div> -->
             </div>
           </div>
           <div class="col-6 pl-0 pr--md-0">
