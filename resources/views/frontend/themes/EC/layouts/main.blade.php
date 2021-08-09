@@ -117,13 +117,7 @@
     @endif
 </head>
 <body>
-    @if(isset($layout_type) && $layout_type == 'new')
-        @section('header')
-            @parent
-            @include('frontend.themes.EC.layouts.sections.new_header')
-        @show
-
-    @else
+    @if(isset($layout_type) && $layout_type == 'old')
         @section('header')
             @parent
             @include('frontend.themes.EC.layouts.sections.main_header')
@@ -133,11 +127,16 @@
             @parent
             @include('frontend.themes.EC.layouts.sections.main_sidebar')
         @show
+    @else
+        @section('header')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.new_header')
+        @show
     @endif
 
     @yield('content')
 
-    @if(isset($layout_type) && $layout_type == 'new')
+    @if(isset($layout_type) && $layout_type == 'old')
 
     @else
         {{-- @section('loader')
