@@ -4,7 +4,9 @@ use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
 class properties extends Sximo  {
-	
+	const CREATED_AT = 'created';
+    const UPDATED_AT = 'updated';
+
 	protected $table = 'tb_properties';
 	protected $primaryKey = 'id';
 
