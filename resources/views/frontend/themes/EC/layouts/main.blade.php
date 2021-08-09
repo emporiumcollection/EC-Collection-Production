@@ -12,9 +12,6 @@
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title> {{ CNF_APPNAME }} - @yield('meta_title') </title>
 
-
-
-
     @yield('meta_link_sitemap')
 
     <meta property="og:url" content="@yield('og_url')" />
@@ -25,22 +22,26 @@
     <meta property="og:image:width" content="@yield('og_image_width')" />
     <meta property="og:image:height" content="@yield('og_image_height')" /> -->
     @yield('og_image')
+
     <meta property="og:site_name" content="@yield('og_sitename')" />
     <meta property="og:locale" content="@yield('og_locale')" />
-
     <meta property="article:section" content="@yield('article_section')" />
+
     @yield('article_tags')
 
     <meta property="twitter:url" content="@yield('twitter_url')" />
     <meta property="twitter:title" content="@yield('twitter_title')" />
     <meta property="twitter:description" content="@yield('twitter_description')" />
+
     @yield('twitter_image')
+
     <meta property="twitter:domain" content="@yield('twitter_domain')" />
     <meta property="twitter:card" content="@yield('twitter_card')" />
     <meta property="twitter:creator" content="@yield('twitter_creator')" />
     <meta property="twitter:site" content="@yield('twitter_site')" />
+
     <script type="application/ld+json">
-    @yield('jsonld')
+        @yield('jsonld')
     </script>
 
     <!-- Disable tap highlight on IE -->
@@ -91,42 +92,53 @@
     {{--For Custom Styles --}}
     @section('custom_css')
         @parent
-
     @show
-@if(defined('CNF_GOOGLE_ANALYTIC_KEY'))
-    @if(CNF_GOOGLE_ANALYTIC_KEY != '')
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id={{ CNF_GOOGLE_ANALYTIC_KEY }}"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
 
-      gtag('config', '{{ CNF_GOOGLE_ANALYTIC_KEY }}');
-    </script>
-    @endif
-@endif
+    @if(defined('CNF_GOOGLE_ANALYTIC_KEY'))
+        @if(CNF_GOOGLE_ANALYTIC_KEY != '')
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id={{ CNF_GOOGLE_ANALYTIC_KEY }}"></script>
+        <script>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
 
-@if(defined('CNF_HUBSPOT_SCRIPT'))
-    @if(CNF_HUBSPOT_SCRIPT != '')
-    <!-- Start of HubSpot Embed Code -->
-    {!! CNF_HUBSPOT_SCRIPT !!}
-    <!-- End of HubSpot Embed Code -->
+          gtag('config', '{{ CNF_GOOGLE_ANALYTIC_KEY }}');
+        </script>
+        @endif
     @endif
-@endif
+
+    @if(defined('CNF_HUBSPOT_SCRIPT'))
+        @if(CNF_HUBSPOT_SCRIPT != '')
+        <!-- Start of HubSpot Embed Code -->
+        {!! CNF_HUBSPOT_SCRIPT !!}
+        <!-- End of HubSpot Embed Code -->
+        @endif
+    @endif
 </head>
 <body>
-    @section('header')
-        @parent
-        @include('frontend.themes.EC.layouts.sections.main_header')
-    @show
+    @if(isset($layout_type) && $layout_type == 'new')
+        @section('header')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.new_header')
+        @show
 
-    @section('leftsidebar')
-        @parent
-        @include('frontend.themes.EC.layouts.sections.main_sidebar')
-    @show
+    @else
+        @section('header')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.main_header')
+        @show
+
+        @section('leftsidebar')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.main_sidebar')
+        @show
+    @endif
 
     @yield('content')
+
+    @if(isset($layout_type) && $layout_type == 'new')
+    @endif
 
     @section('loader')
         @parent
@@ -142,32 +154,6 @@
 {{-- Site Base URL --}}
 
 <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>
-
-<!-- <script type="text/javascript" src="{{ asset('themes/EC/js/jquery.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/popper.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/bootstrap.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/leaflet.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/jqueryui/jquery-ui.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/moment.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/daterangepicker.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/jquery.mousewheel.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/simpleLightbox.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/mediaelement-and-player.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/jquery.rangecalendar.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/owl.carousel.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/daterangepicker.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/fullcalendar/core/main.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/fullcalendar/daygrid/main.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/slick/slick.min.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/wow.min.js') }}"></script>
-
-<script src="{{ asset('themes/EC/js/plugin/lightbox/js/lightgallery.min.js') }}"></script>
-<script src="{{ asset('themes/EC/js/plugin/lightbox/js/lg-thumbnail.js') }}"></script>
-<script src="{{ asset('themes/EC/js/plugin/lightbox/js/lg-share.js') }}"></script>
-<script src="{{ asset('themes/EC/js/plugin/rellax.min.js') }}"></script> -->
-
-
-<!-- <script type="text/javascript" src="{{ asset('themes/EC/js/jquery.min.js') }}"></script> -->
 <script type="text/javascript" src="{{ asset('themes/EC/js/jquery-3.5.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/bootstrap.min.js') }}"></script>
@@ -183,7 +169,6 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/daterangepicker.js') }}"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core.js"></script>
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/md5.js"></script>
-
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/fullcalendar/core/main.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/fullcalendar/daygrid/main.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/slick/slick.min.js') }}"></script>
@@ -211,67 +196,65 @@
 @show
 
 <script>
-
 $(function() {
-
     $(document).on('click', ".dest-collection", function(e){
-                e.preventDefault();
-                //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                var d_name = $(this).attr('data-name');
-                var active_cat = $("input[name='activeDestination']").val();
-                var cat = $("input[name='activeDestination']").val();
-                var coll_type = 'destinations';
-                var req_for = '';
-                var cobj = $(this);
+        e.preventDefault();
+        //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+        var d_name = $(this).attr('data-name');
+        var active_cat = $("input[name='activeDestination']").val();
+        var cat = $("input[name='activeDestination']").val();
+        var coll_type = 'destinations';
+        var req_for = '';
+        var cobj = $(this);
 
-                console.log(d_name+"/"+cat+"/"+coll_type+"/"+req_for+"/"+cobj);
+        console.log(d_name+"/"+cat+"/"+coll_type+"/"+req_for+"/"+cobj);
 
-                //var token = $("input[name='_token']").val();
+        //var token = $("input[name='_token']").val();
 
-                $.ajax({
-                    url:'{{URL::to("propcollection/")}}',
-                    dataType:'json',
-                    data: {d_name:d_name, coll_type:coll_type, cat:cat},
-                    type: 'post',
-                    success: function(response){
+        $.ajax({
+            url:'{{URL::to("propcollection/")}}',
+            dataType:'json',
+            data: {d_name:d_name, coll_type:coll_type, cat:cat},
+            type: 'post',
+            success: function(response){
 
-                        if(response.type=='dedicated-collection'){
-                            var mem_types = response.mem_types;
-                            if(mem_types.indexOf("2")>0){
-                                //window.location.href = '{{URL::to('luxury_destinations')}}/'+cat+'/dedicated-collection';
-                                //cat = $("#dd-destination").val();
-                                getPropertyByCollection('dedicated-collection', cat, 1, req_for);
-                                $(".dest-collection").find('a').removeClass('active');
-                                cobj.find('a').addClass('active');
-                                $("#dest_collection").val('dedicated-collection');
-                            }else{
-                                show_modal_content(response.type);
-                                $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
-                            }
-                        }else if(response.type=='bespoke-collection'){
-                            var mem_types = response.mem_types;
-                            if(mem_types.indexOf("3")>0){
-                                //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/bespoke-collection';
-                                //cat = $("#dd-destination").val();
-                                getPropertyByCollection('bespoke-collection', cat, 1, req_for);
-                                $(".dest-collection").find('a').removeClass('active');
-                                cobj.find('a').addClass('active');
-                                $("#dest_collection").val('bespoke-collection');
-                            }else{
-                                show_modal_content(response.type);
-                                $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
-                            }
-                        }else{
-                            //cat = $("#dd-destination").val();
-                            getPropertyByCollection('lifestyle-collection', cat, 1, req_for);
-                            $(".dest-collection").find('a').removeClass('active');
-                            cobj.find('a').addClass('active');
-                            $("#dest_collection").val('lifestyle-collection');
-                            //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/lifestyle-collection';
-                        }
+                if(response.type=='dedicated-collection'){
+                    var mem_types = response.mem_types;
+                    if(mem_types.indexOf("2")>0){
+                        //window.location.href = '{{URL::to('luxury_destinations')}}/'+cat+'/dedicated-collection';
+                        //cat = $("#dd-destination").val();
+                        getPropertyByCollection('dedicated-collection', cat, 1, req_for);
+                        $(".dest-collection").find('a').removeClass('active');
+                        cobj.find('a').addClass('active');
+                        $("#dest_collection").val('dedicated-collection');
+                    }else{
+                        show_modal_content(response.type);
+                        $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
                     }
-                });
-            });
+                }else if(response.type=='bespoke-collection'){
+                    var mem_types = response.mem_types;
+                    if(mem_types.indexOf("3")>0){
+                        //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/bespoke-collection';
+                        //cat = $("#dd-destination").val();
+                        getPropertyByCollection('bespoke-collection', cat, 1, req_for);
+                        $(".dest-collection").find('a').removeClass('active');
+                        cobj.find('a').addClass('active');
+                        $("#dest_collection").val('bespoke-collection');
+                    }else{
+                        show_modal_content(response.type);
+                        $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
+                    }
+                }else{
+                    //cat = $("#dd-destination").val();
+                    getPropertyByCollection('lifestyle-collection', cat, 1, req_for);
+                    $(".dest-collection").find('a').removeClass('active');
+                    cobj.find('a').addClass('active');
+                    $("#dest_collection").val('lifestyle-collection');
+                    //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/lifestyle-collection';
+                }
+            }
+        });
+    });
 
     $(".suites-slider").not('.slick-initialized').slick({
         infinite: true,
@@ -280,6 +263,7 @@ $(function() {
         prevArrow: $('.prev'),
         nextArrow: $('.next'),
     });
+
     $('.slider-detail').not('.slick-initialized').slick({
       infinite: true,
       speed: 300,
@@ -287,7 +271,6 @@ $(function() {
       prevArrow: $('.prev'),
       nextArrow: $('.next'),
     });
-
 
     $('video').mediaelementplayer({
       enableAutosize: true,
@@ -301,10 +284,11 @@ $(function() {
     });
 
     $('.prev').click(function () {
-      $('video').trigger('pause');
+        $('video').trigger('pause');
     });
+
     $('.next').click(function () {
-      $('video').trigger('pause');
+        $('video').trigger('pause');
     });
 
     $("#cal1").rangeCalendar({
@@ -314,37 +298,35 @@ $(function() {
         start : "0",
         changeRangeCallback: rangeChanged,
     });
+
     var arriveDt = new Date();
     var depDt = new Date();
 
-    @if(!empty($arrive_date))
-      var arriveDt1 = '{{$arrive_date}}';
-    @endif
-
-    @if(!empty($departure_date))
-      var  depDt1 = '{{$departure_date}}';
-    @endif
 
     var _day = '';
     var _month = '';
     var _year = '';
-    var sp_arr = arriveDt1.split('-');
+    var sp_arr = arriveDt.toDateString().split('-');
+
     if(sp_arr.length > 2){
         _year = sp_arr[0];
         _month = sp_arr[2];
         _day = sp_arr[1];
     }
+
     var newArrDt = new Date(_year, _month, _day);
 
     var _dday = '';
     var _dmonth = '';
     var _dyear = '';
-    var sp_darr = depDt1.split('-');
+    var sp_darr = depDt.toDateString().split('-');
+
     if(sp_darr.length > 2){
         _dyear = sp_darr[0];
         _dmonth = sp_darr[2];
         _dday = sp_darr[1];
     }
+
     var newDepDt = new Date(_dyear, _dmonth, _dday);
 
     var defStartDay = moment(newArrDt).format('DD');
@@ -884,33 +866,28 @@ $(function() {
       $('.collapse').removeClass('show');
       $('.slider-detail').not('.slick-initialized').slick('setPosition');
     });
-
-  });
-
+});
 </script>
 
 <script type="text/javascript">
-  $(function() {
+    $(function() {
+        // For header range calendar
+        var pickerDate = $('#date_range').daterangepicker({
+            parentEl: "#date_range_container",
+            autoApply: true,
+            minDate: new Date(),
+            autoUpdateInput: false,
+            locale: {
+                cancelLabel: 'Clear',
+            }
+        });
 
-    // For header range calendar
-    var pickerDate = $('#date_range').daterangepicker({
-        parentEl: "#date_range_container",
-        autoApply: true,
-        minDate: new Date(),
-        autoUpdateInput: false,
-        locale: {
-            cancelLabel: 'Clear',
-        }
+        pickerDate.on('apply.daterangepicker', function (ev, pickerDate) {
+            $('.cal-date').html(pickerDate.startDate.format('DD MMM') + ' - ' + pickerDate.endDate.format('DD MMM'));
+        });
+        pickerDate.data('daterangepicker').hide = function () { };
+        pickerDate.data('daterangepicker').show();
     });
-
-    pickerDate.on('apply.daterangepicker', function (ev, pickerDate) {
-        $('.cal-date').html(pickerDate.startDate.format('DD MMM') + ' - ' + pickerDate.endDate.format('DD MMM'));
-    });
-    pickerDate.data('daterangepicker').hide = function () { };
-    pickerDate.data('daterangepicker').show();
-
-
-  });
 </script>
 
 </body>

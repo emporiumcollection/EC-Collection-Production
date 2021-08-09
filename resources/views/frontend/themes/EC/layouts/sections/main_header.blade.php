@@ -1,3 +1,11 @@
+<?php
+
+  $mapsearch = URL::to("mapsearchavailability?" . Request::getQueryString());
+  $videourl = URL::to("social-youtube?" . Request::getQueryString());
+  $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
+
+?>
+
   <header>
   <div class="top-header">
     <div class="px-4 pt-2">
@@ -13,10 +21,10 @@
               aria-controls="searchF">
               <i class="ico ico-search"></i>
             </a>
-            <a href="#cityList" class="menu-nav text-menu city-f" data-toggle="collapse" role="button"
+<!--             <a href="#cityList" class="menu-nav text-menu city-f" data-toggle="collapse" role="button"
               aria-expanded="false" aria-controls="cityList">
               <span class="label-city" style="background: green;"></span> New York
-            </a>
+            </a> -->
             <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false"
               aria-controls="calcF">
               <span class="cal-date">22 Jun - 23 Jun</span>
@@ -222,17 +230,17 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="location-page.html">
+              <a class="nav-link" href="{{ $mapsearch }}">
                 <i class="ico ico-place"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{ $videourl }}">
                 <i class="ico ico-video"></i>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link" href="{{ $instagramurl }}">
                 <i class="ico ico-instagram"></i>
               </a>
             </li>
@@ -243,7 +251,7 @@
                 Restaurants & Bars
               </a>
             </li>
-            <li class="nav-item">
+<!--             <li class="nav-item">
               <a class="nav-link" href="#">
                 Yachts
               </a>
@@ -252,7 +260,7 @@
               <a class="nav-link" href="#">
                 Jet
               </a>
-            </li>
+            </li> -->
           </ul>
           <ul class="nav nav-right ml-auto">
             <li class="nav-item">
@@ -378,7 +386,7 @@
         </a>
       </div>
     </div>
-    <div class="collapse clp" id="cityList" data-parent="#menunav">
+<!--     <div class="collapse clp" id="cityList" data-parent="#menunav">
       <ul class="nav flex-column py-2">
         <li class="nav-item">
           <a class="nav-link" href="#"><span class="city-name-nav"><span class="label-city"
@@ -393,7 +401,7 @@
                 style="background: blue;"></span> San Francisco</span>. -> 12.8.20 -> 16.8.20</a>
         </li>
       </ul>
-    </div>
+    </div> -->
 
     <div class="collapse clp" id="searchF" data-parent="#menunav">
       <div class="search-field">
