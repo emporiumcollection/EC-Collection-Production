@@ -146,7 +146,8 @@ class HotelController extends Controller {
      * Landing view of site
      */
     public function landing_view() {
-        $latest_hotels = DB::table('tb_properties')->select('tb_properties.*')->orderBy('id', 'desc')->take(8)->get();
+        $latest_hotels = DB::table('tb_properties')->select('tb_properties.*')->where('latest_hotel', '1')->take(8)->get();
+        $trending_destinations = DB::table('tb_categories')->select('tb_categories.*')->where('trending_destination', '1')->take(8)->get();
         $island_hotels = DB::connection('islandconn')->table('tb_properties')->select('tb_properties.*')->orderBy('id', 'desc')->take(8)->get();
         $spa_hotels = DB::connection('spaconn')->table('tb_properties')->select('tb_properties.*')->orderBy('id', 'desc')->take(8)->get();
         $safari_hotels = DB::connection('safariconn')->table('tb_properties')->select('tb_properties.*')->orderBy('id', 'desc')->take(8)->get();
@@ -201,6 +202,7 @@ class HotelController extends Controller {
             'island_hotels' => $island_hotels,
             'spa_hotels' => $spa_hotels,
             'safari_hotels' => $safari_hotels,
+            'trending_destinations' => $trending_destinations,
         ];
         return view('frontend.themes.EC.properties.landing_view', $data);
     }

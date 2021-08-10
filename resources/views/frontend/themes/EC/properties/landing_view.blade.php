@@ -309,7 +309,6 @@
   <div class="book-list-hotel-item">
       @foreach($latest_hotels as $lh)
           @if(isset($lh->hotel_images))
-{{--              {{dd($lh)}}--}}
               <div>
                   <div class="m-1 htl-cont">
                       <div class="book-htl-img">
@@ -376,354 +375,46 @@
 <div class="hotel-book-list container hotel-book-container">
   <h2 class="mx-1 font-weight-bold">Trending Destinations</h2>
   <div class="book-list-hotel-item">
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
+      @foreach($trending_destinations as $lh)
+          @if(isset($lh->category_image))
+              <div>
+                  <div class="m-1 htl-cont">
+                      <div class="book-htl-img">
+                          <a href="{{url('/')}}">
+                              <img src="{{'uploads/category_imgs/'.$lh->category_image}}" class="img-fluid" alt="">
                           </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
+                          <div class="my-dropdown">
+                              <div class="btn-group dropleft">
+                                  <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                      <i class="ico ico-diamon diamon-label"></i>
+                                  </a>
+                                  <div class="dropdown-menu">
+                                      <a href="#" class="dropdown-item">Add to collection</a>
+                                      <a href="#" class="dropdown-item btn-sidebar create-collection"
+                                         data-sidebar="#myCollection">Create new collection</a>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="hotel-meta full-width is-small">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+                                  Quick info
+                              </a>
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
+                                  Gallery
+                              </a>
                           </div>
                       </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
+                      <div class="htl-desc">
+                          <a href="#">
+                              <h5 class="mb-0">
+                                  {{$lh->category_name}}
+                              </h5>
                           </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
                       </div>
                   </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
               </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
+          @endif
+      @endforeach
   </div>
 </div>
 <div class="act-container">
@@ -946,359 +637,359 @@
       @endforeach
   </div>
 </div>
-<div class="hotel-book-list container hotel-book-container">
-  <h2 class="mx-1 font-weight-bold">Yatchs</h2>
-  <div class="book-list-hotel-item">
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-      <div>
-          <div class="m-1 htl-cont">
-              <div class="book-htl-img">
-                  <a href="#">
-                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
-                  </a>
-                  <div class="hotel-prices d-flex">
-                      <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                              <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€
-                                  167
-                              </span>
-                          </h3>
-                          <div class="ml-2">
-                              <span class="pernight"></span>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                              <i class="ico ico-diamon diamon-label"></i>
-                          </a>
-                          <div class="dropdown-menu">
-                              <a href="#" class="dropdown-item">Add to collection</a>
-                              <a href="#" class="dropdown-item btn-sidebar create-collection"
-                                  data-sidebar="#myCollection">Create new collection</a>
-                          </div>
-                      </div>
-                  </div>
-                  <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                          Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                          Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                          Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                          Suite(s)
-                      </a>
-                  </div>
-              </div>
-              <div class="htl-desc">
-                  <a href="#">
-                      <h5 class="mb-0">
-                          The Ludlow Hotel
-                      </h5>
-                      <p class="mb-0">New york</p>
-                  </a>
-              </div>
-          </div>
-      </div>
-  </div>
-</div>
+{{--<div class="hotel-book-list container hotel-book-container">--}}
+{{--  <h2 class="mx-1 font-weight-bold">Yatchs</h2>--}}
+{{--  <div class="book-list-hotel-item">--}}
+{{--      <div>--}}
+{{--          <div class="m-1 htl-cont">--}}
+{{--              <div class="book-htl-img">--}}
+{{--                  <a href="#">--}}
+{{--                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">--}}
+{{--                  </a>--}}
+{{--                  <div class="hotel-prices d-flex">--}}
+{{--                      <div class="row align-items-center justify-content-center">--}}
+{{--                          <div class="mr-2">--}}
+{{--                              <i class="ico ico-info-green"></i>--}}
+{{--                          </div>--}}
+{{--                          <h3 class="mb-0">--}}
+{{--                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€--}}
+{{--                                  167--}}
+{{--                              </span>--}}
+{{--                          </h3>--}}
+{{--                          <div class="ml-2">--}}
+{{--                              <span class="pernight"></span>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="my-dropdown">--}}
+{{--                      <div class="btn-group dropleft">--}}
+{{--                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                              <i class="ico ico-diamon diamon-label"></i>--}}
+{{--                          </a>--}}
+{{--                          <div class="dropdown-menu">--}}
+{{--                              <a href="#" class="dropdown-item">Add to collection</a>--}}
+{{--                              <a href="#" class="dropdown-item btn-sidebar create-collection"--}}
+{{--                                  data-sidebar="#myCollection">Create new collection</a>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="hotel-meta full-width is-small">--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                          Reviews--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">--}}
+{{--                          Quick info--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">--}}
+{{--                          Gallery--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">--}}
+{{--                          Suite(s)--}}
+{{--                      </a>--}}
+{{--                  </div>--}}
+{{--              </div>--}}
+{{--              <div class="htl-desc">--}}
+{{--                  <a href="#">--}}
+{{--                      <h5 class="mb-0">--}}
+{{--                          The Ludlow Hotel--}}
+{{--                      </h5>--}}
+{{--                      <p class="mb-0">New york</p>--}}
+{{--                  </a>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--      <div>--}}
+{{--          <div class="m-1 htl-cont">--}}
+{{--              <div class="book-htl-img">--}}
+{{--                  <a href="#">--}}
+{{--                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">--}}
+{{--                  </a>--}}
+{{--                  <div class="hotel-prices d-flex">--}}
+{{--                      <div class="row align-items-center justify-content-center">--}}
+{{--                          <div class="mr-2">--}}
+{{--                              <i class="ico ico-info-green"></i>--}}
+{{--                          </div>--}}
+{{--                          <h3 class="mb-0">--}}
+{{--                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€--}}
+{{--                                  167--}}
+{{--                              </span>--}}
+{{--                          </h3>--}}
+{{--                          <div class="ml-2">--}}
+{{--                              <span class="pernight"></span>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="my-dropdown">--}}
+{{--                      <div class="btn-group dropleft">--}}
+{{--                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                              <i class="ico ico-diamon diamon-label"></i>--}}
+{{--                          </a>--}}
+{{--                          <div class="dropdown-menu">--}}
+{{--                              <a href="#" class="dropdown-item">Add to collection</a>--}}
+{{--                              <a href="#" class="dropdown-item btn-sidebar create-collection"--}}
+{{--                                  data-sidebar="#myCollection">Create new collection</a>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="hotel-meta full-width is-small">--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                          Reviews--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">--}}
+{{--                          Quick info--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">--}}
+{{--                          Gallery--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">--}}
+{{--                          Suite(s)--}}
+{{--                      </a>--}}
+{{--                  </div>--}}
+{{--              </div>--}}
+{{--              <div class="htl-desc">--}}
+{{--                  <a href="#">--}}
+{{--                      <h5 class="mb-0">--}}
+{{--                          The Ludlow Hotel--}}
+{{--                      </h5>--}}
+{{--                      <p class="mb-0">New york</p>--}}
+{{--                  </a>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--      <div>--}}
+{{--          <div class="m-1 htl-cont">--}}
+{{--              <div class="book-htl-img">--}}
+{{--                  <a href="#">--}}
+{{--                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">--}}
+{{--                  </a>--}}
+{{--                  <div class="hotel-prices d-flex">--}}
+{{--                      <div class="row align-items-center justify-content-center">--}}
+{{--                          <div class="mr-2">--}}
+{{--                              <i class="ico ico-info-green"></i>--}}
+{{--                          </div>--}}
+{{--                          <h3 class="mb-0">--}}
+{{--                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€--}}
+{{--                                  167--}}
+{{--                              </span>--}}
+{{--                          </h3>--}}
+{{--                          <div class="ml-2">--}}
+{{--                              <span class="pernight"></span>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="my-dropdown">--}}
+{{--                      <div class="btn-group dropleft">--}}
+{{--                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                              <i class="ico ico-diamon diamon-label"></i>--}}
+{{--                          </a>--}}
+{{--                          <div class="dropdown-menu">--}}
+{{--                              <a href="#" class="dropdown-item">Add to collection</a>--}}
+{{--                              <a href="#" class="dropdown-item btn-sidebar create-collection"--}}
+{{--                                  data-sidebar="#myCollection">Create new collection</a>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="hotel-meta full-width is-small">--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                          Reviews--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">--}}
+{{--                          Quick info--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">--}}
+{{--                          Gallery--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">--}}
+{{--                          Suite(s)--}}
+{{--                      </a>--}}
+{{--                  </div>--}}
+{{--              </div>--}}
+{{--              <div class="htl-desc">--}}
+{{--                  <a href="#">--}}
+{{--                      <h5 class="mb-0">--}}
+{{--                          The Ludlow Hotel--}}
+{{--                      </h5>--}}
+{{--                      <p class="mb-0">New york</p>--}}
+{{--                  </a>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--      <div>--}}
+{{--          <div class="m-1 htl-cont">--}}
+{{--              <div class="book-htl-img">--}}
+{{--                  <a href="#">--}}
+{{--                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">--}}
+{{--                  </a>--}}
+{{--                  <div class="hotel-prices d-flex">--}}
+{{--                      <div class="row align-items-center justify-content-center">--}}
+{{--                          <div class="mr-2">--}}
+{{--                              <i class="ico ico-info-green"></i>--}}
+{{--                          </div>--}}
+{{--                          <h3 class="mb-0">--}}
+{{--                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€--}}
+{{--                                  167--}}
+{{--                              </span>--}}
+{{--                          </h3>--}}
+{{--                          <div class="ml-2">--}}
+{{--                              <span class="pernight"></span>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="my-dropdown">--}}
+{{--                      <div class="btn-group dropleft">--}}
+{{--                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                              <i class="ico ico-diamon diamon-label"></i>--}}
+{{--                          </a>--}}
+{{--                          <div class="dropdown-menu">--}}
+{{--                              <a href="#" class="dropdown-item">Add to collection</a>--}}
+{{--                              <a href="#" class="dropdown-item btn-sidebar create-collection"--}}
+{{--                                  data-sidebar="#myCollection">Create new collection</a>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="hotel-meta full-width is-small">--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                          Reviews--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">--}}
+{{--                          Quick info--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">--}}
+{{--                          Gallery--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">--}}
+{{--                          Suite(s)--}}
+{{--                      </a>--}}
+{{--                  </div>--}}
+{{--              </div>--}}
+{{--              <div class="htl-desc">--}}
+{{--                  <a href="#">--}}
+{{--                      <h5 class="mb-0">--}}
+{{--                          The Ludlow Hotel--}}
+{{--                      </h5>--}}
+{{--                      <p class="mb-0">New york</p>--}}
+{{--                  </a>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--      <div>--}}
+{{--          <div class="m-1 htl-cont">--}}
+{{--              <div class="book-htl-img">--}}
+{{--                  <a href="#">--}}
+{{--                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">--}}
+{{--                  </a>--}}
+{{--                  <div class="hotel-prices d-flex">--}}
+{{--                      <div class="row align-items-center justify-content-center">--}}
+{{--                          <div class="mr-2">--}}
+{{--                              <i class="ico ico-info-green"></i>--}}
+{{--                          </div>--}}
+{{--                          <h3 class="mb-0">--}}
+{{--                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€--}}
+{{--                                  167--}}
+{{--                              </span>--}}
+{{--                          </h3>--}}
+{{--                          <div class="ml-2">--}}
+{{--                              <span class="pernight"></span>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="my-dropdown">--}}
+{{--                      <div class="btn-group dropleft">--}}
+{{--                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                              <i class="ico ico-diamon diamon-label"></i>--}}
+{{--                          </a>--}}
+{{--                          <div class="dropdown-menu">--}}
+{{--                              <a href="#" class="dropdown-item">Add to collection</a>--}}
+{{--                              <a href="#" class="dropdown-item btn-sidebar create-collection"--}}
+{{--                                  data-sidebar="#myCollection">Create new collection</a>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="hotel-meta full-width is-small">--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                          Reviews--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">--}}
+{{--                          Quick info--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">--}}
+{{--                          Gallery--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">--}}
+{{--                          Suite(s)--}}
+{{--                      </a>--}}
+{{--                  </div>--}}
+{{--              </div>--}}
+{{--              <div class="htl-desc">--}}
+{{--                  <a href="#">--}}
+{{--                      <h5 class="mb-0">--}}
+{{--                          The Ludlow Hotel--}}
+{{--                      </h5>--}}
+{{--                      <p class="mb-0">New york</p>--}}
+{{--                  </a>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--      <div>--}}
+{{--          <div class="m-1 htl-cont">--}}
+{{--              <div class="book-htl-img">--}}
+{{--                  <a href="#">--}}
+{{--                      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">--}}
+{{--                  </a>--}}
+{{--                  <div class="hotel-prices d-flex">--}}
+{{--                      <div class="row align-items-center justify-content-center">--}}
+{{--                          <div class="mr-2">--}}
+{{--                              <i class="ico ico-info-green"></i>--}}
+{{--                          </div>--}}
+{{--                          <h3 class="mb-0">--}}
+{{--                              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€--}}
+{{--                                  167--}}
+{{--                              </span>--}}
+{{--                          </h3>--}}
+{{--                          <div class="ml-2">--}}
+{{--                              <span class="pernight"></span>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="my-dropdown">--}}
+{{--                      <div class="btn-group dropleft">--}}
+{{--                          <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">--}}
+{{--                              <i class="ico ico-diamon diamon-label"></i>--}}
+{{--                          </a>--}}
+{{--                          <div class="dropdown-menu">--}}
+{{--                              <a href="#" class="dropdown-item">Add to collection</a>--}}
+{{--                              <a href="#" class="dropdown-item btn-sidebar create-collection"--}}
+{{--                                  data-sidebar="#myCollection">Create new collection</a>--}}
+{{--                          </div>--}}
+{{--                      </div>--}}
+{{--                  </div>--}}
+{{--                  <div class="hotel-meta full-width is-small">--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                          Reviews--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">--}}
+{{--                          Quick info--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">--}}
+{{--                          Gallery--}}
+{{--                      </a>--}}
+{{--                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">--}}
+{{--                          Suite(s)--}}
+{{--                      </a>--}}
+{{--                  </div>--}}
+{{--              </div>--}}
+{{--              <div class="htl-desc">--}}
+{{--                  <a href="#">--}}
+{{--                      <h5 class="mb-0">--}}
+{{--                          The Ludlow Hotel--}}
+{{--                      </h5>--}}
+{{--                      <p class="mb-0">New york</p>--}}
+{{--                  </a>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </div>--}}
+{{--  </div>--}}
+{{--</div>--}}
 <hr>
 <div class="container hotel-book-container">
   <div class="row">
