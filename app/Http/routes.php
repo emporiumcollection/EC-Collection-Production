@@ -23,6 +23,7 @@ Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 Route::get('landing_view', 'PhaseOne\HotelController@landing_view');
 Route::get('hotel_details', 'PhaseOne\HotelController@hotel_details');
 Route::get('get_inspired', 'PhaseOne\HotelController@get_inspired');
+Route::get('hotel_quick_info', 'PhaseOne\HotelController@getHotelQuickInfo');
 Route::get('hotel/{title}', 'PhaseOne\HotelController@index');
 Route::get('mapsearchavailability', 'PhaseOne\MapBoxController@index');
 Route::get('book/reservation', 'PhaseOne\ReservationController@index');
