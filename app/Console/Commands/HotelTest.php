@@ -206,7 +206,7 @@ class HotelTest extends Command
         $headers = array('Content-Type' => 'application/x-www-form-urlencoded');
         $requests_response = Requests::post($url, $headers, $auth_data);
         $body = json_decode($requests_response->body);
-print_r($body);exit;
+
         $this->access_token = $body->access_token;
 
         //$this->searchCityCodes();
