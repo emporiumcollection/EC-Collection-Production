@@ -1,0 +1,20 @@
+DELIMITER ;;
+CREATE DEFINER=`voyage`@`%` PROCEDURE `property_multi_level_child_proc`(IN param_id CHAR(50))
+BEGIN
+
+SELECT id FROM  (SELECT parent_category_id, id FROM tb_categories WHERE (category_published = 1) ORDER BY parent_category_id, id) products_sorted, (SELECT @pv := param_id) initialisation WHERE FIND_IN_SET(parent_category_id, @pv) > 0 AND @pv := CONCAT(@pv, ',', id);
+    END;;
+DELIMITER ;
+
+create :
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`voyage`@`%` SQL SECURITY DEFINER VIEW `property_categories_split_in_rows` AS (select `tb_properties`.`id` AS `id`,`tb_properties`.`property_category_id` AS `property_category_id`,`tb_properties`.`property_status` AS `property_status`,substring_index(substring_index(`tb_properties`.`property_category_id`,',',`tb_numbers`.`id`),',',-(1)) AS `category_id` from (`tb_numbers` join `tb_properties` on(((char_length(`tb_properties`.`property_category_id`) - char_length(replace(`tb_properties`.`property_category_id`,',',''))) >= (`tb_numbers`.`id` - 1)))) where (`tb_properties`.`property_category_id` <> '') order by `tb_properties`.`id`,`tb_numbers`.`id`);
+
+DELIMITER ;;
+CREATE DEFINER=`voyage`@`%` PROCEDURE `property_multi_level_child_proc`(IN param_id CHAR(50))
+BEGIN
+
+SELECT id FROM  (SELECT parent_category_id, id FROM tb_categories WHERE (category_published = 1) ORDER BY parent_category_id, id) products_sorted, (SELECT @pv := param_id) initialisation WHERE FIND_IN_SET(parent_category_id, @pv) > 0 AND @pv := CONCAT(@pv, ',', id);
+    END;;
+DELIMITER ;
+
