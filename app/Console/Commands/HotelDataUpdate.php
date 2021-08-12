@@ -51,7 +51,7 @@ class HotelDataUpdate extends Command
                 $hotels = Requests::get($hotelUrl, $getHeaders);
 
                 $hotels = json_decode($hotels->body);
-
+                // print_r($hotels);exit();
                 if(isset($hotels->data) && !empty($hotels->data)){
                     foreach($hotels->data as $hotel){
                         // print_r($hotel->offers[0]);exit;
@@ -62,6 +62,18 @@ class HotelDataUpdate extends Command
                         if (isset($hotel->offers[0]->room->typeEstimated->bedType )) {
                             $category_bed_type = $hotel->offers[0]->room->typeEstimated->bedType; 
                         }
+
+                        $fetch_types = DB::table('tb_properties_category_types')
+                                ->select('property_id')
+                                ->Where('property_id','=', $property->id)    
+                                ->get();
+                        if (empty($fetch_types)) {
+                            $insertTypes = DB::table('tb_properties_category_types')->insert([
+                                'category_name' => $category_name
+                            ]);
+                        }
+                        $getlastId = DB::getPdo()->lastInsertId();
+                        
                         $merge_name = $category_name." ".$category_bed_type;
                         $getdata = DB::table('tb_properties_category_rooms')
                         ->select('id','property_id','room_name')
@@ -71,7 +83,7 @@ class HotelDataUpdate extends Command
                         if (empty($getdata)) {
                             DB::table('tb_properties_category_rooms')->insert([
                                 'property_id' => $property->id,
-                                'category_id' => 0,
+                                'category_id' => $getlastId ,
                                 'room_name' => $merge_name  
                             ]);
                             $rooms_id = DB::getPdo()->lastInsertId();
@@ -148,7 +160,6 @@ class HotelDataUpdate extends Command
          }
          return $seasons;
     }
-
     private function getDayPrices($value, $dayPrices){
         $from = $value->startDate;
         $to = $value->endDate;        
