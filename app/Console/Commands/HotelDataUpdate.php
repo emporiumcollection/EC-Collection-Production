@@ -62,20 +62,21 @@ class HotelDataUpdate extends Command
                         if (isset($hotel->offers[0]->room->typeEstimated->bedType )) {
                             $category_bed_type = $hotel->offers[0]->room->typeEstimated->bedType; 
                         }
-
                         $merge_name = $category_name." ".$category_bed_type;
                         $getdata = DB::table('tb_properties_category_rooms')
-                        ->select('property_id','room_name')
+                        ->select('id','property_id','room_name')
                         ->Where('property_id','=', $property->id)    
                         ->Where('room_name','=', $merge_name)
                         ->get();
-
                         if (empty($getdata)) {
                             DB::table('tb_properties_category_rooms')->insert([
                                 'property_id' => $property->id,
                                 'category_id' => 0,
                                 'room_name' => $merge_name  
                             ]);
+                            $rooms_id = DB::getPdo()->lastInsertId();
+                        }else{
+                            $rooms_id = $getdata[0]->id;    
                         }
                         $property_id = $property->id;
                         $rack_rate = $hotel->offers[0]->price->variations->average->base;
@@ -85,7 +86,11 @@ class HotelDataUpdate extends Command
                             if(count($dayPrices)>=7) break;
                             $dayPrices = $this->getDayPrices($value, $dayPrices);
                         }
-                        $this->insertRates($property_id,$season['season_id'], $rack_rate, $dayPrices);
+                        $this->insertRates($property_id,
+                            $season['season_id'], 
+                            $rack_rate, 
+                            $dayPrices,
+                            $rooms_id );
                     }                    
                 }else{
                     echo 'NOT data ==' . $property->amadeus_hotel_id;
@@ -102,7 +107,6 @@ class HotelDataUpdate extends Command
             exit;
         }
     }
-
     private function authenticate(){
         $data = [];
         //Requests::register_autoloader();
@@ -117,10 +121,8 @@ class HotelDataUpdate extends Command
         $headers = array('Content-Type' => 'application/x-www-form-urlencoded');
         $requests_response = Requests::post($url, $headers, $auth_data);
         $body = json_decode($requests_response->body);
-
         $this->access_token = $body->access_token;
     }
-
     private function insertSeasons($property_id, $seasons){
         DB::table('tb_seasons')->where('property_id', '=', $property_id)->delete();
         DB::table('tb_seasons_dates')->where('property_id', '=', $property_id)->delete();
@@ -131,12 +133,12 @@ class HotelDataUpdate extends Command
             // print_r($seasons);exit;
             $start_date = $val['start'];
             $end_date = $val['end'];
-            $addseason = DB::table('tb_seasons')->insert([
+            DB::table('tb_seasons')->insert([
                 'season_name' => 'Season '.$key,
                 'property_id' => $property_id,
             ]);
             $lastId = DB::getPdo()->lastInsertId();
-            $addseason = DB::table('tb_seasons_dates')->insert([
+            DB::table('tb_seasons_dates')->insert([
                 'season_id' => $lastId,
                 'property_id' => $property_id,
                 'season_from_date' => $start_date,
@@ -144,7 +146,6 @@ class HotelDataUpdate extends Command
             ]);
             $seasons[$key]['season_id'] = $lastId;
          }
-
          return $seasons;
     }
 
@@ -154,7 +155,6 @@ class HotelDataUpdate extends Command
          while(strtotime($from) <= strtotime($to) ){
                 $start_date = strtotime($from);
                 $day = date('D', $start_date);
-
                 if(!isset($dayPrices[$day])){
                     $dayPrices[$day] = $value->base;
                 }                
@@ -164,53 +164,44 @@ class HotelDataUpdate extends Command
         return $dayPrices;
     }
 
-    private function insertRates($property_id,$seasons_id,$rack_rate, $dayPrices){
-            $insertday =  DB::table('tb_properties_category_rooms_price')
+    private function insertRates($property_id,$seasons_id,$rack_rate, $dayPrices,$rooms_id){
+        DB::table('tb_properties_category_rooms_price')
             ->insert([
-            'property_id' =>$property_id,
-            'season_id' =>$seasons_id,
-            'rack_rate' =>$rack_rate,
-            'monday_price' =>$dayPrices['Mon'],
-            'tuesday_price' =>$dayPrices['Tue'],
-            'wednesday_price' =>$dayPrices['Wed'],
-            'thursday_price' =>$dayPrices['Thu'],
-            'friday_price' =>$dayPrices['Fri'],
-            'saturday_price' =>$dayPrices['Sat'],
-            'sunday_price' =>$dayPrices['Sun'],
+                'category_id'       => $rooms_id,
+                'property_id'       => $property_id,
+                'season_id'         => $seasons_id,
+                'rack_rate'         => $rack_rate,
+                'monday_price'      => $dayPrices['Mon'],
+                'tuesday_price'     => $dayPrices['Tue'],
+                'wednesday_price'   => $dayPrices['Wed'],
+                'thursday_price'    => $dayPrices['Thu'],
+                'friday_price'      => $dayPrices['Fri'],
+                'saturday_price'    => $dayPrices['Sat'],
+                'sunday_price'      => $dayPrices['Sun'],
             ]);
     }
-
     private function createSeasons(){
         $threshold_date = strtotime(date("Y-m-d"));  
         $threshold_date = strtotime("+1 year", $threshold_date);  
         $threshold_date = date('Y-m-d', $threshold_date);
-        // echo"<pre>";  print_r($threshold_date);exit;
-
         $start_date = date("Y-m-d");  
         $date = strtotime($start_date);
         $date = strtotime("+3 week", $date);
         $end_date = date('Y-m-d', $date);
-        // echo"<pre>";  print_r($end_date);exit;
-        // echo"<pre>";  print_r($end_date);exit;
         $seasons[] = [
             'start' => $start_date,
             'end' => $end_date,
         ];
-
-        // $end_plus_one = 
         while(strtotime($end_date) < strtotime($threshold_date) ){
             $start_date = strtotime($end_date); 
             $start_date = strtotime("+1 day", $start_date);
-
             $end_date = strtotime("+3 week",$start_date);
             $end_date = date('Y-m-d', $end_date);
-
             $seasons[] = [
                 'start' => date("Y-m-d", $start_date),
                 'end' => $end_date,
             ];
         }
-
         return $seasons;
     }
 }
