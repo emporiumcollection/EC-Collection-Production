@@ -2084,7 +2084,7 @@
     });
   });
 
-  $(document).on('click', '#suite_gallery-tab', function () {
+  $(document).on('click', '#suite_gallery-tab2', function () {
     var _type = $(this).attr('data-type');
     var _slug = $("#hid_propid").val();
 

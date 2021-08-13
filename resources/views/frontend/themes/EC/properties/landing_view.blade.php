@@ -343,13 +343,13 @@
                               </div>
                           </div>
                           <div class="hotel-meta full-width is-small">
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                                  Reviews
-                              </a>
+{{--                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                                  Reviews--}}
+{{--                              </a>--}}
                               <a href="#" class="view bg-btn-gl-001 btn-sidebar" onclick="getQuickInfo({{$lh->id}})" data-sidebar="#quickinfo">
                                   Quick info
                               </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" onclick="getHotelGallery({{$lh->id}})" data-sidebar="#gallery">
                                   Gallery
                               </a>
                               <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
@@ -473,9 +473,9 @@
                               </div>
                           </div>
                           <div class="hotel-meta full-width is-small">
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                                  Reviews
-                              </a>
+{{--                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                                  Reviews--}}
+{{--                              </a>--}}
                               <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
                                   Quick info
                               </a>
@@ -541,9 +541,9 @@
                               </div>
                           </div>
                           <div class="hotel-meta full-width is-small">
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                                  Reviews
-                              </a>
+{{--                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                                  Reviews--}}
+{{--                              </a>--}}
                               <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
                                   Quick info
                               </a>
@@ -8248,189 +8248,6 @@
       </div>
   </div>
 </div>
-{{--<div class="sidebar-main" id="quickinfo">--}}
-{{--  <a href="#" class="close-sidebar">--}}
-{{--      <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"--}}
-{{--          xmlns="http://www.w3.org/2000/svg">--}}
-{{--          <title>Close</title>--}}
-{{--          <path--}}
-{{--              d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">--}}
-{{--          </path>--}}
-{{--      </svg>--}}
-{{--  </a>--}}
-
-
-{{--  <div class="sidebar-scroller">--}}
-{{--      <div class="d-flex align-items-center mb-5">--}}
-{{--          <a href="#" class="sidebar-back">--}}
-{{--              <i class="ico ico-back"></i>--}}
-{{--          </a>--}}
-{{--          <h3 class="title-second title-line mb-0">--}}
-{{--              The Ludlow Hotel--}}
-{{--          </h3>--}}
-{{--      </div>--}}
-{{--      <div class="row">--}}
-{{--          <div class="col-8">--}}
-{{--              <div class="text-right mb-4">--}}
-{{--                  <a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>--}}
-{{--              </div>--}}
-{{--          </div>--}}
-{{--          <div class="col-lg-8">--}}
-{{--              <div class="row mb-5">--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Address</h4>--}}
-{{--                          <i class="fa fa-map-marker" aria-hidden="true"></i> 35 east 76th st, New York--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Internet</h4>--}}
-{{--                          <p class="mb-0"><b>Public areas :</b> Free</p>--}}
-{{--                          <p class="mb-0"><b>In room :</b> Free</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Children policy</h4>--}}
-{{--                          <p class="mb-0">Children are welcome</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Check-in / Check-out</h4>--}}
-{{--                          <p class="mb-0"><b>Check-in :</b> 3 pm</p>--}}
-{{--                          <p class="mb-0"><b>Check-out :</b> noon</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Transportation and transfer</h4>--}}
-{{--                          <p class="mb-0"><b>Transfer :</b> subject to supplement</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Smooking policy</h4>--}}
-{{--                          <p class="mb-0">Non smooking public spaces</p>--}}
-{{--                          <p class="mb-0"><b>Smooking rooms:</b> not available</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Rooms</h4>--}}
-{{--                          <p class="mb-0">190 rooms and suites</p>--}}
-{{--                          <p class="mb-0"><b>In-room amenities :</b> iPod dock, flatscreen TV, in-room safe,--}}
-{{--                              minibar</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Available services</h4>--}}
-{{--                          <p class="mb-0">Air conditioned hotel</p>--}}
-{{--                          <p class="mb-0">Laundry service</p>--}}
-{{--                          <p class="mb-0">Concirge service</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Pets</h4>--}}
-{{--                          <p class="mb-0">Small dogs allowed</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-lg-4 col-md-6 mb-5">--}}
-{{--                      <div class="qv-list">--}}
-{{--                          <h4>Parking</h4>--}}
-{{--                          <p class="mb-0"><b>Car park / valet service :</b> 65 US$ per day</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--              </div>--}}
-{{--              <h4 class="mb-4">Amenities</h4>--}}
-{{--              <div class="row mb-5">--}}
-{{--                  <div class="col-md-3 col-sm-6 mb-4">--}}
-{{--                      <p class="mb-0">Pool</p>--}}
-{{--                      <p class="mb-0">Wlan</p>--}}
-{{--                      <p class="mb-0">Smart-TV</p>--}}
-{{--                      <p class="mb-0">Koffeemaschine</p>--}}
-{{--                      <p class="mb-0">Laundry service</p>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-md-3 col-sm-6 mb-4">--}}
-{{--                      <p class="mb-0">Pool</p>--}}
-{{--                      <p class="mb-0">Wlan</p>--}}
-{{--                      <p class="mb-0">Smart-TV</p>--}}
-{{--                      <p class="mb-0">Koffeemaschine</p>--}}
-{{--                      <p class="mb-0">Laundry service</p>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-md-3 col-sm-6 mb-4">--}}
-{{--                      <p class="mb-0">Pool</p>--}}
-{{--                      <p class="mb-0">Wlan</p>--}}
-{{--                      <p class="mb-0">Smart-TV</p>--}}
-{{--                      <p class="mb-0">Koffeemaschine</p>--}}
-{{--                      <p class="mb-0">Laundry service</p>--}}
-{{--                  </div>--}}
-{{--                  <div class="col-md-3 col-sm-6 mb-4">--}}
-{{--                      <p class="mb-0">Pool</p>--}}
-{{--                      <p class="mb-0">Wlan</p>--}}
-{{--                      <p class="mb-0">Smart-TV</p>--}}
-{{--                      <p class="mb-0">Koffeemaschine</p>--}}
-{{--                      <p class="mb-0">Laundry service</p>--}}
-{{--                  </div>--}}
-{{--              </div>--}}
-{{--              <div class="row my-5">--}}
-{{--                  <div class="col text-center">--}}
-{{--                      <div class="i-touch">--}}
-{{--                          <p><i class="ico ico-covid"></i></p>--}}
-{{--                          <p>Corona Conscious</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col text-center">--}}
-{{--                      <div class="i-touch">--}}
-{{--                          <p><i class="ico ico-hotel-line"></i></p>--}}
-{{--                          <p>Handpicked Collection</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col text-center">--}}
-{{--                      <div class="i-touch">--}}
-{{--                          <p><i class="ico ico-bells"></i></p>--}}
-{{--                          <p>Personalize Service</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col text-center">--}}
-{{--                      <div class="i-touch">--}}
-{{--                          <p><i class="ico ico-gift"></i></p>--}}
-{{--                          <p>Perks & Offers</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col text-center">--}}
-{{--                      <div class="i-touch">--}}
-{{--                          <p><i class="ico ico-shield"></i></p>--}}
-{{--                          <p>Price Matching</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col text-center">--}}
-{{--                      <div class="i-touch">--}}
-{{--                          <p><i class="ico ico-pay"></i></p>--}}
-{{--                          <p>Trusted by Visa</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--                  <div class="col text-center">--}}
-{{--                      <div class="i-touch">--}}
-{{--                          <p><i class="ico ico-lock"></i></p>--}}
-{{--                          <p>Secure Booking</p>--}}
-{{--                      </div>--}}
-{{--                  </div>--}}
-{{--              </div>--}}
-{{--          </div>--}}
-{{--          <div class="col-lg-4">--}}
-{{--              <div id="map2"></div>--}}
-{{--          </div>--}}
-{{--      </div>--}}
-{{--      <div class="text-center mb-4">--}}
-{{--          <a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>--}}
-{{--      </div>--}}
-{{--  </div>--}}
-{{--</div>--}}
-<div class="sidebar-main" id="quickinfo"></div>
 <div class="sidebar-main" id="reviews">
   <a href="#" class="close-sidebar">
       <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
@@ -8936,415 +8753,8 @@
       </div>
   </div>
 </div>
-<div class="sidebar-main pt-4 " id="gallery">
-  <a href="#" class="close-sidebar">
-      <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
-          xmlns="http://www.w3.org/2000/svg">
-          <title>Close</title>
-          <path
-              d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
-          </path>
-      </svg>
-  </a>
-  <div class="nav-gallery-wrapper">
-      <div class="d-flex align-items-center mb-3">
-          <a href="#" class="sidebar-back">
-              <i class="ico ico-back"></i>
-          </a>
-          <h3 class="title-second title-line mb-0">
-              The Ludlow Hotel
-          </h3>
-      </div>
-      <ul class="nav nav-tab-main nav-pills nav-justified mb-2">
-          <li class="nav-item">
-              <a class="nav-link active" href="#hotel_gallery" id="hotel_gallery-tab" data-toggle="tab" role="tab"
-                  aria-controls="hotel_gallery" aria-selected="true">
-                  Hotel
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#suite_gallery" id="suite_gallery-tab" data-toggle="tab" role="tab"
-                  aria-controls="suite_gallery" aria-selected="false">
-                  Suites
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#experience_gallery" id="experience_gallery-tab" data-toggle="tab"
-                  role="tab" aria-controls="experience_gallery" aria-selected="false">
-                  Experience
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#restaurant_gallery" id="restaurant_gallery-tab" data-toggle="tab"
-                  role="tab" aria-controls="restaurant_gallery" aria-selected="false">
-                  Restaurant
-              </a>
-          </li>
-          <li class="nav-item">
-              <a class="nav-link" href="#bars_gallery" id="bars_gallery-tab" data-toggle="tab" role="tab"
-                  aria-controls="bars_gallery" aria-selected="false">
-                  Bars
-              </a>
-          </li>
-
-
-      </ul>
-  </div>
-
-  <div class="tab-content h-100">
-      <div id="hotel_gallery" class="tab-pane fade show active" role="tabpanel"
-          aria-labelledby="hotel_gallery-tab">
-          <div class="sidebar-scroller pt-2 is-gallery">
-              <div class="gallery-wrapper">
-                  <div class="row justify-content-center">
-                      <div class="col-8">
-                          <div class="grid-layout" id="gallery_hotel">
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Adipisicing elit">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div id="restaurant_gallery" class="tab-pane fade" role="tabpanel" aria-labelledby="restaurant_gallery-tab">
-          <div class="sidebar-scroller pt-2 is-gallery">
-              <div class="gallery-wrapper">
-                  <div class="row justify-content-center">
-                      <div class="col-4">
-                          <ul class="nav flex-column nav-sidebar ">
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Restaurants</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Two Bedroom Premiere Suite</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Courtyard Junior Suites</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">The Mark 3 Bedroom</a>
-                              </li>
-
-                          </ul>
-                      </div>
-                      <div class="col-8">
-                          <div class="grid-layout" id="gallery_restaurant">
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Adipisicing elit">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div id="bars_gallery" class="tab-pane fade" role="tabpanel" aria-labelledby="bars_gallery-tab">
-          <div class="sidebar-scroller pt-2 is-gallery">
-              <div class="gallery-wrapper">
-                  <div class="row justify-content-center">
-                      <div class="col-4">
-                          <ul class="nav flex-column nav-sidebar ">
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Restaurants</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Two Bedroom Premiere Suite</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Courtyard Junior Suites</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">The Mark 3 Bedroom</a>
-                              </li>
-
-                          </ul>
-                      </div>
-                      <div class="col-8">
-                          <div class="grid-layout" id="gallery_bars">
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Adipisicing elit">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div id="experience_gallery" class="tab-pane fade" role="tabpanel" aria-labelledby="experience_gallery-tab">
-          <div class="sidebar-scroller pt-2 is-gallery">
-              <div class="gallery-wrapper">
-                  <div class="row justify-content-center">
-                      <div class="col-4">
-                          <ul class="nav flex-column nav-sidebar ">
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Restaurants</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Two Bedroom Premiere Suite</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Courtyard Junior Suites</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">The Mark 3 Bedroom</a>
-                              </li>
-
-                          </ul>
-                      </div>
-                      <div class="col-8">
-                          <div class="grid-layout" id="gallery_experience">
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Adipisicing elit">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-          </div>
-      </div>
-      <div id="suite_gallery" class="tab-pane fade" role="tabpanel" aria-labelledby="suite_gallery-tab">
-          <div class="sidebar-scroller pt-2 is-gallery">
-              <div class="gallery-wrapper">
-                  <div class="row justify-content-center">
-                      <div class="col-4">
-                          <ul class="nav flex-column nav-sidebar ">
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Restaurants</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Two Bedroom Premiere Suite</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">Courtyard Junior Suites</a>
-                              </li>
-                              <li class="nav-item">
-                                  <a class="nav-link" href="#">The Mark 3 Bedroom</a>
-                              </li>
-
-                          </ul>
-                      </div>
-                      <div class="col-8">
-                          <div class="grid-layout" id="gallery_suite">
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Adipisicing elit">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                  data-sub-html="Lorem ipsum dolor sit amet">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                              <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                              </a>
-                              <a href="images/29be6592342279.5e49609509d85.jpg"
-                                  class="grid-item span-2 grid-row-3" data-sub-html="Dignissimos quas">
-                                  <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                              </a>
-                              <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                  data-sub-html="Dignissimos quas">
-                                  <img src="images/hotel-kjsdksd.jpg" alt="">
-                              </a>
-                          </div>
-                      </div>
-
-                  </div>
-              </div>
-          </div>
-
-      </div>
-  </div>
-</div>
+<div class="sidebar-main" id="quickinfo"></div>
+<div class="sidebar-main pt-4 " id="gallery"></div>
 
 @endsection
 
@@ -9517,10 +8927,13 @@
                 if(data.status=='success'){
                     var html_hotel = "";
                     var hotel = data.hotel;
-                    html_hotel += '<a href="#" class="close-sidebar"> <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"> <title>Close</title> <path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z"></path> </svg> </a><div class="sidebar-scroller"> <div class="d-flex align-items-center mb-5"> <a href="#" class="sidebar-back"> <i class="ico ico-back"></i> </a> <h3 class="title-second title-line mb-0">'+hotel.property_name+'</h3> </div>';
+
+                    html_hotel += '<a href="#" class="close-sidebar"> <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"> <title>Close</title><path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z"></path></svg></a>';
+                    html_hotel += '<div class="sidebar-scroller"> <div class="d-flex align-items-center mb-5"> <a href="#" class="sidebar-back"> <i class="ico ico-back"></i></a><h3 class="title-second title-line mb-0">'+hotel.property_name+'</h3></div>';
                     html_hotel += '<div class="row">';
                     html_hotel += '<div class="col-8"> <div class="text-right mb-4"> <a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a></div></div>';
-                    html_hotel += '<div class="col-lg-8"> <div class="row mb-5"> <div class="col-lg-4 col-md-6 mb-5"> <div class="qv-list"> <h4>Address</h4> <i class="fa fa-map-marker" aria-hidden="true"></i> '+hotel.address+' </div> </div>';
+                    html_hotel += '<div class="col-lg-8"> <div class="row mb-5">';
+                    html_hotel += '<div class="col-lg-4 col-md-6 mb-5"> <div class="qv-list"> <h4>Address</h4> <i class="fa fa-map-marker" aria-hidden="true"></i> '+hotel.address+' </div> </div>';
                     html_hotel += '<div class="col-lg-4 col-md-6 mb-5"> <div class="qv-list"> <h4>Internet</h4> <p class="mb-0"><b>Public areas :</b>'+ (hotel.internetpublic == 1 ? "Free" : "Not Free") +'</p> <p class="mb-0"><b>In room :</b> '+(hotel.internetroom == 1 ? "Free" : "Not Free")+'</p> </div> </div>';
                     html_hotel += '<div class="col-lg-4 col-md-6 mb-5"> <div class="qv-list"> <h4>Children policy</h4><p class="mb-0">'+hotel.children_policy+'</p></div></div>';
                     html_hotel += '<div class="col-lg-4 col-md-6 mb-5"> <div class="qv-list"> <h4>Check-in / Check-out</h4> <p class="mb-0"><b>Check-in :</b> '+hotel.checkin+'</p> <p class="mb-0"><b>Check-out :</b> '+hotel.checkout+'</p> </div> </div>';
@@ -9530,9 +8943,137 @@
                     html_hotel += '<div class="col-lg-4 col-md-6 mb-5"> <div class="qv-list"> <h4>Available services</h4><p class="mb-0">'+hotel.availableservices+'</p><p class="mb-0">Laundry service</p><p class="mb-0">Concirge service</p></div></div>';
                     html_hotel += '<div class="col-lg-4 col-md-6 mb-5"> <div class="qv-list"> <h4>Pets</h4><p class="mb-0">'+hotel.pets+'</p></div></div>';
                     html_hotel += '<div class="col-lg-4 col-md-6 mb-5"> <div class="qv-list"> <h4>Parking</h4><p class="mb-0"><b>Car park / valet service :</b> '+hotel.carpark+'</p></div></div>';
-                    html_hotel += '<h4 class="mb-4">Amenities</h4><div class="row mb-5"><div class="col-md-3 col-sm-6 mb-4"><p class="mb-0">Pool</p><p class="mb-0">Wlan</p><p class="mb-0">Smart-TV</p><p class="mb-0">Koffeemaschine</p><p class="mb-0">Laundry service</p></div><div class="col-md-3 col-sm-6 mb-4"><p class="mb-0">Pool</p><p class="mb-0">Wlan</p><p class="mb-0">Smart-TV</p><p class="mb-0">Koffeemaschine</p><p class="mb-0">Laundry service</p></div><div class="col-md-3 col-sm-6 mb-4"><p class="mb-0">Pool</p><p class="mb-0">Wlan</p><p class="mb-0">Smart-TV</p><p class="mb-0">Koffeemaschine</p><p class="mb-0">Laundry service</p></div><div class="col-md-3 col-sm-6 mb-4"><p class="mb-0">Pool</p><p class="mb-0">Wlan</p><p class="mb-0">Smart-TV</p><p class="mb-0">Koffeemaschine</p><p class="mb-0">Laundry service</p></div></div><div class="row my-5"><div class="col text-center"><div class="i-touch"><p><i class="ico ico-covid"></i></p><p>Corona Conscious</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-hotel-line"></i></p><p>Handpicked Collection</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-bells"></i></p><p>Personalize Service</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-gift"></i></p><p>Perks & Offers</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-shield"></i></p><p>Price Matching</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-pay"></i></p><p>Trusted by Visa</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-lock"></i></p><p>Secure Booking</p></div></div></div></div><div class="col-lg-4"><div id="map2"></div></div></div><div class="text-center mb-4"><a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a></div></div>';
                     html_hotel += '</div>';
+                    html_hotel += '<h4 class="mb-4">Amenities</h4> <div class="row mb-5"> <div class="col-md-3 col-sm-6 mb-4"> <p class="mb-0">Pool</p> <p class="mb-0">Wlan</p> <p class="mb-0">Smart-TV</p> <p class="mb-0">Koffeemaschine</p> <p class="mb-0">Laundry service</p> </div> <div class="col-md-3 col-sm-6 mb-4"> <p class="mb-0">Pool</p><p class="mb-0">Wlan</p><p class="mb-0">Smart-TV</p><p class="mb-0">Kofmap2feemaschine</p><p class="mb-0">Laundry service</p></div><div class="col-md-3 col-sm-6 mb-4"><p class="mb-0">Pool</p><p class="mb-0">Wlan</p><p class="mb-0">Smart-TV</p><p class="mb-0">Koffeemaschine</p><p class="mb-0">Laundry service</p></div><div class="col-md-3 col-sm-6 mb-4"><p class="mb-0">Pool</p><p class="mb-0">Wlan</p><p class="mb-0">Smart-TV</p><p class="mb-0">Koffeemaschine</p><p class="mb-0">Laundry service</p></div></div><div class="row my-5"><div class="col text-center"><div class="i-touch"><p><i class="ico ico-covid"></i></p><p>Corona Conscious</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-hotel-line"></i></p><p>Handpicked Collection</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-bells"></i></p><p>Personalize Service</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-gift"></i></p><p>Perks & Offers</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-shield"></i></p><p>Price Matching</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-pay"></i></p><p>Trusted by Visa</p></div></div><div class="col text-center"><div class="i-touch"><p><i class="ico ico-lock"></i></p><p>Secure Booking</p></div></div></div></div>';
+                    html_hotel += '<div class="col-lg-4"> <div id="map2"></div></div></div><div class="text-center mb-4"><a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a></div></div>';
                     $('#quickinfo').html(html_hotel);
+                }
+            }
+        });
+    }
+    function getHotelGallery(id){
+        $.ajax({
+            url: BaseURL + '/hotel_gallery',
+            type: "get",
+            dataType: "json",
+            data: {'id':id},
+            success: function (data){
+                if(data.status=='success'){
+                    var html_content = "";
+                    var hotel_name = data.hotel_name;
+                    var hotel_images = data.hotel_images;
+                    var suite_images = data.suite_images;
+                    var experience_images = data.experience_images;
+                    var restaurant_images = data.restaurant_images;
+                    var bar_images = data.bar_images;
+                    html_content += '<a href="#" class="close-sidebar"> <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"> <title>Close</title><path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z"></path></svg></a>';
+                    html_content += '<div class="nav-gallery-wrapper"> <div class="d-flex align-items-center mb-3"> <a href="#" class="sidebar-back"> <i class="ico ico-back"></i></a><h3 class="title-second title-line mb-0">'+hotel_name+'</h3></div><ul class="nav nav-tab-main nav-pills nav-justified mb-2"><li class="nav-item"><a class="nav-link active" href="#hotel_gallery" id="hotel_gallery-tab" data-toggle="tab" role="tab" aria-controls="hotel_gallery" aria-selected="true">Hotel</a></li><li class="nav-item"><a class="nav-link" href="#suite_gallery" id="suite_gallery-tab" data-toggle="tab" role="tab" aria-controls="suite_gallery" aria-selected="false">Suites</a></li><li class="nav-item"><a class="nav-link" href="#experience_gallery" id="experience_gallery-tab" data-toggle="tab" role="tab" aria-controls="experience_gallery" aria-selected="false">Experience</a></li><li class="nav-item"><a class="nav-link" href="#restaurant_gallery" id="restaurant_gallery-tab" data-toggle="tab" role="tab" aria-controls="restaurant_gallery" aria-selected="false">Restaurant</a></li><li class="nav-item"><a class="nav-link" href="#bars_gallery" id="bars_gallery-tab" data-toggle="tab" role="tab" aria-controls="bars_gallery" aria-selected="false">Bars</a></li></ul></div>';
+                    html_content += '<div class="tab-content h-100"><div id="hotel_gallery" class="tab-pane fade show active" role="tabpanel" aria-labelledby="hotel_gallery-tab"> <div class="sidebar-scroller pt-2 is-gallery"> <div class="gallery-wrapper"> <div class="row justify-content-center"> <div class="col-8"><div class="grid-layout" id="gallery_hotel">';
+                    $(hotel_images).each(function(key, val){
+                        if (key == 0) {
+                            html_content += '<a href="'+val.imgsrc+'" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 0) {
+                            html_content += '<a href="'+val.imgsrc+'="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'=""> </a>';
+                        } else if (key % 4 == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-4" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        }
+                    });
+                    html_content += '</div></div></div></div></div></div>';
+                    html_content += '<div id="suite_gallery" class="tab-pane fade" role="tabpanel" aria-labelledby="suite_gallery-tab"> <div class="sidebar-scroller pt-2 is-gallery"> <div class="gallery-wrapper"> <div class="row justify-content-center"><div class="col-12"> <div class="grid-layout" id="gallery_restaurant">';
+                    $(suite_images).each(function(key, val){
+                        if (key == 0) {
+                            html_content += '<a href="'+val.imgsrc+'" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 0) {
+                            html_content += '<a href="'+val.imgsrc+'="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'=""> </a>';
+                        } else if (key % 4 == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-4" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        }
+                    });
+                    html_content += '</div></div></div></div></div></div>';
+                    html_content += '<div id="experience_gallery" class="tab-pane fade" role="tabpanel" aria-labelledby="experience_gallery-tab"> <div class="sidebar-scroller pt-2 is-gallery"> <div class="gallery-wrapper"> <div class="row justify-content-center"><div class="col-12"> <div class="grid-layout" id="gallery_restaurant">';
+                    $(experience_images).each(function(key, val){
+                        if (key == 0) {
+                            html_content += '<a href="'+val.imgsrc+'" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 0) {
+                            html_content += '<a href="'+val.imgsrc+'="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'=""> </a>';
+                        } else if (key % 4 == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-4" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        }
+                    });
+                    html_content += '</div></div></div></div></div></div>';
+                    html_content += '<div id="restaurant_gallery" class="tab-pane fade" role="tabpanel" aria-labelledby="restaurant_gallery-tab"> <div class="sidebar-scroller pt-2 is-gallery"> <div class="gallery-wrapper"> <div class="row justify-content-center"><div class="col-12"> <div class="grid-layout" id="gallery_restaurant">';
+                    $(restaurant_images).each(function(key, val){
+                        if (key == 0) {
+                            html_content += '<a href="'+val.imgsrc+'" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 0) {
+                            html_content += '<a href="'+val.imgsrc+'="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'=""> </a>';
+                        } else if (key % 4 == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-4" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        }
+                    });
+                    html_content += '</div></div></div></div></div></div>';
+                    html_content += '<div id="bars_gallery" class="tab-pane fade" role="tabpanel" aria-labelledby="bars_gallery-tab"> <div class="sidebar-scroller pt-2 is-gallery"> <div class="gallery-wrapper"> <div class="row justify-content-center"><div class="col-12"> <div class="grid-layout" id="gallery_restaurant">';
+                    $(bar_images).each(function(key, val){
+                        if (key == 0) {
+                            html_content += '<a href="'+val.imgsrc+'" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 0) {
+                            html_content += '<a href="'+val.imgsrc+'="grid-item span-2 grid-row-1" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'=""> </a>';
+                        } else if (key % 4 == 1) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-4" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 2) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2 grid-row-3" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        } else if (key % 4 == 3) {
+                            html_content += '<a href="'+val.imgsrc+'" class="grid-item span-2" data-sub-html="'+val.file_display_name+'" class="grid-item span-1"> <img src="'+val.imgsrc+'" alt=""> </a>';
+                        }
+                    });
+                    html_content += '</div></div></div></div></div></div></div>';
+                    $('#gallery').html(html_content);
                 }
             }
         });

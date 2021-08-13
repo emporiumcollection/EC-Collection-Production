@@ -215,82 +215,33 @@ class HotelController extends Controller {
         if(!empty($hotel)) {
             $res['status'] = 'success';
             $res['hotel'] = $hotel;
-//            $res['html'] .= '<a href="#" class="close-sidebar"><svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"> <title>Close</title><path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z"></path></svg></a><div class="sidebar-scroller"><div class="d-flex align-items-center mb-5"><a href="#" class="sidebar-back"><i class="ico ico-back"></i></a><h3 class="title-second title-line mb-0">'.$hotel->property_name.'</h3></div>';
-//            $res['html'] .= '<div class="row"><div class="col-8"><div class="text-right mb-4"><a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a></div></div><div class="col-lg-8"><div class="row mb-5"><div class="col-lg-4 col-md-6 mb-5"><div class="qv-list"><h4>Address</h4><i class="fa fa-map-marker" aria-hidden="true"></i> '.$hotel->address.'</div></div></div>';
-//            $res['html'] .= '</div>';
-//            $res['html'] .= '<div class="row"><div class="col-8"><div class="text-right mb-4"><a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a></div></div><div class="col-lg-8"><div class="row mb-5"><div class="col-lg-4 col-md-6 mb-5"><div class="qv-list"><h4>Address</h4><i class="fa fa-map-marker" aria-hidden="true"></i> '.$hotel->address.'</div></div><div class="col-lg-4 col-md-6 mb-5"><div class="qv-list"><h4>Internet</h4><p class="mb-0"><b>Public areas :</b> '.$hotel->internetpublic == 1 : "Free" ? "Not Free".'</p><p class="mb-0"><b>In room :</b> '.$hotel->internetroom == 1 : "Free" ? "Not Free".'</p></div></div><div class="col-lg-4 col-md-6 mb-5"><div class="qv-list"><h4>Children policy</h4><p class="mb-0">'.$hotel->children_policy.'</p></div></div><div class="col-lg-4 col-md-6 mb-5"><div class="qv-list"><h4>Check-in / Check-out</h4><p class="mb-0"><b>Check-in :</b> '.$hotel->checkin.'</p><p class="mb-0"><b>Check-out :</b> '.$hotel->checkout.'</p></div></div><div class="col-lg-4 col-md-6 mb-5"><div class="qv-list"><h4>Transportation and transfer</h4><p class="mb-0"><b>Transfer :</b> '.$hotel->transfer.'</p></div></div><div class="col-lg-4 col-md-6 mb-5"><div class="qv-list"><h4>Smooking policy</h4><p class="mb-0">'.$hotel->smookingpolicy.'</p><p class="mb-0"><b>Smooking rooms:</b> '.$hotel->smookingrooms == 0 : "not available" ? "available".'</p></div></div><div class="col-lg-4 col-md-6 mb-5"><div class="qv-list"><h4>Rooms</h4><p class="mb-0">190 rooms and suites</p><p class="mb-0"><b>In-room amenities :</b> iPod dock, flatscreen TV, in-room safe, minibar</p></div></div></div>';
-//              <h4 class="mb-4">Amenities</h4>
-//              <div class="row mb-5">
-//                  <div class="col-md-3 col-sm-6 mb-4">
-//                      <p class="mb-0">Pool</p>
-//                      <p class="mb-0">Wlan</p>
-//                      <p class="mb-0">Smart-TV</p>
-//                      <p class="mb-0">Koffeemaschine</p>
-//                      <p class="mb-0">Laundry service</p>
-//                  </div>
-//                  <div class="col-md-3 col-sm-6 mb-4">
-//                      <p class="mb-0">Pool</p>
-//                      <p class="mb-0">Wlan</p>
-//                      <p class="mb-0">Smart-TV</p>
-//                      <p class="mb-0">Koffeemaschine</p>
-//                      <p class="mb-0">Laundry service</p>
-//                  </div>
-//                  <div class="col-md-3 col-sm-6 mb-4">
-//                      <p class="mb-0">Pool</p>
-//                      <p class="mb-0">Wlan</p>
-//                      <p class="mb-0">Smart-TV</p>
-//                      <p class="mb-0">Koffeemaschine</p>
-//                      <p class="mb-0">Laundry service</p>
-//                  </div>
-//                  <div class="col-md-3 col-sm-6 mb-4">
-//                      <p class="mb-0">Pool</p>
-//                      <p class="mb-0">Wlan</p>
-//                      <p class="mb-0">Smart-TV</p>
-//                      <p class="mb-0">Koffeemaschine</p>
-//                      <p class="mb-0">Laundry service</p>
-//                  </div>
-//              </div>
-//              <div class="row my-5">
-//                  <div class="col text-center">
-//                      <div class="i-touch">
-//                          <p><i class="ico ico-covid"></i></p>
-//                          <p>Corona Conscious</p>
-//                      </div>
-//                  </div>
-//                  <div class="col text-center">
-//                      <div class="i-touch">
-//                          <p><i class="ico ico-hotel-line"></i></p>
-//                          <p>Handpicked Collection</p>
-//                      </div>
-//                  </div>
-//                  <div class="col text-center">
-//                      <div class="i-touch">
-//                          <p><i class="ico ico-bells"></i></p>
-//                          <p>Personalize Service</p>
-//                      </div>
-//                  </div>
-//                  <div class="col text-center">
-//                      <div class="i-touch">
-//                          <p><i class="ico ico-gift"></i></p>
-//                          <p>Perks & Offers</p>
-//                      </div>
-//                  </div>
-//                  '<div class="col text-center">
-//                      <div class="i-touch">
-//                          <p><i class="ico ico-shield"></i></p>
-//                          <p>Price Matching</p>
-//                      </div>
-//                  </div>';
-//                  '<div class="col text-center">
-//                      <div class="i-touch">
-//                          <p><i class="ico ico-pay"></i></p>
-//                          <p>Trusted by Visa</p>
-//                      </div>
-//                  </div>';
-//                  $res['html'] .= <div class="col text-center"><div class="i-touch"><p><i class="ico ico-lock"></i></p><p>Secure Booking</p></div></div></div></div><div class="col-lg-4"><div id="map2"></div></div></div><div class="text-center mb-4"><a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a></div></div></div>';
         } else {
             $res['status'] = 'error';
             $res['errors'] = 'No hotel found!';
+        }
+        return response()->json($res);
+    }
+
+    public function getHotelGallery(Request $request){
+        $id = $request->input('id');
+        $hotel_name = DB::table('tb_properties')->select('tb_properties.*')->where('id', $id)->first();
+        $hotel_images = $this->get_property_files($id, 'Property Images');
+        $suite_images = $this->get_property_files($id, 'Rooms Images');
+        $experience_images = $this->get_property_files($id, 'Spa Gallery Images');
+        $restaurant_images = $this->get_property_files($id, 'Restaurant Menu');
+        $bar_images = $this->get_property_files($id, 'Bar Gallery Images');
+
+        if(!empty($hotel_images) || !empty($suite_images) || !empty($experience_images) || !empty($restaurant_images) || !empty($bar_images)) {
+            $res['status'] = 'success';
+            $res['hotel_images'] = $hotel_images;
+            $res['suite_images'] = $suite_images;
+            $res['experience_images'] = $experience_images;
+            $res['restaurant_images'] = $restaurant_images;
+            $res['bar_images'] = $bar_images;
+            $res['hotel_name'] = $hotel_name->property_name;
+        } else {
+            $res['status'] = 'error';
+            $res['errors'] = 'No record found!';
         }
         return response()->json($res);
     }
