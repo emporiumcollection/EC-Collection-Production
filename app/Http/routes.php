@@ -20,6 +20,11 @@ Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 /**
  * New frontend routes.
  */
+Route::get('landing_view', 'PhaseOne\HotelController@landing_view');
+Route::get('hotel_details', 'PhaseOne\HotelController@hotel_details');
+Route::get('get_inspired', 'PhaseOne\HotelController@get_inspired');
+Route::get('hotel_quick_info', 'PhaseOne\HotelController@getHotelQuickInfo');
+Route::get('hotel_gallery', 'PhaseOne\HotelController@getHotelGallery');
 Route::get('hotel/{title}', 'PhaseOne\HotelController@index');
 Route::get('mapsearchavailability', 'PhaseOne\MapBoxController@index');
 Route::get('book/reservation', 'PhaseOne\ReservationController@index');
@@ -486,9 +491,6 @@ Route::group(['middleware' => 'auth'], function()
 });
 Route::post('globalavailability', 'Frontend\PropertyController@propertyglobalavailability');
 Route::get('globalsearchavailability', 'Frontend\PropertyController@globalsearchavailability');
-Route::get('landing_view', 'Frontend\PropertyController@landing_view');
-Route::get('hotel_details', 'Frontend\PropertyController@hotel_details');
-Route::get('get_inspired', 'Frontend\PropertyController@get_inspired');
 Route::post('getpdppage', 'Frontend\PropertyController@getpdppage');
 Route::post('getdestinationpage', 'Frontend\PropertyController@getdestinationpage');
 
