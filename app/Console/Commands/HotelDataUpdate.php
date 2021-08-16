@@ -34,15 +34,18 @@ class HotelDataUpdate extends Command
      */
     public function handle()
     {
-        $seasons = $this->createSeasons();
         $this->authenticate();
 
-        $properties = properties::select(['id', 'amadeus_hotel_id', 'property_name', 'isin_amadeus'])
+        $properties = properties::select(['id', 'amadeus_hotel_id', 'property_name', 'isin_amadeus', 'season_year'])
         ->whereNotNull('amadeus_hotel_id')
         ->get();
 
         foreach($properties as $property){
-            $seasons = $this->insertSeasons($property->id, $seasons);
+            $seasons = $this->createSeasons();
+            $seasons = $this->insertSeasons($property->id, 
+                $property->season_year, 
+                $seasons);
+            
             foreach($seasons as $season){
                 print $hotelUrl = 'https://api.amadeus.com/v2/shopping/hotel-offers?hotelIds='.$property->amadeus_hotel_id.'&checkInDate='.$season['start'].'&checkOutDate=' . $season['end'];
                 print "\n";
@@ -51,27 +54,44 @@ class HotelDataUpdate extends Command
                 $hotels = Requests::get($hotelUrl, $getHeaders);
 
                 $hotels = json_decode($hotels->body);
-
+                // print_r($hotels);exit();
                 if(isset($hotels->data) && !empty($hotels->data)){
                     foreach($hotels->data as $hotel){
                         // print_r($hotel->offers[0]);exit;
                         if (isset($hotel->offers[0]->room->typeEstimated->category )) {
                             $category_name = $hotel->offers[0]->room->typeEstimated->category;
                         }        
-
                         if (isset($hotel->offers[0]->room->typeEstimated->bedType )) {
                             $category_bed_type = $hotel->offers[0]->room->typeEstimated->bedType; 
                         }
+                        $fetch_types = DB::table('tb_properties_category_types')
+                                ->select('id')
+                                ->where('category_name','=', $category_name)    
+                                ->where('property_id','=', $property->id)    
+                                ->get();
+                        // If doesn't exists insert
+                        if (empty($fetch_types)) {
+                            $insertTypes = DB::table('tb_properties_category_types')
+                            ->insert([
+                                'property_id' => $property->id,
+                                'category_name' => $category_name
+                            ]);
+                            $category_type_id = DB::getPdo()->lastInsertId();
+                        }else{
+                            $category_type_id = $fetch_types[0]->id;
+                        }
                         $merge_name = $category_name." ".$category_bed_type;
+                        //Fetch Properties_id and Name 
                         $getdata = DB::table('tb_properties_category_rooms')
                         ->select('id','property_id','room_name')
-                        ->Where('property_id','=', $property->id)    
-                        ->Where('room_name','=', $merge_name)
+                        ->where('property_id','=', $property->id)    
+                        ->where('room_name','=', $merge_name)
                         ->get();
+                        //if doesn't exists insert data
                         if (empty($getdata)) {
                             DB::table('tb_properties_category_rooms')->insert([
                                 'property_id' => $property->id,
-                                'category_id' => 0,
+                                'category_id' => $category_type_id,
                                 'room_name' => $merge_name  
                             ]);
                             $rooms_id = DB::getPdo()->lastInsertId();
@@ -123,32 +143,43 @@ class HotelDataUpdate extends Command
         $body = json_decode($requests_response->body);
         $this->access_token = $body->access_token;
     }
-    private function insertSeasons($property_id, $seasons){
-        DB::table('tb_seasons')->where('property_id', '=', $property_id)->delete();
+    private function insertSeasons($property_id, $season_year, $seasons){
+        $current_season_year = date("Y");
+        $yearExists = DB::table('tb_properties')->where('id', '=', $property_id)->update(['season_year'=> $current_season_year]);
+
+/*        DB::table('tb_seasons')->where('property_id', '=', $property_id)->delete();
         DB::table('tb_seasons_dates')->where('property_id', '=', $property_id)->delete();
         DB::table('tb_properties_category_rooms_price')
         ->where('property_id', '=', $property_id)
-        ->delete();
+        ->delete();*/
         foreach($seasons as $key => $val){
-            // print_r($seasons);exit;
             $start_date = $val['start'];
             $end_date = $val['end'];
-            DB::table('tb_seasons')->insert([
-                'season_name' => 'Season '.$key,
-                'property_id' => $property_id,
-            ]);
-            $lastId = DB::getPdo()->lastInsertId();
-            DB::table('tb_seasons_dates')->insert([
-                'season_id' => $lastId,
-                'property_id' => $property_id,
-                'season_from_date' => $start_date,
-                'season_to_date' =>$end_date,
-            ]);
-            $seasons[$key]['season_id'] = $lastId;
+            if($season_year != $current_season_year){
+                DB::table('tb_seasons')->insert([
+                    'season_name' => 'Season '.$key,
+                    'property_id' => $property_id,
+                ]);
+                $lastId = DB::getPdo()->lastInsertId();
+                DB::table('tb_seasons_dates')->insert([
+                    'season_id' => $lastId,
+                    'property_id' => $property_id,
+                    'season_from_date' => $start_date,
+                    'season_to_date' =>$end_date,
+                ]);
+                $season_id = $lastId;
+            }else{
+                $seasonDates = DB::table('tb_seasons_dates')
+                    ->select('season_id')
+                    ->where('season_from_date','=', $start_date)    
+                    ->where('season_to_date','=', $end_date)    
+                    ->get();
+                $season_id = $seasonDates[0]->season_id;
+            }
+            $seasons[$key]['season_id'] = $season_id;
          }
          return $seasons;
     }
-
     private function getDayPrices($value, $dayPrices){
         $from = $value->startDate;
         $to = $value->endDate;        
@@ -181,25 +212,29 @@ class HotelDataUpdate extends Command
             ]);
     }
     private function createSeasons(){
-        $threshold_date = strtotime(date("Y-m-d"));  
+        //fetch property
+        $threshold_date = strtotime(date("Y").'-01-01');  
         $threshold_date = strtotime("+1 year", $threshold_date);  
         $threshold_date = date('Y-m-d', $threshold_date);
-        $start_date = date("Y-m-d");  
+        $start_date = date("Y").'-01-01';
         $date = strtotime($start_date);
-        $date = strtotime("+3 week", $date);
+        $year=date("Y",$date);  
+        $date = strtotime("+1 week", $date);
         $end_date = date('Y-m-d', $date);
         $seasons[] = [
             'start' => $start_date,
-            'end' => $end_date,
+            'end' => $end_date, 
+            'year' => $year,
         ];
         while(strtotime($end_date) < strtotime($threshold_date) ){
             $start_date = strtotime($end_date); 
-            $start_date = strtotime("+1 day", $start_date);
-            $end_date = strtotime("+3 week",$start_date);
-            $end_date = date('Y-m-d', $end_date);
+            $start_date = strtotime("+1 day",$start_date);
+            $end_date = strtotime("+1 week",$start_date);
+            $end_date = date('Y-m-d', $end_date);   
             $seasons[] = [
                 'start' => date("Y-m-d", $start_date),
                 'end' => $end_date,
+                'year' => $year,
             ];
         }
         return $seasons;
