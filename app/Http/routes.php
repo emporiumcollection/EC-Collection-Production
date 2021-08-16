@@ -14,8 +14,23 @@
 
 
 
-Route::get('/', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
+
+/**
+ * New frontend routes.
+ */
+Route::get('hotel/{title}', 'PhaseOne\HotelController@index');
+Route::get('mapsearchavailability', 'PhaseOne\MapBoxController@index');
+Route::get('book/reservation', 'PhaseOne\ReservationController@index');
+
+/**
+ * New Admin backend routes.
+ */
+Route::post('properties/configmeals', 'MealsController@configMeals');
+Route::post('properties/resetmeals', 'MealsController@resetConfigMeals');
+Route::post('properties/addmeals', 'MealsController@addMeals');
+
 /*
  * AIC: CRM Layout Module
  */
@@ -31,9 +46,9 @@ Route::get('/sitemap/{type}.xml', 'SitemapController@properties');
 
 Route::group(['middleware' => 'auth'], function()
 {
-    
+
      Route::resource('usercontract', 'UsercontractController');
-    
+
 	//Route::get('crmlayouts', 'CrmlayoutController@index');
 	Route::resource('crmlayouts', 'CrmlayoutController');
 	Route::get('crmlayouts/delete/{crmlayouts}', 'CrmlayoutController@destroy');
@@ -67,8 +82,8 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('crmlayouts/edit_row_element', 'CrmlayoutController@edit_row_element');
 
 	/*
-	* Custom Field Module  
-	* All Action urls 
+	* Custom Field Module
+	* All Action urls
 	*/
 	Route::get('evcustomfields', 'EvcustomfieldsController@index');
 	Route::post('evcustomfields/createGroup', 'EvcustomfieldsController@createGroupAjax');
@@ -103,23 +118,23 @@ Route::controller('home', 'HomeController');
 
 Route::controller('/user', 'UserController');
 Route::controller('/customer', 'CustomerController');
-Route::get('/traveller', 'CustomerController@traveller'); 
+Route::get('/traveller', 'CustomerController@traveller');
 
 Route::get('/supplier', 'CustomerController@supplier');
 
-Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences');  
+Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences');
 
 Route::get('/whoiam', 'CustomerController@whoIam');
 
-Route::post('/viewInvite', 'UserController@viewInvite');   
-Route::post('editinvite', 'UserController@editInvite'); 
+Route::post('/viewInvite', 'UserController@viewInvite');
+Route::post('editinvite', 'UserController@editInvite');
 Route::post('deleteinvite', 'UserController@deleteInvite');
 
-Route::post('addcompanion', 'UserController@addCompanion'); 
-Route::post('/viewcompanion', 'UserController@viewCompanion');   
-Route::post('editcompanion', 'UserController@editCompanion'); 
+Route::post('addcompanion', 'UserController@addCompanion');
+Route::post('/viewcompanion', 'UserController@viewCompanion');
+Route::post('editcompanion', 'UserController@editCompanion');
 Route::post('deletecompanion', 'UserController@deleteCompanion');
-Route::post('changepassword', 'UserController@ajaxSavepassword'); 
+Route::post('changepassword', 'UserController@ajaxSavepassword');
 
 Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate');
 
@@ -129,11 +144,11 @@ Route::post('leadupdate', 'UserController@ajaxLeadUpdate');
 Route::get('crmhotel/leadlisting', 'Core\UsersController@leadlisting');
 Route::get('crmhotel/hoteluserlisting', 'Core\UsersController@hoteluserlisting');
 Route::get('crmhotel/travelleruserlisting', 'Core\UsersController@travelleruserlisting');
- 
+
 Route::post('socialinfo', 'UserController@ajaxSocialInfo');
 
-Route::post('customer_ajaxPostSignin', 'CustomerController@ajaxPostSignin'); 
-Route::post('customer_ajaxPostRequest', 'CustomerController@ajaxPostRequest'); 
+Route::post('customer_ajaxPostSignin', 'CustomerController@ajaxPostSignin');
+Route::post('customer_ajaxPostRequest', 'CustomerController@ajaxPostRequest');
 
 include('pageroutes.php');
 include('moduleroutes.php');
@@ -169,12 +184,12 @@ Route::get('social-instagram/{continent}/{region}/{country}/{cat}', 'Frontend\Fr
 
 Route::get('social-stream', 'Frontend\FrontendPagesController@socialStreamWall');
 
-Route::resource('sximoapi', 'SximoapiController'); 
+Route::resource('sximoapi', 'SximoapiController');
 Route::group(['middleware' => 'auth'], function()
 {
 
 	Route::get('core/elfinder', 'Core\ElfinderController@getIndex');
-	Route::post('core/elfinder', 'Core\ElfinderController@getIndex'); 
+	Route::post('core/elfinder', 'Core\ElfinderController@getIndex');
 	Route::controller('/dashboard', 'DashboardController');
 	Route::controllers([
 		'core/users'		=> 'Core\UsersController',
@@ -184,12 +199,12 @@ Route::group(['middleware' => 'auth'], function()
 		'core/groups' 		=> 'Core\GroupsController',
 		'core/template' 	=> 'Core\TemplateController',
 	]);
-	
-	Route::post('addfolder', 'ContainerController@createfolder'); 
+
+	Route::post('addfolder', 'ContainerController@createfolder');
 	Route::post('addfile', 'ContainerController@uploadFile');
 	Route::get('folders/{id}', 'ContainerController@getIndex');
 	Route::get('getFolderListAjax/{id}', 'ContainerController@getFolderListAjax');
-	Route::get('getFolderListAjaxonload/{id}', 'ContainerController@getFolderListAjaxonload');	
+	Route::get('getFolderListAjaxonload/{id}', 'ContainerController@getFolderListAjaxonload');
 	Route::get('getFoldersAjax/{id}', 'ContainerController@getFoldersAjax');
 	Route::get('getFoldersAjax/{id}/{wnd}', 'ContainerController@getFoldersAjax');
 	Route::get('getUserList', 'ContainerController@getUserListAjax');
@@ -220,12 +235,12 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('search_exist_tag', 'ContainerController@search_tag');
 	Route::post('remove_exist_tag', 'ContainerController@remove_exist_tag');
 	Route::post('remove_exist_attribute', 'ContainerController@remove_exist_attribute');
-	
+
 	Route::get('ifolders/{id}', 'ImapperController@getIndex');
 	Route::get('ifiles/view/{fid}/{id}', 'ImapperController@Showfiles');
 	Route::get('ifiles/edit/{fid}/{id}', 'ImapperController@Editfiles');
 	Route::post('savepin', 'ImapperController@savePinData');
-	
+
 	Route::get('getBillTo/{qury}', 'InvoicesController@fetchuserinfoForbillto');
 	Route::post('getprofileBillto', 'InvoicesController@fetchprofileForbillto');
 	Route::post('importUsers', 'MyusersController@importUsersCsv');
@@ -254,9 +269,9 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('add_slider_variant_folder', 'ContainerController@create_slider_variant_folders');
 	Route::post('landing_page_products', 'ContainerController@landingPageProducts');
 	Route::post('seletedfiles_activatelightbox', 'ContainerController@seletedfilesActivatelightbox');
-	Route::post('seletedfiles_deactivatelightbox', 'ContainerController@seletedfilesDeactivatelightbox');	
+	Route::post('seletedfiles_deactivatelightbox', 'ContainerController@seletedfilesDeactivatelightbox');
 	Route::post('activate_deactivate_product_lightbox', 'ContainerController@ActivateDeactivateProductLightbox');
-	
+
 	Route::post('create_lightbox', 'HomeController@create_newlightbox');
 	Route::post('delete_lightbox', 'HomeController@lightboxdelete');
 	Route::post('lightboxupdatename', 'HomeController@lightboxupdatename');
@@ -266,18 +281,18 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('lightbox_reserve', 'HomeController@lightboxReserveItems');
 	Route::post('delete_lightbox_content', 'HomeController@lightbox_content_delete');
 	Route::post('lightbox_addcontent_container', 'ContainerController@lightboxAddcontentsContainer');
-	
+
 	Route::post('delete_attribute_option', 'AttributesController@remove_attribute_option');
 	Route::post('copy_attributes', 'AttributesController@copyAttribute');
 	Route::post('assignPdfImage', 'ContainerController@assignPdfImage');
 	Route::post('delete_shop_product', 'ShopController@remove_shop_product');
 	Route::post('getshopcategories', 'ShopController@shop_categories');
-	
+
 	Route::post('shop_order', 'HomeController@place_shop_order');
 	Route::post('lightbox_ordered_item_update', 'LightboxordersController@lightbox_ordered_item_update');
-	
+
 	Route::post('seletedfolderslanding', 'ContainerController@assign_landing_products');
-	
+
 	Route::post('enable_diable_field_option', 'CustomfieldsController@enable_diable_field_option');
 	Route::post('change_order_num', 'CustomfieldsController@change_fileds_ordering');
 	Route::post('enable_diable_category_option', 'CategoriesController@enable_diable_category_option');
@@ -289,11 +304,11 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('getCustomfieldOptions', 'CustomfieldsController@getCustomfieldOptions');
 	Route::post('save_customfield_tab_content', 'CustomfieldsController@SaveCustomfieldsTabContent');
 	Route::get('customfields_edit_tab_content/{fid}/{tab}', 'CustomfieldsController@CustomfieldsEditTabContent');
-	
+
 	Route::get('properties_settings/{pid}/{tab}', 'PropertiesController@show_settings');
-    
+
     Route::post('ajax_properties_setting_rooms', 'PropertiesController@ajax_show_settings');
-    
+
 	Route::post('properties_settings/{pid}/{tab}', 'PropertiesController@show_settings');
 	Route::post('add_property_type', 'PropertiesController@save_property_type_data');
 	Route::post('delete_property_type', 'PropertiesController@delete_property_type');
@@ -305,185 +320,197 @@ Route::group(['middleware' => 'auth'], function()
 
 	Route::post('property_images_wetransfer', 'PropertiesController@property_images_wetransfer');
 
-	
+
 	Route::post('delete_property_image', 'PropertiesController@delete_property_image');
 	Route::post('save_rooms_amenities', 'PropertiesController@save_rooms_amenities');
 	Route::post('add_property_category_rooms_price', 'PropertiesController@save_property_rooms_price_data');
 	Route::post('change_property_type', 'PropertiesController@change_property_type');
 	Route::post('enable_diable_propertystatus', 'PropertiesController@enable_diable_propertystatus');
 	Route::post('get_category_rooms_reservations', 'PropertiesController@get_category_rooms_reservations');
-    
+
     Route::post('enable_diable_hotel_approval', 'PropertiesController@enable_diable_hotelApproval');
-    
+
 	Route::post('add_new_reservation', 'PropertiesController@add_new_reservation');
 	Route::post('add_new_booking', 'HomeController@new_booking');
-	
+
 	Route::post('add_season_details', 'SeasonsController@add_season_details');
 	Route::post('add_season_dates_details', 'SeasonsController@add_season_dates_details');
 	Route::post('delete_season_data', 'SeasonsController@delete_season_data');
 	Route::post('delete_season_dates_data', 'SeasonsController@delete_season_dates_data');
-	
+
 	Route::post('deleteUserAds', 'UserController@deleteUserAds');
 	Route::post('delete_selected_image', 'PropertiesController@delete_selectedproperty_image');
 	Route::post('fetch_property_info', 'CrmhotelController@fetch_property_info');
 	Route::post('fetch_company_info', 'CrmhotelController@fetch_company_info');
-    
+
     Route::post('fetch_property_company_info', 'CrmhotelController@fetch_property_company_info');
     Route::post('fetch_user_info', 'CrmhotelController@fetch_user_info');
-    
+
 	Route::post('emailCRM', 'CrmhotelController@emailCRM');
-    
+
     Route::post('emailInviteCRM', 'CrmhotelController@emailInviteCRM');
-    
+
 	Route::get('pull_property_hotels', 'CrmhotelController@pull_property_hotels');
 	Route::post('getfolderlistforselectoptions', 'ContainerController@fetchFolderTreeOptions');
     Route::post('getPropertyRates', 'PropertiesController@getPropertyRates');
 
 	Route::post('gallery_images_uploads', 'CitycontentController@gallery_images_uploads');
 	Route::post('delete_gallery_image', 'CitycontentController@delete_gallery_image');
-	
+
 	Route::post('enable_diable_sliderstatus', 'SliderController@enable_diable_sliderstatus');
 	Route::post('change_order_num_sliders', 'SliderController@change_sliders_ordering');
 	Route::post('change_order_num_pagessliders', 'PagessliderController@change_pagessliders_ordering');
 	Route::post('enable_diable_pagessliderstatus', 'PagessliderController@enable_diable_pagessliderstatus');
-	
+
 	Route::get('fetchpackagedetails/{pckid}', 'HomeController@fetchpackagedetails');
 	Route::get('userorder_downloadinvoicepdf/{ordid}', 'UserorderController@ordersdownloadinvoicepdf');
-    
+
     Route::get('userorderdownloadinvoicepdf/{ordid}', 'UserorderController@userordersdownloadinvoicepdf');
-    
+
 	Route::post('delete_menu_image', 'Sximo\MenuController@deleteMenuImage');
 	Route::get('restaurant_reservations/{id}', 'RestaurantController@restroReservations');
 	Route::get('bar_reservations/{id}', 'BarController@barReservations');
 	Route::get('spa_reservations/{id}', 'SpaController@spaReservations');
-    
+
     Route::post('deleteUserAds', 'UserController@deleteUserAds');
     Route::post('save_new_profile', 'UserController@saveNewprofile');
-    
+
     Route::post('save_new_hotel_profile', 'UserController@saveNewHotelprofile');
     Route::post('save_new_supplier_profile', 'UserController@saveNewSupplierprofile');
     Route::post('save_new_traveller_profile', 'UserController@saveNewTravellerProfile');
-        
+
     Route::post('save_new_company_details', 'UserController@saveNewcompanydetails');
     Route::post('confirm_new_profile', 'UserController@confirmNewprofile');
-    
+
     Route::get('signup-contract/{isview}', 'ContractController@download_signup_contract');
     Route::get('supplier-contract/{isview}', 'ContractController@download_supplier_contract');
-    
+
     Route::post('ownhotelsetup', 'UserController@ownhotelsetup');
     Route::post('hotelavaibility', 'UserController@hotelavaibility');
     Route::post('suppliercommissiontype', 'UserController@suppliercommissiontype');
-    
+
     Route::post('upload_contract', 'PropertiesController@contract_upload');
-    
-    Route::post('package_skip', 'CustomerController@skipPackage'); 
-    
-    Route::post('hotel/subtractfee', 'Frontend\HotelMembershipController@subtractfee'); 
-    
+
+    Route::post('package_skip', 'CustomerController@skipPackage');
+
+    Route::post('hotel/subtractfee', 'Frontend\HotelMembershipController@subtractfee');
+
     Route::get('downloadrequirementsheet/{filename}', 'UserorderController@downloadrequirementsheet');
-    
+
     Route::get('addhotel', 'PropertiesController@addhotel');
-    
+
     Route::get('get_setup', 'PackagesController@get_setup');
-    
+
     Route::post('save_hotel_info', 'PropertiesController@saveHotelInfo');
     Route::post('save_hotel_architect_info', 'PropertiesController@saveHotelArchitectInfo');
     Route::post('save_hotel_social_info', 'PropertiesController@saveHotelSocialInfo');
     Route::post('check_hotel_setup', 'PropertiesController@checkHotelSetup');
-    
+
     Route::post('priceonrequest', 'CustomerController@priceonrequest');
-    
+
     Route::post('confirmreservation', 'PropertiesController@confirmreservation');
-    
+
     Route::post('get_b2ccategory_rooms_reservations', 'PropertiesController@get_b2ccategory_rooms_reservations');
-    
+
     Route::post('get_reservation_details', 'PropertiesController@get_reservation_details');
-    
+
     Route::post('user_arrival_departure', 'PropertiesController@user_arrival_departure');
     Route::post('user_arrival_departure_cancelations', 'PropertiesController@user_arrival_departure_cancelations');
-    
+
     Route::get('reservations', 'PropertiesController@reservations');
     Route::get('hotelpackages', 'Frontend\HotelMembershipController@packages');
     Route::get('qualityassurances', 'PropertiesController@qualityassurances');
-    
+
     Route::post('salesoverview', 'PropertiesController@salesoverview');
-    
+
     Route::get('salesreport', 'PropertiesController@salesreport');
     Route::get('arrivaldeparture', 'PropertiesController@arrivaldeparture');
     Route::get('advertising', 'PropertiesController@advertising');
-    
+
     Route::get('hotelcontainer', 'ContainerController@hotelcontainer');
-    
+
     Route::get('flipview/{filename}', 'PropertiesController@flipview');
-    
+
     Route::get('conatinerflip/{filename}', 'PropertiesController@conatinerflip');
-    
+
     Route::get('flipviewpdf/{filename}', 'UserorderController@flipviewpdf');
-    
+
     Route::get('hotelinvoices', 'UserorderController@hotelinvoices');
-    
+
     Route::get('ordershow/{id}', 'UserorderController@ordershow');
-    
+
     Route::get('bookingshow/{id}', 'BookingsController@bookingshow');
-    
+
     Route::get('searchbooking', 'BookingsController@searchbooking');
     Route::post('searchbookingresult', 'BookingsController@searchbookingresult');
-    
+
     Route::post('salesstats', 'PropertiesController@salesstats');
     Route::post('save_management_personnel', 'UserController@savemanagementpersonnel');
-    
+
     Route::post('getPropertyTypeRates', 'PropertiesController@getPropertyTypeRates');
-    
+
     Route::get('ajaxcalendar', 'Frontend\PropertyController@ajaxcalendar');
-    
+
     Route::get('ajaxnextprevmonth', 'Frontend\PropertyController@ajaxnextprevmonth');
    	Route::post('change_order_num', 'PackagesController@change_ordering');
-    
+
     Route::post('pdproomavailability', 'HomeController@ajaxcheckavailability');
-    
+
     Route::post('changeRoomStatus', 'PropertiesController@changeRoomStatus');
-    
+
    	Route::post('resturant_images_uploads', 'RestaurantController@resturant_images_uploads');
     Route::post('delete_restaurant_image', 'RestaurantController@delete_restaurant_image');
     Route::post('delete_rest_selected_image', 'RestaurantController@delete_selected_image');
-    
+
     Route::post('event_images_uploads', 'EventsController@event_images_uploads');
    	Route::post('delete_event_image', 'EventsController@delete_event_image');
     Route::post('delete_selected_event_image', 'EventsController@delete_selected_event_image');
-    
+
     Route::post('addmenutitle', 'RestaurantController@addmenutitle');
-    
+
     Route::post('spa_images_uploads', 'SpaController@spa_images_uploads');
     Route::post('bar_images_uploads', 'BarController@bar_images_uploads');
-    
+
     Route::post('add_event_type', 'EventsController@save_event_type_data');
     Route::post('delete_event_ticket_type', 'EventsController@delete_event_ticket_type');
-    
-   	Route::post('add_event_season_details', 'SeasonsController@add_event_season_details');    
+
+   	Route::post('add_event_season_details', 'SeasonsController@add_event_season_details');
 	Route::post('add_event_season_dates_details', 'SeasonsController@add_event_season_dates_details');
 	Route::post('delete_event_season_data', 'SeasonsController@delete_event_season_data');
 	Route::post('delete_event_season_dates_data', 'SeasonsController@delete_event_season_dates_data');
     Route::post('get_event_seasons', 'SeasonsController@get_event_seasons');
     Route::post('add_event_term', 'EventsController@save_event_term');
     Route::post('add_event_ticket_price', 'EventsController@save_event_ticket_price');
-    
+
     Route::post('addtagtitle', 'TagmanagerController@addtagtitle');
 });
 Route::post('globalavailability', 'Frontend\PropertyController@propertyglobalavailability');
 Route::get('globalsearchavailability', 'Frontend\PropertyController@globalsearchavailability');
+Route::get('landing_view', 'Frontend\PropertyController@landing_view');
+Route::get('hotel_details', 'Frontend\PropertyController@hotel_details');
+Route::get('get_inspired', 'Frontend\PropertyController@get_inspired');
 Route::post('getpdppage', 'Frontend\PropertyController@getpdppage');
 Route::post('getdestinationpage', 'Frontend\PropertyController@getdestinationpage');
 
 Route::get('searchavailability', 'Frontend\PropertyController@propertySearchAvailability');
-    
+
 Route::post('getyoutubechannel', 'Frontend\FrontendPagesController@getyoutubechannel');
-Route::post('getinstagramchannel', 'Frontend\FrontendPagesController@getinstagramchannel');    
+Route::post('getinstagramchannel', 'Frontend\FrontendPagesController@getinstagramchannel');
 Route::post('getDropdownBreadcrumb', 'Frontend\PropertyController@getDropdownBreadcrumb');
 Route::post('getSearchDropdownBreadcrumb', 'Frontend\PropertyController@getSearchDropdownBreadcrumb');
 Route::post('propcollection', 'Frontend\PropertyController@propcollection');
 Route::post('searchpropcollection', 'Frontend\PropertyController@searchpropcollection');
 Route::post('propertybycollection', 'Frontend\PropertyController@propertybycollection');
 Route::post('searchpropertybycollection', 'Frontend\PropertyController@searchpropertybycollection');
+
+Route::get('propertyimagesbypid', 'Frontend\PropertyController@propertyimagesbypid');
+
+Route::get('galleryimages', 'Frontend\PropertyController@galleryimages');
+Route::get('quickinfo', 'Frontend\PropertyController@quickinfo');
+Route::get('restaurantimagebyid', 'Frontend\PropertyController@restaurantimagebyid');
+Route::get('suiteimagebyid', 'Frontend\PropertyController@suiteimagebyid');
+Route::get('suitesbyid', 'Frontend\PropertyController@suitesbyid');
+Route::get('suitedetails', 'Frontend\PropertyController@suitedetails');
 
 Route::post('propertysearchlistbycollection', 'Frontend\PropertyController@propertysearchlistbycollection');
 
@@ -496,10 +523,10 @@ Route::get('hotel/advertiser', 'Frontend\HotelMembershipController@advertisement
 Route::get('hotel/cart', 'Frontend\HotelMembershipController@hotelCart');
 Route::get('hotel/add_package_to_cart', 'Frontend\HotelMembershipController@addToCartAjax');
 Route::post('hotel/getAdvertPrice', 'Frontend\HotelMembershipController@getAdvertPriceAjax');
-Route::get('hotel/checkout', 'Frontend\HotelMembershipController@hotelCheckout');	
+Route::get('hotel/checkout', 'Frontend\HotelMembershipController@hotelCheckout');
 Route::get('thanks', 'Frontend\HotelMembershipController@getThanks');
 Route::get('removecartitem', 'Frontend\HotelMembershipController@getCartItemRemovedAjax');
-Route::get('removesuppliercartitem', 'Frontend\HotelMembershipController@getSupplierCartItemRemovedAjax');		
+Route::get('removesuppliercartitem', 'Frontend\HotelMembershipController@getSupplierCartItemRemovedAjax');
 Route::get('advertiser/package', 'Frontend\AdvertisementController@advertisementPackage');
 
 Route::get('hotel/transferimages', 'Frontend\PropertyimagesmanagementController@propertyImageupload');
@@ -620,7 +647,7 @@ Route::group(['prefix' => 'api', 'after' => 'allowOrigin'], function() {
    Route::get('user', 'ApiController@userProfileSave');
    Route::get('user/{id}', 'ApiController@retriveUserprofile');
    Route::get('user/update/{id}', 'ApiController@userProfileUpdate');
-   
+
 });
 
 
@@ -672,13 +699,13 @@ Route::group(['middleware' => 'auth' , 'middleware'=>'sximoauth'], function()
 		'sximo/config' 		=> 'Sximo\ConfigController',
 		'sximo/module' 		=> 'Sximo\ModuleController',
 		'sximo/tables'		=> 'Sximo\TablesController'
-	]);			
+	]);
 
 
 
 });
 
-Route::filter('allowOrigin', function($route, $request, $response) 
+Route::filter('allowOrigin', function($route, $request, $response)
 {
     $response->header('access-control-allow-origin','*');
 });
@@ -701,7 +728,7 @@ Route::get('press/view/{fid}/{id}', 'ContainerController@PressShowfilesAjax');
 
 Route::get('tpress/view/{fid}/{id}', 'ContainerController@PressShowTiffFiles');
 Route::get('getPressFolderListAjax/{id}', 'ContainerController@getPressFolderListAjax');
-    
+
 Route::get('getPressFoldersAjax/{id}', 'ContainerController@getPressFoldersAjax');
 Route::post('pressseletedfileszip', 'ContainerController@PressDownloadZipSelected');
 Route::post('pressseletedfileslowPdf', 'ContainerController@PressDownloadlowPdfSelected');
@@ -715,13 +742,13 @@ Route::get('hotel/get_checkout', 'Frontend\HotelMembershipController@getwizardCh
 
 Route::get('hotel/add_package_to_cart_wizard', 'Frontend\HotelMembershipController@addToCartWizardAjax');
 
-Route::get('hotel/thanks/{id}', 'Frontend\HotelMembershipController@hotelThanks');	
+Route::get('hotel/thanks/{id}', 'Frontend\HotelMembershipController@hotelThanks');
 
 Route::get('supplier/get_cart', 'Frontend\HotelMembershipController@getsupplierwizardCart');
 Route::post('supplier/update_cart', 'Frontend\HotelMembershipController@postwizardCart');
 Route::get('supplier/get_checkout', 'Frontend\HotelMembershipController@getsupplierwizardCheckout');
 Route::get('supplier/add_package_to_cart_wizard', 'Frontend\HotelMembershipController@addToCartSupplierWizardAjax');
-Route::get('supplier/thanks/{id}', 'Frontend\HotelMembershipController@hotelThanks');	
+Route::get('supplier/thanks/{id}', 'Frontend\HotelMembershipController@hotelThanks');
 
 
 Route::get('traveller/add_package_to_cart_wizard', 'Frontend\HotelMembershipController@addToCartTravellerWizardAjax');
