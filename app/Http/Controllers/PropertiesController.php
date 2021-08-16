@@ -327,6 +327,7 @@ class PropertiesController extends Controller {
 			$this->data['bars'] = \DB::table('tb_bars')->select('id', 'title')->get();
 			$this->data['spas'] = \DB::table('tb_spas')->select('id', 'title')->get();
 		}
+        $this->data['usp_services'] = \DB::table('tb_property_usp')->select('id', 'title')->get();
         $row_reservations = \DB::select(\DB::raw("SELECT COUNT(*) AS total_reservations FROM tb_reservations WHERE property_id = '$id' "));
         $row_reserved_rooms = \DB::select(\DB::raw("SELECT COUNT(*) AS total_reserved_rooms FROM td_reserved_rooms LEFT JOIN tb_reservations ON tb_reservations.id = td_reserved_rooms.reservation_id WHERE tb_reservations.property_id = '$id' "));
         $row_turnover = \DB::select(\DB::raw("SELECT SUM(number_of_nights * tb_reservations.price) AS total_turnover FROM td_reserved_rooms LEFT JOIN tb_reservations ON tb_reservations.id = td_reserved_rooms.reservation_id WHERE tb_reservations.property_id = '$id' "));
@@ -610,6 +611,12 @@ class PropertiesController extends Controller {
                 $data['bar_ids'] = implode(',', $request->input('barids'));
             } else {
                 $data['bar_ids'] = '';
+            }
+
+			if (!empty($request->input('usp_service_ids'))) {
+                $data['usp_service_ids'] = implode(',', $request->input('usp_service_ids'));
+            } else {
+                $data['usp_service_ids'] = '';
             }
 
             $data['owner_name'] = $request->input('owner_name');

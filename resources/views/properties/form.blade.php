@@ -493,7 +493,7 @@
                                             <option  value ="0">-- Select Restaurant --</option> 
                                             @foreach($restaurants as $val)
 
-                                            <option  value ="{{$val->id}}" {{(isset($row['restaurant_ids']) && in_array($val->id,explode(',',$row['restaurant_ids']))) ? " selected='selected' " : '' }}>{{$val->title}}</option> 						
+                                            <option  value ="{{$val->id}}" {{(isset($row['restaurant_ids']) && in_array($val->id,explode(',',$row['restaurant_ids']))) ? " selected='selected' " : '' }}>{{$val->title}}</option>
                                             @endforeach						
                                         </select> 
                                     </div> 
@@ -535,7 +535,23 @@
 										<a href="{{URL::to('spa')}}" >Add Spas</a>
                                     </div>
                                 </div>
-                                
+
+                                <div class="form-group  " >
+                                    <label for="USP Services" class="control-label col-md-4 text-left"> USP Services</label>
+                                    <div class="col-md-6">
+                                        <select name='usp_service_ids[]' id="usp_service_ids" rows='5' class='select2 ' multiple="multiple">
+                                            <option value="0">-- Select USP Service --</option>
+                                            @foreach($usp_services as $val)
+
+                                                <option  value ="{{$val->id}}" {{(isset($row['spa_ids']) && in_array($val->id,explode(',',$row['spa_ids']))) ? " selected='selected' " : '' }}>{{$val->title}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <a href="{{URL::to('propertyusp')}}" >Add USP Service</a>
+                                    </div>
+                                </div>
+
                                 <div class="form-group  " >
                                     <label for="back_link" class=" control-label col-md-4 text-left"> Back Link </label>
                                     <div class="col-md-6">
@@ -553,10 +569,10 @@
                                         <label class="radio-inline"><input type="radio" name="rdlatest_hotel" value="0" {{$row['latest_hotel']==0 ? "checked='checked'" : '' }} >No</label>
                                     </div>
                                 </div>
-                                
+
                             </div>
 
-                            <div class="tab-pane m-t" id="yachtinfo">
+                            <div class="tab-pane m-t" id="yachtinRestaurantsfo">
                                 <div class="form-group  " >
                                     <label for="Yachts Categories" class=" control-label col-md-4 text-left"> Yachts Categories </label>
                                     <div class="col-md-6">
