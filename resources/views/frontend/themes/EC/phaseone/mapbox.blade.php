@@ -621,97 +621,24 @@
 {{-- For custom script --}}
 @section('custom_js')
     @parent
-    <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoibnVtYmVyN2V2ZW4iLCJhIjoiY2tpNjVrNDB5MnJmZzJzbHRwc3A1emN5ZSJ9.8hbjMM5UBnta7I26RaQX6g';
-    var map = new mapboxgl.Map({
-      container: 'property_map',
-    //   style: 'mapbox://styles/mapbox/light-v10',
-      style: 'mapbox://styles/number7even/ckqov97rs0ekf17tadd8giy71',
-      center: [-77.04, 38.907],
-      zoom: 11.15
-    });
-    map.addControl(new mapboxgl.NavigationControl());
-    var points;
-    // var geojsonFeatures1 = {!! json_encode($anchors) !!};
-    // console.log('I ama here =>', geojsonFeatures1);
-    var geojsonFeatures = {
-      type: 'FeatureCollection',
-      features: {!! json_encode($anchors) !!}
-    };
-    // console.log(geojsonFeatures1);
 
-    // var geojsonFeatures = {
-    //   type: 'FeatureCollection',
-    //   features: [{
-    //     'type': 'Feature',
-    //     'geometry': {
-    //       'type': 'Point',
-    //       'coordinates': [-77.038659, 38.931567]
-    //     },
-    //     "properties": {
-    //       'dataId': 'hotel_123',
-    //       'title': 'Hotel Name 1',
-    //       'images': [
-    //         ['images/64133123060-77799344932.jpg'],
-    //         ['images/53511811337-49267444221.jpg']
-    //       ],
-    //       'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    //       'price': '€269'
-    //     }
-    //   }, {
-    //     'type': 'Feature',
-    //     'geometry': {
-    //       'type': 'Point',
-    //       'coordinates': [-77.003168, 38.894651]
-    //     },
-    //     "properties": {
-    //       'dataId': 'hotel_124',
-    //       'title': 'Hotel Name 2',
-    //       'images': [
-    //         ['images/64133123060-77799344932.jpg'],
-    //         ['images/53511811337-49267444221.jpg']
-    //       ],
-    //       'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    //       'price': '€269'
-    //     }
-    //   }, {
-    //     'type': 'Feature',
-    //     'geometry': {
-    //       'type': 'Point',
-    //       'coordinates': [-77.090372, 38.881189]
-    //     },
-    //     "properties": {
-    //       'dataId': 'hotel_125',
-    //       'title': 'Hotel Name 3',
-    //       'images': [
-    //         ['images/64133123060-77799344932.jpg'],
-    //         ['images/53511811337-49267444221.jpg']
-    //       ],
-    //       'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    //       'price': '€269'
-    //     }
-    //   }, {
-    //     'type': 'Feature',
-    //     'geometry': {
-    //       'type': 'Point',
-    //       'coordinates': [-77.111561, 38.882342]
-    //     },
-    //     "properties": {
-    //       'dataId': 'hotel_126',
-    //       'title': 'Hotel Name 4',
-    //       'images': [
-    //         ['images/64133123060-77799344932.jpg'],
-    //         ['images/53511811337-49267444221.jpg']
-    //       ],
-    //       'description': 'Lorem ipsum dolor sit amet consectetur adipisicing elit.',
-    //       'price': '€269'
-    //     }
-    //   },
-    //   ]
-    // };
+    <script type="text/javascript">
+      mapboxgl.accessToken = 'pk.eyJ1IjoibnVtYmVyN2V2ZW4iLCJhIjoiY2tpNjVrNDB5MnJmZzJzbHRwc3A1emN5ZSJ9.8hbjMM5UBnta7I26RaQX6g';
+      var map = new mapboxgl.Map({
+        container: 'property_map',
+        style: 'mapbox://styles/number7even/ckqov97rs0ekf17tadd8giy71',
+        center: [{!! $min_coordinates !!}, {!! $max_coordinates !!}],
+        zoom: 11.15
+      });
+      map.addControl(new mapboxgl.NavigationControl());
+      var points;
 
+      var geojsonFeatures = {
+        type: 'FeatureCollection',
+        features: {!! json_encode($anchors) !!}
+      };
 
-    map.on('load', function () {
+      map.on('load', function () {
       geojsonFeatures.features.forEach(function (marker) {
         var el = document.createElement('div');
         el.className = 'marker';
@@ -733,7 +660,7 @@
           var img = images[i];
 
           slideshowContent += '<div class="image-list' + (i === 1 ? ' active' : '') + '">' +
-            '<img src="' + img[0] + '" class="img-fluid" />' +
+            '<img src="' + img + '" class="img-fluid" />' +
             '</div>';
         }
         var popupContent = '<div class="map-detail-container">' +
@@ -792,40 +719,40 @@
         });
 
       })
-    })
+      })
 
-    $('.close-view').click(function (e) {
+      $('.close-view').click(function (e) {
       e.preventDefault();
       $('.hotel-info-content').removeClass('active');
       $('.hotel-item-map').removeClass('active');
       $('.hotel-item-map').removeClass('not-active');
       $('.close-view').css('display', 'none');
       $('.mapboxgl-popup').remove();
-    })
+      })
 
 
-    var locations = [
+      var locations = [
       ['<b>Loaction Name</b>', 11.8166, 122.0942],
-    ];
+      ];
 
-    var mapL = L.map('map2').setView([11.206051, 122.447886], 8);
+      var mapL = L.map('map2').setView([11.206051, 122.447886], 8);
 
-    var myIcon = L.icon({
+      var myIcon = L.icon({
       iconUrl: "{{ asset('themes/EC/images/basic_geolocalize-01.svg') }}",
       iconSize: [40, 45],
-    });
-    L.tileLayer(
+      });
+      L.tileLayer(
       'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
-    }).addTo(mapL);
+      }).addTo(mapL);
 
-    for (var i = 0; i < locations.length; i++) {
+      for (var i = 0; i < locations.length; i++) {
       marker = new L.marker([locations[i][1], locations[i][2]], { icon: myIcon })
         .bindPopup(locations[i][0])
         .addTo(mapL);
-    }
+      }
 
-    var picker = $('#daterangepicker-inline').daterangepicker({
+      var picker = $('#daterangepicker-inline').daterangepicker({
       parentEl: "#daterangepicker-inline-container",
       autoApply: true,
       minDate: new Date(),
@@ -833,14 +760,15 @@
       locale: {
         cancelLabel: 'Clear',
       }
-    });
+      });
 
-    picker.on('apply.daterangepicker', function (ev, picker) {
+      picker.on('apply.daterangepicker', function (ev, picker) {
       $('.onrange').html(picker.startDate.format('DD-MM-YYYY') + ' -> ' + picker.endDate.format('DD-MM-YYYY'));
       $('.include-form').fadeIn("fast");
-    });
-    picker.data('daterangepicker').hide = function () { };
-    picker.data('daterangepicker').show();
-  </script>
+      });
+      picker.data('daterangepicker').hide = function () { };
+      picker.data('daterangepicker').show();
+    </script>
+
 @endsection
 
