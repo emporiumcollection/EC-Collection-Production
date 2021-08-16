@@ -21,10 +21,10 @@
               aria-controls="searchF">
               <i class="ico ico-search"></i>
             </a>
-            <a href="#cityList" class="menu-nav text-menu city-f" data-toggle="collapse" role="button"
+<!--             <a href="#cityList" class="menu-nav text-menu city-f" data-toggle="collapse" role="button"
               aria-expanded="false" aria-controls="cityList">
               <span class="label-city" style="background: green;"></span> New York
-            </a>
+            </a> -->
             <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false"
               aria-controls="calcF">
               <span class="cal-date">22 Jun - 23 Jun</span>
@@ -386,7 +386,7 @@
         </a>
       </div>
     </div>
-    <div class="collapse clp" id="cityList" data-parent="#menunav">
+<!--     <div class="collapse clp" id="cityList" data-parent="#menunav">
       <ul class="nav flex-column py-2">
         <li class="nav-item">
           <a class="nav-link" href="#"><span class="city-name-nav"><span class="label-city"
@@ -401,7 +401,7 @@
                 style="background: blue;"></span> San Francisco</span>. -> 12.8.20 -> 16.8.20</a>
         </li>
       </ul>
-    </div>
+    </div> -->
 
     <div class="collapse clp" id="searchF" data-parent="#menunav">
       <div class="search-field">
