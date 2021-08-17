@@ -37,7 +37,7 @@ class HotelDataUpdate extends Command
         $this->authenticate();
 
         $properties = properties::select(['id', 'amadeus_hotel_id', 'property_name', 'isin_amadeus', 'season_year'])
-        ->whereNotNull('amadeus_hotel_id')
+        ->where('amadeus_hotel_id', '!=', '')
         ->get();
 
         foreach($properties as $property){
@@ -45,6 +45,8 @@ class HotelDataUpdate extends Command
             $seasons = $this->insertSeasons($property->id, 
                 $property->season_year, 
                 $seasons);
+
+            $foundPrices[$property->id] = false;
             
             foreach($seasons as $season){
                 print $hotelUrl = 'https://api.amadeus.com/v2/shopping/hotel-offers?hotelIds='.$property->amadeus_hotel_id.'&checkInDate='.$season['start'].'&checkOutDate=' . $season['end'];
@@ -57,9 +59,13 @@ class HotelDataUpdate extends Command
                 // print_r($hotels);exit();
                 if(isset($hotels->data) && !empty($hotels->data)){
                     foreach($hotels->data as $hotel){
-                        // print_r($hotel->offers[0]);exit;
+                        $category_name = '';
+                        $category_bed_type = '';
                         if (isset($hotel->offers[0]->room->typeEstimated->category )) {
                             $category_name = $hotel->offers[0]->room->typeEstimated->category;
+                        }        
+                        if (isset($hotel->offers[0]->room->type )) {
+                            $category_name = $hotel->offers[0]->room->type;
                         }        
                         if (isset($hotel->offers[0]->room->typeEstimated->bedType )) {
                             $category_bed_type = $hotel->offers[0]->room->typeEstimated->bedType; 
@@ -99,13 +105,17 @@ class HotelDataUpdate extends Command
                             $rooms_id = $getdata[0]->id;    
                         }
                         $property_id = $property->id;
-                        $rack_rate = $hotel->offers[0]->price->variations->average->base;
+                        $rack_rate = 0;
+                        if(isset($hotel->offers[0]->price->variations->average->base)){
+                            $rack_rate = $hotel->offers[0]->price->variations->average->base;
+                        }
                         $dayPrices = [];
                         $changes =  $hotel->offers[0]->price->variations->changes;
                         foreach ($changes as $key => $value) {
                             if(count($dayPrices)>=7) break;
                             $dayPrices = $this->getDayPrices($value, $dayPrices);
                         }
+                        $foundPrices[$property->id] = true;
                         $this->insertRates($property_id,
                             $season['season_id'], 
                             $rack_rate, 
@@ -124,7 +134,10 @@ class HotelDataUpdate extends Command
                     exit;*/
                 }
             }
-            exit;
+
+            if(!$foundPrices[$property->id]){
+                DB::table('tb_properties')->where('id', '=', $property->id)->update(['amadeus_nodata'=> 1]);
+            }
         }
     }
     private function authenticate(){
@@ -147,11 +160,11 @@ class HotelDataUpdate extends Command
         $current_season_year = date("Y");
         $yearExists = DB::table('tb_properties')->where('id', '=', $property_id)->update(['season_year'=> $current_season_year]);
 
-/*        DB::table('tb_seasons')->where('property_id', '=', $property_id)->delete();
-        DB::table('tb_seasons_dates')->where('property_id', '=', $property_id)->delete();
+        /*DB::table('tb_seasons')->where('property_id', '=', $property_id)->delete();
+        DB::table('tb_seasons_dates')->where('property_id', '=', $property_id)->delete();*/
         DB::table('tb_properties_category_rooms_price')
         ->where('property_id', '=', $property_id)
-        ->delete();*/
+        ->delete();
         foreach($seasons as $key => $val){
             $start_date = $val['start'];
             $end_date = $val['end'];
@@ -187,7 +200,11 @@ class HotelDataUpdate extends Command
                 $start_date = strtotime($from);
                 $day = date('D', $start_date);
                 if(!isset($dayPrices[$day])){
-                    $dayPrices[$day] = $value->base;
+                    if(isset($value->base)){
+                        $dayPrices[$day] = $value->base;
+                    }else{
+                        $dayPrices[$day] = 0;
+                    }
                 }                
                 $from = strtotime("+1 day", $start_date);
                 $from = date('Y-m-d', $from);
