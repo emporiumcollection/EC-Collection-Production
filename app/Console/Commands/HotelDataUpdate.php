@@ -36,8 +36,15 @@ class HotelDataUpdate extends Command
     {
         $this->authenticate();
 
+        $current_date = strtotime(date("Y-m-d"));
+        $week_before = strtotime("-1 week", $current_date);
+        $week_before = date("Y-m-d", $week_before);
+
         $properties = properties::select(['id', 'amadeus_hotel_id', 'property_name', 'isin_amadeus', 'season_year'])
         ->where('amadeus_hotel_id', '!=', '')
+        ->where('price_update_date', '<', $week_before)
+        ->orWhereNull('price_update_date')
+        ->limit(5)
         ->get();
 
         foreach($properties as $property){
@@ -137,6 +144,8 @@ class HotelDataUpdate extends Command
 
             if(!$foundPrices[$property->id]){
                 DB::table('tb_properties')->where('id', '=', $property->id)->update(['amadeus_nodata'=> 1]);
+            }else{
+                DB::table('tb_properties')->where('id', '=', $property->id)->update(['price_update_date'=> date('Y-m-d')]);                
             }
         }
     }
