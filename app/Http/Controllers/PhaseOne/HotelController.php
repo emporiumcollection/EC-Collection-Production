@@ -93,7 +93,7 @@ class HotelController extends Controller {
             /** End */
 
             /** Property types */
-            $cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $props->id)->where('status', 0)->where('show_on_booking', 1)->get();
+            $cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $props->id)->where('status', 0)->where('show_on_booking', 1)->limit(1)->get();
             if (!empty($cat_types)) {
                 $c = 0;
                 foreach ($cat_types as $type) {
