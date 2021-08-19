@@ -3,7 +3,7 @@
 @section('page_name')
     My Companions  <small>Add Companion</small>
 @stop
-
+    
 @section('breadcrumb')
     <li class="m-nav__separator"> - </li>
     <li class="m-nav__item"> 

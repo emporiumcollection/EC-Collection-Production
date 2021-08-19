@@ -141,6 +141,23 @@ class PersonalizedServiceController extends Controller {
     
     public function save(Request $request) {
         
+        $arrival = $request->earliest_arrival;
+        $earliest_arrival_val = explode("-",$arrival);
+        $from = $earliest_arrival_val[0];
+        $to = $earliest_arrival_val[1];
+
+        $arrival_date =  strtotime($from);
+        $earliest_arrival = date('Y-m-d',$arrival_date); 
+
+        $checkout_date =  strtotime($to);
+        $late_check_out = date('Y-m-d',$checkout_date); 
+
+        $destination = array_keys($request->destinations);
+        $inspiration = array_keys($request->inspirations);
+        $experience = array_keys($request->experiences);
+        $inspiration_val = implode(",",$inspiration);
+        $experience_val = implode(",",$experience);
+        $destination_val = implode(",",$destination);
         if (!\Auth::check()):
             return Redirect::to('customer/login');
         endif;
@@ -148,23 +165,23 @@ class PersonalizedServiceController extends Controller {
         $customer_id = \Auth::user()->id;
         
         $params = array('customer_id' => $customer_id,
-                        'salutation' => $request->input('salutation'),
-                        'first_name' => $request->input('first_name'),
-                        'surname' => $request->input('surname'),
-                        'email' => $request->input('email'),
+                        // 'salutation' => $request->input('salutation'),
+                        // 'first_name' => $request->input('first_name'),
+                        // 'surname' => $request->input('surname'),
+                        // 'email' => $request->input('email'),
                         'adults' => $request->input('adults'),
                         'youth' => $request->input('youth'),
                         'children' => $request->input('children'),
                         'toddlers' => $request->input('toddlers'),
-                        'earliest_arrival' => date("Y-m-d", strtotime($request->input('earliest_arrival'))),
-                        'late_check_out' => date("Y-m-d", strtotime($request->input('late_check_out'))),
-                        'stay_time' => $request->input('stay_time'),
-                        'destinations' => implode(', ', $request->input('destinations')),
-                        'inspirations' => implode(', ', $request->input('inspirations')),
-                        'experiences' => implode(', ', $request->input('experiences')),
-                        'note' => $request->input('note'),
-                        'reservation_agent' => '0',
-                        'status' => 'Pending',
+                        'earliest_arrival' => $earliest_arrival,
+                        'late_check_out' => $late_check_out,
+                        'stay_time' => $request->stay_time,
+                        'destinations' => $destination_val,
+                        'inspirations' => $inspiration_val,
+                        'experiences' => $experience_val,
+                        // 'note' => $request->input('note'),
+                        // 'reservation_agent' => '0',
+                        // 'status' => 'Pending',
                         'created' => date("Y-m-d H:i:s"),
                         'updated' => date("Y-m-d H:i:s")
                     );

@@ -41,7 +41,7 @@
 		<link href="{{ asset('sximo/js/plugins/fancybox/jquery.fancybox.css') }}" rel="stylesheet">
 		<link href="{{ asset('sximo/js/plugins/markitup/skins/simple/style.css') }}" rel="stylesheet">
 		<link href="{{ asset('sximo/js/plugins/markitup/sets/default/style.css') }}" rel="stylesheet">
-
+		
                 <link href="{{ asset('sximo/crm_layout/jquery-minicolors/jquery.minicolors.css')}}" rel="stylesheet" type="text/css" />
                 
 		<link href="{{ asset('sximo/css/animate.css')}}" rel="stylesheet">		

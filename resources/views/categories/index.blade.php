@@ -44,9 +44,7 @@
 			<i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
 			@endif
 
-
-					<input class="pull-right"  placeholder="Search" type="text" name="search_keyword"  >
-
+					<input class="pull-right"  placeholder="Search" type="text" name="search_keyword">
 
 		</div> 		
 

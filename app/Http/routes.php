@@ -17,6 +17,7 @@
 Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 
+
 /**
  * New frontend routes.
  */
@@ -103,7 +104,7 @@ Route::group(['middleware' => 'auth'], function()
 Route::get('generate/destination', 'GenerateController@destinationGenerate');
 Route::get('generate/hotel', 'GenerateController@hotelGenerate');
 Route::get('personalized-service', 'Frontend\PersonalizedServiceController@index');
-Route::post('personalized-service/save', 'Frontend\PersonalizedServiceController@save');
+Route::post('/personalized-service','Frontend\PersonalizedServiceController@save');
 
 Route::post('personalized-service/ajax_save', 'Frontend\PersonalizedServiceController@ajax_save');
 
@@ -124,8 +125,23 @@ Route::get('/supplier', 'CustomerController@supplier');
 
 Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences');
 
-Route::get('/whoiam', 'CustomerController@whoIam');
+//Routes for new UI changes in Emporium 
+Route::get('/users/my-preferences', 'UserController@getPreferences');
+Route::get('/users/profile', 'UserController@getProfile');
+Route::get('/users/setting', 'UserController@getSettings');
+Route::get('/users/guestinvite', 'UserController@getInvite');
+Route::get('/users/companion', 'UserController@getCompanion');
+Route::get('/users/security', 'UserController@getSecurity');
+Route::get('/users/contracts', 'UserController@getInvoices');
+Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
+Route::post('/users/invite', 'UserController@postInvite');
+Route::get('/users/reservation', 'UserController@getReservation');
 
+
+
+
+Route::get('/whoiam', 'CustomerController@whoIam');
+// Route::post('user/my-preferences', 'UserController@getPreferences');
 Route::post('/viewInvite', 'UserController@viewInvite');
 Route::post('editinvite', 'UserController@editInvite');
 Route::post('deleteinvite', 'UserController@deleteInvite');

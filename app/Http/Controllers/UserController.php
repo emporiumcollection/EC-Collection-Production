@@ -455,14 +455,14 @@ class UserController extends Controller {
         //End
         
         $group_id = \Auth::user()->group_id;
-        $file_name = 'user.profile';
+        $file_name = 'users_admin.traveller.users.profile';
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
         if($is_demo6 === true){
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = $is_demo6.'.user.profile';
+            $file_name = 'users_admin.traveller.users.profile';
             $is_newuser = (int) $info->new_user;
             if($info->new_user == 1){
-                $file_name = $is_demo6.'.user.new_profile';
+                $file_name = 'users_admin.traveller.users.profile';
             }
         }
         
@@ -617,14 +617,13 @@ class UserController extends Controller {
     }
     
     public function postSavetravellerprofile(Request $request) {
+
         if (!\Auth::check())
             return Redirect::to('user/login');
-            
         $rules = array(
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'txtmobilecode' => 'required',
-            'txtmobileNumber' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'phone' => 'required',
         );
         
         //get contract during signup
@@ -632,7 +631,7 @@ class UserController extends Controller {
         //if(count($contracts) > 0){
         //    $rules['accept_contract'] = 'required';
         //}
-        //End
+        //Enddsd
 
         if ($request->input('email') != \Session::get('eid')) {
             $rules['email'] = 'required|email|unique:tb_users';
@@ -642,32 +641,33 @@ class UserController extends Controller {
 
         if ($validator->passes()) { 
             
-            if (!is_null(Input::file('avatar'))) {
-                $file = $request->file('avatar');
-                $destinationPath = './uploads/users/';
-                $filename = $file->getClientOriginalName();
-                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-                $newfilename = \Session::get('uid') . '.' . $extension;
-                $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
-                if ($uploadSuccess) {
-                    $data['avatar'] = $newfilename;
-                }
-            }
+            // if (!is_null(Input::file('avatar'))) {
+            //     $file = $request->file('avatar');
+            //     $destinationPath = './uploads/users/';
+            //     $filename = $file->getClientOriginalName();
+            //     $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+            //     $newfilename = \Session::get('uid') . '.' . $extension;
+            //     $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
+            //     if ($uploadSuccess) {
+            //         $data['avatar'] = $newfilename;
+            //     }
+            // }
             
             $user = User::find(\Session::get('uid'));
-            $user->first_name = $request->input('first_name');
-            $user->last_name = $request->input('last_name');
+            $user->first_name = $request->input('firstname');
+            $user->last_name = $request->input('lastname');
             $user->email = $request->input('email');
             
-            $user->mobile_code = $request->input('txtmobilecode');
-            $user->mobile_number = $request->input('txtmobileNumber');
+            // $user->mobile_code = $request->input('txtmobilecode');
+            $user->mobile_number = $request->input('phone');
             $user->gender = $request->input('gender');            
-            $user->prefer_communication_with = $request->input('prefer_communication_with');
+            // $user->prefer_communication_with = $request->input('prefer_communication_with');
             $user->preferred_currency = $request->input('preferred_currency');
-            if (isset($data['avatar']))
-                $user->avatar = $newfilename;
+            // if (isset($data['avatar']))
+            //     $user->avatar = $newfilename;
                 
             $user->save();
+
             
             //insert contracts
             //\CommonHelper::submit_contracts($contracts,'sign-up');
@@ -1367,7 +1367,7 @@ class UserController extends Controller {
         $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->where('status', 0)->get();
         $user = User::find(\Session::get('uid'));
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.companion':'';      
+        $file_name = 'users_admin.traveller.users.companion';      
         return view($file_name, $this->data);
     }
     public function postCompanion(Request $request){
@@ -1494,7 +1494,6 @@ class UserController extends Controller {
                 
             }            
                        
-            
             $return_array['status'] = 'success';
             $return_array['message'] = 'You have successfully added a travel companion';          
             
@@ -1574,7 +1573,7 @@ class UserController extends Controller {
         $user = User::find(\Session::get('uid'));
         $this->data['invitees'] = \DB::table('tb_invitee')->where('user_id', \Session::get('uid'))->where('status', 0)->get();
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.invite':'';      
+        $file_name = 'users_admin.traveller.users.guestinvite';      
         return view($file_name, $this->data);
     }
     public function postInvite(Request $request){
@@ -1584,8 +1583,8 @@ class UserController extends Controller {
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
-            'first_name' => 'required|alpha_num|min:2',
-            'last_name' => 'required|alpha_num|min:2',
+            'firstname' => 'required|alpha_num|min:2',
+            'lastname' => 'required|alpha_num|min:2',
             'email' => 'required'
         );
 
@@ -1657,8 +1656,8 @@ class UserController extends Controller {
     }
     public function getSettings(){
         $user = User::find(\Session::get('uid'));
-        $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.settings':'';      
+        // $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
+        $file_name = 'users_admin.traveller.users.account-setting';      
         return view($file_name);
     }
     public function getCompany(){
@@ -2542,9 +2541,7 @@ class UserController extends Controller {
     public function getPreferences(){
         if (!\Auth::check())
             return redirect('user/login');
-
-
-        
+                        
         $def_currency = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
         
         $temp = $this->get_destinations_new();
@@ -2570,24 +2567,28 @@ class UserController extends Controller {
             'preferences' => $preferences
         );
         
-        
-        
         $group_id = \Auth::user()->group_id;
-        $file_name = 'user.preferences';
+        $file_name = 'users_admin.traveller.users.my-preferences';
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
         if($is_demo6 === true){
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = $is_demo6.'.user.preferences';           
+            $file_name = '.users_admin.traveller.users.my-preferences';           
         }
         
         return view($file_name, $this->data);
     }
+    public function getReservation(){
+        $file_name = 'users_admin.traveller.users.reservations';
+        return view($file_name);
+    }
+
+
     public function getSecurity(Request $request){
         
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
         if($is_demo6 === true){
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = $is_demo6.'.user.security';           
+            $file_name = 'users_admin.traveller.users.security-privacy';           
         }
         return view($file_name);
     }
@@ -2596,7 +2597,7 @@ class UserController extends Controller {
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
         if($is_demo6 === true){
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = $is_demo6.'.user.invoices';           
+            $file_name = 'users_admin.traveller.users.billings-contracts';           
         }
         return view($file_name);
     }
