@@ -9,7 +9,7 @@
     <!--begin::Item-->
     <div class="col-lg-12 mb-5">
         <a href="{{ URL::to('/users/my-preferences')}}" class="btn btn-block btn-white text-center radius-5 py-2 px-5">
-            <span class="d-block font-weight-bold font-size-h4 font-saol">My Preferences </span>
+            <span class="d-block font-weight-bold font-size-h4 font-saol">Global Preferences </span>
         </a>
     </div>
     <!--end::Item-->
@@ -53,7 +53,7 @@
     <!--end::Item-->
     <!--begin::Item-->
     <div class="col-lg-12 mb-5">
-        <a href="{{ URL::to('/users/contracts')}}" class="btn btn-block btn-white text-center radius-5 py-2 px-5 @@billing">
+        <a href="{{ URL::to('/users/contracts')}}" class="btn btn-block btn-white text-center radius-5 py-2 px-5 ">
             <span class="d-block font-weight-bold font-size-h4 font-saol">Billings &
                 Contacts</span>
         </a>

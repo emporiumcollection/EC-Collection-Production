@@ -131,14 +131,15 @@ Route::get('/users/profile', 'UserController@getProfile');
 Route::get('/users/setting', 'UserController@getSettings');
 Route::get('/users/guestinvite', 'UserController@getInvite');
 Route::get('/users/companion', 'UserController@getCompanion');
+
+Route::get('/users/companion', 'UserController@getCompanion');
+
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
 Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
 Route::post('/users/invite', 'UserController@postInvite');
 Route::get('/users/reservation', 'UserController@getReservation');
-
-
-
+Route::post('/users/password', 'UserController@postSavepassword');
 
 Route::get('/whoiam', 'CustomerController@whoIam');
 // Route::post('user/my-preferences', 'UserController@getPreferences');
@@ -146,11 +147,10 @@ Route::post('/viewInvite', 'UserController@viewInvite');
 Route::post('editinvite', 'UserController@editInvite');
 Route::post('deleteinvite', 'UserController@deleteInvite');
 
-Route::post('addcompanion', 'UserController@addCompanion');
+Route::post('/users/addcompanion', 'UserController@addCompanion');
 Route::post('/viewcompanion', 'UserController@viewCompanion');
 Route::post('editcompanion', 'UserController@editCompanion');
 Route::post('deletecompanion', 'UserController@deleteCompanion');
-Route::post('changepassword', 'UserController@ajaxSavepassword');
 
 Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate');
 

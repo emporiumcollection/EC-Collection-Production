@@ -19,7 +19,8 @@
 		"maatwebsite/excel": "~2.0.0",
         "barryvdh/laravel-debugbar": "^2.4",
 		"laravel/cashier": " ~5.0",
-        "kouz/laravel-airbrake": "^0.4.1" 
+        "kouz/laravel-airbrake": "^0.4.1",
+        "rmccue/requests": "^1.8" 
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -173,7 +173,8 @@
                                                         <label for="experience_{{$experience->id}}" style="background-image: url('{{URL::to('uploads/category_imgs/'.$experience->category_image)}}');" class="personalized-service-checkbox-label <?php echo $active; ?>">
                                                             <span class="selected-chexkbox"><i class="fa fa-check" aria-hidden="true"></i></span>{{$experience->category_name}}
                                                         </label>
-                                                        <input id="experience_{{$experience->id}}" class="personalized-service-checkbox-input" name="experiences[]" value="{{$experience->id}}" type="checkbox" <?php echo $checked; ?>>
+                                                        <input id="experience_{{$experience->id}}" class="personalized-service-checkbox-input" name="
+                                                        []" value="{{$experience->id}}" type="checkbox" <?php echo $checked; ?>>
                                                     </div>
                                                 
                                             </div>

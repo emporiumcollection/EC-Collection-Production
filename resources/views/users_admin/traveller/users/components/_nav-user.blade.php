@@ -33,28 +33,33 @@
             <!--begin::Navigation-->
             <ul class="navi flex-column navi-hover py-2">
                 <li class="navi-item">
-                    <a href="profile.html" class="navi-link">
-                        <span class="navi-text">Profile</span>
+                    <a href="{{ URL::to('/users/profile')}}" class="navi-link">
+                        <span class="navi-text">My Profile</span>
                     </a>
                 </li>
                 <li class="navi-item">
-                    <a href="#" class="navi-link">
-                        <span class="navi-text">Login Security</span>
+                    <a href="{{ URL::to('/users/security')}}" class="navi-link">
+                        <span class="navi-text">Security & Privacy</span>
                     </a>
                 </li>
                 <li class="navi-item">
-                    <a href="profile.html#account" class="navi-link">
-                        <span class="navi-text">Account</span>
+                    <a href="{{ URL::to('/users/setting')}}" class="navi-link">
+                        <span class="navi-text">Account Settings</span>
                     </a>
                 </li>
                 <li class="navi-item">
-                    <a href="profile.html#preferences" class="navi-link">
+                    <a href="{{ URL::to('/users/my-preferences')}}" class="navi-link">
                         <span class="navi-text">Global Preferences</span>
                     </a>
                 </li>
                 <li class="navi-item">
-                    <a href="profile.html#invite" class="navi-link">
-                        <span class="navi-text">Invite Friends</span>
+                    <a href="{{ URL::to('/users/guestinvite')}}" class="navi-link">
+                        <span class="navi-text">Guest Invitation</span>
+                    </a>
+                </li>
+                <li class="navi-item">
+                    <a href="{{ URL::to('/users/companion')}}" class="navi-link">
+                        <span class="navi-text">Companions</span>
                     </a>
                 </li>
                 <li class="navi-item">
@@ -74,7 +79,12 @@
                 </li>
                 <li class="navi-item">
                     <a href="#preferences" class="navi-link" data-canvas="popup">
-                        <span class="navi-text">Notifications</span>
+                        <span class="navi-text">Communication</span>
+                    </a>
+                </li>
+                <li class="navi-item">
+                    <a href="{{ URL::to('/users/contracts')}}" class="navi-link" data-canvas="popup">
+                        <span class="navi-text">Billings & Contacts</span>
                     </a>
                 </li>
             </ul>
@@ -100,7 +110,7 @@
             <form action="#">
                 <div class="modal-body">
                     <div class="mb-4">
-                        <img src="../images/credit-cards-768x178.png" class="img-fluid" alt="">
+                        <img src="{{ asset('images/credit-cards-768x178.png')}}" class="img-fluid" alt="">
                     </div>
 
                     <div class="form-group">

@@ -259,7 +259,7 @@ class UserController extends Controller {
                 $downfolder = (new ContainerController)->getContainerUserPath($folder->id);
                 if (is_dir($downfolder) === true) {
                     $curr_yr = date('Y');
-                    $curr_mon = date('m');
+                    $curr_mon = date('m');  
                     $yearfolder = \DB::table('tb_container')->where('name', $curr_yr)->where('parent_id', $folder->id)->first();
                     if (!empty($yearfolder)) {
                         $yrfoldid = $yearfolder->id;
@@ -617,7 +617,7 @@ class UserController extends Controller {
     }
     
     public function postSavetravellerprofile(Request $request) {
-
+       
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -639,40 +639,36 @@ class UserController extends Controller {
 
         $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->passes()) { 
+        // if ($validator->passes()) { 
             
-            // if (!is_null(Input::file('avatar'))) {
-            //     $file = $request->file('avatar');
-            //     $destinationPath = './uploads/users/';
-            //     $filename = $file->getClientOriginalName();
-            //     $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-            //     $newfilename = \Session::get('uid') . '.' . $extension;
-            //     $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
-            //     if ($uploadSuccess) {
-            //         $data['avatar'] = $newfilename;
-            //     }
+            if (!is_null($request->profile_avatar)) {
+                $file = $request->profile_avatar;
+                
+                $destinationPath = './uploads/user_avatar';
+                $filename = $file->getClientOriginalName();
+                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                $newfilename = \Session::get('uid') . '.' . $extension;
+                $uploadSuccess = $request->file('profile_avatar')->move(public_path($destinationPath,$file));
+                // if ($uploadSuccess) {
+                //     $data['profile_avatar'] = $newfilename;
+                // }
             // }
-            
             $user = User::find(\Session::get('uid'));
             $user->first_name = $request->input('firstname');
             $user->last_name = $request->input('lastname');
             $user->email = $request->input('email');
-            
             // $user->mobile_code = $request->input('txtmobilecode');
             $user->mobile_number = $request->input('phone');
             $user->gender = $request->input('gender');            
-            // $user->prefer_communication_with = $request->input('prefer_communication_with');
-            $user->preferred_currency = $request->input('preferred_currency');
+            $user->prefer_communication_with = $request->input('prefer_communication_with');
+            $user->preferred_currency = $request->preferred_currency;
             // if (isset($data['avatar']))
-            //     $user->avatar = $newfilename;
-                
+            $user->avatar = $newfilename;
             $user->save();
-
             
             //insert contracts
             //\CommonHelper::submit_contracts($contracts,'sign-up');
             //End
-
             return Redirect::to('user/profile')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
         } else {
             return Redirect::to('user/profile')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
@@ -1427,6 +1423,7 @@ class UserController extends Controller {
         echo json_encode($companion);
     }
     public function addcompanion(Request $request){
+        // print_r($request->all());exit();
         $user = User::find(\Session::get('uid'));
         
         $return_array = array();
@@ -1448,7 +1445,7 @@ class UserController extends Controller {
             $companion_data['first_name'] = $request->input('first_name');
             $companion_data['last_name'] = $request->input('last_name');            
             $companion_data['email'] = $request->input('email');
-            $companion_data['phone_code'] = $request->input('phone_code');
+            // $companion_data['phone_code'] = $request->input('phone_code');
             $companion_data['phone_number'] = $request->input('phone_number');
             $companion_data['gender'] = $request->input('gender');
             $companion_data['preferred_language'] = $request->input('preferred_language');
@@ -1494,8 +1491,9 @@ class UserController extends Controller {
                 
             }            
                        
-            $return_array['status'] = 'success';
-            $return_array['message'] = 'You have successfully added a travel companion';          
+            // $return_array['status'] = 'success';
+            // $return_array['message'] = 'You have successfully added a travel companion';
+             return Redirect::to('user/companion')->with('message', 'You have successfully added a travel companion')->with('msgstatus', 'success');          
             
         } else {
             $return_array['status'] = 'error';
@@ -1577,14 +1575,15 @@ class UserController extends Controller {
         return view($file_name, $this->data);
     }
     public function postInvite(Request $request){
+        // echo "<pre>";print_r($request->all());exit();
         $user = User::find(\Session::get('uid'));
         
         $return_array = array();
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
-            'firstname' => 'required|alpha_num|min:2',
-            'lastname' => 'required|alpha_num|min:2',
+            'first_name' => 'required|alpha_num|min:2',
+            'last_name' => 'required|alpha_num|min:2',
             'email' => 'required'
         );
 
@@ -1603,14 +1602,13 @@ class UserController extends Controller {
             $invitee_data['created'] = date("Y-m-d");
             $today =  date("Y-m-d");            
             $expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($today)));
-            
             $invitee_data['expired_on'] = $expiry_date;
             
             $inviteeId = \DB::table('tb_invitee')->insertGetId($invitee_data);             
             if($inviteeId > 0){
                 
                 $edata = array();
-                $emlData['frmemail'] = 'marketing@emporium-voyage.com';
+                $emlData['frmemail'] = 'compact(varname)';
                 $edata['referral_code'] = $referral_code;
                 $edata['msg'] = $request->input('message');
                 $edata['first_name'] = $request->input('first_name');
@@ -1637,7 +1635,7 @@ class UserController extends Controller {
                 $etemp = 'invite';
                 //echo view('user.emails.invites.' . $etemp, $edata); die;
                 try{ 
-                \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
+                \Mail::send('user.concierge_email_address.' . $etemp, $edata, function($message) use ($emlData) {
                     $message->from($emlData['frmemail'], CNF_APPNAME);
 
                     $message->to($emlData['email']);

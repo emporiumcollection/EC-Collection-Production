@@ -53,7 +53,6 @@ var KTWizard3 = function () {
 					}
 				});
 			}
-
 			return false;  // Do not change wizard step, further action will be handled by he validator
 		});
 
@@ -63,6 +62,7 @@ var KTWizard3 = function () {
 			KTUtil.animate({
 				scrollTop: $("#kt_wizard_v3").offset().top
 			}, 2000);
+			$('.experience-slider').slick('setPosition');
 		});
 
 		// Submit event

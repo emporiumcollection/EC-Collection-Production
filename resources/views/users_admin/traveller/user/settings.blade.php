@@ -178,14 +178,6 @@
     				</button>
     			</div>
     			<div class="modal-body">
-    				
-                    
-                    
-                    
-                    
-                    
-                    
-                    
 						<!--begin::Form-->
 						<form class="m-form m-form--fit m-form--label-align-right">
                                 <div class="form-group m-form__group row  pad-margin-zero">
@@ -268,21 +260,7 @@
 								</div>
 							
 						</form>
-						<!--end::Form-->
-					
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
-                    
+						<!--end::Form-->  
     			</div>
     			<div class="modal-footer">
     				<button type="button" class="btn btn-secondary" data-dismiss="modal">

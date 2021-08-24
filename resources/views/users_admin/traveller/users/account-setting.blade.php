@@ -1,188 +1,5 @@
 @extends('users_admin.traveller.layout.app')
 @section('content')
-    <!--begin::Main-->
-    <!--begin::Header Mobile-->
-    <div id="kt_header_mobile" class="header-mobile">
-        <!--begin::Logo-->
-        <a href="hotels.html">
-            <img alt="Logo" src="../users/assets/media/logos/logo-letter-2.png" class="logo-default max-h-30px" />
-        </a>
-        <!--end::Logo-->
-        <!--begin::Toolbar-->
-        <div class="d-flex align-items-center">
-            <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
-                <span></span>
-            </button>
-        </div>
-        <!--end::Toolbar-->
-    </div>
-    <!--end::Header Mobile-->
-    <div class="d-flex flex-column flex-root">
-        <!--begin::Page-->
-        <div class="d-flex flex-row flex-column-fluid page">
-            <!--begin::Aside-->
-            <div class="aside aside-left d-flex aside-fixed" id="kt_aside">
-                @include('users_admin/traveller/users/components/_sidebar')
-                <!--begin::Tab Pane-->
-                <div class="p-3 px-lg-7 py-lg-5">
-                    <!--begin::Form-->
-                    <form class="p-2 p-lg-3">
-                        <div class="d-flex">
-                            <div class="input-icon h-40px">
-                                <input type="text" class="form-control form-control-lg form-control-solid h-40px"
-                                    placeholder="Search..." id="generalSearch" />
-                                <span>
-                                    <span class="svg-icon svg-icon-lg">
-                                        <!--begin::Svg Icon | path:../users/assets/media/svg/icons/General/Search.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                            viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24" />
-                                                <path
-                                                    d="M14.2928932,16.7071068 C13.9023689,16.3165825 13.9023689,15.6834175 14.2928932,15.2928932 C14.6834175,14.9023689 15.3165825,14.9023689 15.7071068,15.2928932 L19.7071068,19.2928932 C20.0976311,19.6834175 20.0976311,20.3165825 19.7071068,20.7071068 C19.3165825,21.0976311 18.6834175,21.0976311 18.2928932,20.7071068 L14.2928932,16.7071068 Z"
-                                                    fill="#000000" fill-rule="nonzero" opacity="0.3" />
-                                                <path
-                                                    d="M11,16 C13.7614237,16 16,13.7614237 16,11 C16,8.23857625 13.7614237,6 11,6 C8.23857625,6 6,8.23857625 6,11 C6,13.7614237 8.23857625,16 11,16 Z M11,18 C7.13400675,18 4,14.8659932 4,11 C4,7.13400675 7.13400675,4 11,4 C14.8659932,4 18,7.13400675 18,11 C18,14.8659932 14.8659932,18 11,18 Z"
-                                                    fill="#000000" fill-rule="nonzero" />
-                                            </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                </span>
-                            </div>
-                            <div class="dropdown" data-toggle="tooltip" title="Quick actions" data-placement="left">
-                                <a href="#"
-                                    class="btn btn-icon btn-default btn-hover-primary ml-2 h-40px w-40px flex-shrink-0"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="svg-icon svg-icon-lg">
-                                        <!--begin::Svg Icon | path:../users/assets/media/svg/icons/Code/Compiling.svg-->
-                                        <svg xmlns="http://www.w3.org/2000/svg"
-                                            xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
-                                            viewBox="0 0 24 24" version="1.1">
-                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                                <rect x="0" y="0" width="24" height="24" />
-                                                <path
-                                                    d="M2.56066017,10.6819805 L4.68198052,8.56066017 C5.26776695,7.97487373 6.21751442,7.97487373 6.80330086,8.56066017 L8.9246212,10.6819805 C9.51040764,11.267767 9.51040764,12.2175144 8.9246212,12.8033009 L6.80330086,14.9246212 C6.21751442,15.5104076 5.26776695,15.5104076 4.68198052,14.9246212 L2.56066017,12.8033009 C1.97487373,12.2175144 1.97487373,11.267767 2.56066017,10.6819805 Z M14.5606602,10.6819805 L16.6819805,8.56066017 C17.267767,7.97487373 18.2175144,7.97487373 18.8033009,8.56066017 L20.9246212,10.6819805 C21.5104076,11.267767 21.5104076,12.2175144 20.9246212,12.8033009 L18.8033009,14.9246212 C18.2175144,15.5104076 17.267767,15.5104076 16.6819805,14.9246212 L14.5606602,12.8033009 C13.9748737,12.2175144 13.9748737,11.267767 14.5606602,10.6819805 Z"
-                                                    fill="#000000" opacity="0.3" />
-                                                <path
-                                                    d="M8.56066017,16.6819805 L10.6819805,14.5606602 C11.267767,13.9748737 12.2175144,13.9748737 12.8033009,14.5606602 L14.9246212,16.6819805 C15.5104076,17.267767 15.5104076,18.2175144 14.9246212,18.8033009 L12.8033009,20.9246212 C12.2175144,21.5104076 11.267767,21.5104076 10.6819805,20.9246212 L8.56066017,18.8033009 C7.97487373,18.2175144 7.97487373,17.267767 8.56066017,16.6819805 Z M8.56066017,4.68198052 L10.6819805,2.56066017 C11.267767,1.97487373 12.2175144,1.97487373 12.8033009,2.56066017 L14.9246212,4.68198052 C15.5104076,5.26776695 15.5104076,6.21751442 14.9246212,6.80330086 L12.8033009,8.9246212 C12.2175144,9.51040764 11.267767,9.51040764 10.6819805,8.9246212 L8.56066017,6.80330086 C7.97487373,6.21751442 7.97487373,5.26776695 8.56066017,4.68198052 Z"
-                                                    fill="#000000" />
-                                            </g>
-                                        </svg>
-                                        <!--end::Svg Icon-->
-                                    </span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                                    <!--begin::Navigation-->
-                                    <ul class="navi navi-hover py-5">
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-drop"></i>
-                                                </span>
-                                                <span class="navi-text">New Group</span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-list-3"></i>
-                                                </span>
-                                                <span class="navi-text">Contacts</span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-rocket-1"></i>
-                                                </span>
-                                                <span class="navi-text">Groups</span>
-                                                <span class="navi-link-badge">
-                                                    <span
-                                                        class="label label-light-primary label-inline font-weight-bold">new</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-bell-2"></i>
-                                                </span>
-                                                <span class="navi-text">Calls</span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-gear"></i>
-                                                </span>
-                                                <span class="navi-text">Settings</span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-separator my-3"></li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-magnifier-tool"></i>
-                                                </span>
-                                                <span class="navi-text">Help</span>
-                                            </a>
-                                        </li>
-                                        <li class="navi-item">
-                                            <a href="#" class="navi-link">
-                                                <span class="navi-icon">
-                                                    <i class="flaticon2-bell-2"></i>
-                                                </span>
-                                                <span class="navi-text">Privacy</span>
-                                                <span class="navi-link-badge">
-                                                    <span
-                                                        class="label label-light-danger label-rounded font-weight-bold">5</span>
-                                                </span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                    <!--end::Navigation-->
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                    <!--end::Form-->
-                    <div class="p-2 p-lg-3">
-                       @include('users_admin/traveller/users/components/_dashboard-menu')
-                    </div>
-                </div>
-                <!--end::Tab Pane-->
-            </div>
-            <!--end::Tab Content-->
-        </div>
-        <!--end::Workspace-->
-    </div>
-    <!--end::Secondary-->
-    </div>
-    <!--end::Aside-->
-    <!--begin::Wrapper-->
-    <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
-        <!--begin::Content-->
-        <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-            <!--begin::Entry-->
-            <div class="d-flex flex-column-fluid">
-                <!--begin::Container-->
-                <div class="container-fluid mt-5">
-                    <!--begin::Card-->
-                    <div class="card card-custom">
-                        <div class="card-header flex-wrap border-0 pt-6 pb-0">
-                            <div class="card-title">
-                                <h2 class="text-dark font-weight-bold font-saol">Account Settings </h2>
-                            </div>
-                            @include('users_admin/traveller/users/components/_nav-user')
-                        </div>
-                        <div class="card-body">
-                            <div class="banner-page">
-                                <img src="{{ asset('assets/users/assets/media/companion.jpg')}}" class="img-fluid" alt="">
-                                <h2 class="banner-title">Account Settings </h2>
-                            </div>
-
                             <div class="mt-15">
                                 <h2 class="text-dark font-weight-bold font-saol">Payment Method</h2>
                                 <p>Intro text for Payment Method</p>
@@ -193,10 +10,176 @@
                                         </h3>
                                     </div>
                                     <div class="card-body px-0">
-                                        <a href="#addPayment" class="btn-add-payment" data-toggle="modal">
+                                        <!-- <a href="#addPayment" class="btn-add-payment" data-toggle="modal">
                                             <div class="ico-plus">+</div>
                                             Payments Method
-                                        </a>
+                                        </a> -->
+                                        <div class="card-added">
+                                            <div class="d-flex align-items-center list-divider">
+                                                <div class="ico-inline mr-5">
+                                                    <i class="ico-payment mastercard"></i>
+                                                </div>
+                                                <div class="d-flex flex-column flex-grow-1">
+                                                    <div
+                                                        class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
+                                                        MasterCard ••••8928 <span class="default-set">default</span>
+                                                    </div>
+                                                    <span class="text-muted font-weight-bold">Expiration: 09/2025</span>
+                                                </div>
+                                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
+                                                    title="" data-placement="left" data-original-title="Quick actions">
+                                                    <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class="ki ki-bold-more-hor"></i>
+                                                    </a>
+                                                    <div
+                                                        class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
+                                                        <ul class="navi navi-hover">
+                                                            <li class="navi-item">
+                                                                <a href="#" class="navi-link">
+                                                                    <span class="navi-text">
+                                                                        Set Default
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="navi-item">
+                                                                <a href="#" class="navi-link">
+                                                                    <span class="navi-text">
+                                                                        Remove
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <!--end::Navigation-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Dropdown-->
+                                            </div>
+                                            <div class="d-flex align-items-center list-divider">
+                                                <div class="ico-inline mr-5">
+                                                    <i class="ico-payment visa"></i>
+                                                </div>
+                                                <div class="d-flex flex-column flex-grow-1">
+                                                    <div
+                                                        class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
+                                                        Visa ••••1232 </div>
+                                                    <span class="text-muted font-weight-bold">Expiration: 02/2024</span>
+                                                </div>
+                                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
+                                                    title="" data-placement="left" data-original-title="Quick actions">
+                                                    <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class="ki ki-bold-more-hor"></i>
+                                                    </a>
+                                                    <div
+                                                        class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
+                                                        <ul class="navi navi-hover">
+                                                            <li class="navi-item">
+                                                                <a href="#" class="navi-link">
+                                                                    <span class="navi-text">
+                                                                        Set Default
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="navi-item">
+                                                                <a href="#" class="navi-link">
+                                                                    <span class="navi-text">
+                                                                        Remove
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <!--end::Navigation-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Dropdown-->
+                                            </div>
+                                            <div class="d-flex align-items-center list-divider">
+                                                <div class="ico-inline mr-5">
+                                                    <i class="ico-payment american-express"></i>
+                                                </div>
+                                                <div class="d-flex flex-column flex-grow-1">
+                                                    <div
+                                                        class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
+                                                        American Express ••••3251 </div>
+                                                    <span class="text-muted font-weight-bold">Expiration: 10/2028</span>
+                                                </div>
+                                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
+                                                    title="" data-placement="left" data-original-title="Quick actions">
+                                                    <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class="ki ki-bold-more-hor"></i>
+                                                    </a>
+                                                    <div
+                                                        class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
+                                                        <ul class="navi navi-hover">
+                                                            <li class="navi-item">
+                                                                <a href="#" class="navi-link">
+                                                                    <span class="navi-text">
+                                                                        Set Default
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="navi-item">
+                                                                <a href="#" class="navi-link">
+                                                                    <span class="navi-text">
+                                                                        Remove
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <!--end::Navigation-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Dropdown-->
+                                            </div>
+                                            <div class="d-flex align-items-center list-divider">
+                                                <div class="ico-inline mr-5">
+                                                    <i class="ico-payment discover"></i>
+                                                </div>
+                                                <div class="d-flex flex-column flex-grow-1">
+                                                    <div
+                                                        class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
+                                                        Discover Network ••••1415 </div>
+                                                    <span class="text-muted font-weight-bold">Expiration: 06/2026</span>
+                                                </div>
+                                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
+                                                    title="" data-placement="left" data-original-title="Quick actions">
+                                                    <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
+                                                        data-toggle="dropdown" aria-haspopup="true"
+                                                        aria-expanded="false">
+                                                        <i class="ki ki-bold-more-hor"></i>
+                                                    </a>
+                                                    <div
+                                                        class="dropdown-menu p-0 m-0 dropdown-menu dropdown-menu-right">
+                                                        <ul class="navi navi-hover">
+                                                            <li class="navi-item">
+                                                                <a href="#" class="navi-link">
+                                                                    <span class="navi-text">
+                                                                        Set Default
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                            <li class="navi-item">
+                                                                <a href="#" class="navi-link">
+                                                                    <span class="navi-text">
+                                                                        Remove
+                                                                    </span>
+                                                                </a>
+                                                            </li>
+                                                        </ul>
+                                                        <!--end::Navigation-->
+                                                    </div>
+                                                </div>
+                                                <!--end::Dropdown-->
+                                            </div>
+                                        </div>
+                                        <a href="#addPayment" class="btn btn-primary mt-10" data-toggle="modal">Add
+                                            payment method</a>
+
                                         <p class="mt-9">
                                             Remeber emporium-voyage never ask you to wire money
                                             <a href="#">Learn More</a>
@@ -204,36 +187,63 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="mt-15">
                                 <div class="card card-custom">
                                     <div class="card-header px-0">
                                         <h3 class="card-title font-saol font-15">
-                                            Emporium-Collection Gift Card
+                                            Emporium-Collection Gift Credit
                                         </h3>
                                     </div>
                                     <div class="card-body px-0">
                                         <p>
-                                            emporium-voyage gift card balance: 0
-                                        </p>
-                                        <p>
-                                            The credit balance from gift cards will be automatically applied when you
-                                            book a trip.
+                                            Redeem a gift card and find your credit balance. <a href="#">Learn more
+                                                about gift cards.</a>
                                         </p>
                                         <div class="mt-14">
-                                            <form action="profile.html">
-                                                <label>Enter Emporium-Collection gift card code</label>
+                                            <div class="credit-balance">
                                                 <div class="row">
-                                                    <div class="col-lg-5 col-md-6 form-group">
-                                                        <input type="text" class="form-control"
-                                                            placeholder="Enter fullname">
+                                                    <div class="col-9">
+                                                        Current credit balance
                                                     </div>
-                                                    <div class="col-lg-5 col-md-6 form-group">
-                                                        <button type="submit" class="btn btn-primary">Apply to
-                                                            Account</button>
+                                                    <div class="col-3 text-right">
+                                                        $0.00
                                                     </div>
                                                 </div>
-                                            </form>
-                                            <a href="#">Emporium-Collection gift cards help</a>
+                                            </div>
+
+                                            <div class="card-50">
+                                                <div class="accordion accordion-toggle-arrow" id="giftCard">
+                                                    <div class="card card-custom">
+                                                        <div id="btnAddgiftcard" class="collapse show"
+                                                            data-parent="#giftCard">
+                                                            <div class="card-body px-0">
+                                                                <a href="#addGiftcard" class="btn btn-primary" data-toggle="collapse">Add gift card</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card card-custom">
+                                                        <div id="addGiftcard" class="collapse"
+                                                            data-parent="#giftCard">
+                                                            <div class="card-body px-0">
+                                                                <form action="#">
+                                                                    <div class="form-group">
+                                                                        <label>Enter gift card number</label>
+                                                                        <input type="text" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Enter pin code</label>
+                                                                        <input type="text" class="form-control">
+                                                                    </div>
+                                                                    <button class="btn btn-primary" type="submit">Redeem gift card</button>
+                                                                    <a href="#btnAddgiftcard" class="btn btn-secondary" data-toggle="collapse">Cancel</a>
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -242,42 +252,86 @@
                                 <div class="card card-custom">
                                     <div class="card-header px-0">
                                         <h3 class="card-title font-saol font-15">
-                                            Your Coupon
+                                            Coupons
                                         </h3>
                                     </div>
                                     <div class="card-body px-0">
-                                        <form action="#">
-                                            <label>Add a Coupon</label>
-                                            <div class="row">
-                                                <div class="col-lg-6">
-                                                    <div class="row">
-                                                        <div class="col-lg-9 col-md-6 form-group">
-                                                            <input type="text" class="form-control"
-                                                                placeholder="Enter fullname">
-                                                        </div>
-                                                        <div class="col-lg-3 col-md-6 form-group">
-                                                            <button type="submit" class="btn btn-primary">
-                                                                Add
-                                                            </button>
-                                                        </div>
+                                        <p>
+                                            Add a coupon and save on your next trip.
+                                        </p>
+                                        <div class="mt-14">
+                                            <div class="credit-balance">
+                                                <div class="row align-items-center">
+                                                    <div class="col-9">
+                                                        Your coupons
                                                     </div>
-                                                </div>
-                                                <div class="col-lg-6">
-                                                    <div class="form-group">
-                                                        <select name="" class="form-control">
-                                                            <option value="">All Available</option>
+                                                    <div class="col-3 text-right">
+                                                        <select class="form-control">
+                                                            <option value="1">1</option>
+                                                            <option value="2">2</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </form>
-                                        <p>
-                                            Coupon you add to your account will show up here
-                                        </p>
+
+                                            <div class="card-50">
+                                                <div class="accordion accordion-toggle-arrow" id="coupon">
+                                                    <div class="card card-custom">
+                                                        <div id="btnCoupom" class="collapse show"
+                                                            data-parent="#coupon">
+                                                            <div class="card-body px-0">
+                                                                <div class="coupon-list mb-10">
+                                                                    <div class="d-flex align-items-center list-divider">
+                                                                        <div class="d-flex flex-column flex-grow-1">
+                                                                            <div class="text-dark-75 font-weight-bold font-size-lg mb-1">
+                                                                                WEJKLAMSD - Coupon </div>
+                                                                            <span class="text-muted font-weight-bold">Expired on sep 21, 2021</span>
+                                                                        </div>
+                                                                        <div class="font-weight-bold">
+                                                                            10% off
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="d-flex align-items-center list-divider">
+                                                                        <div class="d-flex flex-column flex-grow-1">
+                                                                            <div class="text-dark-75 font-weight-bold font-size-lg mb-1">
+                                                                                ADFASDFCX - Coupon </div>
+                                                                            <span class="text-muted font-weight-bold">Expired on sep 21, 2021</span>
+                                                                        </div>
+                                                                        <div class="font-weight-bold">
+                                                                            10% off
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <a href="#addCoupon" class="btn btn-primary" data-toggle="collapse">Add coupon</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="card card-custom">
+                                                        <!-- <div id="addCoupon" class="collapse"
+                                                            data-parent="#coupon">
+                                                            <div class="card-body px-0">
+                                                                <form action="#">
+                                                                    <div class="form-group">
+                                                                        <label>Enter gift card number</label>
+                                                                        <input type="text" class="form-control">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label>Enter pin code</label>
+                                                                        <input type="text" class="form-control">
+                                                                    </div>
+                                                                    <button class="btn btn-primary" type="submit">Redeem gift card</button>
+                                                                    <a href="#btnCoupom" class="btn btn-secondary" data-toggle="collapse">Cancel</a>
+                                                                </form>
+                                                            </div>
+                                                        </div> -->
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
                     </div>
                     <!--end::Card-->
                 </div>
@@ -286,11 +340,6 @@
             <!--end::Entry-->
         </div>
         <!--end::Content-->
-        <!--begin::Footer-->
-        <!--doc: add "bg-white" class to have footer with solod background color-->
-        @include('users_admin/traveller/users/components/_footer')
-
-        <!--end::Footer-->
     </div>
     <!--end::Wrapper-->
     </div>

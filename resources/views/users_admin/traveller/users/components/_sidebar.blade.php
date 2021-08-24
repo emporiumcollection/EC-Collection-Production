@@ -16,7 +16,7 @@
             <!--begin::Item-->
             <li class="nav-item mb-3 " data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="Dashboard">
-                <a href="dashboard.html" class="nav-link btn btn-icon btn-clean btn-lg @@dashboard">
+                <a href="{{ URL::to('/users/profile')}}" class="nav-link btn btn-icon btn-clean btn-lg">
                     <i class="flaticon-home"></i>
                 </a>
             </li>
@@ -24,7 +24,7 @@
             <!--begin::Item-->
             <li class="nav-item mb-3" data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="Property Management System">
-                <a href="hotels.html" class="nav-link btn btn-icon btn-clean btn-lg @@hotels @@supplier">
+                <a href="hotels.html" class="nav-link btn btn-icon btn-clean btn-lg">
                     <i class="flaticon-analytics"></i>
                 </a>
             </li>
@@ -48,7 +48,7 @@
             <!--begin::Item-->
             <li class="nav-item mb-3 " data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="Dynamic Rate Management">
-                <a href="dynamic-rate.html" class="nav-link btn btn-icon btn-clean btn-lg @@dynamicrate">
+                <a href="dynamic-rate.html" class="nav-link btn btn-icon btn-clean btn-lg">
                     <i class="flaticon-line-graph"></i>
                 </a>
             </li>
@@ -78,9 +78,6 @@
     <div class="aside-workspace scroll scroll-push my-2">
         <!--begin::Tab Content-->
         <div class="tab-content">
-
-
-
             <!--begin::Hotel List Panel-->
             <div id="hotelList" class="offcanvas offcanvas-left p-10">
                 <!--begin::Header-->
@@ -472,7 +469,7 @@
                         <!--end::Item-->
                         <!--end::Item-->
                         <div class="col-4 gutter-b">
-                            <a href="reservations.html"
+                            <a href="reservations.html" 
                                 class="btn btn-block btn-light btn-hover-primary text-dark-50 text-center py-10 px-5">
                                 <span class="d-block font-weight-bold font-size-h6">CW8</span>
                             </a>

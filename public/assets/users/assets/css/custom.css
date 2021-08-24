@@ -1129,6 +1129,7 @@ button[data-kt-indicator="on"] .indicator-progress {
     padding-right: 15px;
     height: 0;
     padding-bottom: 68%;
+    width: 100%;
 }
 
 .checkbox-cs .checkbox:hover .label-inner {
@@ -1294,6 +1295,336 @@ button[data-kt-indicator="on"] .indicator-progress {
     line-height: 51px;
 }
 
+.checked-ico {
+    background: #36cbc5;
+    flex: 0 0 25px;
+    max-width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.checked-ico i {
+    color: #fff;
+}
+
+.password-check-content {
+    padding-left: 11px;
+}
+
+.authorized-list {
+    border-bottom: 1px solid #ebedf3;
+    padding-bottom: 20px;
+    padding-top: 20px;
+}
+.authorized-list:first-child {
+    padding-top: 0;
+}
+.authorized-list:last-child {
+    border-bottom: 0;
+}
+
+.experience-slider .next-arrow,
+.experience-slider .prev-arrow {
+    top: 50%;
+    transform: translateY(-50%);
+    bottom: auto;
+}
+
+.experience-slider .slick-list {
+    margin-left: -15px;
+    margin-right: -15px;
+}
+
+.experience-slider .slick-slide {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.checkbox-cs.checkbox-experience .checkbox {
+    padding-bottom: 127%;
+}
+.checkbox-cs.checkbox-experience .title-checkbox {
+    position: absolute;
+    bottom: 0;
+    text-align: left;
+    font-size: 14px;
+    letter-spacing: unset;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 7px 8px;
+}
+
+.mastercard {
+    display: inline-block;
+    background: url(../media/mastercard.svg) no-repeat center center/contain;
+    width: 50px;
+    height: 32px;
+}
+.visa {
+    display: inline-block;
+    background: url(../media/visa.svg) no-repeat center center/contain;
+    width: 50px;
+    height: 32px;
+}
+.discover {
+    display: inline-block;
+    background: url(../media/discover-network.svg) no-repeat center center/contain;
+    width: 50px;
+    height: 32px;
+}
+.american-express {
+    display: inline-block;
+    background: url(../media/american-express.svg) no-repeat center center/contain;
+    width: 50px;
+    height: 32px;
+}
+
+.ico-payment {
+    border: 1px #ebedf3 solid;
+    border-radius: 4px;
+}
+
+.list-divider {
+    border-bottom: 1px #ebedf3 solid;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    max-width: 501px;
+}
+
+.list-divider:first-child {
+    padding-top: 0;
+}
+
+.default-set{
+    background: #fafafa;
+    display: inline-block;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #8f8f8f;
+    padding: 2px 9px;
+}
+
+.swipe-item {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 300px;
+}
+.swipe-item .swipe-round {
+    position: absolute;
+    left: 0;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    border: 2px #ee0000 solid;
+    overflow: hidden;
+}
+.swipe-item .swipe-round img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.swipe-item .swipe-round .icon-swipe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    font-weight: bold;
+    border: 2px #fff solid;
+    border-radius: 50%;
+}
+.swipe-img-wrapper {
+    margin-left: 18px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+}
+.swipe-img {
+    width: 100%;
+    overflow: hidden;
+    height: 95px;
+}
+.swipe-item .swipe-action {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.swipe-item .swipe-action .swipe-action-content {
+    position: absolute;
+    right: 100%;
+    top: 0;
+    display: flex;
+    background: #fff;
+}
+.collection-slide .right-collection {
+    width: calc(100% - 61px);
+}
+.collection-slide .left-add-slide {
+    width: 60px;
+}
+.btn-add-collection {
+    width: 50px;
+    height: 50px;
+    background: #ee0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 34px;
+    color: #fff;
+    border-radius: 50%;
+}
+.collection-slide .left-add-slide p {
+    font-size: 9px;
+    margin-top: 3px;
+    margin-bottom: 26px;
+    color: #000;
+}
+.collection-slide {
+    display: flex;
+    flex-direction: row;
+}
+.swipe-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.swipe-item .swipe-action .swipe-action-content a {
+    padding: 1.6px 7px;
+    font-size: 12px;
+    color: #000;
+}
+.swipe-item .swipe-action .swipe-action-btn {
+    background: red;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    border-top-right-radius: 4px;
+    cursor: pointer;
+}
+.swipe-item .swipe-action .swipe-action-btn i {
+    font-size: 11px;
+    color: #fff;
+}
+.collection-slide .right-collection p {
+    font-size: 14px;
+    margin-top: 10px;
+    padding-left: 16px;
+}
+.pr-lst {
+    position: relative;
+    overflow: hidden;
+}
+.pr-lst.collection-lst .diamon-label {
+    position: absolute;
+    right: 10px;
+    top: 12px;
+    z-index: 9;
+}
+.pr-lst .pr-lst-desc {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    color: #d5d5d5;
+    text-align: right;
+    padding: 35px 70px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+.pr-lst.collection-lst .fav-lst-desc {
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+.pr-lst.collection-lst .pr-lst-desc {
+    padding: 0;
+}
+.pr-lst.collection-lst .act-lst {
+    width: auto;
+    margin: auto;
+}
+.pr-lst.collection-lst .fav-lst-desc p {
+    margin-bottom: 0;
+}
+.pr-lst.collection-lst .fav-lst-desc .tt-price {
+    font-size: 12px;
+}
+.pr-lst.collection-lst .act-lst a {
+    color: #d5d5d5;
+}
+.pr-lst:hover .pr-lst-desc {
+    opacity: 1;
+}
+.daterangepicker-inline .daterangepicker {
+    position: relative !important;
+    top: 20px !important;
+    left: auto !important;
+    float: left;
+    width: 100%;
+    margin-top: 0;
+    padding: 35px;
+    border: 0;
+    z-index: 1;
+    box-shadow: none;
+}
+.daterangepicker-inline .daterangepicker .drp-calendar {
+    width: 49%;
+    max-width: 49%;
+}
+.calendar-collection {
+    width: 100% !important;
+    border: 1px #ced4da solid;
+    border-radius: 4px;
+    padding: 0;
+}
+.calendar-collection .daterangepicker-inline .daterangepicker {
+    top: 0 !important;
+    padding: 0;
+}
+.credit-balance{
+    max-width: 500px;
+    font-size: 16px;
+    border-bottom: 1px solid #EBEDF3;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+.card-50 {
+    max-width: 500px;
+}
+.w-700 {
+    max-width: 700px;
+}
+.tab-line-cs .nav-link.active, .tab-line-cs .nav-link:hover {
+    color: #000 !important;
+    border-color: #000 !important;
+}
+
+.radio-box .radio-box-label {
+    border: 1px transparent solid;
+    padding: 5px 12px;
+    border-radius: 6px;
+}
+
+.radio-box > input:checked ~ .radio-box-label {
+    border: 1px #505363 solid;
+}
 @media (max-width: 1627.98px) {
     .reservation-widget > .row > .col-md-4 {
         flex: 0 0 50%;
