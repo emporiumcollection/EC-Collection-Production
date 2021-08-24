@@ -13,7 +13,6 @@ nbproject
 .classpath
 .buildpath
 /public/storage
-/public/uploads
 /storage/*.key
 .idea/
 *.sublime-workspace
