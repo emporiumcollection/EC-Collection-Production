@@ -33,10 +33,41 @@
             <!--begin::Navigation-->
             <ul class="navi flex-column navi-hover py-2">
                 <li class="navi-item">
+                    <a href="{{ URL::to('/dashboard')}}" class="navi-link">
+                        <span class="navi-text">My Dashboard</span>
+                    </a>
+                </li>
+                 <li class="navi-item">
+                    <a href="#" class="navi-link">
+                        <span class="navi-text">My Collections</span>
+                    </a>
+                </li>
+                <li class="navi-item">
                     <a href="{{ URL::to('/users/profile')}}" class="navi-link">
                         <span class="navi-text">My Profile</span>
                     </a>
                 </li>
+                 <li class="navi-item">
+                    <a href="{{ URL::to('/users/companion')}}" class="navi-link">
+                        <span class="navi-text">My Companions</span>
+                    </a>
+                </li>
+                <li class="navi-item">
+                    <a href="{{ URL::to('/users/my-preferences')}}" class="navi-link">
+                        <span class="navi-text">My Preferences</span>
+                    </a>
+                </li>
+                <li class="navi-item">
+                    <a href="{{ URL::to('/users/guestinvite')}}" class="navi-link">
+                        <span class="navi-text">My Guest Invitation</span>
+                    </a>
+                </li>
+                 <li class="navi-item">
+                    <a href="#createCompany" class="navi-link" data-canvas="popup">
+                        <span class="navi-text">My Company Setting</span>
+                    </a>
+                </li>
+                <hr>
                 <li class="navi-item">
                     <a href="{{ URL::to('/users/security')}}" class="navi-link">
                         <span class="navi-text">Security & Privacy</span>
@@ -48,35 +79,11 @@
                     </a>
                 </li>
                 <li class="navi-item">
-                    <a href="{{ URL::to('/users/my-preferences')}}" class="navi-link">
-                        <span class="navi-text">Global Preferences</span>
-                    </a>
-                </li>
-                <li class="navi-item">
-                    <a href="{{ URL::to('/users/guestinvite')}}" class="navi-link">
-                        <span class="navi-text">Guest Invitation</span>
-                    </a>
-                </li>
-                <li class="navi-item">
-                    <a href="{{ URL::to('/users/companion')}}" class="navi-link">
-                        <span class="navi-text">Companions</span>
-                    </a>
-                </li>
-                <li class="navi-item">
-                    <a href="#" class="navi-link">
-                        <span class="navi-text">My Collections</span>
-                    </a>
-                </li>
-                <li class="navi-item">
                     <a href="#addPayment" class="navi-link" data-toggle="modal">
                         <span class="navi-text">Add Payment Method</span>
                     </a>
                 </li>
-                <li class="navi-item">
-                    <a href="#createCompany" class="navi-link" data-canvas="popup">
-                        <span class="navi-text">Create a Company</span>
-                    </a>
-                </li>
+               
                 <li class="navi-item">
                     <a href="#preferences" class="navi-link" data-canvas="popup">
                         <span class="navi-text">Communication</span>
@@ -84,7 +91,7 @@
                 </li>
                 <li class="navi-item">
                     <a href="{{ URL::to('/users/contracts')}}" class="navi-link" data-canvas="popup">
-                        <span class="navi-text">Billings & Contacts</span>
+                        <span class="navi-text">Billings & Contracts</span>
                     </a>
                 </li>
             </ul>

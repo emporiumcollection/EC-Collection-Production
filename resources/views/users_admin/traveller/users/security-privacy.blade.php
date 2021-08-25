@@ -165,15 +165,15 @@
 										<i aria-hidden="true" class="ki ki-close"></i>
 									</button>
 								</div>
-								<form action="#">
+								<form method="post" action="/users/password">
 									<div class="modal-body">
 										<div class="form-group">
 											<label>Password</label>
-											<input type="password" class="form-control">
+											<input type="password" name="password" class="form-control">
 										</div>
 										<div class="form-group">
 											<label>Confirm Password</label>
-											<input type="password" class="form-control">
+											<input type="password" name="password_confirmation" class="form-control">
 										</div>
 									</div>
 									<div class="modal-footer">

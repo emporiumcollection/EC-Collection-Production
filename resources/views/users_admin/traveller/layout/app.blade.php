@@ -498,8 +498,7 @@
   </div>
   <!--end::Page-->
   </div>
-  </body>
-</html>
+
 
 <script src="{{ asset('assets/users/assets/plugins/global/plugins.bundle.js')}}"></script>
 <script src="{{ asset('assets/users/assets/plugins/custom/prismjs/prismjs.bundle.js')}}"></script>
@@ -517,8 +516,10 @@
 
   <script src="{{ asset('assets/users/assets/js/pages/crud/forms/widgets/select2.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
-<script src="{{ asset('assets/users/assets/js/pages/crud/ktdatatable/base/data-local-companion.js')}}"></script>
+{{-- <script src="{{ asset('assets/users/assets/js/pages/crud/ktdatatable/base/data-local-companion.js')}}"></script> --}}
   <script>
+ 
+
     $('.dashboard-slider').slick({
       slidesToShow: 1,
       autoplay: true,
@@ -671,9 +672,121 @@
 
     var chart = new ApexCharts(element, options);
     chart.render();
-
-    
     </script>
   <!-- <script src="../users/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script> -->
+<script>
 
+  jQuery(function($){
+  $(document).ready(function(){
+    var datatable = $('#kt_datatable').KTDatatable({
+      data: {
+        type: 'remote',
+        source: { 
+          read: {
+            url: '{{ URL::to('/users/companiondata') }}',
+            method: 'GET',
+            map: function(raw) {
+              // sample data mapping
+              var dataSet = raw;
+              if (typeof raw.data !== 'undefined') {
+                dataSet = raw.data;
+              }
+              return dataSet;
+            },
+          },
+        },
+        pageSize: 10, // display 20 records per page
+        serverPaging: true,
+        serverFiltering: true,
+        serverSorting: true,
+      },
+      layout: {
+        scroll: false,
+        footer: false,
+      },
+      sortable: true,
+      pagination: true,
+      search: {
+          input: $('#kt_datatable_search_query'),
+          key: 'generalSearch'
+      },
+      columns: [
+        {
+          field: 'first_name',
+          title: 'Name',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'email',
+          title: 'Email',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'phone_number',
+          title: 'Phone Number',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'gender',
+          title: 'Gender',
+          sortable: 'asc',
+          selector: false,
+          template: function(row) {
+            var gender = {
+              1: {
+                'title': 'Male',
+              },
+              2: {
+                'title': 'Female',
+              },
+            };
+            return gender[row.gender].title;
+          }
+        }, {
+          field: 'preferred_language',
+          title: 'Preferred Language',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'preferred_currency',
+          title: 'Preferred Currency',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'Action',
+          title: '',
+          sortable: false,
+          overflow: 'visible',
+          width: 30,
+          template: function () {
+            return '\
+              <div class="dropdown dropdown-inline">\
+                      <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">\
+                          <i class="flaticon-cogwheel-2"></i>\
+                      </a>\
+                      <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">\
+                          <ul class="navi flex-column navi-hover py-2">\
+                              <li class="navi-item">\
+                                  <a href="#detail" class="navi-link" data-canvas="popup">\
+                                      <span class="navi-text">Edit</span>\
+                                  </a>\
+                              </li>\
+                              <li class="navi-item">\
+                                  <a href="#detail" class="navi-link" data-canvas="popup">\
+                                      <span class="navi-text">Delete</span>\
+                                  </a>\
+                              </li>\
+                          </ul>\
+                      </div>\
+                  </div>\
+              ';
+          }
+        }
+      ],  
+    });
+  });
+});
+</script>
+  </body>
+</html>
   

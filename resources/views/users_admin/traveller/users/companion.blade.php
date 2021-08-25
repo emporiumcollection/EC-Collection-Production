@@ -338,3 +338,4 @@
 	<!--end::Global Config-->
 	<!--begin::Global Theme Bundle(used by all pages)-->
 @endsection
+

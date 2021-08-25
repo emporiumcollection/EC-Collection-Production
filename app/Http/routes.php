@@ -25,6 +25,9 @@ Route::get('hotel/{title}', 'PhaseOne\HotelController@index');
 Route::get('mapsearchavailability', 'PhaseOne\MapBoxController@index');
 Route::get('book/reservation', 'PhaseOne\ReservationController@index');
 
+//Datatable route
+Route::get('/users/companiondata', 'DatatableController@getDatatable');
+
 /**
  * New Admin backend routes.
  */

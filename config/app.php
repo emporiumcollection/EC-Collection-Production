@@ -136,6 +136,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Yajra\DataTables\DataTablesServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -219,7 +220,7 @@ return [
      'CommonHelper'=> App\Helpers\CommonHelper::class,
         'CrmLayoutHelper' => App\Helpers\CrmLayoutHelper::class,
         'CrmCustomFieldHelper' => App\Helpers\CrmCustomFieldHelper::class,
-
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
     ],
 
 ];
