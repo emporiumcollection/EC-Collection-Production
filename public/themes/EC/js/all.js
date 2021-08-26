@@ -1456,6 +1456,7 @@
 
     var _type = $('.gal-tab.active').attr('data-type');
     var _slug = $(this).attr('data-id');
+    var _conn = $(this).attr('data-connection');
 
     var _for = $(this).attr('data-for');
     //console.log(_type);
@@ -1466,7 +1467,7 @@
       $.ajax({
         url: BaseURL + '/quickinfo',
         dataType: 'json',
-        data: { 'propid': _slug },
+        data: { 'propid': _slug, 'connection': _conn },
         type: 'get',
         beforeSend: function () {
 
@@ -1716,7 +1717,7 @@
       $.ajax({
         url: BaseURL + '/galleryimages',
         dataType: 'json',
-        data: { 'propid': _slug, 'type': _type },
+        data: { 'propid': _slug, 'type': _type, 'connection': _conn },
         type: 'get',
         beforeSend: function () {
 
@@ -1749,7 +1750,7 @@
       $.ajax({
         url: BaseURL + '/suitesbyid',
         dataType: 'json',
-        data: { 'slug': _slug },
+        data: { 'slug': _slug, 'connection': _conn },
         type: 'get',
         beforeSend: function () {
 

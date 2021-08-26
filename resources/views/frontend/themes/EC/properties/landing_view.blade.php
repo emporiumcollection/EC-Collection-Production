@@ -347,13 +347,13 @@
 {{--                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
 {{--                                  Reviews--}}
 {{--                              </a>--}}
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="quickinfo" data-id="{{$lh->property_slug}}" data-sidebar="#quickinfo">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="quickinfo" data-id="{{$lh->property_slug}}" data-sidebar="#quickinfo" data-connection="voyageconn">
                                   Quick info
                               </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="gallery" data-id="{{$lh->property_slug}}" data-sidebar="#gallery">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="gallery" data-id="{{$lh->property_slug}}" data-sidebar="#gallery" data-connection="voyageconn">
                                   Gallery
                               </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" data-id="{{$lh->property_slug}}" data-for="suites">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" data-id="{{$lh->property_slug}}" data-for="suites" data-connection="voyageconn">
                                   Suite(s)
                               </a>
                           </div>
@@ -480,13 +480,13 @@
 {{--                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
 {{--                                  Reviews--}}
 {{--                              </a>--}}
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="quickinfo" data-id="{{$lh->property_slug}}" data-sidebar="#quickinfo" data-connection="spaconn">
                                   Quick info
                               </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="gallery" data-id="{{$lh->property_slug}}" data-sidebar="#gallery" data-connection="spaconn">
                                   Gallery
                               </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" data-id="{{$lh->property_slug}}" data-for="suites" data-connection="spaconn">
                                   Suite(s)
                               </a>
                           </div>
@@ -548,13 +548,13 @@
 {{--                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
 {{--                                  Reviews--}}
 {{--                              </a>--}}
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="quickinfo" data-id="{{$lh->property_slug}}" data-sidebar="#quickinfo" data-connection="islandconn">
                                   Quick info
                               </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="gallery" data-id="{{$lh->property_slug}}" data-sidebar="#gallery" data-connection="islandconn">
                                   Gallery
                               </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" data-id="{{$lh->property_slug}}" data-connection="islandconn" data-for="suites">
                                   Suite(s)
                               </a>
                           </div>
@@ -613,16 +613,16 @@
                               </div>
                           </div>
                           <div class="hotel-meta full-width is-small">
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                                  Reviews
-                              </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+{{--                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">--}}
+{{--                                  Reviews--}}
+{{--                              </a>--}}
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="quickinfo" data-id="{{$lh->property_slug}}" data-sidebar="#quickinfo" data-connection="safariconn">
                                   Quick info
                               </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="gallery" data-id="{{$lh->property_slug}}" data-sidebar="#gallery" data-connection="safariconn">
                                   Gallery
                               </a>
-                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
+                              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" data-id="{{$lh->property_slug}}" data-for="suites" data-connection="safariconn">
                                   Suite(s)
                               </a>
                           </div>

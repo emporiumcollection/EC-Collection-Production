@@ -6689,14 +6689,19 @@ class PropertyController extends Controller {
 
     function galleryimages(Request $request) {
         $propid = $request->input('propid');
+        if ($request->has('connection')) {
+            $con = $request->input('connection');
+        } else {
+            $con = 'voyageconn';
+        }
         $this->data['slug'] = rtrim($propid,'-');
-        $props = \DB::table('tb_properties')->select('tb_properties.*')->whereRaw("TRIM(TRAILING '-' FROM property_slug ) = ?", [$this->data['slug']])->first();
+        $props = \DB::connection($con)->table('tb_properties')->select('tb_properties.*')->whereRaw("TRIM(TRAILING '-' FROM property_slug ) = ?", [$this->data['slug']])->first();
         $type = $request->input('type');
         $filen = array();
         $arr_data = array();
         if($type=="hotel"){
 
-            $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*',  \DB::raw("(CASE WHEN (tb_container_files.file_display_name = '') THEN tb_container_files.file_name ELSE tb_container_files.file_display_name END) as file_display_name"), 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->get();
+            $fileArr = \DB::connection($con)->table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*',  \DB::connection($con)->raw("(CASE WHEN (tb_container_files.file_display_name = '') THEN tb_container_files.file_name ELSE tb_container_files.file_display_name END) as file_display_name"), 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->get();
 
             if (!empty($fileArr)) {
                 $f = 0;
@@ -6714,15 +6719,15 @@ class PropertyController extends Controller {
 
             if(strlen(trim($restaurants))> 0){
                 $ids = explode(',', $restaurants);
-                $obj_res = \DB::table('tb_restaurants')->whereIn('id', $ids)->get();
+                $obj_res = \DB::connection($con)->table('tb_restaurants')->whereIn('id', $ids)->get();
                 if(!empty($obj_res)){
                     $r_id = $obj_res[0]->id;
 
                     $fetchresgalleryfolder = array();
-            		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'res')->first();
+            		$resfileArr = \DB::connection($con)->table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'res')->first();
 
                     if(!empty($resfileArr)){
-                        $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
+                        $fetchresgalleryfolder = \DB::connection($con)->table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
                     }
                     if (!empty($fetchresgalleryfolder)) {
                         $f = 0;
@@ -6744,15 +6749,15 @@ class PropertyController extends Controller {
             $restaurants = $props->bar_ids;
             if(strlen(trim($restaurants))> 0){
                 $ids = explode(',', $restaurants);
-                $obj_res = \DB::table('tb_restaurants')->whereIn('id', $ids)->get();
+                $obj_res = \DB::connection($con)->table('tb_restaurants')->whereIn('id', $ids)->get();
                 if(!empty($obj_res)){
                     $r_id = $obj_res[0]->id;
 
                     $fetchresgalleryfolder = array();
-            		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'bar')->first();
+            		$resfileArr = \DB::connection($con)->table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'bar')->first();
 
                     if(!empty($resfileArr)){
-                        $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
+                        $fetchresgalleryfolder = \DB::connection($con)->table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
                     }
                     if (!empty($fetchresgalleryfolder)) {
                         $f = 0;
@@ -6773,15 +6778,15 @@ class PropertyController extends Controller {
             $restaurants = $props->spa_ids;
             if(strlen(trim($restaurants))> 0){
                 $ids = explode(',', $restaurants);
-                $obj_res = \DB::table('tb_restaurants')->whereIn('id', $ids)->get();
+                $obj_res = \DB::connection($con)->table('tb_restaurants')->whereIn('id', $ids)->get();
                 if(!empty($obj_res)){
                     $r_id = $obj_res[0]->id;
 
                     $fetchresgalleryfolder = array();
-            		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'spa')->first();
+            		$resfileArr = \DB::connection($con)->table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'spa')->first();
 
                     if(!empty($resfileArr)){
-                        $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
+                        $fetchresgalleryfolder = \DB::connection($con)->table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
                     }
                     if (!empty($fetchresgalleryfolder)) {
                         $f = 0;
@@ -6798,11 +6803,11 @@ class PropertyController extends Controller {
         }else if($type=="suites"){
             $cats = array();
             $property_id = $props->id;
-            $cat_types = \DB::table('tb_properties_category_types')->where('property_id', $property_id)->where('status', 0)->get();
+            $cat_types = \DB::connection($con)->table('tb_properties_category_types')->where('property_id', $property_id)->where('status', 0)->get();
             if (!empty($cat_types)) {
                 $f_catid = $cat_types[0]->id;
-                $cat_rooms = \DB::table('tb_properties_category_rooms')->where('property_id', $property_id)->where('category_id', $f_catid)->orderBy('id', 'asc')->get();
-                $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_display_name', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $property_id)->where('tb_properties_images.category_id', $f_catid)->where('tb_properties_images.type', 'Rooms Images')->get();
+                $cat_rooms = \DB::connection($con)->table('tb_properties_category_rooms')->where('property_id', $property_id)->where('category_id', $f_catid)->orderBy('id', 'asc')->get();
+                $fileArr = \DB::connection($con)->table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_display_name', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $property_id)->where('tb_properties_images.category_id', $f_catid)->where('tb_properties_images.type', 'Rooms Images')->get();
                 $filen = array();
                 if (!empty($fileArr)) {
                     $f = 0;
@@ -7038,8 +7043,13 @@ class PropertyController extends Controller {
     }
 
     function quickinfo(Request $request){
-        $prop_slug =  rtrim($request->input('propid'),'-');;
-        $props = \DB::table('tb_properties')->select('tb_properties.*')->whereRaw("TRIM(TRAILING '-' FROM property_slug ) = ?", [$prop_slug])->first();
+        $prop_slug =  rtrim($request->input('propid'),'-');
+        if ($request->has('connection')) {
+            $con = $request->input('connection');
+        } else {
+            $con = 'voyageconn';
+        }
+        $props = \DB::connection($con)->table('tb_properties')->select('tb_properties.*')->whereRaw("TRIM(TRAILING '-' FROM property_slug ) = ?", [$prop_slug])->first();
         $prop_info_arr = array();
         //$prop_info = array();
         $amnties = array();
@@ -7048,15 +7058,15 @@ class PropertyController extends Controller {
         $available_services = array();
         if(!empty($props)){
             //$prop_info = \DB::table('tb_properties_info')->where('status', 1)->where('property_id', $props->id)->get();
-            $prop_usp = \DB::table('tb_property_usp')->where('status', 1)->whereIn('id', explode(',', $props->property_usp_id))->get();
+            $prop_usp = \DB::connection($con)->table('tb_property_usp')->where('status', 1)->whereIn('id', explode(',', $props->property_usp_id))->get();
             if(!empty($props->assign_amenities)){
-                $amnties = \DB::table('tb_amenities')->where('amenity_status', 1)->whereIn('id', explode(',', $props->assign_amenities))->get();
+                $amnties = \DB::connection($con)->table('tb_amenities')->where('amenity_status', 1)->whereIn('id', explode(',', $props->assign_amenities))->get();
             }
             if(!empty($props->roomamenities)){
-                $room_amnties = \DB::table('tb_amenities')->where('amenity_status', 1)->whereIn('id', explode(',', $props->roomamenities))->get();
+                $room_amnties = \DB::connection($con)->table('tb_amenities')->where('amenity_status', 1)->whereIn('id', explode(',', $props->roomamenities))->get();
             }
             if(!empty($props->availableservices)){
-                $available_services = \DB::table('tb_available_services')->where('status', 1)->whereIn('id', explode(',', $props->availableservices))->get();
+                $available_services = \DB::connection($con)->table('tb_available_services')->where('status', 1)->whereIn('id', explode(',', $props->availableservices))->get();
             }
         }
         $prop_info_arr['prop_details'] = $props;
