@@ -33,7 +33,7 @@ class PropertyController extends Controller {
 
         $this->data['slider'] = \DB::table('tb_sliders')->select('slider_category','slider_title','slider_description','slider_img','slider_link','slide_type')->where('slider_category', $request->slug)->where('slider_status',1)->orderBy('sort_num','asc')->get();
 
-          $this->data['destination_category'] =0;
+        $this->data['destination_category'] =0;
         $perPage = 42;
         $pageNumber = 1;
         if(isset($request->page) && $request->page>0){
@@ -2166,7 +2166,13 @@ class PropertyController extends Controller {
         $flag = 0;
         if (!empty($props)) {
 
-            $cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $props->id)->where('status', 0)->where('show_on_booking', 1)->get();
+            $cat_types = \DB::table('tb_properties_category_types')
+            ->select('id','category_name','room_desc')
+            ->where('property_id', $props->id)
+            ->where('status', 0)
+            ->where('show_on_booking', 1)
+            ->get();
+
             if (!empty($cat_types)) {
                 $c = 0;
                 foreach ($cat_types as $type) {

@@ -1,7 +1,6 @@
 <?php
-
-
 namespace App\Http\Controllers\PhaseOne;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\ContainerController;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
