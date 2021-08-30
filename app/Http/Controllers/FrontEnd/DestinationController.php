@@ -744,6 +744,7 @@ class DestinationController extends Controller {
     }
 
     private function _searchDBs($conn, $keyword){
+        $data = [];
         $our_coll_id = '';
         $our_collection = \DB::connection($conn)
             ->table('tb_categories')
