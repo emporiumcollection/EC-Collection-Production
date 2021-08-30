@@ -531,7 +531,6 @@ class DestinationController extends Controller {
     }
 
     public function getGlobalSearch(Request $request) {
-        print date("Ymd H:i:s").'<br>';
         $keyword = trim($request->keyword);
         $sitename = trim($request->sitename);
 
@@ -575,7 +574,6 @@ class DestinationController extends Controller {
             $respns['errors'] = 'Not found!';
             $respns['data'] = array();
         }
-print date("Ymd H:i:s").'<br>';exit;
         return response()->json($respns);
     }
 
