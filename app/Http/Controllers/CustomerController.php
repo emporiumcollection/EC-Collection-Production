@@ -26,8 +26,8 @@ class CustomerController extends Controller {
         $this->data['pageMetadesc'] = "Front end dashboard";
     }
 
-    public function getRegister($pid) {
-
+    public function getRegister(Request $request, $pid = null) {
+        // echo "<pre>";print_r($request->all());exit;
         if (CNF_REGIST == 'false') :
             if (\Auth::check()):
                 return Redirect::to('')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
@@ -38,8 +38,9 @@ class CustomerController extends Controller {
         else :
             $this->data['planId'] = $pid;
             $plan = \DB::table('tb_membership')->where('status', 1)->get();
+            $questions = \DB::table('tb_security_questions')->get();
             $this->data['plans'] = $plan;
-            return view('customer.register', $this->data);
+            return view('users_admin.traveller.users.register',$this->data,compact('questions'));
         endif;
     }
 

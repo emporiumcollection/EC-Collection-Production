@@ -22,7 +22,7 @@
 		<div class="d-flex flex-row flex-column-fluid page">
 			<!--begin::Aside-->
 			<div class="aside aside-left d-flex aside-fixed" id="kt_aside">
-				@include('users_admin/traveller/users/components/_sidebar')
+				@include('users_admin/traveller/layout/sidebar')
 				<!--begin::Tab Pane-->
 				<div class="p-3 px-lg-7 py-lg-5">
 					<!--begin::Form-->
@@ -222,7 +222,7 @@
 							<div class="card-title">
 								<h2 class="text-dark font-weight-bold font-saol">Profile </h2>
 							</div>
-							@include('users_admin/traveller/users/components/_nav-user')
+							@include('users_admin/traveller/users/layout/nav-user')
 						</div>
 						<div class="card-body">
 							<ul class="nav nav-tabs nav-profiletabs">
@@ -1371,7 +1371,7 @@
 		<!--end::Content-->
 		<!--begin::Footer-->
 		<!--doc: add "bg-white" class to have footer with solod background color-->
-		@include('users_admin/traveller/users/components/_footer')
+		@include('users_admin/traveller/users/layout/footer')
 
 		<!--end::Footer-->
 		<!--begin::Modal - Two-factor authentication-->
@@ -1490,9 +1490,9 @@
 									target="_blank">1Password</a>, scan the QR code. It will generate a 6 digit code for
 								you to enter below.
 								<!--begin::QR code image-->
-								<div class="pt-5 text-center">
+								{{-- <div class="pt-5 text-center">
 									<img src="assets/media/misc/qr.png" alt="" class="mw-150px" />
-								</div>
+								</div> --}}
 								<!--end::QR code image-->
 							</div>
 							<!--end::Description-->

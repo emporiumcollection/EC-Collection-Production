@@ -5087,7 +5087,8 @@ var KTWizard = function(elementId, options) {
 
             // Steps Content
             var stepsContent = KTUtil.findAll(the.element, '[data-wizard-type="step-content"]');
-            if (stepsContent&& stepsContent.length > 0) {
+            console.log(stepsContent);
+            if (stepsContent && stepsContent.length > 0) {
                 for (var i = 0, len = stepsContent.length; i < len; i++) {
                     if (i == index) {
                         KTUtil.attr(stepsContent[i], 'data-wizard-state', 'current');

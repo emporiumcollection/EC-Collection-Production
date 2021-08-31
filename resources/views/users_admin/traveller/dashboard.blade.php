@@ -1,3 +1,4 @@
+<?php echo "<pre>"; print_r($preferences);exit; ?>
 @extends('users_admin.traveller.layout.app')
 @section('content')
               <div class="mt-15 reservation-widget">
@@ -7,8 +8,8 @@
                 <div class="row">
                   <div class="col-md-4">
                     <div class="card card-custom card-stretch gutter-b">
-                      <div class="card-img-header">
-                        <img src="{{ asset('assets/users/assets/media/hotel_reservation.jpg')}}" alt="">
+                      <div class="card-chart">
+                        <div id="kt_charts_widget_4_chart"></div>
                         <div class="card-title-cs">
                           <div class="row m-0 align-items-center">
                             <div class="col-8">
@@ -44,7 +45,7 @@
                           <p>Currently, there are no reservation.</p>
                           <a href="#">Make a new reservation</a>
                         </div> -->
-                        <div class="reservation-widget">
+                         <div class="reservation-widget">
                           <div class="d-flex align-items-center mb-10">
                             <!--begin::Bullet-->
                             <span
@@ -115,7 +116,7 @@
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-4">
+                 {{--  <div class="col-md-4">
                     <div class="card card-custom card-stretch gutter-b">
                       <div class="card-img-header">
                         <img src="{{ asset('assets/users/assets/media/event_reservation.jpg')}}" alt="">
@@ -195,11 +196,11 @@
                         </div>
                       </div>
                     </div>
-                  </div>
+                  </div> --}}
                   <div class="col-md-4">
                     <div class="card card-custom card-stretch gutter-b">
-                      <div class="card-chart">
-                        <div id="kt_charts_widget_4_chart"></div>
+                      <div class="card-img-header">
+                        <img src="{{ asset('assets/users/assets/media/hotel_reservation.jpg')}}" alt="">
                         <div class="card-title-cs">
                           <div class="row m-0 align-items-center">
                             <div class="col-9">
@@ -224,6 +225,7 @@
                         </div>
 
                         <div class="preference-list mt-8">
+                          @foreach($data['preferences'] as $preference)
                           <div class="d-flex align-items-center mb-10">
                             <!--begin::Bullet-->
                             <span
@@ -238,12 +240,14 @@
                             <!--end::Checkbox-->
                             <!--begin::Text-->
                             <div class="d-flex flex-column flex-grow-1">
-                              <a href="#"
-                                class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Prefences
-                                Name</a>
-                              <span class="text-muted font-weight-bold">Created 2 day
-                                ago</span>
-                            </div>
+
+                                  <a href="#" class="text-dark-75 text-hover-primar font-weight-bold font-size-lg mb-1">
+                                    {{ $preference->first_name }}
+                                  </a>
+                                  <span class="text-muted font-weight-bold">
+                                    {{ \Carbon\Carbon::parse($preference->created)->diffForHumans() }}
+                                  </span>
+                              </div>
                             <!--end::Text-->
                             <!--begin::Dropdown-->
                             <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
@@ -267,14 +271,14 @@
                                     </a>
                                   </li>
                                   <li class="navi-item">
-                                    <a href="my-preferences.html" class="navi-link">
+                                    <a href="/users/my-preferences/{{$preference->ps_id}}" class="navi-link">
                                       <span class="navi-text">
                                         Edit
-                                      </span>
+                                      </span> 
                                     </a>
                                   </li>
                                   <li class="navi-item">
-                                    <a href="#" class="navi-link">
+                                    <a href="/users/delete-preferences/{{$preference->ps_id}}" class="navi-link">
                                       <span class="navi-text">
                                         Remove
                                       </span>
@@ -284,132 +288,10 @@
                                 <!--end::Navigation-->
                               </div>
                             </div>
+                            
                             <!--end::Dropdown-->
                           </div>
-                          <div class="d-flex align-items-center mb-10">
-                            <!--begin::Bullet-->
-                            <span
-                              class="bullet bullet-bar bg-success align-self-stretch"></span>
-                            <!--end::Bullet-->
-                            <!--begin::Checkbox-->
-                            <label
-                              class="checkbox checkbox-lg checkbox-light-success checkbox-inline flex-shrink-0 m-0 mx-4">
-                              <input type="checkbox" name="select" value="1">
-                              <span></span>
-                            </label>
-                            <!--end::Checkbox-->
-                            <!--begin::Text-->
-                            <div class="d-flex flex-column flex-grow-1">
-                              <a href="#"
-                                class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Prefences
-                                Name</a>
-                              <span class="text-muted font-weight-bold">Created 2 day
-                                ago</span>
-                            </div>
-                            <!--end::Text-->
-                            <!--begin::Dropdown-->
-                            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
-                              title="" data-placement="left"
-                              data-original-title="Quick actions">
-                              <a href="#"
-                                class="btn btn-hover-light-primary btn-sm btn-icon"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                <i class="ki ki-bold-more-hor"></i>
-                              </a>
-                              <div
-                                class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right">
-                                <!--begin::Navigation-->
-                                <ul class="navi navi-hover">
-                                  <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                      <span class="navi-text">
-                                        Set Active
-                                      </span>
-                                    </a>
-                                  </li>
-                                  <li class="navi-item">
-                                    <a href="my-preferences.html" class="navi-link">
-                                      <span class="navi-text">
-                                        Edit
-                                      </span>
-                                    </a>
-                                  </li>
-                                  <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                      <span class="navi-text">
-                                        Remove
-                                      </span>
-                                    </a>
-                                  </li>
-                                </ul>
-                                <!--end::Navigation-->
-                              </div>
-                            </div>
-                            <!--end::Dropdown-->
-                          </div>
-                          <div class="d-flex align-items-center mb-10">
-                            <!--begin::Bullet-->
-                            <span
-                              class="bullet bullet-bar bg-success align-self-stretch"></span>
-                            <!--end::Bullet-->
-                            <!--begin::Checkbox-->
-                            <label
-                              class="checkbox checkbox-lg checkbox-light-success checkbox-inline flex-shrink-0 m-0 mx-4">
-                              <input type="checkbox" name="select" value="1">
-                              <span></span>
-                            </label>
-                            <!--end::Checkbox-->
-                            <!--begin::Text-->
-                            <div class="d-flex flex-column flex-grow-1">
-                              <a href="#"
-                                class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Prefences
-                                Name</a>
-                              <span class="text-muted font-weight-bold">Created 2 day
-                                ago</span>
-                            </div>
-                            <!--end::Text-->
-                            <!--begin::Dropdown-->
-                            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
-                              title="" data-placement="left"
-                              data-original-title="Quick actions">
-                              <a href="#"
-                                class="btn btn-hover-light-primary btn-sm btn-icon"
-                                data-toggle="dropdown" aria-haspopup="true"
-                                aria-expanded="false">
-                                <i class="ki ki-bold-more-hor"></i>
-                              </a>
-                              <div
-                                class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right">
-                                <!--begin::Navigation-->
-                                <ul class="navi navi-hover">
-                                  <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                      <span class="navi-text">
-                                        Set Active
-                                      </span>
-                                    </a>
-                                  </li>
-                                  <li class="navi-item">
-                                    <a href="my-preferences.html" class="navi-link">
-                                      <span class="navi-text">
-                                        Edit
-                                      </span>
-                                    </a>
-                                  </li>
-                                  <li class="navi-item">
-                                    <a href="#" class="navi-link">
-                                      <span class="navi-text">
-                                        Remove
-                                      </span>
-                                    </a>
-                                  </li>
-                                </ul>
-                                <!--end::Navigation-->
-                              </div>
-                            </div>
-                            <!--end::Dropdown-->
-                          </div>
+                          @endforeach
                         </div>
                       </div>
                     </div>

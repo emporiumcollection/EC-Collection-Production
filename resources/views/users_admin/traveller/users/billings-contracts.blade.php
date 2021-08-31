@@ -64,9 +64,7 @@
 			<!--end::Entry-->
 		</div>
 		
-
-	@include('/users_admin/traveller/users/components/_chat-popup')
-	@include('/users_admin/traveller/users/components/_reservation-popup')
-
+	@include('/users_admin/traveller/layout/chat-popup')
+	@include('/users_admin/traveller/layout/reservation-popup')
 
 @endsection

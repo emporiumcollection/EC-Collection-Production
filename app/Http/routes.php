@@ -17,6 +17,22 @@
 Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 
+//Routes for new UI changes in Emporium 
+Route::get('/users/my-preferences', 'UserController@getPreferences');
+Route::get('/users/my-preferences/{id}', 'UserController@editPreferences');
+Route::get('/users/delete-preferences/{id}', 'UserController@deletePreferences');
+Route::get('/users/profile', 'UserController@getProfile');
+Route::get('/users/setting', 'UserController@getSettings');
+Route::get('/users/guestinvite', 'UserController@getInvite');
+Route::get('/users/companion', 'UserController@getCompanion');
+Route::get('/users/companion', 'UserController@getCompanion');
+
+Route::get('/users/security', 'UserController@getSecurity');
+Route::get('/users/contracts', 'UserController@getInvoices');
+Route::post('/users/registeration', 'UserController@postSavetravellerprofile');
+Route::post('/users/invite', 'UserController@postInvite');
+Route::get('/users/reservation', 'UserController@getReservation');
+Route::post('/users/password', 'UserController@postSavepassword');
 
 /**
  * New frontend routes.
@@ -50,9 +66,7 @@ Route::get('/sitemap/{type}.xml', 'SitemapController@properties');
 
 Route::group(['middleware' => 'auth'], function()
 {
-
      Route::resource('usercontract', 'UsercontractController');
-
 	//Route::get('crmlayouts', 'CrmlayoutController@index');
 	Route::resource('crmlayouts', 'CrmlayoutController');
 	Route::get('crmlayouts/delete/{crmlayouts}', 'CrmlayoutController@destroy');
@@ -123,26 +137,11 @@ Route::controller('home', 'HomeController');
 Route::controller('/user', 'UserController');
 Route::controller('/customer', 'CustomerController');
 Route::get('/traveller', 'CustomerController@traveller');
+Route::get('/register/', 'CustomerController@getregister');
 
 Route::get('/supplier', 'CustomerController@supplier');
 
 Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences');
-
-//Routes for new UI changes in Emporium 
-Route::get('/users/my-preferences', 'UserController@getPreferences');
-Route::get('/users/profile', 'UserController@getProfile');
-Route::get('/users/setting', 'UserController@getSettings');
-Route::get('/users/guestinvite', 'UserController@getInvite');
-Route::get('/users/companion', 'UserController@getCompanion');
-
-Route::get('/users/companion', 'UserController@getCompanion');
-
-Route::get('/users/security', 'UserController@getSecurity');
-Route::get('/users/contracts', 'UserController@getInvoices');
-Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
-Route::post('/users/invite', 'UserController@postInvite');
-Route::get('/users/reservation', 'UserController@getReservation');
-Route::post('/users/password', 'UserController@postSavepassword');
 
 Route::get('/whoiam', 'CustomerController@whoIam');
 // Route::post('user/my-preferences', 'UserController@getPreferences');
@@ -152,7 +151,7 @@ Route::post('deleteinvite', 'UserController@deleteInvite');
 
 Route::post('/users/addcompanion', 'UserController@addCompanion');
 Route::post('/viewcompanion', 'UserController@viewCompanion');
-Route::post('editcompanion', 'UserController@editCompanion');
+Route::get('/editcompanion/{id}', 'UserController@editCompanion');
 Route::post('deletecompanion', 'UserController@deleteCompanion');
 
 Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate');

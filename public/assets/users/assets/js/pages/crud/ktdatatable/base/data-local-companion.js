@@ -30,7 +30,7 @@ var KTDatatableDataLocalDemo = function () {
         source: dataJSONArray,
         pageSize: 10,
       },
-      
+
       // layout definition
       layout: {
         scroll: false, // enable/disable datatable scroll both horizontal and vertical when needed.

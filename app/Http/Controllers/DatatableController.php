@@ -6,34 +6,23 @@ use Illuminate\Http\Request;
 use App\Companion;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Collection;
-
+use DB;
 class DatatableController extends Controller
 {
     public function getDatatable()
     {
-        $companions = Companion::all();
-
+        $field = $_GET['sort']['field'];
+        $Order = $_GET['sort']['sort'];
+        if (isset($field) && isset($Order)) {
+            $companions = DB::table('tb_companion')
+                ->select('id','first_name','last_name','email','gender','preferred_language','preferred_currency')
+                ->orderBy('id',$Order)        
+                ->get();   
+        }
+        else{
+            $companions = Companion::all();    
+        }
         return $companions;
-
-        // $companions= collect($companions);
-        // return Datatables::collection(Companion::all())->make(true)->toArray();
-
-        return Datatables::of($companions)
-            // ->addColumn('actions', function ($companions) {
-            //     return $companions->first_name;
-            //     // return (['companions' => $companions, 'companion_id' => $companions->id]);
-            // })
-            // ->escapeColumns('actions')
-            ->editColumn('first_name', function ($companions) {
-                return $companions->first_name;
-            })
-            ->editColumn('email', function ($companions) {
-                return $companions->email;
-            })
-            ->editColumn('phone_number', function ($companions) {
-                return $companions->phone_number;
-            })
-            ->make(true);
     }
 
 }

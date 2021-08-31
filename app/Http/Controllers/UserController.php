@@ -404,6 +404,26 @@ class UserController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
 
+        $genders = [ 
+            'Man',
+            'Women',
+            'Non-Binary',
+            'Cigender',
+            'Intersex',
+            'Other',
+        ];
+
+        $languages = [
+            'en' => 'English',
+            'de' => 'Deutsch',
+            'es' => 'Espanol',
+            'fr' => 'Francais',
+            'it' => 'Italiano',
+            'nl' => 'Nederlands',
+            'en' => 'English',
+            'en' => 'English',
+            'en' => 'English',
+        ]; 
 
         $info = User::find(\Auth::user()->id);
         $extra = \DB::table('tb_user_company_details')->where('user_id', \Auth::user()->id)->first();
@@ -429,6 +449,8 @@ class UserController extends Controller {
             'pageTitle' => 'My Profile',
             'pageNote' => 'View Detail My Info',
             'info' => $info,
+            'genders' => $genders,
+            'languages' => $languages,
             'extra' => $extra,
             'slider_ads_expiry_days' => $slider_ads_expiry_days,
             'slider_ads_price' => $slider_ads_price,
@@ -443,7 +465,7 @@ class UserController extends Controller {
             'experiences' => $experiences,
             'preferences' => $preferences
         );
-        
+
         //get contract during signup
         $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description','tb_users_contracts.is_required','tb_users_contracts.is_agree','tb_users_contracts.sort_num')->where('tb_users_contracts.contract_type','sign-up')->where('tb_users_contracts.accepted_by', \Auth::user()->id)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
         $resetContracts = array();
@@ -617,7 +639,7 @@ class UserController extends Controller {
     }
     
     public function postSavetravellerprofile(Request $request) {
-       
+       // echo"<pre>";print_r($request->all());exit();
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -669,9 +691,9 @@ class UserController extends Controller {
             //insert contracts
             //\CommonHelper::submit_contracts($contracts,'sign-up');
             //End
-            return Redirect::to('user/profile')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
+            return Redirect::to('/dashboard')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
         } else {
-            return Redirect::to('user/profile')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
+            return Redirect::to('/dashboard')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
                             ->withErrors($validator)->withInput();
         }
     }
@@ -769,10 +791,8 @@ class UserController extends Controller {
                 $return_array['message'] = 'Profile not submitted errors occurred!';
             }
 
-            
-
         } else {
-            
+
             $return_array['status'] = 'error';
             $return_array['message'] = 'Profile not submitted errors occurred!';
             
@@ -844,8 +864,7 @@ class UserController extends Controller {
 
                     $message->subject($emlData['subject']);
                 });
-
-
+                
                 $affectedRows = User::where('email', '=', $user->email)
                         ->update(array('reminder' => $token));
 
@@ -1502,6 +1521,7 @@ class UserController extends Controller {
         echo json_encode($return_array);
     }
     public function editCompanion(Request $request){
+        print_r('here');exit();
         $user = User::find(\Session::get('uid'));
         
         $return_array = array();
@@ -1608,7 +1628,8 @@ class UserController extends Controller {
             if($inviteeId > 0){
                 
                 $edata = array();
-                $emlData['frmemail'] = 'compact(varname)';
+                // $emlData['frmemail'] = 'compact(varname)';
+                $emlData['frmemail'] = $request->input('email');
                 $edata['referral_code'] = $referral_code;
                 $edata['msg'] = $request->input('message');
                 $edata['first_name'] = $request->input('first_name');
@@ -1631,21 +1652,20 @@ class UserController extends Controller {
                 //if (\Session::get('newlang') == 'English') {
                 //    $etemp = 'auth.reminder_eng';
                 //}
-                
+                // print_r($emlData['frmemail']);exit;
                 $etemp = 'invite';
                 //echo view('user.emails.invites.' . $etemp, $edata); die;
                 try{ 
-                \Mail::send('user.concierge_email_address.' . $etemp, $edata, function($message) use ($emlData) {
+                \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) { 
                     $message->from($emlData['frmemail'], CNF_APPNAME);
-
                     $message->to($emlData['email']);
-
                     $message->subject($emlData['subject']);
                 });
                 }catch(Exception $ex){
-                    //print_r($ex); 
+                    // print_r($ex); 
                 }
-            }            
+            }
+                         
             return Redirect::to('user/invite/')->with('message', 'Invites send successfully')->with('msgstatus', 'success');
         } else {
             return Redirect::to('user/invite/')->withErrors($validator)->withInput();
@@ -2536,6 +2556,39 @@ class UserController extends Controller {
         echo json_encode($response);
         exit;
     }
+
+    public function deletePreferences($id){
+        $deleted = \DB::table('tb_personalized_services')
+                    ->where('ps_id','=',$id)
+                    ->delete();
+        return Redirect::to('/dashboard');
+    }
+    public function editPreferences($id){   
+
+        $editPreferences = \DB::table('tb_personalized_services')
+        ->select( 
+                'ps_id',
+                'first_name', 
+                'adults', 
+                'youth', 
+                'children',
+                'toddlers', 
+                'earliest_arrival', 
+                'late_check_out', 
+                'stay_time', 
+                'destinations',
+                'inspirations',
+                'experiences'
+               )
+        ->where('ps_id','=', $id)
+        ->orderby('ps_id','DESC')
+        ->limit(3)
+        ->get();
+
+        $file_name = 'users_admin.traveller.users.my-preferences';
+        return view($file_name,compact('editPreferences'));
+    }
+
     public function getPreferences(){
         if (!\Auth::check())
             return redirect('user/login');

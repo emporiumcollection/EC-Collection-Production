@@ -10,250 +10,267 @@
 					information, personal preferences and account settings.</p>
 			</div>
 			<div class="col-md-4 text-right">
-				<a href="#" class="btn btn-secondary" id="remove_account">Remove Account</a>
+				<a href="#" class="btn btn-secondary" id="remove_account">Disable and Remove Account</a>
 			</div>
 		</div>
 		</div>
 
 		<div class="mt-13">
-		<ul class="nav nav-tabs nav-profiletabs">
-		<li class="nav-item ">
-		<a href="#profile" class="nav-link active" data-toggle="tab">Profile
-			Information</a>
-		</li>
-		<li class="nav-item">
-		<a href="#changepass" class="nav-link" data-toggle="tab"> Change Password
-		</a>
-		</li>
-		</ul>
+			<ul class="nav nav-tabs nav-profiletabs">
+				<li class="nav-item ">
+					<a href="#profile" class="nav-link active" data-toggle="tab">Profile
+						Information</a>
+				</li>
+				<li class="nav-item">
+					<a href="#changepass" class="nav-link" data-toggle="tab"> Change Password
+					</a>
+				</li>
+			</ul>
+		</div>
 
 		<div class="tab-content p-7 profile-tabs">
-		<div class="tab-pane fade show active" id="profile">
-		<div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
-			<div class="col-xl-9">
-				<h5 class="text-dark font-weight-bold mb-10">
-					Personal Informations
-				</h5>
-				<form method="post" action="/users/savetravel" enctype="multipart/form-data">
-					<!--begin::Group-->
+			<div class="tab-pane fade show active" id="profile">
+				<div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
+				<div class="col-xl-9">
+					<h5 class="text-dark font-weight-bold mb-10">
+						My Credentials
+					</h5>
+					<form method="post" action="/users/savetravel" enctype="multipart/form-data">
+						<!--begin::Group-->
 
-					<div class="form-group row">
-						<label class="col-xl-3 col-lg-3 col-form-label text-left">My
-							Profile Image </label>
-						<div class="col-lg-9 col-xl-9">
-							<div class="image-input image-input-outline"
-								id="kt_user_add_avatar">
-								<div class="image-input-wrapper"
-									style="background-image: url({{ asset('assets/users/assets/media/users/100_6.jpg')}})">
+						<div class="form-group row">
+							<label class="col-xl-3 col-lg-3 col-form-label text-left">My
+								Profile Image </label>
+							<div class="col-lg-9 col-xl-9">
+								<div class="image-input image-input-outline"
+									id="kt_user_add_avatar">
+									<div class="image-input-wrapper"
+										style="background-image: url({{ asset('assets/users/assets/media/users/100_6.jpg')}})">
+									</div>
+									
+									<label
+										class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+										data-action="change" data-toggle="tooltip"
+										title="" data-original-title="Change avatar">
+										<i class="fa fa-pen icon-sm text-muted"></i>
+										<input type="file" name="profile_avatar"
+											accept=".png, .jpg, .jpeg">
+										<input type="hidden"
+											name="profile_avatar_remove">
+									</label>
+									<span
+										class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+										data-action="cancel" data-toggle="tooltip"
+										title="" data-original-title="Cancel avatar">
+										<i
+											class="ki ki-bold-close icon-xs text-muted"></i>
+									</span>
 								</div>
-								
-								<label
-									class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-									data-action="change" data-toggle="tooltip"
-									title="" data-original-title="Change avatar">
-									<i class="fa fa-pen icon-sm text-muted"></i>
-									<input type="file" name="profile_avatar"
-										accept=".png, .jpg, .jpeg">
-									<input type="hidden"
-										name="profile_avatar_remove">
-								</label>
-								<span
-									class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
-									data-action="cancel" data-toggle="tooltip"
-									title="" data-original-title="Cancel avatar">
-									<i
-										class="ki ki-bold-close icon-xs text-muted"></i>
+							</div>
+						</div>
+						<!--end::Group-->
+						<!--begin::Group-->
+						<div class="form-group row fv-plugins-icon-container">
+							<label class="col-xl-3 col-lg-3 col-form-label">	
+								First Name
+							</label>
+							<div class="col-lg-9 col-xl-9">
+								<input
+									class="form-control form-control-solid form-control-lg"
+									name="firstname" type="text" value="{{ $info->first_name }}">
+
+							</div>
+						</div>
+						<!--end::Group-->
+						<!--begin::Group-->
+						<div class="form-group row fv-plugins-icon-container">
+							<label class="col-xl-3 col-lg-3 col-form-label">Last
+								Name</label>
+							<div class="col-lg-9 col-xl-9">
+								<input
+									class="form-control form-control-solid form-control-lg"
+									name="lastname" type="text" value="{{ $info->last_name }}">
+
+							</div>
+						</div>
+						<!--end::Group-->
+						<!--begin::Group-->
+						<div class="form-group row fv-plugins-icon-container">
+							<label class="col-xl-3 col-lg-3 col-form-label">Email
+								Address</label>
+							<div class="col-lg-9 col-xl-9">
+								<div
+									class="input-group input-group-solid input-group-lg">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="la la-at"></i>
+										</span>
+									</div>
+									<input type="text"
+										class="form-control form-control-solid form-control-lg"
+										name="email" value="{{ $info->email }}">
+								</div>
+							</div>
+						</div>
+						<!--end::Group-->
+						<!--begin::Group-->
+						<div class="form-group row fv-plugins-icon-container">
+							<label class="col-xl-3 col-lg-3 col-form-label">
+								Phone Number
+							</label>
+							<div class="col-lg-9 col-xl-9">
+								<div
+									class="input-group input-group-solid input-group-lg">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="la la-phone"></i>
+										</span>
+									</div>
+									<input type="text"
+										class="form-control form-control-solid form-control-lg"
+										name="landline_number" value="{{ $info->landline_number }}">
+								</div>
+							</div>
+						</div>
+						<!--end::Group-->
+
+						<div class="form-group row fv-plugins-icon-container">
+							<label class="col-xl-3 col-lg-3 col-form-label">
+								Mobile Number
+							</label>
+							<div class="col-lg-9 col-xl-9">
+								<div
+									class="input-group input-group-solid input-group-lg">
+									<div class="input-group-prepend">
+										<span class="input-group-text">
+											<i class="la la-phone"></i>
+										</span>
+									</div>
+									<input type="text"
+										class="form-control form-control-solid form-control-lg"
+										name="mobile_number" value="{{ $info->mobile_number }}">
+								</div>
+							</div>
+						</div>
+
+						<!--begin::Group-->
+						<div class="form-group row fv-plugins-icon-container">
+							<label class="col-xl-3 col-lg-3 col-form-label">
+								I Am
+							</label>
+							<div class="col-lg-9 col-xl-9">
+								<select id="gender" name="gender" class="form-control">
+									<option value="" selected disabled>Select</option>
+									<?php foreach ($genders as $gender) { ?>
+										<option value="{{ $gender }}" {{ $info->gender == $gender ? 'selected' : "" }}>{{ $gender }}</option>
+									<?php } ?>
+								</select>
+							</div>
+						</div>
+						<!--end::Group-->
+						<!--begin::Group-->
+						<div class="form-group row fv-plugins-icon-container">
+							<label class="col-xl-3 col-lg-3 col-form-label">
+								Preferred Language
+							</label>
+							<div class="col-lg-9 col-xl-9">
+								<select class="form-control" id="prefer_communication_with" 
+										name="prefer_communication_with">
+									@foreach ($languages as $key => $language) {	
+										<option value="{{ $key }}" {{ $info->prefer_communication_with == $language ? 'selected' : "" }}>
+											{{$language}}
+										</option>
+									@endforeach
+								</select>
+								<span class="form-text text-muted">
+									We'll send you communication in this language.
 								</span>
 							</div>
 						</div>
-					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					{{-- {!! Form::open(array('url'=>'users/savetravel	', 'class'=>'m-form m-form--fit m-form--label-align-right ' ,'files' => true)) !!}	 --}}
+						<!--end::Group-->
+						<!--begin::Group-->
+						<div class="form-group row fv-plugins-icon-container">
+							<label class="col-xl-3 col-lg-3 col-form-label">
+								Preferred Currency
+							</label>
+							<div class="col-lg-9 col-xl-9">
+								
+			                        <?php  $currencyList=(CommonHelper::getCurrencyList()); if(empty($currencyList)){ $currencyList = array(); } ?>
 
-					<div class="form-group row fv-plugins-icon-container">
-						<label class="col-xl-3 col-lg-3 col-form-label">First
-							Name</label>
-						<div class="col-lg-9 col-xl-9">
-							<input
-								class="form-control form-control-solid form-control-lg"
-								name="firstname" type="text" value="{{ $info->first_name }}">
-
-						</div>
-					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					<div class="form-group row fv-plugins-icon-container">
-						<label class="col-xl-3 col-lg-3 col-form-label">Last
-							Name</label>
-						<div class="col-lg-9 col-xl-9">
-							<input
-								class="form-control form-control-solid form-control-lg"
-								name="lastname" type="text" value="{{ $info->last_name }}">
-
-						</div>
-					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					<div class="form-group row fv-plugins-icon-container">
-						<label class="col-xl-3 col-lg-3 col-form-label">Email
-							Address</label>
-						<div class="col-lg-9 col-xl-9">
-							<div
-								class="input-group input-group-solid input-group-lg">
-								<div class="input-group-prepend">
-									<span class="input-group-text">
-										<i class="la la-at"></i>
-									</span>
-								</div>
-								<input type="text"
-									class="form-control form-control-solid form-control-lg"
-									name="email" value="{{ $info->email }}">
+										<select class="form-control" id="preferred_currency" name="preferred_currency">
+			                                <option value="EUR">Currency</option>
+			                                @foreach($currencyList as $currencyCode => $currencyName)
+			                                    <option value="{{ $currencyCode }}" title="{{ $currencyName }}" {{  $info->preferred_currency == $currencyCode ? 'selected' : ''}} >{{ $currencyName }}
+			                                </option>                                        
+			                                @endforeach
+			                            </select>
 							</div>
+								<span class="form-text text-muted">
+									Select the currency in which we display system wide
+									prices.
+								</span>
 						</div>
-					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					<div class="form-group row fv-plugins-icon-container">
-						<label class="col-xl-3 col-lg-3 col-form-label">
-							Phone Number
-						</label>
-						<div class="col-lg-9 col-xl-9">
-							<div
-								class="input-group input-group-solid input-group-lg">
-								<div class="input-group-prepend">
-									<span class="input-group-text">
-										<i class="la la-phone"></i>
-									</span>
-								</div>
-								<input type="text"
-									class="form-control form-control-solid form-control-lg"
-									name="phone" value="{{ $info->mobile_number }}">
-							</div>
-						</div>
-					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					<div class="form-group row fv-plugins-icon-container">
-						<label class="col-xl-3 col-lg-3 col-form-label">
-							I Am
-						</label>
-						<div class="col-lg-9 col-xl-9">
-							<select id="gender" name="gender" class="form-control">
-								<option value="Male" <?php echo $info->gender=="Male" ? "selected='selected'" : "" ?> >Male</option>
-		        <option value="Female" <?php echo $info->gender=="Female" ? "selected='selected'" : "" ?>>Female</option>
-		        <option value="Other" <?php echo $info->gender=="Other" ? "selected='selected'" : "" ?>>Other</option>
-							</select>
-						</div>
-					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					<div class="form-group row fv-plugins-icon-container">
-						<label class="col-xl-3 col-lg-3 col-form-label">
-							Preferred Language
-						</label>
-						<div class="col-lg-9 col-xl-9">
-							<select class="form-control" id="prefer_communication_with" name="prefer_communication_with">
-								<option value="en"  <?php echo $info->prefer_communication_with=="en" ? "selected='selected'" : "" ?>>English</option>
-		        <option value="de"  <?php echo $info->prefer_communication_with=="de" ? "selected='selected'" : "" ?>>Deutsch</option>                                                    
-		        <option value="es"  <?php echo $info->prefer_communication_with=="es" ? "selected='selected'" : "" ?>>Espanol</option>                                                    
-		        <option value="fr"  <?php echo $info->prefer_communication_with=="fr" ? "selected='selected'" : "" ?>>Francais</option>                                                    
-		        <option value="it"  <?php echo $info->prefer_communication_with=="it" ? "selected='selected'" : "" ?>>Italiano</option>                                                    
-		        <option value="nl"  <?php echo $info->prefer_communication_with=="nl" ? "selected='selected'" : "" ?>>Nederlands</option>        
-							</select>
-
-							<span class="form-text text-muted">
-								We'll send you communication in this language.
-							</span>
-						</div>
-					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					<div class="form-group row fv-plugins-icon-container">
-						<label class="col-xl-3 col-lg-3 col-form-label">
-							Preferred Currency
-						</label>
-						<div class="col-lg-9 col-xl-9">
-							
-		                        <?php  $currencyList=(CommonHelper::getCurrencyList()); if(empty($currencyList)){ $currencyList = array(); } ?>
-									<select class="form-control" id="preferred_currency" name="preferred_currency">
-		                                <option value="EUR">Currency</option>
-		                                @foreach($currencyList as $currencyCode => $currencyName)
-		                                    <option value="{{ $currencyCode }}" title="{{ $currencyName }}" {{  $info->preferred_currency == $currencyCode ? 'selected' : ''}} >{{ $currencyName }}
-		                                </option>                                        
-		                                @endforeach
-		                            </select>
-							</div>
-							<span class="form-text text-muted">
-								Select the currency in which we display system wide
-								prices.
-							</span>
-						</div>
-
 						<div class="form-group row fv-plugins-icon-container mt-12">
-						<div class="col-lg-9 col-xl-9">
-							<button type="submit" class="btn btn-primary">
-								Save Changes
-							</button>
+								<div class="col-lg-9 col-xl-9">
+									<button type="submit" class="btn btn-primary">
+										Save Changes
+									</button>
+								</div>
 						</div>
 					</div>
-					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					
-					<!--end::Group-->
-				</form>
+						<!--end::Group-->
+						<!--begin::Group-->
+						<!--end::Group-->
+				</div>
 			</div>
-		</div>
+			<div class="tab-pane fade" id="changepass">
+				<div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
+					<div class="col-xl-9">
+						<h5 class="text-dark font-weight-bold mb-10">
+							Password
+						</h5>
 
-		<div class="tab-pane fade" id="changepass">
-		<div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
-			<div class="col-xl-9">
-				<h5 class="text-dark font-weight-bold mb-10">
-					Password
-				</h5>
-
-				<form method="post" action="/users/password">
-					<!--begin::Group-->
-					<div class="form-group row">
-						<label class="col-form-label col-xl-3 col-lg-3">
-							New Password
-						</label>
-						<div class="col-xl-9 col-lg-9">
-							<input type="password" class="form-control" name="password">
-							<div class="form-text text-muted">
-								Password must be 8 character.
-								Must be one uppercase character.
-								Must be one Non-alphanumeric (!, @, # etc.)
-								character.
+						<form method="post" action="/users/password">
+							<!--begin::Group-->
+							<div class="form-group row">
+								<label class="col-form-label col-xl-3 col-lg-3">
+									New Password
+								</label>
+								<div class="col-xl-9 col-lg-9">
+									<input type="password" class="form-control" name="password">
+									<div class="form-text text-muted">
+										Password must be 8 character.
+										Must be one uppercase character.
+										Must be one Non-alphanumeric (!, @, # etc.)
+										character.
+									</div>
+								</div>
 							</div>
-						</div>
+							<!--end::Group-->
+							<!--begin::Group-->
+							<div class="form-group row">
+								<label class="col-form-label col-xl-3 col-lg-3">
+									Confirm Password
+								</label>
+								<div class="col-xl-9 col-lg-9">
+									<input type="password" class="form-control" name="password_confirmation">
+								</div>
+							</div>
+							<!--end::Group-->
+							<!--begin::Group-->
+							<div class="form-group row fv-plugins-icon-container mt-12">
+								<div class="col-xl-3 col-lg-3 col-form-div"></div>
+								<div class="col-lg-9 col-xl-9">
+									<button type="submit" class="btn btn-primary" name="submit">
+										Save Changes
+									</button>
+								</div>
+							</div>
+							<!--end::Group-->
+						</form>
 					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					<div class="form-group row">
-						<label class="col-form-label col-xl-3 col-lg-3">
-							Confirm Password
-						</label>
-						<div class="col-xl-9 col-lg-9">
-							<input type="password" class="form-control" name="password_confirmation">
-						</div>
-					</div>
-					<!--end::Group-->
-					<!--begin::Group-->
-					<div class="form-group row fv-plugins-icon-container mt-12">
-						<div class="col-xl-3 col-lg-3 col-form-div"></div>
-						<div class="col-lg-9 col-xl-9">
-							<button type="submit" class="btn btn-primary" name="submit">
-								Save Changes
-							</button>
-						</div>
-					</div>
-					<!--end::Group-->
-				</form>
+				</div>
 			</div>
-		</div>
-		</div>
 		</div>
 		</div>
 		</div>
@@ -268,38 +285,18 @@
 		<!--end::Content-->
 		<!--begin::Footer-->
 		<!--doc: add "bg-white" class to have footer with solod background color-->
-
 		<!--end::Footer-->
 		<!--begin::Modal - Two-factor authentication-->
 		</div>
 		</div>
 	<!--end::Main-->
 	<!--begin::Scrolltop-->
-	<div id="kt_scrolltop" class="scrolltop">
-		<span class="svg-icon">
-			<!--begin::Svg Icon | path:../users/assets/media/svg/icons/Navigation/Up-2.svg-->
-			<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
-				height="24px" viewBox="0 0 24 24" version="1.1">
-				<g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-					<polygon points="0 0 24 0 24 24 0 24" />
-					<rect fill="#000000" opacity="0.3" x="11" y="10" width="2" height="10" rx="1" />
-					<path
-						d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
-						fill="#000000" fill-rule="nonzero" />
-				</g>
-			</svg>
-			<!--end::Svg Icon-->
-		</span>
-	</div>
 
 	<script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
-	<!--begin::Global Config(global config for global JS scripts)-->
-	<script>var KTAppSettings = { "breakpoints": { "sm": 576, "md": 768, "lg": 992, "xl": 1200, "xxl": 1200 }, "colors": { "theme": { "base": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#E5EAEE", "success": "#1BC5BD", "info": "#6993FF", "warning": "#FFA800", "danger": "#F64E60", "light": "#F3F6F9", "dark": "#212121" }, "light": { "white": "#ffffff", "primary": "#1BC5BD", "secondary": "#ECF0F3", "success": "#C9F7F5", "info": "#E1E9FF", "warning": "#FFF4DE", "danger": "#FFE2E5", "light": "#F3F6F9", "dark": "#D6D6E0" }, "inverse": { "white": "#ffffff", "primary": "#ffffff", "secondary": "#212121", "success": "#ffffff", "info": "#ffffff", "warning": "#ffffff", "danger": "#ffffff", "light": "#464E5F", "dark": "#ffffff" } }, "gray": { "gray-100": "#F3F6F9", "gray-200": "#ECF0F3", "gray-300": "#E5EAEE", "gray-400": "#D6D6E0", "gray-500": "#B5B5C3", "gray-600": "#80808F", "gray-700": "#464E5F", "gray-800": "#1B283F", "gray-900": "#212121" } }, "font-family": "Poppins" };</script>
-	<!--end::Global Config-->
+	
 	<!--begin::Global Theme Bundle(used by all pages)-->
 	<script>
-    
-
+	@section('remove_acc_scr')
     var chart = new ApexCharts(element, options);
     chart.render();
 
@@ -321,5 +318,6 @@
 			});
 		});
 
-	</script>
+	@endsection
+</script>
 @endsection

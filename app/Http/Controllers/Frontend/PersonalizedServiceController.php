@@ -140,7 +140,7 @@ class PersonalizedServiceController extends Controller {
      */
     
     public function save(Request $request) {
-        
+
         $arrival = $request->earliest_arrival;
         $earliest_arrival_val = explode("-",$arrival);
         $from = $earliest_arrival_val[0];
@@ -166,7 +166,7 @@ class PersonalizedServiceController extends Controller {
         
         $params = array('customer_id' => $customer_id,
                         // 'salutation' => $request->input('salutation'),
-                        // 'first_name' => $request->input('first_name'),
+                        'first_name' => $request->input('first_name'),
                         // 'surname' => $request->input('surname'),
                         // 'email' => $request->input('email'),
                         'adults' => $request->input('adults'),

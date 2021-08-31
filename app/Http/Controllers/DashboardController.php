@@ -11,9 +11,10 @@ class DashboardController extends Controller {
 	{
 		parent::__construct();
 	}
-
+    
 	public function getIndex( Request $request )
 	{
+    // echo "here";exit();
         /*$url = \CommonHelper::check_membership_package(\Session::get('uid'));
         if(strlen(trim($url))>0){
             return Redirect::to($url);
@@ -24,6 +25,7 @@ class DashboardController extends Controller {
         }
         
         $this->data['container'] = new ContainerController();
+        $preferences = \DB::table('tb_personalized_services')->select( 'ps_id', 'first_name', 'created')->orderby('ps_id','DESC')->limit(3)->get();
         
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
         
@@ -104,6 +106,9 @@ class DashboardController extends Controller {
                $this->data['pageslider'] = \DB::table('tb_pages_sliders')->join('tb_pages_content', 'tb_pages_sliders.slider_page_id', '=' , 'tb_pages_content.pageID')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('tb_pages_content.alias', 'hotel-dashboard')->where('slider_status', 1)->get();
                
                $this->data['setupslider'] = \DB::table('tb_pages_sliders')->join('tb_pages_content', 'tb_pages_sliders.slider_page_id', '=' , 'tb_pages_content.pageID')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('tb_pages_content.alias', 'hotel-dashboard')->where('slider_status', 1)->get();
+
+               
+               $this->data['setupslider'] = \DB::table('tb_pages_sliders')->join('tb_pages_content', 'tb_pages_sliders.slider_page_id', '=' , 'tb_pages_content.pageID')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('tb_pages_content.alias', 'hotel-dashboard')->where('slider_status', 1)->get();
                
                $prop_id = 0;
                $property_name = '';
@@ -120,7 +125,8 @@ class DashboardController extends Controller {
                $this->data['cat_types'] = array();                                       
             }
         }
-		return view($file_name,$this->data);
+        $data = $this->data;
+		return view($file_name, compact('data','preferences'));
 	}
 
 }
