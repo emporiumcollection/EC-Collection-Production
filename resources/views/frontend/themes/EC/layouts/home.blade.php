@@ -11,10 +11,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <title> {{ CNF_APPNAME }} - @yield('meta_title') </title>
-    
-    
-    
-    
+        
     @yield('meta_link_sitemap')
     
     <meta property="og:url" content="@yield('og_url')" />
@@ -88,8 +85,7 @@
 
     {{--For Custom Styles --}}
     @section('custom_css')
-        @parent
-        
+        @parent        
     @show
 @if(defined('CNF_GOOGLE_ANALYTIC_KEY'))
     @if(CNF_GOOGLE_ANALYTIC_KEY != '')
@@ -124,6 +120,7 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/jquery.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/bootstrap.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/sticky-sidebar.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/leaflet.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/jqueryui/jquery-ui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/moment.min.js') }}"></script>
@@ -136,13 +133,24 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/daterangepicker.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/fullcalendar/core/main.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/fullcalendar/daygrid/main.js') }}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/select2/select2.full.min.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/slick/slick.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/wow.min.js') }}"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/md5.js"></script>
 
 <script src="{{ asset('themes/EC/js/plugin/lightbox/js/lightgallery.min.js') }}"></script>
 <script src="{{ asset('themes/EC/js/plugin/lightbox/js/lg-thumbnail.js') }}"></script>
 <script src="{{ asset('themes/EC/js/plugin/lightbox/js/lg-share.js') }}"></script>
 <script src="{{ asset('themes/EC/js/plugin/rellax.min.js') }}"></script>
+
+<script type="text/javascript" src="{{ asset('themes/EC/js/jquery.smartWizard.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/color-thief.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/lightbox/js/lg-video.min.js') }}"></script>
+<script src="{{ asset('themes/EC/js/plugin/datepick/jquery.plugin.js') }}"></script>
+<script src="{{ asset('themes/EC/js/plugin/datepick/jquery.datepick.js') }}"></script>
+<script src="{{ asset('themes/EC/js/plugin/mapbox-gl.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js') }}"></script>
 
