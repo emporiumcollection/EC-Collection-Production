@@ -1,7 +1,7 @@
 <?php 
-Route::get('terms-and-conditions', 'Frontend\FrontendPagesController@index');
-Route::get('imprint', 'Frontend\FrontendPagesController@index');
-Route::get('disclaimer', 'Frontend\FrontendPagesController@index');
-Route::get('careers', 'Frontend\FrontendPagesController@index');
-Route::get('privacy-policy', 'Frontend\FrontendPagesController@index');
+Route::get('terms-and-conditions', 'FrontEnd\FrontendPagesController@index');
+Route::get('imprint', 'FrontEnd\FrontendPagesController@index');
+Route::get('disclaimer', 'FrontEnd\FrontendPagesController@index');
+Route::get('careers', 'FrontEnd\FrontendPagesController@index');
+Route::get('privacy-policy', 'FrontEnd\FrontendPagesController@index');
 ?>

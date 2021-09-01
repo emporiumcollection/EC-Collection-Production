@@ -1,5 +1,5 @@
 <?php
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\FrontEnd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ContainerController;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;

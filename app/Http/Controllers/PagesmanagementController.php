@@ -262,7 +262,7 @@ class PagesmanagementController extends Controller {
 		{
 			
 			$slug = $row->alias;
-			$val .= "Route::get('{$slug}', 'Frontend\FrontendPagesController@index');\n";		
+			$val .= "Route::get('{$slug}', 'FrontEnd\FrontendPagesController@index');\n";		
 		}
 		$val .= 	"?>";
 		$filename = app_path().'/Http/pagemanagementroutes.php';

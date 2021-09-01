@@ -20,6 +20,11 @@ Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 /**
  * New frontend routes.
  */
+Route::get('landing_view', 'PhaseOne\HotelController@landing_view');
+Route::get('hotel_details', 'PhaseOne\HotelController@hotel_details');
+Route::get('get_inspired', 'PhaseOne\HotelController@get_inspired');
+Route::get('hotel_quick_info', 'PhaseOne\HotelController@getHotelQuickInfo');
+Route::get('hotel_gallery', 'PhaseOne\HotelController@getHotelGallery');
 Route::get('hotel/{title}', 'PhaseOne\HotelController@index');
 Route::get('mapsearchavailability', 'PhaseOne\MapBoxController@index');
 Route::get('book/reservation', 'PhaseOne\ReservationController@index');
@@ -102,17 +107,17 @@ Route::group(['middleware' => 'auth'], function()
 /********** Added By Ravinder *********/
 Route::get('generate/destination', 'GenerateController@destinationGenerate');
 Route::get('generate/hotel', 'GenerateController@hotelGenerate');
-Route::get('personalized-service', 'Frontend\PersonalizedServiceController@index');
-Route::post('personalized-service/save', 'Frontend\PersonalizedServiceController@save');
+Route::get('personalized-service', 'FrontEnd\PersonalizedServiceController@index');
+Route::post('personalized-service/save', 'FrontEnd\PersonalizedServiceController@save');
 
-Route::post('personalized-service/ajax_save', 'Frontend\PersonalizedServiceController@ajax_save');
+Route::post('personalized-service/ajax_save', 'FrontEnd\PersonalizedServiceController@ajax_save');
 
-Route::post('personalized-service/update', 'Frontend\PersonalizedServiceController@update');
-Route::get('personalized-service/my-services', 'Frontend\PersonalizedServiceController@list_my_services');
-Route::get('personalized-service/edit/{ps_id}', 'Frontend\PersonalizedServiceController@edit');
-Route::get('personalized-service/delete/{ps_id}', 'Frontend\PersonalizedServiceController@delete');
+Route::post('personalized-service/update', 'FrontEnd\PersonalizedServiceController@update');
+Route::get('personalized-service/my-services', 'FrontEnd\PersonalizedServiceController@list_my_services');
+Route::get('personalized-service/edit/{ps_id}', 'FrontEnd\PersonalizedServiceController@edit');
+Route::get('personalized-service/delete/{ps_id}', 'FrontEnd\PersonalizedServiceController@delete');
 Route::controller('/importdata','ImportdataController');
-Route::controller('destination','Frontend\DestinationController');
+Route::controller('destination','FrontEnd\DestinationController');
 /*************** End *************/
 Route::controller('home', 'HomeController');
 
@@ -170,19 +175,19 @@ Route::get('runInsta', 'instaApiController@runInsta');
 Route::get('bars', 'HomeController@barspage');
 Route::get('spas', 'HomeController@spaspage');
 
-Route::get('social-youtube', 'Frontend\FrontendPagesController@socialYoutube');
-Route::get('social-youtube/{cat}', 'Frontend\FrontendPagesController@socialYoutube');
-Route::get('social-youtube/{continent}/{cat}', 'Frontend\FrontendPagesController@socialYoutube');
-Route::get('social-youtube/{continent}/{region}/{cat}', 'Frontend\FrontendPagesController@socialYoutube');
-Route::get('social-youtube/{continent}/{region}/{country}/{cat}', 'Frontend\FrontendPagesController@socialYoutube');
+Route::get('social-youtube', 'FrontEnd\FrontendPagesController@socialYoutube');
+Route::get('social-youtube/{cat}', 'FrontEnd\FrontendPagesController@socialYoutube');
+Route::get('social-youtube/{continent}/{cat}', 'FrontEnd\FrontendPagesController@socialYoutube');
+Route::get('social-youtube/{continent}/{region}/{cat}', 'FrontEnd\FrontendPagesController@socialYoutube');
+Route::get('social-youtube/{continent}/{region}/{country}/{cat}', 'FrontEnd\FrontendPagesController@socialYoutube');
 
-Route::get('social-instagram', 'Frontend\FrontendPagesController@socialInstagram');
-Route::get('social-instagram/{cat}', 'Frontend\FrontendPagesController@socialInstagram');
-Route::get('social-instagram/{continent}/{cat}', 'Frontend\FrontendPagesController@socialInstagram');
-Route::get('social-instagram/{continent}/{region}/{cat}', 'Frontend\FrontendPagesController@socialInstagram');
-Route::get('social-instagram/{continent}/{region}/{country}/{cat}', 'Frontend\FrontendPagesController@socialInstagram');
+Route::get('social-instagram', 'FrontEnd\FrontendPagesController@socialInstagram');
+Route::get('social-instagram/{cat}', 'FrontEnd\FrontendPagesController@socialInstagram');
+Route::get('social-instagram/{continent}/{cat}', 'FrontEnd\FrontendPagesController@socialInstagram');
+Route::get('social-instagram/{continent}/{region}/{cat}', 'FrontEnd\FrontendPagesController@socialInstagram');
+Route::get('social-instagram/{continent}/{region}/{country}/{cat}', 'FrontEnd\FrontendPagesController@socialInstagram');
 
-Route::get('social-stream', 'Frontend\FrontendPagesController@socialStreamWall');
+Route::get('social-stream', 'FrontEnd\FrontendPagesController@socialStreamWall');
 
 Route::resource('sximoapi', 'SximoapiController');
 Route::group(['middleware' => 'auth'], function()
@@ -393,7 +398,7 @@ Route::group(['middleware' => 'auth'], function()
 
     Route::post('package_skip', 'CustomerController@skipPackage');
 
-    Route::post('hotel/subtractfee', 'Frontend\HotelMembershipController@subtractfee');
+    Route::post('hotel/subtractfee', 'FrontEnd\HotelMembershipController@subtractfee');
 
     Route::get('downloadrequirementsheet/{filename}', 'UserorderController@downloadrequirementsheet');
 
@@ -418,7 +423,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('user_arrival_departure_cancelations', 'PropertiesController@user_arrival_departure_cancelations');
 
     Route::get('reservations', 'PropertiesController@reservations');
-    Route::get('hotelpackages', 'Frontend\HotelMembershipController@packages');
+    Route::get('hotelpackages', 'FrontEnd\HotelMembershipController@packages');
     Route::get('qualityassurances', 'PropertiesController@qualityassurances');
 
     Route::post('salesoverview', 'PropertiesController@salesoverview');
@@ -449,9 +454,9 @@ Route::group(['middleware' => 'auth'], function()
 
     Route::post('getPropertyTypeRates', 'PropertiesController@getPropertyTypeRates');
 
-    Route::get('ajaxcalendar', 'Frontend\PropertyController@ajaxcalendar');
+    Route::get('ajaxcalendar', 'FrontEnd\PropertyController@ajaxcalendar');
 
-    Route::get('ajaxnextprevmonth', 'Frontend\PropertyController@ajaxnextprevmonth');
+    Route::get('ajaxnextprevmonth', 'FrontEnd\PropertyController@ajaxnextprevmonth');
    	Route::post('change_order_num', 'PackagesController@change_ordering');
 
     Route::post('pdproomavailability', 'HomeController@ajaxcheckavailability');
@@ -484,67 +489,64 @@ Route::group(['middleware' => 'auth'], function()
 
     Route::post('addtagtitle', 'TagmanagerController@addtagtitle');
 });
-Route::post('globalavailability', 'Frontend\PropertyController@propertyglobalavailability');
-Route::get('globalsearchavailability', 'Frontend\PropertyController@globalsearchavailability');
-Route::get('landing_view', 'Frontend\PropertyController@landing_view');
-Route::get('hotel_details', 'Frontend\PropertyController@hotel_details');
-Route::get('get_inspired', 'Frontend\PropertyController@get_inspired');
-Route::post('getpdppage', 'Frontend\PropertyController@getpdppage');
-Route::post('getdestinationpage', 'Frontend\PropertyController@getdestinationpage');
+Route::post('globalavailability', 'FrontEnd\PropertyController@propertyglobalavailability');
+Route::get('globalsearchavailability', 'FrontEnd\PropertyController@globalsearchavailability');
+Route::post('getpdppage', 'FrontEnd\PropertyController@getpdppage');
+Route::post('getdestinationpage', 'FrontEnd\PropertyController@getdestinationpage');
 
-Route::get('searchavailability', 'Frontend\PropertyController@propertySearchAvailability');
+Route::get('searchavailability', 'FrontEnd\PropertyController@propertySearchAvailability');
 
-Route::post('getyoutubechannel', 'Frontend\FrontendPagesController@getyoutubechannel');
-Route::post('getinstagramchannel', 'Frontend\FrontendPagesController@getinstagramchannel');
-Route::post('getDropdownBreadcrumb', 'Frontend\PropertyController@getDropdownBreadcrumb');
-Route::post('getSearchDropdownBreadcrumb', 'Frontend\PropertyController@getSearchDropdownBreadcrumb');
-Route::post('propcollection', 'Frontend\PropertyController@propcollection');
-Route::post('searchpropcollection', 'Frontend\PropertyController@searchpropcollection');
-Route::post('propertybycollection', 'Frontend\PropertyController@propertybycollection');
-Route::post('searchpropertybycollection', 'Frontend\PropertyController@searchpropertybycollection');
+Route::post('getyoutubechannel', 'FrontEnd\FrontendPagesController@getyoutubechannel');
+Route::post('getinstagramchannel', 'FrontEnd\FrontendPagesController@getinstagramchannel');
+Route::post('getDropdownBreadcrumb', 'FrontEnd\PropertyController@getDropdownBreadcrumb');
+Route::post('getSearchDropdownBreadcrumb', 'FrontEnd\PropertyController@getSearchDropdownBreadcrumb');
+Route::post('propcollection', 'FrontEnd\PropertyController@propcollection');
+Route::post('searchpropcollection', 'FrontEnd\PropertyController@searchpropcollection');
+Route::post('propertybycollection', 'FrontEnd\PropertyController@propertybycollection');
+Route::post('searchpropertybycollection', 'FrontEnd\PropertyController@searchpropertybycollection');
 
-Route::get('propertyimagesbypid', 'Frontend\PropertyController@propertyimagesbypid');
+Route::get('propertyimagesbypid', 'FrontEnd\PropertyController@propertyimagesbypid');
 
-Route::get('galleryimages', 'Frontend\PropertyController@galleryimages');
-Route::get('quickinfo', 'Frontend\PropertyController@quickinfo');
-Route::get('restaurantimagebyid', 'Frontend\PropertyController@restaurantimagebyid');
-Route::get('suiteimagebyid', 'Frontend\PropertyController@suiteimagebyid');
-Route::get('suitesbyid', 'Frontend\PropertyController@suitesbyid');
-Route::get('suitedetails', 'Frontend\PropertyController@suitedetails');
+Route::get('galleryimages', 'FrontEnd\PropertyController@galleryimages');
+Route::get('quickinfo', 'FrontEnd\PropertyController@quickinfo');
+Route::get('restaurantimagebyid', 'FrontEnd\PropertyController@restaurantimagebyid');
+Route::get('suiteimagebyid', 'FrontEnd\PropertyController@suiteimagebyid');
+Route::get('suitesbyid', 'FrontEnd\PropertyController@suitesbyid');
+Route::get('suitedetails', 'FrontEnd\PropertyController@suitedetails');
 
-Route::post('propertysearchlistbycollection', 'Frontend\PropertyController@propertysearchlistbycollection');
+Route::post('propertysearchlistbycollection', 'FrontEnd\PropertyController@propertysearchlistbycollection');
 
-Route::post('hotel_membership', 'Frontend\HotelMembershipController@hotelMembershipSignupSave');
+Route::post('hotel_membership', 'FrontEnd\HotelMembershipController@hotelMembershipSignupSave');
 
-Route::get('hotel/membership', 'Frontend\HotelMembershipController@membershipSignup');
-Route::post('hotel/membership', 'Frontend\HotelMembershipController@membershipSignupSave');
-Route::get('hotel/package', 'Frontend\HotelMembershipController@hotelPackage');
-Route::get('hotel/advertiser', 'Frontend\HotelMembershipController@advertisementPackage');
-Route::get('hotel/cart', 'Frontend\HotelMembershipController@hotelCart');
-Route::get('hotel/add_package_to_cart', 'Frontend\HotelMembershipController@addToCartAjax');
-Route::post('hotel/getAdvertPrice', 'Frontend\HotelMembershipController@getAdvertPriceAjax');
-Route::get('hotel/checkout', 'Frontend\HotelMembershipController@hotelCheckout');
-Route::get('thanks', 'Frontend\HotelMembershipController@getThanks');
-Route::get('removecartitem', 'Frontend\HotelMembershipController@getCartItemRemovedAjax');
-Route::get('removesuppliercartitem', 'Frontend\HotelMembershipController@getSupplierCartItemRemovedAjax');
-Route::get('advertiser/package', 'Frontend\AdvertisementController@advertisementPackage');
+Route::get('hotel/membership', 'FrontEnd\HotelMembershipController@membershipSignup');
+Route::post('hotel/membership', 'FrontEnd\HotelMembershipController@membershipSignupSave');
+Route::get('hotel/package', 'FrontEnd\HotelMembershipController@hotelPackage');
+Route::get('hotel/advertiser', 'FrontEnd\HotelMembershipController@advertisementPackage');
+Route::get('hotel/cart', 'FrontEnd\HotelMembershipController@hotelCart');
+Route::get('hotel/add_package_to_cart', 'FrontEnd\HotelMembershipController@addToCartAjax');
+Route::post('hotel/getAdvertPrice', 'FrontEnd\HotelMembershipController@getAdvertPriceAjax');
+Route::get('hotel/checkout', 'FrontEnd\HotelMembershipController@hotelCheckout');
+Route::get('thanks', 'FrontEnd\HotelMembershipController@getThanks');
+Route::get('removecartitem', 'FrontEnd\HotelMembershipController@getCartItemRemovedAjax');
+Route::get('removesuppliercartitem', 'FrontEnd\HotelMembershipController@getSupplierCartItemRemovedAjax');
+Route::get('advertiser/package', 'FrontEnd\AdvertisementController@advertisementPackage');
 
-Route::get('hotel/transferimages', 'Frontend\PropertyimagesmanagementController@propertyImageupload');
-Route::post('hotel/transferaddfile', 'Frontend\PropertyimagesmanagementController@transferaddfile');
-Route::post('hotel/transferaddfilessend', 'Frontend\PropertyimagesmanagementController@transferaddfilessend');
-Route::get('download-document/{code}', 'Frontend\PropertyimagesmanagementController@downloadFileCrm');
-Route::get('hotel/propertyimagereminder', 'Frontend\PropertyimagesmanagementController@propertyimageReminder');
+Route::get('hotel/transferimages', 'FrontEnd\PropertyimagesmanagementController@propertyImageupload');
+Route::post('hotel/transferaddfile', 'FrontEnd\PropertyimagesmanagementController@transferaddfile');
+Route::post('hotel/transferaddfilessend', 'FrontEnd\PropertyimagesmanagementController@transferaddfilessend');
+Route::get('download-document/{code}', 'FrontEnd\PropertyimagesmanagementController@downloadFileCrm');
+Route::get('hotel/propertyimagereminder', 'FrontEnd\PropertyimagesmanagementController@propertyimageReminder');
 
-Route::get('advertiser/cart', 'Frontend\AdvertisementController@advertiserCart');
-Route::get('advertiser/add_package_to_cart', 'Frontend\AdvertisementController@addToCartAjax');
-Route::post('advertiser/getAdvertPrice', 'Frontend\AdvertisementController@getAdvertPriceAjax');
-Route::get('advertiser/checkout', 'Frontend\AdvertisementController@advertiserCheckout');
+Route::get('advertiser/cart', 'FrontEnd\AdvertisementController@advertiserCart');
+Route::get('advertiser/add_package_to_cart', 'FrontEnd\AdvertisementController@addToCartAjax');
+Route::post('advertiser/getAdvertPrice', 'FrontEnd\AdvertisementController@getAdvertPriceAjax');
+Route::get('advertiser/checkout', 'FrontEnd\AdvertisementController@advertiserCheckout');
 
-Route::get('fetchadvertisementpackagedetails/{pckid}', 'Frontend\AdvertisementController@fetchadvertisementpackagedetails');
+Route::get('fetchadvertisementpackagedetails/{pckid}', 'FrontEnd\AdvertisementController@fetchadvertisementpackagedetails');
 
-Route::get('hotel/propertymanagement', 'Frontend\PropertymanagementController@propertyManagementList');
-Route::get('hotel/propertymanagement/property-detail/{propid}', 'Frontend\PropertymanagementController@propertyManagementDetail');
-Route::post('hotel/propertymanagement/savepropertydetail', 'Frontend\PropertymanagementController@propertyManagementSaveDetail');
+Route::get('hotel/propertymanagement', 'FrontEnd\PropertymanagementController@propertyManagementList');
+Route::get('hotel/propertymanagement/property-detail/{propid}', 'FrontEnd\PropertymanagementController@propertyManagementDetail');
+Route::post('hotel/propertymanagement/savepropertydetail', 'FrontEnd\PropertymanagementController@propertyManagementSaveDetail');
 
 Route::post('frontend_hotelpost', 'HomeController@addHotelInfoFrontend');
 Route::post('save_previous_page_image', 'HomeController@save_previous_page_image');
@@ -593,49 +595,49 @@ Route::post('get-article-by-title', 'HomeController@getArticleByTitle');
 
 // property search urls
 Route::get('getproperty/{id}', 'HomeController@getPropertyQuickView');
-Route::get('search-property-ajax', 'Frontend\PropertyController@getSearchPropertyAjax');
-Route::get('propertyimagebyid/{propid}', 'Frontend\PropertyController@getPropertyImageById');
-Route::get('container-image/{id}', 'Frontend\PropertyController@getContainerImageById');
-Route::get('propertysliderimagebyid/{propid}', 'Frontend\PropertyController@getPropertySliderImageById');
-Route::get('radtempimage/{propid}/{fileid}', 'Frontend\PropertyController@getPropertyImageByFileID');
-Route::post('ajax-rproperty-images/{propid}/{limit}', 'Frontend\PropertyController@getPropertyAjaxFilesByID');
-Route::get('{slug}', 'Frontend\PropertyController@getPropertyDetail');
-Route::get('{slug}/restaurant', 'Frontend\RestaurantFrontController@propertyRestrurant');
+Route::get('search-property-ajax', 'FrontEnd\PropertyController@getSearchPropertyAjax');
+Route::get('propertyimagebyid/{propid}', 'FrontEnd\PropertyController@getPropertyImageById');
+Route::get('container-image/{id}', 'FrontEnd\PropertyController@getContainerImageById');
+Route::get('propertysliderimagebyid/{propid}', 'FrontEnd\PropertyController@getPropertySliderImageById');
+Route::get('radtempimage/{propid}/{fileid}', 'FrontEnd\PropertyController@getPropertyImageByFileID');
+Route::post('ajax-rproperty-images/{propid}/{limit}', 'FrontEnd\PropertyController@getPropertyAjaxFilesByID');
+Route::get('{slug}', 'FrontEnd\PropertyController@getPropertyDetail');
+Route::get('{slug}/restaurant', 'FrontEnd\RestaurantFrontController@propertyRestrurant');
 
-Route::get('{slug}/events', 'Frontend\PropertyController@getEventsDetail');
+Route::get('{slug}/events', 'FrontEnd\PropertyController@getEventsDetail');
 
-Route::get('restaurants/{slug}', 'Frontend\RestaurantFrontController@restrurantDetail');
-Route::get('bars/{slug}', 'Frontend\RestaurantFrontController@barDetail');
-Route::get('spas/{slug}', 'Frontend\RestaurantFrontController@spaDetail');
-Route::get('reserve_resto_table_request', 'Frontend\RestaurantFrontController@reserveRestoTableRequest');
-Route::post('resturantspabar_by_typecity_ajax', 'Frontend\RestaurantFrontController@resturantSpaBarByTypeCityAjax');
-Route::post('resturantspabarSearch_ajax', 'Frontend\RestaurantFrontController@resturantSpaBarSearchAjax');
-Route::get('pdp/{slug}', 'Frontend\PropertyController@getPropertyDetail');
-Route::get('search', 'Frontend\PropertyController@propertySearch_latest');
+Route::get('restaurants/{slug}', 'FrontEnd\RestaurantFrontController@restrurantDetail');
+Route::get('bars/{slug}', 'FrontEnd\RestaurantFrontController@barDetail');
+Route::get('spas/{slug}', 'FrontEnd\RestaurantFrontController@spaDetail');
+Route::get('reserve_resto_table_request', 'FrontEnd\RestaurantFrontController@reserveRestoTableRequest');
+Route::post('resturantspabar_by_typecity_ajax', 'FrontEnd\RestaurantFrontController@resturantSpaBarByTypeCityAjax');
+Route::post('resturantspabarSearch_ajax', 'FrontEnd\RestaurantFrontController@resturantSpaBarSearchAjax');
+Route::get('pdp/{slug}', 'FrontEnd\PropertyController@getPropertyDetail');
+Route::get('search', 'FrontEnd\PropertyController@propertySearch_latest');
 
 Route::get('our-collection-pages/{slug}/{page}', 'HomeController@getPropertyDetail_pages');
 Route::get('book-property/{slug}', 'HomeController@bookProperty');
 
-Route::get('luxurytravel/{slug}/{type}', 'Frontend\PropertyController@getPropertyGridListByCollectionCategory');
+Route::get('luxurytravel/{slug}/{type}', 'FrontEnd\PropertyController@getPropertyGridListByCollectionCategory');
 
-Route::get('luxurytravel/{slug}', 'Frontend\PropertyController@getPropertyGridListByCategory');
+Route::get('luxurytravel/{slug}', 'FrontEnd\PropertyController@getPropertyGridListByCategory');
 Route::get('ourcollections/{id}', 'HomeController@getPropertyByCategoryQuickView');
 //Route::get('search', 'HomeController@SearchLuxuryExperience');
-Route::get('luxury_experience/{cat}', 'Frontend\PropertyController@propertySearch');
-//Route::get('luxury_experience/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
-Route::get('luxury_destinations/{cat}', 'Frontend\PropertyController@propertySearch');
-//Route::get('luxury_destinations/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
-Route::get('luxury_destinations/{continent}/{cat}', 'Frontend\PropertyController@propertySearch');
-//Route::get('luxury_destinations/{continent}/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
-Route::get('luxury_destinations/{continent}/{region}/{cat}', 'Frontend\PropertyController@propertySearch');
-//Route::get('luxury_destinations/{continent}/{region}/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
-Route::get('luxury_destinations/{continent}/{region}/{country}/{cat}', 'Frontend\PropertyController@propertySearch');
-//Route::get('luxury_destinations/{continent}/{region}/{country}/{cat}/{membershiptype}', 'Frontend\PropertyController@propertySearch');
+Route::get('luxury_experience/{cat}', 'FrontEnd\PropertyController@propertySearch');
+//Route::get('luxury_experience/{cat}/{membershiptype}', 'FrontEnd\PropertyController@propertySearch');
+Route::get('luxury_destinations/{cat}', 'FrontEnd\PropertyController@propertySearch');
+//Route::get('luxury_destinations/{cat}/{membershiptype}', 'FrontEnd\PropertyController@propertySearch');
+Route::get('luxury_destinations/{continent}/{cat}', 'FrontEnd\PropertyController@propertySearch');
+//Route::get('luxury_destinations/{continent}/{cat}/{membershiptype}', 'FrontEnd\PropertyController@propertySearch');
+Route::get('luxury_destinations/{continent}/{region}/{cat}', 'FrontEnd\PropertyController@propertySearch');
+//Route::get('luxury_destinations/{continent}/{region}/{cat}/{membershiptype}', 'FrontEnd\PropertyController@propertySearch');
+Route::get('luxury_destinations/{continent}/{region}/{country}/{cat}', 'FrontEnd\PropertyController@propertySearch');
+//Route::get('luxury_destinations/{continent}/{region}/{country}/{cat}/{membershiptype}', 'FrontEnd\PropertyController@propertySearch');
 
-Route::get('luxury_hotels/{cat}', 'Frontend\PropertyController@propertySearch');
+Route::get('luxury_hotels/{cat}', 'FrontEnd\PropertyController@propertySearch');
 Route::get('getpropertygallery/{id}/{type}', 'HomeController@getPropertyGalleryQuickView');
-Route::get('getpropertyroomimages/{id}', 'Frontend\PropertyController@getPropertyRoomimageGalleryView');
-Route::get('getpropertytypedetail/{id}', 'Frontend\PropertyController@getPropertyTypeQuickView');
+Route::get('getpropertyroomimages/{id}', 'FrontEnd\PropertyController@getPropertyRoomimageGalleryView');
+Route::get('getpropertytypedetail/{id}', 'FrontEnd\PropertyController@getPropertyTypeQuickView');
 Route::post('filter_category_destionation', 'HomeController@getPropertyByCategoryDestination');
 //Route::get('choosepackage/{id}', 'HomeController@index');
 
@@ -712,9 +714,9 @@ Route::filter('allowOrigin', function($route, $request, $response)
 
 Route::resource('sximoapi', 'SximoapiController');
 
-Route::controller('restaurantfront/{id}', 'Frontend\RestaurantFrontController');
-Route::controller('luxury-travel/{slug}', 'Frontend\PresentationController');
-Route::get('getEventPackages/{eventID}', 'Frontend\RestaurantFrontController@getEventPackages');
+Route::controller('restaurantfront/{id}', 'FrontEnd\RestaurantFrontController');
+Route::controller('luxury-travel/{slug}', 'FrontEnd\PresentationController');
+Route::get('getEventPackages/{eventID}', 'FrontEnd\RestaurantFrontController@getEventPackages');
 
 Route::get('traveller/bookings', 'BookingsController@travellerBookings');
 Route::get('traveller/bookings/show/{id}', 'BookingsController@showBooking');
@@ -734,29 +736,29 @@ Route::post('pressseletedfileszip', 'ContainerController@PressDownloadZipSelecte
 Route::post('pressseletedfileslowPdf', 'ContainerController@PressDownloadlowPdfSelected');
 Route::post('pressseletedfileshighPdf', 'ContainerController@PressDownloadhighPdfSelected');
 
-Route::get('hotel/get_cart', 'Frontend\HotelMembershipController@getwizardCart');
+Route::get('hotel/get_cart', 'FrontEnd\HotelMembershipController@getwizardCart');
 
-Route::post('hotel/update_cart', 'Frontend\HotelMembershipController@postwizardCart');
+Route::post('hotel/update_cart', 'FrontEnd\HotelMembershipController@postwizardCart');
 
-Route::get('hotel/get_checkout', 'Frontend\HotelMembershipController@getwizardCheckout');
+Route::get('hotel/get_checkout', 'FrontEnd\HotelMembershipController@getwizardCheckout');
 
-Route::get('hotel/add_package_to_cart_wizard', 'Frontend\HotelMembershipController@addToCartWizardAjax');
+Route::get('hotel/add_package_to_cart_wizard', 'FrontEnd\HotelMembershipController@addToCartWizardAjax');
 
-Route::get('hotel/thanks/{id}', 'Frontend\HotelMembershipController@hotelThanks');
+Route::get('hotel/thanks/{id}', 'FrontEnd\HotelMembershipController@hotelThanks');
 
-Route::get('supplier/get_cart', 'Frontend\HotelMembershipController@getsupplierwizardCart');
-Route::post('supplier/update_cart', 'Frontend\HotelMembershipController@postwizardCart');
-Route::get('supplier/get_checkout', 'Frontend\HotelMembershipController@getsupplierwizardCheckout');
-Route::get('supplier/add_package_to_cart_wizard', 'Frontend\HotelMembershipController@addToCartSupplierWizardAjax');
-Route::get('supplier/thanks/{id}', 'Frontend\HotelMembershipController@hotelThanks');
+Route::get('supplier/get_cart', 'FrontEnd\HotelMembershipController@getsupplierwizardCart');
+Route::post('supplier/update_cart', 'FrontEnd\HotelMembershipController@postwizardCart');
+Route::get('supplier/get_checkout', 'FrontEnd\HotelMembershipController@getsupplierwizardCheckout');
+Route::get('supplier/add_package_to_cart_wizard', 'FrontEnd\HotelMembershipController@addToCartSupplierWizardAjax');
+Route::get('supplier/thanks/{id}', 'FrontEnd\HotelMembershipController@hotelThanks');
 
 
-Route::get('traveller/add_package_to_cart_wizard', 'Frontend\HotelMembershipController@addToCartTravellerWizardAjax');
-Route::get('traveller/get_cart', 'Frontend\HotelMembershipController@getTravellerWizardCart');
+Route::get('traveller/add_package_to_cart_wizard', 'FrontEnd\HotelMembershipController@addToCartTravellerWizardAjax');
+Route::get('traveller/get_cart', 'FrontEnd\HotelMembershipController@getTravellerWizardCart');
 Route::post('traveller/free_membership', 'StripepaymentController@freeMembership');
 Route::get('traveller/thanks/{order_id}', 'StripepaymentController@thanks');
-//Route::get('traveller/get_checkout', 'Frontend\HotelMembershipController@getTravellerWizardCheckout');
-Route::post('traveller/get_checkout', 'Frontend\HotelMembershipController@getTravellerWizardCheckout');
+//Route::get('traveller/get_checkout', 'FrontEnd\HotelMembershipController@getTravellerWizardCheckout');
+Route::post('traveller/get_checkout', 'FrontEnd\HotelMembershipController@getTravellerWizardCheckout');
 Route::post('membershiptype/popup', 'HomeController@membershipPopup');
 Route::post('traveller/businessdetails', 'CustomerController@businessdetails');
 Route::post('traveller/persondetails', 'CustomerController@persondetails');
@@ -769,9 +771,9 @@ Route::get('traveller/checkcategoryavailability', 'BookingsController@checkcateg
 
 Route::get('traveller/get_daywise_price', 'HomeController@get_daywise_price');
 
-Route::get('{slug}/room-availability', 'Frontend\PropertyController@roomavailability');
+Route::get('{slug}/room-availability', 'FrontEnd\PropertyController@roomavailability');
 
-Route::post('topSearch', 'Frontend\PropertyController@topSearch');
+Route::post('topSearch', 'FrontEnd\PropertyController@topSearch');
 
 Route::post('price_on_request', 'HomeController@price_on_request');
 

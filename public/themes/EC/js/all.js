@@ -1,3 +1,4 @@
+var ajaxReq = 'ToCancelPrevReq';
 (function ($) {
 
   $.fn.niceSelect = function (method) {
@@ -472,11 +473,17 @@
 
   function globalSearchForAll(searcValue, sitename) {
     var _token = $('meta[name="csrf-token"]').attr('content');
-    $.ajax({
+    ajaxReq = $.ajax({
         url: BaseURL + '/destination/global-search',
         type: "get",
         dataType: "json",
         data: {'keyword':searcValue, 'sitename':sitename, '_token':_token},
+        beforeSend : function() {
+          console.log(ajaxReq);
+          if(ajaxReq != 'ToCancelPrevReq' && ajaxReq.readyState < 4) {
+              ajaxReq.abort();
+          }
+        },
         success: function (data){
 
             if(data.status=='success'){
@@ -2084,7 +2091,7 @@
     });
   });
 
-  $(document).on('click', '#suite_gallery-tab', function () {
+  $(document).on('click', '#suite_gallery-tab2', function () {
     var _type = $(this).attr('data-type');
     var _slug = $("#hid_propid").val();
 
