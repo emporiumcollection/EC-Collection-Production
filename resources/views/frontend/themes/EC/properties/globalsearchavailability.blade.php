@@ -1,3 +1,10 @@
+<?php
+
+  $mapsearch = URL::to("mapsearchavailability?" . Request::getQueryString());
+  $videourl = URL::to("social-youtube?" . Request::getQueryString());
+  $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
+
+?>
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -19,8 +26,11 @@
           <i class="ico ico-back"></i>
         </a>
         <div class="title-main">
-          <h2>New York<a href="#searchF" data-toggle="collapse"><i class="ico ico-reload reload-offset" title="Reset your search result" data-toggle="tooltip"></i></a>
+          <h2>{{$keyword}}<a href="#searchF" data-toggle="collapse"><i class="ico ico-reload reload-offset" title="Reset your search result" data-toggle="tooltip"></i></a>
           </h2>
+          <input type="hidden" name="activeDestination" value="{{$keyword}}" />
+          <input type="hidden" name="m_type" value="{{$m_type}}" />
+          <input type="hidden" name="hid_propid" value="" />
         </div>
 
       </div>
@@ -59,28 +69,23 @@
                     Experiences
                     <i class="fa fa-angle-down" aria-hidden="true"></i>
                   </a>
+                @if(!empty($experiences))
                   <div class="collapse @@suiteActive" id="experiences">
                     <ul class="nav flex-column nav-sidebar is-small">
-                      <li class="nav-item">
-                        <a class="nav-link nav-link-sub" href="#">Design Hotels</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link nav-link-sub" href="#">Boutique Hotels</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link nav-link-sub" href="#">Spa and Wellness Hotels</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link nav-link-sub" href="#">Cullinary Delights</a>
-                      </li>
+                    @foreach($experiences as $exp)
+                        <li class="nav-item">
+                          <a class="nav-link nav-link-sub experiences"  data-exp="{{$exp->category_name}}">{{ $exp->category_name }}</a>
+                        </li>
+                    @endforeach
                     </ul>
                   </div>
+                @endif
                 </li>
 
                 <li class="nav-item mt-3">
                   <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button"
                     aria-expanded="false" aria-controls="suite">
-                    Explore <span class="font-italic underline">New York</span>
+                    Explore <span class="font-italic underline">{{ $keyword }}</span>
                     <i class="fa fa-angle-down" aria-hidden="true"></i>
                   </a>
                   <div class="collapse @@suiteActive" id="suite">
@@ -89,13 +94,13 @@
                         <a class="nav-link nav-link-sub" href="restaurant.html">Restaurants & Bars</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link nav-link-sub" href="#">Video Channel</a>
+                        <a class="nav-link nav-link-sub" href="{{ $videourl }}">Video Channel</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link nav-link-sub" href="#">Get Social</a>
+                        <a class="nav-link nav-link-sub" href="{{ $instagramurl }}">Get Social</a>
                       </li>
                       <li class="nav-item">
-                        <a class="nav-link nav-link-sub" href="#">Map Search</a>
+                        <a class="nav-link nav-link-sub" href="{{ $mapsearch }}">Map Search</a>
                       </li>
                     </ul>
                   </div>
@@ -109,7 +114,7 @@
           <div class="main-page-banner">
             <div class="img-main-banner">
               <div>
-                <img src="https://emporium-voyage.com/uploads/slider_images/1522914513-27605415.jpg" class="img-fluid"
+                <img src="<?php echo $photos->results[0]->urls->regular; ?>" class="img-fluid"
                   alt="">
               </div>
               <div>
@@ -121,15 +126,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="#">Home</a>
               </li>
+              <?php foreach($path as $cid => $cat):?>
               <li class="nav-item">
-                <a class="nav-link" href="#">Oceania</a>
+                <a class="nav-link" href="#"><?php echo $cat ?></a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Asia</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active" href="#">The Americas</a>
-              </li>
+              <?php endforeach;?>          
             </ul>
             <div class="hotel-meta hotel-meta-banner">
               <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
@@ -157,20 +158,9 @@
             </div>
             <div class="main-banner-content">
               <div class="content-inner">
-                <h3 class="mb-4">Emporium Collection Austria</h3>
+                <h3 class="mb-4">{{ $keyword }}</h3>
                 <p>
-                  This German-speaking, Central European nation is known for its ethereal beauty. Its landscape is
-                  defined
-                  by lush meadows, icy glaciers, undulating woodland, forested foothills, river gorges and alpine vales.
-                  Luxury hotels Austria is the hub of winter sports in Europe, with tourists arriving from near and far
-                  to
-                  enjoy a vast array of activities such as skiing, skating, tobogganing and sledge riding. The country
-                  boasts one of the largest collections of fashionable ski resorts and luxury hotels Austria Europe. The
-                  skiing season lasts from December to March, but the best time to ski is in mid-January. During
-                  summers,
-                  tourists can avail a range of hiking tours of the magnificent Central Eastern Alps. Art and culture
-                  has
-                  long been a staple in Austria. Vienna
+                  <?php echo $location_description;?>
                 </p>
               </div>
             </div>

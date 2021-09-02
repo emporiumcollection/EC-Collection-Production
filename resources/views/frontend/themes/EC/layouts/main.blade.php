@@ -304,8 +304,8 @@ $(function() {
         changeRangeCallback: rangeChanged,
     });
 
-    var arriveDt = new Date();
-    var depDt = new Date();
+    var arriveDt = new Date('{{$arrive}}');
+    var depDt = new Date('{{$departure}}');
 
 
     var _day = '';
@@ -318,14 +318,14 @@ $(function() {
         _month = sp_arr[2];
         _day = sp_arr[1];
     }
-
+console.log(sp_arr);
     var newArrDt = new Date(_year, _month, _day);
 
     var _dday = '';
     var _dmonth = '';
     var _dyear = '';
     var sp_darr = depDt.toDateString().split('-');
-
+console.log(sp_darr);
     if(sp_darr.length > 2){
         _dyear = sp_darr[0];
         _dmonth = sp_darr[2];
@@ -338,7 +338,7 @@ $(function() {
     var defStartMonth = moment(newArrDt).format('MMM');
     var defEndDay = moment(newDepDt).format('DD');
     var defEndMonth = moment(newDepDt).format('MMM');
-    $(".cal-f .cal-date").html(defStartDay +' '+ defStartMonth+' - '+ defEndDay +' '+ defEndMonth);
+    //$(".cal-f .cal-date").html(defStartDay +' '+ defStartMonth+' - '+ defEndDay +' '+ defEndMonth);
 
     function rangeChanged(target,range){
         var startDay = moment(range.start).format('DD');

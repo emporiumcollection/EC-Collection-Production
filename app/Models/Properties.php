@@ -28,6 +28,11 @@ class properties extends Sximo  {
 	public static function queryGroup(){
 		return "  ";
 	}
+
+	public function images()
+    {
+        return $this->hasMany(PropertyImages::class, 'property_id');
+    }
 	
 
 }

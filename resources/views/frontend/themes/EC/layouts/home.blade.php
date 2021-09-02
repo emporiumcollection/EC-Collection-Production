@@ -165,9 +165,9 @@
     });
 
     picker.on('apply.daterangepicker', function (ev, picker) {
-      $('.onrange').html(picker.startDate.format('DD-MM-YYYY') + ' -> ' + picker.endDate.format('DD-MM-YYYY'));
-      $('input[name="arrive"]').val(picker.startDate.format('DD-MM-YYYY'));
-      $('input[name="departure"]').val(picker.endDate.format('DD-MM-YYYY'));
+      $('.onrange').html(picker.startDate.format('YYYY-MM-DD') + ' -> ' + picker.endDate.format('YYYY-MM-DD'));
+      $('input[name="arrive"]').val(picker.startDate.format('YYYY-MM-DD'));
+      $('input[name="departure"]').val(picker.endDate.format('YYYY-MM-DD'));
       $('.include-form').fadeIn("fast");
     });
     picker.data('daterangepicker').hide = function () { };

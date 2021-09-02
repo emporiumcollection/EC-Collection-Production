@@ -1,10 +1,3 @@
-<?php
-
-  $mapsearch = URL::to("mapsearchavailability?" . Request::getQueryString());
-  $videourl = URL::to("social-youtube?" . Request::getQueryString());
-  $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
-
-?>
 <header>
   <div class="top-header">
       <div class="top-header-inner">
@@ -22,18 +15,18 @@
               <a href="#cityList" class="menu-nav text-menu city-f" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="cityList">
                 <!-- <span class="label-city" style="background: green;"></span>  -->
-                <span data-toggle="tooltip" title="Change destination">New York</span>
+                <span data-toggle="tooltip" title="Change destination">{{$keyword}}</span>
               </a>
               <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false"
                 aria-controls="calcF">
-                <span class="cal-date" data-toggle="tooltip" title="Change availability">22 Jun - 23 Jun</span>
+                <span class="cal-date" data-toggle="tooltip" title="Change availability">{{ date("M d",strtotime($arrive)) }} - {{ date("M d",strtotime($departure)) }}</span>
               </a>
               <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
                 aria-controls="whoF">
                 <div class="filter-lst expand filter-guest filter-white">
                   <div class="input-group">
                     <div class="gust-dropdown">
-                      <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">2</span> Guest</div>
+                      <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ $total_guests }}</span> Guests</div>
                     </div>
                   </div>
                 </div>
@@ -471,14 +464,14 @@
               </a>
               <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="calcF">
-                <span class="cal-date">22 Jun - 23 Jun</span>
+                <span class="cal-date">{{ date("M d",strtotime($arrive)) }} - {{ date("M d",strtotime($departure)) }}</span>
               </a>
               <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="whoF">
                 <div class="filter-lst expand filter-guest filter-white">
                   <div class="input-group">
                     <div class="gust-dropdown">
-                      <div class="guest-option rto"><span class="guest-count">2</span> Guest</div>
+                      <div class="guest-option rto"><span class="guest-count">{{ $total_guests }}</span> Guest</div>
                     </div>
                   </div>
                 </div>

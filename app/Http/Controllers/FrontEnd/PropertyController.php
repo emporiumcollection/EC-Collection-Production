@@ -6,8 +6,14 @@ use App\Models\Container;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Models\properties;
+use App\Http\Traits\Property;
 use DB,Validator, Input, Redirect, CustomQuery, Image;
+use UnsplashSearch;
+
 class PropertyController extends Controller {
+    // Uses Property trait
+    use Property;
 
     var $pckages_id = array();
     var $pckages_ids = array();
@@ -2848,6 +2854,13 @@ class PropertyController extends Controller {
 
     function globalsearchavailability(Request $request) {
         $keyword = $request->input('s');
+        $this->data['path'] = $this->getLocationPath($keyword);
+        $this->data['location_description'] = $this->getLocationDescription($keyword);
+
+        $us = new UnsplashSearch();
+        $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+        $this->data['photos'] = json_decode($photos);
+
         $type = $request->input('type');
         $arrive = $request->input('arrive');
         $departure = $request->input('departure');
@@ -2909,7 +2922,7 @@ class PropertyController extends Controller {
         /** End **/
         $this->data['experiences'] = \DB::table('tb_categories')->where('category_approved', 1)->where('category_published', 1)->where('parent_category_id', 8)->get();
 
-        $objcat = \DB::table('tb_categories')->where('category_name', $keyword)->where('category_approved', 1)->where('category_published', 1)->first();
+        $objcat = \DB::table('tb_categories')->where('category_name', '=',$keyword)->where('category_approved', 1)->where('category_published', 1)->first();
         $exp = array();
         if(!empty($objcat)){
             $query = 'SELECT DISTINCT(category_id), tb_categories.category_name FROM property_categories_split_in_rows JOIN tb_categories ON tb_categories.id= property_categories_split_in_rows.category_id WHERE property_categories_split_in_rows.id IN (SELECT id FROM property_categories_split_in_rows WHERE category_id= '.$objcat->id.' AND property_status=1) AND tb_categories.category_approved=1 AND tb_categories.category_published=1 AND property_categories_split_in_rows.category_id<>'.$objcat->id.' AND property_categories_split_in_rows.category_id<>8 AND tb_categories.parent_category_id=8 ORDER BY property_categories_split_in_rows.category_id ASC';
@@ -2917,7 +2930,11 @@ class PropertyController extends Controller {
         }
         $this->data['experiences'] = $exp;
 
-        // print_r($this->data['experiences']); die;
+        //Get editor's choice properties
+        $editorsProperties = properties::with(['images'])
+        ->where('editor_choice_property', '=', 1)
+        ->get();
+        //print_r($editorsProperties->toArray());exit;
 
         $membershiptype = '';
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');

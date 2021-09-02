@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d5cf7688e56048c4d785d2fc762139af",
+    "content-hash": "3a150fbef1f2fdd8f3d85266b5c85b47",
     "packages": [
         {
             "name": "airbrake/phpbrake",
@@ -1235,16 +1235,16 @@
         },
         {
             "name": "laravel/socialite",
-            "version": "v2.0.21",
+            "version": "v2.0.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/socialite.git",
-                "reference": "c4e4337e5b70149fdbefbb95b2c9e93d0749c413"
+                "reference": "67154ff06a43169a2efa28d870344a3a61c36bee"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/socialite/zipball/c4e4337e5b70149fdbefbb95b2c9e93d0749c413",
-                "reference": "c4e4337e5b70149fdbefbb95b2c9e93d0749c413",
+                "url": "https://api.github.com/repos/laravel/socialite/zipball/67154ff06a43169a2efa28d870344a3a61c36bee",
+                "reference": "67154ff06a43169a2efa28d870344a3a61c36bee",
                 "shasum": ""
             },
             "require": {
@@ -1285,7 +1285,11 @@
                 "laravel",
                 "oauth"
             ],
-            "time": "2017-03-27T21:32:28+00:00"
+            "support": {
+                "issues": "https://github.com/laravel/socialite/issues",
+                "source": "https://github.com/laravel/socialite/tree/2.0"
+            },
+            "time": "2019-02-14T10:19:54+00:00"
         },
         {
             "name": "laravelcollective/html",
@@ -2322,6 +2326,59 @@
                 "shell"
             ],
             "time": "2016-03-09T05:03:14+00:00"
+        },
+        {
+            "name": "shweshi/laravel-unsplash-wrapper",
+            "version": "3.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/shweshi/Laravel-Unsplash-Wrapper.git",
+                "reference": "cf5af5c9141dcbcf6fd115f39d56d6eefe8d0089"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/shweshi/Laravel-Unsplash-Wrapper/zipball/cf5af5c9141dcbcf6fd115f39d56d6eefe8d0089",
+                "reference": "cf5af5c9141dcbcf6fd115f39d56d6eefe8d0089",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "~6.0",
+                "illuminate/support": "~5.1",
+                "php": "~5.6|~7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "shweshi\\LaravelUnsplashWrapper\\Providers\\UnsplashServiceProvider",
+                        "shweshi\\LaravelUnsplashWrapper\\Providers\\UnsplashUsersServiceProvider",
+                        "shweshi\\LaravelUnsplashWrapper\\Providers\\UnsplashPhotosServiceProvider",
+                        "shweshi\\LaravelUnsplashWrapper\\Providers\\UnsplashCollectionsServiceProvider",
+                        "shweshi\\LaravelUnsplashWrapper\\Providers\\UnsplashSearchServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "shweshi\\LaravelUnsplashWrapper\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Shashi Prakash Gautam",
+                    "email": "contactmespg@gmail.com"
+                }
+            ],
+            "description": "A Laravel wrapper for Unsplash",
+            "support": {
+                "issues": "https://github.com/shweshi/Laravel-Unsplash-Wrapper/issues",
+                "source": "https://github.com/shweshi/Laravel-Unsplash-Wrapper/tree/master"
+            },
+            "time": "2018-02-10T18:25:09+00:00"
         },
         {
             "name": "stripe/stripe-php",
@@ -4817,5 +4874,6 @@
     "platform": {
         "php": ">=5.5.9"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "2.0.0"
 }

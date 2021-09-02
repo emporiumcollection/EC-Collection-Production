@@ -472,50 +472,20 @@
 </form>
 
   <div class="owl-carousel owl-theme landing-slider ">
+<?php foreach($slider as $slide):?>    
     <div class="item">
-      <img src="images/ecd67d87075247.5dad757ad6705.jpg" alt="">
+      <img src="uploads/slider_images/<?php echo $slide->slider_img;?>" alt="">
       <div class="landing-slider-content">
-        <h2>Welcome to the Emporium-Voyage Collection</h2>
+        <h2><?php echo $slide->slider_title;?></h2>
         <p>
-          Emporium-Collection is a unique, memorable experience company that provides its High-net-worth members,
-          bespoke luxury travel management services via the “by invitation only members club”.
+          <?php echo $slide->slider_description;?>
         </p>
         <div class="action-button">
-          <a href="#" class="btn btn-outline-white btn-lg">Action Button</a>
+          <a href="<?php echo $slide->slider_link;?>" class="btn btn-outline-white btn-lg">Action Button</a>
         </div>
       </div>
     </div>
-    <div class="item">
-      <img src="images/c52c5d91609529.5e36922fbff23.jpg" alt="">
-      <div class="landing-slider-content">
-        <h2>Lorem ipsum dolor sit amet, consectetur adipisicing elit</h2>
-        <p>
-
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nam dignissimos nesciunt vitae cumque, perspiciatis,
-          facere praesentium tempore aut soluta doloribus vero, nulla debitis officiis eos et expedita eveniet earum
-          iure?
-
-        </p>
-        <div class="action-button">
-          <a href="#" class="btn btn-outline-white btn-lg">Action Button</a>
-        </div>
-
-      </div>
-    </div>
-    <div class="item">
-      <img src="images/60c5a787075247-1.5dad757ad76ab.jpg" alt="">
-      <div class="landing-slider-content">
-        <h2>Nam dignissimos nesciunt vitae cumque</h2>
-        <p>
-          Nam dignissimos nesciunt vitae cumque, perspiciatis, facere praesentium tempore aut soluta doloribus vero,
-          nulla debitis officiis eos et expedita eveniet earum iure?
-        </p>
-        <div class="action-button">
-          <a href="#" class="btn btn-outline-white btn-lg">Action Button</a>
-        </div>
-
-      </div>
-    </div>
+<?php endforeach;?>
   </div>
 
 @endsection
