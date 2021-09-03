@@ -14,10 +14,11 @@
                 <i class="ico ico-back"></i>
             </a>
             <h3 class="title-second title-line mb-0">
-                The Ludlow Hotel
+                <?php echo $location[0]['category_name']; ?>
             </h3>
         </div>
-        <ul class="nav nav-tab-main nav-pills nav-justified mb-2">
+        <!--Mahesh hide this based on Riaan's instruction 03/09/2021-->
+        <!--<ul class="nav nav-tab-main nav-pills nav-justified mb-2">
             <li class="nav-item">
                 <a class="nav-link active" href="#hotel_gallery" id="hotel_gallery-tab" data-toggle="tab" role="tab"
                     aria-controls="hotel_gallery" aria-selected="true">
@@ -48,9 +49,7 @@
                     Bars
                 </a>
             </li>
-
-
-        </ul>
+        </ul>-->
     </div>
 
     <div class="tab-content h-100">
@@ -60,50 +59,12 @@
                     <div class="row justify-content-center">
                         <div class="col-8">
                             <div class="grid-layout" id="gallery_hotel">
-                                <a href="images/29be6592342279.5e49609509d85.jpg"
-                                    data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
+                                <?php foreach($photos->results as $photo):?>
+                                <a href="<?php echo $photo->urls->regular; ?>"
+                                    data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item span-1">
+                                    <img src="<?php echo $photo->urls->regular; ?>" alt="">
                                 </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Adipisicing elit">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
+                                <?php endforeach;?>
                             </div>
                         </div>
                     </div>

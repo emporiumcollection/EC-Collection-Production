@@ -10,12 +10,14 @@ trait Property {
         $location = Categories::select(['id', 
             'parent_category_id', 
             'category_name', 
-            'category_description'])
+            'category_description',
+            'category_image'
+        ])
         ->where('category_name', '=', $keyword)
         ->get()
         ->toArray();
 
-        return $location[0]['category_description'];
+        return $location;
     }
 
     public function getLocationPath($keyword){
@@ -36,7 +38,7 @@ trait Property {
             $path[$catId] = $category[0]['category_name'];
         }
 
-        arsort($path);
+        $path = array_reverse($path);
         return $path;
 
     }

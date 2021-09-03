@@ -114,7 +114,7 @@
           <div class="main-page-banner">
             <div class="img-main-banner">
               <div>
-                <img src="<?php echo $photos->results[0]->urls->regular; ?>" class="img-fluid"
+                <img src="uploads/category_imgs/<?php echo $location[0]['category_image']; ?>" class="img-fluid"
                   alt="">
               </div>
               <div>
@@ -160,7 +160,7 @@
               <div class="content-inner">
                 <h3 class="mb-4">{{ $keyword }}</h3>
                 <p>
-                  <?php echo $location_description;?>
+                  <?php echo $location[0]['category_description'];?>
                 </p>
               </div>
             </div>

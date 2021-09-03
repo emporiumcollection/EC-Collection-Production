@@ -2855,7 +2855,7 @@ class PropertyController extends Controller {
     function globalsearchavailability(Request $request) {
         $keyword = $request->input('s');
         $this->data['path'] = $this->getLocationPath($keyword);
-        $this->data['location_description'] = $this->getLocationDescription($keyword);
+        $this->data['location'] = $this->getLocationDescription($keyword);
 
         $us = new UnsplashSearch();
         $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
@@ -2931,10 +2931,20 @@ class PropertyController extends Controller {
         $this->data['experiences'] = $exp;
 
         //Get editor's choice properties
-        $editorsProperties = properties::with(['images'])
+        $this->data['editorsProperties'] = properties::with(['container'])
+        ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->get();
-        //print_r($editorsProperties->toArray());exit;
+
+        $propertyImages = $this->data['editorsProperties'][0]->container->PropertyImages($this->data['editorsProperties'][0]->container->id);
+
+        //print_r($propertyImages);exit;
+
+        //Get editor's choice properties
+        $this->data['featureProperties'] = properties::with(['images'])
+        ->where('city', '=', $keyword)
+        ->where('feature_property', '=', 1)
+        ->get();
 
         $membershiptype = '';
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
