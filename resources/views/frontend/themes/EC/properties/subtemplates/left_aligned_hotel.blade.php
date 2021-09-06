@@ -1,3 +1,6 @@
+<script type="text/javascript">
+  properties[<?php echo $editorChoice->id;?>] = <?php echo json_encode($editorChoice);?>;
+</script>
 <div class="line-separate "></div>
 <div class="row">
   <div class="col-sm-8 mb-4">
@@ -19,7 +22,7 @@
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
           Reviews
         </a>
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">
           Quick info
         </a>
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
@@ -96,7 +99,7 @@
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
           Reviews
         </a>
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">
           Quick info
         </a>
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">

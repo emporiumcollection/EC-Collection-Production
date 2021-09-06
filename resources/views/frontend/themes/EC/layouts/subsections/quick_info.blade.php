@@ -15,7 +15,7 @@
             <a href="#" class="sidebar-back">
                 <i class="ico ico-back"></i>
             </a>
-            <h3 class="title-second title-line mb-0">
+            <h3 class="title-second title-line mb-0" data-place="property" data-replace="property_short_name">
                 The Ludlow Hotel
             </h3>
         </div>
@@ -30,52 +30,53 @@
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Address</h4>
-                            <i class="fa fa-map-marker" aria-hidden="true"></i> 35 east 76th st, New York
+                            <i class="fa fa-map-marker" aria-hidden="true"></i> <p data-place="property" data-replace="address">35 east 76th st, New York</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Internet</h4>
-                            <p class="mb-0"><b>Public areas :</b> Free</p>
-                            <p class="mb-0"><b>In room :</b> Free</p>
+                            <p class="mb-0"><b>Public areas :</b> <span  data-place="property" data-replace="internetpublic"></span></p>
+                            <p class="mb-0"><b>In room :</b> <span data-place="property" data-replace="internetroom"></span></p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Children policy</h4>
-                            <p class="mb-0">Children are welcome</p>
+                            <p class="mb-0" data-place="property" data-replace="children_policy">Children are welcome</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Check-in / Check-out</h4>
-                            <p class="mb-0"><b>Check-in :</b> 3 pm</p>
-                            <p class="mb-0"><b>Check-out :</b> noon</p>
+                            <p class="mb-0"><b>Check-in :</b> <span data-place="property" data-replace="checkin"></span></p>
+                            <p class="mb-0"><b>Check-out :</b> <span data-place="property" data-replace="checkout"></span></p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Transportation and transfer</h4>
-                            <p class="mb-0"><b>Transfer :</b> subject to supplement</p>
+                            <p class="mb-0"><b>Transfer :</b>  <span data-place="property" data-replace="transfer"></span></p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Smooking policy</h4>
-                            <p class="mb-0">Non smooking public spaces</p>
-                            <p class="mb-0"><b>Smooking rooms:</b> not available</p>
+                            <p class="mb-0" data-place="property" data-replace="smookingpolicy">Non smooking public spaces</p>
+                            <p class="mb-0"><b>Smooking rooms:</b> <span data-place="property" data-replace="smookingrooms"></span></p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Rooms</h4>
-                            <p class="mb-0">190 rooms and suites</p>
-                            <p class="mb-0"><b>In-room amenities :</b> iPod dock, flatscreen TV, in-room safe, minibar</p>
+                            <p class="mb-0"><span data-place="property" data-replace="numberofrooms"></span> rooms and suites</p>
+                            <p class="mb-0"><b>In-room amenities :</b> iPod dock, flatscreen TV, in-room safe, minibar [NEED SHOW DYNAMIC]</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Available services</h4>
+                            <p data-place="property" data-replace="availableservices"></p>
                             <p class="mb-0">Air conditioned hotel</p>
                             <p class="mb-0">Laundry service</p>
                             <p class="mb-0">Concirge service</p>
@@ -84,13 +85,13 @@
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Pets</h4>
-                            <p class="mb-0">Small dogs allowed</p>
+                            <p class="mb-0" data-place="property" data-replace="pets">Small dogs allowed</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Parking</h4>
-                            <p class="mb-0"><b>Car park / valet service :</b> 65 US$ per day</p>
+                            <p class="mb-0"><b>Car park / valet service :</b> <span class="mb-0" data-place="property" data-replace="carpark"> 65 US$ per day</span></p>
                         </div>
                     </div>
                 </div>

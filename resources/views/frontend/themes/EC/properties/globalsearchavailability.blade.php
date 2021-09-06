@@ -18,6 +18,17 @@
         cursor: pointer;
     }
 </style>
+<script type="text/javascript">
+  var properties = [];
+  function replacePropertyData(id){
+    var field = '';
+    $('[data-place="property"]').each(function() {
+        field = $(this).attr('data-replace');
+        //console.log(properties[id][field]);
+        $(this).html(properties[id][field]);
+    });
+  }
+</script>
 @section('content')
 <div class="content-em">
     <div class="container pt-5">
