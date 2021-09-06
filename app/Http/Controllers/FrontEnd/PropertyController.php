@@ -2936,15 +2936,19 @@ class PropertyController extends Controller {
         ->where('editor_choice_property', '=', 1)
         ->get();
 
-        $propertyImages = $this->data['editorsProperties'][0]->container->PropertyImages($this->data['editorsProperties'][0]->container->id);
+        $this->data['editorsPropertyImages'] = $this->data['editorsProperties'][0]->container->PropertyImages($this->data['editorsProperties'][0]->container->id);
 
-        //print_r($propertyImages);exit;
+        //print_r($this->data['editorsPropertyImages']);exit;
+        //propertyimagebyid/{propid}
+        //print_r($this->data['editorsProperties']->toArray());exit;
 
         //Get editor's choice properties
         $this->data['featureProperties'] = properties::with(['images'])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
         ->get();
+
+        $this->data['featuredPropertyImages'] = $this->data['featureProperties'][0]->container->PropertyImages($this->data['featureProperties'][0]->container->id);
 
         $membershiptype = '';
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
