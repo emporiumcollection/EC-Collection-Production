@@ -169,14 +169,14 @@
 <?php 
 foreach($editorsProperties as $editorChoice):
 ?>    
-    @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice', $editorChoice, 'propertyImages' => $editorsPropertyImages, 'block_title' => 'Editors choice hotel']);
+    @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice', $editorChoice, 'propertyImages' => $editorChoice->propertyImages, 'block_title' => 'Editors choice hotel']);
 <?php    
 endforeach;
 ?>
 <?php 
 foreach($featureProperties as $editorChoice):
 ?>    
-    @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice', $editorChoice, 'propertyImages' => $featuredPropertyImages, 'block_title' => 'Feature hotel']);
+    @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice', $editorChoice, 'propertyImages' => $editorChoice->propertyImages, 'block_title' => 'Feature hotel']);
 <?php    
 endforeach;
 ?>

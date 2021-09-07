@@ -2938,7 +2938,10 @@ class PropertyController extends Controller {
         ->get();
 
         if(!empty($this->data['editorsProperties']->toArray())){
-            $this->data['editorsPropertyImages'] = $this->data['editorsProperties'][0]->container->PropertyImages($this->data['editorsProperties'][0]->container->id);
+            foreach($this->data['editorsProperties'] as $k => $editorProperty){
+                $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
+            }
+            
             $this->formatPropertyRecords($this->data['editorsProperties']);
         }
 
@@ -2953,7 +2956,10 @@ class PropertyController extends Controller {
         ->get();
 
         if(!empty($this->data['featureProperties']->toArray())){
-            $this->data['featuredPropertyImages'] = $this->data['featureProperties'][0]->container->PropertyImages($this->data['featureProperties'][0]->container->id);
+            foreach($this->data['featureProperties'] as $k => $featureProperty){
+                $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+            }
+            
             $this->formatPropertyRecords($this->data['featureProperties']);
         }
 
