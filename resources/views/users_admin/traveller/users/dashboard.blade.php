@@ -485,18 +485,6 @@
 	<!--begin::Scrolltop-->
 
 	<script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
-	<!--begin::Global Theme Bundle(used by all pages)-->
-	<script src="../users/assets/plugins/global/plugins.bundle.js"></script>
-	<script src="../users/assets/plugins/custom/prismjs/prismjs.bundle.js"></script>
-	<script src="../users/assets/js/scripts.bundle.js"></script>
-	<!--end::Global Theme Bundle-->
-	<!--begin::Page Scripts(used by this page)-->
-	<script src="../users/assets/js/pages/crud/ktdatatable/child/data-local.js"></script>
-	<script src="../users/assets/js/pages/crud/forms/widgets/select2.js"></script>
-	<script src="../users/assets/plugins/custom/datatables/datatables.bundle.js"></script>
-	<script src="../users/assets/plugins/custom/slick/slick.min.js"></script>
-	<!-- <script src="../users/assets/js/pages/crud/forms/widgets/bootstrap-datepicker.js"></script> -->
-	<script src="../users/assets/js/custom.js"></script>
 	<script>
 		$('.dashboard-slider').slick({
 			slidesToShow: 1,

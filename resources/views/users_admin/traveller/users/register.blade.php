@@ -2,11 +2,14 @@
 <html lang="">
 
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="description" content="">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Emporium</title>
+    <script src="{{ asset('js/validation.js')}}"></script>
+    {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script> --}}
+    <meta charset="utf-8">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emporium</title>
 
   <!-- Disable tap highlight on IE -->
   <meta name="msapplication-tap-highlight" content="no">
@@ -25,7 +28,7 @@
                         <i class="ico ico-back"></i>
                     </a>
                 </div>
-                <div class="auth-container-inner wizard" style="margin-top: 50px;">
+                <div class="auth-container-inner wizard" style="margin-top: 70px;">
 
                     <div class="mb-5">
                         <img src="images/logo.svg" alt="">
@@ -45,7 +48,7 @@
                         </li>
                     </ul>
 
-                    <form method="post" action="users/registeration">
+                    <form method="post" action="/verify"  name="form" id="form">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="step1" role="tabpanel"
                                 aria-labelledby="step1-tab">
@@ -56,58 +59,91 @@
                                                 In</b></a></p>
                                 </div>
                                 <div class="form-group">
-                                    <label class="font-2 label-2">First name</label>
-                                    <select name="user_type" id="sel-user-type" class="form-control">
-                                        <option value="">I am:</option>
+                                    <select name="user_type" id="sel-user-type" class="form-control user_type">
+                                        <option value="-1">I am:</option>
                                         <option value="5">Luxury Hotel</option>
-                                        <option value="3">Luxury Traveler</option>
+                                        <option value="2">Luxury Traveler</option>
                                         <option value="7">Bespoke Advertiser</option>
                                         <option value="14">Supplier</option>
                                     </select>
+                                     <p style="color: red; display:none;" id="type_error"><strong>Please select User</strong></p>
+
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group" id="laxury">
+                                    <select id="laxury_traveller" name="membership_id" class="form-control">
+                                       {{--  @foreach($packages as $package) --}}
+                                       <option value="" selected>SELECT MEMBERSHIP</option>
+                                        <option value="38">LIFESTYLE MEMBERSHIP</option>
+                                        <option value="39">DEDICATED MEMBERSHIP</option>
+                                        <option value="40">BESPOKE MEMBERSHIP</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" id="lifestyle">
+                                    <a href="">View LIfestyle Membership Benefits</a>
+                                </div>
+                                
+                                <div class="form-group" id="dedicated">
+                                 <a href="">View Dedicated Membership benefits</a>
+                                </div>
+
+                                <div class="form-group" id="bespoke">
+                                    <a href=""> Bespoke Membership Benefits</a>                                               
+                                </div>
+                                <div>
+                                    <label class="font-2 label-2">First name</label>
+                                     <input type="text" name="first_name" id="first_name" class="form-control first" placeholder="First name">
+                                    <p style="color: red; display: none;" id="first-name-error"><strong>Please enter First name</strong></p>  
+                                    <p id="name_field"></p>  
+                                </div>
+                                <div class="form-group" style="padding-top: 10px;">
                                     <label class="font-2 label-2">Last name</label>
-                                    <input type="text" name="last_name" class="form-control" placeholder="Last name">
+                                    <input type="text" name="last_name" id="last_name" class="form-control last_name" placeholder="Last name">
+                                    <p style="color: red; display: none;" id="last-name-error"><strong>Please enter last name</strong></p>
                                 </div>
                                 <div class="form-group">
                                     <label class="font-2 label-2">Mobile</label>
                                     <div class="d-flex">
                                         <div class="col-c-code">
-                                            <input type="text"  class="form-control" placeholder="+49">
+                                            <input type="text" name="country_code" id="code" class="form-control" placeholder="+49">
                                         </div>
                                         <div class="m-nmbr">
-                                            <input class="form-control"  name="txtmobileNumber" id="txtmobileNumber" type="tel" >
-                                            <span id="valid-msg" class="hide">✓ Valid</span>
-                                            <span id="error-msg" class="hide">Invalid number</span>
+                                            <input class="form-control txtmobileNumber"  name="txtmobileNumber" id="txtmobileNumber" type="tel" >
+                                            <span id="valid-msg" class="hide" style="color: green;">✓ Valid</span>
+                                            <span id="error-msg" class="hide" style="color: red;">Invalid number</span>
                                         </div>
-                                    </div>
+                                    </div><p style="color: red; display: none;" id="mobile-error"><strong>Please enter Mobile Number</strong></p>
                                 </div>
                                 <div class="form-group">
                                     <label class="font-2 label-2">Email</label>
-                                    <input type="email" name="email" class="form-control" placeholder="Email Address">
+                                    <input type="text" name="email" id="email" class="form-control email" placeholder="Email Address">
+                                    <p style="color: red; display: none;" id="email-error"><strong>Please provide your email</strong></p>
                                 </div>
                                 <div class="form-group">
                                     <label class="font-2 label-2">Password</label>
-                                    <input type="password" name="password" class="form-control" placeholder="Enter Password">
+                                    <input type="password" name="password" id="password" class="form-control password" placeholder="Enter Password">
+                                    <p style="color: red; display: none;" id="Password_error"><strong>Plaease provide password</strong></p>
+                                    <p style="color: red; display: none;" id="Password_size"><strong>Password size must be 8</strong></p>
                                 </div>
                                 <div class="form-group">
                                     <label class="font-2 label-2">Security Questions</label>
-                                    <select name="question" class="form-control">
-                                        <option value="" selected="">Select Questions</option>
+                                    <select name="question" id="question" class="form-control question">
+                                        <option value="1" selected="">Select Questions</option>
                                     @foreach($questions as $question)
                                         <option class="form-control" value="{{ $question->id }}">{{ $question->question }}</option>
                                     @endforeach
                                     </select>
+                                    <p style="color: red; display:none;" id="qua_error"><strong>Please select Security Question</strong></p>
                                 </div>
                                 <div class="form-group">
                                     <label class="font-2 label-2">Answer</label>
-                                    <input type="text" name="answer" class="form-control" placeholder="Enter your answer">
+                                    <input type="text" name="answer" id="answer" class="form-control answer" placeholder="Enter your answer">
+                                     <p style="color: red; display:none;" id="ans_error"><strong>Please Enter Security answer</strong></p>
                                 </div>
                                 <div class="text-right mt-5">
-                                    <button type="button" class="btn btn-outline-dark px-5 next-step">Confirm</button>
+                                    <button type="button" id="nextButton" class="btn btn-outline-dark px-5 next-step">Confirm</button>
                                 </div>
                             </div>
-                            <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="step2-tab">
+                            <div class="tab-pane fade" id="step2" role="tabpanel" aria-labelledby="step2-tab" data-step="2">
                                 <div class="mt-5 mb-3">
                                     <h3 class="font-2">Credentials</h3>
                                     <p class="font-2">Already have an account : <a href="login.html"
@@ -313,7 +349,7 @@
                                 </div>
                                 <div class="form-group">
                                     <label class="font-2 label-2">Language Preference</label>
-                                    <select class="lang">
+                                    <select class="lang" name="language">
                                         <option value="english">English</option>
                                         <option value="deutsch">Deutsch</option>
                                     </select>
@@ -332,14 +368,15 @@
                                         type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
                                 </div>
                                 <div class="custom-control custom-checkbox">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck1">
+                                    <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1">
                                     <label class="custom-control-label" for="customCheck1">
                                         I agree to the Emporium-Collection Terms & Conditions and have read the Privacy
                                         Policy.
                                     </label>
+                                    <p style="color: red; display: none" id="term"><strong>Please select role</strong></p>
                                 </div>
                                 <div class="text-right mt-5">
-                                    <button type="button" class="btn btn-outline-dark px-5 next-step">Confirm</button>
+                                    <button type="button" class="btn btn-outline-dark px-5  clickconfirm">Confirm</button>
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="step3" role="tabpanel" aria-labelledby="step3-tab">
@@ -360,6 +397,7 @@
                                         <input type="text" name="code[]" class="form-control mr-1" maxlength="1">
                                         <input type="text" name="code[]" class="form-control mr-1" maxlength="1">
                                     </div>
+                                    <p style="color: red; display: none" id="onetimepass"><strong>Please Enter Your OTP</strong></p>
                                 </div>
 
                                 <div class="row mt-5">
@@ -367,7 +405,7 @@
                                         <a href="#" class="btn btn-outline-dark">Send new code</a>
                                     </div>
                                     <div class="col-6 text-right">
-                                        <button type="submit" class="btn btn-outline-dark px-5">Confirm</button>
+                                        <button type="submit" class="btn btn-outline-dark px-5 thirdwizard">Confirm</button>
                                     </div>
                                 </div>
                             </div>
@@ -380,8 +418,6 @@
     </div>
         </div>
     </div>
-
-    <!-- <script type="text/javascript" src="js/jquery.min.js"></script> -->
 <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js')}}"></script>
@@ -416,6 +452,68 @@
 <script type="text/javascript" src="{{ asset('js/all.js')}}"></script>
 <script src="https://www.emporium-voyage.com/sximo/assets/js/intlTelInput.js" type="text/javascript"></script>
     <script>
+        $(document).ready(function(){    
+            $("#lifestyle").hide();
+            $("#dedicated").hide();
+            $("#bespoke").hide();
+            $("#laxury_traveller").change(function(){
+                $("select option:selected").each(function(){
+                    if($(this).attr("value")=="38"){
+                        $("#dedicated").hide();
+                        $("#bespoke").hide();
+                        $("#lifestyle").show();                        
+                    }
+                    if($(this).attr("value")=="39"){
+                        $("#bespoke").hide();
+                        $("#lifestyle").hide();                        
+                        $("#dedicated").show();
+                    }
+                    if($(this).attr("value")=="40"){
+                        $("#lifestyle").hide();                        
+                        $("#dedicated").hide();
+                        $("#bespoke").show();
+                    }
+                });
+            }).change();
+            });
+
+            $(".first").focusin(function(){
+                $("#first-name-error").hide();
+            });
+            $(".user_type").focusin(function(){
+                $("#type-error").hide();    
+            });
+            $(".last_name").focusin(function(){
+                $("#last-name-error").hide();
+            });
+            $(".txtmobileNumber").focusin(function(){
+                $("#mobile-error").hide();
+            });
+            $(".password").focusin(function(){
+                $("#Password_error").hide();
+            });
+            $(".email").focusin(function(){
+                $("#email-error").hide();
+            });
+            $(".question").focusin(function(){
+                $("#qua_error").hide();
+            });
+            $(".answer").focusin(function(){
+                $("#ans_error").hide();
+            });
+
+        $(document).ready(function() {
+        $(".next-step").click(function (e) { 
+            $("input").focusout(function() { 
+                if($(this).val()=='') { 
+                    $(this).css('border', 'solid 2px red');
+                }
+                else {
+                    $(this).css('border', 'solid 2px green');     
+                }    
+            }) .trigger("focusout");
+        });
+        });  
         $(document).ready(function () {
             //Wizard
             $('a[data-toggle="tab"]').on('show.bs.tab', function (e) {
@@ -426,11 +524,42 @@
             });
 
             $(".next-step").click(function (e) {
-                var $active = $('.wizard .nav li a.active');
-                $active.closest('.nav-item').next().find('.nav-link').removeClass('disabled');
-                nextTab($active);
+                if (validate() == false) {
+                    var $active = $('.wizard .nav li a.active');
+                    $active.closest('.nav-item').next().find('.nav-link');
+                    nextTab($active);
+                }
+                if (validate() == true) {
+                    var $active = $('.wizard .nav li a.active');
+                    $active.closest('.nav-item').next().find('.nav-link').removeClass('disabled');
+                    nextTab($active);
+                }
             });
 
+            $(".clickconfirm").click(function (e) {
+                if (SecondWizardValidate() == false) {
+                    var $active = $('.wizard .nav li a.active');
+                    $active.closest('.nav-item').next().find('.nav-link');
+                    nextTab($active);
+                }
+                if (SecondWizardValidate() == true) {
+                    var $active = $('.wizard .nav li a.active');
+                    $active.closest('.nav-item').next().find('.nav-link').removeClass('disabled');
+                    nextTab($active);
+                }
+            });
+            $(".thirdwizard").click(function (e) {
+                if (ThirdWizardValidate() == false) {
+                    var $active = $('.wizard .nav li a.active');
+                    $active.closest('.nav-item').next().find('.nav-link');
+                    nextTab($active);
+                }
+                // if (ThirdWizardValidate() == true) {
+                //     var $active = $('.wizard .nav li a.active');
+                //     $active.closest('.nav-item').next().find('.nav-link').removeClass('disabled');
+                //     nextTab($active);
+                // }
+            });
 
             var telInput = $("#txtmobileNumber"),
                 errorMsg = $("#error-msg"),
@@ -468,7 +597,6 @@
 
             // on keyup / change flag: reset
             telInput.on("keyup change", reset);
-
         });
 
         function nextTab(elem) {
@@ -493,6 +621,39 @@
                 $(this).prev('.code-input input').focus();
             }
         });
+
+        $(document).on('click','.clickconfirm',function(e) {
+            var mobile_number = $("#txtmobileNumber").val();
+            var email = $("#email").val();
+            var password = $("#password").val();
+            var code = $("#code").val();
+            $.ajax({
+                type: "post",
+                url: "sendSMS",
+                data: { mobile_number :mobile_number ,
+                        email :email,
+                        code :code,
+                        password :password },
+                headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                        },
+                success: function(dataResult){
+                    console.log(dataResult);
+                }
+            });
+        });
+
+        $(document).ready(function(){
+            $("#laxury").hide();
+            $("#sel-user-type").change(function(){
+                $("select option:selected").each(function(){
+                    if($(this).attr("value")=="2"){
+                        $("#laxury").show();
+                    }
+                });
+            }).change();
+            });
+
     </script>
 </body>
     

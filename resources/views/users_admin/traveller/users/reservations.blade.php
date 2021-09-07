@@ -760,7 +760,6 @@
 			</div>
 			<!--end::Wrapper-->
 			<!--begin::Purchase-->
-
 			<!--end::Purchase-->
 		</div>
 		<!--end::Content-->

@@ -27,7 +27,7 @@ class CustomerController extends Controller {
     }
 
     public function getRegister(Request $request, $pid = null) {
-        // echo "<pre>";print_r($request->all());exit;
+
         if (CNF_REGIST == 'false') :
             if (\Auth::check()):
                 return Redirect::to('')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
@@ -39,8 +39,9 @@ class CustomerController extends Controller {
             $this->data['planId'] = $pid;
             $plan = \DB::table('tb_membership')->where('status', 1)->get();
             $questions = \DB::table('tb_security_questions')->get();
+            $packages = \DB::table('tb_packages')->get();
             $this->data['plans'] = $plan;
-            return view('users_admin.traveller.users.register',$this->data,compact('questions'));
+            return view('users_admin.traveller.users.register',$this->data,compact('questions','packages'));
         endif;
     }
 
@@ -1226,7 +1227,8 @@ return Redirect::to('customer/profile')->with('message', \SiteHelpers::alert('er
         $this->data['extra'] = $extra;
         //print_r($extra); die;
         $this->data['user'] = $user;
-        $this->data['company'] = \DB::table('tb_user_company_details')->where('user_id', $user->id)->first();
+         $this->data['company'] = \DB::table('tb_user_company_details')->where('user_id', $user->id)->first();
+         // echo "<pre>";print_r($this->data['company']);exit;
         
         //$this->data['contractdata']=$resultContract["rows"];
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));

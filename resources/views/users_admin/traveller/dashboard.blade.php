@@ -1,4 +1,4 @@
-<?php echo "<pre>"; print_r($preferences);exit; ?>
+
 @extends('users_admin.traveller.layout.app')
 @section('content')
               <div class="mt-15 reservation-widget">
@@ -37,7 +37,6 @@
                               </div>
                             </div>
                           </div>
-
                         </div>
                       </div>
                       <div class="card-body bg-grey">
@@ -225,7 +224,7 @@
                         </div>
 
                         <div class="preference-list mt-8">
-                          @foreach($data['preferences'] as $preference)
+                          @foreach($preferences as $preference)
                           <div class="d-flex align-items-center mb-10">
                             <!--begin::Bullet-->
                             <span

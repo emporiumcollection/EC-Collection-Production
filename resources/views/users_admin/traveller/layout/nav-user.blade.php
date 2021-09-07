@@ -114,12 +114,22 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <form action="" method="post">
+            <form action="/users/CardDetail" method="post">
                 <div class="modal-body">
                     <div class="mb-4">
                         <img src="{{ asset('images/credit-cards-768x178.png')}}" class="img-fluid" alt="">
                     </div>
-
+                     <div class="form-group">
+                        <label> Select Card
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control" name="select_card">
+                            <option value="1">Mastercard</option>
+                            <option value="2">Visa</option>
+                            <option value="3">American-express</option>
+                            <option value="4">Discover</option>
+                        </select>
+                    </div>
                     <div class="form-group">
                         <label> Card Type
                             <span class="text-danger">*</span>

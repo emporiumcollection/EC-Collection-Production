@@ -1,3 +1,4 @@
+
 @extends('users_admin.traveller.layout.app')
 @section('content')
                             <div class="mt-15">
@@ -12,137 +13,41 @@
                                     <div class="card-body px-0">
                                        
                                         <div class="card-added">
+                                            @foreach($card_detail as $detail )
                                             <div class="d-flex align-items-center list-divider">
+                                                @if($detail->select_card == 1)
                                                 <div class="ico-inline mr-5">
                                                     <i class="ico-payment mastercard"></i>
                                                 </div>
-                                                <div class="d-flex flex-column flex-grow-1">
-                                                    <div
-                                                        class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                                                        MasterCard ••••8928 <span class="default-set">default</span>
-                                                    </div>
-                                                    <span class="text-muted font-weight-bold">Expiration: 09/2025</span>
-                                                </div>
-                                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
-                                                    title="" data-placement="left" data-original-title="Quick actions">
-                                                    <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="ki ki-bold-more-hor"></i>
-                                                    </a>
-                                                    <div
-                                                        class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
-                                                        <ul class="navi navi-hover">
-                                                            <li class="navi-item">
-                                                                <a href="#" class="navi-link">
-                                                                    <span class="navi-text">
-                                                                        Set Default
-                                                                    </span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="navi-item">
-                                                                <a href="#" class="navi-link">
-                                                                    <span class="navi-text">
-                                                                        Remove
-                                                                    </span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <!--end::Navigation-->
-                                                    </div>
-                                                </div>
-                                                <!--end::Dropdown-->
-                                            </div>
-                                            <div class="d-flex align-items-center list-divider">
+                                                @endif
+
+                                                @if($detail->select_card == 2)
                                                 <div class="ico-inline mr-5">
                                                     <i class="ico-payment visa"></i>
                                                 </div>
-                                                <div class="d-flex flex-column flex-grow-1">
-                                                    <div
-                                                        class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                                                        Visa ••••1232 </div>
-                                                    <span class="text-muted font-weight-bold">Expiration: 02/2024</span>
-                                                </div>
-                                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
-                                                    title="" data-placement="left" data-original-title="Quick actions">
-                                                    <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="ki ki-bold-more-hor"></i>
-                                                    </a>
-                                                    <div
-                                                        class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
-                                                        <ul class="navi navi-hover">
-                                                            <li class="navi-item">
-                                                                <a href="#" class="navi-link">
-                                                                    <span class="navi-text">
-                                                                        Set Default
-                                                                    </span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="navi-item">
-                                                                <a href="#" class="navi-link">
-                                                                    <span class="navi-text">
-                                                                        Remove
-                                                                    </span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <!--end::Navigation-->
-                                                    </div>
-                                                </div>
-                                                <!--end::Dropdown-->
-                                            </div>
-                                            <div class="d-flex align-items-center list-divider">
+                                                @endif
+
+                                                @if($detail->select_card == 3)
                                                 <div class="ico-inline mr-5">
-                                                    <i class="ico-payment american-express"></i>
+                                                     <i class="ico-payment american-express"></i>
                                                 </div>
-                                                <div class="d-flex flex-column flex-grow-1">
-                                                    <div
-                                                        class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                                                        American Express ••••3251 </div>
-                                                    <span class="text-muted font-weight-bold">Expiration: 10/2028</span>
-                                                </div>
-                                                <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
-                                                    title="" data-placement="left" data-original-title="Quick actions">
-                                                    <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
-                                                        data-toggle="dropdown" aria-haspopup="true"
-                                                        aria-expanded="false">
-                                                        <i class="ki ki-bold-more-hor"></i>
-                                                    </a>
-                                                    <div
-                                                        class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
-                                                        <ul class="navi navi-hover">
-                                                            <li class="navi-item">
-                                                                <a href="#" class="navi-link">
-                                                                    <span class="navi-text">
-                                                                        Set Default
-                                                                    </span>
-                                                                </a>
-                                                            </li>
-                                                            <li class="navi-item">
-                                                                <a href="#" class="navi-link">
-                                                                    <span class="navi-text">
-                                                                        Remove
-                                                                    </span>
-                                                                </a>
-                                                            </li>
-                                                        </ul>
-                                                        <!--end::Navigation-->
-                                                    </div>
-                                                </div>
-                                                <!--end::Dropdown-->
-                                            </div>
-                                            <div class="d-flex align-items-center list-divider">
+                                                @endif
+
+                                                @if($detail->select_card == 4)
                                                 <div class="ico-inline mr-5">
                                                     <i class="ico-payment discover"></i>
                                                 </div>
+                                                @endif
+
                                                 <div class="d-flex flex-column flex-grow-1">
                                                     <div
                                                         class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                                                        Discover Network ••••1415 </div>
-                                                    <span class="text-muted font-weight-bold">Expiration: 06/2026</span>
+                                                        MasterCard {{ str_pad(substr($detail->card_number, -4), strlen($detail->card_number), '*', STR_PAD_LEFT) }} <span class="default-set">default</span>
+                                                    </div>
+                                                    <span class="text-muted font-weight-bold">Expiration:
+                                                        {{ $detail->expires_on }}</span>
                                                 </div>
+                                               
                                                 <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
                                                     title="" data-placement="left" data-original-title="Quick actions">
                                                     <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
@@ -151,7 +56,7 @@
                                                         <i class="ki ki-bold-more-hor"></i>
                                                     </a>
                                                     <div
-                                                        class="dropdown-menu p-0 m-0 dropdown-menu dropdown-menu-right">
+                                                        class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
                                                         <ul class="navi navi-hover">
                                                             <li class="navi-item">
                                                                 <a href="#" class="navi-link">
@@ -161,7 +66,7 @@
                                                                 </a>
                                                             </li>
                                                             <li class="navi-item">
-                                                                <a href="#" class="navi-link">
+                                                                <a href="/users/CardDetail/{{$detail->id}}" class="navi-link">
                                                                     <span class="navi-text">
                                                                         Remove
                                                                     </span>
@@ -173,6 +78,8 @@
                                                 </div>
                                                 <!--end::Dropdown-->
                                             </div>
+                                             @endforeach
+
                                         </div>
                                         <a href="#addPayment" class="btn btn-primary mt-10" data-toggle="modal">Add
                                             payment method</a>
@@ -223,7 +130,7 @@
                                                         <div id="addGiftcard" class="collapse"
                                                             data-parent="#giftCard">
                                                             <div class="card-body px-0">
-                                                                <form action="#">
+                                                                <form action="">
                                                                     <div class="form-group">
                                                                         <label>Enter gift card number</label>
                                                                         <input type="text" class="form-control">
@@ -242,7 +149,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div>  
                                 </div>
                             </div>
                             <div class="mt-15">

@@ -144,7 +144,7 @@
 									</ul>
 									<!--end::Navigation-->
 								</div>
-							</div>
+							</idv>
 						</div>
 					</form>
 					<!--end::Form-->

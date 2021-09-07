@@ -584,6 +584,7 @@ class UserController extends Controller {
     }
     
     public function postSaveprofile(Request $request) { 
+        // echo "<pre>";print_r($request);exit;
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -1494,11 +1495,11 @@ class UserController extends Controller {
                 $edata['email'] = trim($request->input('email'));
                 
                 $emlData['email'] = trim($request->input('email'));
-                $emlData['subject'] = 'Companion Add';
-                
-                
+                $emlData['subject'] = 'Companion Add';                
                 $etemp = 'companion';
                 // echo view('user.emails.' . $etemp, $edata); die;
+
+
                 \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
                     $message->from($emlData['frmemail'], CNF_APPNAME);
         
@@ -1635,24 +1636,16 @@ class UserController extends Controller {
                 $edata['first_name'] = $request->input('first_name');
                 $edata['last_name'] = $request->input('last_name');
                 $emlData['email'] = $request->input('email');
-                $emlData['subject'] = 'Invitation send by '.$request->input('email');
-                
+                $emlData['subject'] = 'Invitation send by '.$request->input('email');                
                 $edata['byfirstname'] = $user->first_name;
                 $edata['bylastname'] = $user->last_name;
-                $edata['byemail'] = $user->email;
-                
-                    
+                $edata['byemail'] = $user->email;                                    
                 $edata['tofirstname'] = $request->input('first_name');
                 $edata['tolastname'] = $request->input('last_name');
                 $edata['todate'] = $today;
                 $expiry_date = date("Y-m-d", strtotime("+30 day", strtotime($today)));
                 $edata['todays'] = 30;
                 $edata['referral_code'] = $referral_code; 
-                
-                //if (\Session::get('newlang') == 'English') {
-                //    $etemp = 'auth.reminder_eng';
-                //}
-                // print_r($emlData['frmemail']);exit;
                 $etemp = 'invite';
                 //echo view('user.emails.invites.' . $etemp, $edata); die;
                 try{ 
@@ -1672,11 +1665,59 @@ class UserController extends Controller {
         }        
         
     }
+
+    public function userCardDetail(Request $request){
+
+        $user = User::find(\Session::get('uid'));
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'card_number' => 'required',
+            'security_code' => 'required',
+            'postal_code' => 'required',
+            'country' => 'required'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+         if ($validator->passes()) {
+
+            $user = User::find(\Session::get('uid'));
+            $card_data['user_id'] = $user->id;
+            $card_data['select_card'] = $request->input('select_card');
+            $card_data['card_type'] = $request->input('card_type');
+            $card_data['card_number'] = $request->card_number;
+            $card_data['expires_on'] = $request->input('expire');
+            $card_data['security_code'] = $request->input('security_code');
+            $card_data['first_name'] =$request->input('first_name');
+            $card_data['last_name'] =$request->input('last_name');
+            $card_data['postal_code'] = $request->input('postal_code');
+            $card_data['country'] = $request->input('country');
+            $card_data['created_at'] = date("Y-m-d");
+            $card_data['updated_at'] = date("Y-m-d");
+
+            \DB::table('tb_cards')->insert($card_data);
+                return Redirect::to('users/setting')->with('message', 'Invites send successfully')->with('msgstatus', 'success');
+            } else {
+                return Redirect::to('')->withErrors($validator)->withInput();
+            }        
+    }
+
+    public function deleteCard($id){
+
+        $deleted = \DB::table('tb_cards')
+            ->where('id','=',$id)
+            ->delete();
+        return Redirect::to('/users/setting');
+    }
+
     public function getSettings(){
         $user = User::find(\Session::get('uid'));
         // $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
+        $card_detail = \DB::table('tb_cards')->get();
         $file_name = 'users_admin.traveller.users.account-setting';      
-        return view($file_name);
+        return view($file_name,compact('card_detail'));
     }
     public function getCompany(){
         $user = User::find(\Session::get('uid'));

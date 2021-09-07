@@ -1,5 +1,6 @@
 <?php
-
+// use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\TwilioSMSController;	
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,9 +11,9 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-
-
+Route::get('/logout', 'Auth\AuthController@logout');
+Route::post('/sendSMS', 'Auth\AuthController@create');
+Route::post('/verify', 'Auth\AuthController@verify');
 
 Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
@@ -29,7 +30,10 @@ Route::get('/users/companion', 'UserController@getCompanion');
 
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
-Route::post('/users/registeration', 'UserController@postSavetravellerprofile');
+Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
+// Route::post('/users/savetravel', 'UserController@postSaveprofile');
+Route::post('/users/CardDetail', 'UserController@userCardDetail');
+Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');
 Route::post('/users/invite', 'UserController@postInvite');
 Route::get('/users/reservation', 'UserController@getReservation');
 Route::post('/users/password', 'UserController@postSavepassword');
