@@ -1,11 +1,12 @@
 <script type="text/javascript">
   properties[<?php echo $editorChoice->id;?>] = <?php echo json_encode($editorChoice);?>;
+  properties[<?php echo $editorChoice->id;?>]['images'] = <?php echo json_encode($propertyImages);?>;
 </script>
 <div class="line-separate "></div>
 <div class="row">
   <div class="col-sm-8 mb-4">
     <div class="hotel-page-list suite-ontouch no-opacity index-2">
-      <img src="images/43182548507-84265125335.jpg" class="img-fluid" alt="">
+      <img src="uploads/container_user_files/locations/<?php echo $editorChoice['container']['name']?>/property-images/<?php echo $propertyImages[0]['file_name']; ?>" class="img-fluid" alt="">
       <div class="my-dropdown">
         <div class="btn-group dropleft">
           <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -18,7 +19,7 @@
           </div>
         </div>
       </div>
-      <div class="hotel-meta full-width">
+      <!--<div class="hotel-meta full-width">
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
           Reviews
         </a>
@@ -44,7 +45,7 @@
             </div>
           </div>
         </div>
-      </div>
+      </div>-->
       <div class="hotel-meta-mobile">
         <a href="detail-page.html" class="btn rounded-0">
           Suite Info
@@ -74,14 +75,18 @@
   <div class="col-sm-8 mb-4">
     <div class="img-offset hotel-page-list suite-ontouch off-set-123">
       <div class="img-offset-slide offsets---190">
-        <?php 
+        <?php
+        $imageNum = 0; 
         foreach($propertyImages as $editorImage):?>
         <div>
           <a href="suite.html">
             <img src="uploads/container_user_files/locations/<?php echo $editorChoice['container']['name']?>/property-images/<?php echo $editorImage['file_name']; ?>" class="img-fluid" alt="">
           </a>
         </div>
-        <?php endforeach;?>
+        <?php 
+        $imageNum++;
+        if($imageNum>3) break;
+        endforeach;?>
       </div>
       <div class="my-dropdown">
         <div class="btn-group dropleft">
@@ -102,7 +107,7 @@
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">
           Quick info
         </a>
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">
           Gallery
         </a>
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">

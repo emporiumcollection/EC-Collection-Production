@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Models\properties;
 use App\Http\Traits\Property;
+use App\Models\amenities;
 use DB,Validator, Input, Redirect, CustomQuery, Image;
 use UnsplashSearch;
 
@@ -2938,6 +2939,7 @@ class PropertyController extends Controller {
 
         if(!empty($this->data['editorsProperties']->toArray())){
             $this->data['editorsPropertyImages'] = $this->data['editorsProperties'][0]->container->PropertyImages($this->data['editorsProperties'][0]->container->id);
+            $this->formatPropertyRecords($this->data['editorsProperties']);
         }
 
         //print_r($this->data['editorsPropertyImages']);exit;
@@ -2952,6 +2954,7 @@ class PropertyController extends Controller {
 
         if(!empty($this->data['featureProperties']->toArray())){
             $this->data['featuredPropertyImages'] = $this->data['featureProperties'][0]->container->PropertyImages($this->data['featureProperties'][0]->container->id);
+            $this->formatPropertyRecords($this->data['featureProperties']);
         }
 
         $membershiptype = '';
@@ -7136,5 +7139,29 @@ class PropertyController extends Controller {
             $result = \DB::select($query);
         }
         print_r($result);
+    }
+
+    private function formatPropertyRecords(&$properties){
+        $room = [];
+        $all = [];
+        foreach($properties as $k => $property){
+            $roomamenities = amenities::whereIn('id', explode(',', $property->roomamenities))
+            ->get()->toArray();
+            if(!empty($roomamenities)){
+                foreach($roomamenities as $amenity){
+                    $room[] = $amenity['amenity_title'];
+                }
+            }
+            $properties[$k]->roomamenities = implode(',', $room);
+
+            $allamenities = amenities::whereIn('id', explode(',', $property->assign_amenities))
+            ->get()->toArray();
+            if(!empty($allamenities)){
+                foreach($allamenities as $amenity){
+                    $all[] = $amenity['amenity_title'];
+                }
+            }
+            $properties[$k]->assign_amenities = implode(',', $all);
+        }
     }
 }

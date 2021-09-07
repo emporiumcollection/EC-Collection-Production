@@ -70,7 +70,7 @@
                         <div class="qv-list">
                             <h4>Rooms</h4>
                             <p class="mb-0"><span data-place="property" data-replace="numberofrooms"></span> rooms and suites</p>
-                            <p class="mb-0"><b>In-room amenities :</b> iPod dock, flatscreen TV, in-room safe, minibar [NEED SHOW DYNAMIC]</p>
+                            <p class="mb-0"><b>In-room amenities :</b> <span data-place="property" data-replace="roomamenities"></span></p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
@@ -97,28 +97,7 @@
                 </div>
                 <h4 class="mb-4">Amenities</h4>
                 <div class="row mb-5">
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <p class="mb-0">Pool</p>
-                        <p class="mb-0">Wlan</p>
-                        <p class="mb-0">Smart-TV</p>
-                        <p class="mb-0">Koffeemaschine</p>
-                        <p class="mb-0">Laundry service</p>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <p class="mb-0">Pool</p>
-                        <p class="mb-0">Wlan</p>
-                        <p class="mb-0">Smart-TV</p>
-                        <p class="mb-0">Koffeemaschine</p>
-                        <p class="mb-0">Laundry service</p>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
-                        <p class="mb-0">Pool</p>
-                        <p class="mb-0">Wlan</p>
-                        <p class="mb-0">Smart-TV</p>
-                        <p class="mb-0">Koffeemaschine</p>
-                        <p class="mb-0">Laundry service</p>
-                    </div>
-                    <div class="col-md-3 col-sm-6 mb-4">
+                    <div class="col-md-12 col-sm-12 mb-12" data-place="property-multi-value" data-replace="assign_amenities">
                         <p class="mb-0">Pool</p>
                         <p class="mb-0">Wlan</p>
                         <p class="mb-0">Smart-TV</p>

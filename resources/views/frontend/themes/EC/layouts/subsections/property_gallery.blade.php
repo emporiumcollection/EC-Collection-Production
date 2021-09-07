@@ -1,4 +1,4 @@
-<div class="sidebar-main pt-4 " id="gallery">
+<div class="sidebar-main pt-4 " id="property-gallery">
     <a href="#" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
             xmlns="http://www.w3.org/2000/svg">
@@ -13,43 +13,9 @@
             <a href="#" class="sidebar-back">
                 <i class="ico ico-back"></i>
             </a>
-            <h3 class="title-second title-line mb-0">
-                <?php echo $location[0]['category_name']; ?>
+            <h3 class="title-second title-line mb-0" data-place="property" data-replace="property_short_name">
             </h3>
         </div>
-        <!--Mahesh hide this based on Riaan's instruction 03/09/2021-->
-        <!--<ul class="nav nav-tab-main nav-pills nav-justified mb-2">
-            <li class="nav-item">
-                <a class="nav-link active" href="#hotel_gallery" id="hotel_gallery-tab" data-toggle="tab" role="tab"
-                    aria-controls="hotel_gallery" aria-selected="true">
-                    Hotel
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#suite_gallery" id="suite_gallery-tab" data-toggle="tab" role="tab"
-                    aria-controls="suite_gallery" aria-selected="false">
-                    Suites
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#experience_gallery" id="experience_gallery-tab" data-toggle="tab" role="tab"
-                    aria-controls="experience_gallery" aria-selected="false">
-                    Experience
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#restaurant_gallery" id="restaurant_gallery-tab" data-toggle="tab" role="tab"
-                    aria-controls="restaurant_gallery" aria-selected="false">
-                    Restaurant
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#bars_gallery" id="bars_gallery-tab" data-toggle="tab" role="tab"
-                    aria-controls="bars_gallery" aria-selected="false">
-                    Bars
-                </a>
-            </li>
-        </ul>-->
     </div>
 
     <div class="tab-content h-100">
@@ -58,19 +24,7 @@
                 <div class="gallery-wrapper">
                     <div class="row justify-content-center">
                         <div class="col-8">
-                            <div class="grid-layout" id="gallery_hotel">
-                                <?php 
-                                $spanid = 1;
-                                $grid = 1;
-                                foreach($photos->results as $photo):?>
-                                <a href="<?php echo $photo->urls->regular; ?>"
-                                    data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-<?php echo $grid;?> span-<?php echo $spanid;?>">
-                                    <img src="<?php echo $photo->urls->regular; ?>" alt="">
-                                </a>
-                                <?php 
-                                $spanid=2;
-                                $grid++;
-                                endforeach;?>
+                            <div class="grid-layout" id="gallery_hotel" data-place="property-images" data-replace="property-images">
                             </div>
                         </div>
                     </div>

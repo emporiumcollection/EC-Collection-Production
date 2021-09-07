@@ -845,11 +845,20 @@ console.log(sp_darr);
     }
 
     var rellax = new Rellax('.relax-offset');
+
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+      $('.result-grid').not('.slick-initialized').slick('setPosition');
+      $('.collapse').removeClass('show');
+      $('.slider-detail').not('.slick-initialized').slick('setPosition');
+    });
+});
+
+function setMapLocation(lat, long){
     var locations = [
-      ['<b>Loaction Name</b>', 11.8166, 122.0942],
+      ['<b>Loaction Name</b>', lat, long],
     ];
 
-    var map = L.map('map2').setView([11.206051, 122.447886], 8);
+    var map = L.map('map2').setView([lat, long], 8);
 
     var myIcon = L.icon({
       iconUrl: 'images/basic_geolocalize-01.svg',
@@ -865,13 +874,7 @@ console.log(sp_darr);
         .bindPopup(locations[i][0])
         .addTo(map);
     }
-
-    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
-      $('.result-grid').not('.slick-initialized').slick('setPosition');
-      $('.collapse').removeClass('show');
-      $('.slider-detail').not('.slick-initialized').slick('setPosition');
-    });
-});
+}
 </script>
 
 <script type="text/javascript">
