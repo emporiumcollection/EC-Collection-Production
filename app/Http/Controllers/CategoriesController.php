@@ -101,7 +101,7 @@ class CategoriesController extends Controller {
 
 	function getUpdate(Request $request, $id = null)
 	{
-	
+
 		if($id =='')
 		{
 			if($this->access['is_add'] ==0 )
@@ -196,7 +196,12 @@ class CategoriesController extends Controller {
 			$data['category_instagram_channel'] = Input::get('category_instagram_channel');
 			$data['category_alias'] = $alias;
 			$data['user_id'] = $uid;
-			if($request->input('id') =='')
+            // $trending destination trigger
+            $trending_destination = \DB::table('tb_categories')->select('tb_categories.*')->where("trending_destination", '1')->count();
+            if ($trending_destination < 9) {
+                $data['trending_destination'] = $request->input('trending_destination');
+            }
+            if($request->input('id') =='')
 			{
 				$data['created'] = date('Y-m-d h:i:s');
 			}
@@ -204,7 +209,7 @@ class CategoriesController extends Controller {
 			{
 				$data['updated'] = date('Y-m-d h:i:s');
 			}
-				
+
 			$id = $this->model->insertRow($data , $request->input('id'));
             
 			/** Start Meta tags **/

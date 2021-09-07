@@ -564,6 +564,11 @@ class PropertiesController extends Controller {
             /** Hotel info ***/
             $data['internetpublic'] = $request->input('rdinternetpublic');
             $data['internetroom'] = $request->input('rdinternetroom');
+            // latest hotel trigger
+            $latest_hotels = \DB::table('tb_properties')->select('tb_properties.*')->where("latest_hotel", '1')->count();
+            if ($latest_hotels < 9) {
+                $data['latest_hotel'] = $request->input('rdlatest_hotel');
+            }
             $data['checkin'] = $request->input('checkin');
             $data['checkout'] = $request->input('checkout');
             $data['transfer'] = $request->input('transfer');
