@@ -1,5 +1,4 @@
 <?php
-
   $mapsearch = URL::to("mapsearchavailability?" . Request::getQueryString());
   $videourl = URL::to("social-youtube?" . Request::getQueryString());
   $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
@@ -19,6 +18,10 @@
     }
 </style>
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
+<script type="text/javascript">
+  var channelurl = '{{URL::to("getyoutubechannel/")}}';
+  setTimeout("getDefaultChannel('<?php echo $location[0]['category_alias'];?>')", 5000);
+</script>
 @section('content')
 <div class="content-em">
     <div class="container pt-5">
@@ -140,7 +143,7 @@
               <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
                 Gallery
               </a>
-              <a href="#" class="view bg-btn-gl-001">
+              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#videos">
                 Videos
               </a>
               <div class="hotel-prices hotel-price-detail d-flex">

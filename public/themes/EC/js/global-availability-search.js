@@ -36,3 +36,48 @@ function replacePropertyData(id){
 
   setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
 }
+
+function replacePropertySuites(id){
+  var suiteview = '';
+  $('[data-place="property-suites"]').each(function() {
+      suiteview += `<li class="nav-item">
+          <a class="nav-link" id="suiteslist-tab" data-toggle="pill" href="#suiteslist" role="tab"
+              aria-controls="suiteslist" aria-selected="true">Suites</a>
+      </li>`;
+      var values = properties[id]['suites'];
+      values.forEach(function(e){
+        suiteview += `<li class="nav-item">
+            <a class="nav-link nav-link-sub" id="suitelist1-tab" data-toggle="pill"
+                href="#suitelist1" role="tab" aria-controls="suitelist1" aria-selected="false"> ` + e.category_name + `</a>
+        </li>`;
+      })
+      $(this).html(suiteview);
+  });
+}
+
+function getDefaultChannel(catt){            
+    $.ajax({
+        url: channelurl,
+        //dataType:'html',
+        dataType:'json',
+        data: {cat:catt},
+        type: 'post',
+        beforeSend: function(){
+            
+        },
+        success: function(data){ 
+            
+            console.log(data.channel_url);   
+//            $(".dv-youtube-channel").html('<div class="yt-rvideos"></div>');
+            //$(".dv-youtube-channel").html('<div data-yt data-yt-channel="'+data.channel_url+'" data-yt-content-columns="4"  data-yt-content-rows="3"></div>')                    
+                $('.yt-rvideos').yottie({  
+                    key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+                    channel: data.channel_url,
+                    content: {
+                        columns: 4,
+                        rows: 2
+                    },
+                });
+        }
+    });
+}    

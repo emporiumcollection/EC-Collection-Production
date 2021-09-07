@@ -30,8 +30,7 @@
                         <div class="line"></div>
                     </div>
                     <div class="nav-collapse">
-                        <ul class="nav flex-column nav-sidebar is-small" id="suitesside-tab" role="tablist"
-                            aria-orientation="vertical">
+                        <ul class="nav flex-column nav-sidebar is-small" id="suitesside-tab" role="tablist" aria-orientation="vertical" data-place="property-suites">
                             <li class="nav-item">
                                 <a class="nav-link" id="suiteslist-tab" data-toggle="pill" href="#suiteslist" role="tab"
                                     aria-controls="suiteslist" aria-selected="true">Suites</a>

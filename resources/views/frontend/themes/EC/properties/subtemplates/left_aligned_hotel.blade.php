@@ -110,7 +110,7 @@
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">
           Gallery
         </a>
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">
           Suite(s)
         </a>
         <div class="hotel-prices hotel-price-detail d-flex">

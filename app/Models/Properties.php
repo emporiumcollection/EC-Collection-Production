@@ -34,6 +34,11 @@ class properties extends Sximo  {
         return $this->hasMany(PropertyImages::class, 'property_id');
     }
 
+	public function suites()
+    {
+        return $this->hasMany(PropertyCategoryTypes::class, 'property_id');
+    }
+
     public function container(){
         return $this->hasOne(Container::class, 'display_name', 'property_name');
     }

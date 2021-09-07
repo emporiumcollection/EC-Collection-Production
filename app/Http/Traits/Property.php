@@ -11,6 +11,7 @@ trait Property {
             'parent_category_id', 
             'category_name', 
             'category_description',
+            'category_alias',
             'category_image'
         ])
         ->where('category_name', '=', $keyword)

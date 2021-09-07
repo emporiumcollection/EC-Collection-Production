@@ -2932,7 +2932,7 @@ class PropertyController extends Controller {
         $this->data['experiences'] = $exp;
 
         //Get editor's choice properties
-        $this->data['editorsProperties'] = properties::with(['container'])
+        $this->data['editorsProperties'] = properties::with(['container','suites'])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->get();
@@ -2950,7 +2950,7 @@ class PropertyController extends Controller {
         //print_r($this->data['editorsProperties']->toArray());exit;
 
         //Get editor's choice properties
-        $this->data['featureProperties'] = properties::with(['images'])
+        $this->data['featureProperties'] = properties::with(['images','suites'])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
         ->get();
@@ -2959,7 +2959,7 @@ class PropertyController extends Controller {
             foreach($this->data['featureProperties'] as $k => $featureProperty){
                 $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
             }
-            
+
             $this->formatPropertyRecords($this->data['featureProperties']);
         }
 
