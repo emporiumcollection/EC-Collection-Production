@@ -31,6 +31,30 @@ class container extends Sximo  {
 	public static function insertRowFile($data){
 		return DB::table('tb_container_files')->insertGetId($data);
 	}
+
+	public function Property(){
+		return $this->belongsTo(properties::class, 'display_name');
+	}
+
+	public function PropertyImages($containerId){
+		$folder = Container::where('parent_id', '=', $containerId)
+		->where('display_name', 'Property Images')
+		->get()
+		->toArray();
+
+		$folderId = $folder[0]['id'];
+		$files = ContainerFiles::where('folder_id', '=', $folderId)
+		->limit(10)
+		->get()
+		->toArray();
+
+		if(!empty($files)){
+			return $files;
+		}else{
+			return [];
+		}
+
+	}
 	
 
 }

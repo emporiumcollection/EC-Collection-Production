@@ -117,13 +117,7 @@
     @endif
 </head>
 <body>
-    @if(isset($layout_type) && $layout_type == 'new')
-        @section('header')
-            @parent
-            @include('frontend.themes.EC.layouts.sections.new_header')
-        @show
-
-    @else
+    @if(isset($layout_type) && $layout_type == 'old')
         @section('header')
             @parent
             @include('frontend.themes.EC.layouts.sections.main_header')
@@ -133,11 +127,22 @@
             @parent
             @include('frontend.themes.EC.layouts.sections.main_sidebar')
         @show
+    @else
+        @section('header')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.new_header')
+        @show
     @endif
 
     @yield('content')
 
-    @if(isset($layout_type) && $layout_type == 'new')
+    @if(isset($layout_type) && $layout_type == 'old')
+
+    @else
+        {{-- @section('loader')
+            @parent
+            @include('frontend.themes.EC.layouts.sections.loader')
+        @show --}}
     @endif
 
     @section('loader')
@@ -299,8 +304,8 @@ $(function() {
         changeRangeCallback: rangeChanged,
     });
 
-    var arriveDt = new Date();
-    var depDt = new Date();
+    var arriveDt = new Date('{{$arrive}}');
+    var depDt = new Date('{{$departure}}');
 
 
     var _day = '';
@@ -313,14 +318,14 @@ $(function() {
         _month = sp_arr[2];
         _day = sp_arr[1];
     }
-
+console.log(sp_arr);
     var newArrDt = new Date(_year, _month, _day);
 
     var _dday = '';
     var _dmonth = '';
     var _dyear = '';
     var sp_darr = depDt.toDateString().split('-');
-
+console.log(sp_darr);
     if(sp_darr.length > 2){
         _dyear = sp_darr[0];
         _dmonth = sp_darr[2];
@@ -333,7 +338,7 @@ $(function() {
     var defStartMonth = moment(newArrDt).format('MMM');
     var defEndDay = moment(newDepDt).format('DD');
     var defEndMonth = moment(newDepDt).format('MMM');
-    $(".cal-f .cal-date").html(defStartDay +' '+ defStartMonth+' - '+ defEndDay +' '+ defEndMonth);
+    //$(".cal-f .cal-date").html(defStartDay +' '+ defStartMonth+' - '+ defEndDay +' '+ defEndMonth);
 
     function rangeChanged(target,range){
         var startDay = moment(range.start).format('DD');
@@ -840,11 +845,20 @@ $(function() {
     }
 
     var rellax = new Rellax('.relax-offset');
+
+    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+      $('.result-grid').not('.slick-initialized').slick('setPosition');
+      $('.collapse').removeClass('show');
+      $('.slider-detail').not('.slick-initialized').slick('setPosition');
+    });
+});
+
+function setMapLocation(lat, long){
     var locations = [
-      ['<b>Loaction Name</b>', 11.8166, 122.0942],
+      ['<b>Loaction Name</b>', lat, long],
     ];
 
-    var map = L.map('map2').setView([11.206051, 122.447886], 8);
+    var map = L.map('map2').setView([lat, long], 8);
 
     var myIcon = L.icon({
       iconUrl: 'images/basic_geolocalize-01.svg',
@@ -860,13 +874,7 @@ $(function() {
         .bindPopup(locations[i][0])
         .addTo(map);
     }
-
-    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
-      $('.result-grid').not('.slick-initialized').slick('setPosition');
-      $('.collapse').removeClass('show');
-      $('.slider-detail').not('.slick-initialized').slick('setPosition');
-    });
-});
+}
 </script>
 
 <script type="text/javascript">

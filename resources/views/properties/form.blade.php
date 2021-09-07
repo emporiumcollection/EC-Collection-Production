@@ -545,6 +545,14 @@
 
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label for="internet" class="control-label col-md-4 text-left">Latest Hotel</label>
+                                    <div class="col-md-6">
+                                        <label class="radio-inline"><input type="radio" name="rdlatest_hotel" value="1"  {{$row['latest_hotel']==1 ? "checked='checked'" : '' }}>Yes</label>
+                                        <label class="radio-inline"><input type="radio" name="rdlatest_hotel" value="0" {{$row['latest_hotel']==0 ? "checked='checked'" : '' }} >No</label>
+                                    </div>
+                                </div>
                                 
                             </div>
 

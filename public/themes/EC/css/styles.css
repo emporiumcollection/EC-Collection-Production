@@ -7531,19 +7531,19 @@ a.text-dark:hover, a.text-dark:focus {
     opacity: 0; } }
 
 /*
- *  Owl Carousel - Auto Height Plugin
+ * 	Owl Carousel - Auto Height Plugin
  */
 .owl-height {
   transition: height 500ms ease-in-out; }
 
 /*
- *  Owl Carousel - Lazy Load Plugin
+ * 	Owl Carousel - Lazy Load Plugin
  */
 .owl-carousel .owl-item {
   /**
-      This is introduced due to a bug in IE11 where lazy loading combined with autoheight plugin causes a wrong
-      calculation of the height of the owl-item that breaks page layouts
-     */ }
+			This is introduced due to a bug in IE11 where lazy loading combined with autoheight plugin causes a wrong
+			calculation of the height of the owl-item that breaks page layouts
+		 */ }
 
 .owl-carousel .owl-item .owl-lazy {
   opacity: 0;
@@ -7556,7 +7556,7 @@ a.text-dark:hover, a.text-dark:focus {
   transform-style: preserve-3d; }
 
 /*
- *  Owl Carousel - Video Plugin
+ * 	Owl Carousel - Video Plugin
  */
 .owl-carousel .owl-video-wrapper {
   position: relative;
@@ -7605,7 +7605,7 @@ a.text-dark:hover, a.text-dark:focus {
  * Licensed under: SEE LICENSE IN https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE
  */
 /*
- *  Default theme - Owl Carousel CSS File
+ * 	Default theme - Owl Carousel CSS File
  */
 .owl-theme .owl-nav {
   margin-top: 10px;
@@ -25417,14 +25417,25 @@ tr.introjs-showElement > th {
     color: #000; }
 
 body {
-  font-size: 16px;
-  font-family: "SaolDisplay-Regular";
+  font-size: 15px;
   color: #282828; }
 
 html,
 body {
   height: 100%;
   max-height: 100%; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5 {
+  font-family: "SaolDisplay-Regular"; }
 
 a:focus,
 .btn:focus {
@@ -25457,6 +25468,15 @@ a:hover {
   z-index: 99;
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.1) -2px 2px 5px; }
+  .top-header .top-header-inner {
+    padding-left: 27px;
+    padding-right: 27px;
+    padding-top: 22px; }
+  .top-header .menu-s {
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-top: 7px;
+    background: #f0f0f0; }
   .top-header hr {
     border-color: #000; }
 
@@ -25466,7 +25486,7 @@ a:hover {
   right: 0;
   top: -500px;
   background: #fff;
-  z-index: 9;
+  z-index: 91;
   box-shadow: rgba(0, 0, 0, 0.1) -2px 2px 5px;
   transition: all 0.3s ease; }
   .second-header.show {
@@ -25498,7 +25518,7 @@ h3 {
   vertical-align: center;
   background: url(../images/logo.svg) no-repeat center center;
   width: 165px;
-  height: 52px;
+  height: 55px;
   background-size: contain; }
 
 .col-2.collogo {
@@ -26121,14 +26141,18 @@ h3 {
     height: 23px; }
 
 .humburger-menu {
-  width: 33px;
-  height: 21px;
+  width: 27px;
+  height: 24px;
   cursor: pointer; }
   .humburger-menu .line {
     height: 2px;
-    width: 100%;
+    width: 40%;
     background: #000;
-    margin: 4px 0; }
+    margin: 6px 0; }
+    .humburger-menu .line:first-child {
+      width: 80%; }
+    .humburger-menu .line:last-child {
+      width: 100%; }
 
 .humburger-menu-sidebar {
   width: 62px;
@@ -26301,7 +26325,8 @@ h3 {
     height: 68px;
     padding-left: 87px;
     padding-top: 0;
-    padding-bottom: 0; }
+    padding-bottom: 0;
+    font-family: "SaolDisplay-Regular"; }
   .form-fl-search .ico-search {
     width: 24px;
     height: 25px; }
@@ -27013,7 +27038,8 @@ h3 {
   .wherepopup .nav-link {
     padding: 0 1rem;
     font-size: 20px;
-    color: #fff; }
+    color: #fff;
+    font-family: "SaolDisplay-Regular"; }
     .wherepopup .nav-link .cat-l {
       font-family: "SaolDisplay-LightItalic";
       text-decoration: underline;
@@ -29679,7 +29705,7 @@ span.calElement.prev:hover {
       font-size: 25px; }
 
 .title-second {
-  font-size: 35px; }
+  font-size: 28px; }
 
 .title-second-small {
   font-size: 32px; }
@@ -29910,12 +29936,13 @@ span.calElement.prev:hover {
     .title-offset.is-small .title-second {
       font-size: 32px; }
     .title-offset.is-small .title-third {
-      font-size: 20px;
+      font-size: 27px;
       margin-left: 128px;
       margin-top: -5px; }
 
 .title-third {
-  font-size: 36px; }
+  font-size: 27px;
+  text-decoration: underline; }
 
 .line-separate {
   height: 2px;
@@ -30048,10 +30075,10 @@ span.calElement.prev:hover {
       margin-right: 6px; }
 
 .nav-right .nav-item {
-  margin-left: 10px;
-  margin-right: 10px; }
+  margin-left: 12px;
+  margin-right: 12px; }
   .nav-right .nav-item:last-child {
-    margin-right: 0; }
+    margin-right: 6px; }
 
 .nav-right .nav-link {
   padding-left: 0;
@@ -30091,7 +30118,8 @@ span.calElement.prev:hover {
   line-height: 0.8;
   position: relative;
   padding-left: 0;
-  padding-right: 0; }
+  padding-right: 0;
+  font-family: "SaolDisplay-Regular"; }
   .nav-sidebar .nav-item .nav-link:hover, .nav-sidebar .nav-item .nav-link.active {
     color: #5e5e5e;
     font-family: "SaolDisplay-LightItalic";
@@ -30107,7 +30135,6 @@ span.calElement.prev:hover {
       left: 0; }
   .nav-sidebar .nav-item .nav-link.nav-link-sub {
     color: #5e5e5e;
-    font-family: "SaolDisplay-LightItalic";
     padding-left: 50px !important;
     font-size: 24px !important;
     line-height: 1; }
@@ -30154,8 +30181,9 @@ span.calElement.prev:hover {
   width: 255px; }
 
 .onstickmainpage2 {
-  position: absolute;
-  width: 94%; }
+  position: relative;
+  width: 92%;
+  z-index: 2; }
 
 .sidebarFixedpages {
   position: fixed;
@@ -30403,15 +30431,26 @@ span.calElement.prev:hover {
 .slider-container .prev .ico-back {
   left: 0; }
   .slider-container .prev .ico-back::before {
-    top: -3px;
-    left: 4px; }
+    position: absolute;
+    background: url(../images/arrow-left-white.svg) no-repeat center center/contain;
+    content: "";
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 15px;
+    transform: translate(-50%, -50%); }
 
 .slider-container .next .ico-next {
   right: 0; }
   .slider-container .next .ico-next::before {
-    top: -3px;
-    right: 12px;
-    left: auto !important; }
+    position: absolute;
+    background: url(../images/arrow-right-white.svg) no-repeat center center/contain;
+    content: "";
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 15px;
+    transform: translate(-50%, -50%); }
 
 .color-search {
   font-size: 20px;
@@ -30504,16 +30543,20 @@ span.calElement.prev:hover {
 .ico-back {
   display: inline-block;
   position: relative;
-  font-family: "SaolDisplay-LightItalic";
   font-size: 85px;
   line-height: 46px;
   width: 93px;
   height: 40px; }
   .ico-back:before {
-    content: "<";
+    content: "";
     position: absolute;
-    top: 0;
-    left: -12px; }
+    background: url(../images/Emporium-Collection-Right-Arrow-New.svg) no-repeat center center/contain;
+    top: -8px;
+    left: -22px;
+    display: inline-block;
+    width: 62px;
+    height: 62px;
+    transform: rotate(180deg); }
 
 .ico-next {
   display: inline-block;
@@ -30595,7 +30638,7 @@ span.calElement.prev:hover {
 
 .menunav-group {
   position: fixed;
-  top: 87px;
+  top: 108px;
   left: 25px;
   right: 25px;
   z-index: 999;
@@ -30656,7 +30699,8 @@ span.calElement.prev:hover {
 .menu-nav {
   height: 31px;
   display: flex;
-  align-items: center; }
+  align-items: center;
+  padding-right: 10px; }
   .menu-nav .gust-dropdown {
     padding: 0; }
   .menu-nav.text-menu {
@@ -30768,16 +30812,28 @@ span.calElement.prev:hover {
   .prev-arrow .ico-back {
     left: 0; }
     .prev-arrow .ico-back::before {
-      top: 1px;
-      left: -1px !important; }
+      position: absolute;
+      background: url(../images/arrow-left-white.svg) no-repeat center center/contain;
+      content: "";
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 15px;
+      transform: translate(-50%, -50%); }
 
 .next-arrow {
   right: 0; }
   .next-arrow .ico-next {
     right: 0; }
     .next-arrow .ico-next::before {
-      top: 1px;
-      left: 0px !important; }
+      position: absolute;
+      background: url(../images/arrow-right-white.svg) no-repeat center center/contain;
+      content: "";
+      top: 50%;
+      left: 50%;
+      width: 16px;
+      height: 15px;
+      transform: translate(-50%, -50%); }
 
 .prev-arrow .ico-back,
 .next-arrow .ico-next {
@@ -31241,6 +31297,9 @@ span.calElement.prev:hover {
     object-fit: cover;
     height: 100%; }
 
+.index-2 {
+  z-index: 2; }
+
 .suite-ontouch {
   position: relative;
   overflow: hidden; }
@@ -31522,6 +31581,9 @@ span.calElement.prev:hover {
     text-decoration: none;
     color: #ee0000; }
 
+.accordion-ex h2 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
+
 .nav-step5 {
   border: 0 !important; }
   .nav-step5 .nav-item .nav-link {
@@ -31619,7 +31681,7 @@ span.calElement.prev:hover {
   .collection-slide .left-add-slide {
     width: 60px; }
     .collection-slide .left-add-slide p {
-      font-size: 11px;
+      font-size: 10px;
       margin-top: 3px;
       margin-bottom: 26px; }
   .collection-slide .right-collection {
@@ -31638,7 +31700,7 @@ span.calElement.prev:hover {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 40px;
+  font-size: 34px;
   color: #fff;
   border-radius: 50%; }
   .btn-add-collection.is-small {
@@ -32271,7 +32333,7 @@ section {
     background: transparent; }
 
 .nav-clr .nav-item .nav-link {
-  font-size: 18px;
+  font-size: 15px;
   border-left: 1px #000 solid;
   border-radius: 0;
   padding-top: 0;
@@ -32279,8 +32341,7 @@ section {
   line-height: 19px; }
   .nav-clr .nav-item .nav-link.active {
     background: transparent;
-    color: #000;
-    font-family: "SaolDisplay-LightItalic"; }
+    color: #000; }
 
 .nav-clr .nav-item:first-child .nav-link {
   border-left: 0;
@@ -32669,10 +32730,12 @@ section {
   width: 600px; }
   .auth-container-inner .nav-link {
     font-size: 22px;
-    padding: 0 26px; }
-  .auth-container-inner .nav-item:first-child .nav-link {
-    padding-left: 0;
+    padding: 0 26px;
     border-right: 2px #000 solid; }
+  .auth-container-inner .nav-item:first-child .nav-link {
+    padding-left: 0; }
+  .auth-container-inner .nav-item:last-child .nav-link {
+    border-right: 0; }
 
 .distri-container-inner {
   width: 600px;
@@ -32699,8 +32762,25 @@ section {
     border-right: 2px #000 solid; }
 
 .col-c-code {
-  flex: 0 0 50px;
-  max-width: 50px; }
+  flex: 0 0 56px;
+  max-width: 56px; }
+
+.icon-inliner {
+  position: absolute;
+  right: 11px;
+  top: 8px; }
+  .icon-inliner .tooltip-cs {
+    position: absolute;
+    width: 400px;
+    right: -11px;
+    font-size: 13px;
+    background: #000;
+    color: #fff;
+    padding: 6px 11px;
+    border-radius: 6px;
+    display: none; }
+  .icon-inliner:hover .tooltip-cs {
+    display: block; }
 
 .m-nmbr {
   width: 100%;
@@ -32771,6 +32851,9 @@ section {
     font-size: 20px;
     display: inline-block;
     margin-left: 5px; }
+
+.hotel-prices h3 {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
 
 .mapboxgl-popup-close-button {
   font-size: 20px; }
@@ -33366,7 +33449,7 @@ section {
   .booking-input .form-control {
     border: 0;
     padding: 0;
-    height: 25px;
+    height: 26px;
     font-weight: 600; }
 
 .btn-take {
@@ -33399,6 +33482,8 @@ section {
 .booking-destination {
   margin-bottom: 10px; }
   .booking-destination .wherepopup {
+    width: 700px;
+    margin: auto;
     margin-top: 6px; }
     .booking-destination .wherepopup .whereinner {
       padding: 15px; }
@@ -33412,16 +33497,16 @@ section {
   padding-right: 5px; }
 
 .book-list-hotel-item .slick-prev::before,
-.book-list-hotel-item .slick-next::before {
+.book-list-hotel-item .slick-next::before,
+.inspiration-future .slick-prev::before,
+.inspiration-future .slick-next::before {
   color: #000; }
 
-.hotel-book-list,
-.magazine-slide {
+.hotel-book-list {
   position: relative;
   margin-bottom: 70px;
   margin-top: 20px; }
-  .hotel-book-list .slick-prev,
-  .magazine-slide .slick-prev {
+  .hotel-book-list .slick-prev {
     width: 40px;
     height: 40px;
     background: #fff;
@@ -33430,20 +33515,17 @@ section {
     top: 40%;
     z-index: 1;
     left: -17px; }
-    .hotel-book-list .slick-prev::before,
-    .magazine-slide .slick-prev::before {
-      color: #000;
-      left: 0;
-      font-size: 48px;
-      font-family: "SaolDisplay-LightItalic";
-      content: "<";
+    .hotel-book-list .slick-prev::before {
+      content: "";
+      background: url(../images/Emporium-Collection-Left-Arrow.svg) no-repeat center center;
       line-height: 32px;
       position: absolute;
       top: 50%;
       transform: translate(-50%, -50%);
-      left: 43%; }
-  .hotel-book-list .slick-next,
-  .magazine-slide .slick-next {
+      left: 43%;
+      width: 19px;
+      height: 21px; }
+  .hotel-book-list .slick-next {
     width: 40px;
     height: 40px;
     background: #fff;
@@ -33451,18 +33533,63 @@ section {
     border-radius: 50%;
     top: 40%;
     right: -17px; }
-    .hotel-book-list .slick-next::before,
-    .magazine-slide .slick-next::before {
-      color: #000;
-      left: 0;
-      font-size: 48px;
-      font-family: "SaolDisplay-LightItalic";
-      content: ">";
+    .hotel-book-list .slick-next::before {
+      background: url(../images/Emporium-Collection-right-Arrow.svg) no-repeat center center;
+      content: "";
       line-height: 32px;
       position: absolute;
       top: 50%;
       transform: translate(-50%, -50%);
-      left: 49%; }
+      left: 49%;
+      width: 19px;
+      height: 21px; }
+
+.inspiration-future,
+.magazine-slide {
+  position: relative;
+  margin-bottom: 70px;
+  margin-top: 20px; }
+  .inspiration-future .slick-prev,
+  .magazine-slide .slick-prev {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    box-shadow: 0 0 10px #999;
+    border-radius: 50%;
+    top: 50%;
+    z-index: 1;
+    left: -10px; }
+    .inspiration-future .slick-prev::before,
+    .magazine-slide .slick-prev::before {
+      content: "";
+      background: url(../images/Emporium-Collection-Left-Arrow.svg) no-repeat center center;
+      line-height: 32px;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 43%;
+      width: 19px;
+      height: 21px; }
+  .inspiration-future .slick-next,
+  .magazine-slide .slick-next {
+    width: 40px;
+    height: 40px;
+    background: #fff;
+    box-shadow: 0 0 10px #999;
+    border-radius: 50%;
+    top: 50%;
+    right: -10px; }
+    .inspiration-future .slick-next::before,
+    .magazine-slide .slick-next::before {
+      background: url(../images/Emporium-Collection-right-Arrow.svg) no-repeat center center;
+      content: "";
+      line-height: 32px;
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 49%;
+      width: 19px;
+      height: 21px; }
 
 .magazine-slide .slick-next,
 .magazine-slide .slick-prev {
@@ -33517,6 +33644,44 @@ section {
 .htl-cont:hover .hotel-meta {
   bottom: 0; }
 
+.htl-cont .htl-desc p {
+  font-size: 15px;
+  color: #9f9f9f; }
+
+.inspiration-future {
+  margin-left: -10px;
+  margin-right: -10px; }
+  .inspiration-future .slick-slide {
+    padding-left: 10px;
+    padding-right: 10px; }
+
+.inspiration-future-item {
+  position: relative;
+  height: 0;
+  padding-bottom: 124%;
+  border-radius: 6px;
+  overflow: hidden; }
+  .inspiration-future-item img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    top: 0;
+    left: 0;
+    filter: grayscale(1);
+    transition: all 0.2s ease-in-out; }
+  .inspiration-future-item:hover img {
+    filter: grayscale(0); }
+  .inspiration-future-item .inspiration-future-title {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.5);
+    color: #bcbcbf;
+    padding: 10px 25px;
+    font-size: 16px; }
+
 .staydate-range {
   position: absolute;
   margin-left: -15px;
@@ -33542,10 +33707,12 @@ section {
   position: absolute;
   left: 0;
   right: 0;
+  margin: auto;
   margin-top: 64px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(0, 0, 0, 0.07);
   border-radius: 3px;
   background: #fff;
+  max-width: 700px;
   display: none; }
   .booking-guest-input.show {
     display: block; }
@@ -33672,30 +33839,40 @@ section {
   max-width: 1536px;
   margin-top: 6rem;
   margin-bottom: 6rem;
-  font-size: 19px; }
+  font-size: 16px; }
   .hotel-book-container h5 {
     font-weight: 600; }
   .hotel-book-container .card-body {
-    font-size: 19px; }
+    font-size: 16px; }
 
 footer {
-  margin-top: 100px; }
+  padding-top: 100px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1); }
+  footer .container {
+    max-width: 1536px; }
   footer h3 {
     font-size: 30px;
     font-weight: 600; }
+  footer .footer-top {
+    font-size: 14px; }
   footer .footer-bottom {
-    font-weight: 600;
     font-size: 14px; }
   footer .sosmed .nav-link {
     font-size: 20px; }
+
+.jurney h3 {
+  font-size: 28px; }
+
+.jurney .h2 {
+  font-family: "SaolDisplay-Regular";
+  font-weight: 700; }
 
 .jurney .journey-list a {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 20px;
   padding-top: 20px;
   display: block;
-  font-family: "Suisse", sans-serif;
-  font-weight: 600;
+  font-weight: 400;
   font-size: 18px; }
 
 .jurney .journey-list:nth-child(5) a {
@@ -33703,11 +33880,6 @@ footer {
 
 .jurney .journey-list:nth-child(6) a {
   border-bottom: 0; }
-
-.jurney .h2 {
-  font-family: "Suisse", sans-serif;
-  font-weight: 600;
-  padding-right: 40px; }
 
 .jurney .btn {
   font-family: "Suisse", sans-serif; }
@@ -33764,66 +33936,291 @@ footer {
 .act-content {
   padding-left: 100px; }
 
-.magazine-item .item-big {
-  position: relative;
-  height: 0;
-  padding-bottom: 100%;
-  overflow: hidden;
-  border-radius: 6px; }
-  .magazine-item .item-big img {
+.magazine-item {
+  border-radius: 6px;
+  overflow: hidden; }
+  .magazine-item .item-big {
+    position: relative;
+    height: 0;
+    padding-bottom: 100%;
+    overflow: hidden; }
+    .magazine-item .item-big img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; }
+  .magazine-item .item-small {
+    position: relative;
+    height: 0;
+    padding-bottom: 50%;
+    overflow: hidden; }
+    .magazine-item .item-small img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover; }
+  .magazine-item .magazine-title {
+    position: absolute;
+    z-index: 1;
+    left: 37px;
+    top: 30px;
+    font-size: 28px;
+    color: #fff; }
+    .magazine-item .magazine-title h3 {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+      font-weight: 800; }
+    .magazine-item .magazine-title p {
+      font-size: 15px; }
+  .magazine-item .magazine-desc {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover; }
-
-.magazine-item .item-small {
-  position: relative;
-  height: 0;
-  padding-bottom: 50%;
-  overflow: hidden;
-  border-radius: 6px; }
-  .magazine-item .item-small img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; }
-
-.magazine-item .magazine-title {
-  position: absolute;
-  z-index: 1;
-  font-weight: 600;
-  left: 37px;
-  top: 30px;
-  font-size: 28px; }
-
-.magazine-item .magazine-desc {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: #f7f7f4;
-  padding: 22px; }
-  .magazine-item .magazine-desc .h-90 {
-    height: calc(100% - 44px); }
-  .magazine-item .magazine-desc p {
-    font-size: 18px; }
-  .magazine-item .magazine-desc .category {
-    font-size: 14px; }
-  .magazine-item .magazine-desc h4 {
-    font-weight: 600; }
+    background: #f7f7f4;
+    padding: 22px; }
+    .magazine-item .magazine-desc .h-90 {
+      height: calc(100% - 44px); }
+    .magazine-item .magazine-desc p {
+      font-size: 16px; }
+    .magazine-item .magazine-desc .category {
+      font-size: 14px; }
+    .magazine-item .magazine-desc h4 {
+      font-weight: 600; }
 
 .qa-btn {
   font-size: 20px;
   color: #000 !important;
-  font-weight: 600; }
+  font-weight: 400; }
 
 .menu-landing-mobile {
   display: none; }
+
+.select-destination {
+  text-align: left; }
+  .select-destination .select2-container--bootstrap .select2-selection--multiple .select2-selection__rendered {
+    width: auto; }
+  .select-destination .select2-container--bootstrap .select2-selection--multiple {
+    min-height: 54px;
+    display: flex;
+    flex-wrap: wrap; }
+  .select-destination .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
+    padding: 7px 16px 7px 11px;
+    border-radius: 21px;
+    margin: 5px 0 5px 6px;
+    font-size: 17px;
+    border-color: transparent;
+    background: #ee0000;
+    color: #fff; }
+  .select-destination .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice__remove {
+    background: transparent;
+    border: 0;
+    color: #fff; }
+  .select-destination .select2-container--bootstrap.select2-container--focus .select2-selection {
+    box-shadow: none;
+    border-color: #000; }
+  .select-destination .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field {
+    font-size: 17px; }
+  .select-destination .select2-container--bootstrap .select2-selection--multiple .select2-search--inline .select2-search__field {
+    height: 52px; }
+
+.select2-container--bootstrap .select2-dropdown {
+  border-color: #000; }
+
+.close-wz {
+  position: absolute;
+  right: 0;
+  top: 0; }
+
+.main-page-banner {
+  position: relative;
+  background-size: cover;
+  background-position: 50% 50%;
+  margin-bottom: 30px;
+  overflow: hidden; }
+  .main-page-banner .img-main-banner {
+    position: relative;
+    height: 418px;
+    overflow: hidden; }
+    .main-page-banner .img-main-banner .slick-slide {
+      height: 0;
+      padding-bottom: 418px;
+      position: relative; }
+      .main-page-banner .img-main-banner .slick-slide img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover; }
+
+.main-banner-content {
+  background-color: rgba(255, 255, 255, 0.9);
+  bottom: 0;
+  top: 0;
+  padding: 21px 30px;
+  position: absolute;
+  right: 0;
+  text-align: left;
+  width: 100%;
+  max-width: 34.4%;
+  color: #000; }
+  .main-banner-content .content-inner {
+    overflow: hidden;
+    height: 100%;
+    padding-right: 15px; }
+    .main-banner-content .content-inner:hover {
+      overflow: auto; }
+
+.breadcrumb-main {
+  position: absolute;
+  background: #fff;
+  padding: 10px;
+  top: 0;
+  margin-top: 0 !important;
+  z-index: 9;
+  padding-left: 0; }
+
+.navheadimage {
+  position: relative;
+  margin-bottom: 25px;
+  overflow: hidden; }
+  .navheadimage img {
+    width: 100%; }
+  .navheadimage .headingoverlay {
+    padding-left: 0;
+    padding-top: 0;
+    top: 0;
+    background-color: rgba(25, 25, 27, 0.35);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0; }
+  .navheadimage .destinationTitle {
+    position: absolute;
+    bottom: -100%;
+    background: black;
+    width: 100%;
+    padding: 10px 25px;
+    color: #bcbcbf;
+    transition: all .3s ease-in-out; }
+  .navheadimage:hover .destinationTitle {
+    bottom: 0; }
+
+.main-title-heading {
+  padding-top: 33px; }
+  .main-title-heading .title-main {
+    padding-left: calc(40% - 254px); }
+  .main-title-heading a {
+    padding-left: 3px; }
+
+.container-bigger {
+  padding-left: 35px;
+  padding-right: 35px; }
+
+.row-bigger {
+  margin-right: -35px;
+  margin-left: -35px; }
+  .row-bigger .col-md-4 {
+    padding-left: 35px;
+    padding-right: 35px; }
+
+.nav-hr {
+  border-bottom: 1px #f2f2f2 solid; }
+  .nav-hr .nav-item {
+    padding-right: 25px; }
+    .nav-hr .nav-item .nav-link {
+      border-bottom: 2px transparent solid;
+      padding-left: 0;
+      padding-right: 0; }
+      .nav-hr .nav-item .nav-link.active {
+        font-weight: 600;
+        border-bottom: 2px #000 solid; }
+
+.user-profile-img {
+  width: 29px;
+  height: 29px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-left: auto; }
+  .user-profile-img img {
+    width: 100%; }
+
+.hotel-meta.hotel-meta-banner {
+  display: flex;
+  width: 65.6%;
+  position: absolute;
+  bottom: -100%;
+  transition: all 0.3s ease-in-out; }
+  .hotel-meta.hotel-meta-banner .hotel-price-detail {
+    width: 228px;
+    background: #fff; }
+    .hotel-meta.hotel-meta-banner .hotel-price-detail .row {
+      margin-left: 0 !important;
+      margin-right: 0 !important;
+      width: 100%; }
+
+.main-page-banner:hover .hotel-meta.hotel-meta-banner {
+  bottom: 0; }
+
+#sidebar {
+  will-change: min-height; }
+
+#sidebar .sidebar-nav-section {
+  position: relative;
+  transform: translate(0, 0);
+  transform: translate3d(0, 0, 0);
+  will-change: position, transform; }
+
+.dropdown-block .btn {
+  text-align: left; }
+  .dropdown-block .btn::after {
+    right: 10px;
+    top: 17px;
+    position: absolute; }
+
+.entry-content {
+  padding: 125px 108px;
+  background: #fbfbfb; }
+  .entry-content h3 {
+    font-size: 68px;
+    font-weight: 700; }
+  .entry-content h4 {
+    font-size: 46px;
+    font-weight: 700; }
+
+.who-hero {
+  position: relative; }
+  .who-hero::before {
+    position: absolute;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.2); }
+
+.title-content {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 73px;
+  position: relative;
+  z-index: 1; }
+  .title-content h2 {
+    font-size: 6.875rem;
+    color: #fff;
+    font-weight: 700; }
+
+.code-input {
+  max-width: 400px; }
+
+.off-set-123 {
+  margin-top: -75px; }
 
 @media (max-width: 1627.98px) {
   .hotel-book-container {
@@ -34047,6 +34444,13 @@ footer {
         display: none; }
     .onstickmainpage2 .nav-item.mt-3 {
       margin-top: 0 !important; }
+  .main-nav-sidebar {
+    align-items: flex-start;
+    padding-left: 0; }
+    .main-nav-sidebar .nav-sidebar {
+      padding-left: 20px; }
+    .main-nav-sidebar .navheadimage {
+      margin-bottom: 0; }
   .nav-sidebar.is-small .nav-item .nav-link:hover::before,
   .nav-sidebar.is-small .nav-item .nav-link.active::before {
     display: none; }
@@ -34162,7 +34566,13 @@ footer {
     position: absolute;
     top: -26px;
     right: 0px;
-    z-index: 99; }
+    z-index: 9; }
+  .breadcrumb-main {
+    right: auto;
+    top: 0; }
+  .main-title-heading.my-5 {
+    margin-top: 26px !important;
+    margin-bottom: 25px !important; }
   .nav-collapse {
     top: 42px;
     left: 0;
@@ -34288,7 +34698,7 @@ footer {
   .gallery-wrapper .nav-sidebar {
     background: #fff !important; }
   .menu-nav.text-menu {
-    padding: 7px 6px; }
+    padding: 7px 2px; }
   .menunav-group {
     left: 15px;
     right: 15px; }
@@ -34304,11 +34714,13 @@ footer {
     font-size: 16px; }
   .nav-header-menu .nav-item .nav-link {
     padding-left: 10px;
-    padding-right: 10px; } }
+    padding-right: 10px; }
+  .mmt-0 {
+    margin-top: 0 !important; } }
 
 @media (max-width: 862px) {
   .menu-nav.text-menu {
-    padding: 7px 5px;
+    padding: 7px 1px;
     font-size: 12px; }
   .logo-2 {
     width: 100%; }
@@ -34360,7 +34772,24 @@ footer {
   .wizard-reservation {
     padding-top: 47px; }
   .hotel-meta.full-width.hotel-meta-details {
-    bottom: -54px; } }
+    bottom: -54px; }
+  .nav-text .nav-item:first-child {
+    margin-left: 10px; }
+  .nav-text .nav-link {
+    font-size: 12px; }
+  .breadcrumb-main .nav-item .nav-link {
+    font-size: 12px; }
+  .hotel-meta.hotel-meta-banner .hotel-price-detail {
+    width: 194px; }
+  .nav-sidebar.is-small .nav-item .nav-link {
+    padding-top: 13px;
+    padding-bottom: 13px; }
+  .onstickmainpage2 .nav .nav-item .nav-link {
+    padding-top: 13px;
+    padding-bottom: 13px; }
+  .nav-collapse > .nav-sidebar {
+    padding-top: 33px;
+    padding-bottom: 29px; } }
 
 @media (max-width: 767.98px) {
   .humburger-second-menu {
@@ -34369,7 +34798,9 @@ footer {
     display: none; }
   .is-w-100 {
     margin-left: auto;
-    width: 100%; }
+    width: 100%;
+    padding-top: 5px;
+    padding-bottom: 5px; }
   .landing-slider .landing-slider-content h2 {
     font-size: 35px; }
   .ppls-0 {
@@ -34525,11 +34956,11 @@ footer {
   .menunav-group {
     left: 0;
     right: 0;
-    top: 88px; }
+    top: 96px; }
   .nav-breadcrumb-ip {
     z-index: 1; }
   .nav-collapse {
-    top: -19px; }
+    top: -11px; }
   .logo-2 {
     height: 36px; }
   .onstickmainpage2 .nav .nav-link {
@@ -34571,7 +35002,9 @@ footer {
     width: 44px;
     height: 40px; }
   .title-on-header {
-    display: flex !important; }
+    display: flex !important;
+    padding-top: 5px;
+    padding-bottom: 5px; }
   .second-header .ico-back {
     font-size: 56px;
     line-height: 23px;
@@ -34632,7 +35065,7 @@ footer {
       position: fixed;
       left: 0;
       right: 0;
-      top: 86px;
+      top: 94px;
       -webkit-transition: all 0.4s ease-in-out;
       -moz-transition: all 0.4s ease-in-out;
       -o-transition: all 0.4s ease-in-out;
@@ -34881,7 +35314,19 @@ footer {
   .magazine-item .magazine-desc .h-90 {
     height: auto; }
   .magazine-item .bottom-left .item-big {
-    padding-bottom: 100%; } }
+    padding-bottom: 100%; }
+  .main-banner-content {
+    padding-top: 70px; }
+  .hotel-meta.hotel-meta-banner {
+    bottom: 0; }
+  .hotel-meta.hotel-meta-banner .hotel-price-detail {
+    width: 200px;
+    padding: 6px 5px; }
+  .suite-ontouch::before {
+    display: none; }
+  .menu-s {
+    padding-top: 5px;
+    padding-bottom: 5px; } }
 
 @media (max-width: 575.98px) {
   .main-content h3 {
@@ -34956,7 +35401,30 @@ footer {
   .booking-guest-input {
     width: 100%; }
   .staydate-range {
-    width: 100%; } }
+    width: 100%; }
+  .main-nav-sidebar {
+    padding-right: 0; }
+    .main-nav-sidebar .navheadimage {
+      display: none; }
+  .main-page-banner .img-main-banner {
+    padding-bottom: 59%; }
+  .main-banner-content {
+    position: relative;
+    height: auto;
+    padding: 0;
+    padding-top: 25px;
+    max-width: 100%; }
+  .main-title-heading.my-5 {
+    margin-bottom: 0 !important; }
+  .hotel-meta.hotel-meta-banner {
+    bottom: auto !important;
+    top: 45px; }
+  .hotel-meta.hotel-meta-banner .hotel-price-detail {
+    padding: 6px 2px; }
+  footer {
+    background-color: #f7f7f7; }
+  .nav-desc .ico-back {
+    width: 32px; } }
 
 @media (max-width: 321.98px) {
   .menu-s .title-main {

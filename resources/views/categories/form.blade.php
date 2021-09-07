@@ -174,8 +174,20 @@
     									 <div class="col-md-2">
     									 	
     									 </div>
-    								  </div> 
-                                      <!--</fieldset>-->
+    								  </div>
+                                    <div class="form-group  " >
+                                        <label for="trending_destination" class=" control-label col-md-3 text-left"> Trending Destination <span class="asterix"> * </span></label>
+                                        <div class="col-md-7">
+                                            <label class='radio radio-inline'>
+                                                <input type='radio' name='trending_destination' value ='0' required @if($row['trending_destination'] == '0') checked="checked" @endif > No </label>
+                                            <label class='radio radio-inline'>
+                                                <input type='radio' name='trending_destination' value ='1' required @if($row['trending_destination'] == '1') checked="checked" @endif > Yes </label>
+                                        </div>
+                                        <div class="col-md-2">
+
+                                        </div>
+                                    </div>
+                        <!--</fieldset>-->
                     </div>
                     <div class="tab-pane m-t " id="seo"> 
                         

@@ -256,7 +256,7 @@
                         @foreach($suit['suites_media']['imgs'] as $suit_image)
                         <div>
                            <a href="detail-page.html">
-                           <img src="{{ $suit_image }}"
+                           <img src="{{ $suit_image->file_name }}"
                               class="img-full" alt="">
                            </a>
                         </div>

@@ -1,7 +1,6 @@
 <?php
-
-
 namespace App\Http\Controllers\PhaseOne;
+
 use Illuminate\Http\Request;
 use App\Http\Controllers\ContainerController;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -50,7 +49,8 @@ class MapBoxController extends Controller {
 
             $price = 0;
 
-            $images = $hcontroller->get_property_files($hotel->id, 'Property Images');
+            $images = [];//$hcontroller->get_property_files($hotel->id, 'Property Images');
+            // Mahesh needs to enable it and fix the time taken
             $hotel_images = [];
             if (count($images) > 0) {
                 for($i = 0; $i < 2; $i++){

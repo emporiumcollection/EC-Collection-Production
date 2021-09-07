@@ -1,5 +1,5 @@
-<?php 
-namespace App\Http\Controllers\Frontend;
+<?php
+namespace App\Http\Controllers\FrontEnd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ContainerController;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -14,30 +14,30 @@ class FrontendPagesController extends Controller {
             Redirect::to('/')->send();
         }*/
     }
-	
+
 	 public function index(Request $request) {
-		 
+
 		 if ($request->segment(1) == '') :
             return Redirect::to('');
         endif;
-		
+
        $page = trim($request->segment(1));
        if ($page != '') {
             $content = \DB::table('tb_pages_content')->where('alias', '=', $page)->where('status', '=', 'enable')->first();
-			
+
 			if (count($content) >= 1) {
                 $row = $content;
                 $this->data['pageTitle'] = $row->title;
                 $this->data['pageMetakey'] = ($row->metakey != '' ? $row->metakey : CNF_METAKEY);
                 $this->data['pageMetadesc'] = ($row->metadesc != '' ? $row->metadesc : CNF_METADESC);
-				
+
 				if ($row->access != '') {
                     $access = json_decode($row->access, true);
                 } else {
                     $access = array();
                 }
 
-                // If guest not allowed 
+                // If guest not allowed
                 if ($row->allow_guest != 1) {
                     $group_id = \Session::get('gid');
                     $isValid = (isset($access[$group_id]) && $access[$group_id] == 1 ? 1 : 0 );
@@ -46,30 +46,30 @@ class FrontendPagesController extends Controller {
                                         ->with('message', \SiteHelpers::alert('error', \Lang::get('core.note_restric')));
                     }
                 }
-				
+
 				$this->data['pagecontent'] = $row->content;
-				
+
 				 $this->data['pageslider'] = \DB::table('tb_pages_sliders')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('slider_page_id', $row->pageID)->where('slider_status',1)->orderBy('sort_num','asc')->get();
-				 
+
 				 $this->data['whybookwithus'] = \DB::table('tb_whybookwithus')->select('id', 'title', 'sub_title')->where('status', 0)->get();
-				 
+
 				 $this->data['sidebargridAds'] = \DB::table('tb_advertisement')->select('adv_img', 'adv_link')->where('adv_type', 'sidebar')->where('adv_position', 'landing')->get();
-				 
-				 return view('frontend.themes.emporium.pages.page', $this->data);
+
+				 return view('frontend.themes.EC.pages.page', $this->data);
 			}
-			else 
+			else
 			{
 				return Redirect::to('')
 								->with('message', \SiteHelpers::alert('error', \Lang::get('core.note_noexists')));
 			}
 	   }
-	   else 
+	   else
 		{
 			return Redirect::to('')
 							->with('message', \SiteHelpers::alert('error', \Lang::get('core.note_noexists')));
 		}
     }
-	
+
 	public function socialYoutube(Request $request)
 	{
 		$channel_url = '';
@@ -81,16 +81,16 @@ class FrontendPagesController extends Controller {
 		{
 			$cateObjsc = \DB::table('tb_categories')->select('id', 'category_youtube_channel_url')->where('parent_category_id', 0)->where('category_published', 1)->where('id', '!=', 8)->orderBy('category_order_num','asc')->first();
 		}
-		
+
 		if (!empty($cateObjsc)) {
 			$channel_url = $cateObjsc->category_youtube_channel_url;
 			$catid = $cateObjsc->id;
 		}
 		$this->data['channel_url'] = $channel_url;
 		$this->data['catid'] = $catid;
-		return view('frontend.themes.emporium.pages.social_youtube_page', $this->data);
+		return view('frontend.themes.EC.pages.social_youtube_page', $this->data);
 	}
-    
+
     public function socialInstagram(Request $request)
 	{
 		$channel_url = '';
@@ -102,16 +102,16 @@ class FrontendPagesController extends Controller {
 		{
 			$cateObjsc = \DB::table('tb_categories')->select('id', 'category_instagram_channel')->where('parent_category_id', 0)->where('category_published', 1)->where('id', '!=', 8)->orderBy('category_order_num','asc')->first();
 		}
-		
+
 		if (!empty($cateObjsc)) {
 			$channel_url = $cateObjsc->category_instagram_channel;
 			$catid = $cateObjsc->id;
 		}
 		$this->data['instagram_channel'] = $channel_url;
 		$this->data['catid'] = $catid;
-		return view('frontend.themes.emporium.pages.social_instagram_page', $this->data);
+		return view('frontend.themes.EC.pages.social_instagram_page', $this->data);
 	}
-    
+
 	public function socialStreamWall(Request $request)
 	{
 		$socialpropertiesArr = array();
@@ -125,13 +125,13 @@ class FrontendPagesController extends Controller {
 			$socialpropertiesArr = $scprops;
 		}
 		$this->data['socialpropertiesArr'] = $socialpropertiesArr;
-		
+
 		$this->data['propertiesArr'] = \DB::table('tb_properties')->select('property_name', 'property_slug')->where('property_status', 1)->where(function ($query) { $query->where('social_twitter', '!=', '')->orWhere('social_facebook', '!=', '')->orWhere('social_youtube', '!=', '')->orWhere('social_vimeo', '!=', '')->orWhere('social_pinterest', '!=', '')->orWhere('social_google', '!=', ''); })->get();
-		
-		return view('frontend.themes.emporium.pages.social_stream_page', $this->data);
+
+		return view('frontend.themes.EC.pages.social_stream_page', $this->data);
 	}
     public function getyoutubechannel(Request $request)
-	{		
+	{
         $channel_url = '';
 		$catid = '';
 		if (trim($request->input('cat'))!='' && !is_null($request->input('cat'))) {
@@ -141,7 +141,7 @@ class FrontendPagesController extends Controller {
 		{
 			$cateObjsc = \DB::table('tb_categories')->select('id', 'category_youtube_channel_url')->where('parent_category_id', 0)->where('category_published', 1)->where('id', '!=', 8)->orderBy('category_order_num','asc')->first();
 		}
-		
+
 		if (!empty($cateObjsc)) {
 			$channel_url = $cateObjsc->category_youtube_channel_url;
 			$catid = $cateObjsc->id;
@@ -149,11 +149,11 @@ class FrontendPagesController extends Controller {
 		$res['channel_url'] = $channel_url;
 		$res['catid'] = $catid;
         echo json_encode($res);
-		//return view('frontend.themes.emporium.pages.social_youtube_page', $this->data);
+		//return view('frontend.themes.EC.pages.social_youtube_page', $this->data);
 	}
-    
+
     public function getinstagramchannel(Request $request)
-	{		
+	{
         $channel_url = '';
 		$catid = '';
 		if (trim($request->input('cat'))!='' && !is_null($request->input('cat'))) {
@@ -163,7 +163,7 @@ class FrontendPagesController extends Controller {
 		{
 			$cateObjsc = \DB::table('tb_categories')->select('id', 'category_instagram_channel')->where('parent_category_id', 0)->where('category_published', 1)->where('id', '!=', 8)->orderBy('category_order_num','asc')->first();
 		}
-		
+
 		if (!empty($cateObjsc)) {
 			$channel_url = $cateObjsc->category_instagram_channel;
 			$catid = $cateObjsc->id;
@@ -171,6 +171,6 @@ class FrontendPagesController extends Controller {
 		$res['channel_url'] = $channel_url;
 		$res['catid'] = $catid;
         echo json_encode($res);
-		//return view('frontend.themes.emporium.pages.social_youtube_page', $this->data);
+		//return view('frontend.themes.EC.pages.social_youtube_page', $this->data);
 	}
 }

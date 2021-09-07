@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'key' => env('APP_KEY', 'asdf1234asdf1234asdf1234asdf1234'),
+    'key' => env('APP_KEY', 'ASDFASDF12341234ASDFASDF12341234'),
     
     'cipher' => 'AES-256-CBC',
 
@@ -154,7 +154,7 @@ return [
 		Maatwebsite\Excel\ExcelServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
-        Kouz\LaravelAirbrake\ServiceProvider::class
+        Kouz\LaravelAirbrake\ServiceProvider::class,
 
     ],
 
@@ -213,14 +213,18 @@ return [
 		'Image' => Intervention\Image\Facades\Image::class,
 		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 		'TagsFinder' => App\Helpers\TagsFinder::class,
-		 'CategoryMenu' => App\Helpers\CategoryMenu::class,
-         'CustomQuery' => App\Helpers\CustomQuery::class,
-         'Debugbar' => Barryvdh\Debugbar\Facade::class,
-	 'ImageCache' => App\Helpers\ImageCache::class,
-     'CommonHelper'=> App\Helpers\CommonHelper::class,
+		'CategoryMenu' => App\Helpers\CategoryMenu::class,
+        'CustomQuery' => App\Helpers\CustomQuery::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+    	'ImageCache' => App\Helpers\ImageCache::class,
+        'CommonHelper'=> App\Helpers\CommonHelper::class,
         'CrmLayoutHelper' => App\Helpers\CrmLayoutHelper::class,
         'CrmCustomFieldHelper' => App\Helpers\CrmCustomFieldHelper::class,
         'DataTables' => Yajra\DataTables\Facades\DataTables::class,
+        'UnsplashSearch' => shweshi\LaravelUnsplashWrapper\UnsplashSearch::class,
+        'UnsplashUsers' => shweshi\LaravelUnsplashWrapper\UnsplashUsers::class,
+        'UnsplashPhotos' => shweshi\LaravelUnsplashWrapper\UnsplashPhotos::class,
+        'UnsplashCollections' => shweshi\LaravelUnsplashWrapper\UnsplashCollections::class,
     ],
 
 ];
