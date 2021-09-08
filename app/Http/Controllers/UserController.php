@@ -374,7 +374,7 @@ class UserController extends Controller {
                             return Redirect::to('dashboard');
                         else :
                             $getusercompany = \DB::table('tb_user_company_details')->where('user_id', $row->id)->first();
-                            if (!empty($getusercompany)) {
+                            if (!empty($getusercompany) or $row->group_id == 1) {
                                 return Redirect::to('dashboard');
                             } else {
                                 if ($row->group_id == 4) {
@@ -507,7 +507,7 @@ class UserController extends Controller {
           if ($results) {
     		foreach($results as $row) {
     		  $folder_tree_array[] = array("id" => $row->id, "name" => $spacing . $row->category_name);
-    		  $folder_tree_array = $this->get_destinations_new($row->id, $spacing . '', $folder_tree_array);
+    		  //$folder_tree_array = $this->get_destinations_new($row->id, $spacing . '', $folder_tree_array);
     		}
     	  }          
     	  return $folder_tree_array;

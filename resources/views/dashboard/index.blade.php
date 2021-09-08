@@ -62,7 +62,7 @@
 									<th> Users </th>
 									<th> Last Activity </th>
 								</tr>
-							@foreach($online_users as $user)
+							@foreach($data['online_users'] as $user)
 								<tr>
 									<td>  {!! SiteHelpers::showUploadedFile($user->avatar,'/uploads/users/') !!}</td>
 									<td>{{ $user->first_name}} {{ $user->last_name}}</td>
