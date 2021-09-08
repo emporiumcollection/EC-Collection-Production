@@ -1,5 +1,6 @@
 <?php
-
+// use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\TwilioSMSController;	
 /*
 |--------------------------------------------------------------------------
 | Application Routes
@@ -10,12 +11,32 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-
-
+Route::get('/logout', 'Auth\AuthController@logout');
+Route::post('/sendSMS', 'Auth\AuthController@create');
+Route::post('/verify', 'Auth\AuthController@verify');
 
 Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
+
+//Routes for new UI changes in Emporium 
+Route::get('/users/my-preferences', 'UserController@getPreferences');
+Route::get('/users/my-preferences/{id}', 'UserController@editPreferences');
+Route::get('/users/delete-preferences/{id}', 'UserController@deletePreferences');
+Route::get('/users/profile', 'UserController@getProfile');
+Route::get('/users/setting', 'UserController@getSettings');
+Route::get('/users/guestinvite', 'UserController@getInvite');
+Route::get('/users/companion', 'UserController@getCompanion');
+Route::get('/users/companion', 'UserController@getCompanion');
+
+Route::get('/users/security', 'UserController@getSecurity');
+Route::get('/users/contracts', 'UserController@getInvoices');
+Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
+// Route::post('/users/savetravel', 'UserController@postSaveprofile');
+Route::post('/users/CardDetail', 'UserController@userCardDetail');
+Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');
+Route::post('/users/invite', 'UserController@postInvite');
+Route::get('/users/reservation', 'UserController@getReservation');
+Route::post('/users/password', 'UserController@postSavepassword');
 
 /**
  * New frontend routes.
@@ -28,6 +49,9 @@ Route::get('hotel_gallery', 'PhaseOne\HotelController@getHotelGallery');
 Route::get('hotel/{title}', 'PhaseOne\HotelController@index');
 Route::get('mapsearchavailability', 'PhaseOne\MapBoxController@index');
 Route::get('book/reservation', 'PhaseOne\ReservationController@index');
+
+//Datatable route
+Route::get('/users/companiondata', 'DatatableController@getDatatable');
 
 /**
  * New Admin backend routes.
@@ -51,9 +75,7 @@ Route::get('/sitemap/{type}.xml', 'SitemapController@properties');
 
 Route::group(['middleware' => 'auth'], function()
 {
-
      Route::resource('usercontract', 'UsercontractController');
-
 	//Route::get('crmlayouts', 'CrmlayoutController@index');
 	Route::resource('crmlayouts', 'CrmlayoutController');
 	Route::get('crmlayouts/delete/{crmlayouts}', 'CrmlayoutController@destroy');
@@ -124,22 +146,22 @@ Route::controller('home', 'HomeController');
 Route::controller('/user', 'UserController');
 Route::controller('/customer', 'CustomerController');
 Route::get('/traveller', 'CustomerController@traveller');
+Route::get('/register/', 'CustomerController@getregister');
 
 Route::get('/supplier', 'CustomerController@supplier');
 
 Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences');
 
 Route::get('/whoiam', 'CustomerController@whoIam');
-
+// Route::post('user/my-preferences', 'UserController@getPreferences');
 Route::post('/viewInvite', 'UserController@viewInvite');
 Route::post('editinvite', 'UserController@editInvite');
 Route::post('deleteinvite', 'UserController@deleteInvite');
 
-Route::post('addcompanion', 'UserController@addCompanion');
+Route::post('/users/addcompanion', 'UserController@addCompanion');
 Route::post('/viewcompanion', 'UserController@viewCompanion');
-Route::post('editcompanion', 'UserController@editCompanion');
+Route::get('/editcompanion/{id}', 'UserController@editCompanion');
 Route::post('deletecompanion', 'UserController@deleteCompanion');
-Route::post('changepassword', 'UserController@ajaxSavepassword');
 
 Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate');
 

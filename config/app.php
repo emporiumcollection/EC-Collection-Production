@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', true),
+    'debug' => True,//env('APP_DEBUG'),
 
     /*
     |--------------------------------------------------------------------------
@@ -219,6 +219,7 @@ return [
         'CommonHelper'=> App\Helpers\CommonHelper::class,
         'CrmLayoutHelper' => App\Helpers\CrmLayoutHelper::class,
         'CrmCustomFieldHelper' => App\Helpers\CrmCustomFieldHelper::class,
+        'DataTables' => Yajra\DataTables\Facades\DataTables::class,
         'UnsplashSearch' => shweshi\LaravelUnsplashWrapper\UnsplashSearch::class,
         'UnsplashUsers' => shweshi\LaravelUnsplashWrapper\UnsplashUsers::class,
         'UnsplashPhotos' => shweshi\LaravelUnsplashWrapper\UnsplashPhotos::class,

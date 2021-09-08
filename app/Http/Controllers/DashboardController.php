@@ -11,9 +11,10 @@ class DashboardController extends Controller {
 	{
 		parent::__construct();
 	}
-
+    
 	public function getIndex( Request $request )
 	{
+    // echo "here";exit();
         /*$url = \CommonHelper::check_membership_package(\Session::get('uid'));
         if(strlen(trim($url))>0){
             return Redirect::to($url);
@@ -24,6 +25,7 @@ class DashboardController extends Controller {
         }
         
         $this->data['container'] = new ContainerController();
+        $preferences = \DB::table('tb_personalized_services')->select( 'ps_id', 'first_name', 'created')->orderby('ps_id','DESC')->limit(3)->get();
         
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
         
@@ -34,13 +36,15 @@ class DashboardController extends Controller {
         //print_r($request->session()->all()); die;
         $this->data['logged_user'] = \DB::table('tb_users')->where('id', $u_id)->first();
           
-		$this->data['online_users'] = \DB::table('tb_users')->orderBy('last_activity','desc')->limit(10)->get(); 
+		    $this->data['online_users'] = \DB::table('tb_users')->orderBy('last_activity','desc')->limit(10)->get(); 
         
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
         
         $g_id = (int) \Session::get('gid');  
-        
         $gp_id = trim(\CommonHelper::getusertype($g_id));
+        /*echo '<pre>';
+        print_r($this->data);exit;
+        echo '</pre>';*/
         
         if(!empty($gp_id)){ 
             if($gp_id=="users-b2c"){           
@@ -104,6 +108,9 @@ class DashboardController extends Controller {
                $this->data['pageslider'] = \DB::table('tb_pages_sliders')->join('tb_pages_content', 'tb_pages_sliders.slider_page_id', '=' , 'tb_pages_content.pageID')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('tb_pages_content.alias', 'hotel-dashboard')->where('slider_status', 1)->get();
                
                $this->data['setupslider'] = \DB::table('tb_pages_sliders')->join('tb_pages_content', 'tb_pages_sliders.slider_page_id', '=' , 'tb_pages_content.pageID')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('tb_pages_content.alias', 'hotel-dashboard')->where('slider_status', 1)->get();
+
+               
+               $this->data['setupslider'] = \DB::table('tb_pages_sliders')->join('tb_pages_content', 'tb_pages_sliders.slider_page_id', '=' , 'tb_pages_content.pageID')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('tb_pages_content.alias', 'hotel-dashboard')->where('slider_status', 1)->get();
                
                $prop_id = 0;
                $property_name = '';
@@ -120,7 +127,8 @@ class DashboardController extends Controller {
                $this->data['cat_types'] = array();                                       
             }
         }
-		return view($file_name,$this->data);
+        $data = $this->data;
+		return view($file_name, compact('data','preferences'));
 	}
 
 }

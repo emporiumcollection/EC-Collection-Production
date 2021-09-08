@@ -95,8 +95,7 @@
 							</div>
 							
                             @include('users_admin/traveller/layouts/blank_horz_menu')
-                            @include('users_admin/traveller/layouts/blank_top_menu')				            
-                            
+                            @include('users_admin/traveller/layouts/blank_top_menu')				                                        
 						</div>
 					</div>
 				</div>

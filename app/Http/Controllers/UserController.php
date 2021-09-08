@@ -259,7 +259,7 @@ class UserController extends Controller {
                 $downfolder = (new ContainerController)->getContainerUserPath($folder->id);
                 if (is_dir($downfolder) === true) {
                     $curr_yr = date('Y');
-                    $curr_mon = date('m');
+                    $curr_mon = date('m');  
                     $yearfolder = \DB::table('tb_container')->where('name', $curr_yr)->where('parent_id', $folder->id)->first();
                     if (!empty($yearfolder)) {
                         $yrfoldid = $yearfolder->id;
@@ -404,6 +404,26 @@ class UserController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
 
+        $genders = [ 
+            'Man',
+            'Women',
+            'Non-Binary',
+            'Cigender',
+            'Intersex',
+            'Other',
+        ];
+
+        $languages = [
+            'en' => 'English',
+            'de' => 'Deutsch',
+            'es' => 'Espanol',
+            'fr' => 'Francais',
+            'it' => 'Italiano',
+            'nl' => 'Nederlands',
+            'en' => 'English',
+            'en' => 'English',
+            'en' => 'English',
+        ]; 
 
         $info = User::find(\Auth::user()->id);
         $extra = \DB::table('tb_user_company_details')->where('user_id', \Auth::user()->id)->first();
@@ -429,6 +449,8 @@ class UserController extends Controller {
             'pageTitle' => 'My Profile',
             'pageNote' => 'View Detail My Info',
             'info' => $info,
+            'genders' => $genders,
+            'languages' => $languages,
             'extra' => $extra,
             'slider_ads_expiry_days' => $slider_ads_expiry_days,
             'slider_ads_price' => $slider_ads_price,
@@ -443,7 +465,7 @@ class UserController extends Controller {
             'experiences' => $experiences,
             'preferences' => $preferences
         );
-        
+
         //get contract during signup
         $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description','tb_users_contracts.is_required','tb_users_contracts.is_agree','tb_users_contracts.sort_num')->where('tb_users_contracts.contract_type','sign-up')->where('tb_users_contracts.accepted_by', \Auth::user()->id)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
         $resetContracts = array();
@@ -455,14 +477,14 @@ class UserController extends Controller {
         //End
         
         $group_id = \Auth::user()->group_id;
-        $file_name = 'user.profile';
+        $file_name = 'users_admin.traveller.users.profile';
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
         if($is_demo6 === true){
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = $is_demo6.'.user.profile';
+            $file_name = 'users_admin.traveller.users.profile';
             $is_newuser = (int) $info->new_user;
             if($info->new_user == 1){
-                $file_name = $is_demo6.'.user.new_profile';
+                $file_name = 'users_admin.traveller.users.profile';
             }
         }
         
@@ -562,6 +584,7 @@ class UserController extends Controller {
     }
     
     public function postSaveprofile(Request $request) { 
+        // echo "<pre>";print_r($request);exit;
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -617,14 +640,13 @@ class UserController extends Controller {
     }
     
     public function postSavetravellerprofile(Request $request) {
+       // echo"<pre>";print_r($request->all());exit();
         if (!\Auth::check())
             return Redirect::to('user/login');
-            
         $rules = array(
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'txtmobilecode' => 'required',
-            'txtmobileNumber' => 'required',
+            'firstname' => 'required',
+            'lastname' => 'required',
+            'phone' => 'required',
         );
         
         //get contract during signup
@@ -632,7 +654,7 @@ class UserController extends Controller {
         //if(count($contracts) > 0){
         //    $rules['accept_contract'] = 'required';
         //}
-        //End
+        //Enddsd
 
         if ($request->input('email') != \Session::get('eid')) {
             $rules['email'] = 'required|email|unique:tb_users';
@@ -640,42 +662,39 @@ class UserController extends Controller {
 
         $validator = Validator::make($request->all(), $rules);
 
-        if ($validator->passes()) { 
+        // if ($validator->passes()) { 
             
-            if (!is_null(Input::file('avatar'))) {
-                $file = $request->file('avatar');
-                $destinationPath = './uploads/users/';
+            if (!is_null($request->profile_avatar)) {
+                $file = $request->profile_avatar;
+                
+                $destinationPath = './uploads/user_avatar';
                 $filename = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                 $newfilename = \Session::get('uid') . '.' . $extension;
-                $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
-                if ($uploadSuccess) {
-                    $data['avatar'] = $newfilename;
-                }
-            }
-            
+                $uploadSuccess = $request->file('profile_avatar')->move(public_path($destinationPath,$file));
+                // if ($uploadSuccess) {
+                //     $data['profile_avatar'] = $newfilename;
+                // }
+            // }
             $user = User::find(\Session::get('uid'));
-            $user->first_name = $request->input('first_name');
-            $user->last_name = $request->input('last_name');
+            $user->first_name = $request->input('firstname');
+            $user->last_name = $request->input('lastname');
             $user->email = $request->input('email');
-            
-            $user->mobile_code = $request->input('txtmobilecode');
-            $user->mobile_number = $request->input('txtmobileNumber');
+            // $user->mobile_code = $request->input('txtmobilecode');
+            $user->mobile_number = $request->input('phone');
             $user->gender = $request->input('gender');            
             $user->prefer_communication_with = $request->input('prefer_communication_with');
-            $user->preferred_currency = $request->input('preferred_currency');
-            if (isset($data['avatar']))
-                $user->avatar = $newfilename;
-                
+            $user->preferred_currency = $request->preferred_currency;
+            // if (isset($data['avatar']))
+            $user->avatar = $newfilename;
             $user->save();
             
             //insert contracts
             //\CommonHelper::submit_contracts($contracts,'sign-up');
             //End
-
-            return Redirect::to('user/profile')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
+            return Redirect::to('/dashboard')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
         } else {
-            return Redirect::to('user/profile')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
+            return Redirect::to('/dashboard')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
                             ->withErrors($validator)->withInput();
         }
     }
@@ -773,10 +792,8 @@ class UserController extends Controller {
                 $return_array['message'] = 'Profile not submitted errors occurred!';
             }
 
-            
-
         } else {
-            
+
             $return_array['status'] = 'error';
             $return_array['message'] = 'Profile not submitted errors occurred!';
             
@@ -848,8 +865,7 @@ class UserController extends Controller {
 
                     $message->subject($emlData['subject']);
                 });
-
-
+                
                 $affectedRows = User::where('email', '=', $user->email)
                         ->update(array('reminder' => $token));
 
@@ -1367,7 +1383,7 @@ class UserController extends Controller {
         $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->where('status', 0)->get();
         $user = User::find(\Session::get('uid'));
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.companion':'';      
+        $file_name = 'users_admin.traveller.users.companion';      
         return view($file_name, $this->data);
     }
     public function postCompanion(Request $request){
@@ -1427,6 +1443,7 @@ class UserController extends Controller {
         echo json_encode($companion);
     }
     public function addcompanion(Request $request){
+        // print_r($request->all());exit();
         $user = User::find(\Session::get('uid'));
         
         $return_array = array();
@@ -1448,7 +1465,7 @@ class UserController extends Controller {
             $companion_data['first_name'] = $request->input('first_name');
             $companion_data['last_name'] = $request->input('last_name');            
             $companion_data['email'] = $request->input('email');
-            $companion_data['phone_code'] = $request->input('phone_code');
+            // $companion_data['phone_code'] = $request->input('phone_code');
             $companion_data['phone_number'] = $request->input('phone_number');
             $companion_data['gender'] = $request->input('gender');
             $companion_data['preferred_language'] = $request->input('preferred_language');
@@ -1478,11 +1495,11 @@ class UserController extends Controller {
                 $edata['email'] = trim($request->input('email'));
                 
                 $emlData['email'] = trim($request->input('email'));
-                $emlData['subject'] = 'Companion Add';
-                
-                
+                $emlData['subject'] = 'Companion Add';                
                 $etemp = 'companion';
                 // echo view('user.emails.' . $etemp, $edata); die;
+
+
                 \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
                     $message->from($emlData['frmemail'], CNF_APPNAME);
         
@@ -1494,9 +1511,9 @@ class UserController extends Controller {
                 
             }            
                        
-            
-            $return_array['status'] = 'success';
-            $return_array['message'] = 'You have successfully added a travel companion';          
+            // $return_array['status'] = 'success';
+            // $return_array['message'] = 'You have successfully added a travel companion';
+             return Redirect::to('user/companion')->with('message', 'You have successfully added a travel companion')->with('msgstatus', 'success');          
             
         } else {
             $return_array['status'] = 'error';
@@ -1505,6 +1522,7 @@ class UserController extends Controller {
         echo json_encode($return_array);
     }
     public function editCompanion(Request $request){
+        print_r('here');exit();
         $user = User::find(\Session::get('uid'));
         
         $return_array = array();
@@ -1574,10 +1592,11 @@ class UserController extends Controller {
         $user = User::find(\Session::get('uid'));
         $this->data['invitees'] = \DB::table('tb_invitee')->where('user_id', \Session::get('uid'))->where('status', 0)->get();
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.invite':'';      
+        $file_name = 'users_admin.traveller.users.guestinvite';      
         return view($file_name, $this->data);
     }
     public function postInvite(Request $request){
+        // echo "<pre>";print_r($request->all());exit();
         $user = User::find(\Session::get('uid'));
         
         $return_array = array();
@@ -1604,62 +1623,101 @@ class UserController extends Controller {
             $invitee_data['created'] = date("Y-m-d");
             $today =  date("Y-m-d");            
             $expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($today)));
-            
             $invitee_data['expired_on'] = $expiry_date;
             
             $inviteeId = \DB::table('tb_invitee')->insertGetId($invitee_data);             
             if($inviteeId > 0){
                 
                 $edata = array();
-                $emlData['frmemail'] = 'marketing@emporium-voyage.com';
+                // $emlData['frmemail'] = 'compact(varname)';
+                $emlData['frmemail'] = $request->input('email');
                 $edata['referral_code'] = $referral_code;
                 $edata['msg'] = $request->input('message');
                 $edata['first_name'] = $request->input('first_name');
                 $edata['last_name'] = $request->input('last_name');
                 $emlData['email'] = $request->input('email');
-                $emlData['subject'] = 'Invitation send by '.$request->input('email');
-                
+                $emlData['subject'] = 'Invitation send by '.$request->input('email');                
                 $edata['byfirstname'] = $user->first_name;
                 $edata['bylastname'] = $user->last_name;
-                $edata['byemail'] = $user->email;
-                
-                    
+                $edata['byemail'] = $user->email;                                    
                 $edata['tofirstname'] = $request->input('first_name');
                 $edata['tolastname'] = $request->input('last_name');
                 $edata['todate'] = $today;
                 $expiry_date = date("Y-m-d", strtotime("+30 day", strtotime($today)));
                 $edata['todays'] = 30;
                 $edata['referral_code'] = $referral_code; 
-                
-                //if (\Session::get('newlang') == 'English') {
-                //    $etemp = 'auth.reminder_eng';
-                //}
-                
                 $etemp = 'invite';
                 //echo view('user.emails.invites.' . $etemp, $edata); die;
                 try{ 
-                \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
+                \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) { 
                     $message->from($emlData['frmemail'], CNF_APPNAME);
-
                     $message->to($emlData['email']);
-
                     $message->subject($emlData['subject']);
                 });
                 }catch(Exception $ex){
-                    //print_r($ex); 
+                    // print_r($ex); 
                 }
-            }            
+            }
+                         
             return Redirect::to('user/invite/')->with('message', 'Invites send successfully')->with('msgstatus', 'success');
         } else {
             return Redirect::to('user/invite/')->withErrors($validator)->withInput();
         }        
         
     }
+
+    public function userCardDetail(Request $request){
+
+        $user = User::find(\Session::get('uid'));
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'card_number' => 'required',
+            'security_code' => 'required',
+            'postal_code' => 'required',
+            'country' => 'required'
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+         if ($validator->passes()) {
+
+            $user = User::find(\Session::get('uid'));
+            $card_data['user_id'] = $user->id;
+            $card_data['select_card'] = $request->input('select_card');
+            $card_data['card_type'] = $request->input('card_type');
+            $card_data['card_number'] = $request->card_number;
+            $card_data['expires_on'] = $request->input('expire');
+            $card_data['security_code'] = $request->input('security_code');
+            $card_data['first_name'] =$request->input('first_name');
+            $card_data['last_name'] =$request->input('last_name');
+            $card_data['postal_code'] = $request->input('postal_code');
+            $card_data['country'] = $request->input('country');
+            $card_data['created_at'] = date("Y-m-d");
+            $card_data['updated_at'] = date("Y-m-d");
+
+            \DB::table('tb_cards')->insert($card_data);
+                return Redirect::to('users/setting')->with('message', 'Invites send successfully')->with('msgstatus', 'success');
+            } else {
+                return Redirect::to('')->withErrors($validator)->withInput();
+            }        
+    }
+
+    public function deleteCard($id){
+
+        $deleted = \DB::table('tb_cards')
+            ->where('id','=',$id)
+            ->delete();
+        return Redirect::to('/users/setting');
+    }
+
     public function getSettings(){
         $user = User::find(\Session::get('uid'));
-        $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.user.settings':'';      
-        return view($file_name);
+        // $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
+        $card_detail = \DB::table('tb_cards')->get();
+        $file_name = 'users_admin.traveller.users.account-setting';      
+        return view($file_name,compact('card_detail'));
     }
     public function getCompany(){
         $user = User::find(\Session::get('uid'));
@@ -2539,12 +2597,43 @@ class UserController extends Controller {
         echo json_encode($response);
         exit;
     }
+
+    public function deletePreferences($id){
+        $deleted = \DB::table('tb_personalized_services')
+                    ->where('ps_id','=',$id)
+                    ->delete();
+        return Redirect::to('/dashboard');
+    }
+    public function editPreferences($id){   
+
+        $editPreferences = \DB::table('tb_personalized_services')
+        ->select( 
+                'ps_id',
+                'first_name', 
+                'adults', 
+                'youth', 
+                'children',
+                'toddlers', 
+                'earliest_arrival', 
+                'late_check_out', 
+                'stay_time', 
+                'destinations',
+                'inspirations',
+                'experiences'
+               )
+        ->where('ps_id','=', $id)
+        ->orderby('ps_id','DESC')
+        ->limit(3)
+        ->get();
+
+        $file_name = 'users_admin.traveller.users.my-preferences';
+        return view($file_name,compact('editPreferences'));
+    }
+
     public function getPreferences(){
         if (!\Auth::check())
             return redirect('user/login');
-
-
-        
+                        
         $def_currency = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
         
         $temp = $this->get_destinations_new();
@@ -2570,24 +2659,28 @@ class UserController extends Controller {
             'preferences' => $preferences
         );
         
-        
-        
         $group_id = \Auth::user()->group_id;
-        $file_name = 'user.preferences';
+        $file_name = 'users_admin.traveller.users.my-preferences';
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
         if($is_demo6 === true){
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = $is_demo6.'.user.preferences';           
+            $file_name = '.users_admin.traveller.users.my-preferences';           
         }
         
         return view($file_name, $this->data);
     }
+    public function getReservation(){
+        $file_name = 'users_admin.traveller.users.reservations';
+        return view($file_name);
+    }
+
+
     public function getSecurity(Request $request){
         
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
         if($is_demo6 === true){
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = $is_demo6.'.user.security';           
+            $file_name = 'users_admin.traveller.users.security-privacy';           
         }
         return view($file_name);
     }
@@ -2596,7 +2689,7 @@ class UserController extends Controller {
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
         if($is_demo6 === true){
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
-            $file_name = $is_demo6.'.user.invoices';           
+            $file_name = 'users_admin.traveller.users.billings-contracts';           
         }
         return view($file_name);
     }
