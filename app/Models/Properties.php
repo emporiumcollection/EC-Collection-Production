@@ -34,6 +34,31 @@ class properties extends Sximo  {
         return $this->hasMany(PropertyImages::class, 'property_id');
     }
 
+	public function roomImages()
+    {
+        return $this->images()->where('type', '=', 'Rooms Images');
+    }
+
+	public function barImages()
+    {
+        return $this->images()->where('type', '=', 'Bar Gallery Images');
+    }
+
+	public function spaImages()
+    {
+        return $this->images()->where('type', '=', 'Spa Gallery Images');
+    }
+
+	public function restrurantImages()
+    {
+        return $this->images()->where('type', '=', 'Restrurants Gallery Images');
+    }
+
+	public function hotelBrochureImages()
+    {
+        return $this->images()->where('type', '=', 'Hotel Brochure');
+    }
+
 	public function suites()
     {
         return $this->hasMany(PropertyCategoryTypes::class, 'property_id');

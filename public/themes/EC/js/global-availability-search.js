@@ -34,6 +34,66 @@ function replacePropertyData(id){
       $(this).html(imageview);
   });
 
+  $('[data-place="room-images"]').each(function() {
+      // field = $(this).attr('data-replace');
+      //console.log(properties[id][field]);
+      var values = properties[id]['room_images'];
+      var imageview = '';
+      var spanid = 1;
+      var grid = 1;
+      values.forEach(function(e){
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        spanid=2;
+        grid++;
+      })
+      $(this).html(imageview);
+  });
+
+  $('[data-place="bar-images"]').each(function() {
+      // field = $(this).attr('data-replace');
+      //console.log(properties[id][field]);
+      var values = properties[id]['bar_images'];
+      var imageview = '';
+      var spanid = 1;
+      var grid = 1;
+      values.forEach(function(e){
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        spanid=2;
+        grid++;
+      })
+      $(this).html(imageview);
+  });
+
+  $('[data-place="restrurant-images"]').each(function() {
+      // field = $(this).attr('data-replace');
+      //console.log(properties[id][field]);
+      var values = properties[id]['restrurant_images'];
+      var imageview = '';
+      var spanid = 1;
+      var grid = 1;
+      values.forEach(function(e){
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        spanid=2;
+        grid++;
+      })
+      $(this).html(imageview);
+  });
+
+  $('[data-place="spa-images"]').each(function() {
+      // field = $(this).attr('data-replace');
+      //console.log(properties[id][field]);
+      var values = properties[id]['spa_images'];
+      var imageview = '';
+      var spanid = 1;
+      var grid = 1;
+      values.forEach(function(e){
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        spanid=2;
+        grid++;
+      })
+      $(this).html(imageview);
+  });
+
   setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
 }
 

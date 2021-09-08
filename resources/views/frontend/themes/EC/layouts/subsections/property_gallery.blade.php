@@ -16,6 +16,38 @@
             <h3 class="title-second title-line mb-0" data-place="property" data-replace="property_short_name">
             </h3>
         </div>
+        <ul class="nav nav-tab-main nav-pills nav-justified mb-2">
+            <li class="nav-item">
+                <a class="nav-link active" href="#hotel_gallery" id="hotel_gallery-tab" data-toggle="tab" role="tab"
+                    aria-controls="hotel_gallery" aria-selected="true">
+                    Hotel
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#suite_gallery" id="suite_gallery-tab" data-toggle="tab" role="tab"
+                    aria-controls="suite_gallery" aria-selected="false">
+                    Suites
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#experience_gallery" id="experience_gallery-tab" data-toggle="tab" role="tab"
+                    aria-controls="experience_gallery" aria-selected="false">
+                    Spa
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#restaurant_gallery" id="restaurant_gallery-tab" data-toggle="tab" role="tab"
+                    aria-controls="restaurant_gallery" aria-selected="false">
+                    Restaurant
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#bars_gallery" id="bars_gallery-tab" data-toggle="tab" role="tab"
+                    aria-controls="bars_gallery" aria-selected="false">
+                    Bars
+                </a>
+            </li>
+        </ul>
     </div>
 
     <div class="tab-content h-100">
@@ -52,53 +84,7 @@
 
                             </ul>
                         </div>
-                        <div class="col-8">
-                            <div class="grid-layout" id="gallery_restaurant">
-                                <a href="images/29be6592342279.5e49609509d85.jpg"
-                                    data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Adipisicing elit">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                            </div>
+                        <div class="grid-layout" id="gallery_restaurant" data-place="restrurant-images" data-replace="restrurant-images">
                         </div>
                     </div>
                 </div>
@@ -126,51 +112,7 @@
                             </ul>
                         </div>
                         <div class="col-8">
-                            <div class="grid-layout" id="gallery_bars">
-                                <a href="images/29be6592342279.5e49609509d85.jpg"
-                                    data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Adipisicing elit">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
+                            <div class="grid-layout" id="gallery_bars" data-place="bar-images" data-replace="bar-images">
                             </div>
                         </div>
                     </div>
@@ -199,51 +141,7 @@
                             </ul>
                         </div>
                         <div class="col-8">
-                            <div class="grid-layout" id="gallery_experience">
-                                <a href="images/29be6592342279.5e49609509d85.jpg"
-                                    data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Adipisicing elit">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
+                            <div class="grid-layout" id="gallery_experience" data-place="spa-images" data-replace="spa-images">
                             </div>
                         </div>
                     </div>
@@ -271,52 +169,8 @@
 
                             </ul>
                         </div>
-                        <div class="col-8">
-                            <div class="grid-layout" id="gallery_suite">
-                                <a href="images/29be6592342279.5e49609509d85.jpg"
-                                    data-sub-html="Lorem ipsum dolor sit amet" class="grid-item span-1">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Adipisicing elit">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2 grid-row-1"
-                                    data-sub-html="Lorem ipsum dolor sit amet">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2 grid-row-4"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
-                                <a href="images/Gandhiva-Restaurant-7.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/Gandhiva-Restaurant-7.jpg" alt="">
-                                </a>
-                                <a href="images/29be6592342279.5e49609509d85.jpg" class="grid-item span-2 grid-row-3"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/29be6592342279.5e49609509d85.jpg" alt="">
-                                </a>
-                                <a href="images/hotel-kjsdksd.jpg" class="grid-item span-2"
-                                    data-sub-html="Dignissimos quas">
-                                    <img src="images/hotel-kjsdksd.jpg" alt="">
-                                </a>
+                        <div class="col-8">                            
+                            <div class="grid-layout" id="gallery_suite" data-place="room-images" data-replace="room-images">
                             </div>
                         </div>
 

@@ -2932,14 +2932,31 @@ class PropertyController extends Controller {
         $this->data['experiences'] = $exp;
 
         //Get editor's choice properties
-        $this->data['editorsProperties'] = properties::with(['container','suites'])
+        $this->data['editorsProperties'] = properties::with([
+            'container',
+            'suites', 
+            'roomImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }, 
+            'barImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }, 
+            'spaImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }, 
+            'restrurantImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }, 
+            'hotelBrochureImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->get();
 
         if(!empty($this->data['editorsProperties']->toArray())){
             foreach($this->data['editorsProperties'] as $k => $editorProperty){
-                $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
+                $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);
             }
             
             $this->formatPropertyRecords($this->data['editorsProperties']);
@@ -2950,7 +2967,25 @@ class PropertyController extends Controller {
         //print_r($this->data['editorsProperties']->toArray());exit;
 
         //Get editor's choice properties
-        $this->data['featureProperties'] = properties::with(['images','suites'])
+        $this->data['featureProperties'] = properties::with([
+            'images',
+            'suites',
+            'roomImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }, 
+            'barImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }, 
+            'spaImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }, 
+            'restrurantImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }, 
+            'hotelBrochureImages' => function($query){
+                return $query->with(['file'])->limit(10);
+            }
+        ])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
         ->get();
