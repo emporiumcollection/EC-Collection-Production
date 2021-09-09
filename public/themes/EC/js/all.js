@@ -470,7 +470,6 @@ var ajaxReq = 'ToCancelPrevReq';
 
   });
 
-
   function globalSearchForAll(searcValue, sitename) {
     var _token = $('meta[name="csrf-token"]').attr('content');
     ajaxReq = $.ajax({
