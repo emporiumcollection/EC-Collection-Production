@@ -48,7 +48,7 @@
                         </li>
                     </ul>
 
-                    <form method="post" action="/verify"  name="form" id="form">
+                    <form method="post" action="/invitecompanion"  name="form" id="form">
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="step1" role="tabpanel"
                                 aria-labelledby="step1-tab">
@@ -375,6 +375,29 @@
                                     </label>
                                     <p style="color: red; display: none" id="term"><strong>Please select role</strong></p>
                                 </div>
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input type="checkbox" name="a" class="custom-control-input" id="customCheck1">
+                                    <label class="custom-control-label" for="customCheck2">
+                                        I agree that my personal data will be collected and stored and used
+                                        electronically to help the reservation agents with specialized offers pertaining
+                                        to my travel preferences. Note: You may revoke your consent at any time by
+                                        e-mail to info@emporium-collection.com or from your settings section in your
+                                        account admin.
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                    <label class="custom-control-label" for="customCheck3">
+                                        Emporium-Collection Privacy Policy <br>
+                                        I have read and agree to the Emporium-Collection Privacy Policy.
+                                    </label>
+                                </div>
+                                <div class="custom-control custom-checkbox mb-2">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                    <label class="custom-control-label" for="customCheck4">
+                                        I Agree to the Emporium-Collection Privacy &amp; Data Protection Policy
+                                    </label>
+                                </div>
                                 <div class="text-right mt-5">
                                     <button type="button" class="btn btn-outline-dark px-5  clickconfirm">Confirm</button>
                                 </div>
@@ -480,9 +503,9 @@
             $(".first").focusin(function(){
                 $("#first-name-error").hide();
             });
-            $(".user_type").focusin(function(){
-                $("#type-error").hide();    
-            });
+            // $(".user_type").focusin(function(){
+            //     $("#type-error").hide();    
+            // });
             $(".last_name").focusin(function(){
                 $("#last-name-error").hide();
             });
@@ -647,9 +670,30 @@
             $("#laxury").hide();
             $("#sel-user-type").change(function(){
                 $("select option:selected").each(function(){
+                    $("#type_error").hide();
                     if($(this).attr("value")=="2"){
                         $("#laxury").show();
                     }
+                    if($(this).attr("value")=="-1"){
+                        $("#laxury").hide();
+                    }
+                    if($(this).attr("value")=="5"){
+                        $("#laxury").hide();
+                    }
+                    if($(this).attr("value")=="7"){
+                        $("#laxury").hide();
+                    }
+                    if($(this).attr("value")=="14"){
+                        $("#laxury").hide();
+                    }
+                });
+            }).change();
+            });
+
+         $(document).ready(function(){
+            $("#question").change(function(){
+                $("select option:selected").each(function(){
+                    $("#qua_error").hide();
                 });
             }).change();
             });

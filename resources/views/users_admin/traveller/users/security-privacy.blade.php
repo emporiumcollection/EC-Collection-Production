@@ -190,80 +190,28 @@
 						<i aria-hidden="true" class="ki ki-close"></i>
 					</button>
 				</div>
-				<form action="#">
+				<form method="post" action="/users/questions" >
 					<div class="modal-body">
 						<p>We'll use these questions as a way to make sure it's your account, like if you need to reset
 							your password</p>
 						<div class="form-group">
 							<label>Security question 1</label>
-							<select class="form-control mb-4">
+							<select class="form-control mb-4" name="question">
 								<option value="Select a question">Select a question</option>
-								<option value="What was the name of your first school?">
-									What was the name of your first school?
+								@foreach($questions as $key => $question)
+								<option value="{{ $question->id }}">
+									{{ $question->question }}
 								</option>
-								<option value="What was the name of your first pet?">
-									What was the name of your first pet?
-								</option>
-								<option value="What's the name of the hospital in which you were born?">
-									What's the name of the hospital in which
-									you were born?
-								</option>
-								<option value="What's the nickname of your oldest child?">
-									What's the nickname of your oldest child?
-								</option>
-								<option value="What is the middle name of your father?">
-									What is the middle name of your father?
-								</option>
-								<option value="What's the name of your favorite childhood cuddly toy?">
-									What's the name of your favorite childhood
-									cuddly toy?
-								</option>
-								<option value="Who was your first roommate?">
-									Who was your first roommate?</option>
-								<option value="What is the maiden name of grandmother?">
-									What is the maiden name of grandmother?
-								</option>
+
+								@endforeach
 							</select>
-							<input type="text" class="form-control" placeholder="Answer">
-						</div>
-						<div class="form-group">
-							<label>Security question 2</label>
-							<select class="form-control mb-4">
-								<option value="Select a question">Select a question</option>
-								<option value="What was the name of your first school?">
-									What was the name of your first school?
-								</option>
-								<option value="What was the name of your first pet?">
-									What was the name of your first pet?
-								</option>
-								<option value="What's the name of the hospital in which you were born?">
-									What's the name of the hospital in which
-									you were born?
-								</option>
-								<option value="What's the nickname of your oldest child?">
-									What's the nickname of your oldest child?
-								</option>
-								<option value="What is the middle name of your father?">
-									What is the middle name of your father?
-								</option>
-								<option value="What's the name of your favorite childhood cuddly toy?">
-									What's the name of your favorite childhood
-									cuddly toy?
-								</option>s
-								<option value="Who was your first roommate?">
-									Who was your first roommate?</option>
-								<option value="What is the maiden name of grandmother?">
-									What is the maiden name of grandmother?
-								</option>
-							</select>
-							<input type="text" class="form-control" placeholder="Answer">
+							<input type="text" class="form-control" name="answer" placeholder="Answer">
 						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-light-primary font-weight-bold"
 							data-dismiss="modal">Cancel</button>
-						<button type="submit" class="btn btn-primary font-weight-bold"
-							data-dismiss="modal">Submit</button>
+						<button type="submit" name="submit" class="btn btn-primary font-weight-bold">Submit</button>
 					</div>
 				</form>
 			</div>

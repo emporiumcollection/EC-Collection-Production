@@ -1255,7 +1255,7 @@ return Redirect::to('customer/profile')->with('message', \SiteHelpers::alert('er
           if ($results) {
     		foreach($results as $row) {
     		  $folder_tree_array[] = array("id" => $row->id, "name" => $spacing . $row->category_name);
-    		  $folder_tree_array = $this->get_destinations_new($row->id, $spacing . '', $folder_tree_array);
+    		  //$folder_tree_array = $this->get_destinations_new($row->id, $spacing . '', $folder_tree_array);
     		}
     	  }          
     	  return $folder_tree_array;

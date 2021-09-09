@@ -767,17 +767,6 @@
           title: 'Gender',
           sortable: 'asc',
           selector: false,
-          template: function(row) {
-            var gender = {
-              1: {
-                'title': 'Male',
-              },
-              2: {
-                'title': 'Female',
-              },
-            };
-            return gender[row.gender].title;
-          }
         }, {
           field: 'preferred_language',
           title: 'Preferred Language',

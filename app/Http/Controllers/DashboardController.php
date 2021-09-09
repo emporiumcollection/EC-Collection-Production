@@ -14,7 +14,6 @@ class DashboardController extends Controller {
     
 	public function getIndex( Request $request )
 	{
-    // echo "here";exit();
         /*$url = \CommonHelper::check_membership_package(\Session::get('uid'));
         if(strlen(trim($url))>0){
             return Redirect::to($url);
@@ -35,7 +34,6 @@ class DashboardController extends Controller {
         //echo $u_id;
         //print_r($request->session()->all()); die;
         $this->data['logged_user'] = \DB::table('tb_users')->where('id', $u_id)->first();
-          
 		    $this->data['online_users'] = \DB::table('tb_users')->orderBy('last_activity','desc')->limit(10)->get(); 
         
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();

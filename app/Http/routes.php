@@ -13,8 +13,11 @@ use App\Http\Controllers\TwilioSMSController;
 */
 Route::get('/logout', 'Auth\AuthController@logout');
 Route::post('/sendSMS', 'Auth\AuthController@create');
-Route::post('/verify', 'Auth\AuthController@verify');
+Route::post('/invitecompanion', 'Auth\AuthController@verify');
 
+Route::post('/sendinvitation','UserController@EmailInvitation');
+
+// Route::post('/invite/companionemail', 'UserController@inviteCompanion');
 Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 
@@ -26,12 +29,12 @@ Route::get('/users/profile', 'UserController@getProfile');
 Route::get('/users/setting', 'UserController@getSettings');
 Route::get('/users/guestinvite', 'UserController@getInvite');
 Route::get('/users/companion', 'UserController@getCompanion');
-Route::get('/users/companion', 'UserController@getCompanion');
+// Route::get('/users/companion', 'UserController@getCompanion');
 
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
 Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
-// Route::post('/users/savetravel', 'UserController@postSaveprofile');
+Route::post('/users/questions', 'UserController@postSecurityQuestion');
 Route::post('/users/CardDetail', 'UserController@userCardDetail');
 Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');
 Route::post('/users/invite', 'UserController@postInvite');

@@ -265,17 +265,10 @@ p.gray-tx {
     			<div class="sections">
                     <div class="container-box">
                       <div class="txt-box">
-            				<h3>INVITATION SEND</h3>
-            				{!! $msg !!}
-                            <?php if(!empty($link)){ ?>
-                            <br><br>
-                            Please click on download button to download the file
+            				<h3>INVITATION SEND</h3>                            
                             <br>
-                            <a href="{{ URL::to($link) }}">Download</a>
-                            <br>
-                            if button does not work please copy below link and paste into browser.<br>
-                            {{ URL::to($link) }}     
-                            <?php } ?>                   
+                            <h3>INVITATION LINK</h3>                            
+                            <a href="http://design.emporium-collection.com/invite" class="form-control">http://design.emporium-collection.com/invite</a>               
                       </div>
                    </div>
     			</div> 				
@@ -295,8 +288,8 @@ p.gray-tx {
                         <div class="pad-box">
                             <div class="invite-box">
                                 <span class="sub-txt">Invitaiton by</span>
-                                <h4>{{ $byfirstname }} {{ $bylastname }}</h4>
-                                <a href="mailto:{{ $byemail }}">{{ $byemail }}</a>
+                                <h4>Maheshchavda@gmail.com</h4>
+                                <a href="mailto:{{ $user['email'] }}">{{ $user['email'] }}</a>
                             </div>
                         </div>
      				</div>
@@ -310,23 +303,20 @@ p.gray-tx {
                       <div class="pad-box bg-shadow">
                           <div class="invite-box invite-person">
                             <span class="sub-txt">Invited</span>
-                            <h4>{{ $tofirstname }} {{ $tolastname }}</h4>            
+                            <h4>{{ $user['email'] }}</h4>            
                           </div>
                           <div class="dates-n-valid">
                             <div class="col-8">
-                              <span class="sub-txt">{{ $todate }} </span>
+                              <span class="sub-txt"></span>
                             </div>
                             <div class="col-4">
                               <span class="sub-txt">Validity</span>
-                              <p>{{ $todays }} days</p>
+                               <?php $date = date('Y-m-d'); ?>
+                              <p>{{ $date }}</p>
                             </div>
                            </div> 
                       </div>
-                      <!-- end of valid dates -->
-                      <div class="box-barcode"> 
-                          <h2>Refferal Code </h2>
-                          {{$referral_code}}           
-                      </div>
+                      <!-- end of valid dates -->           
                     </div>
                     <!-- end of div -->
      			</div>

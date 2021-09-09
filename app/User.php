@@ -18,7 +18,7 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
     use Billable;
 
     protected $dates = ['trial_ends_at', 'subscription_ends_at'];
-
+    
 
     /**
      * The database table used by the model.
@@ -43,7 +43,9 @@ class User extends Model implements AuthenticatableContract, CanResetPasswordCon
         'country',
         'prefer_communication_with',
         'questions_id',
-        'answer'
+        'answer',
+        'gender',
+        'avatar'
     ];
 
     /**

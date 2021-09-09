@@ -138,7 +138,7 @@ class AuthController extends Controller
                 // echo "here";exit;   
                 /* Authenticate user */
                 Auth::login($user);
-                return redirect()->to('/dashboard')->with(['message' => 'Registration Succesfully']);
+                return view('users_admin/traveller/users/register_invitation');
             }else{
                 return redirect()->back()->with(['message' => 'Please try again']);
             }

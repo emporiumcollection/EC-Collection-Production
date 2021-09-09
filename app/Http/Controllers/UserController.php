@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use Socialize;
 use Illuminate\Http\Request;
+use App\Jobs\SendEmailJob;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator,
     Input,
@@ -34,6 +35,31 @@ class UserController extends Controller {
             $this->data['plans'] = $plan;
             return view('user.register', $this->data);
         endif;
+    }
+
+    public function EmailInvitation(Request $request)
+    {
+        // echo "<pre>";print_r($m);exit;
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+                'email' => 'required'
+        );
+        $getemail = $request->email;
+        $invitation_link = $request->invite_link; 
+        $emails = explode(",",$getemail);   
+        $validator = Validator::make($request->all(), $rules);
+         if ($validator->passes()) {
+            foreach ($emails as $key => $value) {
+                $details=[
+                    "email" => $value,
+                    "invite" => $invitation_link,
+                ];
+                dispatch(new SendEmailJob($details));
+            }
+            return Redirect::to('dashboard');
+        }
+        return Redirect::to('/sendinvitation');
     }
 
     public function postCreate(Request $request) {
@@ -640,21 +666,14 @@ class UserController extends Controller {
     }
     
     public function postSavetravellerprofile(Request $request) {
-       // echo"<pre>";print_r($request->all());exit();
+       // echo"<pre>";print_r($request->all());exit;   
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
             'firstname' => 'required',
             'lastname' => 'required',
-            'phone' => 'required',
+            'mobile_number' => 'required',
         );
-        
-        //get contract during signup
-        //$contracts = \CommonHelper::get_default_contracts('sign-up','tb_contracts.*');
-        //if(count($contracts) > 0){
-        //    $rules['accept_contract'] = 'required';
-        //}
-        //Enddsd
 
         if ($request->input('email') != \Session::get('eid')) {
             $rules['email'] = 'required|email|unique:tb_users';
@@ -667,34 +686,37 @@ class UserController extends Controller {
             if (!is_null($request->profile_avatar)) {
                 $file = $request->profile_avatar;
                 
-                $destinationPath = './uploads/user_avatar';
-                $filename = $file->getClientOriginalName();
+                $image_name = time() . '.' . $file->getClientOriginalExtension();
+                $destinationPath = public_path('uploads\user_avatar');
                 $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-                $newfilename = \Session::get('uid') . '.' . $extension;
-                $uploadSuccess = $request->file('profile_avatar')->move(public_path($destinationPath,$file));
+                $newfilename = \Session::get('uid') . '.' . $extension; 
+                $file->move($destinationPath,$newfilename);
+
                 // if ($uploadSuccess) {
                 //     $data['profile_avatar'] = $newfilename;
                 // }
             // }
             $user = User::find(\Session::get('uid'));
+            // echo"<pre>";print_r($user);
             $user->first_name = $request->input('firstname');
             $user->last_name = $request->input('lastname');
             $user->email = $request->input('email');
             // $user->mobile_code = $request->input('txtmobilecode');
             $user->mobile_number = $request->input('phone');
-            $user->gender = $request->input('gender');            
+            $user->gender = $request->input('gender');
+             // echo"<pre>";print_r($request->input('gender'));exit;              
             $user->prefer_communication_with = $request->input('prefer_communication_with');
             $user->preferred_currency = $request->preferred_currency;
-            // if (isset($data['avatar']))
-            $user->avatar = $newfilename;
+            $user->avatar = $file;
+            echo"<pre>";print_r($$user->avatar);exit;              
             $user->save();
-            
+            // echo"<pre>";print_r($user);exit;              
             //insert contracts
             //\CommonHelper::submit_contracts($contracts,'sign-up');
             //End
             return Redirect::to('/dashboard')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
         } else {
-            return Redirect::to('/dashboard')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
+            return Redirect::to('/users/profile')->with('messagetext', 'The following errors occurred')->with('msgstatus', 'error')
                             ->withErrors($validator)->withInput();
         }
     }
@@ -1665,6 +1687,33 @@ class UserController extends Controller {
         }        
         
     }
+
+
+    // public function inviteCompanion(Request $request){
+    //     echo "<pre>";print_r($request->all());exit();
+
+    //     $user = User::find(\Session::get('uid'));
+    //     if (!\Auth::check())
+    //         return Redirect::to('user/login');
+
+    //     $rules = array(
+    //         'email' => 'required'
+    //     );
+
+    //     $validator = Validator::make($request->all(), $rules);
+        
+    //     if ($validator->passes()) {
+
+    //             \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) { 
+    //                 $message->from($emlData['frmemail'], CNF_APPNAME);
+    //                 $message->to($emlData['email']);
+    //                 $message->subject($emlData['subject']);
+    //             });
+                      
+    //         return Redirect::to('user/invite/')->with('message', 'Invites send successfully')->with('msgstatus', 'success');
+    //     }
+
+    // }
 
     public function userCardDetail(Request $request){
 
@@ -2678,12 +2727,21 @@ class UserController extends Controller {
     public function getSecurity(Request $request){
         
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
-        if($is_demo6 === true){
+        if($is_demo6 === true){            
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
+            // $user = User::find(\Session::get('uid'));
+            $questions = \DB::table('tb_security_questions')->get();
             $file_name = 'users_admin.traveller.users.security-privacy';           
         }
-        return view($file_name);
+        return view($file_name,compact('questions'));
     }
+
+    public function postSecurityQuestion(Request $request)
+    {
+        $user = User::find(\Session::get('uid'));
+        $questions = \DB::table('tb_security_questions')->get();
+    }
+
     public function getInvoices(Request $request){
         
         $is_demo6 = (bool) \CommonHelper::isHotelDashBoard();
