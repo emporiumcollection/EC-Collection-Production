@@ -1,1 +1,11 @@
-<svg width="34" height="29" viewBox="0 0 34 29" xmlns="http://www.w3.org/2000/svg"><title>message</title><path d="M17 0C7.62 0 0 5.944 0 13.277a11.742 11.742 0 0 0 4.25 8.781l-1.76 5.31a1.2 1.2 0 0 0 .32 1.318 1.22 1.22 0 0 0 1.349.192l6.679-3.23c1.997.605 4.074.91 6.162.906 9.38 0 17-5.944 17-13.277C34 5.944 26.38 0 17 0z" fill="#383838"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="34px" height="29px" viewBox="0 0 34 29" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>message</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="message" fill="#383838" fill-rule="nonzero">
+            <path d="M17,0 C7.61964286,0 0,5.94449738 0,13.27705 C0.0737596972,16.676931 1.62350935,19.8788808 4.25,22.058008 L2.48928571,27.368828 C2.31453032,27.831627 2.44133497,28.3535657 2.80931232,28.6860846 C3.17728967,29.0186036 3.71205026,29.0944816 4.15892857,28.8775837 L10.8375,25.6488466 C12.8350901,26.2529076 14.912021,26.5580027 17,26.5541 C26.3803571,26.5541 34,20.6096026 34,13.27705 C34,5.94449738 26.3803571,0 17,0 Z" id="Path"></path>
+        </g>
+    </g>
+</svg>

@@ -1,1 +1,13 @@
-<svg width="16" height="16" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><title>arrow_forward - material</title><path d="M8.016 0l8.016 8.016-8.016 8.016L6.6 14.616 12.192 9H0V7.032h12.192L6.6 1.416z" fill="#9E9A9A" fill-rule="evenodd"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>arrow_forward - material</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="CalendarView" transform="translate(-585.000000, -46.000000)" fill="#9E9A9A">
+            <g id="SliderMenu" transform="translate(95.000000, 32.000000)">
+                <polygon id="arrow_forward---material" points="498.016 14 506.032 22.016 498.016 30.032 496.6 28.616 502.192 23 490 23 490 21.032 502.192 21.032 496.6 15.416"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>
