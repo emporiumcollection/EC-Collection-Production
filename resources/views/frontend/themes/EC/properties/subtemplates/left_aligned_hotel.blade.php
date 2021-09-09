@@ -101,17 +101,14 @@
         </div>
       </div>
       <div class="hotel-meta full-width">
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-          Reviews
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">
+          Suite(s)
         </a>
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">
           Quick info
         </a>
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">
           Gallery
-        </a>
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">
-          Suite(s)
         </a>
         <div class="hotel-prices hotel-price-detail d-flex">
           <div class="row align-items-center justify-content-center">

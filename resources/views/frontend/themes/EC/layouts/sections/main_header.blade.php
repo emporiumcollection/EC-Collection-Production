@@ -246,6 +246,18 @@
                 Destinations
               </a>
             </li>
+            @if(!empty($experiences))
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Experiences
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                @foreach($experiences as $exp)
+                  <a href="#" class="dropdown-item">{{ $exp->category_name }}</a>
+                @endforeach                
+              </div>
+            </li>
+            @endif
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -1107,6 +1119,7 @@
 @include('frontend.themes.EC.layouts.subsections.suite_deal')
 @include('frontend.themes.EC.layouts.subsections.filter')
 @include('frontend.themes.EC.layouts.subsections.priceinfo')
+@include('frontend.themes.EC.layouts.subsections.location_info')
 @include('frontend.themes.EC.layouts.subsections.quick_info')
 @include('frontend.themes.EC.layouts.subsections.reviews')
 @include('frontend.themes.EC.layouts.subsections.gallery')

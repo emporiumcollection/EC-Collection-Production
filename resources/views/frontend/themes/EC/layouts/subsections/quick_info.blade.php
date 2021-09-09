@@ -105,7 +105,7 @@
                         <p class="mb-0">Laundry service</p>
                     </div>
                 </div>
-                <div class="row my-5">
+                <!--<div class="row my-5">
                     <div class="col text-center">
                         <div class="i-touch">
                             <p><i class="ico ico-covid"></i></p>
@@ -148,7 +148,7 @@
                             <p>Secure Booking</p>
                         </div>
                     </div>
-                </div>
+                </div>-->
             </div>
             <div class="col-lg-4">
                 <div id="map2"></div>
