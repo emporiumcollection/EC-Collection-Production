@@ -3,6 +3,8 @@
 namespace App\Http\Traits;
 
 use App\Models\Categories;
+use App\Models\properties;
+use App\Models\amenities;
 
 trait Property {
     
@@ -51,6 +53,79 @@ trait Property {
         ->toArray();
 
         return $parent;
+    }
+
+    public function getEditorChoiceProperties($keyword){
+        return properties::with([
+            'container',
+            'suites', 
+            'roomImages' => function($query){
+                return $query->with(['file']);
+            }, 
+            'barImages' => function($query){
+                return $query->with(['file']);
+            }, 
+            'spaImages' => function($query){
+                return $query->with(['file']);
+            }, 
+            'restrurantImages' => function($query){
+                return $query->with(['file']);
+            }, 
+            'hotelBrochureImages' => function($query){
+                return $query->with(['file']);
+            }])
+        ->where('city', '=', $keyword)
+        ->where('editor_choice_property', '=', 1)
+        ->get();
+    }
+
+    public function getFeaturedProperties($keyword){
+        return properties::with([
+            'images',
+            'suites',
+            'roomImages' => function($query){
+                return $query->with(['file']);
+            }, 
+            'barImages' => function($query){
+                return $query->with(['file']);
+            }, 
+            'spaImages' => function($query){
+                return $query->with(['file']);
+            }, 
+            'restrurantImages' => function($query){
+                return $query->with(['file']);
+            }, 
+            'hotelBrochureImages' => function($query){
+                return $query->with(['file']);
+            }
+        ])
+        ->where('city', '=', $keyword)
+        ->where('feature_property', '=', 1)
+        ->get();        
+    }
+
+    public function formatPropertyRecords(&$properties){
+        $room = [];
+        $all = [];
+        foreach($properties as $k => $property){
+            $roomamenities = amenities::whereIn('id', explode(',', $property->roomamenities))
+            ->get()->toArray();
+            if(!empty($roomamenities)){
+                foreach($roomamenities as $amenity){
+                    $room[] = $amenity['amenity_title'];
+                }
+            }
+            $properties[$k]->roomamenities = implode(',', $room);
+
+            $allamenities = amenities::whereIn('id', explode(',', $property->assign_amenities))
+            ->get()->toArray();
+            if(!empty($allamenities)){
+                foreach($allamenities as $amenity){
+                    $all[] = $amenity['amenity_title'];
+                }
+            }
+            $properties[$k]->assign_amenities = implode(',', $all);
+        }
     }
 
 }

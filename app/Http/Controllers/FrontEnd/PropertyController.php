@@ -2932,27 +2932,7 @@ class PropertyController extends Controller {
         $this->data['experiences'] = $exp;
 
         //Get editor's choice properties
-        $this->data['editorsProperties'] = properties::with([
-            'container',
-            'suites', 
-            'roomImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }, 
-            'barImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }, 
-            'spaImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }, 
-            'restrurantImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }, 
-            'hotelBrochureImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }])
-        ->where('city', '=', $keyword)
-        ->where('editor_choice_property', '=', 1)
-        ->get();
+        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($keyword);
 
         if(!empty($this->data['editorsProperties']->toArray())){
             foreach($this->data['editorsProperties'] as $k => $editorProperty){
@@ -2962,33 +2942,8 @@ class PropertyController extends Controller {
             $this->formatPropertyRecords($this->data['editorsProperties']);
         }
 
-        //print_r($this->data['editorsPropertyImages']);exit;
-        //propertyimagebyid/{propid}
-        //print_r($this->data['editorsProperties']->toArray());exit;
-
-        //Get editor's choice properties
-        $this->data['featureProperties'] = properties::with([
-            'images',
-            'suites',
-            'roomImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }, 
-            'barImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }, 
-            'spaImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }, 
-            'restrurantImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }, 
-            'hotelBrochureImages' => function($query){
-                return $query->with(['file'])->limit(10);
-            }
-        ])
-        ->where('city', '=', $keyword)
-        ->where('feature_property', '=', 1)
-        ->get();
+        //Get featured choice properties
+        $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
 
         if(!empty($this->data['featureProperties']->toArray())){
             foreach($this->data['featureProperties'] as $k => $featureProperty){
@@ -7180,29 +7135,5 @@ class PropertyController extends Controller {
             $result = \DB::select($query);
         }
         print_r($result);
-    }
-
-    private function formatPropertyRecords(&$properties){
-        $room = [];
-        $all = [];
-        foreach($properties as $k => $property){
-            $roomamenities = amenities::whereIn('id', explode(',', $property->roomamenities))
-            ->get()->toArray();
-            if(!empty($roomamenities)){
-                foreach($roomamenities as $amenity){
-                    $room[] = $amenity['amenity_title'];
-                }
-            }
-            $properties[$k]->roomamenities = implode(',', $room);
-
-            $allamenities = amenities::whereIn('id', explode(',', $property->assign_amenities))
-            ->get()->toArray();
-            if(!empty($allamenities)){
-                foreach($allamenities as $amenity){
-                    $all[] = $amenity['amenity_title'];
-                }
-            }
-            $properties[$k]->assign_amenities = implode(',', $all);
-        }
     }
 }
