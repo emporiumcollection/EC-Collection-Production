@@ -471,7 +471,7 @@
 
 </form>
 
-  <div class="owl-carousel owl-theme landing-slider ">
+<div class="owl-carousel owl-theme landing-slider ">
 <?php foreach($slider as $slide):?>    
     <div class="item">
       <img src="uploads/slider_images/<?php echo $slide->slider_img;?>" alt="">
