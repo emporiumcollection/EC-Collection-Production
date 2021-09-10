@@ -134,7 +134,7 @@ function replaceRooms(property_id, category_id){
     roomimages = ``;
     r.images.forEach(function(rm){
       roomimages += `<div>
-        <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/property-images/` + rm['file']['file_name'] + `" class="w-100" alt="">
+        <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
       </div>`;
     });
     roomview += `<div>
