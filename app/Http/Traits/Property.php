@@ -5,6 +5,7 @@ namespace App\Http\Traits;
 use App\Models\Categories;
 use App\Models\properties;
 use App\Models\amenities;
+use App\Models\PropertyImages;
 
 trait Property {
     
@@ -56,23 +57,64 @@ trait Property {
     }
 
     public function getEditorChoiceProperties($keyword){
-        return properties::with([
+        return properties::select([
+            'id', 
+            'property_name', 
+            'property_short_name', 
+            'detail_section1_title', 
+            'detail_section1_description_box1', 
+            'detail_section1_description_box2', 
+            'detail_section1_description_box2', 
+            'roomamenities', 
+            'assign_amenities', 
+            'address', 
+            'internetpublic',
+            'internetroom',
+            'children_policy',
+            'checkin',
+            'checkout',
+            'transfer',
+            'smookingpolicy',
+            'smookingrooms',
+            'numberofrooms',
+            'availableservices',
+            'pets',
+            'carpark'
+            ])
+        ->with([
             'container',
-            'suites', 
+            'suites' => function($query){
+                return $query->with(['rooms']);
+            }, 
             'roomImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }, 
             'barImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }, 
             'spaImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }, 
             'restrurantImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }, 
             'hotelBrochureImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
@@ -80,23 +122,41 @@ trait Property {
     }
 
     public function getFeaturedProperties($keyword){
-        return properties::with([
+        return properties::select(['id', 'property_name', 'property_short_name', 'detail_section1_title', 'detail_section1_description_box1', 'detail_section1_description_box2'])
+        ->with([
             'images',
-            'suites',
+            'suites' => function($query){
+                return $query->with(['rooms']);
+            },
             'roomImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }, 
             'barImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }, 
             'spaImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }, 
             'restrurantImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }, 
             'hotelBrochureImages' => function($query){
-                return $query->with(['file']);
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
             }
         ])
         ->where('city', '=', $keyword)
@@ -105,17 +165,22 @@ trait Property {
     }
 
     public function formatPropertyRecords(&$properties){
-        $room = [];
+        $roomamenitieslist = [];
         $all = [];
         foreach($properties as $k => $property){
+            // room and assign amenitiess
             $roomamenities = amenities::whereIn('id', explode(',', $property->roomamenities))
             ->get()->toArray();
             if(!empty($roomamenities)){
                 foreach($roomamenities as $amenity){
-                    $room[] = $amenity['amenity_title'];
+                    $roomamenitieslist[] = $amenity['amenity_title'];
                 }
             }
-            $properties[$k]->roomamenities = implode(',', $room);
+            if(!empty($roomamenitieslist)){
+                $properties[$k]->roomamenities = implode(',', $roomamenitieslist);
+            }else{
+                $properties[$k]->roomamenities = '';
+            }
 
             $allamenities = amenities::whereIn('id', explode(',', $property->assign_amenities))
             ->get()->toArray();
@@ -124,7 +189,31 @@ trait Property {
                     $all[] = $amenity['amenity_title'];
                 }
             }
-            $properties[$k]->assign_amenities = implode(',', $all);
+            if(!empty($all)){
+                $properties[$k]->assign_amenities = implode(',', $all);
+            }else{
+                $properties[$k]->assign_amenities = '';
+            }
+
+            // room images
+            if(!empty($property->suites)){
+                foreach($property->suites as $sk => $suite){
+                    if(!empty($suite->rooms)){
+                        foreach($suite->rooms as $rk => $room){
+                            $roomImages = PropertyImages::with(['file' => function($query){
+                                $query->select(['id', 'file_name']);
+                            }])
+                            ->where('property_id', '=', $room->property_id)
+                            ->where('category_id', '=', $room->category_id)
+                            ->get()
+                            ->toArray();
+
+                            $properties[$k]->suites[$sk]->rooms[$rk]->images = $roomImages;
+
+                        }
+                    }
+                }
+            }
         }
     }
 
