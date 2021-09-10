@@ -1,8 +1,6 @@
 @extends('users_admin.traveller.layout.app')
 @section('content')
 
-	<!--begin::Main-->
-	<!--begin::Header Mobile-->
 	<div id="kt_header_mobile" class="header-mobile">
 		<!--begin::Logo-->
 		<a href="hotels.html">

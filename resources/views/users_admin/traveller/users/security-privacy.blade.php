@@ -217,11 +217,4 @@
 			</div>
 		</div>
 	</div>
-	<!--end::Card-->
-	</div>
-<!--end::Container-->
-</div>
-<!--end::Entry-->
-</div>
-<!--end::Content-->
 @endsection

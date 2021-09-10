@@ -31,7 +31,7 @@ class DashboardController extends Controller {
         $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.dashboard':'dashboard.index'; 
              
         $u_id = \Session::get('uid');  
-        //echo $u_id;
+        // echo $u_id;exit;
         //print_r($request->session()->all()); die;
         $this->data['logged_user'] = \DB::table('tb_users')->where('id', $u_id)->first();
 		    $this->data['online_users'] = \DB::table('tb_users')->orderBy('last_activity','desc')->limit(10)->get(); 
@@ -39,13 +39,10 @@ class DashboardController extends Controller {
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
         
         $g_id = (int) \Session::get('gid');  
-        $gp_id = trim(\CommonHelper::getusertype($g_id));
-        /*echo '<pre>';
-        print_r($this->data);exit;
-        echo '</pre>';*/
-        
+        $gp_id = trim(\CommonHelper::getusertype($g_id));        
         if(!empty($gp_id)){ 
-            if($gp_id=="users-b2c"){           
+            if($gp_id=="users-b2c"){ 
+
                if($this->data['logged_user']->new_user == 1){
                     return Redirect::to('traveller');
                }

@@ -18,6 +18,11 @@
                 document.form.first_name.focus();
                 document.getElementById('first-name-error').style.display="block";
             }
+            if(document.form.username.value == "")
+            {
+                document.form.username.focus();
+                document.getElementById('username-error').style.display="block";
+            }
             if(document.form.last_name.value == "")
             {
                 document.form.last_name.focus();

@@ -30,7 +30,7 @@
 								<h5 class="text-dark font-weight-bold mb-10">
 									Personal Informations
 								</h5>
-								<form method="post" action="/users/addcompanion">
+								<form method="post" action="/users/addcompanion" enctype="multipart/form-data">
 							<!--begin::Group-->
 
 							<div class="form-group row">
@@ -49,7 +49,7 @@
 											title="" data-original-title="Change avatar">
 											<i class="fa fa-pen icon-sm text-muted"></i>
 											<input type="file" name="profile_avatar"
-												accept=".png, .jpg, .jpeg">
+											accept=".png, .jpg, .jpeg">
 											<input type="hidden"
 												name="profile_avatar_remove">
 										</label>
@@ -71,7 +71,7 @@
 								<div class="col-lg-9 col-xl-9">
 									<input
 										class="form-control form-control-solid form-control-lg"
-										name="first_name" type="text" value="">
+										name="first_name" type="text" value="@if(isset($data)){{  $data->first_name ? $data->first_name : ''}} @endif">
 
 								</div>
 							</div>
@@ -83,7 +83,7 @@
 								<div class="col-lg-9 col-xl-9">
 									<input
 										class="form-control form-control-solid form-control-lg"
-										name="last_name" type="text" value="">
+										name="last_name" type="text" value="@if(isset($data)){{  $data->last_name ? $data->last_name : ''}}@endif">
 
 								</div>
 							</div>
@@ -102,7 +102,7 @@
 										</div>
 										<input type="text"
 											class="form-control form-control-solid form-control-lg"
-											name="email" value="">
+											name="email" value="@if(isset($data)){{  $data->email ? $data->email : ''}} @endif">
 									</div>
 								</div>
 							</div>
@@ -122,7 +122,7 @@
 										</div>
 										<input type="text"
 											class="form-control form-control-solid form-control-lg"
-											name="phone_number" value="5678967456"
+											name="phone_number" value=" @if(isset($data)){{  $data->phone_number ? $data->phone_number : ''}}@endif"
 											placeholder="Phone Number">
 									</div>
 								</div>
@@ -135,8 +135,12 @@
 								</label>
 								<div class="col-lg-9 col-xl-9">
 									<select name="gender" class="form-control">
-										<option value="1">Male</option>
-										<option value="2">Female</option>
+										<option value="Man" @if(isset($data)){{  $data->gender == 'Man' ? 'selected' : ''}} @endif>Male</option>
+										<option value="Woman" @if(isset($data)){{  $data->gender == 'Woman' ? 'selected' : ''}} @endif>Woman</option>
+										<option value="Non-Binary" @if(isset($data)){{  $data->gender == 'Non-Binary' ? 'selected' : ''}} @endif>Non-Binary</option>
+										<option value="Cigender" @if(isset($data)){{  $data->gender == 'Cigender' ? 'selected' : ''}} @endif>Cigender</option>
+										<option value="Intersex" @if(isset($data)){{  $data->gender == 'Intersex' ? 'selected' : ''}} @endif>Intersex</option>
+										<option value="Other" @if(isset($data)){{  $data->gender == 'Other' ? 'selected' : ''}} @endif>Other</option>
 									</select>
 								</div>
 							</div>
@@ -148,14 +152,13 @@
 								</label>
 								<div class="col-lg-9 col-xl-9">
 									<select class="form-control" name="preferred_language">
-										<option value="en">English</option>
-										<option value="de">Deutsch</option>
-										<option value="es">Espanol</option>
-										<option value="fr">Francais</option>
-										<option value="it">Italiano</option>
-										<option value="nl">Nederlands</option>
+										<option value="en" @if(isset($data)){{  $data->preferred_language == 'en' ? 'selected' : ''}} @endif>English</option>
+										<option value="de" @if(isset($data)){{  $data->preferred_language == 'de' ? 'selected' : ''}}@endif>Deutsch</option>
+										<option value="es" @if(isset($data)){{  $data->preferred_language == 'es' ? 'selected' : ''}}@endif>Espanol</option>
+										<option value="fr" @if(isset($data)){{  $data->preferred_language == 'fr' ? 'selected' : ''}}@endif>Francais</option>
+										<option value="it"@if(isset($data)) {{  $data->preferred_language == 'it' ? 'selected' : ''}}@endif>Italiano</option>
+										<option value="nl" @if(isset($data)){{  $data->preferred_language == 'nl' ? 'selected' : ''}}@endif>Nederlands</option>
 									</select>
-
 									<span class="form-text text-muted">
 										We'll send you communication in this language.
 									</span>
@@ -170,83 +173,83 @@
 								<div class="col-lg-9 col-xl-9">
 									<select class="form-control" id="preferred_currency"
 										name="preferred_currency">
-										<option value="OMR">
+										<option value="OMR" @if(isset($data)){{  $data->preferred_currency == 'OMR' ? 'selected' : ''}}@endif> 
 											OMR-﷼
 										</option>
 
-										<option value="BHD">
+										<option value="BHD"@if(isset($data)) {{  $data->preferred_currency == 'BHD' ? 'selected' : ''}}@endif>
 											BHD-.د.ب
 										</option>
 
-										<option value="KWD">
+										<option value="KWD" @if(isset($data)){{  $data->preferred_currency == 'KWD' ? 'selected' : ''}}@endif>
 											KWD-د.ك
 										</option>
 
-										<option value="USD">
+										<option value="USD"@if(isset($data)) {{  $data->preferred_currency == 'USD' ? 'selected' : ''}}@endif>
 											USD-$
 										</option>
 
-										<option value="CHF">
+										<option value="CHF" @if(isset($data)){{  $data->preferred_currency == 'CHF' ? 'selected' : ''}}@endif>
 											CHF-CHF
 										</option>
 
-										<option value="EUR">
+										<option value="EUR"@if(isset($data)) {{  $data->preferred_currency == 'EUR' ? 'selected' : ''}}@endif>
 											EUR-€
 										</option>
 
-										<option value="KYD">
+										<option value="KYD"@if(isset($data)) {{  $data->preferred_currency == 'KYD' ? 'selected' : ''}}@endif>
 											KYD-$
 										</option>
 
-										<option value="GIP">
+										<option value="GIP" @if(isset($data)){{  $data->preferred_currency == 'GIP' ? 'selected' : ''}}@endif>
 											GIP-£
 										</option>
 
-										<option value="GBP">
+										<option value="GBP" @if(isset($data)){{  $data->preferred_currency == 'GBP' ? 'selected' : ''}}@endif>
 											GBP-£
 										</option>
 
-										<option value="JOD">
+										<option value="JOD"@if(isset($data)) {{  $data->preferred_currency == 'JOD' ? 'selected' : ''}}@endif>
 											JOD-JD
 										</option>
 
-										<option value="FJD">
+										<option value="FJD" @if(isset($data)){{  $data->preferred_currency == 'FJD' ? 'selected' : ''}}@endif>
 											FJD-$
 										</option>
 
-										<option value="AWG">
+										<option value="AWG"@if(isset($data)) {{  $data->preferred_currency == 'AWG' ? 'selected' : ''}}@endif>
 											AWG-ƒ
 										</option>
 
-										<option value="BGN">
+										<option value="BGN" @if(isset($data)){{  $data->preferred_currency == 'BGN' ? 'selected' : ''}}@endif>
 											BGN-лв
 										</option>
 
-										<option value="NZD">
+										<option value="NZD"@if(isset($data)) {{  $data->preferred_currency == 'NZD' ? 'selected' : ''}}@endif>
 											NZD-$
 										</option>
 
-										<option value="LYD">
+										<option value="LYD"@if(isset($data)) {{  $data->preferred_currency == 'LYD' ? 'selected' : ''}}@endif>
 											LYD-ل.د
 										</option>
 
-										<option value="SGD">
+										<option value="SGD" @if(isset($data)){{  $data->preferred_currency == 'SGD' ? 'selected' : ''}}@endif>
 											SGD-$
 										</option>
 
-										<option value="BND">
+										<option value="BND" @if(isset($data)){{  $data->preferred_currency == 'BND' ? 'selected' : ''}}@endif>
 											BND-$
 										</option>
 
-										<option value="AUD">
+										<option value="AUD"@if(isset($data)) {{  $data->preferred_currency == 'AUD' ? 'selected' : ''}}@endif>
 											AUD-$
 										</option>
 
-										<option value="CAD">
+										<option value="CAD"@if(isset($data)) {{  $data->preferred_currency == 'CAD' ? 'selected' : ''}}@endif>
 											CAD-$
 										</option>
 
-										<option value="INR">
+										<option value="INR" @if(isset($data)){{  $data->preferred_currency == 'INR' ? 'selected' : ''}}@endif>
 											INR-₹
 										</option>
 									</select>
@@ -255,6 +258,7 @@
 										prices.
 									</span>
 								</div>
+								<input type="hidden" name="id" value="@if(isset($data)){{ $data->id ? $data->id : ''   }}@endif">
 							</div>
 							<!--end::Group-->
 							<!--begin::Group-->
@@ -304,19 +308,8 @@
 					</div>
 				</div>
 			</div>
-					</div>
-					</div>
-						</div>
-					</div>
-					<!--end::Card-->
-				</div>
-				<!--end::Container-->
-			</div>
-			<!--end::Entry-->
 		</div>
-	<!--begin::Scrolltop-->
-	
-	<script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
+	</div>
 	<!--begin::Global Theme Bundle(used by all pages)-->
 @endsection
 

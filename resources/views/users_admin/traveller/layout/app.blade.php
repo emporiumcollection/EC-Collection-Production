@@ -299,9 +299,28 @@
                   </a>
                 </div>
               </div>
-
               @yield('content')
 
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    <!--end::Card-->
+    </div>
+    <!--end::Container-->
+    </div>
+    <!--end::Entry-->
+    </div>
+    <!--end::Content-->
+    <!--begin::Footer-->
+    <!--doc: add "bg-white" class to have footer with solod background color-->
+    <!--end::Footer-->
+    <!--begin::Modal - Two-factor authentication-->
+    </div>
+    </div>
+  <!--end::Main-->
+  <!--begin::Scrolltop-->
 
               <div class="d-flex flex-column flex-row-fluid wrapper" id="kt_wrapper">
                 @include('users_admin/traveller/layout/footer')
@@ -792,12 +811,12 @@
               <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                 <ul class="navi flex-column navi-hover py-2">
                   <li class="navi-item">
-                    <a href="http://dev.empo-voyage.com/editcompanion/`+row.id+`" class="navi-link" data-canvas="popup">
+                    <a href="http://development.emporium-voyage.com/editcompanion/`+row.id+`" class="navi-link">
                       <span class="navi-text">Edit</span>
                     </a>
                   </li>
                   <li class="navi-item">
-                    <a href="#detail" class="navi-link" data-canvas="popup">
+                    <a href="http://development.emporium-voyage.com/deletecompanion/`+row.id+`"" class="navi-link">
                       <span class="navi-text">Delete</span>
                     </a>
                   </li>

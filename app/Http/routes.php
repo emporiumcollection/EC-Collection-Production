@@ -156,7 +156,6 @@ Route::get('/supplier', 'CustomerController@supplier');
 Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences');
 
 Route::get('/whoiam', 'CustomerController@whoIam');
-// Route::post('user/my-preferences', 'UserController@getPreferences');
 Route::post('/viewInvite', 'UserController@viewInvite');
 Route::post('editinvite', 'UserController@editInvite');
 Route::post('deleteinvite', 'UserController@deleteInvite');
@@ -164,7 +163,7 @@ Route::post('deleteinvite', 'UserController@deleteInvite');
 Route::post('/users/addcompanion', 'UserController@addCompanion');
 Route::post('/viewcompanion', 'UserController@viewCompanion');
 Route::get('/editcompanion/{id}', 'UserController@editCompanion');
-Route::post('deletecompanion', 'UserController@deleteCompanion');
+Route::get('/deletecompanion/{id}', 'UserController@deleteCompanion');
 
 Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate');
 

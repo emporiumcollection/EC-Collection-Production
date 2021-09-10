@@ -1,7 +1,6 @@
 
 @extends('users_admin.traveller.layout.app')
 @section('content')
-
 	<div class="mt-15">
 		<div class="row align-items-center">
 			<div class="col-md-8">
@@ -272,28 +271,6 @@
 					</div>
 				</div>
 			</div>
-		</div>
-		</div>
-		</div>
-		</div>
-		</div>
-		<!--end::Card-->
-		</div>
-		<!--end::Container-->
-		</div>
-		<!--end::Entry-->
-		</div>
-		<!--end::Content-->
-		<!--begin::Footer-->
-		<!--doc: add "bg-white" class to have footer with solod background color-->
-		<!--end::Footer-->
-		<!--begin::Modal - Two-factor authentication-->
-		</div>
-		</div>
-	<!--end::Main-->
-	<!--begin::Scrolltop-->
-
-	<script>var HOST_URL = "https://preview.keenthemes.com/metronic/theme/html/tools/preview";</script>
 	
 	<!--begin::Global Theme Bundle(used by all pages)-->
 	<script>

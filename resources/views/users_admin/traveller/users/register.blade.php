@@ -89,6 +89,7 @@
                                 <div class="form-group" id="bespoke">
                                     <a href=""> Bespoke Membership Benefits</a>                                               
                                 </div>
+
                                 <div>
                                     <label class="font-2 label-2">First name</label>
                                      <input type="text" name="first_name" id="first_name" class="form-control first" placeholder="First name">
@@ -99,6 +100,11 @@
                                     <label class="font-2 label-2">Last name</label>
                                     <input type="text" name="last_name" id="last_name" class="form-control last_name" placeholder="Last name">
                                     <p style="color: red; display: none;" id="last-name-error"><strong>Please enter last name</strong></p>
+                                </div>
+                                 <div>
+                                    <label class="font-2 label-2">Username</label>
+                                     <input type="text" name="username" id="username" class="form-control username" placeholder="Username">
+                                    <p style="color: red; display: none;" id="username-error"><strong>Please Enter Username</strong></p>    
                                 </div>
                                 <div class="form-group">
                                     <label class="font-2 label-2">Mobile</label>
@@ -122,7 +128,6 @@
                                     <label class="font-2 label-2">Password</label>
                                     <input type="password" name="password" id="password" class="form-control password" placeholder="Enter Password">
                                     <p style="color: red; display: none;" id="Password_error"><strong>Plaease provide password</strong></p>
-                                    <p style="color: red; display: none;" id="Password_size"><strong>Password size must be 8</strong></p>
                                 </div>
                                 <div class="form-group">
                                     <label class="font-2 label-2">Security Questions</label>
@@ -376,7 +381,7 @@
                                     <p style="color: red; display: none" id="term"><strong>Please select role</strong></p>
                                 </div>
                                 <div class="custom-control custom-checkbox mb-2">
-                                    <input type="checkbox" name="a" class="custom-control-input" id="customCheck1">
+                                    <input type="checkbox" name="a" class="custom-control-input" id="customCheck2">
                                     <label class="custom-control-label" for="customCheck2">
                                         I agree that my personal data will be collected and stored and used
                                         electronically to help the reservation agents with specialized offers pertaining
@@ -386,7 +391,7 @@
                                     </label>
                                 </div>
                                 <div class="custom-control custom-checkbox mb-2">
-                                    <input type="checkbox" class="custom-control-input" id="customCheck2">
+                                    <input type="checkbox" class="custom-control-input" id="customCheck3">
                                     <label class="custom-control-label" for="customCheck3">
                                         Emporium-Collection Privacy Policy <br>
                                         I have read and agree to the Emporium-Collection Privacy Policy.
@@ -439,8 +444,7 @@
             </div>
         </div>
     </div>
-        </div>
-    </div>
+</div></div>
 <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js')}}"></script>
@@ -503,9 +507,9 @@
             $(".first").focusin(function(){
                 $("#first-name-error").hide();
             });
-            // $(".user_type").focusin(function(){
-            //     $("#type-error").hide();    
-            // });
+            $(".username").focusin(function(){
+                $("#username-error").hide();    
+            });
             $(".last_name").focusin(function(){
                 $("#last-name-error").hide();
             });
