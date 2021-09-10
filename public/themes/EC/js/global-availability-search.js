@@ -260,6 +260,11 @@ function replaceRooms(property_id, category_id){
   });
 
   $('[data-place="property-rooms"]').html(roomview);
+  $('.result-grid').slick({
+    slidesToShow: 1,
+    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+  });
 }
 
 function getDefaultChannel(catt){            
