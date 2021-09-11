@@ -1,5 +1,4 @@
 @extends('layouts.login')
-
 @section('content')
 
 <style>
@@ -7,16 +6,13 @@
 </style>
 
 <div class="sbox ">
-	<div class="sbox-title">
-			
-				<h3 >Emporium Voyage </small></h3>
-				
+	<div class="sbox-title">			
+		<h3 >Emporium Voyage </small></h3>			
 	</div>
 	<div class="sbox-content">
 	<div class="text-center  animated fadeInDown delayp1">
 		<img src="{{ asset('sximo/assets/images/logo-design_1.png')}}" width="100%" />
-	</div>	
- 
+	</div>	 
 	    	@if(Session::has('message'))
 				{!! Session::get('message') !!}
 			@endif
@@ -52,22 +48,38 @@
 				
 				<i class="icon-lock form-control-feedback"></i>
 			</div>
+			@if( (int) \Session::get('login.attempts') >= 2)
+				<div class="form-group has-feedback  animated fadeInRight delayp1">
+					<label>Security Question</label>
+					<select name="question" class="form-control">
+						@if(isset($questions))
+						{{ $questions }}
+							@foreach($questions as $que)
+								<option value="{{ $que->id }}">{{ $que->question }}</option>
+							}
+							@endforeach
+						@endif	
+					</select>					
+					<i class="icon-lock form-control-feedback"></i>
+				</div>
 
+				<div class="form-group has-feedback  animated fadeInRight delayp1">
+					<label>Answer</label>
+					<input type="text" name="answer" placeholder="Answer" class="form-control" required="true" />				
+					<i class="icon-lock form-control-feedback"></i>
+				</div>
+			@endif
 			<div class="form-group has-feedback  animated fadeInRight delayp1">
 				<label> Remember Me ?	</label>
-				<input type="checkbox" name="remember" value="1" />
-				
+				<input type="checkbox" name="remember" value="1" />				
 				<i class="icon-lock form-control-feedback"></i>
 			</div>
-
-
 			@if(CNF_RECAPTCHA =='true') 
 			<div class="form-group has-feedback  animated fadeInLeft delayp1">
 				<label class="text-left"> Are u human ? </label>	
 				<br />
 				{!! captcha_img() !!} <br /><br />
-				<input type="text" name="captcha" placeholder="Type Security Code" class="form-control" required/>
-				
+				<input type="text" name="captcha" placeholder="Type Security Code" class="form-control" required/>				
 				<div class="clr"></div>
 			</div>	
 		 	@endif	
@@ -99,23 +111,25 @@
 				
 			</div>	
 			<div class="animated fadeInUp delayp1">
-		<div class="form-group has-feedback text-center">
-			@if($socialize['google']['client_id'] !='' || $socialize['twitter']['client_id'] !='' || $socialize['facebook'] ['client_id'] !='') 
-			<br />
-			<p class="text-muted text-center"><b> {{ Lang::get('core.loginsocial') }} </b>	  </p>
+			@if(isset($socialize))
+				<div class="form-group has-feedback text-center">
+					@if($socialize['google']['client_id'] !='' || $socialize['twitter']['client_id'] !='' || $socialize['facebook'] ['client_id'] !='') 
+					<br />
+					<p class="text-muted text-center"><b> {{ Lang::get('core.loginsocial') }} </b>	  </p>
+					@endif
+					<div style="padding:15px 0;">
+						@if($socialize['facebook']['client_id'] !='') 
+						<a href="{{ URL::to('user/socialize/facebook')}}" class="btn btn-primary"><i class="icon-facebook"></i> Facebook </a>
+						@endif
+						@if($socialize['google']['client_id'] !='') 
+						<a href="{{ URL::to('user/socialize/google')}}" class="btn btn-danger"><i class="icon-google"></i> Google </a>
+						@endif
+						@if($socialize['twitter']['client_id'] !='') 
+						<a href="{{ URL::to('user/socialize/twitter')}}" class="btn btn-info"><i class="icon-twitter"></i> Twitter </a>
+						@endif
+					</div>
+				</div>			
 			@endif
-			<div style="padding:15px 0;">
-				@if($socialize['facebook']['client_id'] !='') 
-				<a href="{{ URL::to('user/socialize/facebook')}}" class="btn btn-primary"><i class="icon-facebook"></i> Facebook </a>
-				@endif
-				@if($socialize['google']['client_id'] !='') 
-				<a href="{{ URL::to('user/socialize/google')}}" class="btn btn-danger"><i class="icon-google"></i> Google </a>
-				@endif
-				@if($socialize['twitter']['client_id'] !='') 
-				<a href="{{ URL::to('user/socialize/twitter')}}" class="btn btn-info"><i class="icon-twitter"></i> Twitter </a>
-				@endif
-			</div>
-		</div>			
 
 
 			  <p style="padding:10px 0" class="text-center">

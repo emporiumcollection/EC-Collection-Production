@@ -116,6 +116,7 @@ class AuthController extends Controller
                 'group_id' => 3,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
+                'username' => $request->username,
                 'mobile_code' => $request->country_code,
                 'questions_id' => $request->question,
                 'answer' => $request->answer,
