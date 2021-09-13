@@ -22,14 +22,20 @@
 						</a>
 					</li>
 				</ul>
-
+				
 				<div class="tab-content pt-7 profile-tabs">
 					<div class="tab-pane fade show active" id="addNew">
 						<div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
 							<div class="col-xl-9">
+				                @if(Session::has('message'))
+				        				{!! Session::get('message') !!}
+				        		@endif
+				        		<br>
+				        		<br>
 								<h5 class="text-dark font-weight-bold mb-10">
 									Personal Informations
 								</h5>
+
 								<form method="post" action="/users/addcompanion" enctype="multipart/form-data">
 							<!--begin::Group-->
 
@@ -40,11 +46,12 @@
 								<div class="col-lg-9 col-xl-9">
 									<div class="image-input image-input-outline"
 										id="kt_user_add_avatar">
-										<div class="image-input-wrapper"
-											style="background-image: url({{ asset('assets/users/assets/media/users/100_6.jpg')}})">
-										</div>
-										<label
-											class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+										@if(isset($data))
+										<img class="image-input-wrapper" src="{{ asset('/uploads/users/companion/'.$data->avatar)}}">	
+										@else	
+										<img class="image-input-wrapper" src="{{ asset('/uploads/users/companion/')}}" onerror="this.onerror=null;this.src='{{ asset('/images/profile-pic.png')}}';">		
+										@endif
+										<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
 											data-action="change" data-toggle="tooltip"
 											title="" data-original-title="Change avatar">
 											<i class="fa fa-pen icon-sm text-muted"></i>
@@ -72,7 +79,6 @@
 									<input
 										class="form-control form-control-solid form-control-lg"
 										name="first_name" type="text" value="@if(isset($data)){{  $data->first_name ? $data->first_name : ''}} @endif">
-
 								</div>
 							</div>
 							<!--end::Group-->

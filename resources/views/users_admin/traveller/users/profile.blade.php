@@ -1,4 +1,3 @@
-
 @extends('users_admin.traveller.layout.app')
 @section('content')
 	<div class="mt-15">
@@ -45,7 +44,7 @@
 								<div class="image-input image-input-outline"
 									id="kt_user_add_avatar">
 									<div class="image-input-wrapper"
-										style="background-image: url({{ asset('assets/users/assets/media/users/100_6.jpg')}})">
+										style="background-image: url({{ asset('/uploads/user_avatar/'.$info->avatar)}})">
 									</div>
 									
 									<label

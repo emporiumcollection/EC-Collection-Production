@@ -421,12 +421,11 @@ class UserController extends Controller {
                 $attempts = session()->get('login.attempts', 0); // get attempts, default: 0
                 session()->put('login.attempts', $attempts + 1);
                 $email = session()->get('email', $request->email);
-                
+                $massage = 'Your username/password combination was incorrect';
                 $questions = SecurityQuestions::all();
                 // echo "<pre>";print_r($getQuestion);exit;
-                return view('user.login', compact('questions'))
-                    ->with('message', \SiteHelpers::alert('error', 'Your username/password combination was incorrect'));
-                    
+                return view('user.login', compact('questions','massage'));
+                    // ->with('message', \SiteHelpers::alert('error', 'Your username/password combination was incorrect'));                    
             }
             // }
 
@@ -755,7 +754,8 @@ class UserController extends Controller {
                 $image_name = time() . '.' . $file->getClientOriginalExtension();
                 $destinationPath = public_path('uploads\user_avatar');
                 $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-                $newfilename = \Session::get('uid') . '.' . $extension; 
+                $newfilename = \Session::get('uid') . '.' . $extension;
+                // echo "<pre>";print_r($newfilename);exit(); 
                 $file->move($destinationPath,$newfilename);
             }
                 
@@ -768,7 +768,7 @@ class UserController extends Controller {
             $user->gender = $request->input('gender');              
             $user->prefer_communication_with = $request->input('prefer_communication_with');
             $user->preferred_currency = $request->preferred_currency;
-            $user->avatar = $request->profile_avatar;            
+            $user->avatar = $newfilename;            
             $user->save();        
             //insert contracts
             //\CommonHelper::submit_contracts($contracts,'sign-up');
@@ -1546,15 +1546,12 @@ class UserController extends Controller {
                 $companion_data['first_name'] = $request->input('first_name');
                 $companion_data['last_name'] = $request->input('last_name');           
                 $companion_data['email'] = $request->input('email');
-                // $companion_data['phone_code'] = $request->input('phone_code');
                 $companion_data['phone_number'] = $request->input('phone_number');
                 $companion_data['gender'] = $request->input('gender');
                 $companion_data['preferred_language'] = $request->input('preferred_language');
                 $companion_data['preferred_currency'] = $request->input('preferred_currency');
                     \DB::table('tb_companion')->where('id',$id)->update($companion_data);
-                $companionId = \DB::table('tb_companion')->insertGetId($companion_data);             
-                if($companionId > 0){
-                
+                $companionId = \DB::table('tb_companion')->where('id', $id)->update($companion_data);                             
                     if (!is_null(Input::file('avatar'))) {
                         $file = $request->file('avatar');
                         $destinationPath = './uploads/users/companion';
@@ -1579,7 +1576,6 @@ class UserController extends Controller {
                     $etemp = 'companion';
                     // echo view('user.emails.' . $etemp, $edata); die;
 
-
                     \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
                         $message->from($emlData['frmemail'], CNF_APPNAME);
             
@@ -1587,10 +1583,7 @@ class UserController extends Controller {
             
                         $message->subject($emlData['subject']);
                     });
-                    
-                    
-                }            
-                           
+                                               
                 $return_array['status'] = 'success';
                 $return_array['message'] = 'You have successfully added a travel companion';
                  return Redirect::to('user/companion')->with('message', 'You have successfully added a travel companion')->with('msgstatus', 'success',$return_array);          
