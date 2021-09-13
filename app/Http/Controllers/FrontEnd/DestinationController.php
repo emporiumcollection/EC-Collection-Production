@@ -764,7 +764,7 @@ class DestinationController extends Controller {
             WHERE tb_properties.property_status=1';
 
         if($keyword!=''){
-            $str_keyword .= " and MATCH(tb_properties.property_name) AGAINST  ('".trim($keyword)."')";
+            $str_keyword .= " and MATCH(tb_properties.property_name) AGAINST  ('\"".trim($keyword)."\"')";
         }
 
         $fetchcollection = \DB::connection($conn)->SELECT($str_keyword);
@@ -789,7 +789,7 @@ class DestinationController extends Controller {
         tb_categories.parent_category_id!='.$our_coll_id;
 
         if($keyword!=''){
-            $str_des_keyword .= " and MATCH (tb_categories.category_name) AGAINST ('".trim($keyword)."')";
+            $str_des_keyword .= " and MATCH (tb_categories.category_name) AGAINST ('\"".trim($keyword)."\"')";
         }
 
         $fetchdestinations =  \DB::connection($conn)

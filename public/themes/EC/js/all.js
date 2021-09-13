@@ -473,6 +473,7 @@ var ajaxReq = 'ToCancelPrevReq';
 
   function globalSearchForAll(searcValue, sitename) {
     var _token = $('meta[name="csrf-token"]').attr('content');
+    $('.ico-reload').show();
     ajaxReq = $.ajax({
         url: BaseURL + '/destination/global-search',
         type: "get",
@@ -485,7 +486,7 @@ var ajaxReq = 'ToCancelPrevReq';
           }
         },
         success: function (data){
-
+            $('.ico-reload').hide();
             if(data.status=='success'){
                 var obj = data.data;
                 var voyage = obj.voyage;
@@ -493,53 +494,149 @@ var ajaxReq = 'ToCancelPrevReq';
                 var safari = obj.safari;
                 var island = obj.island;
 
-                var html_hotel = "";
-                var html_destination = "";
+                var voyage_html_hotel = "";
+                var voyage_html_destination = "";
+
+                var spa_html_hotel = "";
+                var spa_html_destination = "";
+
+                var safari_html_hotel = "";
+                var safari_html_destination = "";
+
+                var islands_html_hotel = "";
+                var islands_html_destination = "";
 
                 if(voyage.collection != undefined){
                     $(voyage.collection).each(function(key, val){
-                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="voyage"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Voyage</span></a></li>';
+                       voyage_html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="voyage"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Voyage</span></a></li>';
                     });
                 }
                 if(voyage.dest != undefined){
                     $(voyage.dest).each(function(key, val){
-                       html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="voyage"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Voyage</span></a></li>';
+                       voyage_html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="voyage"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Voyage</span></a></li>';
                     });
                 }
                 if(spa.collection != undefined){
                     $(spa.collection).each(function(key, val){
-                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="spa"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Spa</span></a></li>';
+                       spa_html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="spa"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Spa</span></a></li>';
                     });
                 }
                 if(spa.dest != undefined){
                     $(spa.dest).each(function(key, val){
-                       html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="spa"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Spa</span></a></li>';
+                       spa_html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="spa"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Spa</span></a></li>';
                     });
                 }
                 if(safari.collection != undefined){
                     $(safari.collection).each(function(key, val){
-                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="safari"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Safari</span></a></li>';
+                       safari_html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="safari"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Safari</span></a></li>';
                     });
                 }
                 if(safari.dest != undefined){
                     $(safari.dest).each(function(key, val){
-                       html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="safari"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Safari</span></a></li>';
+                       safari_html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="safari"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Safari</span></a></li>';
                     });
                 }
                 if(island.collection != undefined){
                     $(island.collection).each(function(key, val){
-                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#"  data-type="hotel" data-collection="islands"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Islands</span></a></li>';
+                       islands_html_hotel += '<li class="nav-item"><a class="nav-link" href="#"  data-type="hotel" data-collection="islands"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Islands</span></a></li>';
                     });
                 }
                 if(island.dest != undefined){
                     $(island.dest).each(function(key, val){
-                       html_destination += '<li class="nav-item"><a class="nav-link" data-type="destination"  data-collection="islands" href="#"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Islands</span></a></li>';
+                       islands_html_destination += '<li class="nav-item"><a class="nav-link" data-type="destination"  data-collection="islands" href="#"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Islands</span></a></li>';
                     });
                 }
                 //}
             }
-            $('.wherepopup .where-destination').html(html_destination);
-            $('.wherepopup .where-hotel').html(html_hotel);
+
+            if(voyage_html_destination!=''){
+              $('.wherepopup .voyage-destination').html(voyage_html_destination);
+              $('.wherepopup .voyage-destination').show();
+              $('#voyage-desti-header').show();
+            }
+            else{
+              $('.wherepopup .voyage-destination').hide();
+              $('#voyage-desti-header').hide();
+            }
+
+            if(voyage_html_hotel!=''){
+              $('.wherepopup .voyage-hotels').html(voyage_html_hotel);
+              $('.wherepopup .voyage-hotels').show();
+              $('#voyage-hotel-header').show();
+            }else{
+              $('.wherepopup .voyage-hotels').hide();
+              $('#voyage-hotel-header').hide();
+            }
+            
+            if(spa_html_destination!=''){
+              $('.wherepopup .spa-destination').html(spa_html_destination);
+              $('.wherepopup .spa-destination').show();
+              $('#spa-desti-header').show();
+            }else{
+              $('.wherepopup .spa-destination').hide();
+              $('#spa-desti-header').hide();
+            }
+            
+            if(spa_html_hotel!=''){
+              $('.wherepopup .spa-hotels').html(spa_html_hotel);
+              $('.wherepopup .spa-hotels').show();
+              $('#spa-hotel-header').show();
+            }else{
+              $('.wherepopup .spa-hotels').hide();
+              $('#spa-hotel-header').hide();
+            }
+            
+            if(safari_html_destination!=''){
+              $('.wherepopup .safari-destination').html(safari_html_destination);
+              $('.wherepopup .safari-destination').show();
+              $('#safari-desti-header').show();
+            }else{
+              $('.wherepopup .safari-destination').hide();
+              $('#safari-desti-header').hide();
+            }
+            if(safari_html_hotel!=''){
+              $('.wherepopup .safari-hotel').html(safari_html_hotel);
+              $('.wherepopup .safari-hotel').show();
+              $('#safari-hotel-header').show();
+            }else{
+              $('.wherepopup .safari-hotel').hide();
+              $('#safari-hotel-header').hide();
+            }
+            
+            if(islands_html_destination!=''){
+              $('.wherepopup .islands-destination').html(islands_html_destination);
+              $('.wherepopup .islands-destination').show();
+              $('#islands-desti-header').show();
+            }else{
+              $('.wherepopup .islands-destination').hide();
+              $('#islands-desti-header').hide();
+            }
+            if(islands_html_hotel!=''){
+              $('.wherepopup .islands-hotel').html(islands_html_hotel);
+              $('.wherepopup .islands-hotel').show();
+              $('#islands-hotel-header').show();
+            }else{
+              $('.wherepopup .islands-hotel').hide();
+              $('#islands-hotel-header').hide();
+            }
+
+            if(!voyage_html_destination && 
+              !spa_html_destination && 
+              !safari_html_destination && 
+              !islands_html_destination){
+              $("#distiresults").hide();
+            }else{
+              $("#distiresults").show();
+            }
+
+            if(!voyage_html_hotel && 
+              !spa_html_hotel && 
+              !safari_html_hotel && 
+              !islands_html_hotel){
+              $("#hotelsresults").hide();
+            }else{
+              $("#hotelsresults").show();
+            }
             /*if (data.data.collection == undefined) {
                 console.log("no record found");
             }else{
@@ -823,7 +920,7 @@ var ajaxReq = 'ToCancelPrevReq';
   $(document).mouseup(function(event){
     var $trigger = $(".wherepopup");
     if($trigger !== event.target && !$trigger.has(event.target).length){
-      $('.wherepopup').hide();
+//      $('.wherepopup').hide();
     }
   });
 

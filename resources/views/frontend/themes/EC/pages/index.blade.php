@@ -1,7 +1,14 @@
 @extends('frontend.themes.EC.layouts.home')
 
 @section('content')
-
+<style type="text/css">
+  .wherepopup .nav{
+    margin-bottom: 10px;
+  }
+  .ico-reload{
+    margin-top: 20px;
+  }
+</style>
 <form name="collection-search" method="post" action="{{URL::to('globalavailability')}}" id="collection_search">
 
   <div class="where-container show">
@@ -16,66 +23,41 @@
               placeholder="Where" name="destination">
             <input type="hidden" name="sitename" id="sitename"  />
             <input type="hidden" name="coll_type" id="coll_type" />
-<!--             <div class="input-group-prepend">
-              <div class="input-group-ico color-search"> <span style="background-color: #00a000;"></span> Create
-                Itinerary ->
-              </div>
-            </div> -->
+            <i class="ico ico-reload reload-offset" style="display: none;" title="" data-toggle="tooltip" data-original-title="Reset your search result"></i>
           </div>
         </div>
       </div>
       <div class="wherepopup">
         <div class="whereinner">
           <div class="row">
-            <div class="col-6">
+            <div class="col-6" id="destisresults">
               <h2 style="text-transform: uppercase; color: #FFF;">Destinations</h2>
-              <ul class="nav flex-column where-destination">
-<!--                 <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Map</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Private Jet</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Cuisine</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Channel</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Experiences</span>
-                  </a>
-                </li>
- -->              </ul>
-
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-desti-header">Voyage</h3>
+              <ul class="flex-column voyage-destination">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-desti-header">Spa</h3>
+              <ul class="flex-column spa-destination">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-desti-header">Safari</h3>
+              <ul class="flex-column safari-destination">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-desti-header">Islands</h3>
+              <ul class="flex-column islands-destination">
+              </ul>
             </div>
-            <div class="col-6">
+            <div class="col-6" id="hotelsresults">
               <h2 style="text-transform: uppercase; color: #FFF;">Hotels</h2>
-              <ul class="nav flex-column where-hotel">
-<!--                 <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Map</span>
-                  </a>
-                </li> -->
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-hotel-header">Voyage</h3>
+              <ul class="flex-column voyage-hotels">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-hotel-header">Spa</h3>
+              <ul class="flex-column spa-hotels">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-hotel-header">Safari</h3>
+              <ul class="flex-column safari-hotels">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-hotel-header">Islands</h3>
+              <ul class="flex-column islands-hotels">
               </ul>
             </div>
           </div>
