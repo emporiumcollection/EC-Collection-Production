@@ -23,6 +23,7 @@
               placeholder="Where" name="destination">
             <input type="hidden" name="sitename" id="sitename"  />
             <input type="hidden" name="coll_type" id="coll_type" />
+            <input type="hidden" name="target_page" id="target_page" />
             <i class="ico ico-reload reload-offset" style="display: none;" title="" data-toggle="tooltip" data-original-title="Reset your search result"></i>
           </div>
         </div>
