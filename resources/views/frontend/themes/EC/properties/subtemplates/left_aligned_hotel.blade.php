@@ -6,7 +6,11 @@
 <div class="row">
   <div class="col-sm-8 mb-4">
     <div class="hotel-page-list suite-ontouch no-opacity index-2">
-      <img src="uploads/container_user_files/locations/<?php echo $editorChoice['container']['name']?>/property-images/<?php echo $propertyImages[0]['file_name']; ?>" class="img-fluid" alt="">
+
+      <?php if(!empty$propertyImages)):?>
+        <img src="uploads/container_user_files/locations/<?php echo $editorChoice['container']['name']?>/property-images/<?php echo $propertyImages[0]['file_name']; ?>" class="img-fluid" alt="">
+      <?php endif;?>
+
       <div class="my-dropdown">
         <div class="btn-group dropleft">
           <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
