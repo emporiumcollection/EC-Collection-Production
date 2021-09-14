@@ -2947,7 +2947,11 @@ class PropertyController extends Controller {
 
         if(!empty($this->data['featureProperties']->toArray())){
             foreach($this->data['featureProperties'] as $k => $featureProperty){
-                $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+                if(isset($featureProperty->container) && $featureProperty->container){
+                    $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+                }else{
+                    $this->data['featureProperties'][$k]->propertyImages = [];
+                }
             }
 
             $this->formatPropertyRecords($this->data['featureProperties']);
