@@ -7,7 +7,7 @@
   <div class="col-sm-8 mb-4">
     <div class="hotel-page-list suite-ontouch no-opacity index-2">
 
-      <?php if(!empty$propertyImages)):?>
+      <?php if(!empty($propertyImages)):?>
         <img src="uploads/container_user_files/locations/<?php echo $editorChoice['container']['name']?>/property-images/<?php echo $propertyImages[0]['file_name']; ?>" class="img-fluid" alt="">
       <?php endif;?>
 
