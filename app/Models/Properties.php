@@ -45,6 +45,11 @@ class properties extends Sximo  {
         return $images;
     }
 
+	public function propertyImages()
+    {
+        return $this->images()->where('type', '=', 'Property Images');
+    }
+
 	public function barImages()
     {
         return $this->images()->where('type', '=', 'Bar Gallery Images');

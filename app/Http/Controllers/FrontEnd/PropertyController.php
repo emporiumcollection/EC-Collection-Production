@@ -7136,4 +7136,12 @@ class PropertyController extends Controller {
         }
         print_r($result);
     }
+
+    public function featuredProperty(Request $request){
+        $keyword = $request->query->get('keyword');
+        //Get featured choice properties
+        $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
+        echo json_encode($this->data['featureProperties']);
+        exit;
+    }
 }

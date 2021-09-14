@@ -511,12 +511,14 @@ Route::group(['middleware' => 'auth'], function()
 
     Route::post('addtagtitle', 'TagmanagerController@addtagtitle');
 });
+
 Route::post('globalavailability', 'FrontEnd\PropertyController@propertyglobalavailability');
-Route::get('globalsearchavailability', 'FrontEnd\PropertyController@globalsearchavailability');
 Route::post('getpdppage', 'FrontEnd\PropertyController@getpdppage');
 Route::post('getdestinationpage', 'FrontEnd\PropertyController@getdestinationpage');
 
+Route::get('globalsearchavailability', 'FrontEnd\PropertyController@globalsearchavailability');
 Route::get('searchavailability', 'FrontEnd\PropertyController@propertySearchAvailability');
+Route::get('featuredproperty', 'FrontEnd\PropertyController@featuredProperty');
 
 Route::post('getyoutubechannel', 'FrontEnd\FrontendPagesController@getyoutubechannel');
 Route::post('getinstagramchannel', 'FrontEnd\FrontendPagesController@getinstagramchannel');

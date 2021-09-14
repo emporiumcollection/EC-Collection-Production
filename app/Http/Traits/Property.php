@@ -124,10 +124,17 @@ trait Property {
     public function getFeaturedProperties($keyword){
         return properties::select(['id', 'property_name', 'property_short_name', 'detail_section1_title', 'detail_section1_description_box1', 'detail_section1_description_box2'])
         ->with([
+            'container',
             'images',
             'suites' => function($query){
                 return $query->with(['rooms']);
             },
+            'propertyImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);

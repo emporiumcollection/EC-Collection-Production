@@ -755,7 +755,7 @@ var ajaxReq = 'ToCancelPrevReq';
     $("#sitename").val(_collection);
     $("#coll_type").val(_type);
     $("#target_page").val(_targetpage);
-    get_featured_prop(_type, _collection);
+    get_featured_prop(_type, _collection, asd);
     $('.quick-prev-when1').slick({
                     slidesToShow: 1,
                     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
@@ -763,57 +763,24 @@ var ajaxReq = 'ToCancelPrevReq';
                 });
   });
 
-  function get_featured_prop(_type, _collection){
+  function get_featured_prop(_type, _collection, _location){
     var _token = $('meta[name="csrf-token"]').attr('content');
     //console.log(BaseURL);
     $.ajax({
-        url: BaseURL + '/property/featuredproperties',
+        url: BaseURL + '/featuredproperty',
         type: "get",
         dataType: "json",
-        data: {'type':_type, 'collection':_collection, '_token':_token},
+        data: {'type':_type, 'collection':_collection, '_token':_token, 'keyword':_location},
         success: function (data){
-            if(data.status == "success"){
-                var obj1 = data.data[0];
-                var objproppath = obj1.thumb;
-                var objpropimg = obj1.propimage;
-                var img1_path = objproppath +'/'+ objpropimg[0].file_name;
-                var img2_path = objproppath +'/'+ objpropimg[1].file_name;
-                //console.log(img1_path);
-                $("#left-when-featured-img1").attr('src', img1_path);
-                $("#left-when-featured-img2").attr('src', img2_path);
-                var objprop = obj1.objprop;
-                $("#left-when-featured-text").html(objprop.property_usp);
-                $(".when-hotel-name").html(objprop.property_name);
-                var whensimage = '';
-                for(var i=1; i<4; i++){
-                    var ipath = objproppath +'/'+ objpropimg[i].file_name;
-                    whensimage += '<div><img src="'+ipath+'" class="img-fluid" alt=""></div>';
-                }  //console.log(whensimage);
-                $(".when-quick-prev").html(whensimage);
+            //if(data.status == "success"){
+                $('.title-2').html(data[0]['property_name']);
+                $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
+                $('.herl').html(`<img src="uploads/container_user_files/locations/` 
+                  + data[0]['container']['name'] + `/property-images/` + data[0]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
 
-                var obj2 = data.data[1];
-                var objproppathwho = obj2.thumb;
-                var objpropimgwho = obj2.propimage;
-                var img2_path = objproppathwho +'/'+ objpropimgwho[0].file_name;
-                $("#left-who-featured-img1").attr('src', img2_path);
-                var objprop2 = obj2.objprop;
-                $("#left-who-featured-text").html(objprop2.property_usp);
-                $(".who-hotel-name").html(objprop2.property_name);
-
-                var whosimage = '';
-                for(var i=1; i<4; i++){
-                    var ipath2 = objproppathwho +'/'+ objpropimgwho[i].file_name;
-                    whosimage += '<div><img src="'+ipath2+'" class="img-fluid" alt=""></div>';
-                }  //console.log(whosimage);
-                $(".who-quick-prev").html(whosimage);
-
-                $('.quick-prev-when1').slick('unslick');
-                $('.quick-prev-when1').slick({
-                    slidesToShow: 1,
-                    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-                    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-                });
-            }
+                $('.to-right .title-2').html(data[0]['property_name']);
+                $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);                
+            //}
         }
     });
   }

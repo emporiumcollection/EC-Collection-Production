@@ -92,6 +92,13 @@
               <div class="title-with-icon">
                 <i class="ico ico-calendar"></i>
                 <h2>When</h2>
+                <a href="/" class="main-close mr-3">
+                  <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <title>Close</title>
+                    <path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                    </path>
+                  </svg>
+                </a>
               </div>
               <div class="range-calendar range-date-9127013" id="calendar-pick">
                 <div id="daterangepicker-inline-container" class="daterangepicker-inline"></div>
@@ -140,6 +147,7 @@
             </div>
 
             <div class="fetaruer">
+              <h2 class="title-2"></h2>
               <h3 class="title-3 title-i">— featured hotel —</h3>
               <p class="font-2">
                 <i>
@@ -163,6 +171,13 @@
             <div class="title-with-icon">
               <i class="ico ico-profile-pp"></i>
               <h2>WHO</h2>
+              <a href="index.html" class="main-close mr-3">
+                <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                  <title>Close</title>
+                  <path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                  </path>
+                </svg>
+              </a>
             </div>
 
             <div class="filter-container-fl filter-guest-2 ml-0" id="guest-pick" style="display: block;">
@@ -281,6 +296,7 @@
             </div>
 
             <div class="fetaruer to-right">
+              <h2 class="title-2 title-i"></h2>
               <h3 class="title-3 title-i">— featured hotel —</h3>
               <p class="font-2">
                 <i>
