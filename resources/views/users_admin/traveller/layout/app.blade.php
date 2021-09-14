@@ -15,7 +15,7 @@
   
   <link href="{{ asset('assets/users/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ asset('assets/users/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
-
+  <link href="{{ asset('assets/users/assets/css/owl.carousel.min.css')}}" rel="stylesheet" type="text/css" />
   <!--end::Page Vendors Styles-->
   <!--begin::Global Theme Styles(used by all pages)-->
   <link href="{{ asset('assets/users/assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
@@ -575,8 +575,46 @@
 
   <script src="{{ asset('assets/users/assets/js/pages/crud/forms/widgets/select2.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
-
+  <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
   <script>
+    $('.experience-slider').slick({
+      infinite: false,
+      speed: 300,
+      slidesToShow: 6,
+      slidesToScroll: 1,
+      prevArrow: '<a class="slide-arrow prev-arrow"><i class="ico ico-back"></i></a>',
+      nextArrow: '<a class="slide-arrow next-arrow"><i class="ico ico-next"></i></a>',
+      responsive: [
+        {
+          breakpoint: 1627,
+          settings: {
+            slidesToShow: 5,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 1366,
+          settings: {
+            slidesToShow: 4,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 769,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
     $('.dashboard-slider').slick({
       slidesToShow: 1,
       autoplay: true,
@@ -601,6 +639,11 @@
         });
     $("#send-invitation").click(function (e) {
       Swal.fire("Good job!", "Message has been sent ", "success");
+    });
+
+    $(".clickNext").click(function (e) {
+        var sal = $('.select2 option:selected').eq(0).val();
+        alert(sal);return false;
     });
     
     $('.result-grid').slick({
@@ -794,6 +837,93 @@
         },{
           field: 'preferred_currency',
           title: 'Preferred Currency',
+          sortable: 'asc',
+          selector: false,
+        },{
+          field: 'Action',
+          title: '',
+          sortable: false,
+          overflow: 'visible',
+          width: 30,
+          
+          template: function (row) {
+            return `<div class="dropdown dropdown-inline">
+              <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+                <i class="flaticon-cogwheel-2"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                <ul class="navi flex-column navi-hover py-2">
+                  <li class="navi-item">
+                    <a href="http://development.emporium-voyage.com/editcompanion/`+row.id+`" class="navi-link">
+                      <span class="navi-text">Edit</span>
+                    </a>
+                  </li>
+                  <li class="navi-item">
+                    <a href="http://development.emporium-voyage.com/deletecompanion/`+row.id+`"" class="navi-link">
+                      <span class="navi-text">Delete</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>`;
+          }
+        }
+      ],  
+    });
+
+     var datatable = $('#invite_datatable').KTDatatable({
+      data: {
+        type: 'remote',
+        source: { 
+          read: {
+            url: '{{ URL::to('/users/inviteGuest') }}',
+            method: 'GET',
+            map: function(raw) {
+              // sample data mapping
+              var dataSet = raw;
+              if (typeof raw.data !== 'undefined') {
+                dataSet = raw.data;
+              }
+              return dataSet;
+            },
+          },
+        },
+        pageSize: 10, // display 20 records per page
+        serverPaging: true,
+        serverFiltering: true,
+        serverSorting: true,
+      },
+      layout: {
+        scroll: false,
+        footer: false,
+      },
+      sortable: true,
+      pagination: true,
+      search: {
+          input: $('#kt_datatable_search'),
+          key: 'generalSearch'
+      },
+  
+      columns: [
+        {
+          field: 'first_name',
+          title: 'Name',
+          sortable: 'asc',
+          selector: false,
+        }, 
+        {
+          field: 'last_name',
+          title: 'Last Name',
+          sortable: 'asc',
+          selector: false,
+        },{
+          field: 'email',
+          title: 'Email',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'message',
+          title: 'Massage',
           sortable: 'asc',
           selector: false,
         },{

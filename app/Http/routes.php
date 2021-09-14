@@ -55,7 +55,7 @@ Route::get('book/reservation', 'PhaseOne\ReservationController@index');
 
 //Datatable route
 Route::get('/users/companiondata', 'DatatableController@getDatatable');
-
+Route::get('/users/inviteGuest', 'DatatableController@getInviteGuest');
 /**
  * New Admin backend routes.
  */

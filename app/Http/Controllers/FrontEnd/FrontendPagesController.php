@@ -62,7 +62,7 @@ class FrontendPagesController extends Controller {
 				return Redirect::to('')
 								->with('message', \SiteHelpers::alert('error', \Lang::get('core.note_noexists')));
 			}
-	   }
+	   }	
 	   else
 		{
 			return Redirect::to('')

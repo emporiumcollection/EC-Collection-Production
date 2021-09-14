@@ -14,7 +14,7 @@ use Validator,
     Redirect;
 
 class UserController extends Controller {
-
+    
     protected $layout = "layouts.main";
 
     public function __construct() {
@@ -2818,7 +2818,7 @@ class UserController extends Controller {
             return redirect('user/login');
                         
         $def_currency = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-        
+        $category = \DB::table('tb_categories')->whereNotIn('id',[8,627,672,713])->where('parent_category_id',0)->get();
         $temp = $this->get_destinations_new();
         //print_r($temp); die;
         $destinations = $temp;
@@ -2850,7 +2850,7 @@ class UserController extends Controller {
             $file_name = '.users_admin.traveller.users.my-preferences';           
         }
         
-        return view($file_name, $this->data);
+        return view($file_name, $this->data,compact('category'));
     }
     public function getReservation(){
         $file_name = 'users_admin.traveller.users.reservations';

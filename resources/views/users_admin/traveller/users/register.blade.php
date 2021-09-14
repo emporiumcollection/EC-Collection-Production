@@ -66,9 +66,6 @@
                                     aria-labelledby="step1-tab">
                                     <div class="mt-5 mb-3">
                                         <h3 class="font-2">Create Account</h3>
-                                        <p class="font-2">Already have an account : <a href="login.html"
-                                                class="underline"><b>Sign
-                                                    In</b></a></p>
                                     </div>
                                     <div class="form-group">
                                         <select name="user_type" id="sel-user-type" class="form-control user_type">

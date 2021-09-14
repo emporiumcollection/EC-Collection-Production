@@ -10,7 +10,7 @@
           </a>
         </div>
         <div class="col-md-5 col-4 text-right">
-          <a href="register.html" class="mobile-off">
+          <a href="/register" class="mobile-off">
             <div class="user-profile-img">
               <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
               <!-- <img src="https://i.pravatar.cc/300" alt=""> -->

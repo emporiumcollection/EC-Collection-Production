@@ -77,7 +77,6 @@
 								<input
 									class="form-control form-control-solid form-control-lg"
 									name="firstname" type="text" value="{{ $info->first_name }}">
-
 							</div>
 						</div>
 						<!--end::Group-->
@@ -89,7 +88,6 @@
 								<input
 									class="form-control form-control-solid form-control-lg"
 									name="lastname" type="text" value="{{ $info->last_name }}">
-
 							</div>
 						</div>
 						<!--end::Group-->
@@ -132,7 +130,6 @@
 							</div>
 						</div>
 						<!--end::Group-->
-
 						<div class="form-group row fv-plugins-icon-container">
 							<label class="col-xl-3 col-lg-3 col-form-label">
 								Mobile Number
@@ -151,7 +148,6 @@
 								</div>
 							</div>
 						</div>
-
 						<!--begin::Group-->
 						<div class="form-group row fv-plugins-icon-container">
 							<label class="col-xl-3 col-lg-3 col-form-label">

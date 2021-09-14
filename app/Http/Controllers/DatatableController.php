@@ -24,5 +24,22 @@ class DatatableController extends Controller
         }
         return $companions;
     }
+    public function getinviteguest()
+    {
+        $field = $_GET['sort']['field'];
+        $Order = $_GET['sort']['sort'];
+        if (isset($field) && isset($Order)) {
+            $companions = DB::table('tb_invitee')
+                ->select('id','user_id','first_name','last_name','email','message','referral_code')
+                ->orderBy('id',$Order)        
+                ->get();   
+        }
+        else{
+            $companions = DB::table('tb_invitee')
+                ->select('id','user_id','first_name','last_name','email','message','referral_code')
+                ->get();    
+        }
+        return $companions;
+    }
 
 }

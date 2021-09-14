@@ -103,57 +103,10 @@
                         <p>You can specify one or more destinations</p>
                         <div class="form-group">
                             <select class="form-control select2" id="kt_select2_3"
-                                name="destinations[]"  multiple="multiple">
-                                <option value="AK" selected>Alaska</option>
-                                <option value="HI">Hawaii</option>
-                                <option value="CA">California</option>
-                                <option value="NV" selected>Nevada</option>
-                                <option value="OR">Oregon</option>
-                                <option value="WA">Washington</option>
-                                <option value="AZ">Arizona</option>
-                                <option value="CO">Colorado</option>
-                                <option value="ID">Idaho</option>
-                                <option value="MT" selected>Montana</option>
-                                <option value="NE">Nebraska</option>
-                                <option value="NM">New Mexico</option>
-                                <option value="ND">North Dakota</option>
-                                <option value="UT">Utah</option>
-                                <option value="WY">Wyoming</option>
-                                <option value="AL">Alabama</option>
-                                <option value="AR">Arkansas</option>
-                                <option value="IL">Illinois</option>
-                                <option value="IA">Iowa</option>
-                                <option value="KS">Kansas</option>
-                                <option value="KY">Kentucky</option>
-                                <option value="LA">Louisiana</option>
-                                <option value="MN">Minnesota</option>
-                                <option value="MS">Mississippi</option>
-                                <option value="MO">Missouri</option>
-                                <option value="OK">Oklahoma</option>
-                                <option value="SD">South Dakota</option>
-                                <option value="TX">Texas</option>
-                                <option value="TN">Tennessee</option>
-                                <option value="WI">Wisconsin</option>
-                                <option value="CT">Connecticut</option>
-                                <option value="DE">Delaware</option>
-                                <option value="FL">Florida</option>
-                                <option value="GA">Georgia</option>
-                                <option value="IN">Indiana</option>
-                                <option value="ME">Maine</option>
-                                <option value="MD">Maryland</option>
-                                <option value="MA">Massachusetts</option>
-                                <option value="MI">Michigan</option>
-                                <option value="NH">New Hampshire</option>
-                                <option value="NJ">New Jersey</option>
-                                <option value="NY">New York</option>
-                                <option value="NC">North Carolina</option>
-                                <option value="OH">Ohio</option>
-                                <option value="PA">Pennsylvania</option>
-                                <option value="RI">Rhode Island</option>
-                                <option value="SC">South Carolina</option>
-                                <option value="VT">Vermont</option>
-                                <option value="VA">Virginia</option>
-                                <option value="WV">West Virginia</option>
+                                name="destinations[]" id="destination[]"  multiple="multiple">
+                                @foreach($category as $categories )
+                                <option value="{{ $categories->id }}">{{ $categories->category_name }}</option>
+                                @endforeach
                             </select>
                             <div class="select-notif">
                                 Select the destinations you prefer to travel to.
@@ -163,151 +116,1484 @@
                 </div>
                 <!--end: Wizard Step 1-->
                 <!--begin: Wizard Step 2-->
-                <div class="pb-5" data-wizard-type="step-content">  
+              <div class="pb-5" data-wizard-type="step-content">
                     <div class="text-center">
                         <h1 class="mb-10 font-weight-bolder text-dark font-saol">
                             What inspires you?
                         </h1>
                     </div>
-                    <div class="checkbox-inline checkbox-cs">
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="inspirations[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1517633551-53631207.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">Be Active
-                                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Destinations
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="inspirations[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1517633551-53631207.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">Relax and
-                                        refuel
-                                    </div>
+                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Atmosphere
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Charm
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Nature
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Trendy
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Intimate
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Evasion
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Tropical
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Myth
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Castle life
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Country house
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Colonial
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="inspirations[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1517633551-53631207.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">Explore
-                                        Something
-                                        New</div>
+                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Facilities
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Fitness
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Spa
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Outdoor pool
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Indoor pool
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Kids club
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Beach
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Pets
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Water sports
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Diving
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Golf
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Ski
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="inspirations[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1517633551-53631207.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">Pampering &
-                                        Enjoyment</div>
+                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Style
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Classic
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Contemporary
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Historical
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Unusual
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="inspirations[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1517633551-53631207.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">Time Together
-                                    </div>
+                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Price
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <!--end: Wizard Step 2-->
                 <!--begin: Wizard Step 3-->
-                <div class="pb-5" data-wizard-type="step-content">
+               <div class="pb-5" data-wizard-type="step-content">
                     <div class="text-center">
                         <h1 class="mb-10 font-weight-bolder text-dark font-saol">
                             What would you like to experience
                         </h1>
                     </div>
-                    <div class="checkbox-inline checkbox-cs">
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="experiences[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">
-                                        Collection Experiences
-                                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Spa Collection
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="experiences[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">
-                                        Spa Experiences
-                                    </div>
+                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Voyage Collection
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="experiences[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1524840721-29306538.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">
-                                        Safari Experiences
-                                    </div>
+                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Islands Collection
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="experiences[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1524840721-29306538.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">
-                                        Islands Experiences
-                                    </div>
+                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Safari Collection
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 mb-9">
-                            <label class="checkbox">
-                                <input type="checkbox" name="experiences[]" />
-                                <img src="https://emporium-voyage.com/uploads/category_imgs/1524840721-29306538.jpg"
-                                    class="img-fluid" alt="">
-                                <div class="label-inner">
-                                    <span></span>
-                                    <div class="title-checkbox font-saol">
-                                        Yacht Experiences
-                                    </div>
+                    </div>
+                    <div class="mb-15">
+                        <h3 class="text-dark font-weight-bold font-saol mb-4">
+                            Yatchs
+                        </h3>
+                        <div class="experience-slider">
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
                                 </div>
-                            </label>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                    <label class="checkbox">
+                                        <input type="checkbox" name="Checkboxes2" />
+                                        <img src="https://emporium-voyage.com/uploads/category_imgs/1527177047-75040515.jpg"
+                                            class="img-fluid" alt="">
+                                        <div class="label-inner">
+                                            <span></span>
+                                            <div class="title-checkbox">
+                                                Lorem ipsum
+                                            </div>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -488,7 +1774,7 @@
                             class="btn btn-success font-weight-bolder text-uppercase px-9 py-4"
                             data-wizard-type="action-submit">Submit</button>
                         <button type="button"
-                            class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4"
+                            class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4 clickNext"
                             data-wizard-type="action-next">Next</button>
                     </div>
                 </div>
