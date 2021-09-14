@@ -1,7 +1,14 @@
 @extends('frontend.themes.EC.layouts.home')
 
 @section('content')
-
+<style type="text/css">
+  .wherepopup .nav{
+    margin-bottom: 10px;
+  }
+  .ico-reload{
+    margin-top: 20px;
+  }
+</style>
 <form name="collection-search" method="post" action="{{URL::to('globalavailability')}}" id="collection_search">
 
   <div class="where-container show">
@@ -16,71 +23,63 @@
               placeholder="Where" name="destination">
             <input type="hidden" name="sitename" id="sitename"  />
             <input type="hidden" name="coll_type" id="coll_type" />
-<!--             <div class="input-group-prepend">
-              <div class="input-group-ico color-search"> <span style="background-color: #00a000;"></span> Create
-                Itinerary ->
-              </div>
-            </div> -->
+            <input type="hidden" name="target_page" id="target_page" />
+            <i class="ico ico-reload reload-offset" style="display: none;" title="" data-toggle="tooltip" data-original-title="Reset your search result"></i>
           </div>
         </div>
       </div>
       <div class="wherepopup">
         <div class="whereinner">
           <div class="row">
-            <div class="col-6">
+            <div class="col-6" id="destisresults">
               <h2 style="text-transform: uppercase; color: #FFF;">Destinations</h2>
-              <ul class="nav flex-column where-destination">
-<!--                 <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Map</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Private Jet</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Cuisine</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Channel</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Experiences</span>
-                  </a>
-                </li>
- -->              </ul>
-
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-desti-header">Voyage</h3>
+              <ul class="flex-column voyage-destination">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-desti-header">Spa</h3>
+              <ul class="flex-column spa-destination">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-desti-header">Safari</h3>
+              <ul class="flex-column safari-destination">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-desti-header">Islands</h3>
+              <ul class="flex-column islands-destination">
+              </ul>
             </div>
-            <div class="col-6">
+            <div class="col-6" id="hotelsresults">
               <h2 style="text-transform: uppercase; color: #FFF;">Hotels</h2>
-              <ul class="nav flex-column where-hotel">
-<!--                 <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link pl-0" href="#">
-                    <span class="city-l">New York</span> <span class="cat-l">Map</span>
-                  </a>
-                </li> -->
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-hotel-header">Voyage</h3>
+              <ul class="flex-column voyage-hotels">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-hotel-header">Spa</h3>
+              <ul class="flex-column spa-hotels">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-hotel-header">Safari</h3>
+              <ul class="flex-column safari-hotels">
+              </ul>
+              <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-hotel-header">Islands</h3>
+              <ul class="flex-column islands-hotels">
               </ul>
             </div>
           </div>
         </div>
       </div>
+    </div>
+    <div class="owl-carousel owl-theme landing-slider">
+<?php foreach($slider as $slide):?>    
+    <div class="item">
+      <img src="uploads/slider_images/<?php echo $slide->slider_img;?>" alt="">
+      <div class="landing-slider-content">
+        <h2><?php echo $slide->slider_title;?></h2>
+        <p>
+          <?php echo $slide->slider_description;?>
+        </p>
+        <div class="action-button">
+          <a href="<?php echo $slide->slider_link;?>" class="btn btn-outline-white btn-lg">Action Button</a>
+        </div>
+      </div>
+    </div>
+<?php endforeach;?>
     </div>
   </div>
 
@@ -93,6 +92,13 @@
               <div class="title-with-icon">
                 <i class="ico ico-calendar"></i>
                 <h2>When</h2>
+                <a href="/" class="main-close mr-3">
+                  <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                    <title>Close</title>
+                    <path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                    </path>
+                  </svg>
+                </a>
               </div>
               <div class="range-calendar range-date-9127013" id="calendar-pick">
                 <div id="daterangepicker-inline-container" class="daterangepicker-inline"></div>
@@ -123,169 +129,12 @@
                   </div>
                 </label>
               </div>
-              <div class="mt-5 include-form">
-<!--                 <div id="accordion">
-                  <div class="accor">
-                    <div class="accor-header" id="headingOne">
-                      <div class="row align-items-center include-list">
-                        <div class="col pr-0">
-                          <div class="include">
-                            <p class="inc-t">Include</p>
-                            <p class="inc-f">Flight</p>
-                            <p class="inc-s">Search</p>
-                          </div>
-                        </div>
-                        <div class="col text-center">
-                          <i class="ico-flight"></i>
-                        </div>
-                        <div class="col text-center">
-                          <label class="container-checkbox mb-0 collapsed" data-toggle="collapse"
-                            data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
-                            <input type="checkbox" name="include_flight">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne">
-                      <div class="accor-body">
-                        <div class="d-flex align-items-center">
-                          <div class="lolsp">
-                            <div class="form-asd">Departing From :</div>
-                          </div>
-                          <div class="pl-3">
-                            <input type="text" class="form-control" name="flight_departing">
-                          </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                          <div class="lolsp">
-                            <div class="form-asd">Select Airport :</div>
-                          </div>
-                          <div class="pl-3">
-                            <input type="text" class="form-control" name="flight_airport">
-                          </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                          <div class="lolsp">
-                            <div class="form-asd">Select Guest :</div>
-                          </div>
-                          <div class="pl-3">
-                            <input type="text" class="form-control" name="flight_guest">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accor">
-                    <div class="accor-header" id="headingTwo">
-                      <div class="row align-items-center include-list">
-                        <div class="col">
-                          <div class="include">
-                            <p class="inc-t">Include</p>
-                            <p class="inc-f">Yacht</p>
-                            <p class="inc-s">Search</p>
-                          </div>
-                        </div>
-                        <div class="col text-center">
-                          <i class="ico-yacht"></i>
-                        </div>
-                        <div class="col text-center">
-                          <label class="container-checkbox mb-0 collapsed" data-toggle="collapse"
-                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                            <input type="checkbox" name="include_yacht">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo">
-                      <div class="accor-body">
-                        <div class="d-flex align-items-center">
-                          <div class="lolsp">
-                            <div class="form-asd">Departing From :</div>
-                          </div>
-                          <div class="pl-3">
-                            <input type="text" class="form-control" name="yacht_departing">
-                          </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                          <div class="lolsp">
-                            <div class="form-asd">Select Airport :</div>
-                          </div>
-                          <div class="pl-3">
-                            <input type="text" class="form-control" name="yacht_airport">
-                          </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                          <div class="lolsp">
-                            <div class="form-asd">Select Guest :</div>
-                          </div>
-                          <div class="pl-3">
-                            <input type="text" class="form-control" name="yacht_guest">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="accor">
-                    <div class="accor-header" id="headingThree">
-                      <div class="row align-items-center include-list">
-                        <div class="col">
-                          <div class="include">
-                            <p class="inc-t">Include</p>
-                            <p class="inc-f">Limosine</p>
-                            <p class="inc-s">Search</p>
-                          </div>
-                        </div>
-                        <div class="col text-center">
-                          <i class="ico-limosine"></i>
-                        </div>
-                        <div class="col text-center">
-                          <label class="container-checkbox mb-0 collapsed" data-toggle="collapse"
-                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                            <input type="checkbox" name="include_limosine">
-                            <span class="checkmark"></span>
-                          </label>
-                        </div>
-                      </div>
-                    </div>
-                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree">
-                      <div class="accor-body">
-                        <div class="d-flex align-items-center">
-                          <div class="lolsp">
-                            <div class="form-asd">Departing From :</div>
-                          </div>
-                          <div class="pl-3">
-                            <input type="text" class="form-control" name="limosine_departing">
-                          </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                          <div class="lolsp">
-                            <div class="form-asd">Select Airport :</div>
-                          </div>
-                          <div class="pl-3">
-                            <input type="text" class="form-control" name="limosine_airport">
-                          </div>
-                        </div>
-                        <div class="d-flex align-items-center">
-                          <div class="lolsp">
-                            <div class="form-asd">Select Guest :</div>
-                          </div>
-                          <div class="pl-3">
-                            <input type="text" class="form-control" name="limosine_guest">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div> -->
+              <div class="mt-5 include-form" style="display: block;">
                 <div class="guest-pick-footer mb-5 mt-4 pr-3">
                   <div class="text-right">
-                    <a href="#" class="confirm-room step-3">Submit</a>
+                    <a href="#" class="step-3 btn btn-primary">Who is traveling</a>
                   </div>
-                </div>
-
+                </div>  
                 <div class="herl">
                   <img src="images/5ac27a91813631.5e3b3fe359ee2.jpg" class="img-fluid" alt="">
                 </div>
@@ -298,6 +147,7 @@
             </div>
 
             <div class="fetaruer">
+              <h2 class="title-2"></h2>
               <h3 class="title-3 title-i">— featured hotel —</h3>
               <p class="font-2">
                 <i>
@@ -321,6 +171,13 @@
             <div class="title-with-icon">
               <i class="ico ico-profile-pp"></i>
               <h2>WHO</h2>
+              <a href="index.html" class="main-close mr-3">
+                <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                  <title>Close</title>
+                  <path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                  </path>
+                </svg>
+              </a>
             </div>
 
             <div class="filter-container-fl filter-guest-2 ml-0" id="guest-pick" style="display: block;">
@@ -427,33 +284,19 @@
                   <div class="text-right">
                     <!-- <a href="main-page.html" class="confirm-room">View "New York Collection"</a> -->
                     <!-- <input type="hidden" name="suites_data" class="suites_data"> -->
-                    <input type="submit" class="confirm-room" value="View Collection" />
+                    <input type="submit" class="btn btn-primary" value="View Collection" />
                   </div>
                 </div>
               </div>
-
-<!--               <div class="oldo-o">
-                <div class="quick-prev">
-                  <div>
-                    <img src="images/d9710383434639.5d3c346168dd3.jpg" class="img-fluid" alt="">
-                  </div>
-                  <div>
-
-                    <img src="images/d9710383434639.5d3c346168dd3.jpg" class="img-fluid" alt="">
-                  </div>
-                  <div>
-                    <img src="images/d9710383434639.5d3c346168dd3.jpg" class="img-fluid" alt="">
-                  </div>
-                </div>
-              </div> -->
-            </div>
-          </div>
+  </div>
+  </div>
           <div class="col-6 pl-0 pr--md-0">
             <div class="img-left-when">
               <img src="images/60c5a787075247-1.5dad757ad76ab.jpg" alt="">
             </div>
 
             <div class="fetaruer to-right">
+              <h2 class="title-2 title-i"></h2>
               <h3 class="title-3 title-i">— featured hotel —</h3>
               <p class="font-2">
                 <i>
@@ -470,22 +313,4 @@
   </div>
 
 </form>
-
-  <div class="owl-carousel owl-theme landing-slider ">
-<?php foreach($slider as $slide):?>    
-    <div class="item">
-      <img src="uploads/slider_images/<?php echo $slide->slider_img;?>" alt="">
-      <div class="landing-slider-content">
-        <h2><?php echo $slide->slider_title;?></h2>
-        <p>
-          <?php echo $slide->slider_description;?>
-        </p>
-        <div class="action-button">
-          <a href="<?php echo $slide->slider_link;?>" class="btn btn-outline-white btn-lg">Action Button</a>
-        </div>
-      </div>
-    </div>
-<?php endforeach;?>
-  </div>
-
 @endsection

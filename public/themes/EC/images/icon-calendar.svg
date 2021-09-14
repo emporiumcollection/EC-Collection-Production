@@ -1,1 +1,16 @@
-<svg width="21" height="21" viewBox="0 0 21 21" xmlns="http://www.w3.org/2000/svg"><title>icon-calendar copy</title><g stroke-width=".933" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"><path stroke="#474A53" d="M20 7H1"/><path stroke="#444" d="M1 2h19v18H1zm5-1v4m9-4v4"/></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="21px" viewBox="0 0 21 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>icon-calendar copy</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="GridViewQuickPDP-Copy-4" transform="translate(-87.000000, -103.000000)" stroke-width="0.933333333">
+            <g id="icon-calendar-copy" transform="translate(88.000000, 104.000000)">
+                <line x1="19" y1="6" x2="0" y2="6" id="Stroke-181" stroke="#474A53"></line>
+                <polygon id="Stroke-182" stroke="#444444" points="0 1 19 1 19 19 0 19"></polygon>
+                <line x1="5" y1="0" x2="5" y2="4" id="Stroke-184" stroke="#444444"></line>
+                <line x1="14" y1="0" x2="14" y2="4" id="Stroke-185" stroke="#444444"></line>
+            </g>
+        </g>
+    </g>
+</svg>

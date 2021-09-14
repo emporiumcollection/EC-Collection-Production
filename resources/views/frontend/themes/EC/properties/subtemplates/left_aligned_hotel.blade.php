@@ -6,7 +6,11 @@
 <div class="row">
   <div class="col-sm-8 mb-4">
     <div class="hotel-page-list suite-ontouch no-opacity index-2">
-      <img src="uploads/container_user_files/locations/<?php echo $editorChoice['container']['name']?>/property-images/<?php echo $propertyImages[0]['file_name']; ?>" class="img-fluid" alt="">
+
+      <?php if(!empty($propertyImages)):?>
+        <img src="uploads/container_user_files/locations/<?php echo $editorChoice['container']['name']?>/property-images/<?php echo $propertyImages[0]['file_name']; ?>" class="img-fluid" alt="">
+      <?php endif;?>
+
       <div class="my-dropdown">
         <div class="btn-group dropleft">
           <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -101,17 +105,14 @@
         </div>
       </div>
       <div class="hotel-meta full-width">
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-          Reviews
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">
+          Suite(s)
         </a>
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">
           Quick info
         </a>
         <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">
           Gallery
-        </a>
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">
-          Suite(s)
         </a>
         <div class="hotel-prices hotel-price-detail d-flex">
           <div class="row align-items-center justify-content-center">

@@ -1,1 +1,20 @@
-<svg width="28" height="28" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg"><title>RAte-Info</title><g fill="#FFF" fill-rule="evenodd"><path d="M14 0C6.268 0 0 6.268 0 14s6.268 14 14 14 14-6.268 14-14S21.732 0 14 0zm0 26C7.373 26 2 20.627 2 14S7.373 2 14 2s12 5.373 12 12-5.373 12-12 12z"/><text font-family="Helvetica" font-size="19" letter-spacing="1.583"><tspan x="12.098" y="20">i</tspan></text></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="28px" viewBox="0 0 28 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>RAte-Info</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Room-Details" transform="translate(-1213.000000, -1798.000000)" fill="#FFFFFF">
+            <g id="Hotel-Deals-Box" transform="translate(67.000000, 1252.000000)">
+                <g id="Deal-1-Copy" transform="translate(48.000000, 514.000000)">
+                    <g id="RAte-Info" transform="translate(1098.000000, 32.000000)">
+                        <path d="M14,0 C6.2680135,0 0,6.2680135 0,14 C0,21.7319865 6.2680135,28 14,28 C21.7319865,28 28,21.7319865 28,14 C28,6.2680135 21.7319865,0 14,0 L14,0 Z M14,26 C7.372583,26 2,20.627417 2,14 C2,7.372583 7.372583,2 14,2 C20.627417,2 26,7.372583 26,14 C26,20.627417 20.627417,26 14,26 Z" id="Shape"></path>
+                        <text id="i" font-family="Helvetica" font-size="19" font-weight="normal" letter-spacing="1.58333285">
+                            <tspan x="12.0977379" y="20">i</tspan>
+                        </text>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

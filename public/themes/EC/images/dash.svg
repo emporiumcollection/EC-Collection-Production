@@ -1,1 +1,16 @@
-<svg width="124" height="118" viewBox="0 0 124 118" xmlns="http://www.w3.org/2000/svg"><title>Group 3</title><path d="M2 2v48.465h51.706V2zm67.963 0v48.465h51.706V2zM2 67.53v48.465h51.706V67.529zm67.963 0v48.465h51.706V67.529z" stroke="#000" stroke-width="4" fill="none"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="124px" height="118px" viewBox="0 0 124 118" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>Group 3</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Artboard" transform="translate(-645.000000, -477.000000)" stroke="#000000" stroke-width="4">
+            <g id="Group-3" transform="translate(647.000000, 479.000000)">
+                <polygon id="Path-11" points="-2.84217094e-14 -2.84217094e-14 -2.84217094e-14 48.4653337 51.7058419 48.4653337 51.7058419 -2.84217094e-14"></polygon>
+                <polygon id="Path-11" points="67.9628461 -2.84217094e-14 67.9628461 48.4653337 119.668688 48.4653337 119.668688 -2.84217094e-14"></polygon>
+                <polygon id="Path-11" points="-2.84217094e-14 65.5294033 -2.84217094e-14 113.994737 51.7058419 113.994737 51.7058419 65.5294033"></polygon>
+                <polygon id="Path-11" points="67.9628461 65.5294033 67.9628461 113.994737 119.668688 113.994737 119.668688 65.5294033"></polygon>
+            </g>
+        </g>
+    </g>
+</svg>

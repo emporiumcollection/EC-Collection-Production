@@ -1,1 +1,17 @@
-<svg width="28" height="15" viewBox="0 0 28 15" xmlns="http://www.w3.org/2000/svg"><title>HamburgerMenu</title><path d="M7.792 1h19.416C27.645 1 28 .776 28 .5s-.355-.5-.792-.5H7.792C7.355 0 7 .224 7 .5s.355.5.792.5zM1.057 8h25.886C27.527 8 28 7.776 28 7.5s-.473-.5-1.057-.5H1.057C.473 7 0 7.224 0 7.5s.473.5 1.057.5zm10.585 7h15.716c.355 0 .642-.224.642-.5s-.287-.5-.642-.5H11.642c-.355 0-.642.224-.642.5s.287.5.642.5z" fill="#B9B9C0"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="15px" viewBox="0 0 28 15" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>HamburgerMenu</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="GridViewQuickPDP-Copy-6" transform="translate(-1366.000000, -34.000000)" fill="#B9B9C0">
+            <g id="HamburgerMenu" transform="translate(1366.000000, 34.000000)">
+                <g id="menu">
+                    <path d="M7.79245283,1 L27.2075472,1 C27.6449811,1 28,0.776 28,0.5 C28,0.224 27.6449811,0 27.2075472,0 L7.79245283,0 C7.35501887,0 7,0.224 7,0.5 C7,0.776 7.35501887,1 7.79245283,1 Z" id="Shape" fill-rule="nonzero"></path>
+                    <path d="M1.05660377,8 L26.9433962,8 C27.5266415,8 28,7.776 28,7.5 C28,7.224 27.5266415,7 26.9433962,7 L1.05660377,7 C0.473358491,7 0,7.224 0,7.5 C0,7.776 0.473358491,8 1.05660377,8 Z" id="Shape" fill-rule="nonzero"></path>
+                    <path d="M11.6415094,15 L27.3584906,15 C27.7126038,15 28,14.776 28,14.5 C28,14.224 27.7126038,14 27.3584906,14 L11.6415094,14 C11.2873962,14 11,14.224 11,14.5 C11,14.776 11.2873962,15 11.6415094,15 Z" id="Shape" fill-rule="nonzero"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

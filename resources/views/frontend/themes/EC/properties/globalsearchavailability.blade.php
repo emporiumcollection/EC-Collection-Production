@@ -67,25 +67,6 @@
                 </svg>
               </a>
               <ul class="nav flex-column nav-sidebar ">
-                <li class="nav-item">
-                  <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#experiences" role="button"
-                    aria-expanded="false" aria-controls="experiences">
-                    Experiences
-                    <i class="fa fa-angle-down" aria-hidden="true"></i>
-                  </a>
-                @if(!empty($experiences))
-                  <div class="collapse @@suiteActive" id="experiences">
-                    <ul class="nav flex-column nav-sidebar is-small">
-                    @foreach($experiences as $exp)
-                        <li class="nav-item">
-                          <a class="nav-link nav-link-sub experiences"  data-exp="{{$exp->category_name}}">{{ $exp->category_name }}</a>
-                        </li>
-                    @endforeach
-                    </ul>
-                  </div>
-                @endif
-                </li>
-
                 <li class="nav-item mt-3">
                   <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button"
                     aria-expanded="false" aria-controls="suite">
@@ -137,7 +118,7 @@
               <?php endforeach;?>          
             </ul>
             <div class="hotel-meta hotel-meta-banner">
-              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#info_sidebar">
                 Info
               </a>
               <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">

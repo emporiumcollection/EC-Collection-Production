@@ -1,1 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48"><g fill="none" stroke="#000" stroke-width="2" stroke-miterlimit="10"><path d="M43 47H5c-2.2 0-4-1.8-4-4V5c0-2.2 1.8-4 4-4h38c2.2 0 4 1.8 4 4v38c0 2.2-1.8 4-4 4z"/><path d="M3.1 33.6L15.3 20l17.6 17.8m-6.8-8.9l7.9-7 10.6 8.9"/><circle cx="25.6" cy="12.1" r="4.5"/></g></svg>
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 18.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 48 48" enable-background="new 0 0 48 48" xml:space="preserve">
+<g>
+	<path fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" d="M43,47H5c-2.2,0-4-1.8-4-4V5c0-2.2,1.8-4,4-4h38
+		c2.2,0,4,1.8,4,4v38C47,45.2,45.2,47,43,47z"/>
+	<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="3.1,33.6 15.3,20 32.9,37.8 	"/>
+	<polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="26.1,28.9 34,21.9 44.6,30.8 	"/>
+	<circle fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" cx="25.6" cy="12.1" r="4.5"/>
+</g>
+</svg>
