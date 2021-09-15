@@ -2974,8 +2974,12 @@ class PropertyController extends Controller {
         $this->data['query_str'] = $query_str;
         $this->data['layout_type'] = 'old';
         // dump($this->data); die;
-        return view('frontend.themes.EC.properties.globalsearchavailability', $this->data);
 
+        if($request->get('view') == 'map'){
+            return view('frontend.themes.EC.properties.map_results', $this->data);
+        }else{
+            return view('frontend.themes.EC.properties.globalsearchavailability', $this->data);
+        }
     }
 
     function hotel_details(Request $request) {

@@ -754,6 +754,7 @@ var ajaxReq = 'ToCancelPrevReq';
     $("#sitename").val(_collection);
     $("#coll_type").val(_type);
     $("#target_page").val(_targetpage);
+
     get_featured_prop(_type, _collection, asd);
     $('.quick-prev-when1').slick({
                     slidesToShow: 1,
@@ -2278,9 +2279,10 @@ var ajaxReq = 'ToCancelPrevReq';
 })();
 
 function getNavitems(location, collection_name){
+  var searchResultsPageUrl = "/globalsearchavailability?view=map&s="+location+"&arrive="+$("#arrive").val()+"&departure="+$("#departure").val()+"&type=destination&rac=r0a2c1#";
+
   return `<li class="nav-item">
-      <a class="nav-link" href="#" data-type="hotel" data-collection="`+collection_name+`" 
-      data-page="map">
+      <a class="nav-link-map" href="`+searchResultsPageUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Map</span>
       </a>
     </li>

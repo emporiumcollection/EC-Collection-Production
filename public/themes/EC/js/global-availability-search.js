@@ -278,18 +278,16 @@ function getDefaultChannel(catt){
             
         },
         success: function(data){ 
-            
-            console.log(data.channel_url);   
-//            $(".dv-youtube-channel").html('<div class="yt-rvideos"></div>');
-            //$(".dv-youtube-channel").html('<div data-yt data-yt-channel="'+data.channel_url+'" data-yt-content-columns="4"  data-yt-content-rows="3"></div>')                    
-                $('.yt-rvideos').yottie({  
-                    key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
-                    channel: data.channel_url,
-                    content: {
-                        columns: 4,
-                        rows: 2
-                    },
-                });
+            if(!$('.yt-rvideos').length) return false;
+
+            $('.yt-rvideos').yottie({  
+                key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+                channel: data.channel_url,
+                content: {
+                    columns: 4,
+                    rows: 2
+                },
+            });
         }
     });
 }    

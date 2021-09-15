@@ -8,6 +8,12 @@
   .ico-reload{
     margin-top: 20px;
   }
+  .wherepopup .nav-link-map {
+    padding: 0 1rem;
+    font-size: 20px;
+    color: #fff;
+    font-family: "SaolDisplay-Regular";
+  }
 </style>
 <form name="collection-search" method="post" action="{{URL::to('globalavailability')}}" id="collection_search">
 
