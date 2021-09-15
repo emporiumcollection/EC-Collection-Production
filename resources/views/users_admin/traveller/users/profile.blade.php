@@ -21,7 +21,7 @@
 						Information</a>
 				</li>
 				<li class="nav-item">
-					<a href="#changepass" class="nav-link" data-toggle="tab"> Change Password
+					<a href="#changepass" class="nav-link" data-toggle="tab">Change Password
 					</a>
 				</li>
 			</ul>

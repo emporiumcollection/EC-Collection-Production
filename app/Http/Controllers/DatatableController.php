@@ -24,7 +24,7 @@ class DatatableController extends Controller
         }
         return $companions;
     }
-    public function getinviteguest()
+    public function getInviteGuest()
     {
         $field = $_GET['sort']['field'];
         $Order = $_GET['sort']['sort'];

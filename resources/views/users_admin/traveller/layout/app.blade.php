@@ -577,6 +577,7 @@
   <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
   <script>
+    
     $('.experience-slider').slick({
       infinite: false,
       speed: 300,
@@ -639,11 +640,6 @@
         });
     $("#send-invitation").click(function (e) {
       Swal.fire("Good job!", "Message has been sent ", "success");
-    });
-
-    $(".clickNext").click(function (e) {
-        var sal = $('.select2 option:selected').eq(0).val();
-        alert(sal);return false;
     });
     
     $('.result-grid').slick({

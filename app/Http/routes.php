@@ -20,9 +20,9 @@ Route::post('/sendinvitation','UserController@EmailInvitation');
 // Route::post('/invite/companionemail', 'UserController@inviteCompanion');
 Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
-
 //Routes for new UI changes in Emporium 
 Route::get('/users/my-preferences', 'UserController@getPreferences');
+Route::post('/postPreference', 'UserController@postPreference');
 Route::get('/users/my-preferences/{id}', 'UserController@editPreferences');
 Route::get('/users/delete-preferences/{id}', 'UserController@deletePreferences');
 Route::get('/users/profile', 'UserController@getProfile');
