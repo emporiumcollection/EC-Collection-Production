@@ -18,6 +18,11 @@ class PropertyImages extends Sximo  {
     {
         return $this->belongsTo(properties::class);
     }
+
+	public function file()
+    {
+        return $this->hasOne(ContainerFiles::class, 'id', 'file_id');
+    }
 	
 
 }

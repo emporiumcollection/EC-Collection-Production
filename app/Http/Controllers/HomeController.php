@@ -6,16 +6,20 @@ use Illuminate\Http\Request;
 use Validator,
     Input,
     Redirect;
+
 use App\Http\Controllers\ContainerController;
-use Zipper;
-use DB;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Http\Traits\Property;
+
+use Zipper;
+use DB;
 use Socialize, ImageCache;
 Use CommonHelper;
 
 class HomeController extends Controller {
+    use Property;
 
     public function __construct() {
         parent::__construct();
@@ -40,7 +44,19 @@ class HomeController extends Controller {
             $package_cond = (array) $this->getPackagesIdsAccordingMembership();
             $this->data['isfPublic'] = ((count($package_cond) > 0)?true:false);
         }
-         //return view('frontend.themes.emporium.pages.index', $this->data);
+/*
+        //Get featured choice properties
+        $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
+
+        if(!empty($this->data['featureProperties']->toArray())){
+            foreach($this->data['featureProperties'] as $k => $featureProperty){
+                $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+            }
+
+            $this->formatPropertyRecords($this->data['featureProperties']);
+        }
+*/
+        //return view('frontend.themes.emporium.pages.index', $this->data);
         return view('frontend.themes.EC.pages.index', $this->data);
     }
 

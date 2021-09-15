@@ -1,1 +1,18 @@
-<svg width="28" height="27" viewBox="0 0 28 27" xmlns="http://www.w3.org/2000/svg"><title>icon-search</title><path d="M27 27l-7.621-7.621M11.759 1C17.7 1 22.517 5.817 22.517 11.759c0 5.941-4.817 10.758-10.758 10.758C5.817 22.517 1 17.7 1 11.76 1 5.817 5.817 1 11.759 1z" stroke="#444" stroke-width=".933" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="27px" viewBox="0 0 28 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>icon-search</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="Landing" transform="translate(-296.000000, -429.000000)" stroke="#444444" stroke-width="0.933333347">
+            <g id="Header" transform="translate(212.000000, 402.000000)">
+                <g id="element-searchBox" transform="translate(53.000000, 0.000000)">
+                    <g id="icon-search" transform="translate(32.000000, 28.000000)">
+                        <line x1="26" y1="26" x2="18.3793103" y2="18.3793103" id="Stroke-472"></line>
+                        <path d="M10.7586207,0 C16.700069,0 21.5172414,4.81717241 21.5172414,10.7586207 C21.5172414,16.700069 16.700069,21.5172414 10.7586207,21.5172414 C4.81717241,21.5172414 0,16.700069 0,10.7586207 C0,4.81717241 4.81717241,0 10.7586207,0 L10.7586207,0 Z" id="Stroke-473"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

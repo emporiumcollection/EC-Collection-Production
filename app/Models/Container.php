@@ -43,7 +43,8 @@ class container extends Sximo  {
 		->toArray();
 
 		$folderId = $folder[0]['id'];
-		$files = ContainerFiles::where('folder_id', '=', $folderId)
+		$files = ContainerFiles::select(['id','file_name'])
+		->where('folder_id', '=', $folderId)
 		->limit(10)
 		->get()
 		->toArray();

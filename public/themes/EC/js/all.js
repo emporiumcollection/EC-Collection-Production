@@ -472,6 +472,7 @@ var ajaxReq = 'ToCancelPrevReq';
 
   function globalSearchForAll(searcValue, sitename) {
     var _token = $('meta[name="csrf-token"]').attr('content');
+    $('.ico-reload').show();
     ajaxReq = $.ajax({
         url: BaseURL + '/destination/global-search',
         type: "get",
@@ -484,7 +485,7 @@ var ajaxReq = 'ToCancelPrevReq';
           }
         },
         success: function (data){
-
+            $('.ico-reload').hide();
             if(data.status=='success'){
                 var obj = data.data;
                 var voyage = obj.voyage;
@@ -492,53 +493,48 @@ var ajaxReq = 'ToCancelPrevReq';
                 var safari = obj.safari;
                 var island = obj.island;
 
-                var html_hotel = "";
-                var html_destination = "";
+                var voyage_html_hotel = "";
+                var voyage_html_destination = "";
 
-                if(voyage.collection != undefined){
-                    $(voyage.collection).each(function(key, val){
-                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="voyage"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Voyage</span></a></li>';
-                    });
-                }
-                if(voyage.dest != undefined){
-                    $(voyage.dest).each(function(key, val){
-                       html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="voyage"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Voyage</span></a></li>';
-                    });
-                }
-                if(spa.collection != undefined){
-                    $(spa.collection).each(function(key, val){
-                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="spa"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Spa</span></a></li>';
-                    });
-                }
-                if(spa.dest != undefined){
-                    $(spa.dest).each(function(key, val){
-                       html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="spa"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Spa</span></a></li>';
-                    });
-                }
-                if(safari.collection != undefined){
-                    $(safari.collection).each(function(key, val){
-                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="safari"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Safari</span></a></li>';
-                    });
-                }
-                if(safari.dest != undefined){
-                    $(safari.dest).each(function(key, val){
-                       html_destination += '<li class="nav-item"><a class="nav-link" href="#" data-type="destination" data-collection="safari"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Safari</span></a></li>';
-                    });
-                }
-                if(island.collection != undefined){
-                    $(island.collection).each(function(key, val){
-                       html_hotel += '<li class="nav-item"><a class="nav-link" href="#"  data-type="hotel" data-collection="islands"><span class="city-l">'+val.property_name+'</span> <span class="cat-l">Islands</span></a></li>';
-                    });
-                }
-                if(island.dest != undefined){
-                    $(island.dest).each(function(key, val){
-                       html_destination += '<li class="nav-item"><a class="nav-link" data-type="destination"  data-collection="islands" href="#"><span class="city-l">'+val.category_name+'</span> <span class="cat-l">Islands</span></a></li>';
-                    });
-                }
-                //}
+                var spa_html_hotel = "";
+                var spa_html_destination = "";
+
+                var safari_html_hotel = "";
+                var safari_html_destination = "";
+
+                var islands_html_hotel = "";
+                var islands_html_destination = "";
+
+                voyage_html_hotel = getHotelHtml(voyage, 'voyage');
+                voyage_html_destination = getDestinationHtml(voyage, 'voyage');
+
+                spa_html_hotel = getHotelHtml(spa, 'spa');
+                spa_html_destination = getDestinationHtml(spa, 'spa');
+
+                safari_html_hotel = getHotelHtml(safari, 'safari');
+                safari_html_destination = getDestinationHtml(safari, 'safari');
+
+                islands_html_hotel = getHotelHtml(island, 'islands');
+                islands_html_destination = getDestinationHtml(island, 'islands');
             }
-            $('.wherepopup .where-destination').html(html_destination);
-            $('.wherepopup .where-hotel').html(html_hotel);
+
+            if(!voyage_html_destination && 
+              !spa_html_destination && 
+              !safari_html_destination && 
+              !islands_html_destination){
+              $("#distiresults").hide();
+            }else{
+              $("#distiresults").show();
+            }
+
+            if(!voyage_html_hotel && 
+              !spa_html_hotel && 
+              !safari_html_hotel && 
+              !islands_html_hotel){
+              $("#hotelsresults").hide();
+            }else{
+              $("#hotelsresults").show();
+            }
             /*if (data.data.collection == undefined) {
                 console.log("no record found");
             }else{
@@ -754,9 +750,11 @@ var ajaxReq = 'ToCancelPrevReq';
     $('.wherepopup').hide();
     var _type = $(this).attr('data-type');
     var _collection = $(this).attr('data-collection');
+    var _targetpage = $(this).attr('data-page');
     $("#sitename").val(_collection);
     $("#coll_type").val(_type);
-    get_featured_prop(_type, _collection);
+    $("#target_page").val(_targetpage);
+    get_featured_prop(_type, _collection, asd);
     $('.quick-prev-when1').slick({
                     slidesToShow: 1,
                     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
@@ -764,57 +762,24 @@ var ajaxReq = 'ToCancelPrevReq';
                 });
   });
 
-  function get_featured_prop(_type, _collection){
+  function get_featured_prop(_type, _collection, _location){
     var _token = $('meta[name="csrf-token"]').attr('content');
     //console.log(BaseURL);
     $.ajax({
-        url: BaseURL + '/property/featuredproperties',
+        url: BaseURL + '/featuredproperty',
         type: "get",
         dataType: "json",
-        data: {'type':_type, 'collection':_collection, '_token':_token},
+        data: {'type':_type, 'collection':_collection, '_token':_token, 'keyword':_location},
         success: function (data){
-            if(data.status == "success"){
-                var obj1 = data.data[0];
-                var objproppath = obj1.thumb;
-                var objpropimg = obj1.propimage;
-                var img1_path = objproppath +'/'+ objpropimg[0].file_name;
-                var img2_path = objproppath +'/'+ objpropimg[1].file_name;
-                //console.log(img1_path);
-                $("#left-when-featured-img1").attr('src', img1_path);
-                $("#left-when-featured-img2").attr('src', img2_path);
-                var objprop = obj1.objprop;
-                $("#left-when-featured-text").html(objprop.property_usp);
-                $(".when-hotel-name").html(objprop.property_name);
-                var whensimage = '';
-                for(var i=1; i<4; i++){
-                    var ipath = objproppath +'/'+ objpropimg[i].file_name;
-                    whensimage += '<div><img src="'+ipath+'" class="img-fluid" alt=""></div>';
-                }  //console.log(whensimage);
-                $(".when-quick-prev").html(whensimage);
+            //if(data.status == "success"){
+                $('.title-2').html(data[0]['property_name']);
+                $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
+                $('.herl').html(`<img src="uploads/container_user_files/locations/` 
+                  + data[0]['container']['name'] + `/property-images/` + data[0]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
 
-                var obj2 = data.data[1];
-                var objproppathwho = obj2.thumb;
-                var objpropimgwho = obj2.propimage;
-                var img2_path = objproppathwho +'/'+ objpropimgwho[0].file_name;
-                $("#left-who-featured-img1").attr('src', img2_path);
-                var objprop2 = obj2.objprop;
-                $("#left-who-featured-text").html(objprop2.property_usp);
-                $(".who-hotel-name").html(objprop2.property_name);
-
-                var whosimage = '';
-                for(var i=1; i<4; i++){
-                    var ipath2 = objproppathwho +'/'+ objpropimgwho[i].file_name;
-                    whosimage += '<div><img src="'+ipath2+'" class="img-fluid" alt=""></div>';
-                }  //console.log(whosimage);
-                $(".who-quick-prev").html(whosimage);
-
-                $('.quick-prev-when1').slick('unslick');
-                $('.quick-prev-when1').slick({
-                    slidesToShow: 1,
-                    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-                    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-                });
-            }
+                $('.to-right .title-2').html(data[0]['property_name']);
+                $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);                
+            //}
         }
     });
   }
@@ -822,7 +787,7 @@ var ajaxReq = 'ToCancelPrevReq';
   $(document).mouseup(function(event){
     var $trigger = $(".wherepopup");
     if($trigger !== event.target && !$trigger.has(event.target).length){
-      $('.wherepopup').hide();
+//      $('.wherepopup').hide();
     }
   });
 
@@ -1945,7 +1910,6 @@ var ajaxReq = 'ToCancelPrevReq';
       success: function (data) {
         var _html = '';
         var _sidebar = '';
-        console.log((data.imgs).length);
         if ((data.imgs).length > 0) {
           $(data.imgs).each(function (key, value) {
             //console.log(key);
@@ -2191,11 +2155,25 @@ var ajaxReq = 'ToCancelPrevReq';
   });*/
 
 
-  $('.close-sidebar').click(function (e) {
+  
+  $(".close-sidebar, .sidebar-back").click(function (e) {
     e.preventDefault();
     $(this).closest('.sidebar-main').removeClass('show');
     $(this).closest('body').css('overflow', 'auto');
+    $('.sidebar-overlay').remove();
   });
+  
+  $('body').on('click', '.sidebar-overlay', function () {
+    $('.sidebar-main').removeClass('show');
+    $('.sidebar-overlay').remove();
+    $('body').css('overflow', 'auto');
+    $('.sidebar').removeClass('show');
+  });
+
+  $('.close-collapse').click(function (e) {
+    e.preventDefault();
+    $('#destination-menu').collapse('hide');
+  })
 
   $('.suite-list').on('click', '.select-sd', function (e) {
     e.preventDefault();
@@ -2298,3 +2276,77 @@ var ajaxReq = 'ToCancelPrevReq';
   });
 
 })();
+
+function getNavitems(location, collection_name){
+  return `<li class="nav-item">
+      <a class="nav-link" href="#" data-type="hotel" data-collection="`+collection_name+`" 
+      data-page="map">
+        <span class="city-l">` + location + `</span> <span class="cat-l">Map</span>
+      </a>
+    </li>
+   <li class="nav-item">
+      <a class="nav-link" href="#" data-type="hotel" data-collection="`+collection_name+`" 
+      data-page="channel">
+        <span class="city-l">` + location + `</span> <span class="cat-l">Channel</span>
+      </a>
+    </li>
+   <li class="nav-item">
+      <a class="nav-link" href="#" data-type="hotel" data-collection="`+collection_name+`" 
+      data-page="cuisine">
+        <span class="city-l">` + location + `</span> <span class="cat-l">Cuisine</span>
+      </a>
+    </li>`;
+}
+
+function getHotelHtml(result, collection_name){
+  var result_html_hotel = '';
+  if(result.collection != undefined){
+      $(result.collection).each(function(key, val){
+        result_html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="'+collection_name+'" data-page="results"><span class="city-l">' + val.property_name + '</span> </a></li>';
+      });
+  }
+
+  if(result_html_hotel!=''){
+    $('.wherepopup .'+collection_name+'-hotels').html(result_html_hotel);
+    $('.wherepopup .'+collection_name+'-hotels').show();
+    $('#'+collection_name+'-hotel-header').show();
+  }else{
+    $('.wherepopup .'+collection_name+'-hotels').hide();
+    $('#'+collection_name+'-hotel-header').hide();
+  }
+
+  return result_html_hotel;
+}
+
+function getDestinationHtml(result, collection_name){
+  var searchedLocation = '';
+  var result_html_destination = '';
+  if(result.dest != undefined){
+    $(result.dest).each(function(key, val){
+      searchedLocation = val.category_name;
+      result_html_destination += `
+      <li class="nav-item">
+        <a class="nav-link" href="#" data-type="destination" data-collection="` + collection_name + `" 
+        data-page="results">
+          <span class="city-l">` + val.category_name + `</span>
+        </a>
+      </li>`;
+    });
+
+    if(result.dest.length === 1){
+       result_html_destination += getNavitems(searchedLocation, collection_name);
+    }
+
+    if(result_html_destination != ''){
+      $('.wherepopup .' + collection_name + '-destination').html(result_html_destination);
+      $('.wherepopup .' + collection_name + '-destination').show();
+      $('#' + collection_name + '-desti-header').show();
+    }
+    else{
+      $('.wherepopup .' + collection_name + '-destination').hide();
+      $('#' + collection_name + '-desti-header').hide();
+    }
+
+    return result_html_destination;
+  }
+}

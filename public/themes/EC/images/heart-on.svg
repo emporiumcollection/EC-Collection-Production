@@ -1,1 +1,15 @@
-<svg width="22" height="20" viewBox="0 0 22 20" xmlns="http://www.w3.org/2000/svg"><title>heart</title><path d="M19.036 3.349a5.026 5.026 0 0 0-3.536-1.45 5.026 5.026 0 0 0-3.536 1.45L11 4.303l-.964-.954a5.037 5.037 0 0 0-7.072 0 4.916 4.916 0 0 0 0 7.002l.963.954L11 18.307l7.073-7.002.963-.954a4.925 4.925 0 0 0 1.466-3.501 4.925 4.925 0 0 0-1.466-3.501z" fill="#FF5D51" stroke="#FF5D51" stroke-width="2" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="22px" height="20px" viewBox="0 0 22 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>heart</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" stroke-linecap="round" stroke-linejoin="round">
+        <g id="GridViewQuickPDP-Copy-6" transform="translate(-625.000000, -643.000000)" fill="#FF5D51" stroke="#FF5D51" stroke-width="2">
+            <g id="Favourite" transform="translate(325.000000, 175.000000)">
+                <g id="heart" transform="translate(301.000000, 469.000000)">
+                    <path d="M18.0363636,2.349 C17.0986144,1.42019232 15.8264891,0.898356941 14.5,0.898356941 C13.1735109,0.898356941 11.9013856,1.42019232 10.9636364,2.349 L10,3.303 L9.03636364,2.349 C7.08328392,0.41545114 3.9167161,0.415451163 1.96363642,2.34900005 C0.0105567307,4.28254894 0.0105567071,7.41745108 1.96363636,9.351 L2.92727273,10.305 L10,17.307 L17.0727273,10.305 L18.0363636,9.351 C18.9745532,8.42262822 19.5016597,7.16322423 19.5016597,5.85 C19.5016597,4.53677577 18.9745532,3.27737178 18.0363636,2.349 Z" id="Shape"></path>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

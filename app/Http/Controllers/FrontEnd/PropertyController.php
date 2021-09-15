@@ -2932,32 +2932,26 @@ class PropertyController extends Controller {
         $this->data['experiences'] = $exp;
 
         //Get editor's choice properties
-        $this->data['editorsProperties'] = properties::with(['container','suites'])
-        ->where('city', '=', $keyword)
-        ->where('editor_choice_property', '=', 1)
-        ->get();
+        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($keyword);
 
         if(!empty($this->data['editorsProperties']->toArray())){
             foreach($this->data['editorsProperties'] as $k => $editorProperty){
-                $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
+                $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);
             }
             
             $this->formatPropertyRecords($this->data['editorsProperties']);
         }
 
-        //print_r($this->data['editorsPropertyImages']);exit;
-        //propertyimagebyid/{propid}
-        //print_r($this->data['editorsProperties']->toArray());exit;
-
-        //Get editor's choice properties
-        $this->data['featureProperties'] = properties::with(['images','suites'])
-        ->where('city', '=', $keyword)
-        ->where('feature_property', '=', 1)
-        ->get();
+        //Get featured choice properties
+        $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
 
         if(!empty($this->data['featureProperties']->toArray())){
             foreach($this->data['featureProperties'] as $k => $featureProperty){
-                $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+                if(isset($featureProperty->container) && $featureProperty->container){
+                    $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+                }else{
+                    $this->data['featureProperties'][$k]->propertyImages = [];
+                }
             }
 
             $this->formatPropertyRecords($this->data['featureProperties']);
@@ -7147,27 +7141,11 @@ class PropertyController extends Controller {
         print_r($result);
     }
 
-    private function formatPropertyRecords(&$properties){
-        $room = [];
-        $all = [];
-        foreach($properties as $k => $property){
-            $roomamenities = amenities::whereIn('id', explode(',', $property->roomamenities))
-            ->get()->toArray();
-            if(!empty($roomamenities)){
-                foreach($roomamenities as $amenity){
-                    $room[] = $amenity['amenity_title'];
-                }
-            }
-            $properties[$k]->roomamenities = implode(',', $room);
-
-            $allamenities = amenities::whereIn('id', explode(',', $property->assign_amenities))
-            ->get()->toArray();
-            if(!empty($allamenities)){
-                foreach($allamenities as $amenity){
-                    $all[] = $amenity['amenity_title'];
-                }
-            }
-            $properties[$k]->assign_amenities = implode(',', $all);
-        }
+    public function featuredProperty(Request $request){
+        $keyword = $request->query->get('keyword');
+        //Get featured choice properties
+        $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
+        echo json_encode($this->data['featureProperties']);
+        exit;
     }
 }

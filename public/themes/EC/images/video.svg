@@ -1,1 +1,18 @@
-<svg width="28" height="16" viewBox="0 0 28 16" xmlns="http://www.w3.org/2000/svg"><title>Video</title><path d="M5 1h9.727a4 4 0 0 1 4 4v5.59a4 4 0 0 1-4 4H5a4 4 0 0 1-4-4V5a4 4 0 0 1 4-4zm16.952 4.623l2.093-1.764A1.797 1.797 0 0 1 27 5.233v5.715a1.797 1.797 0 0 1-2.955 1.375l-2.093-1.764a2.42 2.42 0 0 1-.861-1.851V7.474c0-.714.315-1.39.86-1.85z" stroke="#5D5D5D" fill="none" fill-rule="evenodd"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="28px" height="16px" viewBox="0 0 28 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 61 (89581) - https://sketch.com -->
+    <title>Video</title>
+    <desc>Created with Sketch.</desc>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="CalendarView-Copy" transform="translate(-319.000000, -91.000000)" stroke="#5D5D5D">
+            <g id="SliderMenu-Copy" transform="translate(90.000000, 75.000000)">
+                <g id="Video-Filter-Destination" transform="translate(220.000000, 7.000000)">
+                    <g id="Video" transform="translate(10.000000, 10.000000)">
+                        <path d="M4,0 L13.7272727,0 C15.9364117,-4.05812251e-16 17.7272727,1.790861 17.7272727,4 L17.7272727,9.59090909 C17.7272727,11.8000481 15.9364117,13.5909091 13.7272727,13.5909091 L4,13.5909091 C1.790861,13.5909091 2.705415e-16,11.8000481 0,9.59090909 L0,4 C-2.705415e-16,1.790861 1.790861,4.05812251e-16 4,0 Z" id="Rectangle-4"></path>
+                        <path d="M20.9516679,4.62326761 L23.0454545,2.85924201 C23.8043716,2.21985065 24.9379246,2.31674537 25.5773159,3.07566244 C25.850293,3.39966888 26,3.80971251 26,4.23338293 L26,9.94844603 C26,10.9408051 25.1955341,11.745271 24.203175,11.745271 C23.7795046,11.745271 23.369461,11.595564 23.0454545,11.3225869 L20.9516679,9.55856135 C20.4058991,9.09874845 20.0909091,8.42148734 20.0909091,7.70784073 L20.0909091,6.47398822 C20.0909091,5.76034162 20.4058991,5.0830805 20.9516679,4.62326761 Z" id="Rectangle-4-Copy"></path>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

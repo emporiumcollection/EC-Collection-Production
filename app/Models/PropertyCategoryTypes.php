@@ -14,6 +14,11 @@ class PropertyCategoryTypes extends Sximo  {
     {
         return $this->belongsTo(properties::class);
     }
+
+	public function rooms()
+    {
+        return $this->hasMany(PropertyRooms::class, 'category_id');
+    }
 	
 
 }
