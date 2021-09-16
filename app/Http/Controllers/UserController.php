@@ -2789,7 +2789,7 @@ class UserController extends Controller {
     }
     public function editPreferences($id){   
 
-        $editPreferences = \DB::table('tb_personalized_services')
+        $data = \DB::table('tb_personalized_services')
         ->select( 
                 'ps_id',
                 'first_name', 
@@ -2802,22 +2802,14 @@ class UserController extends Controller {
                 'stay_time', 
                 'destinations',
                 'inspirations',
-                'experiences'
+                'experiences',
+                'note'
                )
         ->where('ps_id','=', $id)
         ->orderby('ps_id','DESC')
         ->limit(3)
-        ->get();
+        ->first();
 
-        $file_name = 'users_admin.traveller.users.my-preferences';
-        return view($file_name,compact('editPreferences'));
-    }
-
-    public function getPreferences(){
-        if (!\Auth::check())
-            return redirect('user/login');
-                        
-        $def_currency = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
         $category = \DB::table('tb_categories')->whereNotIn('id',[8,627,672,713])->where('parent_category_id',0)->get();
 
         $destination = \DB::table('tb_categories')->where('parent_category_id',880)->get();
@@ -2825,11 +2817,54 @@ class UserController extends Controller {
         $facilities = \DB::table('tb_categories')->where('parent_category_id',897)->get();
         $style = \DB::table('tb_categories')->where('parent_category_id',909)->get();
 
-        $islandconn = \DB::connection('islandconn')->table('tb_categories')->whereNotIn('id',[8,627,672])->where('parent_category_id',0)->get();
+        $islandconn = \DB::connection('islandconn')->table('tb_categories')->where('parent_category_id',8)->get();
 
-        $spaconn = \DB::connection('spaconn')->table('tb_categories')->whereNotIn('id',[8,627,672])->where('parent_category_id',0)->get();
+        $spaconn = \DB::connection('spaconn')->table('tb_categories')->where('parent_category_id',8)->get();
 
-        $safariconn = \DB::connection('safariconn')->table('tb_categories')->whereNotIn('id',[8,627,672])->where('parent_category_id',0)->get();
+        $safariconn = \DB::connection('safariconn')->table('tb_categories')->where('parent_category_id',8)->get();
+
+        $temp = $this->get_destinations_new();
+        //print_r($temp); die;
+        $destinations = $temp;
+        $inspirations = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 627)->get();
+        $experiences = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 8)->get();
+
+         $this->data = array(
+            'destinations' => $destinations,
+            'inspirations' => $inspirations,
+            'experiences' => $experiences,
+        );
+        $inspire = explode(',',$data->inspirations); 
+        $select_dest = explode(',',$data->destinations);
+
+        $decodeExp = json_decode($data->experiences);
+        $exe_spa = explode(',',$decodeExp->spa);
+        $exe_voyage = explode(',',$decodeExp->voyage);
+        $exe_island = explode(',',$decodeExp->island);
+        $exe_safari = explode(',',$decodeExp->safari);
+
+        $file_name = 'users_admin.traveller.users.edit_preference';
+        return view($file_name, $this->data,compact('category','data','inspire','select_dest','exe_spa','exe_voyage','exe_island','exe_safari','$fetch_destination','destination','atmosphere','facilities','style','islandconn','safariconn','spaconn'));
+    }
+
+    public function getPreferences(){
+        if (!\Auth::check())
+            return redirect('user/login');
+                        
+        $def_currency = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
+
+        $destination = \DB::table('tb_categories')->where('parent_category_id',880)->get();
+        $atmosphere = \DB::table('tb_categories')->where('parent_category_id',886)->get();
+        $facilities = \DB::table('tb_categories')->where('parent_category_id',897)->get();
+        $style = \DB::table('tb_categories')->where('parent_category_id',909)->get();
+
+        $category = \DB::table('tb_categories')->where('parent_category_id', 0)->get();
+
+        $islandconn = \DB::connection('islandconn')->table('tb_categories')->where('parent_category_id',8)->get();
+
+        $spaconn = \DB::connection('spaconn')->table('tb_categories')->where('parent_category_id',8)->get();
+
+        $safariconn = \DB::connection('safariconn')->table('tb_categories')->where('parent_category_id',8)->get();
 
         $temp = $this->get_destinations_new();
         //print_r($temp); die;
@@ -2865,23 +2900,34 @@ class UserController extends Controller {
     }
 
     public function postPreference(Request $request){
-        // echo "<pre>";print_r($request->all());exit;
-        $user = User::find(\Session::get('uid'));
-        $settime = explode("-",$request->earliest_arrival);
-        $arr =  strtotime($settime[0]);
-        $arrival = date('Y-m-d', $arr);
-        $chk =  strtotime($settime[1]);
-        $chekout = date('Y-m-d', $chk);
-        
-        $inspiration = implode(",",$request->inspiration);
-        $destinations = implode(",",$request->destinations);
-        $experience = implode(",",$request->experience);
-
-        $return_array = array();
-        if (!\Auth::check())
+        // echo "<pre>";print_r($request->all());
+        // $inspiration = json_encode($format1);
+        if ($request->id) {
+            if (!\Auth::check())
             return Redirect::to('user/login');
             $user = User::find(\Session::get('uid'));
+                // $spa = implode(",",$request->spacheckbox);
+                $voyage = implode(",",$request->voyagechk);
+                $island = implode(",",$request->islandchk);
+                $safari = implode(",",$request->safarichk);
+                $format2 = array(
+                    // 'spa' => $spa,
+                    'voyage' => $voyage,
+                    'island' => $island,
+                    'safari' => $safari,
+                 );
+                $experience = json_encode($format2);
+                $user = User::find(\Session::get('uid'));
+                $settime = explode("-",$request->earliest_arrival);
+                $arr =  strtotime($settime[0]);
+                $arrival = date('Y-m-d', $arr);
+                $chk =  strtotime($settime[1]);
+                $chekout = date('Y-m-d', $chk);
 
+                $destinations = implode(",",$request->destinations);
+                $inspiration = implode(",",$request->inspirstion);
+                $return_array = array();
+                $id = $request->id;
                 $data['customer_id'] = $user->id;
                 $data['first_name'] = $request->first_name;
                 $data['adults'] = $request->adults;           
@@ -2897,8 +2943,55 @@ class UserController extends Controller {
                 $data['note'] = $request->note;
                 $data['created'] = date('y-m-d');
                 $data['updated'] = date('Y-m-d');
-                \DB::table('tb_personalized_services')->where('customer_id', \Auth::user()->id)->insert($data);
+                $updates = \DB::table('tb_personalized_services')->where('ps_id',$id)->update($data);
                 return redirect::to('/users/my-preferences');
+        }else{
+            echo "here";exit;
+                $spa = implode(",",$request->spacheckbox);
+                $voyage = implode(",",$request->voyagechk);
+                $island = implode(",",$request->islandchk);
+                $safari = implode(",",$request->safarichk);
+                $format2 = array(
+                    'spa' => $spa,
+                    'voyage' => $voyage,
+                    'island' => $island,
+                    'safari' => $safari,
+                 );
+                $experience = json_encode($format2);
+                $user = User::find(\Session::get('uid'));
+                $settime = explode("-",$request->earliest_arrival);
+                $arr =  strtotime($settime[0]);
+                $arrival = date('Y-m-d', $arr);
+                $chk =  strtotime($settime[1]);
+                $chekout = date('Y-m-d', $chk);
+
+                $destinations = implode(",",$request->destinations);
+                $inspiration = implode(",",$request->inspirstion);
+
+                $return_array = array();
+                if (!\Auth::check())
+                    return Redirect::to('user/login');
+                    $user = User::find(\Session::get('uid'));
+
+                        $data['customer_id'] = $user->id;
+                        $data['first_name'] = $request->first_name;
+                        $data['adults'] = $request->adults;           
+                        $data['youth'] = $request->youth;
+                        $data['children'] = $request->children;
+                        $data['toddlers'] = $request->toddlers;
+                        $data['earliest_arrival'] = $arrival;
+                        $data['late_check_out'] = $chekout;
+                        $data['stay_time'] = $request->stay_time;
+                        $data['destinations'] = $destinations;
+                        $data['inspirations'] = $inspiration;
+                        $data['experiences'] = $experience;
+                        $data['note'] = $request->note;
+                        $data['created'] = date('y-m-d');
+                        $data['updated'] = date('Y-m-d');
+                        \DB::table('tb_personalized_services')->where('customer_id', \Auth::user()->id)->insert($data);
+                        return redirect::to('/users/my-preferences');
+        }
+        
     }
 
     public function getReservation(){

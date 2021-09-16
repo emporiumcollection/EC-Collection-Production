@@ -118,8 +118,7 @@
     									 <div class="col-md-2">
     									 	
     									 </div>
-    								  </div> 
-    									
+    								  </div>        									
     								  <div class="form-group  " >
     									<label for="Instagram Channel" class=" control-label col-md-3 text-left"> Instagram Channel </label>
     									<div class="col-md-7">

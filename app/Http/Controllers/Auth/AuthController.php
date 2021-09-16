@@ -69,11 +69,11 @@ class AuthController extends Controller
         $mobile_number = ltrim($space,0);
         $request->mobile_number =  $Countrycode.$mobile_number;
         // echo "<pre>";print_r( $request->mobile_number);exit;
-        $valid = $this->validate($request, [
-            'mobile_number' => 'required|unique:tb_users',
-            'email' => 'required|string||unique:tb_users',
-            'password' => 'required|string|max:15',
-        ]);
+        // $valid = $this->validate($request, [
+        //     'mobile_number' => 'required|unique:tb_users',
+        //     'email' => 'required|string||unique:tb_users',
+        //     'password' => 'required|string|max:15',
+        // ]);
         // if (empty($valid)) {
         // $token = Config::get('app.TWILIO_AUTH_TOKEN');
         // $twilio_sid = Config::get("app.TWILIO_SID");
