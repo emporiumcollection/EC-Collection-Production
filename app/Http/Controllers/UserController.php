@@ -2838,7 +2838,8 @@ class UserController extends Controller {
         $select_dest = explode(',',$data->destinations);
 
         $decodeExp = json_decode($data->experiences);
-        $exe_spa = explode(',',$decodeExp->spa);
+        // echo "<pre>";print_r($decodeExp);exit;
+        $exe_spa = explode(',',$decodeExp->spacollection);
         $exe_voyage = explode(',',$decodeExp->voyage);
         $exe_island = explode(',',$decodeExp->island);
         $exe_safari = explode(',',$decodeExp->safari);
