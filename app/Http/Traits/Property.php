@@ -171,6 +171,67 @@ trait Property {
         ->get();        
     }
 
+    public function searchPropertiesByKeyword($keyword){
+        return properties::select([
+            'id', 
+            'property_name', 
+            'property_short_name', 
+            'detail_section1_title', 
+            'detail_section1_description_box1', 
+            'detail_section1_description_box2',
+            'latitude',
+            'longitude',
+            'address', 
+        ])
+        ->with([
+            'container',
+            'images',
+            'suites' => function($query){
+                return $query->with(['rooms']);
+            },
+            'propertyImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'roomImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'barImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'spaImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'restrurantImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'hotelBrochureImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }
+        ])
+        ->where('city', '=', $keyword)
+        ->where('latitude', '!=', '')
+        ->where('longitude', '!=', '')
+        ->get();        
+    }
+
     public function formatPropertyRecords(&$properties){
         $roomamenitieslist = [];
         $all = [];
@@ -203,6 +264,7 @@ trait Property {
             }
 
             // room images
+            /*
             if(!empty($property->suites)){
                 foreach($property->suites as $sk => $suite){
                     if(!empty($suite->rooms)){
@@ -221,7 +283,36 @@ trait Property {
                     }
                 }
             }
+            */
         }
+    }
+
+    public function formatRecordsMap($results) {
+        $mapResults = [];
+        foreach($results as $property){
+            $row = [];
+            $row['type'] = 'Property';
+            $row['geometry'] = [
+                'type' => 'Point',
+                'coordinates' => [$property->longitude, $property->latitude]
+            ];
+
+            $images = [];
+            foreach($property->propertyImages as $image){
+                $images[] = 'uploads/container_user_files/locations/'.$property['container']['name'].'/property-images/'.$image['file_name'];
+            }
+
+            $row['properties'] = [
+                'dataId' => 'hotel_' . $property->id,
+                'title' => $property->property_name,
+                'description' => $property->detail_section1_description_box1,
+                'price' => '€269',
+                'images'=> $images,
+            ];
+            $mapResults[] = $row;
+        }
+
+        return json_encode($mapResults);
     }
 
 }
