@@ -124,7 +124,7 @@
               <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
                 Gallery
               </a>
-              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#videos">
+              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#videos" id="locationViews">
                 Videos
               </a>
               <div class="hotel-prices hotel-price-detail d-flex">
@@ -987,61 +987,62 @@ endforeach;
 {{-- For custom script --}}
 @section('custom_js')
     @parent
-  <script>
-        $(document).on('click', ".dest-collection", function(e){
-                e.preventDefault();
-                //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                var d_name = $(this).attr('data-name');
-                var cat =  $("input[name='cat']").val();
-                var coll_type = 'destinations';
-                var req_for = '';
-                var cobj = $(this);
-                //var token = $("input[name='_token']").val();
+<script>
+<?php if($view == 'channel'):?>
+  $('#locationViews').trigger("click");
+<?php endif;?>
+$(document).on('click', ".dest-collection", function(e){
+  e.preventDefault();
+  //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+  var d_name = $(this).attr('data-name');
+  var cat =  $("input[name='cat']").val();
+  var coll_type = 'destinations';
+  var req_for = '';
+  var cobj = $(this);
+  //var token = $("input[name='_token']").val();
 
-                $.ajax({
-                    url:'{{URL::to("propcollection/")}}',
-                    dataType:'json',
-                    data: {d_name:d_name, coll_type:coll_type, cat:cat},
-                    type: 'post',
-                    success: function(response){
-
-                        if(response.type=='dedicated-collection'){
-                            var mem_types = response.mem_types;
-                            if(mem_types.indexOf("2")>0){
-                                //window.location.href = '{{URL::to('luxury_destinations')}}/'+cat+'/dedicated-collection';
-                                //cat = $("#dd-destination").val();
-                                getPropertyByCollection('dedicated-collection', cat, 1, req_for);
-                                $(".dest-collection").removeClass('active');
-                                cobj.addClass('active');
-                                $("#dest_collection").val('dedicated-collection');
-                            }else{
-                                show_modal_content(response.type);
-                                $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
-                            }
-                        }else if(response.type=='bespoke-collection'){
-                            var mem_types = response.mem_types;
-                            if(mem_types.indexOf("3")>0){
-                                //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/bespoke-collection';
-                                //cat = $("#dd-destination").val();
-                                getPropertyByCollection('bespoke-collection', cat, 1, req_for);
-                                $(".dest-collection").removeClass('active');
-                                cobj.addClass('active');
-                                $("#dest_collection").val('bespoke-collection');
-                            }else{
-                                show_modal_content(response.type);
-                                $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
-                            }
-                        }else{
-                            //cat = $("#dd-destination").val();
-                            getPropertyByCollection('lifestyle-collection', cat, 1, req_for);
-                            $(".dest-collection").removeClass('active');
-                            cobj.addClass('active');
-                            $("#dest_collection").val('lifestyle-collection');
-                            //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/lifestyle-collection';
-                        }
-                    }
-                });
-            });
-
-        </script>
+  $.ajax({
+    url:'{{URL::to("propcollection/")}}',
+    dataType:'json',
+    data: {d_name:d_name, coll_type:coll_type, cat:cat},
+    type: 'post',
+    success: function(response){
+      if(response.type=='dedicated-collection'){
+          var mem_types = response.mem_types;
+          if(mem_types.indexOf("2")>0){
+              //window.location.href = '{{URL::to('luxury_destinations')}}/'+cat+'/dedicated-collection';
+              //cat = $("#dd-destination").val();
+              getPropertyByCollection('dedicated-collection', cat, 1, req_for);
+              $(".dest-collection").removeClass('active');
+              cobj.addClass('active');
+              $("#dest_collection").val('dedicated-collection');
+          }else{
+              show_modal_content(response.type);
+              $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
+          }
+      }else if(response.type=='bespoke-collection'){
+          var mem_types = response.mem_types;
+          if(mem_types.indexOf("3")>0){
+              //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/bespoke-collection';
+              //cat = $("#dd-destination").val();
+              getPropertyByCollection('bespoke-collection', cat, 1, req_for);
+              $(".dest-collection").removeClass('active');
+              cobj.addClass('active');
+              $("#dest_collection").val('bespoke-collection');
+          }else{
+              show_modal_content(response.type);
+              $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
+          }
+      }else{
+          //cat = $("#dd-destination").val();
+          getPropertyByCollection('lifestyle-collection', cat, 1, req_for);
+          $(".dest-collection").removeClass('active');
+          cobj.addClass('active');
+          $("#dest_collection").val('lifestyle-collection');
+          //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/lifestyle-collection';
+      }
+    }
+  });
+});
+</script>
 @endsection

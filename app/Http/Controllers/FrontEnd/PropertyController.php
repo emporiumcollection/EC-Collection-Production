@@ -2990,6 +2990,7 @@ class PropertyController extends Controller {
         $this->data['number_of_nights'] = $number_of_nights;
         $this->data['query_str'] = $query_str;
         $this->data['layout_type'] = 'old';
+        $this->data['view'] = $request->get('view');
         // dump($this->data); die;
 
         if($request->get('view') == 'map'){
