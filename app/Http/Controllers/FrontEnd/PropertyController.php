@@ -2963,9 +2963,9 @@ class PropertyController extends Controller {
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($keyword);
 
         if(!empty($this->data['propertyResults']->toArray())){
-            foreach($this->data['propertyResults'] as $k => $featureProperty){
-                if(isset($featureProperty->container) && $featureProperty->container){
-                    $this->data['propertyResults'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+            foreach($this->data['propertyResults'] as $k => $propertyRecord){
+                if(isset($propertyRecord->container) && $propertyRecord->container){
+                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);   
                 }else{
                     $this->data['propertyResults'][$k]->propertyImages = [];
                 }
@@ -2997,7 +2997,8 @@ class PropertyController extends Controller {
             $this->data['propertyResultsForMap'] = $this->formatRecordsMap($this->data['propertyResults']);
             $this->data['center_coordinate'] = $this->data['propertyResults'][0]->longitude.','.$this->data['propertyResults'][0]->latitude;
             return view('frontend.themes.EC.properties.map_results', $this->data);
-        }else{
+        }else{            
+            $this->data['propertyResultsForView'] = $this->seperatedByPackage($this->data['propertyResults']);
             return view('frontend.themes.EC.properties.globalsearchavailability', $this->data);
         }
     }

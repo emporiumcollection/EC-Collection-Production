@@ -186,6 +186,9 @@ trait Property {
         ->with([
             'container',
             'images',
+            'PropertyCategoryPackages' => function($query){
+                $query->with(['package']);
+            },
             'suites' => function($query){
                 return $query->with(['rooms']);
             },
@@ -313,6 +316,29 @@ trait Property {
         }
 
         return json_encode($mapResults);
+    }
+
+    public function seperatedByPackage($results){
+        $lifestyle = [];
+        $dedicated = [];
+        $bespoke = [];
+        foreach($results as $property){
+            $record = $property->toArray();
+            if(!isset($record['property_category_packages']['package_id'])) continue;
+            if($record['property_category_packages']['package_id'] == '38'){
+                $lifestyle[] = $property;
+            }elseif($record['property_category_packages']['package_id'] == '39'){
+                $dedicated[] = $property;
+            }elseif($record['property_category_packages']['package_id'] == '40'){
+                $bespoke[] = $property;
+            }
+        }
+
+        return [
+            'lifestyle' => $lifestyle,
+            'dedicated' => $dedicated,
+            'bespoke' => $bespoke,
+        ];
     }
 
 }
