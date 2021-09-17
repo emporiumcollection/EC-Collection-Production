@@ -11,6 +11,12 @@ use App\Http\Controllers\TwilioSMSController;
 | and give it the controller to call when that URI is requested.
 |
 */
+
+Route::get('forget-password', 'Auth\PasswordController@showForgetPasswordForm')->name('forget.password.get');
+Route::post('forget-password','Auth\PasswordController@submitForgetPasswordForm')->name('forget.password.post');
+Route::get('reset-password/{token}', 'Auth\PasswordController@showResetPasswordForm')->name('reset.password.get');
+Route::post('reset-password','Auth\PasswordController@submitResetPasswordForm')->name('reset.password.post');
+
 Route::get('/logout', 'Auth\AuthController@logout');
 Route::post('/sendSMS', 'Auth\AuthController@create');
 Route::post('/invitecompanion', 'Auth\AuthController@verify');
@@ -56,6 +62,8 @@ Route::get('book/reservation', 'PhaseOne\ReservationController@index');
 //Datatable route
 Route::get('/users/companiondata', 'DatatableController@getDatatable');
 Route::get('/users/inviteGuest', 'DatatableController@getInviteGuest');
+Route::get('/users/preferenceDatatable', 'DatatableController@getPreferencesData');
+
 /**
  * New Admin backend routes.
  */

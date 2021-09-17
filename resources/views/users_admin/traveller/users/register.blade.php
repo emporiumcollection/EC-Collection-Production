@@ -3,6 +3,10 @@
 
 <head>
     <script src="{{ asset('js/validation.js')}}"></script>
+    <style type="text/css">
+        input[type="checkbox"]:required:invalid + label { color: red; }
+        input[type="checkbox"]:required:valid + label { color: green; }
+    </style>
     {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script> --}}
     <meta charset="utf-8">
     <meta name="csrf-token" content="{{ csrf_token() }}">
@@ -40,6 +44,9 @@
                         </li>
                         <li class="nav-item " role="presentation">
                             <a class="nav-link" href="user/login">Sign in</a>
+                        </li>
+                        <li class="nav-item " role="presentation">
+                            <a class="nav-link" href="/forget-password">Forgot Password</a>
                         </li>
                     </ul>
                     <br>
@@ -382,15 +389,16 @@
                                             type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1">
+                                        <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1" required>
                                         <label class="custom-control-label" for="customCheck1">
                                             I agree to the Emporium-Collection Terms & Conditions and have read the Privacy
                                             Policy.
                                         </label>
-                                        <p style="color: red; display: none" id="term"><strong>Please select role</strong></p>
+                                        <p style="color: red; display: none" id="term"><strong>select checkboxe</strong></p>
                                     </div>
+                                   
                                     <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" name="a" class="custom-control-input" id="customCheck2">
+                                        <input type="checkbox" name="B" class="custom-control-input" id="customCheck2" required>
                                         <label class="custom-control-label" for="customCheck2">
                                             I agree that my personal data will be collected and stored and used
                                             electronically to help the reservation agents with specialized offers pertaining
@@ -398,19 +406,22 @@
                                             e-mail to info@emporium-collection.com or from your settings section in your
                                             account admin.
                                         </label>
+                                        <p style="color: red; display: none" id="B"><strong>select checkboxe</strong></p>
                                     </div>
-                                    <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck3">
+                                     <div class="custom-control custom-checkbox mb-2">
+                                        <input type="checkbox" name="C" class="custom-control-input" id="customCheck3" required>
                                         <label class="custom-control-label" for="customCheck3">
                                             Emporium-Collection Privacy Policy <br>
                                             I have read and agree to the Emporium-Collection Privacy Policy.
                                         </label>
+                                        <p style="color: red; display: none" id="C"><strong>select checkboxe</strong></p>
                                     </div>
                                     <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck4">
+                                        <input type="checkbox" name="D" class="custom-control-input" id="customCheck4" required>
                                         <label class="custom-control-label" for="customCheck4">
                                             I Agree to the Emporium-Collection Privacy &amp; Data Protection Policy
                                         </label>
+                                        <p style="color: red; display: none" id="D"><strong>select checkboxe</strong></p>
                                     </div>
                                     <div class="text-right mt-5">
                                         <button type="button" class="btn btn-outline-dark px-5  clickconfirm">Confirm</button>

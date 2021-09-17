@@ -454,7 +454,6 @@ class UserController extends Controller {
                                     \Session::put('lang', 'en');
                                 }
                                 if (CNF_FRONT == 'false') :
-                                    echo "here";exit;
                                     return Redirect::to('dashboard');
                                 else :
                                     $getusercompany = \DB::table('tb_user_company_details')->where('user_id', $row->id)->first();
@@ -475,14 +474,10 @@ class UserController extends Controller {
                         $attempts = session()->get('login.attempts', 0); // get attempts, default: 0
                         session()->put('login.attempts', $attempts + 1);
                         $email = session()->get('email', $request->email);
-
                         $questions = SecurityQuestions::all();
-                        // echo "<pre>";print_r($getQuestion);exit;
                         return view('user.login', compact('questions'))
                             ->with('message', \SiteHelpers::alert('error', 'Your username/password combination was incorrect'));
                     }    
-           
-
         } else {
             return Redirect::to('user/login')
                 ->with('message', \SiteHelpers::alert('error', 'The following  errors occurred'))
@@ -515,7 +510,6 @@ class UserController extends Controller {
             'en' => 'English',
             'en' => 'English',
         ]; 
-
         $info = User::find(\Auth::user()->id);
         $extra = \DB::table('tb_user_company_details')->where('user_id', \Auth::user()->id)->first();
         $slider_ads_info = \DB::table('tb_advertisement')->where('user_id', \Auth::user()->id)->where('adv_type', 'slider')->where('adv_status', 1)->first();
@@ -2834,16 +2828,18 @@ class UserController extends Controller {
             'inspirations' => $inspirations,
             'experiences' => $experiences,
         );
-        $inspire = explode(',',$data->inspirations); 
-        $select_dest = explode(',',$data->destinations);
 
-        $decodeExp = json_decode($data->experiences);
-        // echo "<pre>";print_r($decodeExp);exit;
-        $exe_spa = explode(',',$decodeExp->spacollection);
-        $exe_voyage = explode(',',$decodeExp->voyage);
-        $exe_island = explode(',',$decodeExp->island);
-        $exe_safari = explode(',',$decodeExp->safari);
+        if (isset($data)) {
 
+            $inspire = explode(',',$data->inspirations); 
+            $select_dest = explode(',',$data->destinations);
+            $decodeExp = json_decode($data->experiences);
+            $exe_spa = explode(',',$decodeExp->spacollection);
+            $exe_voyage = explode(',',$decodeExp->voyage);
+            $exe_island = explode(',',$decodeExp->island);
+            $exe_safari = explode(',',$decodeExp->safari);
+        }
+        
         $file_name = 'users_admin.traveller.users.edit_preference';
         return view($file_name, $this->data,compact('category','data','inspire','select_dest','exe_spa','exe_voyage','exe_island','exe_safari','$fetch_destination','destination','atmosphere','facilities','style','islandconn','safariconn','spaconn'));
     }
@@ -2853,7 +2849,6 @@ class UserController extends Controller {
             return redirect('user/login');
                         
         $def_currency = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
-
         $destination = \DB::table('tb_categories')->where('parent_category_id',880)->get();
         $atmosphere = \DB::table('tb_categories')->where('parent_category_id',886)->get();
         $facilities = \DB::table('tb_categories')->where('parent_category_id',897)->get();
@@ -2901,18 +2896,17 @@ class UserController extends Controller {
     }
 
     public function postPreference(Request $request){
-        // echo "<pre>";print_r($request->all());
-        // $inspiration = json_encode($format1);
         if ($request->id) {
             if (!\Auth::check())
             return Redirect::to('user/login');
             $user = User::find(\Session::get('uid'));
-                // $spa = implode(",",$request->spacheckbox);
+
+                $spa = implode(",",$request->spacheckbox);
                 $voyage = implode(",",$request->voyagechk);
                 $island = implode(",",$request->islandchk);
                 $safari = implode(",",$request->safarichk);
                 $format2 = array(
-                    // 'spa' => $spa,
+                    'spacollection' => $spa,
                     'voyage' => $voyage,
                     'island' => $island,
                     'safari' => $safari,
@@ -2920,9 +2914,13 @@ class UserController extends Controller {
                 $experience = json_encode($format2);
                 $user = User::find(\Session::get('uid'));
                 $settime = explode("-",$request->earliest_arrival);
-                $arr =  strtotime($settime[0]);
+                if (isset($settime)) {
+                    $arr =  strtotime($settime[0]);
+                }                
                 $arrival = date('Y-m-d', $arr);
-                $chk =  strtotime($settime[1]);
+                if (isset($settime)) {
+                    $chk =  strtotime($settime[1]);
+                }                
                 $chekout = date('Y-m-d', $chk);
 
                 $destinations = implode(",",$request->destinations);
@@ -2947,13 +2945,13 @@ class UserController extends Controller {
                 $updates = \DB::table('tb_personalized_services')->where('ps_id',$id)->update($data);
                 return redirect::to('/users/my-preferences');
         }else{
-            echo "here";exit;
+            
                 $spa = implode(",",$request->spacheckbox);
                 $voyage = implode(",",$request->voyagechk);
                 $island = implode(",",$request->islandchk);
                 $safari = implode(",",$request->safarichk);
                 $format2 = array(
-                    'spa' => $spa,
+                    'spacollection' => $spa,
                     'voyage' => $voyage,
                     'island' => $island,
                     'safari' => $safari,
@@ -2961,9 +2959,13 @@ class UserController extends Controller {
                 $experience = json_encode($format2);
                 $user = User::find(\Session::get('uid'));
                 $settime = explode("-",$request->earliest_arrival);
-                $arr =  strtotime($settime[0]);
+                if (isset($settime)) {
+                    $arr =  strtotime($settime[0]);
+                }                
                 $arrival = date('Y-m-d', $arr);
-                $chk =  strtotime($settime[1]);
+                if (isset($settime)) {
+                    $chk =  strtotime($settime[1]);
+                }            
                 $chekout = date('Y-m-d', $chk);
 
                 $destinations = implode(",",$request->destinations);
