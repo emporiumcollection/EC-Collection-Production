@@ -207,7 +207,7 @@ endforeach;
                 foreach($propertyResultsForView['lifestyle'] as $lifestyleProp):
                 ?>
                   @include('frontend.themes.EC.properties.subtemplates.result_card', 
-                  ['property' => $lifestyleProp])
+                  ['property' => $lifestyleProp, 'propertyImages' => $lifestyleProp->propertyImages])
                 <?php
                 endforeach;
                 ?>
@@ -221,7 +221,7 @@ endforeach;
                 foreach($propertyResultsForView['dedicated'] as $dedicatedProp):
                 ?>
                   @include('frontend.themes.EC.properties.subtemplates.result_card', 
-                    ['property' => $dedicatedProp])
+                    ['property' => $dedicatedProp, 'propertyImages' => $dedicatedProp->propertyImages])
                 <?php
                 endforeach;
                 ?>
@@ -235,7 +235,7 @@ endforeach;
                 foreach($propertyResultsForView['bespoke'] as $bespokeProp):
                 ?>
                   @include('frontend.themes.EC.properties.subtemplates.result_card', 
-                    ['property' => $bespokeProp])
+                    ['property' => $bespokeProp, 'propertyImages' => $bespokeProp->propertyImages])
                 <?php 
                 endforeach;
                 ?>

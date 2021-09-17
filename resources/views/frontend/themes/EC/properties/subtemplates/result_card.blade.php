@@ -1,3 +1,7 @@
+<script type="text/javascript">
+  properties[<?php echo $property->id;?>] = <?php echo json_encode($property);?>;
+  properties[<?php echo $property->id;?>]['images'] = <?php echo json_encode($propertyImages);?>;
+</script>
 <div class="col-lg-6 col-md-6 mb-5 ">
   <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
     <div class="pr-lst result-grid">
@@ -21,17 +25,14 @@
 
     </div>
     <div class="hotel-meta full-width is-small">
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-        Reviews
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
+        Suite(s)
       </a>
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Quick info
       </a>
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery
-      </a>
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-        Suite(s)
       </a>
       <div class="hotel-prices hotel-price-detail d-flex">
         <div class="row align-items-center justify-content-center">
