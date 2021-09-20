@@ -1,7 +1,7 @@
 <div class="hotel-item-map" id="hotel_<?php echo $property->id;?>">
 <script type="text/javascript">
   properties[<?php echo $property->id;?>] = <?php echo json_encode($property);?>;
-  properties[<?php echo $property->id;?>]['images'] = <?php echo json_encode($propertyImages);?>;
+  properties[<?php echo $property->id;?>]['images'] = <?php echo json_encode($property->propertyImages);?>;
 </script>
 <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
     <div class="pr-lst result-grid">
