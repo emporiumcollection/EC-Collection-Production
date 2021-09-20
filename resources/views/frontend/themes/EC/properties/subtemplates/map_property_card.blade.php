@@ -79,7 +79,7 @@
             Suites</a>
         </div>
       </div>
-
+      <!--
       <p class="mb-0 guest-info">2 weeks, 2 adults </p>
       <div class="row align-items-center mb-3">
         <div class="col-md-6">
@@ -92,10 +92,11 @@
       <p class=" included"> Includes taxes and charges </p>
       <p class="cancellation "><b>Free cancellation</b> </p>
       <p class="text-danger "><b>Only 4 left at this price on our site</b></p>
+      -->
       <div class="addre">
-        Sitio Santo Estevão, s/n , Silves
+        <?php echo $property->address;?>
       </div>
-      <div class="addre-list">
+      <!--<div class="addre-list">
         <p class="mb-0 text-16"><b>Top attractions</b></p>
         <div class="row">
           <div class="col-9">Misericórdia Church</div>
@@ -115,7 +116,7 @@
           <div class="col-3 text-right"><a href="#" class="btn-sidebar" data-sidebar="#topExperiences">View</a>
           </div>
         </div>
-      </div>
+      </div>-->
     </div>
   <?php endif;?>
 </div>
