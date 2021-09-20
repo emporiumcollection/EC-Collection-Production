@@ -16,6 +16,9 @@
     .experiences{
         cursor: pointer;
     }
+    .slick-list{
+      height: 300px;
+    }
 </style>
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript">
