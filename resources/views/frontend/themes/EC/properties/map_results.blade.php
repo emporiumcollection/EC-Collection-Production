@@ -20,6 +20,9 @@
     {
       height: 250px;
     }
+    .slide-arrow{
+      height: 200px;
+    }
 </style>
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript">
@@ -85,7 +88,7 @@
                   <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
                     Quick info
                   </a>
-                  <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
+                  <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery">
                     Gallery
                   </a>
                   <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
