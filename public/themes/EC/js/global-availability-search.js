@@ -98,6 +98,7 @@ function replacePropertyData(id){
 }
 
 function replacePropertySuites(id){
+    console.log(properties[id]);
   var suiteview = '';
   var firstsuite = 0;
   $('[data-place="property-suites"]').each(function() {
