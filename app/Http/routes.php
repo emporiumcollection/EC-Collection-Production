@@ -165,8 +165,8 @@ Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences')
 
 Route::get('/whoiam', 'CustomerController@whoIam');
 Route::post('/viewInvite', 'UserController@viewInvite');
-Route::post('editinvite', 'UserController@editInvite');
-Route::post('deleteinvite', 'UserController@deleteInvite');
+Route::get('/editinvite/{id}', 'UserController@editInvite');
+Route::get('deleteinvite/{id}', 'UserController@deleteInvite');
 
 Route::post('/users/addcompanion', 'UserController@addCompanion');
 Route::post('/viewcompanion', 'UserController@viewCompanion');

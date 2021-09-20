@@ -1,6 +1,18 @@
 @extends('users_admin.traveller.layout.app')
 @section('content')
 	<div class="mt-15">
+		@if(Session::has('massage'))      
+	        <div class="alert alert-success alert-dismissible fade show">
+	            <button type="button" class="close" data-dismiss="alert">&times;</button>
+	            <strong>Success!</strong> {!! Session::get('massage') !!}.
+	        </div>
+	    @endif
+	    @if(Session::has('Errmassage'))      
+	        <div class="alert alert-danger alert-dismissible fade show">
+	            <button type="button" class="close" data-dismiss="alert">&times;</button>
+	            <strong>Error!</strong> {!! Session::get('Errmassage') !!}.
+	        </div>
+	    @endif
 		<div class="mt-15">
 			<div class="row align-items-center">
 				<div class="col-md-12">
@@ -26,17 +38,14 @@
 				<div class="tab-content pt-7 profile-tabs">
 					<div class="tab-pane fade show active" id="addNew">
 						<div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
-							<div class="col-xl-9">
-				                @if(Session::has('message'))
-				        				{!! Session::get('message') !!}
-				        		@endif
+							<div class="col-xl-9">				                
 				        		<br>
 				        		<br>
 								<h5 class="text-dark font-weight-bold mb-10">
 									Personal Informations
 								</h5>
 
-								<form method="post" action="/users/addcompanion" enctype="multipart/form-data">
+							<form method="post" action="/users/addcompanion" enctype="multipart/form-data">
 							<!--begin::Group-->
 
 							<div class="form-group row">

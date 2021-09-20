@@ -1,7 +1,18 @@
-
 @extends('users_admin.traveller.layout.app')
 @section('content')
 <div class="mt-15">
+    @if(Session::has('massage'))      
+        <div class="alert alert-success alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Success!</strong> {!! Session::get('massage') !!}.
+        </div>
+    @endif
+    @if(Session::has('Errmassage'))      
+        <div class="alert alert-danger alert-dismissible fade show">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            <strong>Error!</strong> {!! Session::get('Errmassage') !!}.
+        </div>
+    @endif
     <ul class="nav nav-tabs nav-profiletabs">
     <li class="nav-item ">
         <a href="#addNew" class="nav-link active" data-toggle="tab">
@@ -104,7 +115,7 @@
                                 </h1>
                                 {{-- <p>You can specify one or more destinations</p> --}}
                                 <div class="form-group">
-                                    <input type="text" name="first_name" class="form-control">
+                                    <input type="text" name="first_name" id="first_name" class="form-control">
                                 </div>
                             </div>
 
@@ -524,7 +535,7 @@
                                     class="btn btn-success font-weight-bolder text-uppercase px-9 py-4 preferences"
                                     data-wizard-type="action-submit">Submit</button>
                                 <button type="button"
-                                    class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4 clickNext"
+                                    class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4 clickNext validations"
                                     data-wizard-type="action-next">Next</button>
                             </div>
                         </div>
@@ -568,7 +579,6 @@
     </div>
     </div>
 </div>
-
     @section('Preference_Datatable')
         var datatable = $('#preference_table').KTDatatable({
               data: {

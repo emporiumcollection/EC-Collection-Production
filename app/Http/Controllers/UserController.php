@@ -87,7 +87,7 @@ class UserController extends Controller {
 
         if ($validator->passes()) {
             $code = rand(10000, 10000000);
-
+            
             $authen = new User;
             $authen->first_name = $request->input('firstname');
             $authen->last_name = $request->input('lastname');
@@ -767,10 +767,11 @@ class UserController extends Controller {
             //insert contracts
             //\CommonHelper::submit_contracts($contracts,'sign-up');
             //End
-            return Redirect::to('/dashboard')->with('messagetext', 'Profile has been saved!')->with('msgstatus', 'success');
+            return redirect::to('/users/profile')->with('massage', 'Profile has been saved!');
+
+            // return redirect::to('/users/profile')->with('massage','Profile has been saved!');
         } else {
-            return Redirect::to('/users/profile')->with('messagetext', 'The following errors occurred')->with('massage', 'error ocured')
-                            ->withErrors($validator)->withInput();
+            return Redirect::to('/users/profile')->with('Errmessage', 'Error Ocured!');
         }
     }
     
@@ -1502,13 +1503,13 @@ class UserController extends Controller {
                         $data['avatar'] = $newfilename;
                         \DB::table('tb_companion')->where('id', $companionId)->update(['avatar' => $newfilename]);   
                     }
-                }                
-                return Redirect::to('user/companion')->with('message', 'You have successfully added a travel companion')->with('msgstatus', 'success');
-            }else{            
-                return Redirect::to('user/companion')->with('message', 'Error while adding companion')->with('msgstatus', 'error');
+                }
+                return redirect::to('user/companion')->with('massage','You have successfully added a travel companion!');                
+            }else{
+                return redirect::to('user/companion')->with('massage','You have successfully added a travel companion!');
             }
         } else {
-            return Redirect::to('user/companion')->withErrors($validator)->withInput();
+            return redirect::to('user/companion')->with('Errmassage','Error while adding companion!');
         }        
         
     }
@@ -1518,7 +1519,6 @@ class UserController extends Controller {
         echo json_encode($companion);
     }
     public function addcompanion(Request $request){
-        // echo "<pre>";print_r($request->all());exit;
         $user = User::find(\Session::get('uid'));
 
         $return_array = array();
@@ -1529,9 +1529,10 @@ class UserController extends Controller {
             'last_name' => 'required',
             'email' => 'required'
         );
+        $validator = Validator::make($request->all(), $rules);
         $id = $request->input('id'); 
         if (!empty($request->input('id'))) {
-            $validator = Validator::make($request->all(), $rules);
+            
             if ($validator->passes()) { 
                 
                 $user = User::find(\Session::get('uid'));
@@ -1578,17 +1579,13 @@ class UserController extends Controller {
                         $message->subject($emlData['subject']);
                     });
                                                
-                $return_array['status'] = 'success';
-                $return_array['message'] = 'You have successfully added a travel companion';
-                 return Redirect::to('user/companion')->with('message', 'You have successfully added a travel companion')->with('msgstatus', 'success',$return_array);          
+                return redirect::to('user/companion')->with('massage','You have successfully added a travel companion!');          
                 
             } else {
-                $return_array['status'] = 'error';
-                $return_array['message'] = 'Error while adding companion';            
+                 return redirect::to('user/companion')->with('Errmassage','Error while adding companion!');          
             }        
         }
         else{
-        $validator = Validator::make($request->all(), $rules);
         
             if ($validator->passes()) { 
                 
@@ -1644,13 +1641,10 @@ class UserController extends Controller {
                     
                 // }            
                            
-                $return_array['status'] = 'success';
-                $return_array['message'] = 'You have successfully added a travel companion';
-                 return Redirect::to('user/companion')->with('message', 'You have successfully added a travel companion')->with('msgstatus', 'success',$return_array);          
+                return redirect::to('user/companion')->with('massage','You have successfully added a travel companion!');           
                 
                 } else {
-                    $return_array['status'] = 'error';
-                    $return_array['message'] = 'Error while adding companion';            
+                     return redirect::to('user/companion')->with('Errmassage','Error while adding companion!');            
                 }
             }        
             echo json_encode($return_array);
@@ -1736,7 +1730,7 @@ class UserController extends Controller {
         $return_array['status'] = 'success';
         $return_array['message'] = 'Deleted successfully';      
         echo json_encode($return_array);
-         return Redirect::to('user/companion')->with('message', 'data deleted Succesfully')->with('msgstatus', 'success');
+         return redirect::to('user/companion')->with('massage', 'data deleted Succesfully');
     }
     public function getInvite(){
         $user = User::find(\Session::get('uid'));
@@ -1745,73 +1739,129 @@ class UserController extends Controller {
         $file_name = 'users_admin.traveller.users.guestinvite';      
         return view($file_name, $this->data);
     }
+
     public function postInvite(Request $request){
-        // echo "<pre>";print_r($request->all());exit();
+
         $user = User::find(\Session::get('uid'));
-        
-        $return_array = array();
+
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
-            'first_name' => 'required|alpha_num|min:2',
-            'last_name' => 'required|alpha_num|min:2',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required'
         );
 
         $validator = Validator::make($request->all(), $rules);
         
-        if ($validator->passes()) {
-            $referral_code = strtoupper(uniqid());
-            
-            $user = User::find(\Session::get('uid'));
-            $invitee_data['user_id'] = $user->id;
-            $invitee_data['first_name'] = $request->input('first_name');
-            $invitee_data['last_name'] = $request->input('last_name');            
-            $invitee_data['email'] = $request->input('email');
-            $invitee_data['message'] = $request->input('message');
-            $invitee_data['referral_code'] = $referral_code;
-            $invitee_data['created'] = date("Y-m-d");
-            $today =  date("Y-m-d");            
-            $expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($today)));
-            $invitee_data['expired_on'] = $expiry_date;
-            
-            $inviteeId = \DB::table('tb_invitee')->insertGetId($invitee_data);             
-            if($inviteeId > 0){
+        if (!empty($request->id)) {
+            if ($validator->passes()) {
+                $referral_code = strtoupper(uniqid());
+                $id = $request->id;
+                $user = User::find(\Session::get('uid'));
+                $invitee_data['user_id'] = $user->id;
+                $invitee_data['first_name'] = $request->input('first_name');
+                $invitee_data['last_name'] = $request->input('last_name');            
+                $invitee_data['email'] = $request->input('email');
+                $invitee_data['message'] = $request->input('message');
+                $invitee_data['referral_code'] = $referral_code;
+                $invitee_data['created'] = date("Y-m-d");
+                $today =  date("Y-m-d");            
+                $expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($today)));
+                $invitee_data['expired_on'] = $expiry_date;
                 
-                $edata = array();
-                // $emlData['frmemail'] = 'compact(varname)';
-                $emlData['frmemail'] = $request->input('email');
-                $edata['referral_code'] = $referral_code;
-                $edata['msg'] = $request->input('message');
-                $edata['first_name'] = $request->input('first_name');
-                $edata['last_name'] = $request->input('last_name');
-                $emlData['email'] = $request->input('email');
-                $emlData['subject'] = 'Invitation send by '.$request->input('email');                
-                $edata['byfirstname'] = $user->first_name;
-                $edata['bylastname'] = $user->last_name;
-                $edata['byemail'] = $user->email;                                    
-                $edata['tofirstname'] = $request->input('first_name');
-                $edata['tolastname'] = $request->input('last_name');
-                $edata['todate'] = $today;
-                $expiry_date = date("Y-m-d", strtotime("+30 day", strtotime($today)));
-                $edata['todays'] = 30;
-                $edata['referral_code'] = $referral_code; 
-                $etemp = 'invite';
-                //echo view('user.emails.invites.' . $etemp, $edata); die;
-                try{ 
-                \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) { 
-                    $message->from($emlData['frmemail'], CNF_APPNAME);
-                    $message->to($emlData['email']);
-                    $message->subject($emlData['subject']);
-                });
-                }catch(Exception $ex){
-                    // print_r($ex); 
-                }
+                $inviteeId = \DB::table('tb_invitee')->where('id',$id)->update($invitee_data); 
+                if($inviteeId > 0){
+                    
+                    $edata = array();
+                    // $emlData['frmemail'] = 'compact(varname)';
+                    $emlData['frmemail'] = $request->input('email');
+                    $edata['referral_code'] = $referral_code;
+                    $edata['msg'] = $request->input('message');
+                    $edata['first_name'] = $request->input('first_name');
+                    $edata['last_name'] = $request->input('last_name');
+                    $emlData['email'] = $request->input('email');
+                    $emlData['subject'] = 'Invitation send by '.$request->input('email');                
+                    $edata['byfirstname'] = $user->first_name;
+                    $edata['bylastname'] = $user->last_name;
+                    $edata['byemail'] = $user->email;                                    
+                    $edata['tofirstname'] = $request->input('first_name');
+                    $edata['tolastname'] = $request->input('last_name');
+                    $edata['todate'] = $today;
+                    $expiry_date = date("Y-m-d", strtotime("+30 day", strtotime($today)));
+                    $edata['todays'] = 30;
+                    $edata['referral_code'] = $referral_code; 
+                    $etemp = 'invite';
+                    //echo view('user.emails.invites.' . $etemp, $edata); die;
+                    try{ 
+                    \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) { 
+                        $message->from($emlData['frmemail'], CNF_APPNAME);
+                        $message->to($emlData['email']);
+                        $message->subject($emlData['subject']);
+                    });
+                    }catch(Exception $ex){
+                        // print_r($ex); 
+                    }
+                }                             
+                return redirect::to('user/invite/')->with('massage','Invitation edited and send Mail Succesfully!');
+            } else {
+                return redirect::to('user/invite/')->with('Errmassage','Error Ocured!');
             }
-                         
-            return Redirect::to('user/invite/')->with('message', 'Invites send successfully')->with('msgstatus', 'success');
-        } else {
-            return Redirect::to('user/invite/')->withErrors($validator)->withInput();
+        }
+        else{
+            if ($validator->passes()) {
+                $referral_code = strtoupper(uniqid());
+                
+                $user = User::find(\Session::get('uid'));
+                $invitee_data['user_id'] = $user->id;
+                $invitee_data['first_name'] = $request->input('first_name');
+                $invitee_data['last_name'] = $request->input('last_name');            
+                $invitee_data['email'] = $request->input('email');
+                $invitee_data['message'] = $request->input('message');
+                $invitee_data['referral_code'] = $referral_code;
+                $invitee_data['created'] = date("Y-m-d");
+                $today =  date("Y-m-d");            
+                $expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($today)));
+                $invitee_data['expired_on'] = $expiry_date;
+                
+                $inviteeId = \DB::table('tb_invitee')->insertGetId($invitee_data);             
+                if($inviteeId > 0){
+                    
+                    $edata = array();
+                    // $emlData['frmemail'] = 'compact(varname)';
+                    $emlData['frmemail'] = $request->input('email');
+                    $edata['referral_code'] = $referral_code;
+                    $edata['msg'] = $request->input('message');
+                    $edata['first_name'] = $request->input('first_name');
+                    $edata['last_name'] = $request->input('last_name');
+                    $emlData['email'] = $request->input('email');
+                    $emlData['subject'] = 'Invitation send by '.$request->input('email');                
+                    $edata['byfirstname'] = $user->first_name;
+                    $edata['bylastname'] = $user->last_name;
+                    $edata['byemail'] = $user->email;                                    
+                    $edata['tofirstname'] = $request->input('first_name');
+                    $edata['tolastname'] = $request->input('last_name');
+                    $edata['todate'] = $today;
+                    $expiry_date = date("Y-m-d", strtotime("+30 day", strtotime($today)));
+                    $edata['todays'] = 30;
+                    $edata['referral_code'] = $referral_code; 
+                    $etemp = 'invite';
+                    //echo view('user.emails.invites.' . $etemp, $edata); die;
+                    try{ 
+                    \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) { 
+                        $message->from($emlData['frmemail'], CNF_APPNAME);
+                        $message->to($emlData['email']);
+                        $message->subject($emlData['subject']);
+                    });
+                    }catch(Exception $ex){
+                        // print_r($ex); 
+                    }
+                }
+                             
+                return redirect::to('user/invite/')->with('massage','Invite guest is Succesfull!');
+            } else {
+                return redirect::to('user/invite/')->with('Errmassage','Error Ocured!');
+            }
         }        
         
     }
@@ -2001,92 +2051,18 @@ class UserController extends Controller {
         $invitee = \DB::table('tb_invitee')->where('id', $id)->get();
         echo json_encode($invitee);
     }
-    public function editInvite(Request $request){
+    public function editInvite($id){
+
         $user = User::find(\Session::get('uid'));
-        
-        $return_array = array();
         if (!\Auth::check())
             return Redirect::to('user/login');
-        $rules = array(
-            'edit_first_name' => 'required|alpha_num|min:2',
-            'edit_last_name' => 'required|alpha_num|min:2',
-            'edit_email' => 'required'
-        );
+        $data = \DB::table('tb_invitee')->where('id','=',$id)->first();        
+        return view('users_admin.traveller.users.guestinvite',compact('data'));                
+    }   
+    public function deleteInvite($id){
 
-        $validator = Validator::make($request->all(), $rules);
-        
-        if ($validator->passes()) { 
-            //$referral_code = strtoupper(uniqid());
-            
-            $user = User::find(\Session::get('uid'));
-            $inv_id = $request->input('edit_id');
-            $invitee_data['user_id'] = $user->id;
-            $invitee_data['first_name'] = $request->input('edit_first_name');
-            $invitee_data['last_name'] = $request->input('edit_last_name');            
-            $invitee_data['email'] = $request->input('edit_email');
-            $invitee_data['message'] = $request->input('edit_message');
-            $invitee_data['referral_code'] = $request->input('edit_refferal_code');
-            //$invitee_data['created'] = date("Y-m-d");
-            //$today =  date("Y-m-d");            
-            //$expiry_date = date("Y-m-d", strtotime("+1 month", strtotime($today)));
-            
-            //$invitee_data['expired_on'] = $expiry_date;
-            //print_r($invitee_data);
-            $inviteeId = \DB::table('tb_invitee')->where('id', $inv_id)->update($invitee_data);             
-            if($inviteeId > 0){
-                
-                $edata = array();
-                $emlData['frmemail'] = 'marketing@emporium-voyage.com';
-                $edata['referral_code'] = $request->input('edit_refferal_code');
-                $edata['msg'] = $request->input('message');
-                $edata['first_name'] = $request->input('first_name');
-                $edata['last_name'] = $request->input('last_name');
-                $emlData['email'] = $request->input('email');
-                $emlData['subject'] = 'Invitation send by '.$request->input('email');
-                
-                $edata['byfirstname'] = $user->first_name;
-                $edata['bylastname'] = $user->last_name;
-                $edata['byemail'] = $user->email;
-                
-                    
-                $edata['tofirstname'] = $request->input('first_name');
-                $edata['tolastname'] = $request->input('last_name');
-                $edata['todate'] = $today;
-                $expiry_date = date("Y-m-d", strtotime("+30 day", strtotime($today)));
-                $edata['todays'] = 30;
-                $edata['referral_code'] = $referral_code;
-                
-                $etemp = 'invite';
-                
-                try{ 
-                \Mail::send('user.emails.' . $etemp, $edata, function($message) use ($emlData) {
-                    $message->from($emlData['frmemail'], CNF_APPNAME);
-
-                    $message->to($emlData['email']);
-
-                    $message->subject($emlData['subject']);
-                });
-                }catch(Exception $ex){
-                    //print_r($ex); 
-                }
-            }  
-            $return_array['status'] = 'success';
-            $return_array['message'] = 'Updated successfully';          
-            
-        } else {
-            $return_array['status'] = 'error';
-            $return_array['message'] = 'Error While updating';            
-        }        
-        echo json_encode($return_array);
-    }
-    public function deleteInvite(Request $request){
-        $id = $request->input('id'); 
-        $invitee = \DB::table('tb_invitee')->where('id', $id)->update(array('status'=>1));
-        
-        $return_array['status'] = 'success';
-        $return_array['message'] = 'Deleted successfully'; 
-        
-        echo json_encode($return_array);
+        $deleted = \DB::table('tb_invitee')->where('id','=',$id)->delete();
+        return redirect::to('users/guestinvite')->with('massage','You have successfully deleted guest!');                
     }
     
     public function ajaxLeadCreate(Request $request) {
@@ -2803,10 +2779,11 @@ class UserController extends Controller {
         ->orderby('ps_id','DESC')
         ->limit(3)
         ->first();
-
+        // echo "<pre>";print_r($data);exit();
         $category = \DB::table('tb_categories')->whereNotIn('id',[8,627,672,713])->where('parent_category_id',0)->get();
 
         $destination = \DB::table('tb_categories')->where('parent_category_id',880)->get();
+        // echo "<pre>";print_r($destination);exit;
         $atmosphere = \DB::table('tb_categories')->where('parent_category_id',886)->get();
         $facilities = \DB::table('tb_categories')->where('parent_category_id',897)->get();
         $style = \DB::table('tb_categories')->where('parent_category_id',909)->get();
@@ -2839,7 +2816,7 @@ class UserController extends Controller {
             $exe_island = explode(',',$decodeExp->island);
             $exe_safari = explode(',',$decodeExp->safari);
         }
-        
+         // echo "<pre>";print_r($inspire);exit;
         $file_name = 'users_admin.traveller.users.edit_preference';
         return view($file_name, $this->data,compact('category','data','inspire','select_dest','exe_spa','exe_voyage','exe_island','exe_safari','$fetch_destination','destination','atmosphere','facilities','style','islandconn','safariconn','spaconn'));
     }
@@ -2896,11 +2873,31 @@ class UserController extends Controller {
     }
 
     public function postPreference(Request $request){
-        if ($request->id) {
             if (!\Auth::check())
             return Redirect::to('user/login');
             $user = User::find(\Session::get('uid'));
 
+            $rules = array(
+                'first_name' => 'required',
+                'destinations' => 'required',
+                'inspirstion' => 'required',
+                'spacheckbox' => 'required',
+                'voyagechk' => 'required',
+                'islandchk' => 'required',
+                'safarichk' => 'required',
+                'note' => 'required',
+                'adults' => 'required',
+                'children' => 'required',
+                'toddlers' => 'required',
+                'earliest_arrival' => 'required',
+                'stay_time' => 'required',
+            );
+
+            $validator = Validator::make($request->all(), $rules);
+
+            if (!empty($request->id)) {
+
+            if ($validator->passes()) {
                 $spa = implode(",",$request->spacheckbox);
                 $voyage = implode(",",$request->voyagechk);
                 $island = implode(",",$request->islandchk);
@@ -2943,9 +2940,14 @@ class UserController extends Controller {
                 $data['created'] = date('y-m-d');
                 $data['updated'] = date('Y-m-d');
                 $updates = \DB::table('tb_personalized_services')->where('ps_id',$id)->update($data);
-                return redirect::to('/users/my-preferences');
+                return redirect::to('/users/my-preferences')->with('massage','Preference edited succesfully');
+            }else{
+                return redirect::to('/users/my-preferences')->with('Errmassage','Fil all the fields!');
+            }
+
         }else{
-            
+            if ($validator->passes()) {
+                echo "here";exit();
                 $spa = implode(",",$request->spacheckbox);
                 $voyage = implode(",",$request->voyagechk);
                 $island = implode(",",$request->islandchk);
@@ -2992,7 +2994,10 @@ class UserController extends Controller {
                         $data['created'] = date('y-m-d');
                         $data['updated'] = date('Y-m-d');
                         \DB::table('tb_personalized_services')->where('customer_id', \Auth::user()->id)->insert($data);
-                        return redirect::to('/users/my-preferences');
+                        return redirect::to('/users/my-preferences')->with('massage','Preference added succesfully!');
+            }else{
+            return redirect::to('/users/my-preferences')->with('Errmassage',' Error ocured!');
+            }
         }
         
     }

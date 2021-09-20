@@ -1,4 +1,3 @@
-
 @extends('users_admin.traveller.layout.app')
 @section('content')
   <div class="mt-15 reservation-widget">

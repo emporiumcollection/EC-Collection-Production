@@ -141,25 +141,24 @@
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Destinations
                                 </h3>
-                                <div class="experience-slider">                            
-                                    @foreach($inspire as $inst)
-                                        @foreach($destination as $dest)
-                                            <div>
-                                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" id="destination" value="{{ $dest->id }}" {{ $inst == $dest->id ? 'checked' : ''}}/>
-                                                        <img src="{{ asset('/uploads/category_imgs/'.$dest->category_image)}}"
-                                                            class="img-fluid" alt="">
-                                                        <div class="label-inner">
-                                                            <span></span>
-                                                            <div class="title-checkbox">
-                                                                {{ $dest->category_name }}
-                                                            </div>
+                                <div class="experience-slider">                         
+                                    @foreach($destination as $dest)                        
+                                        <div>
+                                            <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                                <label class="checkbox">                         
+                                                    <input type="checkbox" name="inspirstion[]" id="destination" value="{{ $dest->id }}" @foreach($inspire as $inst){{ $inst == $dest->id ? 'checked' : ''}}@endforeach/>    
+                                                    <img src="{{ asset('/uploads/category_imgs/'.$dest->category_image)}}"
+                                                        class="img-fluid" alt="">
+                                                    <div class="label-inner">
+                                                        <span></span>
+                                                        <div class="title-checkbox">
+                                                            {{ $dest->id }}{{ $dest->category_name }}
+                                                            {{ $inst }}
                                                         </div>
-                                                    </label>
-                                                </div>
+                                                    </div>
+                                                </label>
                                             </div>
-                                        @endforeach
+                                        </div>                                        
                                     @endforeach
                                 </div>
                             </div>
@@ -167,13 +166,12 @@
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Atmosphere
                                 </h3>
-                                <div class="experience-slider">                                    
-                                    @foreach($inspire as $inst)
+                                <div class="experience-slider">
                                         @foreach($atmosphere as $atm)
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" value="{{ $atm->id }}" {{ $inst == $atm->id ? 'checked' : ''}}/>
+                                                        <input type="checkbox" name="inspirstion[]" value="{{ $atm->id }}"  @foreach($inspire as $inst){{ $inst == $atm->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$atm->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -185,7 +183,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach
                                     @endforeach                                               
                                 </div>
                             </div>
@@ -193,13 +190,12 @@
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Facilities
                                 </h3>
-                                <div class="experience-slider">                                    
-                                    @foreach($inspire as $inst)
+                                <div class="experience-slider">
                                         @foreach($facilities as $facilits)
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" value="{{ $facilits->id }}" {{  $inst == $facilits->id ? 'checked' : ''}}/>
+                                                        <input type="checkbox" name="inspirstion[]" value="{{ $facilits->id }}" @foreach($inspire as $inst){{  $inst == $facilits->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$facilits->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -211,7 +207,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach
                                     @endforeach                                      
                                 </div>
                             </div>
@@ -219,13 +214,12 @@
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Style
                                 </h3>
-                                <div class="experience-slider">                                    
-                                    @foreach($inspire as $inst)
+                                <div class="experience-slider">
                                         @foreach($style as $sty)
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" value="{{ $sty->id }}" {{ $inst == $sty->id ? 'checked' : ''}}/>
+                                                        <input type="checkbox" name="inspirstion[]" value="{{ $sty->id }}" @foreach($inspire as $inst){{ $inst == $sty->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$sty->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -237,7 +231,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach
                                     @endforeach
                                 </div>
                             </div>
@@ -254,25 +247,23 @@
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Spa Collection
                                 </h3>
-                                <div class="experience-slider">                                    
-                                    @foreach($exe_spa as $ex_spa)
+                                <div class="experience-slider">
                                         @foreach($spaconn as $spa)
                                         <div>
                                             <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                 <label class="checkbox">
-                                                    <input type="checkbox" name="spacheckbox[]" value="{{ $spa->id }}" {{ $ex_spa == $spa->id ? 'checked' : ''}}/>
+                                                    <input type="checkbox" name="spacheckbox[]" value="{{ $spa->id }}" @foreach($exe_spa as $ex_spa){{ $ex_spa == $spa->id ? 'checked' : ''}}@endforeach/>
                                                     <img src="{{ asset('/uploads/category_imgs/'.$spa->category_image)}}"
                                                         class="img-fluid" alt="">
                                                     <div class="label-inner">
                                                         <span></span>
                                                         <div class="title-checkbox">
-                                                            {{ $spa->category_name }}
+                                                            {{ $ex_spa }}{{ $spa->category_name }}{{ $spa->id }}
                                                         </div>
                                                     </div>
                                                 </label>
                                             </div>
                                         </div>
-                                        @endforeach
                                     @endforeach                                
                                 </div>
                             </div>
@@ -280,13 +271,12 @@
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Voyage Collection
                                 </h3>
-                                <div class="experience-slider">                                    
-                                    @foreach($exe_voyage as $exe_voyag)
+                                <div class="experience-slider">
                                         @foreach($category as $cat)
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="voyagechk[]" value="{{ $cat->id }}" {{ $exe_voyag == $cat->id ? 'checked' : ''}}/>
+                                                        <input type="checkbox" name="voyagechk[]" value="{{ $cat->id }}" @foreach($exe_voyage as $exe_voyag){{ $exe_voyag == $cat->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$cat->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -298,7 +288,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach
                                    @endforeach                               
                                 </div>
                             </div>
@@ -306,13 +295,12 @@
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Islands Collection
                                 </h3>
-                                <div class="experience-slider">                                    
-                                    @foreach($exe_island as $exe_is)
+                                <div class="experience-slider">      
                                         @foreach($islandconn as $island)
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="islandchk[]" value="{{ $island->id }}" {{ $exe_is == $island->id ? 'checked' : ''}}/>
+                                                        <input type="checkbox" name="islandchk[]" value="{{ $island->id }}" @foreach($exe_island as $exe_is){{ $exe_is == $island->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$island->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -324,7 +312,6 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach
                                     @endforeach    
                                 </div>
                             </div>
@@ -332,13 +319,12 @@
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Safari Collection
                                 </h3>
-                                <div class="experience-slider">                                                                
-                                    @foreach($exe_safari as $ex_safari)
+                                <div class="experience-slider">
                                         @foreach($safariconn as $safari)
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="safarichk[]" value="{{ $safari->id }}" {{ $ex_safari == $safari->id ? 'checked' : ''}}/>
+                                                        <input type="checkbox" name="safarichk[]" value="{{ $safari->id }}" @foreach($exe_safari as $ex_safari){{ $ex_safari == $safari->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$safari->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -349,8 +335,7 @@
                                                         </div>
                                                     </label>
                                                 </div>
-                                            </div>
-                                        @endforeach
+                                            </div>                                        
                                     @endforeach 
                                 </div>
                             </div>

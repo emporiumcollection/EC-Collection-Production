@@ -12,7 +12,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/  css?family=Poppins:300,400,500,600,700" />
   <!--end::Fonts-->
   <!--begin::Page Vendors Styles(used by this page)-->
-  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link href="{{ asset('assets/users/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ asset('assets/users/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ asset('assets/users/assets/css/owl.carousel.min.css')}}" rel="stylesheet" type="text/css" />
@@ -576,8 +579,7 @@
   <script src="{{ asset('assets/users/assets/js/pages/crud/forms/widgets/select2.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
-  <script>
-    
+  <script>    
     $('.experience-slider').slick({
       infinite: false,
       speed: 300,
@@ -641,7 +643,7 @@
     $("#send-invitation").click(function (e) {
       Swal.fire("Good job!", "Message has been sent ", "success");
     });
-    
+     
     $('.result-grid').slick({
       slidesToShow: 1,
       prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
@@ -770,8 +772,8 @@
     chart.render();
 
   jQuery(function($){
-  $(document).ready(function(){
-    
+  $(document).ready(function(){    
+
     @yield('companion_datatable')
 
     @yield('Preference_Datatable')    
