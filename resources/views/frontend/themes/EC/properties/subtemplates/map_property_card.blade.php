@@ -75,7 +75,7 @@
           <p class="text-16 mb-0"><?php echo $property->suites[0]->rooms[0]->num_beds;?> single beds</p>
         </div>
         <div class="col-md-5">
-          <a href="#" class="btn btn-dark btn-block btn-sm btn-sidebar" data-sidebar="#suiteside">View
+          <a href="#" class="btn btn-dark btn-block btn-sm btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">View
             Suites</a>
         </div>
       </div>
