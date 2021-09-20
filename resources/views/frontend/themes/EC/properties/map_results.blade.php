@@ -118,7 +118,7 @@
               var img = images[i];
 
               slideshowContent += '<div class="image-list' + (i === 1 ? ' active' : '') + '">' +
-                '<img src="' + img[0] + '" class="img-fluid" />' +
+                '<img src="' + img + '" class="img-fluid" />' +
                 '</div>';
             }
             var popupContent = '<div class="map-detail-container">' +
