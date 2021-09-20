@@ -171,18 +171,24 @@ endforeach;
           <div class="mobile-off">
             <p>396 exceptional hotels</p>
             <ul class="nav nav-tabs tabs-w3" id="myTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="lifestyle-tab" data-toggle="tab" href="#lifestyle" role="tab"
-                  aria-controls="lifestyle" aria-selected="true">LIFESTYLE</a>
-              </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link" id="dedicated-tab" data-toggle="tab" href="#dedicated" role="tab"
-                  aria-controls="dedicated" aria-selected="false">DEDICATED</a>
-              </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link" id="bespoke-tab" data-toggle="tab" href="#bespoke" role="tab"
-                  aria-controls="bespoke" aria-selected="false">BESPOKE</a>
-              </li>
+              <?php if(!empty($propertyResultsForView['lifestyle'])):?>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link active" id="lifestyle-tab" data-toggle="tab" href="#lifestyle" role="tab"
+                    aria-controls="lifestyle" aria-selected="true">LIFESTYLE</a>
+                </li>
+              <?php endif;?>
+              <?php if(!empty($propertyResultsForView['dedicated'])):?>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="dedicated-tab" data-toggle="tab" href="#dedicated" role="tab"
+                    aria-controls="dedicated" aria-selected="false">DEDICATED</a>
+                </li>
+              <?php endif;?>
+              <?php if(!empty($propertyResultsForView['bespoke'])):?>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="bespoke-tab" data-toggle="tab" href="#bespoke" role="tab"
+                    aria-controls="bespoke" aria-selected="false">BESPOKE</a>
+                </li>
+              <?php endif;?>
             </ul>
           </div>
           <div class="dropdown dropdown-block mobile-on">
