@@ -29,13 +29,13 @@
       <!--<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
         Reviews
       </a>-->
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Quick info
       </a>
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery
       </a>
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
         Suite(s)
       </a>
       <div class="hotel-prices hotel-price-detail d-flex">
