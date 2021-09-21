@@ -2965,10 +2965,14 @@ class PropertyController extends Controller {
         if(!empty($this->data['propertyResults']->toArray())){
             foreach($this->data['propertyResults'] as $k => $propertyRecord){
                 if(isset($propertyRecord->container) && $propertyRecord->container){
-                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);   
-                }else{
-                    $this->data['propertyResults'][$k]->propertyImages = [];
+                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
                 }
+
+                if(empty($this->data['propertyResults'][$k]->propertyImages) &&
+                    !empty($this->data['propertyResults'][$k]->property_images)){
+                    $this->data['propertyResults'][$k]->propertyImages = $this->data['propertyResults'][$k]->property_images;
+                }
+
             }
 
             $this->formatPropertyRecords($this->data['propertyResults']);

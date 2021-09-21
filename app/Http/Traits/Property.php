@@ -196,37 +196,37 @@ trait Property {
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
             }, 
             'barImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
             }, 
             'spaImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
             }, 
             'restrurantImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
             }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
             }
         ])
         ->where('city', '=', $keyword)
@@ -267,7 +267,7 @@ trait Property {
             }
 
             // room images
-            
+            /*
             if(!empty($property->suites)){
                 foreach($property->suites as $sk => $suite){
                     if(!empty($suite->rooms)){
@@ -285,7 +285,7 @@ trait Property {
                         }
                     }
                 }
-            }
+            }*/
         }
     }
 
