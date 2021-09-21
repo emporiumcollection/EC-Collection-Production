@@ -169,7 +169,7 @@ foreach($featureProperties as $featureProp):
 endforeach;
 ?>
           <div class="mobile-off">
-            <p><?php print count($propertyResultsForView['lifestyle']) + count($propertyResultsForView['bespoke']) + count($propertyResultsForView['dedicated']) ;?></p>
+            <p><?php print count($propertyResultsForView['lifestyle']) + count($propertyResultsForView['bespoke']) + count($propertyResultsForView['dedicated']) ;?> exceptional hotels</p>
             <ul class="nav nav-tabs tabs-w3" id="myTab" role="tablist">
               <?php if(!empty($propertyResultsForView['lifestyle'])):?>
                 <li class="nav-item" role="presentation">
