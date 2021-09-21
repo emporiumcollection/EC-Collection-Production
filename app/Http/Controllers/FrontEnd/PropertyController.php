@@ -2964,17 +2964,23 @@ class PropertyController extends Controller {
 
         if(!empty($this->data['propertyResults']->toArray())){
             foreach($this->data['propertyResults'] as $k => $propertyRecord){
+                if(empty($propertyRecord->container)){
+                    $container = Container::
+                    where('display_name', '=', $propertyRecord->property_name)
+                    ->get();
+
+                    if(!empty($container->toArray())){
+                        $propertyRecord->container = $container[0];
+                        $this->data['propertyResults'][$k]->container = $container[0];
+                    }
+                }
                 if(isset($propertyRecord->container) && $propertyRecord->container){
-                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
+                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);   
+                    //$this->data['propertyResults'][$k]->folder = $propertyRecord->container;
+                }else{
+                    $this->data['propertyResults'][$k]->propertyImages = [];
                 }
-
-                if(empty($this->data['propertyResults'][$k]->propertyImages) &&
-                    !empty($this->data['propertyResults'][$k]->property_images)){
-                    $this->data['propertyResults'][$k]->propertyImages = $this->data['propertyResults'][$k]->property_images;
-                }
-
             }
-
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
 
