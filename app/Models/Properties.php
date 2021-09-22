@@ -78,6 +78,9 @@ class properties extends Sximo  {
     public function container(){
         return $this->hasOne(Container::class, 'display_name', 'property_name');
     }
-	
 
+	public function PropertyCategoryPackages()
+    {
+        return $this->hasOne(PropertyCategoryPackages::class, 'property_id');
+    }
 }

@@ -3164,7 +3164,6 @@
                                                         aria-hidden="true"></i></a>
                                             </li>
                                         </ul>
-                                        <div id="map"></div>
                                     </div>
 
                                 </div>

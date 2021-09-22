@@ -84,7 +84,7 @@ trait Property {
         ->with([
             'container',
             'suites' => function($query){
-                return $query->with(['rooms']);
+                return $query->with(['rooms', 'amenities']);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -118,6 +118,7 @@ trait Property {
             }])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
+        //->limit(1)
         ->get();
     }
 
@@ -127,7 +128,7 @@ trait Property {
             'container',
             'images',
             'suites' => function($query){
-                return $query->with(['rooms']);
+                return $query->with(['rooms', 'amenities']);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -168,6 +169,72 @@ trait Property {
         ])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
+        //->limit(1)
+        ->get();        
+    }
+
+    public function searchPropertiesByKeyword($keyword){
+        return properties::select([
+            'id', 
+            'property_name', 
+            'property_short_name', 
+            'detail_section1_title', 
+            'detail_section1_description_box1', 
+            'detail_section1_description_box2',
+            'latitude',
+            'longitude',
+            'address', 
+        ])
+        ->with([
+            'container',
+            'images',
+            'PropertyCategoryPackages' => function($query){
+                $query->with(['package']);
+            },
+            'suites' => function($query){
+                return $query->with(['rooms', 'amenities']);
+            },
+            'propertyImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'roomImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'barImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'spaImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'restrurantImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }, 
+            'hotelBrochureImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            }
+        ])
+        ->where('city', '=', $keyword)
+        ->where('latitude', '!=', '')
+        ->where('longitude', '!=', '')
+        //->limit(1)
         ->get();        
     }
 
@@ -216,12 +283,78 @@ trait Property {
                             ->toArray();
 
                             $properties[$k]->suites[$sk]->rooms[$rk]->images = $roomImages;
-
+                            break;
+                        }
+                        foreach($suite->amenities as $ak => $amenity){
+                            $suiteamenities = amenities::whereIn('id', explode(',', $amenity->amenity_ids))
+                            ->get()->toArray();
+                            $suiteamenitlist = [];
+                            if(!empty($suiteamenities)){
+                                foreach($suiteamenities as $amn){
+                                    $suiteamenitlist[] = $amn['amenity_title'];
+                                }
+                            }
+                            if(!empty($suiteamenitlist)){
+                                $properties[$k]->suites[$sk]->suiteamenities = '<li>'.implode('</li><li>', $suiteamenitlist).'</li>';
+                            }else{
+                                $properties[$k]->suites[$sk]->suiteamenities = '';
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    public function formatRecordsMap($results) {
+        $mapResults = [];
+        foreach($results as $property){
+            $row = [];
+            $row['type'] = 'Property';
+            $row['geometry'] = [
+                'type' => 'Point',
+                'coordinates' => [$property->longitude, $property->latitude]
+            ];
+
+            $images = [];
+            foreach($property->propertyImages as $image){
+                $images[] = 'uploads/container_user_files/locations/'.$property['container']['name'].'/property-images/'.$image['file_name'];
+            }
+
+            $row['properties'] = [
+                'dataId' => 'hotel_' . $property->id,
+                'title' => $property->property_name,
+                'description' => $property->detail_section1_description_box1,
+                'price' => '€269',
+                'images'=> $images,
+            ];
+            $mapResults[] = $row;
+        }
+
+        return json_encode($mapResults);
+    }
+
+    public function seperatedByPackage($results){
+        $lifestyle = [];
+        $dedicated = [];
+        $bespoke = [];
+        foreach($results as $property){
+            $record = $property->toArray();
+            if(!isset($record['property_category_packages']['package_id'])) continue;
+            if($record['property_category_packages']['package_id'] == '38'){
+                $lifestyle[] = $property;
+            }elseif($record['property_category_packages']['package_id'] == '39'){
+                $dedicated[] = $property;
+            }elseif($record['property_category_packages']['package_id'] == '40'){
+                $bespoke[] = $property;
+            }
+        }
+
+        return [
+            'lifestyle' => $lifestyle,
+            'dedicated' => $dedicated,
+            'bespoke' => $bespoke,
+        ];
     }
 
 }

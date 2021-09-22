@@ -26,6 +26,11 @@ class packages extends Sximo  {
 	public static function queryGroup(){
 		return "  ";
 	}
+
+	public function PropertyCategoryPackages()
+    {
+        return $this->hasMany(PropertyCategoryPackages::class, 'package_id');
+    }
 	
 
 }

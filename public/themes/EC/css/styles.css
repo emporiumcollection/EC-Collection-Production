@@ -35590,7 +35590,14 @@ footer {
     display: none; }
   .second-header .second-header-right {
     flex: 0 0 100%;
-    max-width: 100%; } }
+    max-width: 100%; }
+  .top-header .ico-back {
+    margin-left: 0; }
+    .top-header .ico-back::before {
+      top: 0;
+      left: 0;
+      width: 17px;
+      height: 29px; } }
 
 @media (max-width: 575.98px) {
   .main-content h3 {

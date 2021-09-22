@@ -100,6 +100,7 @@ function replacePropertyData(id){
 function replacePropertySuites(id){
   var suiteview = '';
   var firstsuite = 0;
+
   $('[data-place="property-suites"]').each(function() {
       suiteview += `<li class="nav-item">
           <a class="nav-link" id="suiteslist-tab" data-toggle="pill" href="#suiteslist" role="tab"
@@ -110,13 +111,40 @@ function replacePropertySuites(id){
         if(!firstsuite){
           firstsuite = e.id;
         }
-        suiteview += `<li class="nav-item" onclick="replaceRooms(` + id + `, ` + e.id + `)">
-            <a class="nav-link nav-link-sub" id="suitelist` + e.id + `-tab" data-toggle="pill"
+        suiteview += `<li class="nav-item" onclick="replaceSuiteDetail(` + id + `, ` + e.id + `)">
+            <a class="nav-link nav-link-sub" id="suitelist1-tab" data-toggle="pill"
                 href="#suitelist1" role="tab" aria-controls="suitelist1" aria-selected="false"> ` + e.category_name + `</a>
         </li>`;
       })
       $(this).html(suiteview);
-      replaceRooms(id, firstsuite);
+      //replaceRooms(id, firstsuite);
+  });
+}
+
+function replaceSuiteDetail(property_id, category_id){
+  var suite;
+  properties[property_id]['suites'].forEach(function(e){
+    if(category_id === e.id){
+      suite = e;
+    }
+  });
+
+  $('[data-place="suite_category_name"]').html(suite.category_name);
+  $('[data-place="suite_description"]').html(suite.room_desc);
+  $('[data-place="suite_amenities"]').html(suite.suiteamenities);
+
+  var roomimages = ``;
+  suite.rooms[0].images.forEach(function(rm){
+    roomimages += `<div>
+      <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+    </div>`;
+  });
+
+  $('[data-place="suite_room_images"]').html(roomimages);
+  $('.result-grid').slick({
+    slidesToShow: 1,
+    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
   });
 }
 
@@ -278,18 +306,16 @@ function getDefaultChannel(catt){
             
         },
         success: function(data){ 
-            
-            console.log(data.channel_url);   
-//            $(".dv-youtube-channel").html('<div class="yt-rvideos"></div>');
-            //$(".dv-youtube-channel").html('<div data-yt data-yt-channel="'+data.channel_url+'" data-yt-content-columns="4"  data-yt-content-rows="3"></div>')                    
-                $('.yt-rvideos').yottie({  
-                    key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
-                    channel: data.channel_url,
-                    content: {
-                        columns: 4,
-                        rows: 2
-                    },
-                });
+            if(!$('.yt-rvideos').length) return false;
+
+            $('.yt-rvideos').yottie({  
+                key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+                channel: data.channel_url,
+                content: {
+                    columns: 4,
+                    rows: 2
+                },
+            });
         }
     });
 }    

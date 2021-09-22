@@ -16,6 +16,9 @@
     .experiences{
         cursor: pointer;
     }
+    .slick-list{
+      height: 300px;
+    }
 </style>
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript">
@@ -124,7 +127,7 @@
               <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
                 Gallery
               </a>
-              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#videos">
+              <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#videos" id="locationViews">
                 Videos
               </a>
               <div class="hotel-prices hotel-price-detail d-flex">
@@ -153,32 +156,39 @@
 <?php 
 foreach($editorsProperties as $editorChoice):
 ?>    
-    @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice', $editorChoice, 'propertyImages' => $editorChoice->propertyImages, 'block_title' => 'Editors choice hotel']);
+    @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice' => $editorChoice, 'propertyImages' => $editorChoice->propertyImages, 'block_title' => 'Editors choice hotel'])
 <?php    
 endforeach;
 ?>
 <?php 
-foreach($featureProperties as $editorChoice):
+foreach($featureProperties as $featureProp):
 ?>    
-    @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice', $editorChoice, 'propertyImages' => $editorChoice->propertyImages, 'block_title' => 'Feature hotel']);
+    @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', 
+    ['editorChoice' => $featureProp, 'propertyImages' => $featureProp->propertyImages, 'block_title' => 'Feature hotel'])
 <?php    
 endforeach;
 ?>
           <div class="mobile-off">
-            <p>396 exceptional hotels</p>
+            <p><?php print count($propertyResultsForView['lifestyle']) + count($propertyResultsForView['bespoke']) + count($propertyResultsForView['dedicated']) ;?> exceptional hotels</p>
             <ul class="nav nav-tabs tabs-w3" id="myTab" role="tablist">
-              <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="lifestyle-tab" data-toggle="tab" href="#lifestyle" role="tab"
-                  aria-controls="lifestyle" aria-selected="true">LIFESTYLE</a>
-              </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link" id="dedicated-tab" data-toggle="tab" href="#dedicated" role="tab"
-                  aria-controls="dedicated" aria-selected="false">DEDICATED</a>
-              </li>
-              <li class="nav-item" role="presentation">
-                <a class="nav-link" id="bespoke-tab" data-toggle="tab" href="#bespoke" role="tab"
-                  aria-controls="bespoke" aria-selected="false">BESPOKE</a>
-              </li>
+              <?php if(!empty($propertyResultsForView['lifestyle'])):?>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link active" id="lifestyle-tab" data-toggle="tab" href="#lifestyle" role="tab"
+                    aria-controls="lifestyle" aria-selected="true">LIFESTYLE</a>
+                </li>
+              <?php endif;?>
+              <?php if(!empty($propertyResultsForView['dedicated'])):?>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="dedicated-tab" data-toggle="tab" href="#dedicated" role="tab"
+                    aria-controls="dedicated" aria-selected="false">DEDICATED</a>
+                </li>
+              <?php endif;?>
+              <?php if(!empty($propertyResultsForView['bespoke'])):?>
+                <li class="nav-item" role="presentation">
+                  <a class="nav-link" id="bespoke-tab" data-toggle="tab" href="#bespoke" role="tab"
+                    aria-controls="bespoke" aria-selected="false">BESPOKE</a>
+                </li>
+              <?php endif;?>
             </ul>
           </div>
           <div class="dropdown dropdown-block mobile-on">
@@ -187,796 +197,60 @@ endforeach;
               396 exceptional hotels
             </button>
             <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
+              <?php if(!empty($propertyResultsForView['lifestyle'])):?>
               <a class="dropdown-item" data-toggle="tab" href="#lifestyle">Lifestyle</a>
+              <?php endif;?>
+              <?php if(!empty($propertyResultsForView['dedicated'])):?>
               <a class="dropdown-item" data-toggle="tab" href="#dedicated">Dedicated</a>
+              <?php endif;?>
+              <?php if(!empty($propertyResultsForView['bespoke'])):?>
               <a class="dropdown-item" data-toggle="tab" href="#bespoke">Bespoke</a>
+              <?php endif;?>
             </div>
           </div>
           <div class="tab-content pt-5" id="myTabContent">
+            <?php if(!empty($propertyResultsForView['lifestyle'])):?>
             <div class="tab-pane fade show active" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
               <div class="row">
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/Emporium-Collection_129.jpg" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/64133123060-77799344932.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
-
+                <?php 
+                foreach($propertyResultsForView['lifestyle'] as $lifestyleProp):
+                ?>
+                  @include('frontend.themes.EC.properties.subtemplates.result_card', 
+                  ['property' => $lifestyleProp, 'propertyImages' => $lifestyleProp->propertyImages])
+                <?php
+                endforeach;
+                ?>
               </div>
             </div>
+            <?php endif;?>
+            <?php if(!empty($propertyResultsForView['dedicated'])):?>
             <div class="tab-pane fade" id="dedicated" role="tabpanel" aria-labelledby="dedicated-tab">
               <div class="row">
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/64133123060-77799344932.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/64133123060-77799344932.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
+                <?php 
+                foreach($propertyResultsForView['dedicated'] as $dedicatedProp):
+                ?>
+                  @include('frontend.themes.EC.properties.subtemplates.result_card', 
+                    ['property' => $dedicatedProp, 'propertyImages' => $dedicatedProp->propertyImages])
+                <?php
+                endforeach;
+                ?>
               </div>
             </div>
+            <?php endif;?>
+            <?php if(!empty($propertyResultsForView['bespoke'])):?>
             <div class="tab-pane fade" id="bespoke" role="tabpanel" aria-labelledby="bespoke-tab">
               <div class="row">
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/64133123060-77799344932.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/64133123060-77799344932.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
-                <div class="col-lg-6 col-md-6 mb-5 ">
-                  <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                    <div class="pr-lst result-grid">
-                      <div>
-                        <img src="images/64133123060-77799344932.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                      <div>
-                        <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                      </div>
-                    </div>
-                    <div class="my-dropdown">
-                      <div class="btn-group dropleft">
-                        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                          <i class="ico ico-diamon diamon-label"></i>
-                        </a>
-                        <div class="dropdown-menu">
-                          <a href="#" class="dropdown-item">Add to collection</a>
-                          <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                        </div>
-                      </div>
-
-                    </div>
-                    <div class="hotel-meta full-width is-small">
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                        Reviews
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                        Quick info
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                        Gallery
-                      </a>
-                      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                        Suite(s)
-                      </a>
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-
-                      </div>
-                    </div>
-                    <div class="hotel-meta-mobile">
-                      <a href="detail-page.html" class="btn rounded-0">
-                        Suite Info
-                      </a>
-                      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-                        Check Availability
-                      </a>
-                    </div>
-                  </div>
-                  <a href="#">
-                    <div class="title-offset mt-5 ">
-                      <h3 class="title-second title-line mb-0">11 Howard</h3>
-                      <h4 class="title-font-2 title-third">experience</h4>
-                    </div>
-                  </a>
-                </div>
+                <?php 
+                foreach($propertyResultsForView['bespoke'] as $bespokeProp):
+                ?>
+                  @include('frontend.themes.EC.properties.subtemplates.result_card', 
+                    ['property' => $bespokeProp, 'propertyImages' => $bespokeProp->propertyImages])
+                <?php 
+                endforeach;
+                ?>
               </div>
             </div>
+            <?php endif;?>
           </div>
         </div>
       </div>
@@ -987,61 +261,62 @@ endforeach;
 {{-- For custom script --}}
 @section('custom_js')
     @parent
-  <script>
-        $(document).on('click', ".dest-collection", function(e){
-                e.preventDefault();
-                //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                var d_name = $(this).attr('data-name');
-                var cat =  $("input[name='cat']").val();
-                var coll_type = 'destinations';
-                var req_for = '';
-                var cobj = $(this);
-                //var token = $("input[name='_token']").val();
+<script>
+<?php if($view == 'channel'):?>
+  $('#locationViews').trigger("click");
+<?php endif;?>
+$(document).on('click', ".dest-collection", function(e){
+  e.preventDefault();
+  //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+  var d_name = $(this).attr('data-name');
+  var cat =  $("input[name='cat']").val();
+  var coll_type = 'destinations';
+  var req_for = '';
+  var cobj = $(this);
+  //var token = $("input[name='_token']").val();
 
-                $.ajax({
-                    url:'{{URL::to("propcollection/")}}',
-                    dataType:'json',
-                    data: {d_name:d_name, coll_type:coll_type, cat:cat},
-                    type: 'post',
-                    success: function(response){
-
-                        if(response.type=='dedicated-collection'){
-                            var mem_types = response.mem_types;
-                            if(mem_types.indexOf("2")>0){
-                                //window.location.href = '{{URL::to('luxury_destinations')}}/'+cat+'/dedicated-collection';
-                                //cat = $("#dd-destination").val();
-                                getPropertyByCollection('dedicated-collection', cat, 1, req_for);
-                                $(".dest-collection").removeClass('active');
-                                cobj.addClass('active');
-                                $("#dest_collection").val('dedicated-collection');
-                            }else{
-                                show_modal_content(response.type);
-                                $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
-                            }
-                        }else if(response.type=='bespoke-collection'){
-                            var mem_types = response.mem_types;
-                            if(mem_types.indexOf("3")>0){
-                                //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/bespoke-collection';
-                                //cat = $("#dd-destination").val();
-                                getPropertyByCollection('bespoke-collection', cat, 1, req_for);
-                                $(".dest-collection").removeClass('active');
-                                cobj.addClass('active');
-                                $("#dest_collection").val('bespoke-collection');
-                            }else{
-                                show_modal_content(response.type);
-                                $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
-                            }
-                        }else{
-                            //cat = $("#dd-destination").val();
-                            getPropertyByCollection('lifestyle-collection', cat, 1, req_for);
-                            $(".dest-collection").removeClass('active');
-                            cobj.addClass('active');
-                            $("#dest_collection").val('lifestyle-collection');
-                            //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/lifestyle-collection';
-                        }
-                    }
-                });
-            });
-
-        </script>
+  $.ajax({
+    url:'{{URL::to("propcollection/")}}',
+    dataType:'json',
+    data: {d_name:d_name, coll_type:coll_type, cat:cat},
+    type: 'post',
+    success: function(response){
+      if(response.type=='dedicated-collection'){
+          var mem_types = response.mem_types;
+          if(mem_types.indexOf("2")>0){
+              //window.location.href = '{{URL::to('luxury_destinations')}}/'+cat+'/dedicated-collection';
+              //cat = $("#dd-destination").val();
+              getPropertyByCollection('dedicated-collection', cat, 1, req_for);
+              $(".dest-collection").removeClass('active');
+              cobj.addClass('active');
+              $("#dest_collection").val('dedicated-collection');
+          }else{
+              show_modal_content(response.type);
+              $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
+          }
+      }else if(response.type=='bespoke-collection'){
+          var mem_types = response.mem_types;
+          if(mem_types.indexOf("3")>0){
+              //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/bespoke-collection';
+              //cat = $("#dd-destination").val();
+              getPropertyByCollection('bespoke-collection', cat, 1, req_for);
+              $(".dest-collection").removeClass('active');
+              cobj.addClass('active');
+              $("#dest_collection").val('bespoke-collection');
+          }else{
+              show_modal_content(response.type);
+              $("#showMemberLoginPopup").modal({backdrop: 'static', keyboard: false}, 'show');
+          }
+      }else{
+          //cat = $("#dd-destination").val();
+          getPropertyByCollection('lifestyle-collection', cat, 1, req_for);
+          $(".dest-collection").removeClass('active');
+          cobj.addClass('active');
+          $("#dest_collection").val('lifestyle-collection');
+          //window.location.href = '{{URL::to('luxury_experience')}}/'+cat+'/lifestyle-collection';
+      }
+    }
+  });
+});
+</script>
 @endsection

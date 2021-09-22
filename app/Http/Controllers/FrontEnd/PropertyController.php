@@ -2931,30 +2931,57 @@ class PropertyController extends Controller {
         }
         $this->data['experiences'] = $exp;
 
-        //Get editor's choice properties
-        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($keyword);
+        if($request->get('view') != 'map'){
+            //Get editor's choice properties
+            $this->data['editorsProperties'] = $this->getEditorChoiceProperties($keyword);
 
-        if(!empty($this->data['editorsProperties']->toArray())){
-            foreach($this->data['editorsProperties'] as $k => $editorProperty){
-                $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);
+            if(!empty($this->data['editorsProperties']->toArray())){
+                foreach($this->data['editorsProperties'] as $k => $editorProperty){
+                    $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);
+                }
+                
+                $this->formatPropertyRecords($this->data['editorsProperties']);
             }
-            
-            $this->formatPropertyRecords($this->data['editorsProperties']);
+
+            //Get featured choice properties
+            $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
+
+            if(!empty($this->data['featureProperties']->toArray())){
+                foreach($this->data['featureProperties'] as $k => $featureProperty){
+                    if(isset($featureProperty->container) && $featureProperty->container){
+                        $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+                    }else{
+                        $this->data['featureProperties'][$k]->propertyImages = [];
+                    }
+                }
+
+                $this->formatPropertyRecords($this->data['featureProperties']);
+            }
         }
 
         //Get featured choice properties
-        $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
+        $this->data['propertyResults'] = $this->searchPropertiesByKeyword($keyword);
 
-        if(!empty($this->data['featureProperties']->toArray())){
-            foreach($this->data['featureProperties'] as $k => $featureProperty){
-                if(isset($featureProperty->container) && $featureProperty->container){
-                    $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+        if(!empty($this->data['propertyResults']->toArray())){
+            foreach($this->data['propertyResults'] as $k => $propertyRecord){
+                if(empty($propertyRecord->container)){
+                    $container = Container::
+                    where('display_name', '=', $propertyRecord->property_name)
+                    ->get();
+
+                    if(!empty($container->toArray())){
+                        $propertyRecord->container = $container[0];
+                        $this->data['propertyResults'][$k]->container = $container[0];
+                    }
+                }
+                if(isset($propertyRecord->container) && $propertyRecord->container){
+                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);   
+                    //$this->data['propertyResults'][$k]->folder = $propertyRecord->container;
                 }else{
-                    $this->data['featureProperties'][$k]->propertyImages = [];
+                    $this->data['propertyResults'][$k]->propertyImages = [];
                 }
             }
-
-            $this->formatPropertyRecords($this->data['featureProperties']);
+            $this->formatPropertyRecords($this->data['propertyResults']);
         }
 
         $membershiptype = '';
@@ -2973,9 +3000,17 @@ class PropertyController extends Controller {
         $this->data['number_of_nights'] = $number_of_nights;
         $this->data['query_str'] = $query_str;
         $this->data['layout_type'] = 'old';
+        $this->data['view'] = $request->get('view');
         // dump($this->data); die;
-        return view('frontend.themes.EC.properties.globalsearchavailability', $this->data);
 
+        if($request->get('view') == 'map'){
+            $this->data['propertyResultsForMap'] = $this->formatRecordsMap($this->data['propertyResults']);
+            $this->data['center_coordinate'] = $this->data['propertyResults'][0]->longitude.','.$this->data['propertyResults'][0]->latitude;
+            return view('frontend.themes.EC.properties.map_results', $this->data);
+        }else{            
+            $this->data['propertyResultsForView'] = $this->seperatedByPackage($this->data['propertyResults']);
+            return view('frontend.themes.EC.properties.globalsearchavailability', $this->data);
+        }
     }
 
     function hotel_details(Request $request) {
