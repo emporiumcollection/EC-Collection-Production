@@ -84,7 +84,7 @@ trait Property {
         ->with([
             'container',
             'suites' => function($query){
-                return $query->with(['rooms']);
+                return $query->with(['rooms', 'amenities']);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -118,6 +118,7 @@ trait Property {
             }])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
+        //->limit(1)
         ->get();
     }
 
@@ -127,7 +128,7 @@ trait Property {
             'container',
             'images',
             'suites' => function($query){
-                return $query->with(['rooms']);
+                return $query->with(['rooms', 'amenities']);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -168,6 +169,7 @@ trait Property {
         ])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
+        //->limit(1)
         ->get();        
     }
 
@@ -190,7 +192,7 @@ trait Property {
                 $query->with(['package']);
             },
             'suites' => function($query){
-                return $query->with(['rooms']);
+                return $query->with(['rooms', 'amenities']);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -232,6 +234,7 @@ trait Property {
         ->where('city', '=', $keyword)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
+        //->limit(1)
         ->get();        
     }
 
@@ -280,7 +283,22 @@ trait Property {
                             ->toArray();
 
                             $properties[$k]->suites[$sk]->rooms[$rk]->images = $roomImages;
-
+                            break;
+                        }
+                        foreach($suite->amenities as $ak => $amenity){
+                            $suiteamenities = amenities::whereIn('id', explode(',', $amenity->amenity_ids))
+                            ->get()->toArray();
+                            $suiteamenitlist = [];
+                            if(!empty($suiteamenities)){
+                                foreach($suiteamenities as $amn){
+                                    $suiteamenitlist[] = $amn['amenity_title'];
+                                }
+                            }
+                            if(!empty($suiteamenitlist)){
+                                $properties[$k]->suites[$sk]->suiteamenities = '<li>'.implode('</li><li>', $suiteamenitlist).'</li>';
+                            }else{
+                                $properties[$k]->suites[$sk]->suiteamenities = '';
+                            }
                         }
                     }
                 }
