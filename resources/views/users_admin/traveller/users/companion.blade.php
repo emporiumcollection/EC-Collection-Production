@@ -1,5 +1,6 @@
 @extends('users_admin.traveller.layout.app')
 @section('content')
+
 	<div class="mt-15">
 		@if(Session::has('massage'))      
 	        <div class="alert alert-success alert-dismissible fade show">
@@ -98,7 +99,7 @@
 								<div class="col-lg-9 col-xl-9">
 									<input
 										class="form-control form-control-solid form-control-lg"
-										name="last_name" type="text" value="@if(isset($data)){{  $data->last_name ? $data->last_name : ''}}@endif">
+										name="last_name" type="text" value="@if(isset($data)){{ $data->last_name ? $data->last_name : ''}}@endif">
 
 								</div>
 							</div>

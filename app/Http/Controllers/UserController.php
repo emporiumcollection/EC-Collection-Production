@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\SecurityQuestions;
+use App\Category;
 use Socialize;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmailJob;
@@ -3003,8 +3004,17 @@ class UserController extends Controller {
     }
 
     public function getReservation(){
-        $file_name = 'users_admin.traveller.users.reservations';
-        return view($file_name);
+
+        if (!\Auth::check())
+            return redirect('user/login');
+        
+        $atmosphere = \DB::table('tb_categories')->where('parent_category_id', 886)->get();
+
+        $facilities = \DB::table('tb_categories')->where('parent_category_id', 897)->get();
+        $style = \DB::table('tb_categories')->where('parent_category_id', 909)->get();        
+
+        $file_name = 'reservation.reservations';
+        return view($file_name,compact('atmosphere','facilities','style'));
     }
 
     public function getSecurity(Request $request){
