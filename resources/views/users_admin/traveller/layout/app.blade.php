@@ -643,7 +643,6 @@
 
     $(".clickNext").click(function (e) {
         var sal = $('.select2 option:selected').eq(0).val();
-        alert(sal);return false;
     });
     
     $('.result-grid').slick({

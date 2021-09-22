@@ -26,7 +26,7 @@
               <div class="input-group-ico"><i class="ico ico-search"></i></div>
             </div>
             <input type="text" class="form-control form-control-em border-0 where" id="inlineFormInputGroup"
-              placeholder="Where" name="destination">
+              placeholder="Where" name="destination" autocomplete="off">
             <input type="hidden" name="sitename" id="sitename"  />
             <input type="hidden" name="coll_type" id="coll_type" />
             <input type="hidden" name="target_page" id="target_page" />
@@ -138,7 +138,7 @@
               <div class="mt-5 include-form" style="display: block;">
                 <div class="guest-pick-footer mb-5 mt-4 pr-3">
                   <div class="text-right">
-                    <a href="#" class="step-3 btn btn-primary">Who is traveling</a>
+                    <a href="#" class="step-3 btn btn-primary who">Who is traveling</a>
                   </div>
                 </div>  
                 <div class="herl">
@@ -290,7 +290,7 @@
                   <div class="text-right">
                     <!-- <a href="main-page.html" class="confirm-room">View "New York Collection"</a> -->
                     <!-- <input type="hidden" name="suites_data" class="suites_data"> -->
-                    <input type="submit" class="btn btn-primary" value="View Collection" />
+                    <input type="submit" class="btn btn-primary" id="collection" value=""/>
                   </div>
                 </div>
               </div>
