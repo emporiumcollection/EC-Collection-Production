@@ -643,7 +643,11 @@
     $("#send-invitation").click(function (e) {
       Swal.fire("Good job!", "Message has been sent ", "success");
     });
-     
+
+    $(".clickNext").click(function (e) {
+        var sal = $('.select2 option:selected').eq(0).val();
+    });
+    
     $('.result-grid').slick({
       slidesToShow: 1,
       prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
