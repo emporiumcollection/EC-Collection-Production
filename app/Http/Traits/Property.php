@@ -267,7 +267,6 @@ trait Property {
             }
 
             // room images
-            /*
             if(!empty($property->suites)){
                 foreach($property->suites as $sk => $suite){
                     if(!empty($suite->rooms)){
@@ -286,7 +285,6 @@ trait Property {
                     }
                 }
             }
-            */
         }
     }
 
