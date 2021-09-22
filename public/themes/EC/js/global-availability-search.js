@@ -144,7 +144,8 @@ function replaceSuiteDetail(property_id, category_id){
   setTimeout('appendSlider()', 2000);
 }
 
-function appendSlider(){
+function appendSlider(){  
+  $('#suitelist1 .slider-detail').removeClass("slick-initialized slick-slider");
   $('#suitelist1 .slider-detail').slick({
     slidesToShow: 1,
     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
