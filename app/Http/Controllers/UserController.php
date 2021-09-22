@@ -2855,6 +2855,9 @@ class UserController extends Controller {
     }
     public function getReservation(){
 
+        if (!\Auth::check())
+            return redirect('user/login');
+        
         $atmosphere = \DB::table('tb_categories')->where('parent_category_id', 886)->get();
 
         $facilities = \DB::table('tb_categories')->where('parent_category_id', 897)->get();

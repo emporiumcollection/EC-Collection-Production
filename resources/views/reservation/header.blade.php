@@ -274,8 +274,8 @@
                 @if(isset($atmosphere))
                   @foreach($atmosphere as $atm)
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="setting1">
-                      <label class="custom-control-label" for="setting1">
+                      <input type="checkbox" name="atmosphere[]" class="custom-control-input" id="{{ $atm->id }}">
+                      <label class="custom-control-label" for="{{ $atm->id }}">
                         {{ $atm->category_name }} ({{ $atm->id }})</label>
                     </div>
                   @endforeach  
@@ -293,8 +293,8 @@
                 @if(isset($facilities))
                   @foreach($facilities as $fac)
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="fasilities6">
-                      <label class="custom-control-label" for="fasilities6">
+                      <input type="checkbox" class="custom-control-input" id="{{ $fac->id }}">
+                      <label class="custom-control-label" for="{{ $fac->id }}">
                          {{ $fac->category_name }} ({{ $fac->id }})</label>
                     </div>
                   @endforeach  
@@ -312,8 +312,8 @@
                 @if(isset($style))
                   @foreach($style as $sty)
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" class="custom-control-input" id="style6">
-                      <label class="custom-control-label" for="style6">
+                      <input type="checkbox" class="custom-control-input" id="{{ $sty->id }}">
+                      <label class="custom-control-label" for="{{ $sty->id }}">
                         {{ $sty->category_name }} ({{ $sty->id }})</label>
                     </div>                
                   @endforeach
