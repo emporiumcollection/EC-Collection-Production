@@ -141,7 +141,11 @@ function replaceSuiteDetail(property_id, category_id){
   });
 
   $('[data-place="suite_room_images"]').html(roomimages);
-  $('.slider-detail').slick({
+  setTimeout('appendSlider()', 2000);
+}
+
+function appendSlider(){
+  $('#suitelist1 .slider-detail').slick({
     slidesToShow: 1,
     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
     nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
