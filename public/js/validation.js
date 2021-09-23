@@ -73,6 +73,7 @@
             var fourthchk = document.querySelectorAll('input[name="D"]:checked');
             if(fourthchk.length == 0){
                 document.getElementById('D').style.display="block";
+                return false;
             }
           return true;
         }
