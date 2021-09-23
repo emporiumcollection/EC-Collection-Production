@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
 use Illuminate\Http\Request;
 use Validator;
+use App\User;
 use Illuminate\Support\Str;
 use DB;
 use Carbon\Carbon;
@@ -65,6 +66,7 @@ class PasswordController extends Controller
     }
 
     public function showResetPasswordForm($token) { 
+        // echo "<pre>";print_r($token);exit;
          return view('forgotpassword.forgetPasswordLink', ['token' => $token]);
     }
 
@@ -90,11 +92,11 @@ class PasswordController extends Controller
             }
 
             $user = User::where('email', $request->email)
-                    ->update(['password' => Hash::make($request->password)]);
+                    ->update(['password' => \Hash::make($request->password)]);
  
             DB::table('password_resets')->where(['email'=> $request->email])->delete();
   
-            return redirect('/login')->with('message', 'Your password has been changed!');
+            return redirect('/user/login')->with('message', 'Your password has been changed!');
         }
     }
 
