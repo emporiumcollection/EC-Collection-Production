@@ -33,7 +33,150 @@ class ReservationsController extends Controller {
         );
     }
 
-    public function getIndex(Request $request) {
+    public function index(){
+
+        if (!\Auth::check())
+            return redirect('user/login');
+        
+        $atmosphere = \DB::table('tb_categories')->where('parent_category_id', 886)->get();
+
+        $facilities = \DB::table('tb_categories')->where('parent_category_id', 897)->get();
+        $style = \DB::table('tb_categories')->where('parent_category_id', 909)->get();        
+
+        $file_name = 'frontend.themes.reservation.pages.reservations';
+        return view($file_name,compact('atmosphere','facilities','style'));
+    }
+    public function when()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';        
+
+        $file_name = 'frontend.themes.EC.reservation.when';
+        return view($file_name, $this->data);   
+    }
+
+    public function where()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';        
+
+        $file_name = 'frontend.themes.EC.reservation.where';
+        return view($file_name, $this->data);   
+    }
+
+    public function suite()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';        
+
+        $file_name = 'frontend.themes.EC.reservation.suite';
+        return view($file_name, $this->data);   
+    }
+
+    public function suiteBoard()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';        
+
+        $file_name = 'frontend.themes.EC.reservation.suiteboard';
+        return view($file_name, $this->data);   
+    }
+
+    public function suitePolicies()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';        
+
+        $file_name = 'frontend.themes.EC.reservation.suitepolicies';
+        return view($file_name, $this->data);   
+    }
+
+    public function aditionalServices()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';        
+
+        $file_name = 'frontend.themes.EC.reservation.services';
+        return view($file_name, $this->data);   
+    }
+
+    public function whoistravelling()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';        
+
+        $file_name = 'frontend.themes.EC.reservation.whotravelling';
+        return view($file_name, $this->data);   
+    }
+
+    public function paymentmethod()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';        
+
+        $file_name = 'frontend.themes.EC.reservation.payment_method';
+        return view($file_name, $this->data);   
+    }
+
+    public function hotelpolicies()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';        
+
+        $file_name = 'frontend.themes.EC.reservation.hotel_policies';
+        return view($file_name, $this->data);   
+    }
+
+    public function bookingsummary()
+    {
+        $this->data['layout_type'] = 'old';
+        $this->data['keyword'] = '';
+        $this->data['arrive'] = '';
+        $this->data['departure'] = '';
+        $this->data['total_guests'] = '';        
+        $this->data['location'] = '';
+                
+        $file_name = 'frontend.themes.EC.reservation.booking_summary';
+        return view($file_name, $this->data);   
+    }
+
+    public function getIndex(Request $request) {    
         $uid = \Auth::user()->id;
         if ($this->access['is_view'] == 0)
             return Redirect::to('dashboard')

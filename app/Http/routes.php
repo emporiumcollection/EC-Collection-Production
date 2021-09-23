@@ -38,8 +38,18 @@ Route::post('/users/questions', 'UserController@postSecurityQuestion');
 Route::post('/users/CardDetail', 'UserController@userCardDetail');
 Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');
 Route::post('/users/invite', 'UserController@postInvite');
-Route::get('/users/reservation', 'UserController@getReservation');
-Route::post('/users/password', 'UserController@postSavepassword');
+// Route::get('/users/reservation', 'ReservationsController@getReservation');
+Route::get('reservation/when', 'ReservationsController@when');
+Route::get('reservation/where', 'ReservationsController@where');
+Route::get('reservation/suite', 'ReservationsController@suite');
+Route::get('reservation/suiteboard', 'ReservationsController@suiteBoard');
+Route::get('reservation/suitepolicies', 'ReservationsController@suitePolicies');
+Route::get('reservation/aditionalservices', 'ReservationsController@aditionalServices');
+Route::get('reservation/whoistravelling','ReservationsController@whoistravelling');
+Route::get('reservation/paymentmethod', 'ReservationsController@paymentmethod');
+Route::get('reservation/hotelpolicies', 'ReservationsController@hotelpolicies');
+Route::get('reservation/bookingsummary', 'ReservationsController@bookingsummary');
+// Route::post('/users/bookingsummary', 'UserController@bookingsummary');
 
 /**
  * New frontend routes.

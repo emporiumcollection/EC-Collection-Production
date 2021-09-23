@@ -1,4 +1,24 @@
-<div id="step-6" class="tab-pane" role="tabpanel">
+@extends('frontend.themes.EC.layouts.main')
+{{--  For Title --}}
+@section('title', 'Global search availability')
+{{-- For Meta Keywords --}}
+@section('meta_keywords', '')
+{{-- For Meta Description --}}
+@section('meta_description', '')
+{{-- For Page's Content Part --}}
+<style>
+    .experiences{
+        cursor: pointer;
+    }
+</style>
+@section('content')
+<div class="content-em">
+  <div class="top-wrapper">
+    <div class="container ">
+      
+      @include('frontend.themes.EC.reservation.nav_wizard')
+     
+     <div id="step-6" class="tab-pane" role="tabpanel">
   <div class="row">
     <div class="col-lg-9 col-md-8 mb-4">
       <div class="row align-items-center mb-5">
@@ -11,7 +31,7 @@
           </h2>
         </div>
         <div class="col-md-6 mb-4 text-right">
-          <a href="#" class="btn btn-dark  rounded-0 px-4 btn-nextwizard">Continue</a>
+          <a href="/reservation/whoistravelling" class="btn btn-dark  rounded-0 px-4 btn-nextwizard">Continue</a>
         </div>
       </div>
       <hr class="mb-0">
@@ -946,3 +966,7 @@
     </div>
   </div>
 </div>
+  </div>
+</div>
+</div>
+@endsection

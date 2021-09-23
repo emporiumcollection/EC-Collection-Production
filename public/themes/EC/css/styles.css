@@ -25506,7 +25506,11 @@ a:hover {
     flex: 0 0 83.8%;
     max-width: 83.8%; }
   .second-header .nav-text .nav-item:first-child {
-    margin-left: 26px; }
+    margin-left: 0; }
+  .second-header .nav-dest {
+    padding-top: 21px;
+    padding-bottom: 6px;
+    border-top: 1px #000 solid; }
   .second-header .nav-text .nav-item {
     margin-right: 15px;
     margin-left: 25px; }
@@ -31384,7 +31388,7 @@ span.calElement.prev:hover {
   .sw-theme-arrows .nav li:last-child .nav-link {
     margin-right: 0; }
   .sw-theme-arrows .nav .nav-link {
-    padding: 1rem 1rem;
+    padding: 10px;
     padding-left: 3rem; }
     .sw-theme-arrows .nav .nav-link::before {
       border-left: 30px solid #e4e4e4; }
@@ -34371,6 +34375,52 @@ footer {
   .mobile-flex .menu-col-nav {
     width: 50px; }
 
+.btn-use-addr.active {
+  background: #ee0000;
+  color: #fff;
+  padding: 2px 5px;
+  border-radius: 5px; }
+
+.visa {
+  display: inline-block;
+  background: url(../images/visa.svg) no-repeat center center/contain;
+  width: 50px;
+  height: 32px; }
+
+.mastercard {
+  display: inline-block;
+  background: url(../images/mastercard.svg) no-repeat center center/contain;
+  width: 50px;
+  height: 32px; }
+
+.american-express {
+  display: inline-block;
+  background: url(../images/american-express.svg) no-repeat center center/contain;
+  width: 50px;
+  height: 32px; }
+
+.discover {
+  display: inline-block;
+  background: url(../images/discover-network.svg) no-repeat center center/contain;
+  width: 50px;
+  height: 32px; }
+
+.ico-payment {
+  border: 1px #ebedf3 solid;
+  border-radius: 4px; }
+
+.wizard-reservation .backwizard {
+  display: inline-flex; }
+
+.wizard-reservation .block-res-title {
+  display: none; }
+
+.nav-reservation-mobile, .nav-wizard-active {
+  display: none; }
+
+.form-date-lg .form-control {
+  font-size: 23px; }
+
 @media (max-width: 1627.98px) {
   .hotel-book-container {
     max-width: 94%; } }
@@ -34551,6 +34601,88 @@ footer {
     height: auto; }
   .menu-nav.text-menu {
     padding: 7px 5px; } }
+
+@media (max-width: 1084.99px) {
+  .nav-reservation-desktop {
+    display: none !important; }
+  .nav-reservation-mobile {
+    display: block !important; }
+    .nav-reservation-mobile .nav li {
+      display: block;
+      width: 100%; }
+      .nav-reservation-mobile .nav li .nav-link {
+        padding-left: 10px; }
+  .wizard-reservation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center; }
+    .wizard-reservation .block-res-title {
+      display: block;
+      flex: 0 0 50%;
+      max-width: 50%; }
+    .wizard-reservation .nav-wizard-active {
+      display: block;
+      width: 50%;
+      border: 1px #000 solid;
+      padding: 10px;
+      border-radius: 6px;
+      background: #f8f7f5;
+      position: relative; }
+      .wizard-reservation .nav-wizard-active::before {
+        content: "\f107";
+        border: 0;
+        display: inline-block;
+        font: normal normal normal 14px/1 FontAwesome;
+        font-size: 14px;
+        font-size: inherit;
+        text-rendering: auto;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        vertical-align: baseline;
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%); }
+      .wizard-reservation .nav-wizard-active span {
+        display: none; }
+        .wizard-reservation .nav-wizard-active span.active {
+          display: block; }
+    .wizard-reservation .nav {
+      flex: 0 0 50%;
+      max-width: 50%;
+      display: none;
+      flex-direction: column;
+      margin-top: 0 !important;
+      position: absolute;
+      right: 0;
+      z-index: 9;
+      width: 50%;
+      top: 41px; }
+      .wizard-reservation .nav.active {
+        display: flex; }
+      .wizard-reservation .nav .nav-link {
+        margin-left: 0;
+        margin-right: 0;
+        padding: 10px 15px;
+        display: flex; }
+        .wizard-reservation .nav .nav-link > div {
+          margin-right: 9px;
+          position: relative; }
+          .wizard-reservation .nav .nav-link > div::before {
+            position: absolute;
+            content: ".";
+            right: -5px; }
+        .wizard-reservation .nav .nav-link::before, .wizard-reservation .nav .nav-link::after {
+          display: none; }
+    .wizard-reservation .wizard-reservation-content {
+      flex: 0 0 100%;
+      max-width: 100%; }
+  .wizard-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0; } }
 
 @media (max-width: 991.98px) {
   .nav-clr.mb-5 {
@@ -34906,7 +35038,9 @@ footer {
   .menu-nav {
     padding-right: 6px; }
   .menu-nav.text-menu {
-    padding: 7px 4px; } }
+    padding: 7px 4px; }
+  .nav-dest {
+    display: none; } }
 
 @media (max-width: 862px) {
   .menu-nav.text-menu {
@@ -34988,7 +35122,9 @@ footer {
     line-height: 23px;
     width: 30px;
     height: 26px;
-    margin-left: 5px; } }
+    margin-left: 5px; }
+  .wizard-reservation .nav {
+    top: 90px; } }
 
 @media (max-width: 767.98px) {
   .humburger-second-menu {
@@ -35597,7 +35733,20 @@ footer {
       top: 0;
       left: 0;
       width: 17px;
-      height: 29px; } }
+      height: 29px; }
+  .nav-reservation-mobile {
+    margin-top: 50px; }
+  .wizard-reservation {
+    margin-top: 40px; }
+    .wizard-reservation .nav .nav-link {
+      text-align: left !important; }
+    .wizard-reservation h2 {
+      font-size: 23px; }
+    .wizard-reservation .backwizard .ico-back::before {
+      top: 0;
+      left: 0;
+      width: 25px;
+      height: 37px; } }
 
 @media (max-width: 575.98px) {
   .main-content h3 {
@@ -35723,7 +35872,16 @@ footer {
   .range-date-9127013 .daterangepicker-inline .daterangepicker .drp-calendar.left {
     padding-right: 0; }
   .range-date-9127013 .daterangepicker-inline .daterangepicker .drp-calendar.right {
-    padding-left: 0; } }
+    padding-left: 0; }
+  .reservation-progress {
+    font-size: 15px; }
+  .list-divider {
+    flex-wrap: wrap; }
+    .list-divider .mb-2.text-12 {
+      width: 100%;
+      margin-top: 10px; }
+  .wizard-reservation .mb-5 {
+    margin-bottom: 20px !important; } }
 
 @media (max-width: 321.98px) {
   .menu-s .title-main {

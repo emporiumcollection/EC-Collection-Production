@@ -40,7 +40,7 @@
             </ul>
             <div class="tab-content pt-4">
                 <div class="tab-pane fade show active" id="infoTab">
-                    <?php echo $location[0]['category_description'];?>
+                    <?php echo isset($location[0]['category_description'])?$location[0]['category_description']:'';?>
                 </div>
                 <div class="tab-pane fade" id="galleryTab">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Impedit corporis veniam alias ullam aliquid
