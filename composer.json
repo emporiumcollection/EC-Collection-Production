@@ -21,7 +21,8 @@
 		"laravel/cashier": " ~5.0",
         "kouz/laravel-airbrake": "^0.4.1",
         "rmccue/requests": "^1.8",
-        "shweshi/laravel-unsplash-wrapper": "^3.0" 
+        "shweshi/laravel-unsplash-wrapper": "^3.0",
+        "folklore/image": "0.3.*"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

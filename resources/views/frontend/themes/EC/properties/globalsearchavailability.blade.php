@@ -16,8 +16,27 @@
     .experiences{
         cursor: pointer;
     }
-    .slick-list{
-      height: 300px;
+
+    .global-search-resultbox .slick-list{
+      height: 320px;
+    }
+
+    .suite-popup .result-grid .slick-list{
+      height: 750px;
+    }
+
+    .suite-popup .slick-slide img{
+      width: 750px!important;
+      height: 520px!important;
+      top: 375px!important;
+      left: 260px!important;
+    }
+
+    .global-search-resultbox .slick-slide img{
+      width: 450px!important;
+      height: 320px!important;
+      top: 160px!important;
+      left: 225px!important;
     }
 </style>
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>

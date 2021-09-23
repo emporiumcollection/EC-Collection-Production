@@ -136,7 +136,7 @@ function replaceSuiteDetail(property_id, category_id){
   var roomimages = ``;
   suite.rooms[0].images.forEach(function(rm){
     roomimages += `<div>
-      <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      <img src="room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
     </div>`;
   });
 

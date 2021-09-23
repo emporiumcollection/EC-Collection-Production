@@ -118,7 +118,7 @@ trait Property {
             }])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
-        //->limit(1)
+        ->limit(1)
         ->get();
     }
 
@@ -169,7 +169,7 @@ trait Property {
         ])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
-        //->limit(1)
+        ->limit(1)
         ->get();        
     }
 
@@ -234,7 +234,7 @@ trait Property {
         ->where('city', '=', $keyword)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
-        //->limit(1)
+        ->limit(1)
         ->get();        
     }
 

@@ -4,10 +4,10 @@
 </script>
 <div class="col-lg-6 col-md-6 mb-5 ">
   <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-    <div class="pr-lst result-grid">
+    <div class="pr-lst result-grid global-search-resultbox">
       <?php foreach($property->propertyImages as $image):?>
         <div>
-          <img src="<?php echo 'uploads/container_user_files/locations/'.$property['container']['name'].'/property-images/'.$image['file_name'];?>" class="w-100" alt="">
+          <img src="<?php echo 'property-image/resize/450x320/'.$property['container']['name'].'/'.$image['file_name'];?>" alt="">
         </div>
       <?php endforeach;?>
     </div>

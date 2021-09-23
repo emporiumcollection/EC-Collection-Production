@@ -78,7 +78,7 @@
                     </div>
                 </div>
             </a>
-            <div class="slider-detail" data-place="suite_room_images">
+            <div class="slider-detail suite-popup" data-place="suite_room_images">
             </div>
             <div class="prev"><i class="ico ico-back"></i></div>
             <div class="next"><i class="ico ico-next"></i></div>
