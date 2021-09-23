@@ -155,6 +155,14 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js') }}"></script>
 
   <script>
+
+    $(".who").click(function (e) {
+       var dest = $("#inlineFormInputGroup").val();
+       $("#collection").val('View '+dest);
+
+
+    });
+
     var picker = $('#daterangepicker-inline').daterangepicker({
       parentEl: "#daterangepicker-inline-container",
       autoApply: true,

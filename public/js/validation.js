@@ -61,7 +61,18 @@
             var tANDc = document.querySelectorAll('input[name="terms"]:checked');
             if(tANDc.length == 0){
                 document.getElementById('term').style.display="block";
-                return false;
+            }
+            var secondchk = document.querySelectorAll('input[name="B"]:checked');
+            if(secondchk.length == 0){
+                document.getElementById('B').style.display="block";
+            }
+            var thirdchk = document.querySelectorAll('input[name="C"]:checked');
+            if(thirdchk.length == 0){
+                document.getElementById('C').style.display="block";
+            }
+            var fourthchk = document.querySelectorAll('input[name="D"]:checked');
+            if(fourthchk.length == 0){
+                document.getElementById('D').style.display="block";
             }
           return true;
         }

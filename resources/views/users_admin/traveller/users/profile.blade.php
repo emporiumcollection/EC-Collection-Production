@@ -21,11 +21,23 @@
 						Information</a>
 				</li>
 				<li class="nav-item">
-					<a href="#changepass" class="nav-link" data-toggle="tab"> Change Password
+					<a href="#changepass" class="nav-link" data-toggle="tab">Change Password
 					</a>
 				</li>
 			</ul>
 		</div>
+		@if(Session::has('massage'))      
+	        <div class="alert alert-success alert-dismissible fade show">
+	            <button type="button" class="close" data-dismiss="alert">&times;</button>
+	            <strong>Success!</strong> {!! Session::get('massage') !!}.
+	        </div>
+	    @endif
+	    @if(Session::has('Errmassage'))      
+	        <div class="alert alert-danger alert-dismissible fade show">
+	            <button type="button" class="close" data-dismiss="alert">&times;</button>
+	            <strong>Error!</strong> {!! Session::get('Errmassage') !!}.
+	        </div>
+	    @endif
 
 		<div class="tab-content p-7 profile-tabs">
 			<div class="tab-pane fade show active" id="profile">

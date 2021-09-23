@@ -11,6 +11,12 @@ use App\Http\Controllers\TwilioSMSController;
 | and give it the controller to call when that URI is requested.
 |
 */
+
+Route::get('forget-password', 'Auth\PasswordController@showForgetPasswordForm')->name('forget.password.get');
+Route::post('forget-password','Auth\PasswordController@submitForgetPasswordForm')->name('forget.password.post');
+Route::get('reset-password/{token}', 'Auth\PasswordController@showResetPasswordForm')->name('reset.password.get');
+Route::post('reset-password','Auth\PasswordController@submitResetPasswordForm')->name('reset.password.post');
+
 Route::get('/logout', 'Auth\AuthController@logout');
 Route::post('/sendSMS', 'Auth\AuthController@create');
 Route::post('/invitecompanion', 'Auth\AuthController@verify');
@@ -20,9 +26,9 @@ Route::post('/sendinvitation','UserController@EmailInvitation');
 // Route::post('/invite/companionemail', 'UserController@inviteCompanion');
 Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
-
 //Routes for new UI changes in Emporium 
 Route::get('/users/my-preferences', 'UserController@getPreferences');
+Route::post('/postPreference', 'UserController@postPreference');
 Route::get('/users/my-preferences/{id}', 'UserController@editPreferences');
 Route::get('/users/delete-preferences/{id}', 'UserController@deletePreferences');
 Route::get('/users/profile', 'UserController@getProfile');
@@ -66,6 +72,8 @@ Route::get('book/reservation', 'PhaseOne\ReservationController@index');
 //Datatable route
 Route::get('/users/companiondata', 'DatatableController@getDatatable');
 Route::get('/users/inviteGuest', 'DatatableController@getInviteGuest');
+Route::get('/users/preferenceDatatable', 'DatatableController@getPreferencesData');
+
 /**
  * New Admin backend routes.
  */
@@ -167,8 +175,8 @@ Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences')
 
 Route::get('/whoiam', 'CustomerController@whoIam');
 Route::post('/viewInvite', 'UserController@viewInvite');
-Route::post('editinvite', 'UserController@editInvite');
-Route::post('deleteinvite', 'UserController@deleteInvite');
+Route::get('/editinvite/{id}', 'UserController@editInvite');
+Route::get('deleteinvite/{id}', 'UserController@deleteInvite');
 
 Route::post('/users/addcompanion', 'UserController@addCompanion');
 Route::post('/viewcompanion', 'UserController@viewCompanion');

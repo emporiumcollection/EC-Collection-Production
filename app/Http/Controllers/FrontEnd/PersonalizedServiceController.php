@@ -111,7 +111,6 @@ class PersonalizedServiceController extends Controller {
             foreach ($sub_destinations as $key => $sub_destination) {
                 
                 $chldIds = array();
-                
                 $chldIds[] = $sub_destination->id;
                 $temp = $this->get_destinations($sub_destination->id);
                 $sub_destinations[$key]->sub_destinations = $temp['sub_destinations'];

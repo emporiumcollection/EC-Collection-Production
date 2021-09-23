@@ -24,7 +24,7 @@ class DatatableController extends Controller
         }
         return $companions;
     }
-    public function getinviteguest()
+    public function getInviteGuest()
     {
         $field = $_GET['sort']['field'];
         $Order = $_GET['sort']['sort'];
@@ -40,6 +40,24 @@ class DatatableController extends Controller
                 ->get();    
         }
         return $companions;
+    }
+
+    public function getPreferencesData()
+    {
+        $field = $_GET['sort']['field'];
+        $Order = $_GET['sort']['sort'];
+        if (isset($field) && isset($Order)) {
+            $preferences = DB::table('tb_personalized_services')
+                ->select('ps_id','customer_id','first_name','adults','youth','children','toddlers','earliest_arrival','late_check_out','stay_time','note')
+                ->orderBy('ps_id',$Order)        
+                ->get();   
+        }
+        else{
+            $preferences = DB::table('tb_personalized_services')
+                ->select('ps_id','customer_id','first_name','adults','youth','children','toddlers','earliest_arrival','late_check_out','stay_time','note')
+                ->get();    
+        }
+        return $preferences;
     }
 
 }

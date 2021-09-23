@@ -21,6 +21,9 @@
 		                    <li class="nav-item " role="presentation">
 		                        <a class="nav-link" href="login">Sign in</a>
 		                    </li>
+		                    <li class="nav-item " role="presentation">
+		                        <a class="nav-link" href="/forget-password">Forgot Password</a>
+		                    </li>
                     	</ul>
                         <div class="mt-5 mb-3">                                              
                             <h3 class="mt-4 font-2">Welcome</h3>
@@ -45,7 +48,7 @@
                         </div>
                         <div class="form-group">
                             <label class="font-2 label-2">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Last name">
+                            <input type="password" name="password" class="form-control" placeholder="Password">
                         </div>
 
 				        @if( (int) \Session::get('login.attempts') >= 5)
@@ -96,7 +99,7 @@
 						</div>	
 					 	@endif	
                         <div class="text-right mt-5">
-                            <a href="#" class="mr-4">Forgot Password?</a>	
+                            <a href="/forget-password" class="mr-4">Forgot Password?</a>	
                             <button type="submit" class="btn btn-outline-dark px-5">Sign in</button>
                         </div>
                     </form>

@@ -12,7 +12,10 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/  css?family=Poppins:300,400,500,600,700" />
   <!--end::Fonts-->
   <!--begin::Page Vendors Styles(used by this page)-->
-  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <link href="{{ asset('assets/users/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ asset('assets/users/assets/plugins/custom/datatables/datatables.bundle.css')}}" rel="stylesheet" type="text/css" />
   <link href="{{ asset('assets/users/assets/css/owl.carousel.min.css')}}" rel="stylesheet" type="text/css" />
@@ -576,7 +579,7 @@
   <script src="{{ asset('assets/users/assets/js/pages/crud/forms/widgets/select2.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
-  <script>
+  <script>    
     $('.experience-slider').slick({
       infinite: false,
       speed: 300,
@@ -643,7 +646,6 @@
 
     $(".clickNext").click(function (e) {
         var sal = $('.select2 option:selected').eq(0).val();
-        alert(sal);return false;
     });
     
     $('.result-grid').slick({
@@ -774,190 +776,16 @@
     chart.render();
 
   jQuery(function($){
-  $(document).ready(function(){
-    var datatable = $('#kt_datatable').KTDatatable({
-      data: {
-        type: 'remote',
-        source: { 
-          read: {
-            url: '{{ URL::to('/users/companiondata') }}',
-            method: 'GET',
-            map: function(raw) {
-              // sample data mapping
-              var dataSet = raw;
-              if (typeof raw.data !== 'undefined') {
-                dataSet = raw.data;
-              }
-              return dataSet;
-            },
-          },
-        },
-        pageSize: 10, // display 20 records per page
-        serverPaging: true,
-        serverFiltering: true,
-        serverSorting: true,
-      },
-      layout: {
-        scroll: false,
-        footer: false,
-      },
-      sortable: true,
-      pagination: true,
-      search: {
-          input: $('#kt_datatable_search_query'),
-          key: 'generalSearch'
-      },
-  
-      columns: [
-        {
-          field: 'first_name',
-          title: 'Name',
-          sortable: 'asc',
-          selector: false,
-        }, {
-          field: 'email',
-          title: 'Email',
-          sortable: 'asc',
-          selector: false,
-        }, {
-          field: 'phone_number',
-          title: 'Phone Number',
-          sortable: 'asc',
-          selector: false,
-        }, {
-          field: 'gender',
-          title: 'Gender',
-          sortable: 'asc',
-          selector: false,
-        }, {
-          field: 'preferred_language',
-          title: 'Preferred Language',
-          sortable: 'asc',
-          selector: false,
-        },{
-          field: 'preferred_currency',
-          title: 'Preferred Currency',
-          sortable: 'asc',
-          selector: false,
-        },{
-          field: 'Action',
-          title: '',
-          sortable: false,
-          overflow: 'visible',
-          width: 30,
-          
-          template: function (row) {
-            return `<div class="dropdown dropdown-inline">
-              <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
-                <i class="flaticon-cogwheel-2"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                <ul class="navi flex-column navi-hover py-2">
-                  <li class="navi-item">
-                    <a href="http://development.emporium-voyage.com/editcompanion/`+row.id+`" class="navi-link">
-                      <span class="navi-text">Edit</span>
-                    </a>
-                  </li>
-                  <li class="navi-item">
-                    <a href="http://development.emporium-voyage.com/deletecompanion/`+row.id+`"" class="navi-link">
-                      <span class="navi-text">Delete</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>`;
-          }
-        }
-      ],  
-    });
+  $(document).ready(function(){    
 
-     var datatable = $('#invite_datatable').KTDatatable({
-      data: {
-        type: 'remote',
-        source: { 
-          read: {
-            url: '{{ URL::to('/users/inviteGuest') }}',
-            method: 'GET',
-            map: function(raw) {
-              // sample data mapping
-              var dataSet = raw;
-              if (typeof raw.data !== 'undefined') {
-                dataSet = raw.data;
-              }
-              return dataSet;
-            },
-          },
-        },
-        pageSize: 10, // display 20 records per page
-        serverPaging: true,
-        serverFiltering: true,
-        serverSorting: true,
-      },
-      layout: {
-        scroll: false,
-        footer: false,
-      },
-      sortable: true,
-      pagination: true,
-      search: {
-          input: $('#kt_datatable_search'),
-          key: 'generalSearch'
-      },
-  
-      columns: [
-        {
-          field: 'first_name',
-          title: 'Name',
-          sortable: 'asc',
-          selector: false,
-        }, 
-        {
-          field: 'last_name',
-          title: 'Last Name',
-          sortable: 'asc',
-          selector: false,
-        },{
-          field: 'email',
-          title: 'Email',
-          sortable: 'asc',
-          selector: false,
-        }, {
-          field: 'message',
-          title: 'Massage',
-          sortable: 'asc',
-          selector: false,
-        },{
-          field: 'Action',
-          title: '',
-          sortable: false,
-          overflow: 'visible',
-          width: 30,
-          
-          template: function (row) {
-            return `<div class="dropdown dropdown-inline">
-              <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
-                <i class="flaticon-cogwheel-2"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                <ul class="navi flex-column navi-hover py-2">
-                  <li class="navi-item">
-                    <a href="http://development.emporium-voyage.com/editcompanion/`+row.id+`" class="navi-link">
-                      <span class="navi-text">Edit</span>
-                    </a>
-                  </li>
-                  <li class="navi-item">
-                    <a href="http://development.emporium-voyage.com/deletecompanion/`+row.id+`"" class="navi-link">
-                      <span class="navi-text">Delete</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>`;
-          }
-        }
-      ],  
-    });
+    @yield('companion_datatable')
+
+    @yield('Preference_Datatable')    
+
+    @yield('Guest_invite_datatable')
+
       @yield('remove_acc_scr')
+      
     });
   });
 

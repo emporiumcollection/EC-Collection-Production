@@ -1,18 +1,6 @@
 @extends('users_admin.traveller.layout.app')
 @section('content')
 <div class="mt-15">
-    @if(Session::has('massage'))      
-        <div class="alert alert-success alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Success!</strong> {!! Session::get('massage') !!}.
-        </div>
-    @endif
-    @if(Session::has('Errmassage'))      
-        <div class="alert alert-danger alert-dismissible fade show">
-            <button type="button" class="close" data-dismiss="alert">&times;</button>
-            <strong>Error!</strong> {!! Session::get('Errmassage') !!}.
-        </div>
-    @endif
     <ul class="nav nav-tabs nav-profiletabs">
     <li class="nav-item ">
         <a href="#addNew" class="nav-link active" data-toggle="tab">
@@ -23,16 +11,16 @@
             My Preferences
         </a>
     </li>
-</ul>
+    </ul>
 <br>
 <p>
     In this section you manage personal preferences.
 </p>
 
     <div class="mt-13">
-        <!--begin: Wizard-->
         <div class="tab-content pt-7 profile-tabs">
             <div class="tab-pane fade show active" id="addNew">
+                <!--begin: Wizard-->
                 <div class="wizard wizard-3" id="kt_wizard_v3" data-wizard-state="step-first"
                     data-wizard-clickable="true">
                     <!--begin: Wizard Nav-->
@@ -93,7 +81,7 @@
                             <div class="wizard-step" data-wizard-type="step">
                                 <div class="wizard-label">
                                     <h3 class="wizard-title">
-                                        <span>6.</span>
+                                        <span>6.</span>sd
                                     </h3>
                                     <div class="wizard-bar"></div>
                              </div>
@@ -105,7 +93,7 @@
                     <!--begin: Wizard Body-->
                     <!--begin: Wizard Form-->
                     <form class="form" id="kt_form" method="post" action="/postPreference">
-
+                    <input type="hidden" name="id" value="{{ $data->ps_id }}">
                     {{-- Route-> getPreferences --}}
                         <!--begin: Wizard Step 1-->
                         <div class="pb-5" data-wizard-type="step-content" data-wizard-state="current">
@@ -115,7 +103,7 @@
                                 </h1>
                                 {{-- <p>You can specify one or more destinations</p> --}}
                                 <div class="form-group">
-                                    <input type="text" name="first_name" id="first_name" class="form-control">
+                                    <input type="text" name="first_name" class="form-control" value="{{ $data->first_name ? $data->first_name : ''}}">
                                 </div>
                             </div>
 
@@ -128,10 +116,10 @@
                                     <select class="form-control select2" id="kt_select2_3"
                                         name="destinations[]" multiple="multiple">
                                         @if(isset($category)) 
-                                            @foreach($category as $categories)
-                                            <option value="{{ $categories->id }}" >
-                                                {{ $categories->category_name }}
-                                            </option>                                        
+                                            @foreach($category as $categories )
+                                                @foreach($select_dest as $select_cat )
+                                                    <option value="{{ $categories->id }}" {{ $select_cat == $categories->id ? 'selected="selected"' : ''}}>{{ $categories->category_name }}</option>
+                                            @endforeach
                                         @endforeach    
                                         @endif
                                     </select>
@@ -153,24 +141,25 @@
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Destinations
                                 </h3>
-                                <div class="experience-slider">
-                                        @foreach($destination as $dest)
-                                            <div>
-                                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" id="destination" value="{{ $dest->id }}" />
-                                                        <img src="{{ asset('/uploads/category_imgs/'.$dest->category_image)}}"
-                                                            class="img-fluid" alt="">
-                                                        <div class="label-inner">
-                                                            <span></span>
-                                                            <div class="title-checkbox">
-                                                                {{ $dest->category_name }}
-                                                            </div>
+                                <div class="experience-slider">                         
+                                    @foreach($destination as $dest)                        
+                                        <div>
+                                            <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                                <label class="checkbox">                         
+                                                    <input type="checkbox" name="inspirstion[]" id="destination" value="{{ $dest->id }}" @foreach($inspire as $inst){{ $inst == $dest->id ? 'checked' : ''}}@endforeach/>    
+                                                    <img src="{{ asset('/uploads/category_imgs/'.$dest->category_image)}}"
+                                                        class="img-fluid" alt="">
+                                                    <div class="label-inner">
+                                                        <span></span>
+                                                        <div class="title-checkbox">
+                                                            {{ $dest->id }}{{ $dest->category_name }}
+                                                            {{ $inst }}
                                                         </div>
-                                                    </label>
-                                                </div>
+                                                    </div>
+                                                </label>
                                             </div>
-                                        @endforeach
+                                        </div>                                        
+                                    @endforeach
                                 </div>
                             </div>
                             <div class="mb-15">
@@ -182,7 +171,7 @@
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" value="{{ $atm->id }}" />
+                                                        <input type="checkbox" name="inspirstion[]" value="{{ $atm->id }}"  @foreach($inspire as $inst){{ $inst == $atm->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$atm->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -194,7 +183,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach               
+                                    @endforeach                                               
                                 </div>
                             </div>
                             <div class="mb-15">
@@ -206,7 +195,7 @@
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" value="{{ $facilits->id }}" />
+                                                        <input type="checkbox" name="inspirstion[]" value="{{ $facilits->id }}" @foreach($inspire as $inst){{  $inst == $facilits->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$facilits->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -218,7 +207,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach      
+                                    @endforeach                                      
                                 </div>
                             </div>
                             <div class="mb-15">
@@ -230,7 +219,7 @@
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" value="{{ $sty->id }}" />
+                                                        <input type="checkbox" name="inspirstion[]" value="{{ $sty->id }}" @foreach($inspire as $inst){{ $inst == $sty->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$sty->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -242,7 +231,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
@@ -259,25 +248,23 @@
                                     Spa Collection
                                 </h3>
                                 <div class="experience-slider">
-                                    @if(isset($spaconn))
                                         @foreach($spaconn as $spa)
-                                            <div>
-                                                <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
-                                                    <label class="checkbox">
-                                                        <input type="checkbox" name="spacheckbox[]" value="{{ $spa->id }}" />
-                                                        <img src="{{ asset('/uploads/category_imgs/'.$spa->category_image)}}"
-                                                            class="img-fluid" alt="">
-                                                        <div class="label-inner">
-                                                            <span></span>
-                                                            <div class="title-checkbox">
-                                                                {{ $spa->category_name }}
-                                                            </div>
+                                        <div>
+                                            <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
+                                                <label class="checkbox">
+                                                    <input type="checkbox" name="spacheckbox[]" value="{{ $spa->id }}" @foreach($exe_spa as $ex_spa){{ $ex_spa == $spa->id ? 'checked' : ''}}@endforeach/>
+                                                    <img src="{{ asset('/uploads/category_imgs/'.$spa->category_image)}}"
+                                                        class="img-fluid" alt="">
+                                                    <div class="label-inner">
+                                                        <span></span>
+                                                        <div class="title-checkbox">
+                                                            {{ $ex_spa }}{{ $spa->category_name }}{{ $spa->id }}
                                                         </div>
-                                                    </label>
-                                                </div>
+                                                    </div>
+                                                </label>
                                             </div>
-                                        @endforeach    
-                                    @endif                                
+                                        </div>
+                                    @endforeach                                
                                 </div>
                             </div>
                             <div class="mb-15">
@@ -285,12 +272,11 @@
                                     Voyage Collection
                                 </h3>
                                 <div class="experience-slider">
-                                    @if(isset($category))
                                         @foreach($category as $cat)
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="voyagechk[]" value="{{ $cat->id }}" />
+                                                        <input type="checkbox" name="voyagechk[]" value="{{ $cat->id }}" @foreach($exe_voyage as $exe_voyag){{ $exe_voyag == $cat->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$cat->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -302,21 +288,19 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @endif                                
+                                   @endforeach                               
                                 </div>
                             </div>
                             <div class="mb-15">
                                 <h3 class="text-dark font-weight-bold font-saol mb-4">
                                     Islands Collection
                                 </h3>
-                                <div class="experience-slider">
-                                    @if(isset($islandconn))
+                                <div class="experience-slider">      
                                         @foreach($islandconn as $island)
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="islandchk[]" value="{{ $island->id }}" />
+                                                        <input type="checkbox" name="islandchk[]" value="{{ $island->id }}" @foreach($exe_island as $exe_is){{ $exe_is == $island->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$island->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -328,8 +312,7 @@
                                                     </label>
                                                 </div>
                                             </div>
-                                        @endforeach
-                                    @endif    
+                                    @endforeach    
                                 </div>
                             </div>
                             <div class="mb-15">
@@ -337,12 +320,11 @@
                                     Safari Collection
                                 </h3>
                                 <div class="experience-slider">
-                                    @if(isset($safariconn))
                                         @foreach($safariconn as $safari)
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="safarichk[]" value="{{ $safari->id }}" />
+                                                        <input type="checkbox" name="safarichk[]" value="{{ $safari->id }}" @foreach($exe_safari as $ex_safari){{ $ex_safari == $safari->id ? 'checked' : ''}}@endforeach/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$safari->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -353,9 +335,8 @@
                                                         </div>
                                                     </label>
                                                 </div>
-                                            </div>
-                                        @endforeach
-                                    @endif 
+                                            </div>                                        
+                                    @endforeach 
                                 </div>
                             </div>
                         </div>
@@ -369,7 +350,7 @@
                             </div>
                             <div class="form-group">
                                 <textarea class="form-control" name="note" cols="4" rows="10"
-                                    placeholder="Further comments or wishes? A concrete trip , a special occasion such as a honeymoon"></textarea>
+                                    placeholder="Further comments or wishes? A concrete trip , a special occasion such as a honeymoon">{{ $data->note }}</textarea>
                                 <div class="text-right mt-7">
                                     <i class="fas fa-info-circle" data-toggle="tooltip"
                                         data-placement="top" data-container="body"
@@ -395,8 +376,8 @@
                                     <div class="col-6 mb-10">
                                         <div class="guest-qty">
                                             <button type="button" id="min" class="min">-</button>
-                                            <input class="form-control" type="number"  name="adults" value="0"
-                                                min="0" readonly />
+                                            <input class="form-control" type="number"  name="adults" value="{{ $data->adults }}"
+                                                min="0" />
                                             <button type="button" name="adults" id="plus" class="plus">+</button>
                                         </div>
                                     </div>
@@ -409,7 +390,7 @@
                                     <div class="col-6 mb-10">
                                         <div class="guest-qty">
                                             <button type="button" id="min" class="min">-</button>
-                                            <input class="form-control" type="number" name="youth" value="0"
+                                            <input class="form-control" type="number" name="youth" value="{{ $data->youth }}"
                                                 min="0" readonly />
                                             <button type="button" id="plus" class="plus">+</button>
                                         </div>
@@ -423,7 +404,7 @@
                                     <div class="col-6 mb-10">
                                         <div class="guest-qty">
                                             <button type="button" id="min" class="min">-</button>
-                                            <input class="form-control" type="number" name="children" value="0"
+                                            <input class="form-control" type="number" name="children" value="{{ $data->children }}"
                                                 min="0" readonly />
                                             <button type="button" id="plus" class="plus">+</button>
                                         </div>
@@ -437,7 +418,7 @@
                                     <div class="col-6 mb-10">
                                         <div class="guest-qty">
                                             <button type="button" id="min" class="min">-</button>
-                                            <input class="form-control" type="number" name="toddlers" value="0"
+                                            <input class="form-control" type="number" name="toddlers" value="{{ $data->toddlers }}"
                                                 min="0" readonly />
                                             <button type="button" id="plus" class="plus">+</button>
                                         </div>
@@ -455,12 +436,15 @@
                             </div>
 
                             <div class='input-group' id='kt_daterangepicker_2'>
-                                <input type='text' class="form-control" readonly
-                                    placeholder="Select date range"  name="earliest_arrival" />
+                                <input type='text' class="form-control"
+                                    placeholder="Select date range"  name="earliest_arrival" value=" 
+                                @if (isset($data->earliest_arrival))
+                                    {!!date('d-m-Y', strtotime($data->earliest_arrival))!!}"
+                                @endif />
                                 <div class="input-group-append">
                                     <span class="input-group-text"><i
                                             class="la la-calendar-check-o"></i></span>
-                                </div>
+                                </div>                    
                             </div>
 
                             <div class="text-center mt-17">
@@ -471,10 +455,10 @@
                             </div>
                             <div class="form-group">
                                 <select name="stay_time" class="form-control">
-                                    <option value="1-2 Weeks">1-2 Weeks</option>
-                                    <option value="2-3 Weeks">2-3 Weeks</option>
-                                    <option value="3-4 Weeks">3-4 Weeks</option>
-                                    <option value="4-5 Weeks">4-5 Weeks</option>
+                                    <option value="1-2 Weeks" {{ $data->stay_time == '1-2 Weeks' ? 'selected="selected"' : ''}}>1-2 Weeks</option>
+                                    <option value="2-3 Weeks" {{ $data->stay_time == '2-3 Weeks' ? 'selected="selected"' : ''}}>2-3 Weeks</option>
+                                    <option value="3-4 Weeks" {{ $data->stay_time == '3-4 Weeks' ? 'selected="selected"' : ''}}>3-4 Weeks</option>
+                                    <option value="4-5 Weeks" {{ $data->stay_time == '4-5 Weeks' ? 'selected="selected"' : ''}}>4-5 Weeks</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -535,7 +519,7 @@
                                     class="btn btn-success font-weight-bolder text-uppercase px-9 py-4 preferences"
                                     data-wizard-type="action-submit">Submit</button>
                                 <button type="button"
-                                    class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4 clickNext validations"
+                                    class="btn btn-primary font-weight-bolder text-uppercase px-9 py-4 clickNext"
                                     data-wizard-type="action-next">Next</button>
                             </div>
                         </div>
@@ -544,9 +528,9 @@
                     <!--end: Wizard Form-->
                     <!--end: Wizard Body-->
                 </div>
+                <!--end: Wizard-->
             </div>
-        <!--end: Wizard-->
-            <div class="tab-pane fade" id="mypreferences">
+             <div class="tab-pane fade" id="mypreferences">
                 <div class="mb-7">
                     <!--begin::Subheader-->
                     <div class="row align-items-center">
@@ -576,9 +560,10 @@
                     </div>
                 </div>
             </div>
-    </div>
+        </div>
     </div>
 </div>
+
     @section('Preference_Datatable')
         var datatable = $('#preference_table').KTDatatable({
               data: {

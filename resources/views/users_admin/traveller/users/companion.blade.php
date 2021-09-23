@@ -2,6 +2,18 @@
 @section('content')
 
 	<div class="mt-15">
+		@if(Session::has('massage'))      
+	        <div class="alert alert-success alert-dismissible fade show">
+	            <button type="button" class="close" data-dismiss="alert">&times;</button>
+	            <strong>Success!</strong> {!! Session::get('massage') !!}.
+	        </div>
+	    @endif
+	    @if(Session::has('Errmassage'))      
+	        <div class="alert alert-danger alert-dismissible fade show">
+	            <button type="button" class="close" data-dismiss="alert">&times;</button>
+	            <strong>Error!</strong> {!! Session::get('Errmassage') !!}.
+	        </div>
+	    @endif
 		<div class="mt-15">
 			<div class="row align-items-center">
 				<div class="col-md-12">
@@ -27,17 +39,14 @@
 				<div class="tab-content pt-7 profile-tabs">
 					<div class="tab-pane fade show active" id="addNew">
 						<div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
-							<div class="col-xl-9">
-				                @if(Session::has('message'))
-				        				{!! Session::get('message') !!}
-				        		@endif
+							<div class="col-xl-9">				                
 				        		<br>
 				        		<br>
 								<h5 class="text-dark font-weight-bold mb-10">
 									Personal Informations
 								</h5>
 
-								<form method="post" action="/users/addcompanion" enctype="multipart/form-data">
+							<form method="post" action="/users/addcompanion" enctype="multipart/form-data">
 							<!--begin::Group-->
 
 							<div class="form-group row">
@@ -318,5 +327,102 @@
 		</div>
 	</div>
 	<!--begin::Global Theme Bundle(used by all pages)-->
+	@section('companion_datatable')
+		var datatable = $('#kt_datatable').KTDatatable({
+      data: {
+        type: 'remote',
+        source: { 
+          read: {
+            url: '{{ URL::to('/users/companiondata') }}',
+            method: 'GET',
+            map: function(raw) {
+              // sample data mapping
+              var dataSet = raw;
+              if (typeof raw.data !== 'undefined') {
+                dataSet = raw.data;
+              }
+              return dataSet;
+            },
+          },
+        },
+        pageSize: 10, // display 20 records per page
+        serverPaging: true,
+        serverFiltering: true,
+        serverSorting: true,
+      },
+      layout: {
+        scroll: false,
+        footer: false,
+      },
+      sortable: true,
+      pagination: true,
+      search: {
+          input: $('#kt_datatable_search_query'),
+          key: 'generalSearch'
+      },
+  
+      columns: [
+        {
+          field: 'first_name',
+          title: 'Name',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'email',
+          title: 'Email',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'phone_number',
+          title: 'Phone Number',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'gender',
+          title: 'Gender',
+          sortable: 'asc',
+          selector: false,
+        }, {
+          field: 'preferred_language',
+          title: 'Preferred Language',
+          sortable: 'asc',
+          selector: false,
+        },{
+          field: 'preferred_currency',
+          title: 'Preferred Currency',
+          sortable: 'asc',
+          selector: false,
+        },{
+          field: 'Action',
+          title: '',
+          sortable: false,
+          overflow: 'visible',
+          width: 30,
+          
+          template: function (row) {
+            return `<div class="dropdown dropdown-inline">
+              <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+                <i class="flaticon-cogwheel-2"></i>
+              </a>
+              <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                <ul class="navi flex-column navi-hover py-2">
+                  <li class="navi-item">
+                    <a href="http://development.emporium-voyage.com/editcompanion/`+row.id+`" class="navi-link">
+                      <span class="navi-text">Edit</span>
+                    </a>
+                  </li>
+                  <li class="navi-item">
+                    <a href="http://development.emporium-voyage.com/deletecompanion/`+row.id+`"" class="navi-link">
+                      <span class="navi-text">Delete</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>`;
+          }
+        }
+      ],  
+    });
+	@endsection
 @endsection
 
