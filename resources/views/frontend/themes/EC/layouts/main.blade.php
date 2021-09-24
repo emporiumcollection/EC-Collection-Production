@@ -202,6 +202,7 @@
 
 <script>
 $(function() {
+    /*
     $(document).on('click', ".dest-collection", function(e){
         e.preventDefault();
         //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -260,6 +261,7 @@ $(function() {
             }
         });
     });
+    */
 
     $(".suites-slider").not('.slick-initialized').slick({
         infinite: true,
@@ -370,7 +372,7 @@ console.log(sp_darr);
         //$('#gs_sb_navhead').addClass('navheadimage');
         //$('#gs_sb_criteria').addClass('sdestination');
     }
-
+/*
     function getPropertyByCollection(coll_type, cat, page, req_for, active_exp){ console.log(coll_type+', '+cat+', '+page+', '+req_for);
         $.ajax({
             url:'{{URL::to("propertysearchlistbycollection/")}}',
@@ -405,14 +407,14 @@ console.log(sp_darr);
 				params['url'] = BaseURL + '/destination/destinatinos-ajax';
 				params['data'] = datObj;
 				params['successCallbackFunction'] = renderSearchDestination;
-				doAjax(params);*/
+				doAjax(params);
 
                 //listpagestructure(data);
                 hideLoading();
             }
         });
-    }
-
+    //}
+*/
     function listpagestructure(data){
 
         var _html = '';
