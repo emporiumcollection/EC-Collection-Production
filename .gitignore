@@ -14,6 +14,7 @@ nbproject
 .buildpath
 /public/storage
 /public/uploads
+/public/cached-images
 /storage/*.key
 .idea/
 *.sublime-workspace

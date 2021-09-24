@@ -407,7 +407,7 @@ console.log(sp_darr);
 				params['successCallbackFunction'] = renderSearchDestination;
 				doAjax(params);*/
 
-                listpagestructure(data);
+                //listpagestructure(data);
                 hideLoading();
             }
         });
