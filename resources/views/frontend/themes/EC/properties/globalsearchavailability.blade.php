@@ -25,13 +25,6 @@
       height: 750px;
     }
 
-    .suite-popup .slick-slide img{
-      width: 750px!important;
-      height: 520px!important;
-      top: 375px!important;
-      left: 260px!important;
-    }
-
     .global-search-resultbox .slick-slide img{
       width: 450px!important;
       height: 320px!important;
@@ -339,3 +332,23 @@ $(document).on('click', ".dest-collection", function(e){
 });
 </script>
 @endsection
+
+@include('frontend.themes.EC.layouts.subsections.suites')
+@include('frontend.themes.EC.layouts.subsections.share')
+@include('frontend.themes.EC.layouts.subsections.policies')
+@include('frontend.themes.EC.layouts.subsections.availability')
+@include('frontend.themes.EC.layouts.subsections.policies')
+@include('frontend.themes.EC.layouts.subsections.my_collections')
+@include('frontend.themes.EC.layouts.subsections.reservation')
+@include('frontend.themes.EC.layouts.subsections.suiteinfo')
+@include('frontend.themes.EC.layouts.subsections.suite_deal')
+@include('frontend.themes.EC.layouts.subsections.filter')
+@include('frontend.themes.EC.layouts.subsections.priceinfo')
+@include('frontend.themes.EC.layouts.subsections.location_info')
+@include('frontend.themes.EC.layouts.subsections.quick_info')
+@include('frontend.themes.EC.layouts.subsections.reviews')
+@include('frontend.themes.EC.layouts.subsections.gallery')
+@include('frontend.themes.EC.layouts.subsections.property_gallery')
+@include('frontend.themes.EC.layouts.subsections.search_history')
+@include('frontend.themes.EC.layouts.subsections.ask_question')
+@include('frontend.themes.EC.layouts.subsections.videos')

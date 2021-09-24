@@ -1,12 +1,33 @@
 
-	<div id="step-4" class="tab-pane" role="tabpanel">
+
+@extends('frontend.themes.EC.layouts.main')
+{{--  For Title --}}
+@section('title', 'Global search availability')
+{{-- For Meta Keywords --}}
+@section('meta_keywords', '')
+{{-- For Meta Description --}}
+@section('meta_description', '')
+{{-- For Page's Content Part --}}
+<style>
+    .experiences{
+        cursor: pointer;
+    }
+</style>
+@section('content')
+<div class="content-em">
+  <div class="top-wrapper">
+    <div class="container ">
+
+      @include('frontend.themes.EC.reservation.nav_wizard')
+     
+      <div id="step-4" class="tab-pane" role="tabpanel">
         <h2 class="mb-5 d-flex align-items-center">
           <a href="#" class="backwizard btn-backwizard">
             <i class="ico ico-back mr-3"></i>
           </a>
           Suite Board
         </h2>
-    	<div class="row">
+      <div class="row">
       <div class="col-lg-9 col-md-8">
         <div class="suite-board d-block section-shadow">
           <div class="suite-board-header">
@@ -77,7 +98,7 @@
                   & Policies</a>
                 <div class="footer-sdse">
                   <p>€1.099 per night inclusive of all taxes and fees</p>
-                  <a href="#" class="btn btn-dark btn-block rounded-0 btn-nextwizard">Select</a>
+                  <a href="/reservation/suitepolicies" class="btn btn-dark btn-block rounded-0 btn-nextwizard">Select</a>
                 </div>
               </div>
             </div>
@@ -141,7 +162,7 @@
                   Policies</a>
                 <div class="footer-sdse">
                   <p>€1.099 per night inclusive of all taxes and fees</p>
-                  <a href="#" class="btn btn-dark  btn-block rounded-0 btn-nextwizard">Select</a>
+                  <a href="/reservation/suitepolicies" class="btn btn-dark  btn-block rounded-0 btn-nextwizard">Select</a>
                 </div>
               </div>
             </div>
@@ -181,5 +202,10 @@
           </table>
         </div>
       </div>
-    	</div>
-  	</div>
+      </div>
+  </div>
+  </div>
+</div>
+</div>
+@endsection
+

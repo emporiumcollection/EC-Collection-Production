@@ -14,7 +14,7 @@
                 <i class="ico ico-back"></i>
             </a>
             <h3 class="title-second title-line mb-0">
-                <?php echo $location[0]['category_name']; ?>
+                <?php echo isset($location[0]['category_name'])?$location[0]['category_name']:''; ?>
             </h3>
         </div>
     </div>
