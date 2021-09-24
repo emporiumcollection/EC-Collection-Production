@@ -82,14 +82,14 @@ class ImageController extends Controller {
         $file_path = $image_path .
         '/container_user_files/locations/' .
         $path .
-        '/room-images/' .
+        '/room-images' .
 		'/' . $category .
         $file;
 
         $destination_dir = public_path() .
         '/cached-images/container_user_files/locations/' .
-		'/' . $category .
-        $path .
+        $path . '/' .
+        $category . '/' .
         '/resized';
 
         if(!file_exists($destination_dir)){
