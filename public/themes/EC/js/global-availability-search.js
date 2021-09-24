@@ -27,7 +27,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -37,15 +37,23 @@ function replacePropertyData(id){
   $('[data-place="room-images"]').each(function() {
       // field = $(this).attr('data-replace');
       //console.log(properties[id][field]);
-      var values = properties[id]['room_images'];
+      var suites = properties[id]['suites'];
       var imageview = '';
       var spanid = 1;
       var grid = 1;
-      values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';        
-        spanid=2;
-        grid++;
-      })
+      suites.forEach(function(s){
+        rooms = s.rooms;
+        rooms.forEach(function(r){
+          rimages = r.images;
+          if(r.images!=undefined){          
+            rimages.forEach(function(e){
+              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + s.category_name.replaceAll(' ', '-').toLowerCase() + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
+              spanid=2;
+              grid++;
+            });
+          }
+        });
+      });
       $(this).html(imageview);
   });
 
@@ -57,7 +65,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/bar-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -72,7 +80,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -87,7 +95,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/spa-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })

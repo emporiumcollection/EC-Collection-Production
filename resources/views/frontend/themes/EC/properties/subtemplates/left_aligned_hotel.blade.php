@@ -8,7 +8,7 @@
     <div class="hotel-page-list suite-ontouch no-opacity index-2">
 
       <?php if(!empty($propertyImages)):?>
-        <img src="<?php echo 'property-image/resize/615x420/'.$editorChoice['container']['name'].'/'.$propertyImages[0]['file_name'];?>" class="img-fluid" alt="">
+        <img src="<?php echo 'property-image/resize/615x420/'.$editorChoice['container']['name'].'/'.$propertyImages[0]['file_name'].'/property-image';?>" class="img-fluid" alt="">
       <?php endif;?>
 
       <div class="my-dropdown">
@@ -84,7 +84,7 @@
         foreach($propertyImages as $editorImage):?>
         <div>
           <a href="suite.html">
-            <img src="<?php echo 'property-image/resize/615x420/'.$editorChoice['container']['name'].'/'.$editorImage['file_name'];?>" class="img-fluid" alt="">
+            <img src="<?php echo 'property-image/resize/615x420/'.$editorChoice['container']['name'].'/'.$editorImage['file_name'].'/property-image';?>" class="img-fluid" alt="">
           </a>
         </div>
         <?php 

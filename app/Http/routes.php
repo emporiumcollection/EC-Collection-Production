@@ -821,5 +821,5 @@ Route::post('topSearch', 'FrontEnd\PropertyController@topSearch');
 
 Route::post('price_on_request', 'HomeController@price_on_request');
 
-Route::get('property-image/resize/{scale}/{path}/{file}', 'ImageController@propertyImageResize');
+Route::get('property-image/resize/{scale}/{path}/{file}/{type}', 'ImageController@resize');
 Route::get('room-image/resize/{scale}/{path}/{category}/{file}', 'ImageController@roomImageResize');
