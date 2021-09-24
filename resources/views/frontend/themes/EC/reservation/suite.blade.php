@@ -1,5 +1,26 @@
 
-	<div id="step-3" class="tab-pane" role="tabpanel">
+
+@extends('frontend.themes.EC.layouts.main')
+{{--  For Title --}}
+@section('title', 'Global search availability')
+{{-- For Meta Keywords --}}
+@section('meta_keywords', '')
+{{-- For Meta Description --}}
+@section('meta_description', '')
+{{-- For Page's Content Part --}}
+<style>
+    .experiences{
+        cursor: pointer;
+    }
+</style>
+@section('content')
+<div class="content-em">
+  <div class="top-wrapper">
+    <div class="container ">
+      
+      @include('frontend.themes.EC.reservation.nav_wizard')
+
+      <div id="step-3" class="tab-pane" role="tabpanel">
         <h2 class="mb-5 d-flex align-items-center">
           <a href="#" class="backwizard btn-backwizard">
             <i class="ico ico-back mr-3"></i>
@@ -71,7 +92,7 @@
                         </div>
                         <div class="col-4">
                           <div class="text-right">
-                            <a href="#" class="btn btn-dark  px-4 btn-nextwizard rounded-0">Select</a>
+                            <a href="/reservation/suiteboard" class="btn btn-dark  px-4 btn-nextwizard rounded-0">Select</a>
                           </div>
                         </div>
                       </div>
@@ -130,7 +151,7 @@
                         </div>
                         <div class="col-4">
                           <div class="text-right">
-                            <a href="#" class="btn btn-dark  px-4 btn-nextwizard rounded-0">Select</a>
+                            <a href="/reservation/suiteboard" class="btn btn-dark  px-4 btn-nextwizard rounded-0">Select</a>
                           </div>
                         </div>
                       </div>
@@ -189,7 +210,7 @@
                         </div>
                         <div class="col-4">
                           <div class="text-right">
-                            <a href="#" class="btn btn-dark  px-4 btn-nextwizard rounded-0">Select</a>
+                            <a href="/reservation/suiteboard" class="btn btn-dark  px-4 btn-nextwizard rounded-0">Select</a>
                           </div>
                         </div>
                       </div>
@@ -233,4 +254,8 @@
             </div>
           </div>
         </div>
-    </div>
+    </div>  
+  </div>
+</div>
+</div>
+@endsection
