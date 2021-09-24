@@ -18,7 +18,6 @@ class ImageController extends Controller {
     private $destination_dir;    
 
     public function resize($scale, $path, $file, $type = null){
-        $this->image_path = public_path().'/uploads';
 
         if($type == 'property-image'){
             $this->propertyImageResize($scale, $path, $file);
@@ -61,7 +60,6 @@ class ImageController extends Controller {
 
 	public function roomImageResize($scale, $path, $category, $file)
 	{
-        $this->image_path = public_path().'/uploads';
         $this->initializeValues($scale, $file);
 
         $this->file_path = $this->image_path .
