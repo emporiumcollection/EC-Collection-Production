@@ -27,7 +27,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -42,7 +42,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';        
         spanid=2;
         grid++;
       })
@@ -57,7 +57,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -72,7 +72,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -87,7 +87,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/500x500/' + properties[id]['container']['name'] + '/' + e.file_name + '" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
