@@ -25,13 +25,6 @@
       height: 750px;
     }
 
-    .suite-popup .slick-slide img{
-      width: 750px!important;
-      height: 520px!important;
-      top: 375px!important;
-      left: 260px!important;
-    }
-
     .global-search-resultbox .slick-slide img{
       width: 450px!important;
       height: 320px!important;
