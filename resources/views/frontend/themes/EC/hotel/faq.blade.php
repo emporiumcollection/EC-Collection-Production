@@ -1173,120 +1173,94 @@
 
   <div class="content-em">
     <div class="container pt-5">
+
       <div id="main-content">
         <div class="row mt-5">
 
           @include('frontend.themes.EC.hotel.sidebar_nav')
-
+          
           <div class="col-lg-8 content-lg pt-5">
             <ul class="nav nav-pills nav-clr nav-breadcrumb nav-breadcrumb-ip mb-3 mt-3">
               <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
+                  <a class="nav-link" href="#">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link active" href="#">Hollow Spa</a>
+                  <a class="nav-link active" href="#">FAQ</a>
               </li>
-            </ul>
-            <div class="d-flex w-100 wow fadeInUp align-items-center" data-wow-delay=".3s">
+          </ul>
+          <div class="d-flex w-100 wow fadeInUp align-items-center" data-wow-delay=".3s">
               <a href="main-page.html" class="back-btn ipad-view">
-                <i class="ico ico-back"></i>
+                  <i class="ico ico-back"></i>
               </a>
               <div class="title-main mb-4 w-100">
-                <h2>Hollow Spa</h2>
-                <a href="suite.html" class="main-close">
-                  <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <title>Close</title>
-                    <path
-                      d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
-                    </path>
-                  </svg>
-                </a>
+                  <h2>FAQ</h2>
+                  <a href="suite.html" class="main-close">
+                      <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <title>Close</title>
+                          <path
+                              d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                          </path>
+                      </svg>
+                  </a>
               </div>
-            </div>
-  
+          </div>
             <div class="main-container wow fadeInUp" data-wow-delay=".3s">
               <div class="main-content">
-                <div class="row align-items-start">
-                  <div class="col-md-6 mmb-4">
-                    <div class="row ">
-                      <div class="col-6">
-                        <a href="#">
-                          <div class="img-overlay">
-                            <img src="{{ asset('images/788c7b4ce200637440526200b2dc8de240df101b.jpg')}}" alt="">
-                          </div>
-                        </a>
-                      </div>
-                      <div class="col-6">
-                        <a href="#">
-                          <div class="img-overlay">
-                            <img src="{{ asset('images/788c7b4ce200637440526200b2dc8de240df101b.jpg')}}" alt="">
-                          </div>
-                        </a>
+                <div class="accordion accordion-ex" id="accordionExample">
+                  <div class="card">
+                    <div class="card-header" id="headingOne">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left btn-accordion collapsed" type="button" data-toggle="collapse"
+                          data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                          Collapsible Group Item #1
+  
+                          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                        </button>
+                      </h2>
+                    </div>
+  
+                    <div id="collapseOne" class="collapse" aria-labelledby="headingOne"
+                      data-parent="#accordionExample">
+                      <div class="card-body">
+                        Some placeholder content for the first accordion panel. This panel is shown by default, thanks to
+                        the <code>.show</code> class.
                       </div>
                     </div>
                   </div>
-                  <div class="col-md-6 mmb-4">
-                      <a href="#">
-                        <div class="img-overlay">
-                          <img src="{{ asset('images/98d13b87078871.5dad9554e33ef.jpg')}}" alt="">
-                          <div class="overlay">
-                            <p class="d-flex align-items-center justify-content-center">
-                              Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                              scenes.
-                              Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                              get
-                              The Ludlow Resort.
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                  </div>
-                </div>
-                <div class="row align-items-end">
-                  <div class="col-md-6 mmb-4">
-                      <a href="#">
-                        <div class="img-overlay">
-                          <img src="{{ asset('images/98d13b87078871.5dad9554e33ef.jpg')}}" alt="">
-                          <div class="overlay">
-                            <p class="d-flex align-items-center justify-content-center">
-                              Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                              scenes.
-                              Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                              get
-                              The Ludlow Resort.
-                            </p>
-                          </div>
-                        </div>
-                      </a>
-                  </div>
-                  <div class="col-md-6 mmb-4">
-                    <div class="row ">
-                      <div class="col-6">
-                        <a href="#">
-                          <div class="img-overlay">
-                            <img src="{{ asset('images/788c7b4ce200637440526200b2dc8de240df101b.jpg')}}" alt="">
-                          </div>
-                        </a>
-                      </div>
-                      <div class="col-6">
-                        <a href="#">
-                          <div class="img-overlay">
-                            <img src="{{ asset('images/788c7b4ce200637440526200b2dc8de240df101b.jpg')}}" alt="">
-                          </div>
-                        </a>
+                  <div class="card">
+                    <div class="card-header" id="headingTwo">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left btn-accordion collapsed" type="button" data-toggle="collapse"
+                          data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                          Collapsible Group Item #2
+                          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+                      <div class="card-body">
+                        Some placeholder content for the second accordion panel. This panel is hidden by default.
                       </div>
                     </div>
                   </div>
-                </div>
-                <div class="row mt-5">
-                  <div class="col-md-6"></div>
-                  <div class="col-md-6">
-                    <p class="px-5">
-                      Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes. Then
-                      translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The Ludlow
-                      Resort.
-                    </p>
+                  <div class="card">
+                    <div class="card-header" id="headingThree">
+                      <h2 class="mb-0">
+                        <button class="btn btn-link btn-block text-left btn-accordion collapsed" type="button" data-toggle="collapse"
+                          data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                          Collapsible Group Item #3
+                          <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                        </button>
+                      </h2>
+                    </div>
+                    <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+                      data-parent="#accordionExample">
+                      <div class="card-body">
+                        And lastly, the placeholder content for the third and final accordion panel. This panel is hidden
+                        by default.
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -1380,9 +1354,44 @@
                 </div>
             </div>
         </div>
+
     </div>
 </footer>
+  <!-- <script type="text/javascript" src="js/jquery.min.js"></script> -->
+<script type="text/javascript" src="js/jquery-3.5.1.min.js"></script>
+<script type="text/javascript" src="js/popper.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.min.js"></script>
 
+<!-- <script type="text/javascript" src="js/jquery.sticky.js"></script> -->
+<script type="text/javascript" src="js/sticky-sidebar.min.js"></script>
+<script type="text/javascript" src="js/leaflet.js"></script>
+<script type="text/javascript" src="js/plugin/jqueryui/jquery-ui.js"></script>
+<script type="text/javascript" src="js/moment.min.js"></script>
+<script type="text/javascript" src="js/daterangepicker.min.js"></script>
+<script type="text/javascript" src="js/plugin/jquery.mousewheel.js"></script>
+<script type="text/javascript" src="js/plugin/simpleLightbox.js"></script>
+<script type="text/javascript" src="js/mediaelement-and-player.min.js"></script>
+<script type="text/javascript" src="js/jquery.rangecalendar.js"></script>
+<script type="text/javascript" src="js/plugin/owl.carousel.min.js"></script>
+<script type="text/javascript" src="js/plugin/daterangepicker.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/core.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/components/md5.js"></script>
+
+<script type="text/javascript" src="js/plugin/fullcalendar/core/main.js"></script>
+<script type="text/javascript" src="js/plugin/fullcalendar/daygrid/main.js"></script>
+<script type="text/javascript" src="js/plugin/slick/slick.min.js"></script>
+<script type="text/javascript" src="js/plugin/select2/select2.full.min.js"></script>
+<script type="text/javascript" src="js/plugin/wow.min.js"></script>
+<script type="text/javascript" src="js/jquery.smartWizard.min.js"></script>
+<script type="text/javascript" src="js/plugin/lightbox/js/lightgallery.min.js"></script>
+<script type="text/javascript" src="js/plugin/lightbox/js/lg-thumbnail.js"></script>
+<script type="text/javascript" src="js/plugin/lightbox/js/lg-share.js"></script>
+<script type="text/javascript" src="js/plugin/lightbox/js/lg-video.min.js"></script>
+<script type="text/javascript" src="js/color-thief.min.js"></script>
+<script type="text/javascript" src="js/plugin/datepick/jquery.plugin.js"></script>
+<script type="text/javascript" src="js/plugin/datepick/jquery.datepick.js"></script>
+<script type="text/javascript" src="js/plugin/mapbox-gl.js"></script>
+<script type="text/javascript" src="./js/all.js"></script>
   <div class="sidebar-main pt-4 " id="gallery">
     <a href="#" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
@@ -1791,5 +1800,38 @@
         </div>
     </div>
 </div>
+    
+    @section('faq_script')
+    <script>
+    $('.restaurant-slide').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      arrows: false,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 600,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 2
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1
+          }
+        }
+      ]
+    });
+  </script>
+    @endsection
 
 @endsection

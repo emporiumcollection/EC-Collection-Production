@@ -11,7 +11,9 @@
         cursor: pointer;
     }
 </style>
+
 @section('content')
+
     <div class="sidebar-main share-sidebar" id="share">
     <a href="#" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
@@ -1170,34 +1172,38 @@
 </div>
 
   <div class="content-em">
-    <div class="top-wrapper" id="main-content">
-      <div class="slide-023k4"></div>
-      <div class="slider-bg-inner">
-        <div class="container">
-          <div class="row mt-5">
+    <div id="main-content">
+      <div class="top-wrapper">
+        <div class="slide-023k4"></div>
+        <div class="slider-bg-inner">
+          <div class="container">
+            <div class="row mt-5">
 
-            @include('frontend.themes.EC.hotel.sidebar_nav')
+              @include('frontend.themes.EC.hotel.sidebar_nav')
 
-            <div class="col-lg-8 mm-pt-20">
-              <div class="title-main mb-4 wow fadeInUp" data-wow-delay=".3s">
-                <h2>All Suites</h2>
-              </div>
-              <div class="all-suite-list">
-                <div class="title-main offset-930 mb-2 title-subs">
-                  <h2>Madison Suite</h2>
-                </div>
-                <div class="inner-wrapper hotel-page-list mb-0910">
-                  <div class="pr-lst result-grid slider-big">
-                    <div>
-                      <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
-                    </div>
-                    <div>
-                      <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
-                    </div>
-                    <div>
-                      <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
+              <div class="col-lg-8 col-hotel-slider">
+                <div class="text-right">
+                  <div class="dropdown dropdown-suite ipad-view mb-3">
+                    <button class="btn dropdown-toggle p-0" type="button" id="suiteDetail" data-toggle="dropdown"
+                      aria-haspopup="true" aria-expanded="false">
+                      Suite Details
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="suiteDetail">
+                      <a class="dropdown-item scrollto" href="#amenitieCollapse">Ameninties</a>
+                      <a class="dropdown-item scrollto" href="#reviewCollapse">Review</a>
+                      <a class="dropdown-item scrollto" href="#avalableCollapse">Availability</a>
+                      <a class="dropdown-item scrollto" href="#suiteinfoCollapse">Suite Info</a>
+                      <a class="dropdown-item scrollto" href="#">Rate Info</a>
+                      <a class="dropdown-item scrollto" href="#">Suite Deals</a>
+                      <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Add to Collection</a>
+                      <a class="dropdown-item scrollto" href="#">FAQ</a>
                     </div>
                   </div>
+                </div>
+                <div class="slider-container hotel-page-list">
+                  <a href="#" class="hotel-info btn-sidebar" data-sidebar="#quickinfo">
+                    Hotel info
+                  </a>
                   <div class="my-dropdown">
                     <div class="btn-group dropleft">
                       <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -1206,43 +1212,68 @@
                       <div class="dropdown-menu">
                         <a href="#" class="dropdown-item">Add to collection</a>
                         <a href="#" class="dropdown-item btn-sidebar create-collection"
-                          data-sidebar="#myCollection">Create new collection</a>
+                          data-sidebar="#myCollection">Create
+                          new collection</a>
                       </div>
                     </div>
                   </div>
-                  <a href="#">
-                    <div class="covid-info align-items-center">
-                      <div class="ico-security">
-                        <i class="ico icon-security"></i>
-                      </div>
-                      <div class="pl-3 w-100">
-                        <p class="covid-title mb-0 text-18">Sichere Urlaubsplanung <span><i>Trotz
-                              Covid 19</i></span></p>
-                        <p class="mb-0 mobile-off">
-                          Lorem ipsum, dolor sit amet consectetur adipisicing elit
-                        </p>
-                      </div>
-                      <div class="covid-act">
-                        JETZT INFORMIEREN
-                      </div>
+                  <!-- Data video popup -->
+
+                  <div style="display:none;" id="video1">
+                    <video class="lg-video-object lg-html5" controls preload="none">
+                      <source src="images/Emporium-Hotel-South-Bank.mp4" type="video/mp4">
+                      Your browser does not support HTML5 video.
+                    </video>
+                  </div>
+                  <!-- Data video popup end -->
+                  <div class="slider-detail" id="sliderDetail">
+                    <div>
+                      <a href="{{ asset('images/53511811337-49267444221.jpg')}}" class="slider-item-inner">
+                        <img src="{{asset('images/53511811337-49267444221.jpg')}}" id="heading-img" class="img-fluid" alt="">
+                        <div class="view-images-btn">
+                          <i class="ico icon-camera"></i> View Images
+                        </div>
+                      </a>
                     </div>
-                  </a>
+                    <div>
+                      <a data-html="#video1" data-poster="{{asset('images/video-cover.jpg')}}" data-sub-html="video caption1"
+                        class="slider-item-inner">
+                        <img src="{{asset('images/video-cover.jpg')}}" id="heading-img" class="img-fluid" alt="">
+                        <div class="play-button">
+                          <img src="images/video-play.png" alt="">
+                        </div>
+                        <div class="view-images-btn">
+                          <i class="ico icon-camera"></i> View Images
+                        </div>
+                      </a>
+                    </div>
+                    <div>
+                      <a href="{{asset('images/53511811337-49267444221.jpg')}}" class="slider-item-inner">
+                        <img src="{{asset('images/53511811337-49267444221.jpg')}}" id="heading-img" class="img-fluid " alt="">
+                        <div class="view-images-btn">
+                          <i class="ico icon-camera"></i> View Images
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                  <div class="prev"><i class="ico ico-back"></i></div>
+                  <div class="next"><i class="ico ico-next"></i></div>
                 <div class="hotel-meta full-width hotel-meta-details">
-                    <a href="#" class="view btn-sidebar" data-sidebar="#reviews">
+                    <a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews">
                       Reviews
                     </a>
-                    <a href="#" class="view btn-sidebar" data-sidebar="#availability">
+                    <a href="#" class="view btn-sidebar i-none" data-sidebar="#availability">
                       Availability
                     </a>
-                    <a href="#" class="view btn-sidebar" data-sidebar="#suiteinfo">
+                    <a href="#" class="view btn-sidebar i-none" data-sidebar="#suiteinfo">
                       Suite Info
                     </a>
-                    <div class="hotel-title">
+                    <div class="hotel-title i-none">
                       <p class="mb-0 inc">Includes</p>
                       <p class="mb-0">2 Bedrooms</p>
                     </div>
-                    <a href="#" class="btn-sidebar" data-sidebar="#priceinfo" style="align-self: center;">
-                      <div class="hotel-prices hotel-price-detail d-flex">
+                    <a href="#" class="btn-sidebar" data-sidebar="#priceinfo">
+                      <div class="hotel-prices hotel-price-detail d-flex h-100">
                         <div class="row align-items-center justify-content-center">
                           <div class="mr-2">
                             <i class="ico ico-info-green"></i>
@@ -1254,234 +1285,1102 @@
                             <span class="pernight"></span>
                           </div>
                         </div>
-  
+
                       </div>
                     </a>
-                    <div class="action-hotel show">
-                      <nav class="nav nav-pills nav-justified">
-                        <a class="nav-link btn-sidebar" href="#" data-sidebar="#suite-deal">Suite
-                          Deals</a>
-                        <a class="nav-link btn-sidebar" href="#" data-sidebar="#myCollection">Add to
-                          Collection</a>
-                        <a class="nav-link" href="#">Ask Question</a>
-                        <a class="nav-link" href="#">Share</a>
-                        <a class="nav-link" href="#">Book this Suite</a>
-                      </nav>
-                    </div>
-                </div>
-                </div>
-                <div class="hotel-meta-mobile">
-                  <a href="detail-suite.html" class="btn rounded-0">
-                    Suite Info
-                  </a>
-                  <a href="#" class="btn btn-primary rounded-0">
-                    Check Availability
-                  </a>
-                </div>
-              </div>
-
-            <div class="all-suite-list">
-                <div class="title-main offset-930 mb-2 title-subs">
-                  <h2>Premiere Suite</h2>
-                </div>
-                <div class="inner-wrapper hotel-page-list mb-0910">
-                  <div class="pr-lst result-grid slider-big">
-                    <div>
-                      <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
-                    </div>
-                    <div>
-                      <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
-                    </div>
-                    <div>
-                      <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
-                    </div>
-                  </div>
-                  <div class="my-dropdown">
-                    <div class="btn-group dropleft">
-                      <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ico ico-diamon diamon-label"></i>
+                    <div class="ipad-view book-suite">
+                      <a href="#">
+                        Book this Suite
                       </a>
-                      <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Add to collection</a>
-                        <a href="#" class="dropdown-item btn-sidebar create-collection"
-                          data-sidebar="#myCollection">Create new collection</a>
-                      </div>
                     </div>
-
-                  </div>
-                  <a href="#">
-                    <div class="covid-info align-items-center">
-                      <div class="ico-security">
-                        <i class="ico icon-security"></i>
-                      </div>
-                      <div class="pl-3 w-100">
-                        <p class="covid-title mb-0 text-18">Sichere Urlaubsplanung <span><i>Trotz
-                              Covid 19</i></span></p>
-                        <p class="mb-0 mobile-off">
-                          Lorem ipsum, dolor sit amet consectetur adipisicing elit
-                        </p>
-                      </div>
-                      <div class="covid-act">
-                        JETZT INFORMIEREN
-                      </div>
-                    </div>
-                  </a>
-                  <div class="hotel-meta full-width hotel-meta-details">
-                    <a href="#" class="view btn-sidebar" data-sidebar="#reviews">
-                      Reviews
-                    </a>
-                    <a href="#" class="view btn-sidebar" data-sidebar="#availability">
-                      Availability
-                    </a>
-                    <a href="#" class="view btn-sidebar" data-sidebar="#suiteinfo">
-                      Suite Info
-                    </a>
-                    <div class="hotel-title">
-                      <p class="mb-0 inc">Includes</p>
-                      <p class="mb-0">2 Bedrooms</p>
-                    </div>
-                    <a href="#" class="btn-sidebar" data-sidebar="#priceinfo" style="align-self: center;">
-                      <div class="hotel-prices hotel-price-detail d-flex">
-                        <div class="row align-items-center justify-content-center">
-                          <div class="mr-2">
-                            <i class="ico ico-info-green"></i>
-                          </div>
-                          <h3 class="mb-0">
-                            <span class="title-font-2 mr-1">From</span> <span class="color-primary"> € 1.299</span>
-                          </h3>
-                          <div class="ml-2">
-                            <span class="pernight"></span>
-                          </div>
-                        </div>
-  
-                      </div>
-                    </a>
                     <div class="action-hotel show">
                       <nav class="nav nav-pills nav-justified">
-                        <a class="nav-link btn-sidebar" href="#" data-sidebar="#suite-deal">Suite
-                          Deals</a>
-                        <a class="nav-link btn-sidebar" href="#" data-sidebar="#myCollection">Add to
-                          Collection</a>
+                        <a class="nav-link btn-sidebar" href="#" data-sidebar="#suite-deal">Suite Deals</a>
+                        <a class="nav-link btn-sidebar" href="#" data-sidebar="#myCollection">Add to Collection</a>
                         <a class="nav-link" href="#">Ask Question</a>
                         <a class="nav-link" href="#">Share</a>
                         <a class="nav-link" href="#">Book this Suite</a>
                       </nav>
                     </div>
                   </div>
-                  
                 </div>
-                <div class="hotel-meta-mobile">
-                  <a href="detail-suite.html" class="btn rounded-0">
-                    Suite Info
-                  </a>
+            </div>
+        </div>
+    </div>
+                <div class="hotel-meta-mobile meta-sticky">
+                  <div class="dropdown dropdown-suite w-100">
+                    <a href="#" class="btn dropdown-toggle text-left" type="button" id="suiteDetail"
+                      data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Suite Details
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="suiteDetail">
+                      <a class="dropdown-item scrollto" href="#amenitieCollapse">Ameninties</a>
+                      <a class="dropdown-item scrollto" href="#reviewCollapse">Review</a>
+                      <a class="dropdown-item scrollto" href="#avalableCollapse">Availability</a>
+                      <a class="dropdown-item scrollto" href="#suiteinfoCollapse">Suite Info</a>
+                      <a class="dropdown-item scrollto" href="#">Rate Info</a>
+                      <a class="dropdown-item scrollto" href="#">Suite Deals</a>
+                      <a class="dropdown-item scrollto" href="#">Add to collection</a>
+                      <a class="dropdown-item scrollto" href="#">FAQ</a>
+                    </div>
+                  </div>
                   <a href="#" class="btn btn-primary rounded-0">
                     Check Availability
                   </a>
                 </div>
-              </div>
 
-              <div class="title-main offset-930 mb-2 title-subs">
-                <h2>Premiere Suite</h2>
               </div>
-              <div class="inner-wrapper hotel-page-list mb-0910">
-                <div class="pr-lst result-grid slider-big">
-                  <div>
-                    <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container ">
+        <div class="row mt-5">
+          <div class="col-lg-4"></div>
+          <div class="col-lg-8 pr-0">
+            <div class="pr-3">
+
+              <div class="row">
+                <div class="col-md-8">
+                  <div class="title-main title-main-mobile mt-0 mb-5">
+                    <h2>Suite Name</h2>
                   </div>
-                  <div>
-                    <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
+                  <p>Stylish and Glamourous afternoon tea in Oscar restaurant or in the
+                    drawing room.</p>
+                  <hr>
+                  <div class="row">
+                    <div class="col-5 ">
+                      Size
+                    </div>
+                    <div class="col-7">
+                      43 M2 / 463 sq.ft
+                    </div>
                   </div>
-                  <div>
-                    <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
+                  <div class="row">
+                    <div class="col-5 ">
+                      View
+                    </div>
+                    <div class="col-7">
+                      Ocean View
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 ">
+                      Location
+                    </div>
+                    <div class="col-7">
+                      6th Floor
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-5 ">
+                      Bathroom
+                    </div>
+                    <div class="col-7">
+                      Bathtub, Shower
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="i-none">
+                    <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
+                    <div class="row mb-4">
+                      <div class="col-md-4 mb-4">
+                        <p class="mb-0">Pool</p>
+                        <p class="mb-0">Wlan</p>
+                        <p class="mb-0">Smart-TV</p>
+                        <p class="mb-0">Koffeemaschine</p>
+                        <p class="mb-0">Laundry service</p>
+                      </div>
+                      <div class="col-md-4 mb-4">
+                        <p class="mb-0">Pool</p>
+                        <p class="mb-0">Wlan</p>
+                        <p class="mb-0">Smart-TV</p>
+                        <p class="mb-0">Koffeemaschine</p>
+                        <p class="mb-0">Laundry service</p>
+                      </div>
+                      <div class="col-md-4 mb-4">
+                        <p class="mb-0">Pool</p>
+                        <p class="mb-0">Wlan</p>
+                        <p class="mb-0">Smart-TV</p>
+                        <p class="mb-0">Koffeemaschine</p>
+                        <p class="mb-0">Laundry service</p>
+                      </div>
+                      <div class="col-md-4 mb-4">
+                        <p class="mb-0">Pool</p>
+                        <p class="mb-0">Wlan</p>
+                        <p class="mb-0">Smart-TV</p>
+                        <p class="mb-0">Koffeemaschine</p>
+                        <p class="mb-0">Laundry service</p>
+                      </div>
+                      <div class="col-md-4 mb-4">
+                        <p class="mb-0">Pool</p>
+                        <p class="mb-0">Wlan</p>
+                        <p class="mb-0">Smart-TV</p>
+                        <p class="mb-0">Koffeemaschine</p>
+                        <p class="mb-0">Laundry service</p>
+                      </div>
+                      <div class="col-md-4 mb-4">
+                        <p class="mb-0">Pool</p>
+                        <p class="mb-0">Wlan</p>
+                        <p class="mb-0">Smart-TV</p>
+                        <p class="mb-0">Koffeemaschine</p>
+                        <p class="mb-0">Laundry service</p>
+                      </div>
+
+                    </div>
                   </div>
                 </div>
-                <div class="my-dropdown">
-                  <div class="btn-group dropleft">
-                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="ico ico-diamon diamon-label"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                      <a href="#" class="dropdown-item">Add to collection</a>
-                      <a href="#" class="dropdown-item btn-sidebar create-collection"
-                        data-sidebar="#myCollection">Create new collection</a>
-                    </div>
+                <div class="col-md-4">
+                  <div class="side-detail mb-3">
+                    <p>Free cancelation before <b>18 Feb 2020</b></p>
+                    <p>Reserve now, pay at the Hotel</p>
+                    <a href="#" class="btn btn-dark btn-block btn-sidebar" data-sidebar="#reservation">Reservation</a>
                   </div>
 
+                  <div class="side-detail text-left mb-3 px-2 i-none">
+                    <h3 class="text-center mt-2 mb-0">
+                      <span class="why-we"></span>
+                    </h3>
+                    <ul class="pl-4">
+                      <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
+                        restaurant or in the drawing room.</li>
+                      <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
+                        restaurant or in the drawing room.</li>
+                      <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
+                        restaurant or in the drawing room.</li>
+                      <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
+                        restaurant or in the drawing room.</li>
+                    </ul>
+                  </div>
                 </div>
-                <a href="#">
-                  <div class="covid-info align-items-center">
-                    <div class="ico-security">
-                      <i class="ico icon-security"></i>
-                    </div>
-                    <div class="pl-3 w-100">
-                      <p class="covid-title mb-0 text-18">Sichere Urlaubsplanung <span><i>Trotz
-                            Covid 19</i></span></p>
-                      <p class="mb-0 mobile-off">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit
-                      </p>
-                    </div>
-                    <div class="covid-act">
-                      JETZT INFORMIEREN
+              </div>
+              <div class="accordion accordion-ex" id="accordionExample">
+                <!-- display on ipad only -->
+                <div class="card ipad-view">
+                  <div class="card-header" id="loveit">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#loveitcollapse" aria-expanded="true" aria-controls="loveitcollapse">
+                        Why we Love it
+                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-minus" style="display: none"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="loveitcollapse" class="collapse additional-collapse hotel-info-panel"
+                    aria-labelledby="loveit" data-parent="#accordionExample">
+                    <div class="card-body h-100">
+                      <h3 class="text-center mt-2 mb-3">
+                        <span class="why-we"></span>
+                      </h3>
+                      <ul class="pl-4">
+                        <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
+                          restaurant or in the drawing room.</li>
+                        <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
+                          restaurant or in the drawing room.</li>
+                        <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
+                          restaurant or in the drawing room.</li>
+                        <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
+                          restaurant or in the drawing room.</li>
+                      </ul>
                     </div>
                   </div>
-                </a>
-                <div class="hotel-meta full-width hotel-meta-details">
-                  <a href="#" class="view btn-sidebar" data-sidebar="#reviews">
-                    Reviews
-                  </a>
-                  <a href="#" class="view btn-sidebar" data-sidebar="#availability">
-                    Availability
-                  </a>
-                  <a href="#" class="view btn-sidebar" data-sidebar="#suiteinfo">
-                    Suite Info
-                  </a>
-                  <div class="hotel-title">
-                    <p class="mb-0 inc">Includes</p>
-                    <p class="mb-0">2 Bedrooms</p>
+                </div>
+                <div class="card ipad-view">
+                  <div class="card-header" id="amenities1">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#amenitieCollapse" aria-expanded="true" aria-controls="amenitieCollapse">
+                        Amenities
+                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-minus" style="display: none"></i>
+                      </button>
+                    </h2>
                   </div>
-                  <a href="#" class="btn-sidebar" data-sidebar="#priceinfo" style="align-self: center;">
-                    <div class="hotel-prices hotel-price-detail d-flex">
-                      <div class="row align-items-center justify-content-center">
-                        <div class="mr-2">
-                          <i class="ico ico-info-green"></i>
+                  <div id="amenitieCollapse" class="collapse additional-collapse hotel-info-panel"
+                    aria-labelledby="amenities1" data-parent="#accordionExample">
+                    <div class="card-body h-100">
+                      <h4 class="mb-4 color-dark-grey ">Amenities</h4>
+                      <div class="row">
+                        <div class="col-md-4 mb-4">
+                          <p class="mb-0">Pool</p>
+                          <p class="mb-0">Wlan</p>
+                          <p class="mb-0">Smart-TV</p>
+                          <p class="mb-0">Koffeemaschine</p>
+                          <p class="mb-0">Laundry service</p>
                         </div>
-                        <h3 class="mb-0">
-                          <span class="title-font-2 mr-1">From</span> <span class="color-primary"> € 1.299</span>
-                        </h3>
-                        <div class="ml-2">
-                          <span class="pernight"></span>
+                        <div class="col-md-4 mb-4">
+                          <p class="mb-0">Pool</p>
+                          <p class="mb-0">Wlan</p>
+                          <p class="mb-0">Smart-TV</p>
+                          <p class="mb-0">Koffeemaschine</p>
+                          <p class="mb-0">Laundry service</p>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                          <p class="mb-0">Pool</p>
+                          <p class="mb-0">Wlan</p>
+                          <p class="mb-0">Smart-TV</p>
+                          <p class="mb-0">Koffeemaschine</p>
+                          <p class="mb-0">Laundry service</p>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                          <p class="mb-0">Pool</p>
+                          <p class="mb-0">Wlan</p>
+                          <p class="mb-0">Smart-TV</p>
+                          <p class="mb-0">Koffeemaschine</p>
+                          <p class="mb-0">Laundry service</p>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                          <p class="mb-0">Pool</p>
+                          <p class="mb-0">Wlan</p>
+                          <p class="mb-0">Smart-TV</p>
+                          <p class="mb-0">Koffeemaschine</p>
+                          <p class="mb-0">Laundry service</p>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                          <p class="mb-0">Pool</p>
+                          <p class="mb-0">Wlan</p>
+                          <p class="mb-0">Smart-TV</p>
+                          <p class="mb-0">Koffeemaschine</p>
+                          <p class="mb-0">Laundry service</p>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card ipad-view">
+                  <div class="card-header" id="review_id">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#reviewCollapse" aria-expanded="true" aria-controls="reviewCollapse">
+                        Review
+                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-minus" style="display: none"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="reviewCollapse" class="collapse additional-collapse hotel-info-panel"
+                    aria-labelledby="review_id" data-parent="#accordionExample">
+                    <div class="card-body h-100">
+                      <div class="row reviews">
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>C.M</b></p>
+                              <p>United States</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>8.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  We love the hotel and its location. The front desk staff was extremely pleasant. The
+                                  breakfast staff are very friendly and efficient.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>P.M</b></p>
+                              <p>United Kingdom</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>9.03/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  Fantastic hotel, great atmosphere, room upgrade was much appreciated. All the staff I
+                                  interacted with were great. One of the best hotel experiences I have ever had I would
+                                  unreservedly recommend the hotel and will return.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>G.P</b></p>
+                              <p>United Kingdom</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>9.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  Probably the best City hotel weve stayed at. Alal Gogo was particularly outstanding.
+                                  He
+                                  managed to arrange for us to attend the Woody Allan Band show with our guest (who is a
+                                  musician) even when it had been booked out and was very courteous throughout. Thank
+                                  you
+                                  so muclh. A wonderful stay.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>C.M</b></p>
+                              <p>United States</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>8.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  We love the hotel and its location. The front desk staff was extremely pleasant. The
+                                  breakfast staff are very friendly and efficient.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>C.M</b></p>
+                              <p>United States</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>8.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  We love the hotel and its location. The front desk staff was extremely pleasant. The
+                                  breakfast staff are very friendly and efficient.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>P.M</b></p>
+                              <p>United Kingdom</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>9.03/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  Fantastic hotel, great atmosphere, room upgrade was much appreciated. All the staff I
+                                  interacted with were great. One of the best hotel experiences I have ever had I would
+                                  unreservedly recommend the hotel and will return.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>G.P</b></p>
+                              <p>United Kingdom</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>9.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  Probably the best City hotel weve stayed at. Alal Gogo was particularly outstanding.
+                                  He
+                                  managed to arrange for us to attend the Woody Allan Band show with our guest (who is a
+                                  musician) even when it had been booked out and was very courteous throughout. Thank
+                                  you
+                                  so muclh. A wonderful stay.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>C.M</b></p>
+                              <p>United States</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>8.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  We love the hotel and its location. The front desk staff was extremely pleasant. The
+                                  breakfast staff are very friendly and efficient.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>C.M</b></p>
+                              <p>United States</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>8.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  We love the hotel and its location. The front desk staff was extremely pleasant. The
+                                  breakfast staff are very friendly and efficient.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>P.M</b></p>
+                              <p>United Kingdom</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>9.03/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  Fantastic hotel, great atmosphere, room upgrade was much appreciated. All the staff I
+                                  interacted with were great. One of the best hotel experiences I have ever had I would
+                                  unreservedly recommend the hotel and will return.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>G.P</b></p>
+                              <p>United Kingdom</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>9.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  Probably the best City hotel weve stayed at. Alal Gogo was particularly outstanding.
+                                  He
+                                  managed to arrange for us to attend the Woody Allan Band show with our guest (who is a
+                                  musician) even when it had been booked out and was very courteous throughout. Thank
+                                  you
+                                  so muclh. A wonderful stay.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>C.M</b></p>
+                              <p>United States</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>8.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  We love the hotel and its location. The front desk staff was extremely pleasant. The
+                                  breakfast staff are very friendly and efficient.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>C.M</b></p>
+                              <p>United States</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>8.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  We love the hotel and its location. The front desk staff was extremely pleasant. The
+                                  breakfast staff are very friendly and efficient.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>P.M</b></p>
+                              <p>United Kingdom</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>9.03/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  Fantastic hotel, great atmosphere, room upgrade was much appreciated. All the staff I
+                                  interacted with were great. One of the best hotel experiences I have ever had I would
+                                  unreservedly recommend the hotel and will return.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>G.P</b></p>
+                              <p>United Kingdom</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>9.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  Probably the best City hotel weve stayed at. Alal Gogo was particularly outstanding.
+                                  He
+                                  managed to arrange for us to attend the Woody Allan Band show with our guest (who is a
+                                  musician) even when it had been booked out and was very courteous throughout. Thank
+                                  you
+                                  so muclh. A wonderful stay.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-6 reviews-list reviews-mobile">
+                          <div class="row">
+                            <div class="col-3 pl-5">
+                              <p><b>C.M</b></p>
+                              <p>United States</p>
+                            </div>
+                            <div class="col pr-5">
+                              <div class="rate mb-1">
+                                <span class="mr-4">
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                  <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                </span>
+                                <span>
+                                  <b>8.68/10</b>
+                                </span>
+                              </div>
+                              <div class="review-content">
+                                <p>
+                                  We love the hotel and its location. The front desk staff was extremely pleasant. The
+                                  breakfast staff are very friendly and efficient.
+                                </p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="text-center mb-3">
+                        <div class="mb-3">
+                          <a href="#" class="underline" id="loadMore">SEE MORE COMMENTS</a>
                         </div>
                       </div>
                     </div>
-                  </a>
-                  <div class="action-hotel show">
-                    <nav class="nav nav-pills nav-justified">
-                      <a class="nav-link btn-sidebar" href="#" data-sidebar="#suite-deal">Suite
-                        Deals</a>
-                      <a class="nav-link btn-sidebar" href="#" data-sidebar="#myCollection">Add to
-                        Collection</a>
-                      <a class="nav-link" href="#">Ask Question</a>
-                      <a class="nav-link" href="#">Share</a>
-                      <a class="nav-link" href="#">Book this Suite</a>
-                    </nav>
                   </div>
                 </div>
-                
+                <div class="card ipad-view">
+                  <div class="card-header" id="avalable_id">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#avalableCollapse" aria-expanded="true" aria-controls="avalableCollapse">
+                        Availability
+                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-minus" style="display: none"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="avalableCollapse" class="collapse additional-collapse hotel-info-panel"
+                    aria-labelledby="avalable_id" data-parent="#accordionExample">
+                    <div class="card-body h-100">
+                      <div class="row">
+                        <div class="col-sm-4 mb-4">
+                          <div class="avail-hotel-outer">
+                            <div class="avail-htl---0029" id="hotel--06" data-hotel-list="#hotel--06--1">
+                              <img src="images/64133123060-77799344932.jpg" class="img-fluid" alt="">
+                              <div class="avl-dsc">
+                                <p class="title-second title-line mb-0">11 Howard</p>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-sm-8 mb-4">
+                          <div class="available-date w-100" id="calendarAvailable"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="card ipad-view">
+                  <div class="card-header" id="suiteinfo_id">
+                    <h2 class="mb-0">
+                      <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
+                        data-target="#suiteinfoCollapse" aria-expanded="true" aria-controls="suiteinfoCollapse">
+                        Suite Info
+                        <i class="fa fa-plus"></i>
+                        <i class="fa fa-minus" style="display: none"></i>
+                      </button>
+                    </h2>
+                  </div>
+                  <div id="suiteinfoCollapse" class="collapse additional-collapse hotel-info-panel"
+                    aria-labelledby="suiteinfo_id" data-parent="#accordionExample">
+                    <div class="card-body h-100">
+                      <div class="row suite-board-body rounded-0">
+                        <div class="col-lg-4 col-md-6 suite-price-feature">
+                          <div class="suite-board-main">
+                            <h4>Breakfast on the Amalfi Coast </h4>
+                            <ul class="pl-3">
+                              <li>Accommodation</li>
+                              <li>Daily breakfast</li>
+                            </ul>
+                          </div>
+                          <div class="suite-board-footer">
+                            <div class="collapse" id="breakfas">
+                              <div class="card card-body border-0">
+                                <h4 class="mb-4">Details &amp; Policies</h4>
+                                <ul class="text-left pl-3">
+                                  <li>
+                                    CANCEL: <br>
+                                    Cancel by 12PM local time 24 hours prior to arrival or
+                                    pay 1 night plus tax
+                                  </li>
+                                  <li>
+                                    GUARANTEE: <br>
+                                    A credit card guarantee is required at time of booking
+                                    unless otherwise stated in the rate description.
+                                  </li>
+                                  <li>
+                                    MEAL PLAN: <br>
+                                    Breakfast included
+                                  </li>
+                                  <li>
+                                    SERVICE CHARGE: <br>
+                                    Rates shown are inclusive of 10 percent Service Charge
+                                    per room, per night. This will appear itemized in your
+                                    shopping basket.
+                                  </li>
+                                  <li>
+                                    GOVERNMENT TAX: <br>
+                                    Rates shown are inclusive of 10 percent Government Tax
+                                    per room, per night. This will appear itemized in your
+                                    shopping basket.
+                                  </li>
+                                  <li>
+                                    GOVERNMENT TAX AND SERVICE CHARGE: <br>
+                                    Room rates do not include 11 percent Government Tax and
+                                    10 percent Service Charge
+                                  </li>
+                                  <li>
+                                    PACKAGE GOVERNMENT TAX: <br>
+                                    Room rates do not include 10% Government Tax
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                            <a class="detail-policies" data-toggle="collapse" href="#breakfas" role="button"
+                              aria-expanded="false" aria-controls="breakfas">Details
+                              &amp; Policies</a>
+                            <div class="footer-sdse">
+                              <p>€1.099 per night inclusive of all taxes and fees</p>
+                              <a href="#" class="btn btn-dark  btn-block rounded-0">Select</a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 suite-price-feature">
+                          <div class="suite-board-main">
+                            <h4>Half Board</h4>
+                            <ul class="pl-3">
+                              <li>Accommodation</li>
+                              <li>Daily breakfast</li>
+                              <li>Daily à la carte lunch or dinner </li>
+                              <li>Accommodation</li>
+                              <li>Daily breakfast</li>
+                              <li>Daily à la carte lunch or dinner </li>
+                            </ul>
+                          </div>
+                          <div class="suite-board-footer">
+                            <div class="collapse" id="half">
+                              <div class="card card-body border-0">
+                                <h4 class="mb-4">Details &amp; Policies</h4>
+                                <ul class="text-left pl-3">
+                                  <li>
+                                    CANCEL: <br>
+                                    Cancel by 12PM local time 24 hours prior to arrival or
+                                    pay 1 night plus tax
+                                  </li>
+                                  <li>
+                                    GUARANTEE: <br>
+                                    A credit card guarantee is required at time of booking
+                                    unless otherwise stated in the rate description.
+                                  </li>
+                                  <li>
+                                    MEAL PLAN: <br>
+                                    Breakfast included
+                                  </li>
+                                  <li>
+                                    SERVICE CHARGE: <br>
+                                    Rates shown are inclusive of 10 percent Service Charge
+                                    per room, per night. This will appear itemized in your
+                                    shopping basket.
+                                  </li>
+                                  <li>
+                                    GOVERNMENT TAX: <br>
+                                    Rates shown are inclusive of 10 percent Government Tax
+                                    per room, per night. This will appear itemized in your
+                                    shopping basket.
+                                  </li>
+                                  <li>
+                                    GOVERNMENT TAX AND SERVICE CHARGE: <br>
+                                    Room rates do not include 11 percent Government Tax and
+                                    10 percent Service Charge
+                                  </li>
+                                  <li>
+                                    PACKAGE GOVERNMENT TAX: <br>
+                                    Room rates do not include 10% Government Tax
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                            <a class="detail-policies" data-toggle="collapse" href="#half" role="button"
+                              aria-expanded="false" aria-controls="half">Details &amp;
+                              Policies</a>
+                            <div class="footer-sdse">
+                              <p>€1.099 per night inclusive of all taxes and fees</p>
+                              <a href="#" class="btn btn-dark  btn-block rounded-0">Select</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="policies p-4" id="policies">
+                        <h3>Policies</h3>
+                        <div class="card card-body rounded-0">
+                          <p><b>Suite 1</b></p>
+                          <p><b>CANCEL</b> Cancel by 1pm local time 72 hours prior or pay 1 night for
+                            every 3 nights booked plus tax. No show charged full stay.</p>
+                          <p><b>GUARANTEE</b> A credit card guarantee is required at time of booking
+                            unless otherwise started in the rate description.</p>
+                          <p><b>MEAL PLAN</b> Breakfast included</p>
+                          <p><b>VAT TAX</b> Rates shown are inclusive of 10 percent VAT Tax per room, per
+                            night. this will appear itemized in your shopping basket.</p>
+                          <p><b>CITY TAX</b> Rates shown are inclusive of EUR 5 city Tax per person, per
+                            night for persons 8 years and older for up to 10 nights. Seasonal
+                            adjustments may apply. This will appear itemized in your shopping basket.
+                          </p>
+                        </div>
+                        <hr>
+                        <div class="booking-tearms">
+                          <h3>Booking teams and conditions</h3>
+                          <div class="custom-control custom-checkbox mb-5">
+                            <input type="checkbox" class="custom-control-input" id="customCheck22">
+                            <label class="custom-control-label" for="customCheck22">
+                              Your reservation is made subject to our
+                              <a href="#" class="underline"><b>Terms &amp; Conditions</b> </a>(available
+                              in other
+                              languages <a href="#" class="underline"><b>here</b></a>), and the
+                              specific
+                              payment tearms (deposit, tax and cancellation) set out above, Please
+                              check
+                              this box to agrree to these tearms and proceed with your booking. By
+                              confirming your booking, you agree with all provisions of the
+                              <a href="#" class="underline"><b>privacy policy</b></a>
+                            </label>
+                          </div>
+                          <p>
+                            For further information about how we use your data, please see our
+                            <a href="#" class="underline"><b>privacy policy</b></a>
+                          </p>
+                        </div>
+                        <div class="row">
+                          <div class="col-sm-6 mb-3">
+                            <a href="#" class="btn btn-dark  px-5 btn-backwizard">Go back</a>
+                          </div>
+                          <div class="col-sm-6 mb-3 text-right">
+                            <a href="#" class="btn btn-dark  px-5 btn-nextwizard">Confirm
+                              booking</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- display on ipad only end -->
               </div>
-              <div class="hotel-meta-mobile">
-                <a href="detail-suite.html" class="btn rounded-0">
-                  Suite Info
-                </a>
-                <a href="#" class="btn btn-primary rounded-0">
-                  Check Availability
-                </a>
+              <h4 class="mt-5 mb-4 color-dark-grey">Inspiration</h4>
+              <div class="row">
+                <div class="col-md-4 mb-4">
+                  <div class="mb-3">
+                    <img src="images/ddumy.jpg" class="img-fluid" alt="">
+                  </div>
+                  <h4>Off the beaten track</h4>
+                  <p>Here are some of your favourite winter sun destinations</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                  <div class="mb-3">
+                    <img src="images/ddumy.jpg" class="img-fluid" alt="">
+                  </div>
+                  <h4>Off the beaten track</h4>
+                  <p>Here are some of your favourite winter sun destinations</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                  <div class="mb-3">
+                    <img src="images/ddumy.jpg" class="img-fluid" alt="">
+                  </div>
+                  <h4>Off the beaten track</h4>
+                  <p>Here are some of your favourite winter sun destinations</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   </div>
+
+  <!-- Modal Info -->
+  <div class="modal fade" id="priceModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-body">
+          <button type="button" class="close modal-close" data-dismiss="modal" aria-label="Close">
+            <i class="fa fa-times" aria-hidden="true"></i>
+          </button>
+          <div class="row m-0 price-lst-table-head">
+            <div class="col-6 pl-0">DETAILS</div>
+            <div class="col-3 text-right">USD</div>
+            <div class="col-3 pr-0 text-right">ZAR</div>
+          </div>
+          <div class="row m-0 list-prs">
+            <div class="col-6 pl-0"><a href="#" class="btn-prc-title" data-price="#pr-11">Subtotal for
+                7
+                nights <span class="arrow-down"></span></a></div>
+            <div class="col-3 text-right">$2,250</div>
+            <div class="col-3 pr-0 text-right">R33,202</div>
+            <div class="col-12 sub-price-content" id="pr-11">
+              <div class="row subs-price">
+                <div class="col-6">February 19, 2020</div>
+                <div class="col-3 text-right">$375</div>
+                <div class="col-3 text-right pr-0">R5,534</div>
+              </div>
+              <div class="row subs-price">
+                <div class="col-6">February 19, 2020</div>
+                <div class="col-3 text-right">$375</div>
+                <div class="col-3 text-right pr-0">R5,534</div>
+              </div>
+              <div class="row subs-price">
+                <div class="col-6">February 19, 2020</div>
+                <div class="col-3 text-right">$375</div>
+                <div class="col-3 text-right pr-0">R5,534</div>
+              </div>
+              <div class="row subs-price">
+                <div class="col-6">February 19, 2020</div>
+                <div class="col-3 text-right">$375</div>
+                <div class="col-3 text-right pr-0">R5,534</div>
+              </div>
+            </div>
+          </div>
+          <div class="row m-0 list-prs">
+            <div class="col-6 pl-0"><a href="#" class="btn-prc-title" data-price="#pr-22">Hotel
+                taxes & fees <span class="arrow-down"></span></a></div>
+            <div class="col-3 text-right">$2,250</div>
+            <div class="col-3 pr-0 text-right">R33,202</div>
+            <div class="col-12 sub-price-content" id="pr-22">
+              <div class="row subs-price">
+                <div class="col-6">February 19, 2020</div>
+                <div class="col-3 text-right">$375</div>
+                <div class="col-3 text-right pr-0">R5,534</div>
+              </div>
+              <div class="row subs-price">
+                <div class="col-6">February 19, 2020</div>
+                <div class="col-3 text-right">$375</div>
+                <div class="col-3 text-right pr-0">R5,534</div>
+              </div>
+              <div class="row subs-price">
+                <div class="col-6">February 19, 2020</div>
+                <div class="col-3 text-right">$375</div>
+                <div class="col-3 text-right pr-0">R5,534</div>
+              </div>
+              <div class="row subs-price">
+                <div class="col-6">February 19, 2020</div>
+                <div class="col-3 text-right">$375</div>
+                <div class="col-3 text-right pr-0">R5,534</div>
+              </div>
+            </div>
+          </div>
+          <div class="row m-0 list-prs">
+            <div class="col-6 pl-0">Total with taxes & fees</div>
+            <div class="col-3 text-right">$2,250</div>
+            <div class="col-3 pr-0 text-right">R33,202</div>
+          </div>
+          <div class="row m-0 mt-2 txt-do">
+            <div class="col-12 pl-0">
+              *All hotel prices are based on local currency. <br>
+              Guests may be subject to additional fees and taxes.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal Info End -->
 
   <footer>
     <div class="container mb-0">
@@ -7316,8 +8215,42 @@
     </div>
 </div>
 
-@section('suite_script')
-    <script>
+@section('detail_suite')
+      <script>
+    var navpos = $('.meta-sticky').offset();
+    $(window).bind('scroll', function () {
+      if ($(window).scrollTop() > navpos.top) {
+        $('.meta-sticky').addClass('sticky'); // Add sticky navbar
+        $(".top-wrapper").css("margin-bottom", "97px"); // Set the correct margin space to content container below
+      } else {
+        $('.meta-sticky').removeClass('sticky'); // Remove sticky navbar
+        $(".top-wrapper").css("margin-bottom", "");// Set margin to default
+      }
+    });
+    $('a.scrollto[href*="#"]:not([href="#"])').click(function () {
+      if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+        $(target).collapse('show');
+        if (target.length) {
+          $('html, body').animate({
+            scrollTop: (target.offset().top - 120)
+          }, 1000, "easeInOutExpo");
+          return false;
+        }
+      }
+    });
+    $('.dropdown-suite .dropdown-menu a').click(function () {
+      $('.dropdown').dropdown('hide')
+    })
+    if ($(window).width() < 992) {
+      $('.hotel-info-panel').on('shown.bs.collapse', function (e) {
+        var $panel = $(this).closest('.card');
+        $('html,body').animate({
+          scrollTop: $panel.offset().top - 120
+        }, 500);
+      });
+    }
 
     var locations = [
       ['<b>Loaction Name</b>', 11.8166, 122.0942],
@@ -7361,8 +8294,7 @@
     }
 
 
- 
-   $('#calendarAvailable').datepicker({
+    $('#calendarAvailable').datepicker({
       changeMonth: true,
       changeYear: true,
       minDate: 0,
@@ -7449,4 +8381,3 @@
 @endsection
 
 @endsection
-

@@ -157,7 +157,6 @@
 
 
 {{-- Site Base URL --}}
-
 <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('js/moment.min.js')}}"></script>
@@ -178,6 +177,7 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/jquery.sticky.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/sticky-sidebar.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/jqueryui/jquery-ui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/moment.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/jquery.mousewheel.js') }}"></script>
@@ -216,6 +216,18 @@
     @parent
 @show
 
+@yield('suites_script')
+
+@yield('detail_suite')
+
+@yield('restaurant_script')
+
+@yield('detail_restaurant')
+
+@yield('experience_script')
+
+@yield('faq_script')
+    
 <script>
 
  if ($('.fromdate, .todate').length) {
@@ -279,6 +291,7 @@
       iconUrl: 'images/basic_geolocalize-01.svg',
       iconSize: [40, 45],
     });
+
     var locations = [
       ['<b>Loaction Name</b>', 11.8166, 122.0942],
     ];
