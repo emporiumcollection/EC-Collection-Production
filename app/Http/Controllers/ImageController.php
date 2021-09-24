@@ -82,8 +82,8 @@ class ImageController extends Controller {
         $file_path = $image_path .
         '/container_user_files/locations/' .
         $path .
-		'/' . $category .
         '/room-images/' .
+		'/' . $category .
         $file;
 
         $destination_dir = public_path() .
