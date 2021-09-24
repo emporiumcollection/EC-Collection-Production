@@ -37,6 +37,9 @@ Route::get('/users/guestinvite', 'UserController@getInvite');
 Route::get('/users/companion', 'UserController@getCompanion');
 // Route::get('/users/companion', 'UserController@getCompanion');
 
+
+Route::get('/users/hoteldetail', 'FrontEnd\HotelDetailController@hoteldetail');
+
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
 Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
