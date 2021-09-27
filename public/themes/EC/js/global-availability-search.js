@@ -1,4 +1,5 @@
 var properties = [];
+var suiteTemplate = '';
 function replacePropertyData(id){
   var field = '';
   $('[data-place="property"]').each(function() {
@@ -108,6 +109,8 @@ function replacePropertyData(id){
 function replacePropertySuites(id){
   var suiteview = '';
   var firstsuite = 0;
+  
+  replaceSuiteList(id);
 
   $('[data-place="property-suites"]').each(function() {
       suiteview += `<li class="nav-item">
@@ -127,6 +130,40 @@ function replacePropertySuites(id){
       $(this).html(suiteview);
       //replaceRooms(id, firstsuite);
   });
+}
+
+function replaceSuiteList(id){
+  if(!suiteTemplate){
+    suiteTemplate = $('#suiteslist').html();
+  }
+  $('#suiteslist').html('');
+
+  var suiteItem = '';
+  var sid;
+  var roomimages;
+  var onlyThree;
+
+  properties[id].suites.forEach(function(suite){
+    if(suite.show_on_booking){
+      onlyThree = 0;
+      sid = suite['id'];
+      suiteItem = '<div class="property-suite-p'+sid+'">' + suiteTemplate + '</div>';
+
+      roomimages = '';
+      suite.rooms[0].images.forEach(function(rm){
+        if(onlyThree < 3){        
+          roomimages += `<div>
+              <img src="room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+            </div>`;  
+        }
+        onlyThree++; 
+      });
+      suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
+      $('#suiteslist').append(suiteItem);
+    }
+
+  });
+  setTimeout('appendResultGridSlider()', 2000);
 }
 
 function replaceSuiteDetail(property_id, category_id){
@@ -150,11 +187,21 @@ function replaceSuiteDetail(property_id, category_id){
 
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);
+  replacePropertyData(property_id);
 }
 
 function appendSlider(){  
   $('#suitelist1 .slider-detail').removeClass("slick-initialized slick-slider");
   $('#suitelist1 .slider-detail').slick({
+    slidesToShow: 1,
+    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+  });
+}
+
+function appendResultGridSlider(){  
+  $('#suiteslist .result-grid').removeClass("slick-initialized slick-slider");
+  $('#suiteslist .result-grid').slick({
     slidesToShow: 1,
     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
     nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
@@ -301,7 +348,7 @@ function replaceRooms(property_id, category_id){
   });
 
   $('[data-place="property-rooms"]').html(roomview);
-  $('.result-grid').slick({
+  $('.result-grid', $('[data-place="property-rooms"]')).slick({
     slidesToShow: 1,
     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
     nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'

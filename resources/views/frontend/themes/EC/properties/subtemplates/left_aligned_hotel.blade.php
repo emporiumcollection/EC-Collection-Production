@@ -1,4 +1,7 @@
 <script type="text/javascript">
+  if(properties === undefined){
+    var properties = [];
+  }
   properties[<?php echo $editorChoice->id;?>] = <?php echo json_encode($editorChoice);?>;
   properties[<?php echo $editorChoice->id;?>]['images'] = <?php echo json_encode($propertyImages);?>;
 </script>

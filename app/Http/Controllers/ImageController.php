@@ -33,6 +33,7 @@ class ImageController extends Controller {
     }
 
     private function initializeValues($scale, $file){
+        $this->image_path = public_path().'/uploads';
         $size = explode('x', $scale);
         $this->width = $size[0];
         $this->height = $size[1];

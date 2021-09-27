@@ -28,18 +28,22 @@ trait Property {
         $path = [];
         
         $category = Categories::select(['id', 'parent_category_id', 'category_name'])
-        ->where('category_name', '=', $keyword)
+        ->where('category_name', 'like', "%$keyword%")
         ->get()
         ->toArray();
 
-        $path[$category[0]['id']] = $category[0]['category_name'];
+        if(!empty($category)){
+            $path[$category[0]['id']] = $category[0]['category_name'];
 
-        while($category[0]['parent_category_id']!=0){
-            $category = $this->getParentCategory($category[0]['parent_category_id']);
-            $catId = $category[0]['id'];
-            $parentId = $category[0]['parent_category_id'];
-            
-            $path[$catId] = $category[0]['category_name'];
+            while($category[0]['parent_category_id']!=0){
+                $category = $this->getParentCategory($category[0]['parent_category_id']);
+                $catId = $category[0]['id'];
+                $parentId = $category[0]['parent_category_id'];
+                
+                $path[$catId] = $category[0]['category_name'];
+            }
+        } else {
+            return [];
         }
 
         $path = array_reverse($path);

@@ -35,7 +35,7 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript">
   var channelurl = '{{URL::to("getyoutubechannel/")}}';
-  setTimeout("getDefaultChannel('<?php echo $location[0]['category_alias'];?>')", 5000);
+  setTimeout("getDefaultChannel('<?php echo isset($location[0]['category_alias'])?$location[0]['category_alias']:'';?>')", 5000);
 </script>
 @section('content')
 <div class="content-em">
@@ -114,7 +114,7 @@
           <div class="main-page-banner">
             <div class="img-main-banner">
               <div>
-                <img src="uploads/category_imgs/<?php echo $location[0]['category_image']; ?>" class="img-fluid"
+                <img src="uploads/category_imgs/<?php echo isset($location[0]['category_image'])?$location[0]['category_image']:''; ?>" class="img-fluid"
                   alt="">
               </div>
               <div>
@@ -160,7 +160,7 @@
               <div class="content-inner">
                 <h3 class="mb-4">{{ $keyword }}</h3>
                 <p>
-                  <?php echo $location[0]['category_description'];?>
+                  <?php echo isset($location[0]['category_description'])?$location[0]['category_description']:'';?>
                 </p>
               </div>
             </div>
