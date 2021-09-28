@@ -86,6 +86,7 @@ trait Property {
             'carpark'
             ])
         ->with([
+            'boards',
             'container',
             'suites' => function($query){
                 return $query->with(['rooms', 'amenities']);
@@ -129,6 +130,7 @@ trait Property {
     public function getFeaturedProperties($keyword){
         return properties::select(['id', 'property_name', 'property_short_name', 'detail_section1_title', 'detail_section1_description_box1', 'detail_section1_description_box2'])
         ->with([
+            'boards',
             'container',
             'images',
             'suites' => function($query){
@@ -190,6 +192,7 @@ trait Property {
             'address', 
         ])
         ->with([
+            'boards',
             'container',
             'images',
             'PropertyCategoryPackages' => function($query){

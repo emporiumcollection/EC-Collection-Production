@@ -75,7 +75,7 @@
                 <a href="#" class="view btn-sidebar i-none" data-sidebar="#availability">
                     Availability
                 </a>
-                <a href="#" class="view btn-sidebar i-none" data-sidebar="#suiteinfo">
+                <a href="#" class="view btn-sidebar i-none" data-sidebar="#suiteinfo" onclick="replaceSuiteBoard();">
                     Suite Info
                 </a>
                 <div class="hotel-title i-none">

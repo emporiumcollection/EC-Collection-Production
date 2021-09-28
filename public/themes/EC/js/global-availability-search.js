@@ -1,6 +1,9 @@
 var properties = [];
 var suiteTemplate = '';
+var boardTemplate = '';
+var currentPropertyId = '';
 function replacePropertyData(id){
+  currentPropertyId = id;
   var field = '';
   $('[data-place="property"]').each(function() {
       field = $(this).attr('data-replace');
@@ -109,6 +112,7 @@ function replacePropertyData(id){
 function replacePropertySuites(id){
   var suiteview = '';
   var firstsuite = 0;
+  currentPropertyId = id;
   
   replaceSuiteList(id);
 
@@ -133,6 +137,7 @@ function replacePropertySuites(id){
 }
 
 function replaceSuiteList(id){
+  currentPropertyId = id;
   if(!suiteTemplate){
     suiteTemplate = $('#suiteslist').html();
   }
@@ -167,6 +172,7 @@ function replaceSuiteList(id){
 }
 
 function replaceSuiteDetail(property_id, category_id){
+  currentPropertyId = property_id;
   var suite;
   properties[property_id]['suites'].forEach(function(e){
     if(category_id === e.id){
@@ -188,6 +194,21 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);
   replacePropertyData(property_id);
+}
+
+function replaceSuiteBoard(){
+  if(!boardTemplate){
+    boardTemplate = $('#suiteinfo .suite-board-body').html();
+  }
+  $('#suiteinfo .suite-board-body').html('');
+
+  var boards = properties[currentPropertyId].boards;
+  var boardHtml='';
+  boards.forEach(function(b){
+    boardHtml = boardTemplate.replace('<!--PROPERTY-BOARD-TITLE-->', b.board_name);
+    boardHtml = boardHtml.replace('<!--PROPERTY-BOARD-RATE-->', b.board_rackrate);
+    $('#suiteinfo .suite-board-body').append(boardHtml);
+  });
 }
 
 function appendSlider(){  
