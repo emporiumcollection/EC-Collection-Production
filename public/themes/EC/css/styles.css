@@ -31297,20 +31297,7 @@ span.calElement.prev:hover {
 
 .result-grid .slick-slide {
   width: 100%;
-  position: relative;
-  overflow: hidden;
-  padding-bottom: 10%; }
-  .result-grid .slick-slide img {
-    width: auto;
-    left: 50%;
-    right: auto;
-    top: 50%;
-    bottom: auto;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    width: 100%;
-    object-fit: cover;
-    height: 100%; }
+  position: relative; }
 
 #suitesside-tabContent {
   padding-right: 35%;
@@ -31945,7 +31932,8 @@ span.calElement.prev:hover {
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding-bottom: 9%; }
+  padding-bottom: 477px;
+  height: 0; }
   .slider-detail .slick-slide img,
   .slider-detail .slick-slide .videoWrapper {
     left: 50%;
@@ -33299,23 +33287,28 @@ section {
     width: 50px;
     height: 30px; }
 
-  .grid-row-1 {
-    grid-row-end: span 3; }
-  
-  .grid-row-3 {
-    grid-row-end: span 3; }
-  
-  .grid-row-4 {
-    grid-row-end: span 4; }
-  
-  .grid-row-5 {
-    grid-row-end: span 3; }
-  
-  .grid-row-6 {
-    grid-row-end: span 4; }
-  
-  .grid-row-17 {
-      grid-row-end: span 17; }
+.span-1 {
+  grid-column-end: span 4;
+  grid-row-end: span 2; }
+
+.span-2 {
+  grid-column-end: span 2;
+  grid-row-end: span 2; }
+
+.grid-row-1 {
+  grid-row-end: span 3; }
+
+.grid-row-3 {
+  grid-row-end: span 3; }
+
+.grid-row-4 {
+  grid-row-end: span 4; }
+
+.grid-row-5 {
+  grid-row-end: span 3; }
+
+.grid-row-6 {
+  grid-row-end: span 4; }
 
 .grid-row-17 {
   grid-row-end: span 17; }
