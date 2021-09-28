@@ -389,7 +389,7 @@
                                             type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1" required>
+                                        <input type="checkbox" name="terms" class="custom-control-input A" id="customCheck1" required>
                                         <label class="custom-control-label" for="customCheck1">
                                             I agree to the Emporium-Collection Terms & Conditions and have read the Privacy
                                             Policy.
@@ -398,7 +398,7 @@
                                     </div>
                                    
                                     <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" name="B" class="custom-control-input" id="customCheck2" required>
+                                        <input type="checkbox" name="B" class="custom-control-input B" id="customCheck2" required>
                                         <label class="custom-control-label" for="customCheck2">
                                             I agree that my personal data will be collected and stored and used
                                             electronically to help the reservation agents with specialized offers pertaining
@@ -409,7 +409,7 @@
                                         <p style="color: red; display: none" id="B"><strong>select checkboxe</strong></p>
                                     </div>
                                      <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" name="C" class="custom-control-input" id="customCheck3" required>
+                                        <input type="checkbox" name="C" class="custom-control-input C" id="customCheck3" required>
                                         <label class="custom-control-label" for="customCheck3">
                                             Emporium-Collection Privacy Policy <br>
                                             I have read and agree to the Emporium-Collection Privacy Policy.
@@ -417,7 +417,7 @@
                                         <p style="color: red; display: none" id="C"><strong>select checkboxe</strong></p>
                                     </div>
                                     <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" name="D" class="custom-control-input" id="customCheck4" required>
+                                        <input type="checkbox" name="D" class="custom-control-input D" id="customCheck4" required>
                                         <label class="custom-control-label" for="customCheck4">
                                             I Agree to the Emporium-Collection Privacy &amp; Data Protection Policy
                                         </label>
@@ -548,6 +548,18 @@
             });
             $(".answer").focusin(function(){
                 $("#ans_error").hide();
+            });
+            $(".A").focusin(function(){
+                $("#term").hide();
+            });
+            $(".B").focusin(function(){
+                $("#B").hide();
+            });
+            $(".C").focusin(function(){
+                $("#C").hide();
+            });
+            $(".D").focusin(function(){
+                $("#D").hide();
             });
 
         $(document).ready(function() {
