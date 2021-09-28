@@ -33299,22 +33299,23 @@ section {
     width: 50px;
     height: 30px; }
 
-.span-1 {
-  grid-column-end: span 4;
-  grid-row-end: span 2; }
-
-.span-2 {
-  grid-column-end: span 2;
-  grid-row-end: span 2; }
-
-.grid-row-1 {
-  grid-row-end: span 3; }
-
-.grid-row-3 {
-  grid-row-end: span 3; }
-
-.grid-row-4 {
-  grid-row-end: span 4; }
+  .grid-row-1 {
+    grid-row-end: span 3; }
+  
+  .grid-row-3 {
+    grid-row-end: span 3; }
+  
+  .grid-row-4 {
+    grid-row-end: span 4; }
+  
+  .grid-row-5 {
+    grid-row-end: span 3; }
+  
+  .grid-row-6 {
+    grid-row-end: span 4; }
+  
+  .grid-row-17 {
+      grid-row-end: span 17; }
 
 .grid-row-17 {
   grid-row-end: span 17; }
