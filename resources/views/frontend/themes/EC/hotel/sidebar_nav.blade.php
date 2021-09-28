@@ -27,31 +27,31 @@
           <div class="collapse " id="suite">
             <ul class="nav flex-column nav-sidebar is-small">
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/user/suite">All Suites</a>
+                <a class="nav-link nav-link-sub" href="/hotel/suite">All Suites</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/user/detailsuite">The Mark Fire Bedroom Terrace Suite</a>
+                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">The Mark Fire Bedroom Terrace Suite</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/detailsuite">Suite Name</a>
+                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/user/detailsuite">Suite Name</a>
+                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/user/detailsuite">Suite Name</a>
+                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/user/detailsuite">Suite Name</a>
+                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
               </li>
             </ul>
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/user/architecture">Architecture</a>
+          <a class="nav-link " href="/hotel/architecture">Architecture</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " href="/user/spa">Spa & Wellness </a>
+          <a class="nav-link " href="/hotel/spa">Spa & Wellness </a>
         </li>
         <li class="nav-item">
           <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#restaurant" role="button" aria-expanded="false"
@@ -61,37 +61,37 @@
           <div class="collapse " id="restaurant">
             <ul class="nav flex-column nav-sidebar is-small">
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/user/restaurant">All Restaurant</a>
+                <a class="nav-link nav-link-sub" href="/hotel/restaurant">All Restaurant</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/user/detailrestaurant">Restaurant Name</a>
+                <a class="nav-link nav-link-sub" href="/hotel/detailrestaurant">Restaurant Name</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/user/detailrestaurant">Restaurant Name</a>
+                <a class="nav-link nav-link-sub" href="/hotel/detailrestaurant">Restaurant Name</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/user/detailrestaurant">Restaurant Name</a>
+                <a class="nav-link nav-link-sub" href="/hotel/detailrestaurant">Restaurant Name</a>
               </li>
             </ul>
           </div>
         </li>
         <li class="nav-item">
-          <a class="nav-link @@locActive" href="/user/location">Location</a>
+          <a class="nav-link @@locActive" href="/hotel/location">Location</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link active" href="/user/experiences">Experiences</a>
+          <a class="nav-link active" href="/hotel/experiences">Experiences</a>
         </li>
         <li class="nav-item">
           <a class="nav-link btn-sidebar" href="#" data-sidebar="#gallery">Gallery</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link @@sosActive" href="/user/social">Social</a>
+          <a class="nav-link @@sosActive" href="/hotel/social">Social</a>
         </li>
         <li class="nav-item">
           <a class="nav-link @@comActive" href="#">Video Channel</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link @@faq" href="/faq">FAQ</a>
+          <a class="nav-link @@faq" href="/hotel/faq">FAQ</a>
         </li>
       </ul>
     </div>

@@ -40,17 +40,17 @@ Route::get('/users/companion', 'UserController@getCompanion');
 
 //HotelDetail Routes
 
-Route::get('/user/hoteldetail', 'FrontEnd\HotelDetailController@hoteldetail');
-Route::get('/user/suite', 'FrontEnd\HotelDetailController@suites');
-Route::get('/user/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
-Route::get('/user/architecture', 'FrontEnd\HotelDetailController@architecture');
-Route::get('/user/spa', 'FrontEnd\HotelDetailController@spa');
-Route::get('/user/restaurant', 'FrontEnd\HotelDetailController@restaurant');
-Route::get('/user/detailrestaurant','FrontEnd\HotelDetailController@detailrestaurant');
-Route::get('/user/location','FrontEnd\HotelDetailController@location');
-Route::get('/user/experiences','FrontEnd\HotelDetailController@experiences');
-Route::get('/user/social','FrontEnd\HotelDetailController@social');
-Route::get('/faq','FrontEnd\HotelDetailController@faq');
+Route::get('/hotel/hoteldetail', 'FrontEnd\HotelDetailController@hoteldetail');
+Route::get('/hotel/suite', 'FrontEnd\HotelDetailController@suites');
+Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
+Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture');
+Route::get('/hotel/spa', 'FrontEnd\HotelDetailController@spa');
+Route::get('/hotel/restaurant', 'FrontEnd\HotelDetailController@restaurant');
+Route::get('/hotel/detailrestaurant','FrontEnd\HotelDetailController@detailrestaurant');
+Route::get('/hotel/location','FrontEnd\HotelDetailController@location');
+Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
+Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
+Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
 
 
 Route::get('/users/security', 'UserController@getSecurity');
