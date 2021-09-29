@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\controller;
 use App\Models\Reservations;
 use Illuminate\Http\Request;
+use App\Models\PropertyCategoryTypes;
+
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator,
     Input,
@@ -46,15 +48,18 @@ class ReservationsController extends Controller {
         $file_name = 'frontend.themes.reservation.pages.reservations';
         return view($file_name,compact('atmosphere','facilities','style'));
     }
-    public function when()
-    {        
-        \Session::put('property_id', 1);
-        \Session::put('arrival_date',date('d-m-y'));
-        \Session::put('departure_date',date('Y-m-d'));
-        \Session::put('suites',2);
-        //print_r (\Session::get('suites'));exit;
-        \Session::put('adult',2);
-        \Session::put('children',2);
+    public function when(Request $request)
+    {
+        $properties = PropertyCategoryTypes::first();
+
+        $request->session()->put('suite_name',$properties->category_name);
+        $request->session()->put('property_id', 1);
+        $request->session()->put('arrival_date',date('j F Y'));
+        $request->session()->put('departure_date',date('j F Y'));
+        $request->session()->put('suites',2);  
+        $request->session()->put('adult',2);
+        $request->session()->put('children',2);        
+
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -68,13 +73,6 @@ class ReservationsController extends Controller {
 
     public function where()
     {
-        \Session::put('property_id', 1);
-        \Session::put('arrival_date',date('d-m-y'));
-        \Session::put('departure_date',date('Y-m-d'));
-        \Session::put('suites',2);
-        //print_r (\Session::get('suites'));exit;
-        \Session::put('adult',2);
-        \Session::put('children',2);
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';

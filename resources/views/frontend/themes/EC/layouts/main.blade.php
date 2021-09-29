@@ -222,6 +222,45 @@
 
 $(function() {
 
+    if ($('.fromdate, .todate').length) {
+      // check if element is available to bind ITS ONLY ON HOMEPAGE
+      var currentDate = new Date();
+
+      $('.fromdate, .todate').daterangepicker({
+        locale: {
+          format: 'DD MMM YYYY'
+        },
+        "minDate": currentDate,
+        autoApply: true,
+        autoUpdateInput: false
+      }, function (start, end, label) {
+        // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
+        // Lets update the fields manually this event fires on selection of range
+        var selectedStartDate = start.format('DD MMM YYYY'); // selected start
+        var selectedEndDate = end.format('DD MMM YYYY'); // selected end
+
+        $checkinInput = $('.fromdate');
+        $checkoutInput = $('.todate');
+
+        // Updating Fields with selected dates
+        $checkinInput.val(selectedStartDate);
+        $checkoutInput.val(selectedEndDate);
+
+        // Setting the Selection of dates on calender on CHECKOUT FIELD (To get this it must be binded by Ids not Calss)
+        var checkOutPicker = $checkoutInput.data('daterangepicker');
+        checkOutPicker.setStartDate(selectedStartDate);
+        checkOutPicker.setEndDate(selectedEndDate);
+
+        // Setting the Selection of dates on calender on CHECKIN FIELD (To get this it must be binded by Ids not Calss)
+        var checkInPicker = $checkinInput.data('daterangepicker');
+        checkInPicker.setStartDate(selectedStartDate);
+        checkInPicker.setEndDate(selectedEndDate);
+
+      });
+
+    } // End Daterange Picke
+    
+
     $('.field-count-reservation').on('click', '.plus-room', function () {
       if ($(this).prev().find('.mr-1').html() < 5) {
         $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
@@ -308,6 +347,7 @@ $(function() {
         $(this).closest('.field-count-reservation').find('.min').addClass('disable');
       }
     });
+
     $(document).on('click', ".dest-collection", function(e){
         e.preventDefault();
         //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');

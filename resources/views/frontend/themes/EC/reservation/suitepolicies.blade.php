@@ -68,28 +68,9 @@
 
           </div>
           <div class="col-lg-3 col-md-4 mb-4">
-            <div class="reservation-summary">
-              <h4>YOUR RESERVATION</h4>
-              <p><b>Belmond Jimbaran Puri</b></p>
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Guests</td>
-                  <td class="px-0 py-1 text-right">2 Guests</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Check-in</td>
-                  <td class="px-0 py-1 text-right">14 August 2020</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Check-out</td>
-                  <td class="px-0 py-1 text-right">15 August 2020</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Suites</td>
-                  <td class="px-0 py-1 text-right">Pavilion suite</td>
-                </tr>
-              </table>
-            </div>
+
+          @include('frontend.themes.EC.reservation.reservation-summary')
+          
             <div class="reservation-total">
               <table class="table table-borderless mb-0">
                 <tr>
