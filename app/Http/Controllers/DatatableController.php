@@ -59,13 +59,13 @@ class DatatableController extends Controller
             $preferences = DB::table('tb_personalized_services')
                 ->select('ps_id','customer_id','first_name','adults','youth','children','toddlers','earliest_arrival','late_check_out','stay_time','note')
                 ->orderBy('ps_id',$Order)
-                ->where('user_id',$user->id)        
+                ->where('customer_id',$user->id)        
                 ->get();   
         }
         else{
             $preferences = DB::table('tb_personalized_services')
                 ->select('ps_id','customer_id','first_name','adults','youth','children','toddlers','earliest_arrival','late_check_out','stay_time','note')
-                ->where('user_id',$user->id)
+                ->where('customer_id',$user->id)
                 ->get();    
         }
         return $preferences;
