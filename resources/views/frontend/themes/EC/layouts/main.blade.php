@@ -216,157 +216,11 @@
     @parent
 @show
 
+
+
 <script>
 
- if ($('.fromdate, .todate').length) {
-      // check if element is available to bind ITS ONLY ON HOMEPAGE
-      var currentDate = moment().format("DD-MM-YYYY");
-
-      $('.fromdate, .todate').daterangepicker({
-        locale: {
-          format: 'DD MMM YYYY'
-        },
-        "minDate": currentDate,
-        autoApply: true,
-        autoUpdateInput: false
-      }, function (start, end, label) {
-        // console.log("New date range selected: ' + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD') + ' (predefined range: ' + label + ')");
-        // Lets update the fields manually this event fires on selection of range
-        var selectedStartDate = start.format('DD MMM YYYY'); // selected start
-        var selectedEndDate = end.format('DD MMM YYYY'); // selected end
-
-        $checkinInput = $('.fromdate');
-        $checkoutInput = $('.todate');
-
-        // Updating Fields with selected dates
-        $checkinInput.val(selectedStartDate);
-        $checkoutInput.val(selectedEndDate);
-
-        // Setting the Selection of dates on calender on CHECKOUT FIELD (To get this it must be binded by Ids not Calss)
-        var checkOutPicker = $checkoutInput.data('daterangepicker');
-        checkOutPicker.setStartDate(selectedStartDate);
-        checkOutPicker.setEndDate(selectedEndDate);
-
-        // Setting the Selection of dates on calender on CHECKIN FIELD (To get this it must be binded by Ids not Calss)
-        var checkInPicker = $checkinInput.data('daterangepicker');
-        checkInPicker.setStartDate(selectedStartDate);
-        checkInPicker.setEndDate(selectedEndDate);
-
-      });
-
-    } // End Daterange Picker
-
-    $(document).on("click", ".btn-use-addr", function (e) {
-      e.preventDefault();
-      $('.btn-use-addr').removeClass('active')
-      $(this).addClass('active')
-    });
-    $(".nav-wizard-active").click(function () {
-      $('.nav-wizard-primary').addClass('active');
-      $('body').append("<div class='wizard-overlay'>");
-    });
-
-    $(document).on('click', '.wizard-overlay', function () {
-      $('.nav-wizard-primary').removeClass('active');
-      $(this).remove();
-    });
-
-
-
-    // var map = L.map('map').setView([11.206051, 122.447886], 8);
-
-    var myIcon = L.icon({
-      iconUrl: 'images/basic_geolocalize-01.svg',
-      iconSize: [40, 45],
-    });
-    var locations = [
-      ['<b>Loaction Name</b>', 11.8166, 122.0942],
-    ];
-    L.tileLayer(
-      'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-    }).addTo(map);
-
-    for (var i = 0; i < locations.length; i++) {
-      marker = new L.marker([locations[i][1], locations[i][2]], { icon: myIcon })
-        .bindPopup(locations[i][0])
-        .addTo(map);
-    }
-
-
-    $('#smartwizard').smartWizard({
-      theme: 'arrows',
-      selected: 0,
-      enableURLhash: false,
-      toolbarSettings: {
-        showNextButton: false,
-        showPreviousButton: false,
-      },
-
-    });
-
-    $(".availability-check").on("click", function () {
-      $('#smartwizard').smartWizard("next");
-      $('.img-offset-slide').slick('setPosition');
-      var iis = $(this).closest('.tab-pane').attr('id');
-      $(".nav-wizard-active span").removeClass('active');
-      $("[data-id='" + iis + "']").addClass('active');
-      return true;
-    });
-
-    $(".btn-nextwizard").on("click", function (e) {
-      $('#smartwizard').smartWizard("next");
-      // $('.result-grid').slick('setPosition');
-      setTimeout(function () {
-        map.invalidateSize();
-      }, 100);
-      var iis = $(this).closest('.tab-pane').attr('id');
-      $(".nav-wizard-active span").removeClass('active');
-      $("[data-id='" + iis + "']").addClass('active');
-      return true;
-    });
-
-    $('.goto-guest').on("click", function (e) {
-        alert();
-      $('#smartwizard').smartWizard("next");
-      var iis = $(this).closest('.tab-pane').attr('id');
-      $(".nav-wizard-active span").removeClass('active');
-      $("[data-id='" + iis + "']").addClass('active');
-      return true;
-    })
-
-
-    $(".btn-newreserve").on("click", function () {
-      $('#smartwizard').smartWizard("prev");
-      var iis = $(this).closest('.tab-pane').attr('id');
-      $(".nav-wizard-active span").removeClass('active');
-      $("[data-id='" + iis + "']").addClass('active');
-      return true;
-    });
-    $(".btn-backwizard").on("click", function () {
-      $('#smartwizard').smartWizard("prev");
-      var iis = $(this).closest('.tab-pane').attr('id');
-      $(".nav-wizard-active span").removeClass('active');
-      $("[data-id='" + iis + "']").closest('.nv-wz').prev().prev().find('span').addClass('active');
-      return true;
-    });
-
-    $('.nav-wizard-primary .nav-link').click(function () {
-      $(this).closest('.nav-wizard-primary').removeClass('active');
-      $(".wizard-overlay").remove();
-      if ($(this).hasClass('active')) {
-        var idNav = $(this).attr("href");
-        var sp = idNav.split("#").join("");
-        $(".nav-wizard-active span").removeClass('active');
-        $("[data-id='" + sp + "']").closest('.nv-wz').prev().find('span').addClass('active');
-      }
-    })
-
-    $('.policies').on('show.bs.collapse', function () {
-      $('.collapse.show').each(function () {
-        $(this).collapse('hide');
-      });
-    });
+$(function() {
 
     $('.field-count-reservation').on('click', '.plus-room', function () {
       if ($(this).prev().find('.mr-1').html() < 5) {
@@ -454,8 +308,6 @@
         $(this).closest('.field-count-reservation').find('.min').addClass('disable');
       }
     });
-
-$(function() {
     $(document).on('click', ".dest-collection", function(e){
         e.preventDefault();
         //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');

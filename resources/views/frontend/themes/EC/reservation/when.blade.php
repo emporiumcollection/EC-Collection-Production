@@ -28,14 +28,14 @@
             <div class="col">
               <p><b>Arrival date</b></p>
               <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line fromdate" value="22 Jun 2021">
+                <input type="text" class="form-control form-line fromdate" value="{!! Session::get('arrival_date') !!}">
                 <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
             </div>
             <div class="col">
               <p><b>Departure date</b></p>
               <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line todate" value="23 Jun 2021">
+                <input type="text" class="form-control form-line todate" value="{!! Session::get('departure_date') !!}">
                 <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
             </div>

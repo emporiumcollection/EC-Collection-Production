@@ -15,7 +15,7 @@ class ReservationsController extends Controller {
     protected $layout = "layouts.main";
     protected $data = array();
     public $module = 'reservations';
-    static $per_page = '10';
+    static $per_page = '10';        
 
     public function __construct() {
 
@@ -47,7 +47,14 @@ class ReservationsController extends Controller {
         return view($file_name,compact('atmosphere','facilities','style'));
     }
     public function when()
-    {
+    {        
+        \Session::put('property_id', 1);
+        \Session::put('arrival_date',date('d-m-y'));
+        \Session::put('departure_date',date('Y-m-d'));
+        \Session::put('suites',2);
+        //print_r (\Session::get('suites'));exit;
+        \Session::put('adult',2);
+        \Session::put('children',2);
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -61,6 +68,13 @@ class ReservationsController extends Controller {
 
     public function where()
     {
+        \Session::put('property_id', 1);
+        \Session::put('arrival_date',date('d-m-y'));
+        \Session::put('departure_date',date('Y-m-d'));
+        \Session::put('suites',2);
+        //print_r (\Session::get('suites'));exit;
+        \Session::put('adult',2);
+        \Session::put('children',2);
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
