@@ -667,10 +667,10 @@
         });
 
         function nextTab(elem) {
-            $(elem).closest('.nav-item').next().find('a[data-toggle="tab"]').click();
+            $(elem).closest('.nav-item').next().find('a[data-toggle="tab"]').tab('show');
         }
         function prevTab(elem) {
-            $(elem).closest('.nav-item').prev().find('a[data-toggle="tab"]').click();
+            $(elem).closest('.nav-item').prev().find('a[data-toggle="tab"]').tab('show');
         }
 
         $('.nationality').select2({

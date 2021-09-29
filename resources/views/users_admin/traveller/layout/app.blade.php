@@ -577,7 +577,7 @@
   <link href="{{ asset('assets/users/assets/css/pages/wizard/wizard-3.css')}}" rel="stylesheet" type="text/css" />
 
   <script src="{{ asset('assets/users/assets/js/pages/crud/forms/widgets/select2.js')}}"></script>
-  <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
+  <!--<script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>-->
   <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
   <script>    
     $('.experience-slider').slick({
