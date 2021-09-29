@@ -1007,9 +1007,7 @@ button[data-kt-indicator="on"] .indicator-progress {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: 14px;
-    padding-left: 10px;
-    padding-right: 10px;
+    font-size: 16px;
 }
 
 .bg-grey {
@@ -1032,7 +1030,6 @@ button[data-kt-indicator="on"] .indicator-progress {
 .preferences-btn {
     position: relative;
     margin-top: -85px;
-    z-index: 99;
 }
 
 .preferences-btn-list {
@@ -1401,7 +1398,7 @@ button[data-kt-indicator="on"] .indicator-progress {
     padding-top: 0;
 }
 
-.default-set {
+.default-set{
     background: #fafafa;
     display: inline-block;
     border-radius: 6px;
@@ -1601,10 +1598,10 @@ button[data-kt-indicator="on"] .indicator-progress {
     top: 0 !important;
     padding: 0;
 }
-.credit-balance {
+.credit-balance{
     max-width: 500px;
     font-size: 16px;
-    border-bottom: 1px solid #ebedf3;
+    border-bottom: 1px solid #EBEDF3;
     padding-bottom: 15px;
     margin-bottom: 15px;
 }
@@ -1614,8 +1611,7 @@ button[data-kt-indicator="on"] .indicator-progress {
 .w-700 {
     max-width: 700px;
 }
-.tab-line-cs .nav-link.active,
-.tab-line-cs .nav-link:hover {
+.tab-line-cs .nav-link.active, .tab-line-cs .nav-link:hover {
     color: #000 !important;
     border-color: #000 !important;
 }
@@ -1628,19 +1624,6 @@ button[data-kt-indicator="on"] .indicator-progress {
 
 .radio-box > input:checked ~ .radio-box-label {
     border: 1px #505363 solid;
-}
-.container-xxl,
-.container-xl,
-.container-lg,
-.container-md,
-.container-sm,
-.container {
-    max-width: 1290px;
-}
-
-.container > .card.card-custom > .card-header, .container > .card.card-custom > .card-body {
-    padding-left: 0;
-    padding-right: 0;
 }
 @media (max-width: 1627.98px) {
     .reservation-widget > .row > .col-md-4 {
@@ -1686,8 +1669,4 @@ button[data-kt-indicator="on"] .indicator-progress {
     .guest-adult {
         font-size: 12px;
     }
-}
-
-.content > .d-flex > .container-fluid {
-    max-width: 1345px;
 }
