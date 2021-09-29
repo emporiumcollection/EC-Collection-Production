@@ -83,15 +83,15 @@
             <div class="prev"><i class="ico ico-back"></i></div>
             <div class="next"><i class="ico ico-next"></i></div>
             <div class="hotel-meta full-width hotel-meta-details">
-                <a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews">
+                <!--<a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews">
                     Reviews
-                </a>
+                </a>-->
                 <a href="#" class="view btn-sidebar i-none" data-sidebar="#quickinfo">
                     Hotel Info
                 </a>
-                <a href="#" class="view btn-sidebar i-none" data-sidebar="#policies">
+                <!--<a href="#" class="view btn-sidebar i-none" data-sidebar="#policies">
                     Policies
-                </a>
+                </a>-->
                 <div class="hotel-prices hotel-price-detail d-flex">
                     <div class="row align-items-center justify-content-center">
                         <div class="mr-2">

@@ -28,18 +28,22 @@ trait Property {
         $path = [];
         
         $category = Categories::select(['id', 'parent_category_id', 'category_name'])
-        ->where('category_name', '=', $keyword)
+        ->where('category_name', 'like', "%$keyword%")
         ->get()
         ->toArray();
 
-        $path[$category[0]['id']] = $category[0]['category_name'];
+        if(!empty($category)){
+            $path[$category[0]['id']] = $category[0]['category_name'];
 
-        while($category[0]['parent_category_id']!=0){
-            $category = $this->getParentCategory($category[0]['parent_category_id']);
-            $catId = $category[0]['id'];
-            $parentId = $category[0]['parent_category_id'];
-            
-            $path[$catId] = $category[0]['category_name'];
+            while($category[0]['parent_category_id']!=0){
+                $category = $this->getParentCategory($category[0]['parent_category_id']);
+                $catId = $category[0]['id'];
+                $parentId = $category[0]['parent_category_id'];
+                
+                $path[$catId] = $category[0]['category_name'];
+            }
+        } else {
+            return [];
         }
 
         $path = array_reverse($path);
@@ -82,6 +86,7 @@ trait Property {
             'carpark'
             ])
         ->with([
+            'boards',
             'container',
             'suites' => function($query){
                 return $query->with(['rooms', 'amenities']);
@@ -125,6 +130,7 @@ trait Property {
     public function getFeaturedProperties($keyword){
         return properties::select(['id', 'property_name', 'property_short_name', 'detail_section1_title', 'detail_section1_description_box1', 'detail_section1_description_box2'])
         ->with([
+            'boards',
             'container',
             'images',
             'suites' => function($query){
@@ -186,6 +192,7 @@ trait Property {
             'address', 
         ])
         ->with([
+            'boards',
             'container',
             'images',
             'PropertyCategoryPackages' => function($query){

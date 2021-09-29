@@ -574,14 +574,13 @@ $(function() {
     });
 
     
-console.log(sp_arr);
     var newArrDt = new Date(_year, _month, _day);
 
     var _dday = '';
     var _dmonth = '';
     var _dyear = '';
     var sp_darr = depDt.toDateString().split('-');
-console.log(sp_darr);
+
     if(sp_darr.length > 2){
         _dyear = sp_darr[0];
         _dmonth = sp_darr[2];

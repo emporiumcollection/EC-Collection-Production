@@ -1,16 +1,15 @@
-<div class="tab-pane fade show active" id="suiteslist" role="tabpanel"
-                            aria-labelledby="suiteslist-tab">
-    <div>
+<div class="tab-pane fade show active" id="suiteslist" role="tabpanel" aria-labelledby="suiteslist-tab">
+    <div [template-suite-class]>
         <div class="header-suite-list justify-content-between align-items-center mb-2">
             <div class="title-outer-container">
                 <div class="title-main offset-930 pr-3 title-subs">
                     <h2>Premiere Suite</h2>
                 </div>
-                <div class="meta-title">
+                <!--<div class="meta-title">
                     <span>Sleeps</span>
                     <span>2 Queens beds </span>
                     <span>Suite size: 643 ft</span>
-                </div>
+                </div>-->
             </div>
             <div class="dropdown ipad-view">
                 <button class="btn dropdown-toggle p-0" type="button" id="suiteDetail"
@@ -35,15 +34,7 @@
         </div>
         <div class="inner-wrapper hotel-page-list mb-0910">
             <div class="pr-lst result-grid slider-big">
-                <div>
-                    <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                </div>
-                <div>
-                    <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                </div>
-                <div>
-                    <img src="images/53511811337-49267444221.jpg" class="w-100" alt="">
-                </div>
+                <!--TEMPLATE-SUITE-GALLERY-->
             </div>
             <div class="my-dropdown">
                 <div class="btn-group dropleft">
@@ -84,7 +75,7 @@
                 <a href="#" class="view btn-sidebar i-none" data-sidebar="#availability">
                     Availability
                 </a>
-                <a href="#" class="view btn-sidebar i-none" data-sidebar="#suiteinfo">
+                <a href="#" class="view btn-sidebar i-none" data-sidebar="#suiteinfo" onclick="replaceSuiteBoard();">
                     Suite Info
                 </a>
                 <div class="hotel-title i-none">

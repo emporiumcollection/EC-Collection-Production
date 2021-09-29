@@ -7,7 +7,7 @@
     <div class="pr-lst result-grid global-search-resultbox">
       <?php foreach($property->propertyImages as $image):?>
         <div>
-          <img src="<?php echo 'property-image/resize/450x320/'.$property['container']['name'].'/'.$image['file_name'];?>" alt="">
+          <img src="<?php echo 'property-image/resize/450x320/'.$property['container']['name'].'/'.$image['file_name'].'/property-image';?>" alt="">
         </div>
       <?php endforeach;?>
     </div>
