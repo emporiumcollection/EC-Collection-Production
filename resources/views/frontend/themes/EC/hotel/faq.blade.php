@@ -245,6 +245,7 @@
         </form>
     </div>
 </div>
+
 <div class="sidebar-main share-sidebar" id="question">
     <a href="#" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
@@ -267,7 +268,7 @@
                         <img src="images/QR-code.png" class="img-fluid" alt="">
                       </div>
                     </div>
-                  </div>
+                </div>
             </div>
             <div class="col-8">
                 <div class="hotel-user w-100">
@@ -275,9 +276,9 @@
                       <img src="images/img-profile.jpg" alt="">
                     </div>
                     <div class="usr-info">
-                      <h4 class=" mb-2"><b>June</b> Davidson</h4>
-                      <p class="dd--info mb-2">Luxury Lifstyle Agent</p>
-                      <p class="dd-location-info mb-0"><i class="ico ico-place-2"></i> Munch</p>
+                        <h4 class=" mb-2"><b>June</b> Davidson</h4>
+                        <p class="dd--info mb-2">Luxury Lifstyle Agent</p>
+                        <p class="dd-location-info mb-0"><i class="ico ico-place-2"></i> Munch</p>
                     </div>
                     <a href="#" class="plus-btn">+</a>
                 </div>
@@ -286,292 +287,291 @@
     </div>
 </div>
 <div class="sidebar">
-  <a href="#" class="sidebar-close">
-    <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
-      xmlns="http://www.w3.org/2000/svg">
-      <title>Close</title>
-      <path
-        d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
-      </path>
-    </svg>
+    <a href="#" class="sidebar-close">
+        <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+        xmlns="http://www.w3.org/2000/svg">
+            <title>Close</title>
+            <path
+                d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+            </path>
+        </svg>
     </i></a>
-  <ul class="nav nav-tabs nav-one" id="myTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <a class="nav-link active" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search"
-        aria-selected="true">Search</a>
-    </li>
-    <li class="nav-item" role="presentation">
-      <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
-        aria-selected="false">Settings</a>
-    </li>
-  </ul>
-  <div class="tab-content" id="myTabContent">
-    <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab">
-      <ul class="nav nav-tab-main nav-pills nav-justified mt-2">
+    <ul class="nav nav-tabs nav-one" id="myTab" role="tablist">
         <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login"
-            aria-selected="true">Login/register</a>
+          <a class="nav-link active" id="search-tab" data-toggle="tab" href="#search" role="tab" aria-controls="search"
+            aria-selected="true">Search</a>
         </li>
         <li class="nav-item" role="presentation">
-          <a class="nav-link" id="filter-tab" data-toggle="tab" href="#filter" role="tab" aria-controls="filter"
-            aria-selected="false">Filter</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" id="preference-tab" data-toggle="tab" href="#preference" role="tab"
-            aria-controls="preference" aria-selected="false">Preferences</a>
-        </li>
-      </ul>
-
-      <div class="tab-content mt-4" id="myTabContent">
-        <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
-          <!-- <a href="#" class="btn btn-primary"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a> -->
-          <div class="auth-screen">
-            <div class="auth-header">
-              <div class="row align-items-center">
-                <div class="col">
-                  NEED HELP ?
-                </div>
-              </div>
-            </div>
-            <div class="auth-content auth-signin active">
-              <div class="auth-body">
-                <h2>
-                  MEMBERS CLUB <br>
-                  LOGIN
-                </h2>
-                <form action="#">
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Email Address">
-                  </div>
-                  <div class="form-group form-group-inline">
-                    <input type="password" class="form-control" placeholder="Password">
-                    <a href="#">FORGOT?</a>
-                  </div>
-                  <div class="form-group ">
-                    <button class="btn btn-primary btn-block rounded-0" type="submit">LOG IN</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <div class="auth-content auth-signup">
-              <div class="auth-body">
-                <h2>
-                  Welcome to the Emporium Voyage <br> Members Club
-                </h2>
-                <form action="#">
-                  <select class="w-100 mb-3">
-                    <option value="">I AM:</option>
-                    <option value="">LUXURY HOTEL</option>
-                    <option value="">LUXURY TRAVELER</option>
-                    <option value="">BESPOKE ADVERTISER</option>
-                    <option value="">SUPPLIER</option>
-                    <option value="">DISTRIBUTOR</option>
-                  </select>
-                  <div class="form-group">
-                    <input type="email" class="form-control" placeholder="Email Address">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Phone Number">
-                  </div>
-                  <div class="form-group">
-                    <input type="password" class="form-control" placeholder="Password">
-                  </div>
-                  <div class="form-group">
-                    <p>
-                      By clicking on the become a member button, you agree to our <a href="#"
-                        class="underline">terms</a> and conditions default communication & privacy preferences.
-                    </p>
-                  </div>
-                  <div class="form-group">
-                    <button class="btn btn-primary btn-block rounded-0" type="submit">BECOME A BESPOKE MEMBER</button>
-                  </div>
-
-                </form>
-              </div>
-            </div>
-            <div class="auth-footer row m-0">
-              <button class="btn btn-auth col-6" data-member=".auth-signup">MEMBER SIGN UP</button>
-              <button class="btn btn-auth col-6" data-member=".auth-signin">MEMBER LOG IN</button>
-              <button class="btn btn-auth col-12" data-member=".auth-signin">ADVERTISER LOGIN</button>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane fade" id="filter" role="tabpanel" aria-labelledby="filter-tab">...</div>
-        <div class="tab-pane fade" id="preference" role="tabpanel" aria-labelledby="preference-tab">...</div>
-      </div>
-    </div>
-    <div class="tab-pane fade h-100" id="settings" role="tabpanel" aria-labelledby="settings-tab">
-      <ul class="nav nav-pills nav-justified nav-tab-main mt-2">
-        <li class="nav-item" role="presentation">
-          <a class="nav-link active" id="communication-tab" data-toggle="tab" href="#communication" role="tab"
-            aria-controls="communication" aria-selected="false">Communication</a>
-        </li>
-        <li class="nav-item" role="presentation">
-          <a class="nav-link" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting"
+            <a class="nav-link" id="settings-tab" data-toggle="tab" href="#settings" role="tab" aria-controls="settings"
             aria-selected="false">Settings</a>
         </li>
-      </ul>
+    </ul>
+<div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="search" role="tabpanel" aria-labelledby="search-tab">
+        <ul class="nav nav-tab-main nav-pills nav-justified mt-2">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="login-tab" data-toggle="tab" href="#login" role="tab" aria-controls="login"
+                aria-selected="true">Login/register</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="filter-tab" data-toggle="tab" href="#filter" role="tab" aria-controls="filter"
+                aria-selected="false">Filter</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="preference-tab" data-toggle="tab" href="#preference" role="tab"
+                aria-controls="preference" aria-selected="false">Preferences</a>
+            </li>
+        </ul>
 
-      <div class="tab-content mt-4" id="myTabContent">
+        <div class="tab-content mt-4" id="myTabContent">
+            <div class="tab-pane fade show active" id="login" role="tabpanel" aria-labelledby="login-tab">
+              <!-- <a href="#" class="btn btn-primary"><i class="fa fa-power-off" aria-hidden="true"></i> Logout</a> -->
+                <div class="auth-screen">
+                    <div class="auth-header">
+                      <div class="row align-items-center">
+                        <div class="col">
+                          NEED HELP ?
+                        </div>
+                      </div>
+                    </div>
+                    <div class="auth-content auth-signin active">
+                        <div class="auth-body">
+                            <h2>
+                              MEMBERS CLUB <br>
+                              LOGIN
+                            </h2>
+                            <form action="#">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="Email Address">
+                                </div>
+                                <div class="form-group form-group-inline">
+                                    <input type="password" class="form-control" placeholder="Password">
+                                    <a href="#">FORGOT?</a>
+                                </div>
+                                <div class="form-group ">
+                                    <button class="btn btn-primary btn-block rounded-0" type="submit">LOG IN</button>
+                                </div>
+                            </form>
+                      </div>
+                    </div>
+                    <div class="auth-content auth-signup">
+                        <div class="auth-body">
+                            <h2>
+                              Welcome to the Emporium Voyage <br> Members Club
+                            </h2>
+                            <form action="#">
+                            <select class="w-100 mb-3">
+                                <option value="">I AM:</option>
+                                <option value="">LUXURY HOTEL</option>
+                                <option value="">LUXURY TRAVELER</option>
+                                <option value="">BESPOKE ADVERTISER</option>
+                                <option value="">SUPPLIER</option>
+                                <option value="">DISTRIBUTOR</option>
+                            </select>
+                            <div class="form-group">
+                                <input type="email" class="form-control" placeholder="Email Address">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Phone Number">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" placeholder="Password">
+                            </div>
+                            <div class="form-group">
+                                <p>
+                                  By clicking on the become a member button, you agree to our <a href="#"
+                                    class="underline">terms</a> and conditions default communication & privacy preferences.
+                                </p>
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary btn-block rounded-0" type="submit">BECOME A BESPOKE MEMBER</button>
+                            </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="auth-footer row m-0">
+                      <button class="btn btn-auth col-6" data-member=".auth-signup">MEMBER SIGN UP</button>
+                      <button class="btn btn-auth col-6" data-member=".auth-signin">MEMBER LOG IN</button>
+                      <button class="btn btn-auth col-12" data-member=".auth-signin">ADVERTISER LOGIN</button>
+                    </div>
+                </div>
+            </div>
+            <div class="tab-pane fade" id="filter" role="tabpanel" aria-labelledby="filter-tab">...</div>
+            <div class="tab-pane fade" id="preference" role="tabpanel" aria-labelledby="preference-tab">...</div>
+        </div>
+    </div>
+    <div class="tab-pane fade h-100" id="settings" role="tabpanel" aria-labelledby="settings-tab">
+        <ul class="nav nav-pills nav-justified nav-tab-main mt-2">
+            <li class="nav-item" role="presentation">
+              <a class="nav-link active" id="communication-tab" data-toggle="tab" href="#communication" role="tab"
+                aria-controls="communication" aria-selected="false">Communication</a>
+            </li>
+            <li class="nav-item" role="presentation">
+                <a class="nav-link" id="setting-tab" data-toggle="tab" href="#setting" role="tab" aria-controls="setting"
+                aria-selected="false">Settings</a>
+            </li>
+        </ul>
+
+        <div class="tab-content mt-4" id="myTabContent">
         <div class="tab-pane fade show active" id="communication" role="tabpanel" aria-labelledby="communication-tab">
-          <div class="messenger">
+        <div class="messenger">
             <div class="messenger-inner">
-              <div class="messenger-in">
-                <div class="row">
-                  <div class="col-2 col-img">
-                    <div class="messenger-img">
-                      <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="messenger-in-layout">
-                      <div class="messenger-username">Megan wrote </div>
-                      <div class="messenger-text">
-                        Hi Bob. What time will be the meeting ?
+                <div class="messenger-in">
+                    <div class="row">
+                      <div class="col-2 col-img">
+                        <div class="messenger-img">
+                          <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="messenger-in-layout">
+                          <div class="messenger-username">Megan wrote </div>
+                          <div class="messenger-text">
+                            Hi Bob. What time will be the meeting ?
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="messenger-out">
-                <div class="row">
-                  <div class="col">
-                    <div class="messenger-out-layout">
-                      <div class="messenger-text">
-                        Hi Megan. It's at 2.30PM
+                <div class="messenger-out">
+                    <div class="row">
+                      <div class="col">
+                        <div class="messenger-out-layout">
+                          <div class="messenger-text">
+                            Hi Megan. It's at 2.30PM
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="messenger-in">
-                <div class="row">
-                  <div class="col-2 col-img">
-                    <div class="messenger-img">
-                      <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="messenger-in-layout">
-                      <div class="messenger-username">Megan wrote </div>
-                      <div class="messenger-text">
-                        Will the development team be joining ?
+                <div class="messenger-in">
+                    <div class="row">
+                      <div class="col-2 col-img">
+                        <div class="messenger-img">
+                          <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="messenger-in-layout">
+                          <div class="messenger-username">Megan wrote </div>
+                          <div class="messenger-text">
+                            Will the development team be joining ?
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="messenger-out">
-                <div class="row">
-                  <div class="col">
-                    <div class="messenger-out-layout">
-                      <div class="messenger-text">
-                        Yes sure. I invited them as well
+                <div class="messenger-out">
+                    <div class="row">
+                      <div class="col">
+                        <div class="messenger-out-layout">
+                          <div class="messenger-text">
+                            Yes sure. I invited them as well
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="messenger-date-time">
-                2:30PM
-              </div>
-              <div class="messenger-in">
-                <div class="row">
-                  <div class="col-2 col-img">
-                    <div class="messenger-img">
-                      <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="messenger-in-layout">
-                      <div class="messenger-username">Megan wrote </div>
-                      <div class="messenger-text">
-                        Noted. For the Coca-Cola Mobile App project as well ?
+                <div class="messenger-date-time">
+                    2:30PM
+                </div>
+                <div class="messenger-in">
+                    <div class="row">
+                      <div class="col-2 col-img">
+                        <div class="messenger-img">
+                          <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="messenger-in-layout">
+                          <div class="messenger-username">Megan wrote </div>
+                          <div class="messenger-text">
+                            Noted. For the Coca-Cola Mobile App project as well ?
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="messenger-out">
-                <div class="row">
-                  <div class="col">
-                    <div class="messenger-out-layout">
-                      <div class="messenger-text">
-                        Yes, sure.
+                <div class="messenger-out">
+                    <div class="row">
+                      <div class="col">
+                        <div class="messenger-out-layout">
+                          <div class="messenger-text">
+                            Yes, sure.
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="messenger-out">
-                <div class="row">
-                  <div class="col">
-                    <div class="messenger-out-layout">
-                      <div class="messenger-text">
-                        Please also prepare the quotation for the Loop CRM project as well.
+                <div class="messenger-out">
+                    <div class="row">
+                      <div class="col">
+                        <div class="messenger-out-layout">
+                          <div class="messenger-text">
+                            Please also prepare the quotation for the Loop CRM project as well.
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="messenger-in">
-                <div class="row">
-                  <div class="col-2 col-img">
-                    <div class="messenger-img">
-                      <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
+                <div class="messenger-in">
+                    <div class="row">
+                        <div class="col-2 col-img">
+                            <div class="messenger-img">
+                                <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="messenger-in-layout">
+                                <div class="messenger-username">Megan wrote </div>
+                                <div class="messenger-text">
+                                    Noted. I will prepare it.
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <div class="col">
-                    <div class="messenger-in-layout">
-                      <div class="messenger-username">Megan wrote </div>
-                      <div class="messenger-text">
-                        Noted. I will prepare it.
+                </div>
+                <div class="messenger-out">
+                    <div class="row">
+                      <div class="col">
+                        <div class="messenger-out-layout">
+                          <div class="messenger-text">
+                            Thanks Megan. I will see you later.
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="messenger-out">
-                <div class="row">
-                  <div class="col">
-                    <div class="messenger-out-layout">
-                      <div class="messenger-text">
-                        Thanks Megan. I will see you later.
+                <div class="messenger-in">
+                    <div class="row">
+                      <div class="col-2 col-img">
+                        <div class="messenger-img">
+                          <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="messenger-in-layout">
+                          <div class="messenger-username">Megan wrote </div>
+                          <div class="messenger-text">
+                            Sure. See you in the meeting soon.
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </div>
                 </div>
-              </div>
-              <div class="messenger-in">
-                <div class="row">
-                  <div class="col-2 col-img">
-                    <div class="messenger-img">
-                      <img src="https://emporium-voyage.com/metronic/assets/app/media/img/users/user3.jpg" alt="">
-                    </div>
-                  </div>
-                  <div class="col">
-                    <div class="messenger-in-layout">
-                      <div class="messenger-username">Megan wrote </div>
-                      <div class="messenger-text">
-                        Sure. See you in the meeting soon.
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             <div class="messenger-type">
-              <hr>
-              <div class="d-flex align-items-center">
-                <div class="col">
-                  <input type="text" class="form-control" placeholder="Type Here">
+                <hr>
+                <div class="d-flex align-items-center">
+                    <div class="col">
+                      <input type="text" class="form-control" placeholder="Type Here">
+                    </div>
+                    <div class="attach-btn">
+                        <a href="#" class="attach"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
+                    </div>
                 </div>
-                <div class="attach-btn">
-                  <a href="#" class="attach"><i class="fa fa-paperclip" aria-hidden="true"></i></a>
-                </div>
-              </div>
             </div>
-          </div>
+        </div>
         </div>
         <div class="tab-pane fade h-100" id="setting" role="tabpanel" aria-labelledby="setting-tab">
           <div class="setting-outer">
@@ -1246,20 +1246,20 @@
                   </div>
                   <div class="card">
                     <div class="card-header" id="headingThree">
-                      <h2 class="mb-0">
-                        <button class="btn btn-link btn-block text-left btn-accordion collapsed" type="button" data-toggle="collapse"
-                          data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                          Collapsible Group Item #3
-                          <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                        </button>
-                      </h2>
+                        <h2 class="mb-0">
+                            <button class="btn btn-link btn-block text-left btn-accordion collapsed" type="button" data-toggle="collapse"
+                            data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                            Collapsible Group Item #3
+                            <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                            </button>
+                        </h2>
                     </div>
                     <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
                       data-parent="#accordionExample">
-                      <div class="card-body">
-                        And lastly, the placeholder content for the third and final accordion panel. This panel is hidden
-                        by default.
-                      </div>
+                        <div class="card-body">
+                            And lastly, the placeholder content for the third and final accordion panel. This panel is hidden
+                            by default.
+                        </div>
                     </div>
                   </div>
                 </div>
@@ -1274,89 +1274,7 @@
   </div>
 
 
-  <footer>
-    <div class="container mb-0">
-        <div class="footer-top pb-4">
-            <div class="row">
-                <div class="col-md-3 mmb-4">
-                    <h4>About</h4>
-                    <nav class="nav flex-column">
-                        <a class="nav-link pl-0" href="#">How Emporium-Collection works</a>
-                        <a class="nav-link pl-0" href="#">Newsroom</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection 2021</a>
-                        <a class="nav-link pl-0" href="#">Investors</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection Plus</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection Luxe</a>
-                        <a class="nav-link pl-0" href="#">Hotel Tonight</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection for Work</a>
-                        <a class="nav-link pl-0" href="#">Made possible by Host</a>
-                        <a class="nav-link pl-0" href="#">Careers</a>
-                        <a class="nav-link pl-0" href="#">Founder's Letter</a>
-                    </nav>
-                </div>
-                <div class="col-md-3 mmb-4">
-                    <h4>Community</h4>
-                    <nav class="nav flex-column">
-                        <a class="nav-link pl-0" href="#">Diversity & Belonging</a>
-                        <a class="nav-link pl-0" href="#">Against Discrimination</a>
-                        <a class="nav-link pl-0" href="#">Accessibility</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection Associates</a>
-                        <a class="nav-link pl-0" href="#">Frontline Stays</a>
-                        <a class="nav-link pl-0" href="#">Guest Referrals</a>
-                        <a class="nav-link pl-0" href="#">Gift cards</a>
-                        
-                    </nav>
-                </div>
-                <div class="col-md-3 mmb-4">
-                    <h4>Host</h4>
-                    <nav class="nav flex-column">
-                        <a class="nav-link pl-0" href="#">Host your home</a>
-                        <a class="nav-link pl-0" href="#">Host an Online Experience</a>
-                        <a class="nav-link pl-0" href="#">Host an Experience</a>
-                        <a class="nav-link pl-0" href="#">Responsible hosting</a>
-                        <a class="nav-link pl-0" href="#">Resource Center</a>
-                        <a class="nav-link pl-0" href="#">Community Centers</a>
-                        
-                    </nav>
-                </div>
-                <div class="col-md-3 mmb-4">
-                    <h4>Support</h4>
-                    <nav class="nav flex-column">
-                        <a class="nav-link pl-0" href="#">Our COVID-19 Response</a>
-                        <a class="nav-link pl-0" href="#">Help Center</a>
-                        <a class="nav-link pl-0" href="#">Cancellation options</a>
-                        <a class="nav-link pl-0" href="#">Neighborhood Support</a>
-                        <a class="nav-link pl-0" href="#">Trust & Safety</a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-        <hr>
-        <div class="footer-bottom pb-4 ">
-            <div class="row align-items-center">
-                <div class="col-lg-9 mmb-4">
-                    <div>
-                        <nav class="nav">
-                            <a class="nav-link py-0 pl-0" href="#">&copy; Emporium Collection</a>
-                            <a class="nav-link py-0" href="#">Privacy</a>
-                            <a class="nav-link py-0" href="#">Terms</a>
-                            <a class="nav-link py-0" href="#">Sitemap</a>
-                        </nav>
-                    </div>
-                </div>
-                <div class="col-lg-3 mmb-4">
-                    <nav class="nav justify-content-end sosmed">
-                        <a class="nav-link py-0" href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                        <a class="nav-link py-0" href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                        <a class="nav-link py-0" href="#"><i class="fa fa-pinterest-p" aria-hidden="true"></i></a>
-                        <a class="nav-link py-0" href="#"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
-                    </nav>
-                </div>
-            </div>
-        </div>
-
-    </div>
-</footer>
+    @include('frontend.themes.EC.hotel.footer')
 
     @include('frontend.themes.EC.hotel.gallery')
     

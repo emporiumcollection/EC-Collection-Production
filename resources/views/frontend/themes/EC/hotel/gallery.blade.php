@@ -128,7 +128,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">The Mark 3 Bedroom</a>
                                 </li>
-
                             </ul>
                         </div>
                         <div class="col-8">

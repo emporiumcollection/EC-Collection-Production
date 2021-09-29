@@ -24,7 +24,6 @@
         </svg>
     </a>
 
-
     <div class="sidebar-scroller">
         <h3>Share this accommodation with friends and family</h3>
         <nav class="nav flex-column nav-line">
@@ -411,8 +410,8 @@
         </li>
       </ul>
 
-      <div class="tab-content mt-4" id="myTabContent">
-        <div class="tab-pane fade show active" id="communication" role="tabpanel" aria-labelledby="communication-tab">
+        <div class="tab-content mt-4" id="myTabContent">
+            <div class="tab-pane fade show active" id="communication" role="tabpanel" aria-labelledby="communication-tab">
           <div class="messenger">
             <div class="messenger-inner">
               <div class="messenger-in">
@@ -1106,8 +1105,7 @@
                                 <a href="#">Save to collection</a>
                             </div>
                         </div>
-                    </div>
-                   
+                    </div>                   
                 </div>
             </div>
             <div class="search-list-item">
