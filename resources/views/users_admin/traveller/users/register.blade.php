@@ -541,6 +541,18 @@
             $(".answer").focusin(function(){
                 $("#ans_error").hide();
             });
+            $(".A").focusin(function(){
+                $("#term").hide();
+            });
+            $(".B").focusin(function(){
+                $("#B").hide();
+            });
+            $(".C").focusin(function(){
+                $("#C").hide();
+            });
+            $(".D").focusin(function(){
+                $("#D").hide();
+            });
 
         $(document).ready(function() {
         $(".next-step").click(function (e) { 
@@ -646,7 +658,6 @@
         });
 
         function nextTab(elem) {
-            
             $(elem).closest('.nav-item').next().find('a[data-toggle="tab"]').tab('show');
         }
         function prevTab(elem) {
