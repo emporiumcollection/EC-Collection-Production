@@ -297,7 +297,7 @@
     </div>
   </div>
 
-    <div class="mt-15">
+    <div class="mt-15"> 
       <h3 class="text-dark font-weight-bold font-saol mb-10">
         My Settings
       </h3>

@@ -37,6 +37,22 @@ Route::get('/users/guestinvite', 'UserController@getInvite');
 Route::get('/users/companion', 'UserController@getCompanion');
 // Route::get('/users/companion', 'UserController@getCompanion');
 
+
+//HotelDetail Routes
+
+Route::get('/hotel/hoteldetail', 'FrontEnd\HotelDetailController@hoteldetail');
+Route::get('/hotel/suite', 'FrontEnd\HotelDetailController@suites');
+Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
+Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture');
+Route::get('/hotel/spa', 'FrontEnd\HotelDetailController@spa');
+Route::get('/hotel/restaurant', 'FrontEnd\HotelDetailController@restaurant');
+Route::get('/hotel/detailrestaurant','FrontEnd\HotelDetailController@detailrestaurant');
+Route::get('/hotel/location','FrontEnd\HotelDetailController@location');
+Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
+Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
+Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
+
+
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
 Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
