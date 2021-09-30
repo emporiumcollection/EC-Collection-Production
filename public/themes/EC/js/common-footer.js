@@ -337,12 +337,13 @@ $(function() {
     });
 });
 
+var map = null;
 function setMapLocation(lat, long){
     var locations = [
       ['<b>Loaction Name</b>', lat, long],
     ];
 
-    var map = L.map('map2').setView([lat, long], 8);
+    map = L.map('map2').setView([lat, long], 8);
 
     var myIcon = L.icon({
       iconUrl: 'images/basic_geolocalize-01.svg',

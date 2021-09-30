@@ -31,7 +31,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -51,7 +51,7 @@ function replacePropertyData(id){
           rimages = r.images;
           if(r.images!=undefined){          
             rimages.forEach(function(e){
-              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + s.category_name.replaceAll(' ', '-').toLowerCase() + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
+              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + s.category_name.replaceAll(' ', '-').toLowerCase() + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
             });
@@ -69,7 +69,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/bar-image" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/bar-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -84,7 +84,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -99,7 +99,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/spa-image" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/spa-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -158,7 +158,7 @@ function replaceSuiteList(id){
       suite.rooms[0].images.forEach(function(rm){
         if(onlyThree < 3){        
           roomimages += `<div>
-              <img src="room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+              <img src="/room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
             </div>`;  
         }
         onlyThree++; 
@@ -187,7 +187,7 @@ function replaceSuiteDetail(property_id, category_id){
   var roomimages = ``;
   suite.rooms[0].images.forEach(function(rm){
     roomimages += `<div>
-      <img src="room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
     </div>`;
   });
 
