@@ -1,4 +1,3 @@
-<div class="col-lg-4 mb-4 pt-3">
   <div class="sidebar-nav-section" id="sidebar">
     <div class="humburger-menu-sidebar">
       <div class="line"></div>
@@ -25,7 +24,7 @@
             Suites <i class="fa fa-angle-down" aria-hidden="true"></i>
           </a>
           <div class="collapse " id="suite">
-            <ul class="nav flex-column nav-sidebar is-small">
+            <ul class="nav flex-column nav-sidebar is-small" data-place="property-suites">
               <li class="nav-item">
                 <a class="nav-link nav-link-sub" href="/hotel/suite">All Suites</a>
               </li>
@@ -96,4 +95,3 @@
       </ul>
     </div>
   </div>
-</div>

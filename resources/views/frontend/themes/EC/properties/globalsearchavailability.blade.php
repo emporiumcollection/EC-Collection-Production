@@ -12,6 +12,7 @@
 {{-- For Meta Description --}}
 @section('meta_description', '')
 {{-- For Page's Content Part --}}
+@section('content')
 <style>
     .experiences{
         cursor: pointer;
@@ -37,7 +38,6 @@
   var channelurl = '{{URL::to("getyoutubechannel/")}}';
   setTimeout("getDefaultChannel('<?php echo isset($location[0]['category_alias'])?$location[0]['category_alias']:'';?>')", 5000);
 </script>
-@section('content')
 <div class="content-em">
     <div class="container pt-5">
       <div class="d-flex align-items-center nav-desc main-title-heading my-5">

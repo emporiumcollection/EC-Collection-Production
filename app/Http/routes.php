@@ -41,7 +41,7 @@ Route::get('/users/companion', 'UserController@getCompanion');
 //HotelDetail Routes
 
 Route::get('/hotel/hoteldetail', 'FrontEnd\HotelDetailController@hoteldetail');
-Route::get('/hotel/suite', 'FrontEnd\HotelDetailController@suites');
+Route::get('/hotel/suite/{property_id}', 'FrontEnd\HotelDetailController@suites');
 Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
 Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture');
 Route::get('/hotel/spa', 'FrontEnd\HotelDetailController@spa');
