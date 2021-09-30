@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="">
-
 <head>
     <script src="{{ asset('js/validation.js')}}"></script>
     <style type="text/css">

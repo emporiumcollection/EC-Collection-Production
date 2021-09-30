@@ -40,6 +40,7 @@ class UserController extends Controller {
 
     public function EmailInvitation(Request $request)
     {
+        // echo "<pre>";print_r($request->all());exit;
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(

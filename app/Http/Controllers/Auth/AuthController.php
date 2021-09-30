@@ -90,7 +90,6 @@ class AuthController extends Controller
 
     protected function verify(Request $request)
     {
-        // echo "<pre>";print_r($request->all());exit;
         $replace = "+";
         $Countrycode = substr_replace($request->country_code, $replace, 0, 0);
         $space = ltrim($request->txtmobileNumber," ");
