@@ -40,7 +40,6 @@ class UserController extends Controller {
 
     public function EmailInvitation(Request $request)
     {
-        // echo "<pre>";print_r($m);exit;
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -60,7 +59,7 @@ class UserController extends Controller {
             }
             return Redirect::to('dashboard');
         }
-        return Redirect::to('/sendinvitation');
+        return Redirect::to('/invitecompanion');
     }
 
     public function postCreate(Request $request) {

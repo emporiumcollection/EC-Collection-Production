@@ -586,7 +586,6 @@
             $(".nav-item").click(function (e) {
                 var $active = $('.wizard .nav li a.active');
                 $active.closest('.nav-item').next().find('.nav-link').removeClass('disabled');
-                nextTab($active);
             });
 
             $(".next-step").click(function (e) {
@@ -670,6 +669,7 @@
             $(elem).closest('.nav-item').next().find('a[data-toggle="tab"]').tab('show');
         }
         function prevTab(elem) {
+
             $(elem).closest('.nav-item').prev().find('a[data-toggle="tab"]').tab('show');
         }
 

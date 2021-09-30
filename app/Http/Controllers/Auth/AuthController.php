@@ -135,8 +135,7 @@ class AuthController extends Controller
                     'created' =>date('Y-m-d H:i:s') ,
                     'updated' =>date('Y-m-d H:i:s'),
                 ]);
-            if($user){
-                // echo "here";exit;   
+            if($user){                
                 /* Authenticate user */
                 Auth::login($user);
                 return view('users_admin/traveller/users/register_invitation');
