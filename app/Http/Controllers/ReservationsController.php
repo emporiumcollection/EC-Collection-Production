@@ -6,6 +6,7 @@ use App\Http\Controllers\controller;
 use App\Models\Reservations;
 use Illuminate\Http\Request;
 use App\Models\PropertyCategoryTypes;
+use App\Models\Properties;
 
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator,
@@ -50,10 +51,12 @@ class ReservationsController extends Controller {
     }
     public function when(Request $request)
     {
+        if (!\Auth::check())
+            return redirect('user/login');
         $properties = PropertyCategoryTypes::first();
-
-        $request->session()->put('suite_name',$properties->category_name);
-        $request->session()->put('property_id', 1);
+        // echo "<pre>";print_r($properties);exit;
+        $request->session()->put('property_id',$properties->property_id);
+        $request->session()->put('suite_name',$properties->category_name);        
         $request->session()->put('arrival_date',date('j F Y'));
         $request->session()->put('departure_date',date('j F Y'));
         $request->session()->put('suites',2);  
@@ -73,6 +76,8 @@ class ReservationsController extends Controller {
 
     public function where()
     {
+        if (!\Auth::check())
+            return redirect('user/login');
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -86,6 +91,9 @@ class ReservationsController extends Controller {
 
     public function suite()
     {
+        if (!\Auth::check())
+            return redirect('user/login');
+        $this->data['properties'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('property_id',\Session::get('property_id'))->get();
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -99,6 +107,9 @@ class ReservationsController extends Controller {
 
     public function suiteBoard()
     {
+        if (!\Auth::check())
+            return redirect('user/login');
+
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -112,6 +123,8 @@ class ReservationsController extends Controller {
 
     public function suitePolicies()
     {
+        if (!\Auth::check())
+            return redirect('user/login');
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -125,6 +138,8 @@ class ReservationsController extends Controller {
 
     public function aditionalServices()
     {
+        if (!\Auth::check())
+            return redirect('user/login');
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -138,6 +153,8 @@ class ReservationsController extends Controller {
 
     public function whoistravelling()
     {
+        if (!\Auth::check())
+            return redirect('user/login');
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -151,6 +168,8 @@ class ReservationsController extends Controller {
 
     public function paymentmethod()
     {
+        if (!\Auth::check())
+            return redirect('user/login');
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -164,6 +183,8 @@ class ReservationsController extends Controller {
 
     public function hotelpolicies()
     {
+        if (!\Auth::check())
+            return redirect('user/login');
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -177,6 +198,8 @@ class ReservationsController extends Controller {
 
     public function bookingsummary()
     {
+        if (!\Auth::check())
+            return redirect('user/login');
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';

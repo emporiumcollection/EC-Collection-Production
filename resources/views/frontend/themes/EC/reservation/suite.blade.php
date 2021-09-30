@@ -1,5 +1,4 @@
-
-
+  
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -42,6 +41,7 @@
               </ul>
             </div>
 
+          @foreach($properties as $property)
             <div class="suite-list section-shadow mb-5">
               <div class="suite-tumb">
                 <div class="row align-items">
@@ -69,22 +69,10 @@
                   </div>
                   <div class="col-lg-6">
                     <div class="suite-desc">
-                      <h3>Superior Double Room Garden or Village View </h3>
+                      <h3>{{ $property->category_name }}</h3>
                       <p>
-                        Superior Double Rooms are located in the Main Building, offering
-                        a
-                        delightful view of the village or garden.
+                        {{ $property->room_desc }}
                       </p>
-                      <ul class="pl-3">
-                        <li>One king or two twin-size beds</li>
-                        <li>Extra-large marble bathroom with separate bathtub and shower
-                        </li>
-                        <li>Size 35-45m² / 377-484ft² </li>
-                        <li>Maximum occupancy is 2 persons </li>
-                        <li>Connects to another Superior Double Room or an Executive
-                          Junior
-                          Suite </li>
-                      </ul>
                       <div class="row align-items-center mt-5">
                         <div class="col-8">
                           <p class="mb-0">From: <b>€1.099 per night</b></p>
@@ -101,126 +89,8 @@
                 </div>
               </div>
             </div>
-            <div class="suite-list section-shadow mb-5">
-              <div class="suite-tumb">
-                <div class="row align-items">
-                  <div class="col-lg-6">
-                    <div class="img-offset-slide">
-                      <div>
-                        <a href="detail-page.html">
-                          <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}"
-                            class="img-full" alt="">
-                        </a>
-                      </div>
-                      <div>
-                        <a href="detail-page.html">
-                          <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}"
-                            class="img-full" alt="">
-                        </a>
-                      </div>
-                      <div>
-                        <a href="detail-page.html">
-                          <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}"
-                            class="img-full" alt="">
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="suite-desc">
-                      <h3>Superior Double Room Garden or Village View </h3>
-                      <p>
-                        Superior Double Rooms are located in the Main Building, offering
-                        a
-                        delightful view of the village or garden.
-                      </p>
-                      <ul class="pl-3">
-                        <li>One king or two twin-size beds</li>
-                        <li>Extra-large marble bathroom with separate bathtub and shower
-                        </li>
-                        <li>Size 35-45m² / 377-484ft² </li>
-                        <li>Maximum occupancy is 2 persons </li>
-                        <li>Connects to another Superior Double Room or an Executive
-                          Junior
-                          Suite </li>
-                      </ul>
-                      <div class="row align-items-center mt-5">
-                        <div class="col-8">
-                          <p class="mb-0">From: <b>€1.099 per night</b></p>
-                          <p>inclusive of all taxes and fees</p>
-                        </div>
-                        <div class="col-4">
-                          <div class="text-right">
-                            <a href="/reservation/suiteboard" class="btn btn-dark  px-4 btn-nextwizard rounded-0">Select</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="suite-list section-shadow mb-5">
-              <div class="suite-tumb">
-                <div class="row align-items">
-                  <div class="col-lg-6">
-                    <div class="img-offset-slide">
-                      <div>
-                        <a href="detail-page.html">
-                          <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}"
-                            class="img-full" alt="">
-                        </a>
-                      </div>
-                      <div>
-                        <a href="detail-page.html">
-                          <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}"
-                            class="img-full" alt="">
-                        </a>
-                      </div>
-                      <div>
-                        <a href="detail-page.html">
-                          <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}"
-                            class="img-full" alt="">
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-lg-6">
-                    <div class="suite-desc">
-                      <h3>Superior Double Room Garden or Village View </h3>
-                      <p>
-                        Superior Double Rooms are located in the Main Building, offering
-                        a
-                        delightful view of the village or garden.
-                      </p>
-                      <ul class="pl-3">
-                        <li>One king or two twin-size beds</li>
-                        <li>Extra-large marble bathroom with separate bathtub and shower
-                        </li>
-                        <li>Size 35-45m² / 377-484ft² </li>
-                        <li>Maximum occupancy is 2 persons </li>
-                        <li>Connects to another Superior Double Room or an Executive
-                          Junior
-                          Suite </li>
-                      </ul>
-                      <div class="row align-items-center mt-5">
-                        <div class="col-8">
-                          <p class="mb-0">From: <b>€1.099 per night</b></p>
-                          <p>inclusive of all taxes and fees</p>
-                        </div>
-                        <div class="col-4">
-                          <div class="text-right">
-                            <a href="/reservation/suiteboard" class="btn btn-dark  px-4 btn-nextwizard rounded-0">Select</a>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div>
+          @endforeach
+        </div>
           <div class="col-lg-3 col-md-4">
           @include('frontend.themes.EC.reservation.reservation-summary')
             <div class="reservation-total">
