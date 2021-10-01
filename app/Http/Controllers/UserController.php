@@ -2751,13 +2751,20 @@ class UserController extends Controller {
         exit;
     }
 
-    public function deletePreferences($id){
-        $deleted = \DB::table('tb_personalized_services')
-                    ->where('ps_id','=',$id)
-                    ->delete();
-        return Redirect::to('/dashboard');
+    public function deletePreferences($id)
+    {
+        if (!\Auth::check())
+            return redirect('user/login');
+
+        \DB::table('tb_personalized_services')
+            ->where('ps_id','=',$id)
+            ->delete();
+        
+        return redirect::to('/users/my-preferences')->with('massage','Preference Deleted succesfully!');
     }
     public function editPreferences($id){   
+        if (!\Auth::check())
+            return redirect('user/login');
 
         $data = \DB::table('tb_personalized_services')
         ->select( 
