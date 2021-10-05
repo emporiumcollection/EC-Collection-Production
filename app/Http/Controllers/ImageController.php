@@ -140,21 +140,20 @@ class ImageController extends Controller {
 
         $this->destination_path = $this->destination_dir . '/' . $this->scale . $this->file;
 
-        if(!file_exists($this->destination_path)){
-                /*
-                $thumbnail = Image::open($file_path)
-                        ->thumbnail(new Imagine\Image\Box($width, $height));
+        if(file_exists($this->destination_path)){
+                $thumbnail = Image::open($this->file_path)
+                        ->thumbnail(new Imagine\Image\Box($this->width, $this->height));
 
                 $thumbnail->effects()->grayscale();
 
-                $thumbnail->save($destination_path);
-                 */
+                $thumbnail->save($this->destination_path);
+            /*
             Image::make($this->file_path,array(
             'width' => $this->width,
             'height' => $this->height,
             'grayscale' => true
             ))->save($this->destination_path);
-
+            */
         }
 
         $file_extension = strtolower(substr(strrchr($this->file,"."),1));

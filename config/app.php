@@ -210,7 +210,7 @@ return [
         'Markdown'  => GrahamCampbell\Markdown\Facades\Markdown::class,
 		'Zipper' 	=> Chumper\Zipper\Zipper::class,
 		'PDF' 		=> Barryvdh\DomPDF\Facade::class,
-		'Image' => Intervention\Image\Facades\Image::class,
+		//'Image' => Intervention\Image\Facades\Image::class,
 		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 		'TagsFinder' => App\Helpers\TagsFinder::class,
 		'CategoryMenu' => App\Helpers\CategoryMenu::class,

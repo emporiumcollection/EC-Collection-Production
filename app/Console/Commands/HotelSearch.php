@@ -226,7 +226,7 @@ class HotelSearch extends Command
             print $hotelUrl = 'https://api.amadeus.com/v2/shopping/hotel-offers?cityCode='.$property->cityCode;
             print "\n";
 
-            DB::table('tb_properties')->where('id', '=', $property->id )->update(array('is_checked' => 1));
+            \DB::connection('spaconn')->table('tb_properties')->where('id', '=', $property->id )->update(array('is_checked' => 1));
 
             if(!isset($property->cityCode)){
                 $getHeaders = array('Authorization' => 'Bearer '.$body->access_token);
@@ -246,7 +246,7 @@ class HotelSearch extends Command
 
                     if($apiHotelName == $dbHotelName or $perc > 90){
                         echo 'matched' . $hotel->hotel->name;
-                        DB::table('tb_properties')->where('id', '=', $property->id )->update(array('isin_amadeus' => 1));
+                        \DB::connection('spaconn')->table('tb_properties')->where('id', '=', $property->id )->update(array('isin_amadeus' => 1));
 
                         /*if($perc > 90){
                             DB::table('tb_properties')->where('id', '=', $property->id )->update(array('is_parsial_match' => 1));
@@ -263,8 +263,8 @@ class HotelSearch extends Command
     {
         $data = [];
 
-        $properties = properties::select(['id', 'latitude', 'longitude', 'property_name', 'isin_amadeus'])
-        ->where('id', '=', 2)
+        //Config::set('database.connections.mysql.database', 'other_database');
+        $properties = \DB::connection('spaconn')->table('tb_properties')->select(['id', 'latitude', 'longitude', 'property_name', 'isin_amadeus'])
         ->where('is_checked', '=', 0)
         ->get();
 
@@ -275,7 +275,7 @@ class HotelSearch extends Command
             print $hotelUrl = 'https://api.amadeus.com/v2/shopping/hotel-offers?latitude='.$property->latitude.'&longitude='.$property->longitude;
             print "\n";
 
-            DB::table('tb_properties')->where('id', '=', $property->id )->update(array('is_checked' => 1));
+            \DB::connection('spaconn')->table('tb_properties')->where('id', '=', $property->id )->update(array('is_checked' => 1));
 
             $getHeaders = array('Authorization' => 'Bearer '.$this->access_token);
             $hotels = Requests::get($hotelUrl, $getHeaders);
@@ -293,7 +293,7 @@ class HotelSearch extends Command
 
                     if($apiHotelName == $dbHotelName or $perc > 90){
                         echo 'matched' . $hotel->hotel->name.'='.$hotel->hotel->hotelId;
-                        DB::table('tb_properties')->where('id', '=', $property->id )->update(array('isin_amadeus' => 1, 'amadeus_hotel_id' => $hotel->hotel->hotelId));
+                        \DB::connection('spaconn')->table('tb_properties')->where('id', '=', $property->id )->update(array('isin_amadeus' => 1, 'amadeus_hotel_id' => $hotel->hotel->hotelId));
 
                         /*if($perc > 90){
                             DB::table('tb_properties')->where('id', '=', $property->id )->update(array('is_parsial_match' => 1));
@@ -336,7 +336,7 @@ class HotelSearch extends Command
             
             foreach($results as $result){
                 if(strtolower(trim($cityName)) == strtolower(trim($result->name))){
-                    DB::table('tb_properties')->where('city', 'like', '%'.$originalCityName.'%' )->update(array('cityCode' => $result->address->cityCode));
+                    \DB::connection('spaconn')->table('tb_properties')->where('city', 'like', '%'.$originalCityName.'%' )->update(array('cityCode' => $result->address->cityCode));
                 }
             }
         }
