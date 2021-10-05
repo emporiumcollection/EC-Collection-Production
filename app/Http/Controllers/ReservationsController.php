@@ -59,8 +59,8 @@ class ReservationsController extends Controller {
         $request->session()->put('suite_name',$properties->category_name);        
         $request->session()->put('arrival_date',date('j F Y'));
         $request->session()->put('departure_date',date('j F Y'));
-        $request->session()->put('suites',2);  
-        $request->session()->put('adult',2);
+        $request->session()->put('suites',4);  
+        $request->session()->put('adult',3);
         $request->session()->put('children',2);        
 
         $this->data['layout_type'] = 'old';
