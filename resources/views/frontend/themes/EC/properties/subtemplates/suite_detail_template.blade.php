@@ -93,7 +93,7 @@
                 </a>-->
                 <div class="hotel-prices hotel-price-detail d-flex">
                     <div class="row align-items-center justify-content-center">
-                        <div class="mr-2">
+                        <div class="mr-2" data-place="price-icon">
                             <i class="ico ico-info-green pointer btn-sidebar" type="button"
                                 data-sidebar="#priceinfo"></i>
                         </div>

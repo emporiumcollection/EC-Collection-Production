@@ -2,6 +2,7 @@ var properties = [];
 var suiteTemplate = '';
 var boardTemplate = '';
 var currentPropertyId = '';
+var priceTemplate = '';
 function replacePropertyData(id){
   currentPropertyId = id;
   var field = '';
@@ -51,7 +52,7 @@ function replacePropertyData(id){
           rimages = r.images;
           if(r.images!=undefined){          
             rimages.forEach(function(e){
-              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + s.category_name.replaceAll(' ', '-').toLowerCase() + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
+              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + rm['file']['name'] + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
             });
@@ -158,12 +159,14 @@ function replaceSuiteList(id){
       suite.rooms[0].images.forEach(function(rm){
         if(onlyThree < 3){        
           roomimages += `<div>
-              <img src="/room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+              <img src="/room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
             </div>`;  
         }
         onlyThree++; 
       });
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
+      suiteItem = suiteItem.replace('<!--SUITEID-->', sid);  
+      
       $('#suiteslist').append(suiteItem);
     }
 
@@ -187,9 +190,12 @@ function replaceSuiteDetail(property_id, category_id){
   var roomimages = ``;
   suite.rooms[0].images.forEach(function(rm){
     roomimages += `<div>
-      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
     </div>`;
   });
+
+  $('[data-place="price-icon"]').html(`<i class="ico ico-info-green pointer btn-sidebar" type="button"
+                                data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
 
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);
@@ -243,7 +249,7 @@ function replaceRooms(property_id, category_id){
     roomimages = ``;
     r.images.forEach(function(rm){
       roomimages += `<div>
-        <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+        <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
       </div>`;
     });
     roomview += `<div>
@@ -333,7 +339,7 @@ function replaceRooms(property_id, category_id){
               <div class="row align-items-center justify-content-center">
                   <div class="mr-2">
                       <i class="ico ico-info-green pointer btn-sidebar" type="button"
-                          data-sidebar="#priceinfo"></i>
+                          data-sidebar="#priceinfo" onclick="replacePrices(` + category_id + `)"></i>
                   </div>
                   <h3 class="mb-0">
                       <span class="title-font-2 mr-1">From</span> <span
@@ -400,3 +406,34 @@ function getDefaultChannel(catt){
         }
     });
 }    
+
+function replacePrices(cat_id){
+    $.ajax({
+        url: 'property/prices?category_id=' +  cat_id + '&property_id=' +  currentPropertyId + '&arrival=2021-10-05&departure=2021-10-10',
+        //dataType:'html',
+        dataType:'json',
+        type: 'get',
+        beforeSend: function(){
+            
+        },
+        success: function(data){ 
+            console.log(data);
+            $('#priceinfo #suite-total-night').html(data.numberOfNights);
+            $('#priceinfo #suite-total-price').html(data.totalPrice);
+            $('#priceinfo #suite-total-usd-price').html(data.totalUSDPrice);
+            if(!priceTemplate){              
+              priceTemplate = $('#priceinfo .sub-price-content').html();
+            }
+            var priceList = '';
+            
+            data.propertyPrices.forEach(function(p){
+              priceList += priceTemplate.
+              replace('<!--NIGHT-DATE-->', p.date).
+              replace('<!--NIGHT-PRICE-->', p.price).
+              replace('<!--NIGHT-USD-PRICE-->', p.usd_price);
+            });
+
+            $('#priceinfo .sub-price-content').html(priceList);
+        }
+    });
+}

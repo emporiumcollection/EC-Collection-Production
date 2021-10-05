@@ -11,6 +11,8 @@ use App\Http\Traits\Property;
 use App\Models\amenities;
 use DB,Validator, Input, Redirect, CustomQuery, Image;
 use UnsplashSearch;
+use DateTime;
+use Session;
 
 class PropertyController extends Controller {
     // Uses Property trait
@@ -2853,6 +2855,10 @@ class PropertyController extends Controller {
         return Redirect::to($querry_string);
     }
 
+    /**
+     * Mahesh: Global search availability function 
+     * 
+    */
     function globalsearchavailability(Request $request) {
         $keyword = $request->input('s');
         $this->data['path'] = $this->getLocationPath($keyword);
@@ -7176,11 +7182,70 @@ class PropertyController extends Controller {
         print_r($result);
     }
 
+    /**
+     * Mahesh: Get featured properties by keyword
+    */
     public function featuredProperty(Request $request){
         $keyword = $request->query->get('keyword');
         //Get featured choice properties
         $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
         echo json_encode($this->data['featureProperties']);
+        exit;
+    }
+
+    /**
+     * 
+     */
+    public function propertyRoomPrices(Request $request){
+        $usdRate = Session::get('current_rate');
+        if(!$usdRate){
+            $rsGbp = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=9c25f1b7954b2cc85b74449e328ae2dc&symbols=GBP');
+            $rsGbp = json_decode($rsGbp);
+
+            $rsUsd = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=9c25f1b7954b2cc85b74449e328ae2dc&symbols=USD');
+            $rsUsd = json_decode($rsUsd);
+            
+            $euroRate = (1 / (float) $rsGbp->rates->GBP);
+            $usdRate = $euroRate * $rsUsd->rates->USD;
+
+            $request->session()->put('current_rate', $usdRate);
+        }
+
+        $property_id = $request->query->get('property_id');
+        $category_id = $request->query->get('category_id');
+        $arrival = $request->query->get('arrival');
+        $departure = $request->query->get('departure');
+
+        $date1 = new DateTime($arrival);
+        $date2 = new DateTime($departure);
+
+        // this calculates the diff between two dates, which is the number of nights
+        $this->data['numberOfNights'] = $date2->diff($date1)->format("%a");
+
+        $propertyPrices = $this->getPropertyRoomPrices($property_id, 
+            $category_id,
+            $arrival,
+            $departure
+        );
+
+        $this->data['totalPrice'] = 0;
+        $this->data['totalUSDPrice'] = 0;
+        $this->data['propertyPrices'] = [];
+        foreach($propertyPrices as $dt => $price){
+            if(strtotime($dt) >= strtotime($arrival) &&  strtotime($dt) <= strtotime($departure)){
+                $this->data['propertyPrices'][] = [
+                    'date' => date("M, d Y", strtotime($dt)), 
+                    'price' => '£' . number_format($price,0), 
+                    'usd_price' => '$' . number_format($price * $usdRate,0)
+                ];
+                $this->data['totalPrice'] += $price;
+                $this->data['totalUSDPrice'] += $price * $usdRate;
+            }
+        }
+        $this->data['totalPrice'] = '£' . number_format($this->data['totalPrice'], 0);
+        $this->data['totalUSDPrice'] = '$' . number_format($this->data['totalUSDPrice'], 0);
+
+        echo json_encode($this->data);
         exit;
     }
 }

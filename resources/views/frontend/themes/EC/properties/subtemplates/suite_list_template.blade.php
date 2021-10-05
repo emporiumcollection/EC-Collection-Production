@@ -85,7 +85,7 @@
                 <div class="row align-items-center justify-content-center">
                     <div class="mr-2">
                         <i class="ico ico-info-green pointer btn-sidebar" type="button"
-                            data-sidebar="#priceinfo"></i>
+                            data-sidebar="#priceinfo" onclick="replacePrices(<!--SUITEID-->)"></i>
                     </div>
                     <h3 class="mb-0">
                         <span class="title-font-2 mr-1">From</span> <span

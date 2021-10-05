@@ -264,6 +264,7 @@ class HotelSearch extends Command
         $data = [];
 
         $properties = properties::select(['id', 'latitude', 'longitude', 'property_name', 'isin_amadeus'])
+        ->where('id', '=', 2)
         ->where('is_checked', '=', 0)
         ->get();
 

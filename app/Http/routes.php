@@ -555,6 +555,7 @@ Route::post('getdestinationpage', 'FrontEnd\PropertyController@getdestinationpag
 Route::get('globalsearchavailability', 'FrontEnd\PropertyController@globalsearchavailability');
 Route::get('searchavailability', 'FrontEnd\PropertyController@propertySearchAvailability');
 Route::get('featuredproperty', 'FrontEnd\PropertyController@featuredProperty');
+Route::get('property/prices', 'FrontEnd\PropertyController@propertyRoomPrices');
 
 Route::post('getyoutubechannel', 'FrontEnd\FrontendPagesController@getyoutubechannel');
 Route::post('getinstagramchannel', 'FrontEnd\FrontendPagesController@getinstagramchannel');

@@ -2,11 +2,16 @@
 
 namespace App\Http\Traits;
 
+use App\Models\PropertyRoomPrices;
+use App\Models\PropertyImages;
+use App\Models\PropertyRooms;
+use App\Models\SeasonDates;
 use App\Models\Categories;
 use App\Models\properties;
 use App\Models\amenities;
-use App\Models\PropertyImages;
+use App\Models\Seasons;
 
+use DateTime;
 trait Property {
     
     public function getLocationDescription($keyword){
@@ -123,7 +128,7 @@ trait Property {
             }])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
-        ->limit(1)
+        ->limit(4)
         ->get();
     }
 
@@ -175,7 +180,7 @@ trait Property {
         ])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
-        ->limit(1)
+        ->limit(4)
         ->get();        
     }
 
@@ -241,7 +246,7 @@ trait Property {
         ->where('city', '=', $keyword)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
-        ->limit(1)
+        ->limit(4)
         ->get();        
     }
 
@@ -282,7 +287,10 @@ trait Property {
                     if(!empty($suite->rooms)){
                         foreach($suite->rooms as $rk => $room){
                             $roomImages = PropertyImages::with(['file' => function($query){
-                                $query->select(['id', 'file_name']);
+                                return $query
+                                ->leftJoin('tb_container', 'tb_container_files.folder_id', 
+                                    '=', 'tb_container.id')
+                                ->select(['tb_container_files.id', 'file_name', 'tb_container.name']);
                             }])
                             ->where('property_id', '=', $room->property_id)
                             ->where('category_id', '=', $room->category_id)
@@ -362,6 +370,82 @@ trait Property {
             'dedicated' => $dedicated,
             'bespoke' => $bespoke,
         ];
+    }
+
+    public function getPropertyRoomPrices($id, $category_id, $arrival, $departure){
+        $seasonDays = [];
+
+        $roomIds = [];
+        $rooms = PropertyRooms::where('category_id', '=', $category_id)
+        ->get()
+        ->toArray();
+        foreach($rooms as $room){
+            $roomIds[] = $room['id'];
+        }
+
+        $journyStart = $arrival;
+        $journyEnd = $departure;
+
+        while($journyStart <= $journyEnd){
+            // Get season dates
+            $seasonDates = SeasonDates::select(['season_id', 'season_from_date', 'season_to_date'])
+            ->where('season_from_date', '<=', $journyStart)
+            ->where('season_to_date', '>=', $journyStart)
+            ->where('property_id', '=', $id)
+            ->get()
+            ->toArray();
+
+            // Find prices per day mon, tue, wed...
+            if(!empty($seasonDates)){
+                foreach($seasonDates as $sdate){                    
+                    // Get season prices
+                    $roomPrices = PropertyRoomPrices::select([
+                        'monday_price', 
+                        'tuesday_price',
+                        'wednesday_price',
+                        'thursday_price',
+                        'friday_price',
+                        'saturday_price',
+                        'sunday_price',
+                    ])
+                    ->whereIn('category_id', $roomIds)
+                    ->where('season_id', '=', $sdate['season_id'])
+                    ->get()
+                    ->toArray();
+                    
+                    if(empty($roomPrices)){
+                        continue;    
+                    }
+
+                    $start = $sdate['season_from_date'];
+                    $end = $sdate['season_to_date'];
+
+                    while($start <= $end){
+                        $dayname = strtolower(date('l', strtotime($start)));
+
+                        $seasonDays[$start] = $roomPrices[0][$dayname.'_price'];
+
+                        $nextDay = new DateTime($start . ' + 1 day');
+                        $start = $nextDay->format('Y-m-d');
+                    }
+                }
+            }
+
+
+            $nextDay = new DateTime($journyStart . ' + 1 day');
+            $journyStart = $nextDay->format('Y-m-d');
+        }
+
+        return $seasonDays;
+    }
+
+    private function getStartAndEndDate($week, $year) {
+        $dto = new DateTime();
+        $dto->setISODate($year, $week);
+        $ret['week_start'] = $dto->format('Y-m-d');
+        $dto->modify('+6 days');
+        $ret['week_end'] = $dto->format('Y-m-d');
+        return $ret;
     }
 
 }
