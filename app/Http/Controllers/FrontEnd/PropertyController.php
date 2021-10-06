@@ -7206,7 +7206,8 @@ class PropertyController extends Controller {
             $rsUsd = json_decode($rsUsd);
             
             $euroRate = (1 / (float) $rsGbp->rates->GBP);
-            $usdRate = $euroRate * $rsUsd->rates->USD;
+            //$usdRate = $euroRate * $rsUsd->rates->USD;
+            $usdRate = $rsUsd->rates->USD;
 
             $request->session()->put('current_rate', $usdRate);
         }
@@ -7235,14 +7236,14 @@ class PropertyController extends Controller {
             if(strtotime($dt) >= strtotime($arrival) &&  strtotime($dt) <= strtotime($departure)){
                 $this->data['propertyPrices'][] = [
                     'date' => date("M, d Y", strtotime($dt)), 
-                    'price' => '£' . number_format($price,0), 
+                    'price' => '€' . number_format($euroRate * $price,0), 
                     'usd_price' => '$' . number_format($price * $usdRate,0)
                 ];
                 $this->data['totalPrice'] += $price;
                 $this->data['totalUSDPrice'] += $price * $usdRate;
             }
         }
-        $this->data['totalPrice'] = '£' . number_format($this->data['totalPrice'], 0);
+        $this->data['totalPrice'] = '€' . number_format($this->data['totalPrice'], 0);
         $this->data['totalUSDPrice'] = '$' . number_format($this->data['totalUSDPrice'], 0);
 
         echo json_encode($this->data);

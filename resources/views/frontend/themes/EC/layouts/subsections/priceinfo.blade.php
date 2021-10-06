@@ -34,7 +34,7 @@
             <div class="suite-board-body p-5">
                 <div class="row m-0 price-lst-table-head">
                     <div class="col-6 pl-0">DETAILS</div>
-                    <div class="col-3 text-right">GBP</div>
+                    <div class="col-3 text-right">EURO</div>
                     <div class="col-3 pr-0 text-right">USD</div>
                 </div>
                 <div class="row m-0 list-prs">

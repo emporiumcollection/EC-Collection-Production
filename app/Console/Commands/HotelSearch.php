@@ -201,7 +201,8 @@ class HotelSearch extends Command
             'client_secret'=>'NTgXgybvwSwlRtpm',
             //'client_id'=>'slzhKT0uHLVWZrkWakAs6IktoD6sAB5K',
             //'client_secret'=>'dF0008AIlsZGQrqc',
-            'grant_type'=>'client_credentials'
+            'grant_type'=>'client_credentials',
+            'connect_timeout'=>60
         ];
         $headers = array('Content-Type' => 'application/x-www-form-urlencoded');
         $requests_response = Requests::post($url, $headers, $auth_data);
@@ -261,6 +262,9 @@ class HotelSearch extends Command
 
     private function processUsingLatLong()
     {
+        ini_set('max_execution_time', -1);
+        ini_set('max_input_time', 300);
+
         $data = [];
 
         //Config::set('database.connections.mysql.database', 'other_database');
@@ -275,11 +279,15 @@ class HotelSearch extends Command
             print $hotelUrl = 'https://api.amadeus.com/v2/shopping/hotel-offers?latitude='.$property->latitude.'&longitude='.$property->longitude;
             print "\n";
 
-            \DB::connection('spaconn')->table('tb_properties')->where('id', '=', $property->id )->update(array('is_checked' => 1));
-
             $getHeaders = array('Authorization' => 'Bearer '.$this->access_token);
-            $hotels = Requests::get($hotelUrl, $getHeaders);
-            $hotels = json_decode($hotels->body);
+            try{ 
+                $hotels = Requests::get($hotelUrl, $getHeaders);
+                $hotels = json_decode($hotels->body);
+            }catch(Exception $e){
+                continue;                
+            }
+
+            \DB::connection('spaconn')->table('tb_properties')->where('id', '=', $property->id )->update(array('is_checked' => 1));
 
             //$hotels = json_decode($hotels->body)->data;
             if(isset($hotels->data) && !empty($hotels->data)){
