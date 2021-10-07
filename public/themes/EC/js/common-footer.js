@@ -51,30 +51,6 @@
       $(this).remove();
     });
 
-
-
-    // var map = L.map('map').setView([11.206051, 122.447886], 8);
-
-    var myIcon = L.icon({
-      iconUrl: 'images/basic_geolocalize-01.svg',
-      iconSize: [40, 45],
-    });
-
-    var locations = [
-      ['<b>Loaction Name</b>', 11.8166, 122.0942],
-    ];
-    L.tileLayer(
-      'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
-    }).addTo(map);
-
-    for (var i = 0; i < locations.length; i++) {
-      marker = new L.marker([locations[i][1], locations[i][2]], { icon: myIcon })
-        .bindPopup(locations[i][0])
-        .addTo(map);
-    }
-
-
     $('#smartwizard').smartWizard({
       theme: 'arrows',
       selected: 0,
@@ -281,52 +257,12 @@ $(function() {
         changeRangeCallback: rangeChanged,
     });
 
-    
-    var newArrDt = new Date(_year, _month, _day);
-
-    var _dday = '';
-    var _dmonth = '';
-    var _dyear = '';
-    var sp_darr = depDt.toDateString().split('-');
-
-    if(sp_darr.length > 2){
-        _dyear = sp_darr[0];
-        _dmonth = sp_darr[2];
-        _dday = sp_darr[1];
-    }
-
-    var newDepDt = new Date(_dyear, _dmonth, _dday);
-
-    var defStartDay = moment(newArrDt).format('DD');
-    var defStartMonth = moment(newArrDt).format('MMM');
-    var defEndDay = moment(newDepDt).format('DD');
-    var defEndMonth = moment(newDepDt).format('MMM');
-    //$(".cal-f .cal-date").html(defStartDay +' '+ defStartMonth+' - '+ defEndDay +' '+ defEndMonth);
-
     function rangeChanged(target,range){
         var startDay = moment(range.start).format('DD');
         var startMonth = moment(range.start).format('MMM');
         var endDay = moment(range.end).format('DD');
         var endMonth = moment(range.end).format('MMM');
         $(".cal-f .cal-date").html(startDay +' '+ startMonth+' - '+ endDay +' '+ endMonth);
-    }
-
-    $(document).ready(function(){
-        var active_cat = $("input[name='activeDestination']").val();
-        console.log(active_cat);
-        getDestinationPage(active_cat, '');
-    });
-
-    $(document).on('click', '.experiences', function(){
-        var active_cat = $("input[name='activeDestination']").val();
-        var active_exp = $(this).attr('data-exp');
-        getDestinationPage(active_cat, active_exp); console.log(active_cat+', '+active_exp);
-    });
-
-    function getDestinationPage(item, active_exp){
-        var mtype = $("input[name='m_type']").val();
-        var _cat = item;
-        getPropertyByCollection(mtype, _cat, 1, '', active_exp);
     }
     var rellax = new Rellax('.relax-offset');
 
@@ -379,3 +315,9 @@ $(function() {
     pickerDate.data('daterangepicker').hide = function () { };
     pickerDate.data('daterangepicker').show();
 });
+/*
+$(window).load(function() {
+  $(".loader").delay(2000).fadeOut("slow");
+  $("#overlayer").delay(2000).fadeOut("slow");
+});
+*/

@@ -2,57 +2,16 @@
     <div class="container mb-0">
         <div class="footer-top pb-4">
             <div class="row">
+                <?php foreach($footer_menus as $menu):?>
                 <div class="col-md-3 mmb-4">
-                    <h4>About</h4>
+                    <h4><?php echo $menu['menu_name'];?></h4>
                     <nav class="nav flex-column">
-                        <a class="nav-link pl-0" href="#">How Emporium-Collection works</a>
-                        <a class="nav-link pl-0" href="#">Newsroom</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection 2021</a>
-                        <a class="nav-link pl-0" href="#">Investors</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection Plus</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection Luxe</a>
-                        <a class="nav-link pl-0" href="#">Hotel Tonight</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection for Work</a>
-                        <a class="nav-link pl-0" href="#">Made possible by Host</a>
-                        <a class="nav-link pl-0" href="#">Careers</a>
-                        <a class="nav-link pl-0" href="#">Founder's Letter</a>
+                        <?php foreach($menu['childs'] as $child):?>
+                        <a class="nav-link pl-0" href="<?php echo $child['url'];?>"><?php echo $child['menu_name'];?></a>
+                        <?php endforeach;?>
                     </nav>
                 </div>
-                <div class="col-md-3 mmb-4">
-                    <h4>Community</h4>
-                    <nav class="nav flex-column">
-                        <a class="nav-link pl-0" href="#">Diversity &amp; Belonging</a>
-                        <a class="nav-link pl-0" href="#">Against Discrimination</a>
-                        <a class="nav-link pl-0" href="#">Accessibility</a>
-                        <a class="nav-link pl-0" href="#">Emporium-Collection Associates</a>
-                        <a class="nav-link pl-0" href="#">Frontline Stays</a>
-                        <a class="nav-link pl-0" href="#">Guest Referrals</a>
-                        <a class="nav-link pl-0" href="#">Gift cards</a>
-                        
-                    </nav>
-                </div>
-                <div class="col-md-3 mmb-4">
-                    <h4>Host</h4>
-                    <nav class="nav flex-column">
-                        <a class="nav-link pl-0" href="#">Host your home</a>
-                        <a class="nav-link pl-0" href="#">Host an Online Experience</a>
-                        <a class="nav-link pl-0" href="#">Host an Experience</a>
-                        <a class="nav-link pl-0" href="#">Responsible hosting</a>
-                        <a class="nav-link pl-0" href="#">Resource Center</a>
-                        <a class="nav-link pl-0" href="#">Community Centers</a>
-                        
-                    </nav>
-                </div>
-                <div class="col-md-3 mmb-4">
-                    <h4>Support</h4>
-                    <nav class="nav flex-column">
-                        <a class="nav-link pl-0" href="#">Our COVID-19 Response</a>
-                        <a class="nav-link pl-0" href="#">Help Center</a>
-                        <a class="nav-link pl-0" href="#">Cancellation options</a>
-                        <a class="nav-link pl-0" href="#">Neighborhood Support</a>
-                        <a class="nav-link pl-0" href="#">Trust &amp; Safety</a>
-                    </nav>
-                </div>
+                <?php endforeach;?>                
             </div>
         </div>
         <hr>

@@ -18,7 +18,12 @@ abstract class Controller extends BaseController {
     var $is_public = true;
 	public function __construct()
 	{
-		
+	    $footer_menus = \SiteHelpers::menus('footer');
+	    $this->data['footer_menus'] = $footer_menus;
+
+        $landing_menus = \SiteHelpers::menus('landing');
+	    $this->data['landing_menus'] = $landing_menus;
+
 		$this->middleware('ipblocked');
 		
         $driver             = config('database.default');

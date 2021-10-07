@@ -331,7 +331,7 @@ $(document).on('click', ".dest-collection", function(e){
   });
 });
 </script>
-@endsection
+
 
 @include('frontend.themes.EC.layouts.subsections.suites')
 @include('frontend.themes.EC.layouts.subsections.share')
@@ -352,3 +352,5 @@ $(document).on('click', ".dest-collection", function(e){
 @include('frontend.themes.EC.layouts.subsections.search_history')
 @include('frontend.themes.EC.layouts.subsections.ask_question')
 @include('frontend.themes.EC.layouts.subsections.videos')
+
+@endsection

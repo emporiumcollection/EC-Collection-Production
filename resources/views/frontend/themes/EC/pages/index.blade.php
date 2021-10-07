@@ -81,7 +81,7 @@
           <?php echo $slide->slider_description;?>
         </p>
         <div class="action-button">
-          <a href="<?php echo $slide->slider_link;?>" class="btn btn-outline-white btn-lg">Action Button</a>
+          <a href="<?php echo $slide->slider_link;?>" class="btn btn-outline-white btn-lg">View</a>
         </div>
       </div>
     </div>
@@ -115,9 +115,9 @@
               </div>
               <div class="search-results mb-2">
                 <h4>Your Selection</h4>
-                <p>New York . -> <span class="onrange"></span></p>
+                <p><span id="your-selection"></span> . -> <span class="onrange"></span></p>
               </div>
-              <div class="custom-control custom-checkbox">
+              <!--<div class="custom-control custom-checkbox">
                 <input type="checkbox" class="custom-control-input" id="flexibledate" name="flexibledate">
                 <label class="custom-control-label" for="flexibledate">
                   <div class="d-flex align-items-center text-20">
@@ -134,7 +134,7 @@
                     <div>3 Days</div>
                   </div>
                 </label>
-              </div>
+              </div>-->
               <div class="mt-5 include-form" style="display: block;">
                 <div class="guest-pick-footer mb-5 mt-4 pr-3">
                   <div class="text-right">

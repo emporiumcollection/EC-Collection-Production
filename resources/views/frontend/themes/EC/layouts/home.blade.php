@@ -153,33 +153,5 @@
 <script src="{{ asset('themes/EC/js/plugin/mapbox-gl.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js') }}"></script>
-
-  <script>
-
-    $(".who").click(function (e) {
-       var dest = $("#inlineFormInputGroup").val();
-       $("#collection").val('View '+dest);
-
-
-    });
-
-    var picker = $('#daterangepicker-inline').daterangepicker({
-      parentEl: "#daterangepicker-inline-container",
-      autoApply: true,
-      autoUpdateInput: false,
-      locale: {
-        cancelLabel: 'Clear',
-      }
-    });
-
-    picker.on('apply.daterangepicker', function (ev, picker) {
-      $('.onrange').html(picker.startDate.format('YYYY-MM-DD') + ' -> ' + picker.endDate.format('YYYY-MM-DD'));
-      $('input[name="arrive"]').val(picker.startDate.format('YYYY-MM-DD'));
-      $('input[name="departure"]').val(picker.endDate.format('YYYY-MM-DD'));
-      $('.include-form').fadeIn("fast");
-    });
-    picker.data('daterangepicker').hide = function () { };
-    picker.data('daterangepicker').show();
-  </script>
 </body>
 </html>

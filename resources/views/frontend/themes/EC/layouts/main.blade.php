@@ -119,6 +119,8 @@
     <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 </head>
 <body>
+    <!--@include('frontend.themes.EC.layouts.sections.preloader')-->
+
     @if(isset($layout_type) && $layout_type == 'old')
         @section('header')
             @parent
@@ -170,7 +172,6 @@
 <script type="text/javascript" src="{{ asset('js/plugin/wow.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/color-thief.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/plugin/mapbox-gl.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/all.js')}}"></script>
 <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/jquery-3.5.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/leaflet.js') }}"></script>
@@ -203,30 +204,14 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/mapbox-gl.js') }}"></script>
 <!-- <script type="text/javascript" src="{{ asset('themes/EC/./js/all.js') }}"></script> -->
 <script src="{{ asset('themes/EC/js/plugin/rellax.min.js') }}"></script>
-
-
 <script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
-
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reservation.js') }}"></script>
-<script src="{{ asset('js/reservation.js')}}"></script>
 
 
 @section('custom_js')
     @parent
 @show
-
-@yield('suites_script')
-
-@yield('detail_suite')
-
-@yield('restaurant_script')
-
-@yield('detail_restaurant')
-
-@yield('experience_script')
-
-@yield('faq_script')
 
 <script type="text/javascript" src="{{ asset('themes/EC/js/common-footer.js') }}"></script>
     

@@ -64,27 +64,22 @@
                 <div class="row w-100">
                   <div class="col-sm-4">
                     <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#">Boutique</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Design</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Lifestyle</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Beach</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Cullinary</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Urban</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Infinity</a>
-                      </li>
+                    <?php 
+                    $lmenus = [];
+                    foreach($landing_menus as $menu):?>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="#"><?php echo $menu['menu_name'];?></a>
+                        </li>
+                        <?php 
+                        $cmenu = '';
+                        foreach($menu['childs'] as $child):
+                          $cmenu .= '<li class="nav-item">
+                            <a class="nav-link" href="'.$child['url'].'">'.$child['menu_name'].' <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                          </li>';
+                        endforeach;
+                        $lmenus[] = $cmenu;
+                        ?>
+                    <?php endforeach;?>
                     </ul>
 
                     <div class="menu-media">
@@ -93,114 +88,17 @@
                       <a href="#" class="nav-sos"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                     </div>
                   </div>
+                  <?php foreach($lmenus as $lmenu):?>
                   <div class="col-sm-4">
                     <div class="row">
                       <div class="col-6">
                         <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Active <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-6">
-                        <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Active <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
+                          <?php echo $lmenu;?>
                         </ul>
                       </div>
                     </div>
                   </div>
-                  <div class="col-sm-4">
-                    <div class="row">
-                      <div class="col-6">
-                        <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Active <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-6">
-                        <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Active <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+                  <?php endforeach;?>
                 </div>
               </div>
             </div>

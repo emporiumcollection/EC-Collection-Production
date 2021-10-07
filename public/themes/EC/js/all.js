@@ -535,216 +535,26 @@ var ajaxReq = 'ToCancelPrevReq';
             }else{
               $("#hotelsresults").show();
             }
-            /*if (data.data.collection == undefined) {
-                console.log("no record found");
-            }else{
-                console.log(data.data.collection);
-                //console.log(html);
-                var BaseURL1 = '';
-                if(data.data.sitename!=undefined){
-                    var sitenm = data.data.sitename;
-                    if(sitenm=='voyage'){
-                        BaseURL1 = 'https://emporium-voyage.com';
-                    }else if(sitenm=='safari'){
-                        BaseURL1 = 'https://emporium-safari.com';
-                    }else if(sitenm=='spa'){
-                        BaseURL1 = 'https://emporium-spa.com';
-                    }else if(sitenm=='islands'){
-                        BaseURL1 = 'https://emporium-islands.com';
-                    }
-                }
-
-                var html ='';
-                //var collString = (data.data.collection.length > 1) ? "Our Hotels" : "Our Hotel";
-                //$('[data-action="global-search-collections"] span').html(collString + ' ('+data.data.collection.length+')');
-                $(data.data.collection).each(function (i, val) {
-                    var  linkMenu = BaseURL1+'/'+val.property_slug;
-                    //html += '<li><a class="cursor menu_item" href="'+linkMenu+'">' + val.property_name + '</a></li>';
-
-                    var cat_name = val.property_name;
-                    var cname = searcValue;
-                    var arr_str = cname.split(',');
-                    $.each(arr_str, function(key, value){
-                        if($.trim(value)!=''){
-                            var regExp = new RegExp("" + $.trim(value) + "", 'gi');
-                            cat_name = cat_name.replace(regExp,'<span style="text-decoration:underline;">'+$.trim(value)+'</span>');
-                        }
-                    });
-                    var h_cat_name = val.property_name;
-                    var r_h_cat_name = h_cat_name.replace(/ /gi, '-');
-                    //html += '<li class="our-hotels our-hotels-'+r_h_cat_name+'" data-name="'+ val.property_name +'">' + cat_name + '<input type="checkbox" name="ourHotels[]" value="'+ val.property_name +'" class="invisible"></li>';
-
-                    html += '<li class="nav-item"><a class="nav-link" href="#"><span class="city-l">'+ val.property_name +'</span> <span class="cat-l">' + cat_name + '</span></a></li>';
-
-                });
-                $('.wherepopup .whereul').html(html);
-                //$('[data-action="global-collections"]').parent().show();
-            } */
+            
         }
     });
-
-    /*var datObj = {};
-    datObj.keyword = searcValue;
-    datObj.sitename = sitename;
-    var params = $.extend({}, doAjax_params_default);
-    params['url'] = BaseURL + '/destination/global-search';
-    params['data'] = datObj;
-    params['successCallbackFunction'] = function (data) {
-
-        if(data.data.sitename!=undefined){
-            var sitenm = data.data.sitename;
-            if(sitenm=='voyage'){
-                BaseURL1 = 'https://emporium-voyage.com';
-            }else if(sitenm=='safari'){
-                BaseURL1 = 'https://emporium-safari.com';
-            }else if(sitenm=='spa'){
-                BaseURL1 = 'https://emporium-spa.com';
-            }else if(sitenm=='islands'){
-                BaseURL1 = 'https://emporium-islands.com';
-            }
-        }
-        $('[data-action="global-search-our-collections"] span').html('Our Collection (0)');
-        $('[data-action="global-search-collections"] span').html('Our Hotel (0)');
-        $('[data-action="global-search-destinations"] span').html('Our Destination (0)');
-        $('[data-action="global-search-experiences"] span').html('Our Experience (0)');
-        $('[data-action="global-search-destination-channels"] span').html('Our Channel (0)');
-
-        $('[data-option="global-search-our-collection-option-list"]').html('');
-        $('[data-option="global-search-collection-option-list"]').html('');
-        $('[data-option="global-search-dest-option-list"]').html('');
-        $('[data-option="global-search-experience-option-list"]').html('');
-        $('[data-option="global-search-dest-channel-option-list"]').html('');
-
-        if (data.data.our_collection == undefined) {
-            $('[data-action="global-search-our-collections"] span').html('Our Collection (0)');
-        }else{
-            var html ='';
-            var collString = (data.data.our_collection.length > 1) ? "Our Collections" : "Our Collection";
-            $('[data-action="global-search-our-collections"] span').html(collString + ' ('+data.data.our_collection.length+')');
-            $(data.data.our_collection).each(function (i, val) {
-                var  linkMenu = BaseURL1+'/'+val.category_alias;
-                //html += '<li><a class="cursor menu_item" href="'+linkMenu+'">' + val.category_name + '</a></li>';
-
-
-                var cname = searcValue;
-                var arr_str = cname.split(',');
-                $.each(arr_str, function(key, value){
-
-                });
-
-                cat_name = val.category_name;
-                var regExp = new RegExp("##" + cname + "##", 'g');
-                cat_name = cat_name.replace(regExp,'<span style="text-decoration:underline;">'+cname+'</span>');
-
-
-                html += '<li class="our-collections" data-name="'+ val.category_name +'">' + val.category_name + '<input type="radio" name="ourCollections[]" value="'+ val.category_name +'" class="invisible"></li>';
-            });
-            $('[data-option="global-search-our-collection-option-list"]').html(html);
-            //$('[data-action="global-search-our-collections"]').parent().show();
-        }
-        if (data.data.collection == undefined) {
-            $('[data-action="global-search-collections"] span').html('Our Hotel (0)');
-        }else{
-            console.log(data.data.collection);
-            //console.log(html);
-            var html ='';
-            var collString = (data.data.collection.length > 1) ? "Our Hotels" : "Our Hotel";
-            $('[data-action="global-search-collections"] span').html(collString + ' ('+data.data.collection.length+')');
-            $(data.data.collection).each(function (i, val) {
-                var  linkMenu = BaseURL1+'/'+val.property_slug;
-                //html += '<li><a class="cursor menu_item" href="'+linkMenu+'">' + val.property_name + '</a></li>';
-
-                var cat_name = val.property_name;
-                var cname = searcValue;
-                var arr_str = cname.split(',');
-                $.each(arr_str, function(key, value){
-                    if($.trim(value)!=''){
-                        var regExp = new RegExp("" + $.trim(value) + "", 'gi');
-                        cat_name = cat_name.replace(regExp,'<span style="text-decoration:underline;">'+$.trim(value)+'</span>');
-                    }
-                });
-                var h_cat_name = val.property_name;
-                var r_h_cat_name = h_cat_name.replace(/ /gi, '-');
-                html += '<li class="our-hotels our-hotels-'+r_h_cat_name+'" data-name="'+ val.property_name +'">' + cat_name + '<input type="checkbox" name="ourHotels[]" value="'+ val.property_name +'" class="invisible"></li>';
-            });
-            $('[data-option="global-search-collection-option-list"]').html(html);
-            //$('[data-action="global-collections"]').parent().show();
-        }
-        if (data.data.dest == undefined) {
-            $('[data-action="global-search-destinations"] span').html('Our Destination (0)');
-        }else {
-            var html ='';
-            var destString = (data.data.dest.length > 1) ? "Our Destinations" : "Our Destination";
-            $('[data-action="global-search-destinations"] span').html(destString + ' ('+data.data.dest.length+')');
-            $(data.data.dest).each(function (i, val) {
-                var  linkMenu = BaseURL1+'/luxury_destinations/'+val.category_alias;
-                //html += '<li><a class="cursor menu_item" href="'+linkMenu+'">' + val.category_name + '</a></li>';
-
-                var cat_name = val.category_name;
-                var cname = searcValue;
-                var arr_str = cname.split(',');
-                $.each(arr_str, function(key, value){
-                    if($.trim(value)!=''){
-                        var regExp = new RegExp("" + $.trim(value) + "", 'gi');
-                        cat_name = cat_name.replace(regExp,'<span style="text-decoration:underline;">'+$.trim(value)+'</span>');
-                    }
-                });
-                var h_cat_name = val.category_name;
-                var r_h_cat_name = h_cat_name.replace(/ /gi, '-');
-                html += '<li class="our-destinations our-destinations-'+r_h_cat_name+'" data-name="'+ val.category_name +'">' + cat_name + ' (' + val.p_name + ')<input type="checkbox" name="ourDestinations[]" value="'+ val.category_name +'" class="invisible"></li>';
-            });
-            $('[data-option="global-search-dest-option-list"]').html(html);
-            //$('[data-action="global-destinations"]').parent().show();
-        }
-
-        if (data.data.experiences == undefined) {
-            $('[data-action="global-search-experiences"] span').html('Our Experience (0)');
-        } else {
-            var html ='';
-            var restroString = (data.data.experiences.length > 1) ? "Our Experiences" : "Our Experience";
-            $('[data-action="global-search-experiences"] span').html(restroString + ' ('+data.data.experiences.length+')');
-            $(data.data.experiences).each(function (i, val) {
-                var  linkMenu = BaseURL1+'/luxury_experience/'+val.category_alias;
-                //html += '<li><a class="cursor menu_item" href="'+linkMenu+'">' + val.category_name + '</a></li>';
-                html += '<li class="our-experiences" data-name="'+ val.category_name +'">' + val.category_name + '<input type="radio" name="ourExperiences[]" value="'+ val.category_name +'" class="invisible"></li>';
-            });
-            $('[data-option="global-search-experience-option-list"]').html(html);
-            //$('[data-action="global-restaurant"]').parent().show();
-        }
-        if (data.data.dest == undefined) {
-            $('[data-action="global-search-destination-channels"] span').html('Our Channel (0)');
-        } else {
-            var html ='';
-            var barString = (data.data.dest.length > 1) ? "Our Channels" : "Our Channel";
-            $('[data-action="global-search-destination-channels"] span').html(barString + ' ('+data.data.dest.length+')');
-            $(data.data.dest).each(function (i, val) {
-                var  linkMenu = BaseURL1+'/social-youtube/'+val.category_alias;
-                //html += '<li><a class="cursor menu_item" href="'+linkMenu+'">' + val.category_name + '</a></li>';
-                html += '<li class="our-channels" data-name="'+ val.category_name +'">' + val.category_name + '<input type="radio" name="ourChannels[]" value="'+ val.category_name +'" class="invisible"></li>';
-            });
-            $('[data-option="global-search-dest-channel-option-list"]').html(html);
-            //$('[data-action="global-bar"]').parent().show();
-        }
-    };
-    doAjax(params);
-    $('[data-option="global-search"]').slideDown(300);*/
 }
 
 
 
   $('.wherepopup .nav-link').click(function(){
-    var asd = $(this).find('.city-l').html();
-    $('.where').val(asd);
+    var location = $(this).find('.city-l').html();
+    $('.where').val(location);
     $(this).closest('.where-container').removeClass('show');
     $('.when-container').addClass('show');
     $('.wherepopup').hide();
   });
 
   $(document).on('click', '.wherepopup .nav-link', function(){
-    var asd = $(this).find('.city-l').html();
-    $('.where').val(asd);
+    var location = $(this).find('.city-l').html();
+    $('.where').val(location);
     $("#where_selection").html('');
-    $("#where_selection").html(asd);
+    $("#where_selection").html(location);
     $(this).closest('.where-container').removeClass('show');
     $('.when-container').addClass('show');
     $('.wherepopup').hide();
@@ -754,8 +564,9 @@ var ajaxReq = 'ToCancelPrevReq';
     $("#sitename").val(_collection);
     $("#coll_type").val(_type);
     $("#target_page").val(_targetpage);
+    $("#your-selection").html(location);
 
-    get_featured_prop(_type, _collection, asd);
+    get_featured_prop(_type, _collection, location);
     $('.quick-prev-when1').slick({
                     slidesToShow: 1,
                     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
@@ -2133,29 +1944,6 @@ var ajaxReq = 'ToCancelPrevReq';
 
     });
   });
-
-
-  /*$(document).on('click', '.suite-details', function(){
-        var cid = $(this).attr('data-id');
-        var _slug = $("#hid_propid").val();
-        console.log(cid);
-        $.ajax({
-            url: BaseURL+'/suitedetails',
-            dataType:'json',
-            data: {'cid':cid, 'slug':_slug},
-            type: 'get',
-            beforeSend: function(){
-
-            },
-            success: function(data){
-                console.log(data);
-            }
-        }).done(function(){
-
-        });
-  });*/
-
-
   
   $(".close-sidebar, .sidebar-back").click(function (e) {
     e.preventDefault();
@@ -2301,6 +2089,7 @@ function getNavitems(location, collection_name){
 
 function getHotelHtml(result, collection_name){
   var result_html_hotel = '';
+  $('.wherepopup .'+collection_name+'-hotels').html(result_html_hotel);
   if(result.collection != undefined){
       $(result.collection).each(function(key, val){
         result_html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="'+collection_name+'" data-page="results"><span class="city-l">' + val.property_name + '</span> </a></li>';
@@ -2322,6 +2111,7 @@ function getHotelHtml(result, collection_name){
 function getDestinationHtml(result, collection_name){
   var searchedLocation = '';
   var result_html_destination = '';
+  $('.wherepopup .' + collection_name + '-destination').html(result_html_destination);
   if(result.dest != undefined){
     $(result.dest).each(function(key, val){
       searchedLocation = val.category_name;
@@ -2351,3 +2141,29 @@ function getDestinationHtml(result, collection_name){
     return result_html_destination;
   }
 }
+
+$(document).ready(function () {
+  $(".who").click(function (e) {
+     var dest = $("#inlineFormInputGroup").val();
+     $("#collection").val('View ' + dest + ' Collection');
+  });
+
+  var picker = $('#daterangepicker-inline').daterangepicker({
+    parentEl: "#daterangepicker-inline-container",
+    autoApply: true,
+    autoUpdateInput: false,
+    locale: {
+      cancelLabel: 'Clear',
+    }
+  });
+
+  picker.on('apply.daterangepicker', function (ev, picker) {
+    $('.onrange').html(picker.startDate.format('YYYY-MM-DD') + ' -> ' + picker.endDate.format('YYYY-MM-DD'));
+    $('input[name="arrive"]').val(picker.startDate.format('YYYY-MM-DD'));
+    $('input[name="departure"]').val(picker.endDate.format('YYYY-MM-DD'));
+    $('.include-form').fadeIn("fast");
+  });
+  picker.data('daterangepicker').hide = function () { };
+  picker.data('daterangepicker').show();
+
+});
