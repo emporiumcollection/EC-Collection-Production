@@ -587,7 +587,12 @@ var ajaxReq = 'ToCancelPrevReq';
                 $('.title-2').html(data[0]['property_name']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
                 $('.herl').html(`<img src="uploads/container_user_files/locations/` 
-                  + data[0]['container']['name'] + `/property-images/` + data[0]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
+                  + data[0]['container']['name'] + `/property-images/` + data[0]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);                
+
+                $('.img-left-when').html(`<img src="/property-image/resize/645x600/` + 
+                  data[0]['container']['name'] + `/` + 
+                  data[0]['property_images'][0]['file']['file_name'] + 
+                  `/property-image" class="img-fluid" alt="" />`);                
 
                 $('.to-right .title-2').html(data[0]['property_name']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);                

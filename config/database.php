@@ -54,7 +54,11 @@ return [
 
         'mysql' => [
             'driver'    => 'mysql',
-            'host'      => env('DB_HOST', '172.105.71.247'),
+/*            'host'      => env('DB_HOST', 'localhost'),
+            'database'  => env('DB_DATABASE', 'empo_voyage'),
+            'username'  => env('DB_USERNAME', 'root'),
+            'password'  => env('DB_PASSWORD', ''),
+*/            'host'      => env('DB_HOST', '172.105.71.247'),
             'database'  => env('DB_DATABASE', 'EmporiumVoyage'),
             'username'  => env('DB_USERNAME', 'voyage'),
             'password'  => env('DB_PASSWORD', '!!Voyage2021%%$$'),

@@ -2927,7 +2927,11 @@ class PropertyController extends Controller {
         }
         $this->data['collections'] = $cat_collection;
         /** End **/
-        $this->data['experiences'] = \DB::table('tb_categories')->where('category_approved', 1)->where('category_published', 1)->where('parent_category_id', 8)->get();
+        $this->data['experiences'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 8)
+        ->get();
 
         $objcat = \DB::table('tb_categories')->where('category_name', '=',$keyword)->where('category_approved', 1)->where('category_published', 1)->first();
         $exp = array();

@@ -24,6 +24,13 @@ abstract class Controller extends BaseController {
         $landing_menus = \SiteHelpers::menus('landing');
 	    $this->data['landing_menus'] = $landing_menus;
 
+		$this->data['menu_experiences'] = \DB::table('tb_categories')
+		->select(['id', 'category_name', 'category_alias'])
+		->where('category_approved', 1)
+		->where('category_published', 1)
+		->where('parent_category_id', 8)
+		->get();
+
 		$this->middleware('ipblocked');
 		
         $driver             = config('database.default');
