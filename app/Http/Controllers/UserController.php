@@ -2819,7 +2819,7 @@ class UserController extends Controller {
         }
          // echo "<pre>";print_r($inspire);exit;
         $file_name = 'users_admin.traveller.users.edit_preference';
-        return view($file_name, $this->data,compact('category','data','inspire','select_dest','exe_spa','exe_voyage','exe_island','exe_safari','$fetch_destination','destination','atmosphere','facilities','style','islandconn','safariconn','spaconn'));
+        return view($file_name, $this->data,compact('category','data','inspire','select_dest','exe_spa','exe_voyage','exe_island','exe_safari','select_dest','destination','atmosphere','facilities','style','islandconn','safariconn','spaconn'));
     }
 
     public function getPreferences(){
@@ -2941,14 +2941,14 @@ class UserController extends Controller {
                 $data['created'] = date('y-m-d');
                 $data['updated'] = date('Y-m-d');
                 $updates = \DB::table('tb_personalized_services')->where('ps_id',$id)->update($data);
-                return redirect::to('/users/my-preferences')->with('massage','Preference edited succesfully');
+                return redirect::to('/users/my-preferences')->with('massage','Preference edited succesfully!');
             }else{
-                return redirect::to('/users/my-preferences')->with('Errmassage','Fil all the fields!');
+                return redirect::to('/users/my-preferences')->with('Errmassage','Plz fill all the fields!');
             }
 
         }else{
             if ($validator->passes()) {
-                echo "here";exit();
+
                 $spa = implode(",",$request->spacheckbox);
                 $voyage = implode(",",$request->voyagechk);
                 $island = implode(",",$request->islandchk);

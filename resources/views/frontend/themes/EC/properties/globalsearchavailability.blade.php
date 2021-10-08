@@ -12,20 +12,32 @@
 {{-- For Meta Description --}}
 @section('meta_description', '')
 {{-- For Page's Content Part --}}
+@section('content')
 <style>
     .experiences{
         cursor: pointer;
     }
-    .slick-list{
-      height: 300px;
+
+    .global-search-resultbox .slick-list{
+      height: 320px;
+    }
+
+    .suite-popup .result-grid .slick-list{
+      height: 750px;
+    }
+
+    .global-search-resultbox .slick-slide img{
+      width: 450px!important;
+      height: 320px!important;
+      top: 160px!important;
+      left: 225px!important;
     }
 </style>
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript">
   var channelurl = '{{URL::to("getyoutubechannel/")}}';
-  setTimeout("getDefaultChannel('<?php echo $location[0]['category_alias'];?>')", 5000);
+  setTimeout("getDefaultChannel('<?php echo isset($location[0]['category_alias'])?$location[0]['category_alias']:'';?>')", 5000);
 </script>
-@section('content')
 <div class="content-em">
     <div class="container pt-5">
       <div class="d-flex align-items-center nav-desc main-title-heading my-5">
@@ -102,7 +114,7 @@
           <div class="main-page-banner">
             <div class="img-main-banner">
               <div>
-                <img src="uploads/category_imgs/<?php echo $location[0]['category_image']; ?>" class="img-fluid"
+                <img src="uploads/category_imgs/<?php echo isset($location[0]['category_image'])?$location[0]['category_image']:''; ?>" class="img-fluid"
                   alt="">
               </div>
               <div>
@@ -148,7 +160,7 @@
               <div class="content-inner">
                 <h3 class="mb-4">{{ $keyword }}</h3>
                 <p>
-                  <?php echo $location[0]['category_description'];?>
+                  <?php echo isset($location[0]['category_description'])?$location[0]['category_description']:'';?>
                 </p>
               </div>
             </div>

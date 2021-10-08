@@ -29,32 +29,35 @@
           <div class="col-lg-9 col-md-8">
             <hr class="mb-4">
             <div class="row">
-              <div class="col-md-4 mb-4">
-                <p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Use this address</a></p>
+              <div class="col-md-4 mb-4">                
                 Mr Riaan Kleynhans <br>
                 riaan@number7even.com <br>
                 +49 172 8937230 <br>
                 Eisolriederstrasse 12 <br>
                 Munich <br>
                 Germany
+                <br>
+                <p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Add this companion</a></p>
               </div>
-              <div class="col-md-4 mb-4">
-                <p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Use this address</a></p>
+              <div class="col-md-4 mb-4">                
                 Mrs Obert <br>
                 riaan@number7even.com <br>
                 +49 172 8937230 <br>
                 Eisolriederstrasse 12 <br>
                 Munich <br>
                 Germany
+                <br>
+                <p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Add this companion</a></p>
               </div>
-              <div class="col-md-4 mb-4">
-                <p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Use this address</a></p>
+              <div class="col-md-4 mb-4">                
                 Mr Obert<br>
                 riaan@number7even.com <br>
                 +49 172 8937230 <br>
                 Eisolriederstrasse 12 <br>
                 Munich <br>
                 Germany
+                <br>
+                <p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Add this companion</a></p>
               </div>
             </div>
             <hr class="mb-4 mt-4">

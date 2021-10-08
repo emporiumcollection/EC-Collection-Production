@@ -1,4 +1,7 @@
 <script type="text/javascript">
+  if(properties === undefined){
+    var properties = [];
+  }
   properties[<?php echo $editorChoice->id;?>] = <?php echo json_encode($editorChoice);?>;
   properties[<?php echo $editorChoice->id;?>]['images'] = <?php echo json_encode($propertyImages);?>;
 </script>
@@ -8,7 +11,7 @@
     <div class="hotel-page-list suite-ontouch no-opacity index-2">
 
       <?php if(!empty($propertyImages)):?>
-        <img src="uploads/container_user_files/locations/<?php echo $editorChoice['container']['name']?>/property-images/<?php echo $propertyImages[0]['file_name']; ?>" class="img-fluid" alt="">
+        <img src="<?php echo 'property-image/resize/615x420/'.$editorChoice['container']['name'].'/'.$propertyImages[0]['file_name'].'/property-image';?>" class="img-fluid" alt="">
       <?php endif;?>
 
       <div class="my-dropdown">
@@ -84,7 +87,7 @@
         foreach($propertyImages as $editorImage):?>
         <div>
           <a href="suite.html">
-            <img src="uploads/container_user_files/locations/<?php echo $editorChoice['container']['name']?>/property-images/<?php echo $editorImage['file_name']; ?>" class="img-fluid" alt="">
+            <img src="<?php echo 'property-image/resize/615x420/'.$editorChoice['container']['name'].'/'.$editorImage['file_name'].'/property-image';?>" class="img-fluid" alt="">
           </a>
         </div>
         <?php 

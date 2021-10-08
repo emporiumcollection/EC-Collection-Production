@@ -7531,19 +7531,19 @@ a.text-dark:hover, a.text-dark:focus {
     opacity: 0; } }
 
 /*
- *  Owl Carousel - Auto Height Plugin
+ * 	Owl Carousel - Auto Height Plugin
  */
 .owl-height {
   transition: height 500ms ease-in-out; }
 
 /*
- *  Owl Carousel - Lazy Load Plugin
+ * 	Owl Carousel - Lazy Load Plugin
  */
 .owl-carousel .owl-item {
   /**
-      This is introduced due to a bug in IE11 where lazy loading combined with autoheight plugin causes a wrong
-      calculation of the height of the owl-item that breaks page layouts
-     */ }
+			This is introduced due to a bug in IE11 where lazy loading combined with autoheight plugin causes a wrong
+			calculation of the height of the owl-item that breaks page layouts
+		 */ }
 
 .owl-carousel .owl-item .owl-lazy {
   opacity: 0;
@@ -7556,7 +7556,7 @@ a.text-dark:hover, a.text-dark:focus {
   transform-style: preserve-3d; }
 
 /*
- *  Owl Carousel - Video Plugin
+ * 	Owl Carousel - Video Plugin
  */
 .owl-carousel .owl-video-wrapper {
   position: relative;
@@ -7605,7 +7605,7 @@ a.text-dark:hover, a.text-dark:focus {
  * Licensed under: SEE LICENSE IN https://github.com/OwlCarousel2/OwlCarousel2/blob/master/LICENSE
  */
 /*
- *  Default theme - Owl Carousel CSS File
+ * 	Default theme - Owl Carousel CSS File
  */
 .owl-theme .owl-nav {
   margin-top: 10px;
@@ -25461,6 +25461,10 @@ a:hover {
   background: #fff;
   padding-bottom: 10px; }
 
+.container-full {
+  padding-left: 30px;
+  padding-right: 30px; }
+
 .top-header {
   position: absolute;
   left: 0;
@@ -31293,44 +31297,11 @@ span.calElement.prev:hover {
 
 .result-grid .slick-slide {
   width: 100%;
-  position: relative;
-  overflow: hidden;
-  padding-bottom: 10%; }
-  .result-grid .slick-slide img {
-    width: auto;
-    left: 50%;
-    right: auto;
-    top: 50%;
-    bottom: auto;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    width: 100%;
-    object-fit: cover;
-    height: 100%; }
-
-.img-offset-slide .slick-slide {
-  width: 100%;
-  position: relative;
-  overflow: hidden;
-  padding-bottom: 8%; }
-  .img-offset-slide .slick-slide img {
-    width: auto;
-    left: 50%;
-    right: auto;
-    top: 50%;
-    bottom: auto;
-    transform: translate(-50%, -50%);
-    position: absolute;
-    width: 100%;
-    object-fit: cover;
-    height: 100%; }
+  position: relative; }
 
 #suitesside-tabContent {
   padding-right: 35%;
   padding-bottom: 130px; }
-
-.offsets---190 .slick-slide {
-  padding-bottom: 10%; }
 
 .content-img {
   width: 100%;
@@ -31961,7 +31932,8 @@ span.calElement.prev:hover {
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding-bottom: 9%; }
+  padding-bottom: 477px;
+  height: 0; }
   .slider-detail .slick-slide img,
   .slider-detail .slick-slide .videoWrapper {
     left: 50%;
@@ -33270,7 +33242,7 @@ section {
 .grid-layout {
   display: grid;
   grid-gap: 1rem;
-  grid-auto-rows: minmax(60px, auto);
+  grid-auto-rows: minmax(126px, auto);
   grid-auto-flow: dense; }
 
 .grid-item {
@@ -33281,7 +33253,8 @@ section {
     display: block;
     width: 100%;
     height: 100%;
-    object-fit: cover; }
+    object-fit: cover;
+    position: absolute; }
   .grid-item::before {
     position: absolute;
     content: "";
@@ -33323,12 +33296,18 @@ section {
   grid-row-end: span 2; }
 
 .grid-row-1 {
-  grid-row-end: span 1; }
+  grid-row-end: span 3; }
 
 .grid-row-3 {
   grid-row-end: span 3; }
 
 .grid-row-4 {
+  grid-row-end: span 4; }
+
+.grid-row-5 {
+  grid-row-end: span 3; }
+
+.grid-row-6 {
   grid-row-end: span 4; }
 
 .grid-row-17 {
@@ -33905,7 +33884,7 @@ footer {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   background-color: #f7f7f7; }
   footer .container {
-    max-width: 1644px; }
+    max-width: 97%; }
   footer h3 {
     font-size: 30px;
     font-weight: 600; }
@@ -34412,14 +34391,16 @@ footer {
 .wizard-reservation .backwizard {
   display: inline-flex; }
 
-.wizard-reservation .block-res-title {
-  display: none; }
-
-.nav-reservation-mobile, .nav-wizard-active {
-  display: none; }
+.wizard-reservation .inactive {
+  display: none !important; }
+  .wizard-reservation .inactive.active, .wizard-reservation .inactive.done {
+    display: block !important; }
 
 .form-date-lg .form-control {
   font-size: 23px; }
+
+.nav-reservation-mobile, .nav-wizard-active, .block-res-title {
+  display: none; }
 
 @media (max-width: 1627.98px) {
   .hotel-book-container {
@@ -34600,29 +34581,18 @@ footer {
   section {
     height: auto; }
   .menu-nav.text-menu {
-    padding: 7px 5px; } }
-
-@media (max-width: 1084.99px) {
-  .nav-reservation-desktop {
-    display: none !important; }
-  .nav-reservation-mobile {
-    display: block !important; }
-    .nav-reservation-mobile .nav li {
-      display: block;
-      width: 100%; }
-      .nav-reservation-mobile .nav li .nav-link {
-        padding-left: 10px; }
+    padding: 7px 5px; }
   .wizard-reservation {
     display: flex;
     flex-wrap: wrap;
     align-items: center; }
     .wizard-reservation .block-res-title {
       display: block;
-      flex: 0 0 50%;
-      max-width: 50%; }
+      flex: 0 0 76.6%;
+      max-width: 76.6%; }
     .wizard-reservation .nav-wizard-active {
       display: block;
-      width: 50%;
+      width: 23.4%;
       border: 1px #000 solid;
       padding: 10px;
       border-radius: 6px;
@@ -34647,9 +34617,7 @@ footer {
         display: none; }
         .wizard-reservation .nav-wizard-active span.active {
           display: block; }
-    .wizard-reservation .nav {
-      flex: 0 0 50%;
-      max-width: 50%;
+    .wizard-reservation > .nav {
       display: none;
       flex-direction: column;
       margin-top: 0 !important;
@@ -34658,21 +34626,21 @@ footer {
       z-index: 9;
       width: 50%;
       top: 41px; }
-      .wizard-reservation .nav.active {
+      .wizard-reservation > .nav.active {
         display: flex; }
-      .wizard-reservation .nav .nav-link {
+      .wizard-reservation > .nav .nav-link {
         margin-left: 0;
         margin-right: 0;
         padding: 10px 15px;
         display: flex; }
-        .wizard-reservation .nav .nav-link > div {
+        .wizard-reservation > .nav .nav-link > div {
           margin-right: 9px;
           position: relative; }
-          .wizard-reservation .nav .nav-link > div::before {
+          .wizard-reservation > .nav .nav-link > div::before {
             position: absolute;
             content: ".";
             right: -5px; }
-        .wizard-reservation .nav .nav-link::before, .wizard-reservation .nav .nav-link::after {
+        .wizard-reservation > .nav .nav-link::before, .wizard-reservation > .nav .nav-link::after {
           display: none; }
     .wizard-reservation .wizard-reservation-content {
       flex: 0 0 100%;
@@ -34682,7 +34650,26 @@ footer {
     top: 0;
     left: 0;
     right: 0;
-    bottom: 0; } }
+    bottom: 0; }
+  .block-res-title {
+    display: block; }
+  .wizard-reservation .inactive {
+    display: none !important; }
+    .wizard-reservation .inactive.active, .wizard-reservation .inactive.done {
+      display: flex !important; }
+  .wizard-reservation .nav-link {
+    padding-left: 1.3rem !important; } }
+
+@media (max-width: 1084.99px) {
+  .nav-reservation-desktop {
+    display: none !important; }
+  .nav-reservation-mobile {
+    display: block !important; }
+    .nav-reservation-mobile .nav li {
+      display: block;
+      width: 100%; }
+      .nav-reservation-mobile .nav li .nav-link {
+        padding-left: 10px; } }
 
 @media (max-width: 991.98px) {
   .nav-clr.mb-5 {
@@ -35124,7 +35111,11 @@ footer {
     height: 26px;
     margin-left: 5px; }
   .wizard-reservation .nav {
-    top: 90px; } }
+    top: 90px; }
+  .menu-nav {
+    padding-right: 2px; }
+  .menu-nav.text-menu {
+    margin-left: 7px; } }
 
 @media (max-width: 767.98px) {
   .humburger-second-menu {
@@ -35746,7 +35737,17 @@ footer {
       top: 0;
       left: 0;
       width: 25px;
-      height: 37px; } }
+      height: 37px; }
+  .wizard-reservation .block-res-title {
+    display: block;
+    flex: 0 0 50%;
+    max-width: 50%;
+    padding-right: 20px; }
+  .wizard-reservation .nav-wizard-active {
+    width: 50%; }
+  .container-full {
+    padding-left: 15px;
+    padding-right: 15px; } }
 
 @media (max-width: 575.98px) {
   .main-content h3 {

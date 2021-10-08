@@ -867,6 +867,13 @@
                           <input class="form-qty" type="number" id="1" value="1" min="1" />
                           <button type="button" id="add" class="add btn-qty">+</button>
                         </div>
+                        <div class="field-count-reservation align-items-center qty-button mb-4">
+                          <button type="button" class="min">-</button>
+                          <div class="col text-center">
+                            <span class="mr-1 child-val form-qty">{!! Session::get('children') !!} </span>
+                          </div>
+                          <button type="button" class="plus mr-3">+</button>
+                        </div>
                         <p class="qty-label">€16.00</p>
                       </div>
                       <div class="confirm-qty">

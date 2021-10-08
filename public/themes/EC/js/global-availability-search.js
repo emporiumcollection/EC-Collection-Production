@@ -1,5 +1,9 @@
 var properties = [];
+var suiteTemplate = '';
+var boardTemplate = '';
+var currentPropertyId = '';
 function replacePropertyData(id){
+  currentPropertyId = id;
   var field = '';
   $('[data-place="property"]').each(function() {
       field = $(this).attr('data-replace');
@@ -27,7 +31,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -37,15 +41,23 @@ function replacePropertyData(id){
   $('[data-place="room-images"]').each(function() {
       // field = $(this).attr('data-replace');
       //console.log(properties[id][field]);
-      var values = properties[id]['room_images'];
+      var suites = properties[id]['suites'];
       var imageview = '';
       var spanid = 1;
       var grid = 1;
-      values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
-        spanid=2;
-        grid++;
-      })
+      suites.forEach(function(s){
+        rooms = s.rooms;
+        rooms.forEach(function(r){
+          rimages = r.images;
+          if(r.images!=undefined){          
+            rimages.forEach(function(e){
+              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + s.category_name.replaceAll(' ', '-').toLowerCase() + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
+              spanid=2;
+              grid++;
+            });
+          }
+        });
+      });
       $(this).html(imageview);
   });
 
@@ -57,7 +69,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/bar-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -72,7 +84,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -87,7 +99,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="uploads/container_user_files/locations/' + properties[id]['container']['name'] + '/property-images/' + e.file_name + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/spa-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -100,6 +112,9 @@ function replacePropertyData(id){
 function replacePropertySuites(id){
   var suiteview = '';
   var firstsuite = 0;
+  currentPropertyId = id;
+  
+  replaceSuiteList(id);
 
   $('[data-place="property-suites"]').each(function() {
       suiteview += `<li class="nav-item">
@@ -121,7 +136,43 @@ function replacePropertySuites(id){
   });
 }
 
+function replaceSuiteList(id){
+  currentPropertyId = id;
+  if(!suiteTemplate){
+    suiteTemplate = $('#suiteslist').html();
+  }
+  $('#suiteslist').html('');
+
+  var suiteItem = '';
+  var sid;
+  var roomimages;
+  var onlyThree;
+
+  properties[id].suites.forEach(function(suite){
+    if(suite.show_on_booking){
+      onlyThree = 0;
+      sid = suite['id'];
+      suiteItem = '<div class="property-suite-p'+sid+'">' + suiteTemplate + '</div>';
+
+      roomimages = '';
+      suite.rooms[0].images.forEach(function(rm){
+        if(onlyThree < 3){        
+          roomimages += `<div>
+              <img src="/room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+            </div>`;  
+        }
+        onlyThree++; 
+      });
+      suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
+      $('#suiteslist').append(suiteItem);
+    }
+
+  });
+  setTimeout('appendResultGridSlider()', 2000);
+}
+
 function replaceSuiteDetail(property_id, category_id){
+  currentPropertyId = property_id;
   var suite;
   properties[property_id]['suites'].forEach(function(e){
     if(category_id === e.id){
@@ -136,12 +187,42 @@ function replaceSuiteDetail(property_id, category_id){
   var roomimages = ``;
   suite.rooms[0].images.forEach(function(rm){
     roomimages += `<div>
-      <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
     </div>`;
   });
 
   $('[data-place="suite_room_images"]').html(roomimages);
-  $('.result-grid').slick({
+  setTimeout('appendSlider()', 2000);
+  replacePropertyData(property_id);
+}
+
+function replaceSuiteBoard(){
+  if(!boardTemplate){
+    boardTemplate = $('#suiteinfo .suite-board-body').html();
+  }
+  $('#suiteinfo .suite-board-body').html('');
+
+  var boards = properties[currentPropertyId].boards;
+  var boardHtml='';
+  boards.forEach(function(b){
+    boardHtml = boardTemplate.replace('<!--PROPERTY-BOARD-TITLE-->', b.board_name);
+    boardHtml = boardHtml.replace('<!--PROPERTY-BOARD-RATE-->', b.board_rackrate);
+    $('#suiteinfo .suite-board-body').append(boardHtml);
+  });
+}
+
+function appendSlider(){  
+  $('#suitelist1 .slider-detail').removeClass("slick-initialized slick-slider");
+  $('#suitelist1 .slider-detail').slick({
+    slidesToShow: 1,
+    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+  });
+}
+
+function appendResultGridSlider(){  
+  $('#suiteslist .result-grid').removeClass("slick-initialized slick-slider");
+  $('#suiteslist .result-grid').slick({
     slidesToShow: 1,
     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
     nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
@@ -288,7 +369,7 @@ function replaceRooms(property_id, category_id){
   });
 
   $('[data-place="property-rooms"]').html(roomview);
-  $('.result-grid').slick({
+  $('.result-grid', $('[data-place="property-rooms"]')).slick({
     slidesToShow: 1,
     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
     nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'

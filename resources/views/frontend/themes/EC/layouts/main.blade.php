@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="robots" content=" @yield('robots')">
     <meta name="keywords" content=" {{ CNF_APPNAME }}, @yield('meta_keywords') ">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content=" {{ CNF_APPNAME }} - @yield('meta_description') ">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
@@ -102,7 +103,6 @@
           window.dataLayer = window.dataLayer || [];
           function gtag(){dataLayer.push(arguments);}
           gtag('js', new Date());
-
           gtag('config', '{{ CNF_GOOGLE_ANALYTIC_KEY }}');
         </script>
         @endif
@@ -201,31 +201,21 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/datepick/jquery.plugin.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/datepick/jquery.datepick.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/mapbox-gl.js') }}"></script>
-<!-- <script type="text/javascript" src="{{ asset('themes/EC/./js/all.js') }}"></script> -->
 <script src="{{ asset('themes/EC/js/plugin/rellax.min.js') }}"></script>
-
-
 <script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
-
-<script type="text/javascript" src="{{ asset('themes/EC/js/all.js') }}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/all.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reservation.js') }}"></script>
 <script src="{{ asset('js/reservation.js')}}"></script>
-
 
 @section('custom_js')
     @parent
 @show
 
-
-
 <script>
-
 $(function() {
-
     if ($('.fromdate, .todate').length) {
       // check if element is available to bind ITS ONLY ON HOMEPAGE
       var currentDate = new Date();
-
       $('.fromdate, .todate').daterangepicker({
         locale: {
           format: 'DD MMM YYYY'
@@ -238,29 +228,22 @@ $(function() {
         // Lets update the fields manually this event fires on selection of range
         var selectedStartDate = start.format('DD MMM YYYY'); // selected start
         var selectedEndDate = end.format('DD MMM YYYY'); // selected end
-
         $checkinInput = $('.fromdate');
         $checkoutInput = $('.todate');
-
         // Updating Fields with selected dates
         $checkinInput.val(selectedStartDate);
         $checkoutInput.val(selectedEndDate);
-
         // Setting the Selection of dates on calender on CHECKOUT FIELD (To get this it must be binded by Ids not Calss)
         var checkOutPicker = $checkoutInput.data('daterangepicker');
         checkOutPicker.setStartDate(selectedStartDate);
         checkOutPicker.setEndDate(selectedEndDate);
-
         // Setting the Selection of dates on calender on CHECKIN FIELD (To get this it must be binded by Ids not Calss)
         var checkInPicker = $checkinInput.data('daterangepicker');
         checkInPicker.setStartDate(selectedStartDate);
         checkInPicker.setEndDate(selectedEndDate);
-
       });
-
     } // End Daterange Picke
     
-
     $('.field-count-reservation').on('click', '.plus-room', function () {
       if ($(this).prev().find('.mr-1').html() < 5) {
         $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
@@ -310,14 +293,12 @@ $(function() {
 
     $('.field-count-reservation ').on('click', '.min-room', function () {
       $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
-
       if ($(this).next().find('.mr-1').html() > 1) {
         $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
       }
       if ($(this).next().find('.mr-1').html() < 2) {
         $(this).closest('.field-count-reservation').find('.min-room').addClass('disable');
         $('.guest-pick-body').find('.col-ews').addClass('col-12').removeClass('col-6');
-
       }
       if ($(this).prev().find('.mr-1').html() != 4) {
         $(this).closest('.field-count-reservation').find('.plus-room').removeClass('disable');
@@ -325,7 +306,6 @@ $(function() {
         $('.room-limit').hide();
       }
     });
-
     $('.field-count .plus').click(function () {
       $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
     });
@@ -334,7 +314,6 @@ $(function() {
         $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
       }
     });
-
     $(document).on('click', '.field-count-reservation .plus', function () {
       $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
       $(this).closest('.field-count-reservation').find('.min').removeClass('disable');
@@ -348,6 +327,23 @@ $(function() {
       }
     });
 
+    $(document).on('click', ".select_suite", function(){
+        var suit_id = $(this).data('suite-id');
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',            
+            url:'{{URL::to("/suite")}}',
+            //url: "/suite",
+            data: {suit_id:suit_id },
+            dataType:'json',                    
+            success: function(response){
+               
+            }
+        });
+    });    
+
     $(document).on('click', ".dest-collection", function(e){
         e.preventDefault();
         //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -357,18 +353,14 @@ $(function() {
         var coll_type = 'destinations';
         var req_for = '';
         var cobj = $(this);
-
         console.log(d_name+"/"+cat+"/"+coll_type+"/"+req_for+"/"+cobj);
-
         //var token = $("input[name='_token']").val();
-
         $.ajax({
             url:'{{URL::to("propcollection/")}}',
             dataType:'json',
             data: {d_name:d_name, coll_type:coll_type, cat:cat},
             type: 'post',
             success: function(response){
-
                 if(response.type=='dedicated-collection'){
                     var mem_types = response.mem_types;
                     if(mem_types.indexOf("2")>0){
@@ -406,7 +398,6 @@ $(function() {
             }
         });
     });
-
     $(".suites-slider").not('.slick-initialized').slick({
         infinite: true,
         speed: 300,
@@ -414,7 +405,6 @@ $(function() {
         prevArrow: $('.prev'),
         nextArrow: $('.next'),
     });
-
     $('.slider-detail').not('.slick-initialized').slick({
       infinite: true,
       speed: 300,
@@ -422,7 +412,6 @@ $(function() {
       prevArrow: $('.prev'),
       nextArrow: $('.next'),
     });
-
     $('video').mediaelementplayer({
       enableAutosize: true,
       alwaysShowControls: true,
@@ -433,15 +422,12 @@ $(function() {
       audioWidth: 400,
       audioHeight: 30,
     });
-
     $('.prev').click(function () {
         $('video').trigger('pause');
     });
-
     $('.next').click(function () {
         $('video').trigger('pause');
     });
-
     $("#cal1").rangeCalendar({
         minRangeWidth : 1,
         maxRangeWidth: 30,
@@ -449,11 +435,9 @@ $(function() {
         start : "0",
         changeRangeCallback: rangeChanged,
     });
-
     
 console.log(sp_arr);
     var newArrDt = new Date(_year, _month, _day);
-
     var _dday = '';
     var _dmonth = '';
     var _dyear = '';
@@ -464,15 +448,12 @@ console.log(sp_darr);
         _dmonth = sp_darr[2];
         _dday = sp_darr[1];
     }
-
     var newDepDt = new Date(_dyear, _dmonth, _dday);
-
     var defStartDay = moment(newArrDt).format('DD');
     var defStartMonth = moment(newArrDt).format('MMM');
     var defEndDay = moment(newDepDt).format('DD');
     var defEndMonth = moment(newDepDt).format('MMM');
     //$(".cal-f .cal-date").html(defStartDay +' '+ defStartMonth+' - '+ defEndDay +' '+ defEndMonth);
-
     function rangeChanged(target,range){
         var startDay = moment(range.start).format('DD');
         var startMonth = moment(range.start).format('MMM');
@@ -480,30 +461,24 @@ console.log(sp_darr);
         var endMonth = moment(range.end).format('MMM');
         $(".cal-f .cal-date").html(startDay +' '+ startMonth+' - '+ endDay +' '+ endMonth);
     }
-
     $(document).ready(function(){
         var active_cat = $("input[name='activeDestination']").val();
         console.log(active_cat);
         getDestinationPage(active_cat, '');
     });
-
     $(document).on('click', '.experiences', function(){
         var active_cat = $("input[name='activeDestination']").val();
         var active_exp = $(this).attr('data-exp');
         getDestinationPage(active_cat, active_exp); console.log(active_cat+', '+active_exp);
     });
-
     function getDestinationPage(item, active_exp){
         var mtype = $("input[name='m_type']").val();
         var _cat = item;
         getPropertyByCollection(mtype, _cat, 1, '', active_exp);
-
         //changeBreadcrumbDropdown(_cat);
-
         //$('#gs_sb_navhead').addClass('navheadimage');
         //$('#gs_sb_criteria').addClass('sdestination');
     }
-
     function getPropertyByCollection(coll_type, cat, page, req_for, active_exp){ console.log(coll_type+', '+cat+', '+page+', '+req_for);
         $.ajax({
             url:'{{URL::to("propertysearchlistbycollection/")}}',
@@ -531,27 +506,22 @@ console.log(sp_darr);
                     $("#social_url").css('display', '');
                     $("#social_url").attr('data-url', social_url);
                 } */
-
                 /*var datObj = {};
-				datObj.catID = data.data.dest_id;
-				var params = $.extend({}, doAjax_params_default);
-				params['url'] = BaseURL + '/destination/destinatinos-ajax';
-				params['data'] = datObj;
-				params['successCallbackFunction'] = renderSearchDestination;
-				doAjax(params);*/
-
+                datObj.catID = data.data.dest_id;
+                var params = $.extend({}, doAjax_params_default);
+                params['url'] = BaseURL + '/destination/destinatinos-ajax';
+                params['data'] = datObj;
+                params['successCallbackFunction'] = renderSearchDestination;
+                doAjax(params);*/
                 listpagestructure(data);
                 hideLoading();
             }
         });
     }
-
     function listpagestructure(data){
-
         var _html = '';
         var jsonobj = data.data;
         if($.isEmptyObject(jsonobj)){
-
         }else{
             var cat_image = jsonobj.category_image;
             var gs_side_image_path = BaseURL+'/uploads/category_imgs/'+cat_image;
@@ -560,25 +530,17 @@ console.log(sp_darr);
             }
             $(".gs-sidebar-criteria-image").html('');
             $(".gs-sidebar-criteria-image").html('<img src="'+gs_side_image_path+'" alt="" class="mCS_img_loaded desaturate">');
-
             var cat_insta_tag = jsonobj.category_instagram_tag;
             var cat_nm = jsonobj.category_name;
             $(".destinationTitle").html('');
             $(".destinationTitle").html(cat_nm+"<br><span class='hashTag'>"+cat_insta_tag+"</span>");
-
-
             var editorPropertiesArr = jsonobj.editorPropertiesArr;
-
             if (typeof editorPropertiesArr !== undefined && editorPropertiesArr.length > 0){
-
                     $(editorPropertiesArr).each(function(_key, _val){
-
                         //_html += '<a href="'+_val['property_slug']+'" class="dtl-link">';
                         _html += '<div class="row">';
                             _html += '<div class="col-8 ">';
                                 //_html += '<div class="content-img" style="background: url("http://localhost:8181/emporium-staging-forge/public/themes/EC/images/aaabf028325021.5637326997cb1.jpg") no-repeat center center;" id="ecp-bg-img-'+_val['id']+'"></div>';
-
-
                                 _html += '<div class="content-img">';
                                     _html += '<a href="suite.html" class="dtl-link">';
                                       _html += '<img id="ecp-bg-img-'+_val['id']+'" alt="">';
@@ -593,10 +555,7 @@ console.log(sp_darr);
                                       _html += '</div>';
                                     _html += '</div>';
                                 _html += '</div>';
-
-
                             _html += '</div>';
-
                             _html += '<div class="col-4 ">';
                                 _html += '<h3 class="title-font-2 title-line is-small  fadeInUp "><b>editors choice hotel</b></h3>';
                                 _html += '<p class="font-2 mt-4 ">';
@@ -607,7 +566,6 @@ console.log(sp_darr);
                             _html += '</div>';
                         _html += '</div>';
                         //_html += '</a>';
-
                         _html += '<div class="row relax-offset" data-rellax-speed="2">';
                             _html += '<div class="col-4 ">';
                                 _html += '<div class="title-offset mt-5 ">';
@@ -618,7 +576,6 @@ console.log(sp_darr);
                             _html += '<div class="col-8 ">';
                                 _html += '<div class="img-offset hotel-page-list suite-ontouch ">';
                                     _html += '<div class="img-offset-slide offsets---190" id="ecp-img-slk-'+_val['id']+'">';
-
                                         var _ecid = _val['id'];
                                         $.ajax({
                                             url:'{{URL::to("propertyimagesbypid/")}}',
@@ -636,7 +593,6 @@ console.log(sp_darr);
                                                 });
                                                 $("#ecp-img-slk-"+_val['id']).html(_ecpimg);
                                                 $("#ecp-bg-img-"+_val['id']).css('background-image', 'url(' + _ecpbg + ')')
-
                                             }
                                         }).done(function(){
                                             $("#ecp-img-slk-"+_val['id']).slick({
@@ -645,11 +601,7 @@ console.log(sp_darr);
                                                 nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
                                             });
                                         });
-
                                     _html += '</div>';
-
-
-
                                     _html += '<div class="hotel-meta full-width">';
                                         _html += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="reviews" data-id="'+_val['property_slug']+'" data-sidebar="#reviews">Reviews</a>';
                                         _html += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="quickinfo" data-id="'+_val['property_slug']+'" data-sidebar="#quickinfo">Quick info</a>';
@@ -662,22 +614,16 @@ console.log(sp_darr);
                                             _html += '</div>';
                                         _html += '</div>';
                                     _html += '</div>';
-
-
-
                                 _html += '</div>';
                             _html += '</div>';
                         _html += '</div>';
                         _html += '<div class="line-separate "></div>';
                       });
-
             }
-
             var featurePropertiesArr = jsonobj.featurePropertiesArr;
             console.log(featurePropertiesArr);
             var i=1;
             if(typeof featurePropertiesArr !== undefined && featurePropertiesArr.length > 0){
-
                 var fp1 = featurePropertiesArr[0];
                 var fp2 = featurePropertiesArr[1];
                 console.log(fp1);
@@ -710,11 +656,7 @@ console.log(sp_darr);
                                 nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
                             });
                         });
-
                       _html += '</div>';
-
-
-
                       _html += '<div class="hotel-meta full-width">';
                         _html += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="reviews" data-id="'+fp1['property_slug']+'" data-sidebar="#reviews">Reviews</a>';
                         _html += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="quickinfo" data-id="'+fp1['property_slug']+'" data-sidebar="#quickinfo">Quick info</a>';
@@ -727,16 +669,11 @@ console.log(sp_darr);
                             _html += '</div>';
                         _html += '</div>';
                       _html += '</div>';
-
                   _html += '</div>';
-
-
-
                       _html += '<div class="title-offset mt-5 relax-offset" data-rellax-speed="2" data-rellax-percentage="0.1">';
                         _html += '<h3 class="title-second title-line mb-0">'+fp1["property_name"]+'</h3>';
                         //_html += '<h4 class="title-font-2 title-third">experience</h4>';
                       _html += '</div>';
-
                     _html += '</div>';
                     _html += '<div class="col-5 ">';
                       _html += '<div class="fetaruer py-5 pl-5 pr-0">';
@@ -749,7 +686,6 @@ console.log(sp_darr);
                       _html += '</div>';
                     _html += '</div>';
               _html += '</div>';
-
               }
               if(typeof fp2 !== 'undefined'){
               //_html += '<a href="'+fp2['property_slug']+'" class="dtl-link">';
@@ -767,7 +703,6 @@ console.log(sp_darr);
                   _html += '<div class="col-7 ">';
                   _html += '<div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">';
                     _html += '<div class="img-offset-slide" id="fp-img-slk-'+fp2['id']+'">';
-
                         var _fpid2 = fp2['id'];
                         $.ajax({
                             url:'{{URL::to("propertyimagesbypid/")}}',
@@ -791,11 +726,7 @@ console.log(sp_darr);
                                 nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
                             });
                         });
-
-
                     _html += '</div>';
-
-
                     _html += '<div class="hotel-meta full-width">';
                         _html += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="reviews" data-id="'+fp2['property_slug']+'" data-sidebar="#reviews">Reviews</a>';
                         _html += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="quickinfo" data-id="'+fp2['property_slug']+'" data-sidebar="#quickinfo">Quick info</a>';
@@ -808,8 +739,6 @@ console.log(sp_darr);
                             _html += '</div>';
                         _html += '</div>';
                     _html += '</div>';
-
-
                   _html += '</div>';
                     _html += '<div class="title-offset mt-5 relax-offset" data-rellax-speed="2" data-rellax-percentage="0.1">';
                       _html += '<h3 class="title-second title-line mb-0">'+fp2["property_name"]+'</h3>';
@@ -818,35 +747,26 @@ console.log(sp_darr);
                   _html += '</div>';
                 _html += '</div>';
               //_html += '</a>';
-
               /*$('.img-offset-slide').slick({
                 slidesToShow: 1,
                 prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
                 nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
               });*/
               }
-
           }
-
           var _html_prop = '';
           _html_prop += '<div class="row">';
             //_html_prop += '<div class="col-3"></div>';
             //_html_prop += '<div class="col-9">';
             //  _html_prop += '<div class="row">';
-
                 var propertiesArr = jsonobj.propertiesArr;
                 if(typeof propertiesArr!==undefined && propertiesArr.length > 0 ){
                     var rw = 1;
                     $.each(propertiesArr, function(key, value){
-
                         var _pid = value['id'];
-
                         _html_prop += '<div class="col-6 mb-5 ">';
-
                         _html_prop += '<div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">';
-
                         _html_prop += '<div class="pr-lst result-grid" id="grid-img-'+value['id']+'">';
-
                         $.ajax({
                             url:'{{URL::to("propertyimagesbypid/")}}',
                             //dataType:'html',
@@ -871,13 +791,9 @@ console.log(sp_darr);
                             });
                         });
                         _html_prop += '</div>'
-
-
                         //_html_prop += '<a href="#" class="dtl-link">';
                         //    _html_prop += '<i class="ico ico-diamon diamon-label fav-button"></i>';
                         //_html_prop += '</a>';
-
-
                         _html_prop += '<div class="my-dropdown">';
                               _html_prop += '<div class="btn-group dropleft">';
                                 _html_prop += '<a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="ico ico-diamon diamon-label"></i></a>';
@@ -886,19 +802,12 @@ console.log(sp_darr);
                                   _html_prop += '<a href="#" class="dropdown-item btn-sidebar create-collection" data-sidebar="#myCollection">Create new collection</a>';
                                 _html_prop += '</div>';
                               _html_prop += '</div>';
-
                         _html_prop += '</div>';
-
-
                         _html_prop += '<div class="hotel-meta full-width is-small">';
-
-
                             _html_prop += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="reviews" data-id="'+value['property_slug']+'" data-sidebar="#reviews">Reviews</a>';
                             _html_prop += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="quickinfo" data-id="'+value['property_slug']+'" data-sidebar="#quickinfo">Quick info</a>';
                             _html_prop += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="gallery" data-id="'+value['property_slug']+'" data-sidebar="#gallery">Gallery</a>';
                             _html_prop += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-for="suites" data-id="'+value['property_slug']+'" data-sidebar="#suiteside">Suite(s)</a>';
-
-
                           //_html_prop += '<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-id="'+value['property_slug']+'" data-sidebar="#gallery">';
                           //  _html_prop += 'View Gallery';
                           //_html_prop += '</a>';
@@ -915,8 +824,6 @@ console.log(sp_darr);
                             //_html_prop += '<p><i><b>Includes breakfast</b></i></p>';
                           _html_prop += '</div>';
                         _html_prop += '</div>';
-
-
                         _html_prop += '</div>';
                           _html_prop += '<a href="'+value['property_slug']+'">';
                             _html_prop += '<div class="title-offset mt-5 ">';
@@ -925,48 +832,40 @@ console.log(sp_darr);
                             _html_prop += '</div>';
                           _html_prop += '</a>';
                     _html_prop += '</div>';
-
                     });
                 }
               //_html_prop += '</div>';
             //_html_prop += '</div>';
           _html_prop += '</div>';
-
-
-
-
             _html += '<div class="col-md-12 col-xs-12 col-xs-12 text-center">';
                 _html += '<div class="row">';
                     var total_pages = jsonobj.total_pages;
                     if(total_pages>1){
-                		_html += '<ul class="pagination">';
-                			for(i=1; i<=total_pages; i++){
-                				<?php
-                					$url=Request::url().'?';
-                					$queryStrings=Request::query();
-                					if(isset($queryStrings['page']))
-                					{
-                						unset($queryStrings['page']);
-                					}
-                					foreach($queryStrings as $keyQuery=>$querystring):
-                						$url.=$keyQuery.'='.$querystring.'&';
-                					endforeach;
-                				?>
+                        _html += '<ul class="pagination">';
+                            for(i=1; i<=total_pages; i++){
+                                <?php
+                                    $url=Request::url().'?';
+                                    $queryStrings=Request::query();
+                                    if(isset($queryStrings['page']))
+                                    {
+                                        unset($queryStrings['page']);
+                                    }
+                                    foreach($queryStrings as $keyQuery=>$querystring):
+                                        $url.=$keyQuery.'='.$querystring.'&';
+                                    endforeach;
+                                ?>
                                 var act = (i==jsonobj.active_page) ? 'active' : '';
-                				_html += '<li class="'+act+' paging"><a href="{{ $url.'page='}}'+i+'" data-page="'+i+'">'+i+'</a></li>';
-                			}
-                		_html += '</ul>';
-            		}
-            	_html += '</div>';
+                                _html += '<li class="'+act+' paging"><a href="{{ $url.'page='}}'+i+'" data-page="'+i+'">'+i+'</a></li>';
+                            }
+                        _html += '</ul>';
+                    }
+                _html += '</div>';
             _html += '</div>';
-
         }
         $(".load_ajax").html('');
         $(".load_ajax").html(_html);
-
         $(".load_property_ajax").html('');
         $(".load_property_ajax").html(_html_prop);
-
         var rellax = new Rellax('.relax-offset');
         /*$grid = $('.grid').masonry({
           // options...
@@ -976,23 +875,18 @@ console.log(sp_darr);
         });
         $('img.rad-img').photoLoadAfterPageLoad(noImg);*/
     }
-
     var rellax = new Rellax('.relax-offset');
-
     $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
       $('.result-grid').not('.slick-initialized').slick('setPosition');
       $('.collapse').removeClass('show');
       $('.slider-detail').not('.slick-initialized').slick('setPosition');
     });
 });
-
 function setMapLocation(lat, long){
     var locations = [
       ['<b>Loaction Name</b>', lat, long],
     ];
-
     var map = L.map('map2').setView([lat, long], 8);
-
     var myIcon = L.icon({
       iconUrl: 'images/basic_geolocalize-01.svg',
       iconSize: [40, 45],
@@ -1001,7 +895,6 @@ function setMapLocation(lat, long){
       'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 18,
     }).addTo(map);
-
     for (var i = 0; i < locations.length; i++) {
       marker = new L.marker([locations[i][1], locations[i][2]], { icon: myIcon })
         .bindPopup(locations[i][0])
@@ -1022,7 +915,6 @@ function setMapLocation(lat, long){
                 cancelLabel: 'Clear',
             }
         });
-
         pickerDate.on('apply.daterangepicker', function (ev, pickerDate) {
             $('.cal-date').html(pickerDate.startDate.format('DD MMM') + ' - ' + pickerDate.endDate.format('DD MMM'));
         });

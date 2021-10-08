@@ -83,4 +83,9 @@ class properties extends Sximo  {
     {
         return $this->hasOne(PropertyCategoryPackages::class, 'property_id');
     }
+
+    public function boards()
+    {
+    	return $this->hasMany(PropertyBoards::class, 'property_id');
+    }
 }

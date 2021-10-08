@@ -2,6 +2,7 @@
 <html lang="">
 
 <head>
+    
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="">
@@ -40,7 +41,7 @@
                         </div>
                     @endif
 
-                    <form method="post" action="/sendinvitation" >
+                    <form method="post" action="/sendinvitation" onsubmit="return validateform()" name = "form">
                         <div class="mt-5 mb-3">
                             <h3 class="font-2 mb-4">Invite companion </h3>
 
@@ -54,10 +55,11 @@
                             </div>
 
                             <div class="form-group">
-                                <input type="text" name="email" class="form-control" placeholder="Enter multiple Email seprated by(,)comma">
+                                <input type="text" name="email" class="form-control" placeholder="Enter multiple Email seprated by(,)comma">                                
                             </div>
+                            <p style="color: red; display: none" id="email_error"><strong>select checkboxe</strong></p>
                             <div class="form-group">
-                                <button type="submit" name="submit" class="btn btn-primary btn-block mb-3">Send invitations</button>
+                                <button type="submit" name="submit" class="btn btn-primary btn-block mb-3 send">Send invitations</button>
                                 <a href="/dashboard" class="btn btn-outline-dark btn-block">Skip for now</a>
                             </div>
                         </div>
@@ -132,6 +134,20 @@
             theme: "bootstrap",
             minimumResultsForSearch: -1
 
+        });
+
+        $(document).ready(function() {
+            $(".send").click(function (e) { 
+                alert();
+                $("input").focusout(function() { 
+                    if($(this).val()=='') { 
+                        $(this).css('border', 'solid 2px red');
+                    }
+                    else {
+                        $(this).css('border', 'solid 2px green');     
+                    }    
+                }) .trigger("focusout");
+            });
         });
     </script>
 </body>

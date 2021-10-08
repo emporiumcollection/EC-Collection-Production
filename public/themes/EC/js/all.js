@@ -1813,7 +1813,7 @@ var ajaxReq = 'ToCancelPrevReq';
 
 
   });
-
+/*
   $(document).on('click', '#restaurant_gallery-tab', function () {
     var _type = $(this).attr('data-type');
     var _slug = $("#hid_propid").val();
@@ -1860,7 +1860,7 @@ var ajaxReq = 'ToCancelPrevReq';
 
     });
   });
-
+*/
   $(document).on('click', '.res-sidebar', function () {
     var id = $(this).attr('data-id');
     var type = 'res';

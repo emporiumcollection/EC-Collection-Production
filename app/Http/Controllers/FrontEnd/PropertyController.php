@@ -2905,6 +2905,9 @@ class PropertyController extends Controller {
             }
         }
 
+        $this->storeSession($adults, $childs, $arrive_date,
+            $departure_date);
+
         //Get Number of night
         $number_of_nights = '';
         if($arrive != '' && $departure != '') {

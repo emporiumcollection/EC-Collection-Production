@@ -37,6 +37,22 @@ Route::get('/users/guestinvite', 'UserController@getInvite');
 Route::get('/users/companion', 'UserController@getCompanion');
 // Route::get('/users/companion', 'UserController@getCompanion');
 
+
+//HotelDetail Routes
+
+Route::get('/hotel/hoteldetail', 'FrontEnd\HotelDetailController@hoteldetail');
+Route::get('/hotel/suite/{property_id}', 'FrontEnd\HotelDetailController@suites');
+Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
+Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture');
+Route::get('/hotel/spa', 'FrontEnd\HotelDetailController@spa');
+Route::get('/hotel/restaurant', 'FrontEnd\HotelDetailController@restaurant');
+Route::get('/hotel/detailrestaurant','FrontEnd\HotelDetailController@detailrestaurant');
+Route::get('/hotel/location','FrontEnd\HotelDetailController@location');
+Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
+Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
+Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
+
+
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
 Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
@@ -49,12 +65,13 @@ Route::get('reservation/when', 'ReservationsController@when');
 Route::get('reservation/where', 'ReservationsController@where');
 Route::get('reservation/suite', 'ReservationsController@suite');
 Route::get('reservation/suiteboard', 'ReservationsController@suiteBoard');
-Route::get('reservation/suitepolicies', 'ReservationsController@suitePolicies');
-Route::get('reservation/aditionalservices', 'ReservationsController@aditionalServices');
+Route::get('policies', 'ReservationsController@Policies');
+Route::get('reservation/services', 'ReservationsController@aditionalServices');
 Route::get('reservation/whoistravelling','ReservationsController@whoistravelling');
 Route::get('reservation/paymentmethod', 'ReservationsController@paymentmethod');
 Route::get('reservation/hotelpolicies', 'ReservationsController@hotelpolicies');
 Route::get('reservation/bookingsummary', 'ReservationsController@bookingsummary');
+Route::post('/suite', 'ReservationsController@selected_suite');
 // Route::post('/users/bookingsummary', 'UserController@bookingsummary');
 
 /**
@@ -821,5 +838,5 @@ Route::post('topSearch', 'FrontEnd\PropertyController@topSearch');
 
 Route::post('price_on_request', 'HomeController@price_on_request');
 
-
-
+Route::get('property-image/resize/{scale}/{path}/{file}/{type}', 'ImageController@resize');
+Route::get('room-image/resize/{scale}/{path}/{category}/{file}', 'ImageController@roomImageResize');
