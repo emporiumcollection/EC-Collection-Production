@@ -25579,7 +25579,7 @@ h3 {
     height: 33px;
     background-size: contain; }
   .ico.ico-reload {
-    background: url(../images/reload.svg) no-repeat center center;
+    background: url(../images/ajax-loader.gif) no-repeat center center;
     width: 24px;
     height: 24px;
     background-size: contain; }
