@@ -84,7 +84,9 @@
 
                             </ul>
                         </div>
-                        <div class="grid-layout" id="gallery_restaurant" data-place="restrurant-images" data-replace="restrurant-images">
+                        <div class="col-8">
+                            <div class="grid-layout" id="gallery_restaurant" data-place="restrurant-images" data-replace="restrurant-images">
+                            </div>
                         </div>
                     </div>
                 </div>
