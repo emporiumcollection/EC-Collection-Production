@@ -73,8 +73,6 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="{{ asset('themes/EC/css/styles.css') }}">
-    <link rel="stylesheet" href="{{ asset('themes/EC/css/loader.css') }}">
-
     <!-- tilt css include -->
     <!-- end of tilt css include -->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -119,6 +117,8 @@
     <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 </head>
 <body>
+    @include('frontend.themes.EC.layouts.sections.preloader')
+
     <!--@include('frontend.themes.EC.layouts.sections.preloader')-->
 
     @if(isset($layout_type) && $layout_type == 'old')
