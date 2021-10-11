@@ -52,7 +52,8 @@ function replacePropertyData(id){
           rimages = r.images;
           if(r.images!=undefined){          
             rimages.forEach(function(e){
-              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + rm['file']['name'] + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
+              console.log(e);
+              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
             });
@@ -107,7 +108,70 @@ function replacePropertyData(id){
       $(this).html(imageview);
   });
 
+  $('#experience_gallery-tab').parents('li').hide();
+  $('#restaurant_gallery-tab').parents('li').hide();
+  $('#bars_gallery-tab').parents('li').hide();  
+
+  if(properties[id]['barList'].toString().length > 0){
+    $('#bars_gallery-tab').parents('li').show();    
+  }
+  if(properties[id]['spaList'].toString().length > 0){
+    $('#experience_gallery-tab').parents('li').show();    
+  }
+  if(properties[id]['restaurantList'].toString().length > 0){
+    $('#restaurant_gallery-tab').parents('li').show();    
+  }
+
+  replaceGalleryNames(id);
+
   setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
+}
+
+function replaceGalleryNames(id){
+  var suitenamelist = `<li class="nav-item">
+        <a class="nav-link" href="#">Suites</a>
+      </li>`;
+  
+  properties[id]['suites'].forEach(function(s) {
+      suitenamelist += `<li class="nav-item">
+        <a class="nav-link" href="#">` + s.cat_short_name + `</a>
+      </li>`;
+  });
+
+  $('[data-replace="suitenamelist"]').html(suitenamelist);
+
+  var restaurant = `<li class="nav-item">
+        <a class="nav-link" href="#">Restaurants</a>
+      </li>`;
+  for (const [key, value] of Object.entries(properties[id]['restaurantList'])) {
+    restaurant += `<li class="nav-item">
+        <a class="nav-link" href="#">` + value + `</a>
+      </li>`;
+  }
+
+  $('[data-replace="restaurants"]').html(restaurant);
+
+  var bar = `<li class="nav-item">
+        <a class="nav-link" href="#">Bars</a>
+      </li>`;
+  for (const [key, value] of Object.entries(properties[id]['barList'])) {
+    bar += `<li class="nav-item">
+        <a class="nav-link" href="#">` + value + `</a>
+      </li>`;
+  }
+
+  $('[data-replace="bars"]').html(bar);
+
+  var spa = `<li class="nav-item">
+        <a class="nav-link" href="#">Spas</a>
+      </li>`;
+  for (const [key, value] of Object.entries(properties[id]['spaList'])) {
+    spa += `<li class="nav-item">
+        <a class="nav-link" href="#">` + value + `</a>
+      </li>`;
+  }
+
+  $('[data-replace="spas"]').html(spa);
 }
 
 function replacePropertySuites(id){
@@ -437,3 +501,29 @@ function replacePrices(cat_id){
         }
     });
 }
+
+$(document).ready(function(){
+  $(".close-sidebar, .sidebar-back").click(function (e) {
+    e.preventDefault();
+    $(this).closest('.sidebar-main').removeClass('show');
+    $(this).closest('body').css('overflow', 'auto');
+    $('.sidebar-overlay').remove();
+  });
+  
+  $('body').on('click', '.sidebar-overlay', function () {
+    $('.sidebar-main').removeClass('show');
+    $('.sidebar-overlay').remove();
+    $('body').css('overflow', 'auto');
+    $('.sidebar').removeClass('show');
+  });
+
+  $('body').click(function (e) {
+    console.log(e.target);
+    if(!$(e.target).hasClass('sidebar-main') && !$(e.target).parents('div').hasClass('sidebar-main')){
+      console.log('close it');
+      $('.sidebar-main').removeClass('show');
+      $('body').css('overflow', 'auto');
+      $('.sidebar-overlay').remove();      
+    }
+  });
+});

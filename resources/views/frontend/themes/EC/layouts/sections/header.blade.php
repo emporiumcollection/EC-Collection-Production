@@ -28,11 +28,11 @@
                 <a class="nav-link " href="get-inspired.html">Get Inspired</a>
               </li>
             </ul> -->
-            <div class="humburger-menu">
+            <!--<div class="humburger-menu">
               <div class="line"></div>
               <div class="line"></div>
               <div class="line"></div>
-            </div>
+            </div>-->
             <div class="menu">
               <a href="#" class="close-menu">
                 <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">

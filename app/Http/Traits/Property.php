@@ -10,6 +10,9 @@ use App\Models\Categories;
 use App\Models\properties;
 use App\Models\amenities;
 use App\Models\Seasons;
+use App\Models\Restaurant;
+use App\Models\Bar;
+use App\Models\Spa;
 
 use DateTime;
 trait Property {
@@ -76,6 +79,8 @@ trait Property {
             'detail_section1_description_box2', 
             'roomamenities', 
             'assign_amenities', 
+            'latitude',
+            'longitude',
             'address', 
             'internetpublic',
             'internetroom',
@@ -88,7 +93,10 @@ trait Property {
             'numberofrooms',
             'availableservices',
             'pets',
-            'carpark'
+            'carpark',
+            'bar_ids',
+            'spa_ids',
+            'restaurant_ids'
             ])
         ->with([
             'boards',
@@ -128,12 +136,40 @@ trait Property {
             }])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
-        ->limit(1)
+        ->limit(4)
         ->get();
     }
 
     public function getFeaturedProperties($keyword){
-        return properties::select(['id', 'property_name', 'property_short_name', 'detail_section1_title', 'detail_section1_description_box1', 'detail_section1_description_box2'])
+        return properties::select([
+            'id', 
+            'property_name', 
+            'property_short_name', 
+            'detail_section1_title', 
+            'detail_section1_description_box1', 
+            'detail_section1_description_box2', 
+            'detail_section1_description_box2', 
+            'roomamenities', 
+            'assign_amenities', 
+            'latitude',
+            'longitude',
+            'address', 
+            'internetpublic',
+            'internetroom',
+            'children_policy',
+            'checkin',
+            'checkout',
+            'transfer',
+            'smookingpolicy',
+            'smookingrooms',
+            'numberofrooms',
+            'availableservices',
+            'pets',
+            'carpark',
+            'bar_ids',
+            'spa_ids',
+            'restaurant_ids'
+        ])
         ->with([
             'boards',
             'container',
@@ -180,7 +216,7 @@ trait Property {
         ])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
-        ->limit(1)
+        ->limit(4)
         ->get();        
     }
 
@@ -191,10 +227,28 @@ trait Property {
             'property_short_name', 
             'detail_section1_title', 
             'detail_section1_description_box1', 
-            'detail_section1_description_box2',
+            'detail_section1_description_box2', 
+            'detail_section1_description_box2', 
+            'roomamenities', 
+            'assign_amenities', 
             'latitude',
             'longitude',
             'address', 
+            'internetpublic',
+            'internetroom',
+            'children_policy',
+            'checkin',
+            'checkout',
+            'transfer',
+            'smookingpolicy',
+            'smookingrooms',
+            'numberofrooms',
+            'availableservices',
+            'pets',
+            'carpark',
+            'bar_ids',
+            'spa_ids',
+            'restaurant_ids'
         ])
         ->with([
             'boards',
@@ -246,7 +300,7 @@ trait Property {
         ->where('city', '=', $keyword)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
-        ->limit(1)
+        ->limit(4)
         ->get();        
     }
 
@@ -254,6 +308,7 @@ trait Property {
         $roomamenitieslist = [];
         $all = [];
         foreach($properties as $k => $property){
+            $suiteNameList = [];
             // room and assign amenitiess
             $roomamenities = amenities::whereIn('id', explode(',', $property->roomamenities))
             ->get()->toArray();
@@ -283,7 +338,9 @@ trait Property {
 
             // room images
             if(!empty($property->suites)){
+                $suiteNameList = [];
                 foreach($property->suites as $sk => $suite){
+                    $suiteNameList[] = $suite->cat_short_name;
                     if(!empty($suite->rooms)){
                         foreach($suite->rooms as $rk => $room){
                             $roomImages = PropertyImages::with(['file' => function($query){
@@ -318,6 +375,36 @@ trait Property {
                     }
                 }
             }
+            $properties[$k]->suiteNameList = implode('<br>', $suiteNameList);
+
+            //bars spas and restrurants
+            $bars = Bar::whereIn('id', explode(',', str_replace(' ', '', $properties[$k]->bar_ids)))
+            ->get();
+
+            $pbars = [];
+            foreach($bars as $bar){
+                $pbars[$bar->id] = $bar->title;
+            }
+            $properties[$k]->barList = $pbars;
+
+            $spas = Spa::whereIn('id', explode(',', str_replace(' ', '', $properties[$k]->spa_ids)))
+            ->get();
+
+            $pspas = [];
+            foreach($spas as $spa){
+                $pspas[$spa->id] = $spa->title;
+            }
+            $properties[$k]->spaList = $pspas;
+
+            $restaurants = Restaurant::whereIn('id', explode(',', str_replace(' ', '', $properties[$k]->restaurant_ids)))
+            ->get();
+
+            $prestau = [];
+            foreach($restaurants as $res){
+                $prestau[$res->id] = $res->title;
+            }
+            $properties[$k]->restaurantList = $prestau;
+
         }
     }
 

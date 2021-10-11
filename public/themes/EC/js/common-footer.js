@@ -279,7 +279,9 @@ function setMapLocation(lat, long){
       ['<b>Loaction Name</b>', lat, long],
     ];
 
-    map = L.map('map2').setView([lat, long], 8);
+    if(!map){
+      map = L.map('map2').setView([lat, long], 8);
+    }
 
     var myIcon = L.icon({
       iconUrl: 'images/basic_geolocalize-01.svg',

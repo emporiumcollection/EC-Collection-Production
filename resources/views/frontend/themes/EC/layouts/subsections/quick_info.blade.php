@@ -8,8 +8,6 @@
             </path>
         </svg>
     </a>
-
-
     <div class="sidebar-scroller">
         <div class="d-flex align-items-center mb-5">
             <a href="#" class="sidebar-back">
@@ -68,8 +66,11 @@
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
-                            <h4>Rooms</h4>
+                            <h4>Suites</h4>
                             <p class="mb-0"><span data-place="property" data-replace="numberofrooms"></span> rooms and suites</p>
+                            <div data-place="property" data-replace="suiteNameList">
+                                
+                            </div>
                             <p class="mb-0"><b>In-room amenities :</b> <span data-place="property" data-replace="roomamenities"></span></p>
                         </div>
                     </div>
