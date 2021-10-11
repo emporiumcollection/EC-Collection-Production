@@ -2994,6 +2994,8 @@ class PropertyController extends Controller {
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
 
+        $this->data['loaderImages'] = $this->getLoaderImages($keyword);
+
         $membershiptype = '';
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
 

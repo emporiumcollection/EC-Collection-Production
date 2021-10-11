@@ -36,6 +36,10 @@ class container extends Sximo  {
 		return $this->belongsTo(properties::class, 'display_name');
 	}
 
+	public function files(){
+		return $this->hasMany(ContainerFiles::class, 'folder_id');
+	}
+
 	public function PropertyImages($containerId){
 		$folder = Container::where('parent_id', '=', $containerId)
 		->where('display_name', 'Property Images')

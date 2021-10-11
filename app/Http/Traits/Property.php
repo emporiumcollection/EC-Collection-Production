@@ -10,6 +10,7 @@ use App\Models\Categories;
 use App\Models\properties;
 use App\Models\amenities;
 use App\Models\Seasons;
+use App\Models\Container;
 use App\Models\Restaurant;
 use App\Models\Bar;
 use App\Models\Spa;
@@ -533,6 +534,17 @@ trait Property {
         $dto->modify('+6 days');
         $ret['week_end'] = $dto->format('Y-m-d');
         return $ret;
+    }
+
+    public function getLoaderImages($location){
+        $location = 'brazil';
+        $loaderImages = Container::where('parent_id', '=', 10294)
+        ->where('display_name', 'like', '%'.$location.'%')
+        ->with(['files'])
+        ->get()
+        ->toArray();
+
+        return $loaderImages;
     }
 
 }
