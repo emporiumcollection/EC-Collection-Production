@@ -335,14 +335,116 @@ $(function() {
             },
             type: 'POST',            
             url:'{{URL::to("/suite")}}',
-            //url: "/suite",
             data: {suit_id:suit_id },
+            dataType:'json',                    
+            success: function(response){
+
+                window.location.href('/reservation/suiteboard');
+            }
+        });
+    });
+
+    $(document).on('click', ".confirm_address", function(){
+
+        var title = $( "#title option:selected" ).text();
+        var country = $( "#country option:selected" ).text();
+        var state = $( "#state option:selected" ).text();
+        var city = $( "#city").val();
+        var address2 = $('#address2').val();
+        var address1 = $('#address1').val();
+        var phone = $('#phone').val();
+        var email = $('#email_').val();       
+        var zip_code = $('#zip_code').val();                
+        var last_name = $('#last_name').val();
+        var first_name = $('#first_name').val();
+        
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',            
+            url:'{{URL::to("/addresses")}}',
+            data:{  
+                    first_name: first_name,
+                    last_name: last_name,
+                    zip_code: zip_code,
+                    email: email,
+                    phone: phone,
+                    address1: address1,
+                    address2: address2,
+                    city: city,
+                    state: state,
+                    country: country,
+                    title: title
+                },
             dataType:'json',                    
             success: function(response){
                
             }
         });
-    });    
+    });
+
+
+    $(document).on('click', ".add_address", function(){
+
+        var add_title = $( "#add_title option:selected" ).text();
+        var country = $( "#add_country option:selected" ).text();
+        var state = $( "#addstate option:selected" ).text();
+        var city_ = $("#add-city").val();
+        var adr1 = $('#add1').val();
+        var adr2 = $('#adr2').val();
+        var mob_number = $('#mob_number').val();
+        var email = $('#add_email').val();       
+        var zip_code = $('#add_zip_code').val();                
+        var last_name = $('#add_last_name').val();
+        var first_name = $('#add_first_name').val();
+        
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',            
+            url:'{{URL::to("/addresses")}}',
+            data:{  
+                    first_name: first_name,
+                    last_name: last_name,
+                    zip_code: zip_code,
+                    email: email,
+                    mob_number: mob_number,
+                    adr2: adr2,
+                    adr1: adr1,
+                    city_: city_,
+                    state: state,
+                    country: country,
+                    add_title: add_title
+                },
+            dataType:'json',                    
+            success: function(response){
+               
+            }
+        });
+    });        
+                
+    // $(document).on('click', ".add_address", function(){
+
+    //     var name = $("#first_name").val();
+    //     var name_ = $("#name").html(name);
+    //     var email_ = $("#email_").val();
+    //     var email_s = $("#email_d").html(email_);
+    //     var phone = $("#phone").val();
+    //     var phone_ = $("#phone_").html(phone);
+    //     var address1 = $("#address1").val();
+    //     var address1_ = $("#address1_").html(address1);
+    //     var city = $("#city").val();
+    //     var city_ = $("#city_").html(city);
+    //     var country = $("#add_country").val();
+    //     var country_ = $("#country_").html(country);
+    //     var zip_code = $("#zip_code").val();
+    //     var zip_code_ = $("#zip_code_").html(zip_code);
+
+    //     $(".display_add").after('<div class="col-md-4 mb-4 display_add1"><p id="name" value="" ><p id="email_d" value="" ><p id="phone_" value="" ><p id="address1_" value="" ><p id="city_" value="" ><p id="country_" value="" ><p id="zip_code_" value=""><br><p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Add this companion</a></p></div>');
+
+    // });
 
     $(document).on('click', ".dest-collection", function(e){
         e.preventDefault();

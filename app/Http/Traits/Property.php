@@ -368,9 +368,11 @@ trait Property {
         $arrive_date,$departure_date){
         $adult = $adults[0];
         $child = $childs[0];
+        $Guests = $adult + $child; 
         \session()->put('adult',$adult);
         \session()->put('suites',4);          
         \session()->put('children',$child);
+        \session()->put('Guests',$Guests);
         \session()->put('arrival_date',$arrive_date);
         \session()->put('departure_date',$departure_date);        
     }

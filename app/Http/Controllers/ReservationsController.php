@@ -6,8 +6,10 @@ use App\Http\Controllers\controller;
 use App\Models\Reservations;
 use Illuminate\Http\Request;
 use App\Models\PropertyCategoryTypes;
+use App\Models\Addresses;
 use App\Models\properties;
 use App\Http\Traits\Property;
+use App\User;
 
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator,
@@ -52,6 +54,7 @@ class ReservationsController extends Controller {
         $file_name = 'frontend.themes.reservation.pages.reservations';
         return view($file_name,compact('atmosphere','facilities','style'));
     }
+
     public function when(Request $request)
     {
         if (!\Auth::check())
@@ -93,9 +96,7 @@ class ReservationsController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
 
-        $request->session()->forget('suit_id');
         $this->data['suites'] = properties::with('suites')->where('id',\Session::get('property_id'))->get();
-       // echo "<pre>";print_r($this->data['suites']);exit;
         
         $this->data['property'] = properties::select(['id'])
         ->where('id',\Session::get('property_id'))->get();
@@ -120,9 +121,9 @@ class ReservationsController extends Controller {
         $suite = request()->suite;
 
         $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',\Session::get('suit_id'))->first();
-        //echo "<Pre>";print_r($this->data['suites']);exit;
+        
         $this->data['suitesboards'] = properties::with('boards')->where('id',\Session::get('property_id'))->get();
-        //echo "<Pre>";print_r($this->data['suitesboards']);exit;
+        
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -151,7 +152,7 @@ class ReservationsController extends Controller {
         $this->data['termDetail'] = \DB::table('tb_properties_custom_plan')->where('property_id',\Session::get('property_id'))->get();
 
         $this->data['global_terms'] = \DB::table('tb_policies')->get();
-        
+        // echo "<pre>";print_r($this->data['global_terms']);exit;
         $file_name = 'frontend.themes.EC.reservation.suitepolicies';
         return view($file_name, $this->data);   
     }
@@ -175,15 +176,52 @@ class ReservationsController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
+
+        $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->get();
+        
+        $this->data['address'] = User::find(\Session::get('uid'));
+
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
-        $this->data['location'] = '';        
+        $this->data['location'] = '';
 
+        // $this->data['address'] = Addresses::get();        
         $file_name = 'frontend.themes.EC.reservation.whotravelling';
         return view($file_name, $this->data);   
+    }
+
+    public function addresses(Request $request){
+        // echo "<pre>";print_r($request->all());exit;
+         if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+        );
+
+        $validator = Validator::make($request->all(), $rules);
+
+        if ($validator->passes()) { 
+                
+            $user = User::find(\Session::get('uid'));
+            // echo"<pre>";print_r(\Session::get('uid'));exit;
+            $user->first_name = $request->input('first_name');
+            $user->last_name = $request->input('last_name');
+            $user->email = $request->input('email');
+            $user->mobile_number = $request->input('phone');
+            $user->address = $request->input('address1');
+            $user->city = $request->input('city');
+            // $user->email = $request->input('state');
+            $user->country = $request->input('country');
+            $user->title = $request->input('title');
+            $user->zip_code = $request->input('zip_code');
+            $user->save();
+        }
+
     }
 
     public function paymentmethod()
@@ -238,8 +276,6 @@ class ReservationsController extends Controller {
         \Session::put('suit_id', $suits_id);
         $request->session()
                 ->put('suit_id', $suits_id);
-        $sessionss = \Session::get('suit_id');
-        //echo "<pre>";print_r($sessionss);exit;
 
     }
 

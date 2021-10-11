@@ -60,11 +60,11 @@
               Policies
             </a>
           </li>
-          <li>
+         {{--  <li>
             <a class="nav-link {{ Request::is('reservation/services') ? 'active' : ''}}" href="/reservation/services">
               Additional Services
             </a>
-          </li>
+          </li> --}}
           <li>
             <a class="nav-link {{ Request::is('reservation/whoistravelling') ? 'active' : ''}}" href="/reservation/whoistravelling">
               Who’s travelling

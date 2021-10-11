@@ -1,10 +1,10 @@
 <div class="reservation-summary">
   <h4>YOUR RESERVATION</h4>
-  <p><b>Belmond Jimbaran Puri</b></p>
+  <p><b>{!! Session::get('suite_name') !!}</b></p>
   <table class="table table-borderless mb-0">
     <tr>
       <td class="px-0 py-1">Guests</td>
-      <td class="px-0 py-1 text-right">2 Guests</td>
+      <td class="px-0 py-1 text-right">{!! Session::get('Guests') !!}</td>
     </tr>
     <tr>
       <td class="px-0 py-1">Check-in</td>

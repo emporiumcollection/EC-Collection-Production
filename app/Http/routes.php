@@ -72,6 +72,9 @@ Route::get('reservation/paymentmethod', 'ReservationsController@paymentmethod');
 Route::get('reservation/hotelpolicies', 'ReservationsController@hotelpolicies');
 Route::get('reservation/bookingsummary', 'ReservationsController@bookingsummary');
 Route::post('/suite', 'ReservationsController@selected_suite');
+
+Route::post('/addresses', 'ReservationsController@addresses');
+
 // Route::post('/users/bookingsummary', 'UserController@bookingsummary');
 
 /**

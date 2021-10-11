@@ -23,7 +23,7 @@
           <a href="#" class="backwizard btn-backwizard">
             <i class="ico ico-back mr-3"></i>
           </a>
-          Suite Board{!! Session::get('suit_id') !!}
+          Suite Board{!! \Session::get('suit_id') !!}
         </h2>
       <div class="row">
       <div class="col-lg-9 col-md-8">

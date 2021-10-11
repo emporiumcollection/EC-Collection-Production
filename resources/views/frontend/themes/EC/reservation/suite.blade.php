@@ -81,7 +81,7 @@
                           </div>
                           <div class="col-4">
                             <div class="text-right">      
-                              <a href="/reservation/suiteboard" class="btn btn-dark  px-4 btn-nextwizard rounded-0 select_suite" data-suite-id="{{ $suite->id }}">Select</a>
+                              <a href="javascript:void()" class="btn btn-dark  px-4 btn-nextwizard rounded-0 select_suite" data-suite-id="{{ $suite->id }}">Select</a>
                             </div>
                           </div>
                         </div>

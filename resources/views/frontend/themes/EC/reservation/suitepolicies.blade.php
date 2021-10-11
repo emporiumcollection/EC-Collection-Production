@@ -1,3 +1,4 @@
+
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -27,48 +28,25 @@
         </h2>
         <div class="row">
           <div class="col-lg-9 col-md-8 mb-4">
-            <h3>Policies</h3>
-            <div class="card card-body rounded-0">
+            <h3>Policies</h3>            
               @if(!empty($policies->booking_policy))
-                @foreach($policies as $policy)
-                  <p><b>Suite 1</b></p>
-                  <p><b>CANCEL</b> Cancel by 1pm local time 72 hours prior or pay 1 night for
-                    every 3 nights booked plus tax. No show charged full stay.</p>
-                  <p><b>GUARANTEE</b> A credit card guarantee is required at time of booking
-                    unless otherwise started in the rate description.</p>
-                  <p><b>MEAL PLAN</b> Breakfast included</p>
-                  <p><b>VAT TAX</b> Rates shown are inclusive of 10 percent VAT Tax per room, per
-                    night. this will appear itemized in your shopping basket.</p>
-                  <p><b>CITY TAX</b> Rates shown are inclusive of EUR 5 city Tax per person, per
-                    night for persons 8 years and older for up to 10 nights. Seasonal
-                    adjustments may apply. This will appear itemized in your shopping basket.
-                  </p>
-                @endforeach              
+                <div class="card card-body rounded-0">
+                  @foreach($policies as $policy)
+                    <p>{{ $policy->booking_policy }}</p>
+                  @endforeach
+                </div>                
               @endif
 
               @if(empty($policies))
-
                 @if(!empty($termDetail->terms_and_condition))
-                  @foreach($termDetail as $policy)
-                    <p><b>Term And Condition</b></p>
-                    <p><b>CANCEL</b> Cancel by 1pm local time 72 hours prior or pay 1 night for
-                      every 3 nights booked plus tax. No show charged full stay.</p>
-                    <p><b>GUARANTEE</b> A credit card guarantee is required at time of booking
-                      unless otherwise started in the rate description.</p>
-                    <p><b>MEAL PLAN</b> Breakfast included</p>
-                    <p><b>VAT TAX</b> Rates shown are inclusive of 10 percent VAT Tax per room, per
-                      night. this will appear itemized in your shopping basket.</p>
-                    <p><b>CITY TAX</b> Rates shown are inclusive of EUR 5 city Tax per person, per
-                      night for persons 8 years and older for up to 10 nights. Seasonal
-                      adjustments may apply. This will appear itemized in your shopping basket.
-                    </p>
-                  @endforeach
+                  <div class="card card-body rounded-0">
+                    @foreach($termDetail as $policy)
+                      <p>{{ $policy[0]->terms_and_condition }}</p>
+                    @endforeach
                 @endif
-
               @endif          
-            </div>
-            <hr>
-              @if(empty($policies) && empty($termDetail))
+            
+            <hr>              
                 @if(!empty($global_terms))
                   @foreach($global_terms as $links)
                     <div class="form-group">
@@ -87,8 +65,7 @@
 
                     </div>
                   @endforeach
-                @endif
-              @endif    
+                @endif  
             <hr>
               <div class="booking-tearms">
                 <h3>Booking teams and conditions</h3>
@@ -132,7 +109,7 @@
                 <a href="#" class="btn btn-dark  px-5 btn-backwizard">Go back</a>
               </div>
               <div class="col-6 text-right">
-                <a href="/reservation/services" class="btn btn-dark  px-5 btn-nextwizard">Confirm
+                <a href="/reservation/whoistravelling" class="btn btn-dark  px-5 btn-nextwizard">Confirm
                   booking</a>
               </div>
             </div>
