@@ -32,7 +32,7 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image" class="img-fluid" alt=""></a>';
+        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -53,7 +53,7 @@ function replacePropertyData(id){
           if(r.images!=undefined){          
             rimages.forEach(function(e){
               console.log(e);
-              imageview += '<a href="#" data-sub-html="alter text" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
+              imageview += '<a href="#" data-sub-html="alter text" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
             });
