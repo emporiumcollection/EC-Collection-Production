@@ -771,21 +771,6 @@ class RestaurantController extends Controller {
     }
     
     function get_restaurant_files($r_id, $filetype, $foldertype='gallery') {
-        /*$fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*',  \DB::raw("(CASE WHEN (tb_container_files.file_display_name = '') THEN tb_container_files.file_name ELSE tb_container_files.file_display_name END) as file_display_name"), 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $r_id)->where('tb_properties_images.type', $filetype)->get();
-        $filen = array();
-        if (!empty($fileArr)) {
-            $f = 0;
-            foreach ($fileArr as $file) {
-                $filen[$f] = $file;
-                $filen[$f]->imgsrc = (new ContainerController)->getThumbpath($file->folder_id);
-                $f++;
-            }
-        }
-        return $filen;*/
-        
-        
-        
-        
         $filen = array();
         $fetchresgalleryfolder = array();
 		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', $filetype)->first();

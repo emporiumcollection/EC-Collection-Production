@@ -53,7 +53,7 @@ function replacePropertyData(id){
           if(r.images!=undefined){          
             rimages.forEach(function(e){
               console.log(e);
-              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
+              imageview += '<a href="#" data-sub-html="alter text" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
             });
@@ -63,50 +63,9 @@ function replacePropertyData(id){
       $(this).html(imageview);
   });
 
-  $('[data-place="bar-images"]').each(function() {
-      // field = $(this).attr('data-replace');
-      //console.log(properties[id][field]);
-      var values = properties[id]['bar_images'];
-      var imageview = '';
-      var spanid = 1;
-      var grid = 1;
-      values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/bar-image" class="img-fluid" alt=""></a>';
-        spanid=2;
-        grid++;
-      })
-      $(this).html(imageview);
-  });
-
-  $('[data-place="restrurant-images"]').each(function() {
-      // field = $(this).attr('data-replace');
-      //console.log(properties[id][field]);
-      var values = properties[id]['restrurant_images'];
-      var imageview = '';
-      var spanid = 1;
-      var grid = 1;
-      values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
-        spanid=2;
-        grid++;
-      })
-      $(this).html(imageview);
-  });
-
-  $('[data-place="spa-images"]').each(function() {
-      // field = $(this).attr('data-replace');
-      //console.log(properties[id][field]);
-      var values = properties[id]['spa_images'];
-      var imageview = '';
-      var spanid = 1;
-      var grid = 1;
-      values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/spa-image" class="img-fluid" alt=""></a>';
-        spanid=2;
-        grid++;
-      })
-      $(this).html(imageview);
-  });
+  replaceGalleryImages(id, 'restrurant-images', 'restaurantList');
+  replaceGalleryImages(id, 'bar-images', 'barList');
+  replaceGalleryImages(id, 'spa-images', 'spaList');
 
   $('#experience_gallery-tab').parents('li').hide();
   $('#restaurant_gallery-tab').parents('li').hide();
@@ -127,6 +86,28 @@ function replacePropertyData(id){
   setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
 }
 
+function replaceGalleryImages(id, place, list){
+  $('[data-place="' + place + '"]').each(function() {
+      // field = $(this).attr('data-replace');
+      //console.log(properties[id][field]);
+      var values = properties[id][list];
+
+      var imageview = '';
+      var spanid = 1;
+      var grid = 1;
+      for (const [key, e] of Object.entries(values)) {
+        if(e.gallery.files){          
+          e.gallery.files.forEach(function(rgallery){          
+            imageview += '<a href="#" data-sub-html="alter text" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + e.gallery.name + '/' + rgallery.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
+            spanid=2;
+            grid++;
+          });  
+        }
+      }
+      $(this).html(imageview);
+  });
+}
+
 function replaceGalleryNames(id){
   var suitenamelist = `<li class="nav-item">
         <a class="nav-link" href="#">Suites</a>
@@ -134,7 +115,7 @@ function replaceGalleryNames(id){
   
   properties[id]['suites'].forEach(function(s) {
       suitenamelist += `<li class="nav-item">
-        <a class="nav-link" href="#">` + s.cat_short_name + `</a>
+        <a class="nav-link" href="#" onclick="showSuiteImages(`+s.id+`)">` + s.cat_short_name + `</a>
       </li>`;
   });
 
@@ -145,7 +126,7 @@ function replaceGalleryNames(id){
       </li>`;
   for (const [key, value] of Object.entries(properties[id]['restaurantList'])) {
     restaurant += `<li class="nav-item">
-        <a class="nav-link" href="#">` + value + `</a>
+        <a class="nav-link" href="#" onclick="showGalleryImages('restrurant-images','restrurant-images-id-` + key + `')">` + value.title + `</a>
       </li>`;
   }
 
@@ -156,7 +137,7 @@ function replaceGalleryNames(id){
       </li>`;
   for (const [key, value] of Object.entries(properties[id]['barList'])) {
     bar += `<li class="nav-item">
-        <a class="nav-link" href="#">` + value + `</a>
+        <a class="nav-link" href="#" onclick="showGalleryImages('bar-images','bar-images-id-` + key + `')">` + value.title + `</a>
       </li>`;
   }
 
@@ -167,11 +148,21 @@ function replaceGalleryNames(id){
       </li>`;
   for (const [key, value] of Object.entries(properties[id]['spaList'])) {
     spa += `<li class="nav-item">
-        <a class="nav-link" href="#">` + value + `</a>
+        <a class="nav-link" href="#" onclick="showGalleryImages('spa-images','spa-images-id-` + key + `')">` + value.title + `</a>
       </li>`;
   }
 
   $('[data-replace="spas"]').html(spa);
+}
+
+function showSuiteImages(suite_id){
+  $('[class*="suite-id"]').hide();
+  $('.suite-id-' + suite_id).show();  
+}
+
+function showGalleryImages(gallery, divid){
+  $('[class*="'+gallery+'"]').hide();
+  $('.' + divid).show();  
 }
 
 function replacePropertySuites(id){

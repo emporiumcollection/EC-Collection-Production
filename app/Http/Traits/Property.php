@@ -5,6 +5,7 @@ namespace App\Http\Traits;
 use App\Models\PropertyRoomPrices;
 use App\Models\PropertyImages;
 use App\Models\PropertyRooms;
+use App\Models\ImageResSpaBar;
 use App\Models\SeasonDates;
 use App\Models\Categories;
 use App\Models\properties;
@@ -111,24 +112,6 @@ trait Property {
 
                 }])->limit(20);
             }, 
-            'barImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
-            'spaImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
-            'restrurantImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
@@ -137,7 +120,8 @@ trait Property {
             }])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
-        ->limit(4)
+        ->where('approved', '=', 1)
+        //->limit(4)
         ->get();
     }
 
@@ -190,24 +174,6 @@ trait Property {
 
                 }])->limit(20);
             }, 
-            'barImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
-            'spaImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
-            'restrurantImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
@@ -217,7 +183,8 @@ trait Property {
         ])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
-        ->limit(4)
+        ->where('approved', '=', 1)
+        //->limit(4)
         ->get();        
     }
 
@@ -273,24 +240,6 @@ trait Property {
 
                 }])->limit(20);
             }, 
-            'barImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
-            'spaImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
-            'restrurantImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
@@ -301,7 +250,8 @@ trait Property {
         ->where('city', '=', $keyword)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
-        ->limit(4)
+        ->where('approved', '=', 1)
+        //->limit(4)
         ->get();        
     }
 
@@ -384,7 +334,8 @@ trait Property {
 
             $pbars = [];
             foreach($bars as $bar){
-                $pbars[$bar->id] = $bar->title;
+                $pbars[$bar->id]['title'] = $bar->title;
+                $pbars[$bar->id]['gallery'] = $this->getResSpaBarGallery($bar->id, 'bar');
             }
             $properties[$k]->barList = $pbars;
 
@@ -393,7 +344,8 @@ trait Property {
 
             $pspas = [];
             foreach($spas as $spa){
-                $pspas[$spa->id] = $spa->title;
+                $pspas[$spa->id]['title'] = $spa->title;
+                $pspas[$spa->id]['gallery'] = $this->getResSpaBarGallery($spa->id, 'spa');
             }
             $properties[$k]->spaList = $pspas;
 
@@ -402,11 +354,41 @@ trait Property {
 
             $prestau = [];
             foreach($restaurants as $res){
-                $prestau[$res->id] = $res->title;
+                $prestau[$res->id]['title'] = $res->title;
+                $prestau[$res->id]['gallery'] = $this->getResSpaBarGallery($res->id, 'res');
             }
             $properties[$k]->restaurantList = $prestau;
 
         }
+    }
+
+    private function getResSpaBarGallery($id, $type){
+        $gallery = [];
+        $containerId = ImageResSpaBar::select(['folder_id'])
+            ->where('parent_id', '=', $id)
+            ->where('type', '=', $type)
+            ->get()
+            ->toArray();
+
+        if(!empty($containerId)){
+            $containerId = $containerId[0]['folder_id'];
+            $galleryId = Container::where('parent_id', '=', $containerId)
+                ->where('name', '=', 'gallery')
+                ->get()
+                ->toArray();
+            if(!empty($galleryId)){
+                $gallery = Container::select(['id', 'name'])
+                    ->where('id', '=', $galleryId[0]['id'])
+                    ->with(['files'])
+                    ->get()
+                    ->toArray();
+                if(!empty($gallery)){
+                    $gallery = $gallery[0];
+                }
+            }
+        }
+
+        return $gallery;
     }
 
     public function formatRecordsMap($results) {
