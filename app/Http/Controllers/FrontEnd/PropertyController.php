@@ -2969,8 +2969,6 @@ class PropertyController extends Controller {
             }
         }
 
-//        print_r($this->data['featureProperties']->toArray());exit;
-
         //Get featured choice properties
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($keyword);
 
@@ -2996,6 +2994,7 @@ class PropertyController extends Controller {
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
 
+//        print_r($this->data['propertyResults']->toArray());exit;
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
 
         $membershiptype = '';

@@ -372,6 +372,12 @@ trait Property {
 
         if(!empty($containerId)){
             $containerId = $containerId[0]['folder_id'];
+            $containerName = Container::select(['name'])
+                ->where('id', '=', $containerId)
+                ->get()
+                ->toArray();
+            $containerName = $containerName[0]['name'];
+
             $galleryId = Container::where('parent_id', '=', $containerId)
                 ->where('name', '=', 'gallery')
                 ->get()
@@ -384,6 +390,7 @@ trait Property {
                     ->toArray();
                 if(!empty($gallery)){
                     $gallery = $gallery[0];
+                    $gallery['container'] = $containerName;
                 }
             }
         }

@@ -98,7 +98,7 @@ function replaceGalleryImages(id, place, list){
       for (const [key, e] of Object.entries(values)) {
         if(e.gallery.files){          
           e.gallery.files.forEach(function(rgallery){          
-            imageview += '<a href="#" data-sub-html="alter text" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/320x320/' + e.gallery.name + '/' + rgallery.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
+            imageview += '<a href="#" data-sub-html="alter text" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
             spanid=2;
             grid++;
           });  

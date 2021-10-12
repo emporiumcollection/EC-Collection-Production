@@ -84,9 +84,9 @@ class ImageController extends Controller {
         $this->initializeValues($scale, $file);
 
         $this->file_path = $this->image_path .
-        '/container_user_files/locations/' .
+        '/container_user_files/spas/' .
         $path .
-        '/spa-gallery-images/' .
+        '/gallery/' .
         $this->file;
 
         $this->destination_dir = public_path() .
@@ -102,9 +102,9 @@ class ImageController extends Controller {
         $this->initializeValues($scale, $file);
 
         $this->file_path = $this->image_path .
-        '/container_user_files/locations/' .
+        '/container_user_files/bars/' .
         $path .
-        '/bar-gallery-images/' .
+        '/gallery/' .
         $this->file;
 
         $this->destination_dir = public_path() .
@@ -120,9 +120,9 @@ class ImageController extends Controller {
         $this->initializeValues($scale, $file);
 
         $this->file_path = $this->image_path .
-        '/container_user_files/locations/' .
+        '/container_user_files/restaurants/' .
         $path .
-        '/restrurants-gallery-images/' .
+        '/gallery/' .
         $this->file;
 
         $this->destination_dir = public_path() .
