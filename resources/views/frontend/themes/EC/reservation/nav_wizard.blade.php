@@ -1,4 +1,4 @@
-<div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
+      <div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
         <div class="block-res-title">
           Reservation Progress
         </div>

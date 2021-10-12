@@ -51,6 +51,79 @@
     <!-- Web Application Manifest -->
     <link rel="manifest" href="manifest.json">
 
+    <style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+/* Button used to open the contact form - fixed at the bottom of the page */
+.open-button {
+  background-color: #555;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  opacity: 0.8;
+  position: fixed;
+  bottom: 23px;
+  right: 28px;
+  width: 280px;
+}
+
+/* The popup form - hidden by default */
+.form-popup {
+  display: none;
+  position: fixed;
+  bottom: 0;
+  right: 15px;
+  border: 3px solid #f1f1f1;
+  z-index: 9;
+}
+
+/* Add styles to the form container */
+.form-container {
+  max-width: 300px;
+  padding: 10px;
+  background-color: white;
+}
+
+/* Full-width input fields */
+.form-container input[type=text], .form-container input[type=password] {
+  width: 100%;
+  padding: 15px;
+  margin: 5px 0 22px 0;
+  border: none;
+  background: #f1f1f1;
+}
+
+/* When the inputs get focus, do something */
+.form-container input[type=text]:focus, .form-container input[type=password]:focus {
+  background-color: #ddd;
+  outline: none;
+}
+
+/* Set a style for the submit/login button */
+.form-container .btn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px 20px;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom:10px;
+  opacity: 0.8;
+}
+
+/* Add a red background color to the cancel button */
+.form-container .cancel {
+  background-color: red;
+}
+
+/* Add some hover effects to buttons */
+.form-container .btn:hover, .open-button:hover {
+  opacity: 1;
+}
+</style>
+
 
     <!-- Favicon Start -->
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/images/favicon/apple-icon-57x57.png') }}" />
@@ -212,6 +285,16 @@
 @show
 
 <script>
+    function openForm() {
+      document.getElementById("myForm").style.display = "block";
+    }
+
+    function closeForm() {
+      document.getElementById("myForm").style.display = "none";
+    }
+</script>
+
+<script>
 $(function() {
     if ($('.fromdate, .todate').length) {
       // check if element is available to bind ITS ONLY ON HOMEPAGE
@@ -327,6 +410,22 @@ $(function() {
       }
     });
 
+    $(document).on('click', ".add_new_addres", function(){
+
+        var title = $( "#title option:selected" ).val("");
+        var country = $( "#country option:selected" ).val("");
+        var state = $( "#state option:selected" ).val("");
+        var city = $( "#city").val("");
+        var address2 = $('#address2').val("");
+        var address1 = $('#address1').val("");
+        var phone = $('#phone').val("");
+        var email = $('#email_').val("");       
+        var zip_code = $('#zip_code').val("");                
+        var last_name = $('#last_name').val("");
+        var first_name = $('#first_name').val("");
+    });
+
+
     $(document).on('click', ".select_suite", function(){
         var suit_id = $(this).data('suite-id');
         $.ajax({
@@ -336,6 +435,37 @@ $(function() {
             type: 'POST',            
             url:'{{URL::to("/suite")}}',
             data: {suit_id:suit_id },
+            dataType:'json',                    
+            success: function(response){
+
+                window.location.href('/reservation/suiteboard');
+            }
+        });
+    });
+
+    $(document).on('click', ".add_companion", function(){        
+        var first_name = $('#comapnion_f_name').val();
+        var last_name = $('#comapnion_l_name').val();
+        var phone = $('#comapnion_phone').val();
+        var email = $('#comapnion_email').val();       
+        var zip_code = $('#zip_code').val();
+        var language = $( "#language option:selected" ).text();
+        var gender = $( "#gender option:selected" ).text();
+        alert(gender);                        
+
+        $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',            
+            url:'{{URL::to("/addcompanion")}}',
+            data: { first_name:first_name,
+                    last_name:last_name,
+                    phone:phone,
+                    email:email,
+                    language:language,
+                    gender:gender,
+                    zip_code:zip_code },
             dataType:'json',                    
             success: function(response){
 
@@ -387,17 +517,17 @@ $(function() {
 
     $(document).on('click', ".add_address", function(){
 
-        var add_title = $( "#add_title option:selected" ).text();
-        var country = $( "#add_country option:selected" ).text();
-        var state = $( "#addstate option:selected" ).text();
-        var city_ = $("#add-city").val();
-        var adr1 = $('#add1').val();
-        var adr2 = $('#adr2').val();
-        var mob_number = $('#mob_number').val();
-        var email = $('#add_email').val();       
-        var zip_code = $('#add_zip_code').val();                
-        var last_name = $('#add_last_name').val();
-        var first_name = $('#add_first_name').val();
+        var title = $( "#title option:selected" ).text();
+        var country = $( "#country option:selected" ).text();
+        var state = $( "#state option:selected" ).text();
+        var city = $( "#city").val();
+        var address2 = $('#address2').val();
+        var address1 = $('#address1').val();
+        var phone = $('#phone').val();
+        var email = $('#email_').val();       
+        var zip_code = $('#zip_code').val();                
+        var last_name = $('#last_name').val();
+        var first_name = $('#first_name').val();
         
         $.ajax({
             headers: {
@@ -410,42 +540,50 @@ $(function() {
                     last_name: last_name,
                     zip_code: zip_code,
                     email: email,
-                    mob_number: mob_number,
-                    adr2: adr2,
-                    adr1: adr1,
-                    city_: city_,
+                    phone: phone,
+                    address1: address1,
+                    address2: address2,
+                    city: city,
                     state: state,
                     country: country,
-                    add_title: add_title
+                    title: title
                 },
             dataType:'json',                    
             success: function(response){
                
             }
         });
-    });        
+    });
+
+    $(document).ready(function(){
+        $('input[type="checkbox"]').click(function(){
+            if($(this).prop("checked") == true){
+                var companion_id = $(this).closest('div.tagvalue').find('.companion_id').val();
+                var companion_name = $(this).closest('div.tagvalue').find('.companion_name').text();
+                var companion_email = $(this).closest('div.tagvalue').find('.companion_email').text();
+                var companion_phone = $(this).closest('div.tagvalue').find('.companion_phone').text();
+            }
+
+            $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',            
+            url:'{{URL::to("/storeinTosession")}}',
+            data:{  
+                    companion_id: companion_id,
+                    companion_name: companion_name,
+                    companion_email: companion_email,
+                    companion_phone: companion_phone
+                },
+            dataType:'json',                    
+            success: function(response){
+               
+            }
+        });
+        });
+    });
                 
-    // $(document).on('click', ".add_address", function(){
-
-    //     var name = $("#first_name").val();
-    //     var name_ = $("#name").html(name);
-    //     var email_ = $("#email_").val();
-    //     var email_s = $("#email_d").html(email_);
-    //     var phone = $("#phone").val();
-    //     var phone_ = $("#phone_").html(phone);
-    //     var address1 = $("#address1").val();
-    //     var address1_ = $("#address1_").html(address1);
-    //     var city = $("#city").val();
-    //     var city_ = $("#city_").html(city);
-    //     var country = $("#add_country").val();
-    //     var country_ = $("#country_").html(country);
-    //     var zip_code = $("#zip_code").val();
-    //     var zip_code_ = $("#zip_code_").html(zip_code);
-
-    //     $(".display_add").after('<div class="col-md-4 mb-4 display_add1"><p id="name" value="" ><p id="email_d" value="" ><p id="phone_" value="" ><p id="address1_" value="" ><p id="city_" value="" ><p id="country_" value="" ><p id="zip_code_" value=""><br><p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Add this companion</a></p></div>');
-
-    // });
-
     $(document).on('click', ".dest-collection", function(e){
         e.preventDefault();
         //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');

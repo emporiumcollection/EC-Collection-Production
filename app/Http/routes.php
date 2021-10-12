@@ -74,6 +74,8 @@ Route::get('reservation/bookingsummary', 'ReservationsController@bookingsummary'
 Route::post('/suite', 'ReservationsController@selected_suite');
 
 Route::post('/addresses', 'ReservationsController@addresses');
+Route::post('/addcompanion', 'ReservationsController@addcompanion');
+Route::post('/storeinTosession', 'ReservationsController@storecompanionTosession');
 
 // Route::post('/users/bookingsummary', 'UserController@bookingsummary');
 

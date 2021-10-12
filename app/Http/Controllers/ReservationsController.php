@@ -29,10 +29,8 @@ class ReservationsController extends Controller {
 
         $this->beforeFilter('csrf', array('on' => 'post'));
         $this->model = new Reservations();
-
         $this->info = $this->model->makeInfo($this->module);
         $this->access = $this->model->validAccess($this->info['id']);
-
         $this->data = array(
             'pageTitle' => $this->info['title'],
             'pageNote' => $this->info['note'],
@@ -44,10 +42,8 @@ class ReservationsController extends Controller {
     public function index(){
 
         if (!\Auth::check())
-            return redirect('user/login');
-        
+            return redirect('user/login');        
         $atmosphere = \DB::table('tb_categories')->where('parent_category_id', 886)->get();
-
         $facilities = \DB::table('tb_categories')->where('parent_category_id', 897)->get();
         $style = \DB::table('tb_categories')->where('parent_category_id', 909)->get();        
 
@@ -59,8 +55,7 @@ class ReservationsController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
-        $properties = PropertyCategoryTypes::first();
-        
+        $properties = PropertyCategoryTypes::first();        
         $request->session()
                 ->put('property_id',$properties->property_id);
         $request->session()
@@ -97,12 +92,9 @@ class ReservationsController extends Controller {
             return redirect('user/login');
 
         $this->data['suites'] = properties::with('suites')->where('id',\Session::get('property_id'))->get();
-        
         $this->data['property'] = properties::select(['id'])
         ->where('id',\Session::get('property_id'))->get();
-
         $this->formatPropertyRecords($this->data['property']);
-
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -123,7 +115,6 @@ class ReservationsController extends Controller {
         $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',\Session::get('suit_id'))->first();
         
         $this->data['suitesboards'] = properties::with('boards')->where('id',\Session::get('property_id'))->get();
-        
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -148,11 +139,8 @@ class ReservationsController extends Controller {
         $this->data['location'] = '';        
 
         $this->data['policies'] = PropertyCategoryTypes::select('id','property_id','category_name','booking_policy')->where('id',\Session::get('suit_id'))->first();
-
         $this->data['termDetail'] = \DB::table('tb_properties_custom_plan')->where('property_id',\Session::get('property_id'))->get();
-
         $this->data['global_terms'] = \DB::table('tb_policies')->get();
-        // echo "<pre>";print_r($this->data['global_terms']);exit;
         $file_name = 'frontend.themes.EC.reservation.suitepolicies';
         return view($file_name, $this->data);   
     }
@@ -167,7 +155,6 @@ class ReservationsController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';        
-
         $file_name = 'frontend.themes.EC.reservation.services';
         return view($file_name, $this->data);   
     }
@@ -176,11 +163,8 @@ class ReservationsController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
-
         $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->get();
-        
         $this->data['address'] = User::find(\Session::get('uid'));
-
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -188,13 +172,12 @@ class ReservationsController extends Controller {
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
 
-        // $this->data['address'] = Addresses::get();        
         $file_name = 'frontend.themes.EC.reservation.whotravelling';
         return view($file_name, $this->data);   
     }
 
     public function addresses(Request $request){
-        // echo "<pre>";print_r($request->all());exit;
+        
          if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -204,11 +187,8 @@ class ReservationsController extends Controller {
         );
 
         $validator = Validator::make($request->all(), $rules);
-
-        if ($validator->passes()) { 
-                
+        if ($validator->passes()) {                 
             $user = User::find(\Session::get('uid'));
-            // echo"<pre>";print_r(\Session::get('uid'));exit;
             $user->first_name = $request->input('first_name');
             $user->last_name = $request->input('last_name');
             $user->email = $request->input('email');
@@ -219,9 +199,30 @@ class ReservationsController extends Controller {
             $user->country = $request->input('country');
             $user->title = $request->input('title');
             $user->zip_code = $request->input('zip_code');
-            $user->save();
+            $user->save();  
         }
+    }
 
+    public function addcompanion(Request $request)
+    {
+        if (!\Auth::check())
+            return Redirect::to('user/login');
+        $rules = array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required'
+        );
+        $validator = Validator::make($request->all(), $rules);
+            if ($validator->passes()) {                 
+                $user = User::find(\Session::get('uid'));
+                $id = $user->id;            
+                $companion_data['user_id'] = $user->id;
+                $companion_data['first_name'] = $request->input('first_name');
+                $companion_data['last_name'] = $request->input('last_name');           
+                $companion_data['email'] = $request->input('email');
+                $companion_data['phone_number'] = $request->input('phone');
+                $companionId = \DB::table('tb_companion')->insert($companion_data);
+            }
     }
 
     public function paymentmethod()
@@ -269,17 +270,23 @@ class ReservationsController extends Controller {
         return view($file_name, $this->data);   
     }
 
-    public function selected_suite(Request $request){  
-
+    public function selected_suite(Request $request)
+    {  
         $suits_id = $request->suit_id;
-
         \Session::put('suit_id', $suits_id);
-        $request->session()
-                ->put('suit_id', $suits_id);
-
+        $request->session()->put('suit_id', $suits_id);
     }
 
-    public function getIndex(Request $request) {    
+    public function storecompanionTosession(Request $request)
+    {
+        $request->session()->put('companion_id', $request->companion_id);
+        $request->session()->put('companion_name', $request->companion_name);
+        $request->session()->put('companion_email', $request->companion_email);
+        $request->session()->put('companion_phone', $request->companion_phone);
+    }
+
+    public function getIndex(Request $request) 
+    {    
         $uid = \Auth::user()->id;
         if ($this->access['is_view'] == 0)
             return Redirect::to('dashboard')
@@ -305,12 +312,10 @@ class ReservationsController extends Controller {
         );
         // Get Query 
         $results = $this->model->getRows($params);
-
         // Build pagination setting
         $page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;
         $pagination = new Paginator($results['rows'], $results['total'], $params['limit']);
         $pagination->setPath('reservations');
-
         $this->data['rowData'] = $results['rows'];
         // Build Pagination 
         $this->data['pagination'] = $pagination;
