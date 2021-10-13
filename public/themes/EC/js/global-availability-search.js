@@ -31,8 +31,10 @@ function replacePropertyData(id){
       var imageview = '';
       var spanid = 1;
       var grid = 1;
+      var imgUrl = '';
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image" class="img-fluid" alt=""></a>';
+        imgUrl = '/property-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image';
+        imageview += '<a href="' + imgUrl + '" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -46,14 +48,15 @@ function replacePropertyData(id){
       var imageview = '';
       var spanid = 1;
       var grid = 1;
+      var imgUrl = '';
       suites.forEach(function(s){
         rooms = s.rooms;
         rooms.forEach(function(r){
           rimages = r.images;
           if(r.images!=undefined){          
             rimages.forEach(function(e){
-              console.log(e);
-              imageview += '<a href="#" data-sub-html="alter text" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/room-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
+              imgUrl = '/room-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name;
+              imageview += '<a href="' + imgUrl + '" data-sub-html="alter text" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
             });
