@@ -123,7 +123,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="location-page.html">
+              <a class="nav-link" href="<?php echo Request::fullUrl().'&view=map';?>">
                 <i class="ico ico-place"></i>
               </a>
             </li>

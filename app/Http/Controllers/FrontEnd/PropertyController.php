@@ -3024,7 +3024,10 @@ class PropertyController extends Controller {
 
         if($request->get('view') == 'map'){
             $this->data['propertyResultsForMap'] = $this->formatRecordsMap($this->data['propertyResults']);
-            $this->data['center_coordinate'] = $this->data['propertyResults'][0]->longitude.','.$this->data['propertyResults'][0]->latitude;
+            $this->data['center_coordinate'] = '0,0';
+            if(!empty($this->data['propertyResults']->toArray())){
+                $this->data['center_coordinate'] = $this->data['propertyResults'][0]->longitude.','.$this->data['propertyResults'][0]->latitude;
+            }
             return view('frontend.themes.EC.properties.map_results', $this->data);
         }else{            
             $this->data['propertyResultsForView'] = $this->seperatedByPackage($this->data['propertyResults']);
