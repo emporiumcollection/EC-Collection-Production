@@ -34,7 +34,7 @@ function replacePropertyData(id){
       var imgUrl = '';
       values.forEach(function(e){
         imgUrl = '/property-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image';
-        imageview += '<a href="' + imgUrl + '" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file_title + '" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -56,7 +56,7 @@ function replacePropertyData(id){
           if(r.images!=undefined){          
             rimages.forEach(function(e){
               imgUrl = '/room-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name;
-              imageview += '<a href="' + imgUrl + '" data-sub-html="alter text" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+              imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
             });
@@ -144,7 +144,7 @@ function replaceGalleryImages(id, place, list){
         if(e.gallery.files){          
           e.gallery.files.forEach(function(rgallery){          
             imgUrl = '/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/restrurant-image';
-            imageview += '<a href="' + imgUrl + '" data-sub-html="alter text" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+            imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
             spanid=2;
             grid++;
           });  
@@ -267,6 +267,7 @@ function replaceSuiteList(id){
       });
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid);  
+      suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
       
       $('#suiteslist').append(suiteItem);
     }
@@ -297,6 +298,7 @@ function replaceSuiteDetail(property_id, category_id){
 
   $('[data-place="price-icon"]').html(`<i class="ico ico-info-green pointer btn-sidebar" type="button"
                                 data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
+  $('[data-place="suite-price"]').html(suite.price);
 
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);

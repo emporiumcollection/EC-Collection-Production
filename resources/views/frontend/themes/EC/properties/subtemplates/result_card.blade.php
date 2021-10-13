@@ -40,7 +40,7 @@
             <i class="ico ico-info-green"></i>
           </div>
           <h3 class="mb-0">
-            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
+            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ <?php echo $property->price;?> </span>
           </h3>
           <div class="ml-2">
             <span class="pernight"></span>

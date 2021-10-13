@@ -90,7 +90,7 @@
                     <h3 class="mb-0">
                         <span class="title-font-2 mr-1">From</span> <span
                             class="color-primary">
-                            € 1.299</span>
+                            € <!--SUITE-PRICE--></span>
                     </h3>
                     <div class="ml-2">
                         <span class="pernight"></span>

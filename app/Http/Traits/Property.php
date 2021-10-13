@@ -261,81 +261,29 @@ trait Property {
         $all = [];
         foreach($properties as $k => $property){
             $suiteNameList = [];
-            // room and assign amenitiess
-            $roomamenities = amenities::whereIn('id', explode(',', $property->roomamenities))
-            ->get()->toArray();
-            if(!empty($roomamenities)){
-                foreach($roomamenities as $amenity){
-                    $roomamenitieslist[] = $amenity['amenity_title'];
-                }
-            }
-            if(!empty($roomamenitieslist)){
-                $properties[$k]->roomamenities = implode(',', $roomamenitieslist);
-            }else{
-                $properties[$k]->roomamenities = '';
-            }
-
-            $allamenities = amenities::whereIn('id', explode(',', $property->assign_amenities))
-            ->get()->toArray();
-            if(!empty($allamenities)){
-                foreach($allamenities as $amenity){
-                    $all[] = $amenity['amenity_title'];
-                }
-            }
-            if(!empty($all)){
-                $properties[$k]->assign_amenities = implode(',', $all);
-            }else{
-                $properties[$k]->assign_amenities = '';
-            }
-
-            $allservices = availableservices::whereIn('id', explode(',', $property->availableservices))
-            ->get()->toArray();
-            if(!empty($allservices)){
-                foreach($allservices as $service){
-                    $all[] = $service['amenity_title'];
-                }
-            }
-            if(!empty($all)){
-                $properties[$k]->availableservices = implode(',', $all);
-            }else{
-                $properties[$k]->availableservices = '';
-            }
+            $properties[$k]->price = $this->getPropertyPrice($property->id);
+            $properties[$k]->roomamenities = $this->formatRoomAmenities($property->roomamenities);
+            $properties[$k]->assign_amenities = $this->formatRoomAmenities($property->assign_amenities);
+            $properties[$k]->availableservices = $this->formatAvailableServices($property->availableservices);
 
             // room images
             if(!empty($property->suites)){
                 $suiteNameList = [];
                 foreach($property->suites as $sk => $suite){
+                    $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
                     $suiteNameList[] = $suite->cat_short_name;
                     if(!empty($suite->rooms)){
                         foreach($suite->rooms as $rk => $room){
-                            $roomImages = PropertyImages::with(['file' => function($query){
-                                return $query
-                                ->leftJoin('tb_container', 'tb_container_files.folder_id', 
-                                    '=', 'tb_container.id')
-                                ->select(['tb_container_files.id', 'file_name', 'tb_container.name']);
-                            }])
-                            ->where('property_id', '=', $room->property_id)
-                            ->where('category_id', '=', $room->category_id)
-                            ->get()
-                            ->toArray();
+                            //$properties[$k]->suites[$sk]->rooms[$rk]->price = $this->getRoomPrice($room->id);
 
-                            $properties[$k]->suites[$sk]->rooms[$rk]->images = $roomImages;
-                            break;
+                            if(!isset($properties[$k]->suites[$sk]->rooms[$rk]->images)){
+                                $properties[$k]->suites[$sk]->rooms[$rk]->images = $this->getRoomImages($room->property_id, $room->category_id);
+                            }
                         }
                         foreach($suite->amenities as $ak => $amenity){
                             $suiteamenities = amenities::whereIn('id', explode(',', $amenity->amenity_ids))
                             ->get()->toArray();
-                            $suiteamenitlist = [];
-                            if(!empty($suiteamenities)){
-                                foreach($suiteamenities as $amn){
-                                    $suiteamenitlist[] = $amn['amenity_title'];
-                                }
-                            }
-                            if(!empty($suiteamenitlist)){
-                                $properties[$k]->suites[$sk]->suiteamenities = '<li>'.implode('</li><li>', $suiteamenitlist).'</li>';
-                            }else{
-                                $properties[$k]->suites[$sk]->suiteamenities = '';
-                            }
+                            $properties[$k]->suites[$sk]->suiteamenities = $this->formatRoomAmenities($amenity->amenity_ids, 'li');
                         }
                     }
                 }
@@ -547,6 +495,115 @@ trait Property {
         ->toArray();
 
         return $loaderImages;
+    }
+
+    public function getPropertyPrice($id){
+        $price = PropertyRoomPrices::first()
+        ->select(['rack_rate'])
+        ->where('property_id', '=', $id)
+        ->orderBy('rack_rate', 'asc')
+        ->get()
+        ->toArray();
+
+        if(!empty($price)){
+            return number_format($price[0]['rack_rate'],2);
+        }else{
+            return 0;
+        }
+    }
+
+    public function formatRoomAmenities($commaSeperated, $format = null){        
+        // room and assign amenitiess
+        $roomamenities = amenities::whereIn('id', explode(',', $commaSeperated))
+        ->get()->toArray();
+        if(!empty($roomamenities)){
+            foreach($roomamenities as $amenity){
+                $roomamenitieslist[] = $amenity['amenity_title'];
+            }
+        }
+        if(!empty($roomamenitieslist)){
+            if($format == 'li'){
+                return '<li>'.implode('</li><li>', $roomamenitieslist).'</li>';
+            }
+            return implode(',', $roomamenitieslist);
+        }else{
+            return '';
+        }
+    }
+
+    public function formatAvailableServices($commaSeperated){
+        $all = [];
+        $allservices = availableservices::whereIn('id', explode(',', $commaSeperated))
+        ->get()->toArray();
+        if(!empty($allservices)){
+            foreach($allservices as $service){
+                $all[] = $service['amenity_title'];
+            }
+        }
+        if(!empty($all)){
+            return implode(',', $all);
+        }else{
+            return '';
+        }
+    }
+
+    public function getSuitePrice($suite_id){
+        $seasonDays = [];
+
+        $roomIds = [];
+        $rooms = PropertyRooms::where('category_id', '=', $suite_id)
+        ->get()
+        ->toArray();
+        foreach($rooms as $room){
+            $roomIds[] = $room['id'];
+        }
+
+        if(empty($roomIds)) return 0;
+
+        $price = PropertyRoomPrices::first()
+        ->select(['rack_rate'])
+        ->whereIn('category_id', $roomIds)
+        ->orderBy('rack_rate', 'asc')
+        ->get()
+        ->toArray();
+
+        if(!empty($price)){
+            return number_format($price[0]['rack_rate'],2);
+        }else{
+            return 0;
+        }
+
+    }
+
+    public function getRoomPrice($room_id){
+        $price = PropertyRoomPrices::first()
+        ->select(['rack_rate'])
+        ->where('category_id', '=', $room_id)
+        ->orderBy('rack_rate', 'asc')
+        ->get()
+        ->toArray();
+
+        if(!empty($price)){
+            return number_format($price[0]['rack_rate'],2);
+        }else{
+            return 0;
+        }
+
+    }
+
+    public function getRoomImages($property_id, $room_id){
+        $roomImages = PropertyImages::with(['file' => function($query){
+            return $query
+            ->leftJoin('tb_container', 'tb_container_files.folder_id', 
+                '=', 'tb_container.id')
+            ->select(['tb_container_files.id', 'file_name', 'tb_container.name']);
+        }])
+        ->where('property_id', '=', $property_id)
+        ->where('category_id', '=', $room_id)
+        ->get()
+        ->toArray();
+
+        return $roomImages;
     }
 
 }

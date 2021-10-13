@@ -13,6 +13,7 @@ use DB,Validator, Input, Redirect, CustomQuery, Image;
 use UnsplashSearch;
 use DateTime;
 use Session;
+use Cache;
 
 class PropertyController extends Controller {
     // Uses Property trait
@@ -2864,8 +2865,13 @@ class PropertyController extends Controller {
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
 
-        $us = new UnsplashSearch();
-        $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+        $cacheKey = 'location_photos'.$keyword;
+        if (Cache::has($cacheKey)) {
+            $photos = Cache::get($cacheKey);
+        }else{
+            $us = new UnsplashSearch();
+            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+        }
         $this->data['photos'] = json_decode($photos);
 
         $type = $request->input('type');
