@@ -75,11 +75,11 @@
               Payment Method
             </a>
           </li>
-          <li>
+          {{-- <li>
             <a class="nav-link {{ Request::is('reservation/hotelpolicies') ? 'active' : ''}}" href="/reservation/hotelpolicies">
               Hotel Policies
             </a>
-          </li>
+          </li> --}}
           <li>
             <a class="nav-link {{ Request::is('reservation/bookingsummary') ? 'active' : ''}}" href="/reservation/bookingsummary">
               Booking Summary

@@ -55,7 +55,7 @@
                 <label>Credit/Debit card: </label>
               </div>
               <div class="col-md-8 form-group">
-                <select class="form-control">
+                <select class="form-control" name="card_type" id="card_type">
                   <option value="">Visa</option>
                   <option value="">Master Card</option>
                   <option value="">American Express</option>
@@ -67,7 +67,7 @@
                 <label>Card number: </label>
               </div>
               <div class="col-md-8 form-group">
-                <input type="text" class="form-control" placeholder="****_****_****_****">
+                <input type="text" class="form-control" name="card_number" id="card_number" placeholder="****_****_****_****">
               </div>
             </div>
             <div class="row align-items-center">
@@ -75,7 +75,7 @@
                 <label>Expiration: </label>
               </div>
               <div class="col-md-4 form-group">
-                <select class="form-control">
+                <select class="form-control" name="expire_month" id="expire_month">
                   <option value="">Month</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -92,7 +92,7 @@
                 </select>
               </div>
               <div class="col-md-4 form-group">
-                <select class="form-control">
+                <select class="form-control" name="expire_year" id="expire_year">
                   <option value=""> Year</option>
                   <option value="2020">2020</option>
                   <option value="2021">2021</option>
@@ -178,7 +178,7 @@
           </div>
           <div class="col-md-9">
             <div class="text-right">
-              <a href="/reservation/hotelpolicies" class="btn btn-dark px-5 btn-nextwizard">Next</a>
+              <a href="/reservation/bookingsummary" class="btn btn-dark px-5 btn-nextwizard">Next</a>
             </div>
           </div>
         </div>

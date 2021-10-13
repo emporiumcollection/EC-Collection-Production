@@ -392,11 +392,11 @@
 
             <div class="reservation-summary section-shadow">
               <h4>SUITE 1</h4>
-              <p><b>Superior Double Room Garden or Village View </b></p>
+              <p><b>{{ $suites->category_name }}</b></p>
               <table class="table table-borderless mb-0">
                 <tr>
                   <td class="px-0 py-1">Guests</td>
-                  <td class="px-0 py-1 text-right">2</td>
+                  <td class="px-0 py-1 text-right">{!! Session::get('Guests') !!}</td>
                 </tr>
                 <tr>
                   <td class="px-0 py-1">Suite</td>

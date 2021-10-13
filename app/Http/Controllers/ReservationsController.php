@@ -10,6 +10,7 @@ use App\Models\Addresses;
 use App\Models\properties;
 use App\Http\Traits\Property;
 use App\User;
+use Response;
 
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator,
@@ -55,7 +56,8 @@ class ReservationsController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
-        $properties = PropertyCategoryTypes::first();        
+        $properties = PropertyCategoryTypes::first();
+        // echo "<pre>";print_r($properties);exit;        
         $request->session()
                 ->put('property_id',$properties->property_id);
         $request->session()
@@ -145,25 +147,28 @@ class ReservationsController extends Controller {
         return view($file_name, $this->data);   
     }
 
-    public function aditionalServices()
-    {
-        if (!\Auth::check())
-            return redirect('user/login');
-        $this->data['layout_type'] = 'old';
-        $this->data['keyword'] = '';
-        $this->data['arrive'] = '';
-        $this->data['departure'] = '';
-        $this->data['total_guests'] = '';        
-        $this->data['location'] = '';        
-        $file_name = 'frontend.themes.EC.reservation.services';
-        return view($file_name, $this->data);   
-    }
+    // public function aditionalServices()
+    // {
+    //     if (!\Auth::check())
+    //         return redirect('user/login');
+    //     $this->data['layout_type'] = 'old';
+    //     $this->data['keyword'] = '';
+    //     $this->data['arrive'] = '';
+    //     $this->data['departure'] = '';
+    //     $this->data['total_guests'] = '';        
+    //     $this->data['location'] = '';        
+    //     $file_name = 'frontend.themes.EC.reservation.services';
+    //     return view($file_name, $this->data);   
+    // }
 
     public function whoistravelling()
     {
         if (!\Auth::check())
             return redirect('user/login');
         $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->get();
+
+        $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',\Session::get('suit_id'))->first();
+
         $this->data['address'] = User::find(\Session::get('uid'));
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -265,6 +270,15 @@ class ReservationsController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
+
+        $arrival = \Session::get('arrival_date');
+        // $this->data['arival_date'] = date('Y-m-d',$arrival);   
+        
+        // echo "<pre>";print_r($this->data['arival_date']);exit;
+
+        $this->data['policies'] = PropertyCategoryTypes::where('id',\Session::get('suit_id'))->first();
+
+        $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',\Session::get('suit_id'))->first();
                 
         $file_name = 'frontend.themes.EC.reservation.booking_summary';
         return view($file_name, $this->data);   
@@ -275,6 +289,9 @@ class ReservationsController extends Controller {
         $suits_id = $request->suit_id;
         \Session::put('suit_id', $suits_id);
         $request->session()->put('suit_id', $suits_id);
+        $data = 'data';
+        echo json_encode($data);
+        die;
     }
 
     public function storecompanionTosession(Request $request)

@@ -450,8 +450,7 @@ $(function() {
         var email = $('#comapnion_email').val();       
         var zip_code = $('#zip_code').val();
         var language = $( "#language option:selected" ).text();
-        var gender = $( "#gender option:selected" ).text();
-        alert(gender);                        
+        var gender = $( "#gender option:selected" ).text();                        
 
         $.ajax({
             headers: {
@@ -469,7 +468,11 @@ $(function() {
             dataType:'json',                    
             success: function(response){
 
-                window.location.href('/reservation/suiteboard');
+                var mem_types = response.data;
+                    if( !empty(mem_types) ) {
+                        var link = 'reservation/suiteboard';
+                        window.location.href = link;
+                    }
             }
         });
     });
