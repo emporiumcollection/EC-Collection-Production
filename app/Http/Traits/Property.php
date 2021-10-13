@@ -121,7 +121,7 @@ trait Property {
             }])
         ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
-        ->where('approved', '=', 1)
+        ->where('property_status', '=', 1)
         //->limit(4)
         ->get();
     }
@@ -184,7 +184,7 @@ trait Property {
         ])
         ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
-        ->where('approved', '=', 1)
+        ->where('property_status', '=', 1)
         //->limit(4)
         ->get();        
     }
@@ -251,7 +251,7 @@ trait Property {
         ->where('city', '=', $keyword)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
-        ->where('approved', '=', 1)
+        ->where('property_status', '=', 1)
         //->limit(4)
         ->get();        
     }
