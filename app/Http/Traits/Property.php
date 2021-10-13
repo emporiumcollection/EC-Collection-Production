@@ -540,7 +540,6 @@ trait Property {
     }
 
     public function getLoaderImages($location){
-        $location = 'brazil';
         $loaderImages = Container::where('parent_id', '=', 10294)
         ->where('display_name', 'like', '%'.$location.'%')
         ->with(['files'])
