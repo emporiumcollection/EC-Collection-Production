@@ -5,6 +5,7 @@ namespace App\Http\Traits;
 use App\Models\PropertyRoomPrices;
 use App\Models\PropertyImages;
 use App\Models\PropertyRooms;
+use App\Models\availableservices;
 use App\Models\ImageResSpaBar;
 use App\Models\SeasonDates;
 use App\Models\Categories;
@@ -285,6 +286,19 @@ trait Property {
                 $properties[$k]->assign_amenities = implode(',', $all);
             }else{
                 $properties[$k]->assign_amenities = '';
+            }
+
+            $allservices = availableservices::whereIn('id', explode(',', $property->availableservices))
+            ->get()->toArray();
+            if(!empty($allservices)){
+                foreach($allservices as $service){
+                    $all[] = $service['amenity_title'];
+                }
+            }
+            if(!empty($all)){
+                $properties[$k]->availableservices = implode(',', $all);
+            }else{
+                $properties[$k]->availableservices = '';
             }
 
             // room images

@@ -78,9 +78,6 @@
                         <div class="qv-list">
                             <h4>Available services</h4>
                             <p data-place="property" data-replace="availableservices"></p>
-                            <p class="mb-0">Air conditioned hotel</p>
-                            <p class="mb-0">Laundry service</p>
-                            <p class="mb-0">Concirge service</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">

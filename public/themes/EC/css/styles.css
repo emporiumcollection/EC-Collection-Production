@@ -30868,7 +30868,7 @@ span.calElement.prev:hover {
 .prev-arrow,
 .next-arrow {
   position: absolute;
-  z-index: 8;
+  z-index: 1;
   border: 0;
   width: 60px;
   top: 0;
