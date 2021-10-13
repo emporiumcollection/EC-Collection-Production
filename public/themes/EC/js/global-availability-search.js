@@ -66,6 +66,7 @@ function replacePropertyData(id){
   replaceGalleryImages(id, 'restrurant-images', 'restaurantList');
   replaceGalleryImages(id, 'bar-images', 'barList');
   replaceGalleryImages(id, 'spa-images', 'spaList');
+  initializeAllGalleries();
 
   $('#experience_gallery-tab').parents('li').hide();
   $('#restaurant_gallery-tab').parents('li').hide();
@@ -84,6 +85,46 @@ function replacePropertyData(id){
   replaceGalleryNames(id);
 
   setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
+}
+
+function initializeAllGalleries(){
+
+  lightGallery(document.getElementById('gallery_hotel'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    escKey: false,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_restaurant'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_bars'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_experience'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_suite'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
 }
 
 function replaceGalleryImages(id, place, list){
