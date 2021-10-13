@@ -2171,4 +2171,41 @@ $(document).ready(function () {
   picker.data('daterangepicker').hide = function () { };
   picker.data('daterangepicker').show();
 
+  lightGallery(document.getElementById('gallery_hotel'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    escKey: false,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_restaurant'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_bars'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_experience'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_suite'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+
 });
