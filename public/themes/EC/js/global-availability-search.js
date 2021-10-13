@@ -136,10 +136,12 @@ function replaceGalleryImages(id, place, list){
       var imageview = '';
       var spanid = 1;
       var grid = 1;
+      var imgUrl = '';
       for (const [key, e] of Object.entries(values)) {
         if(e.gallery.files){          
           e.gallery.files.forEach(function(rgallery){          
-            imageview += '<a href="#" data-sub-html="alter text" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
+            imgUrl = '/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/restrurant-image';
+            imageview += '<a href="' + imgUrl + '" data-sub-html="alter text" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
             spanid=2;
             grid++;
           });  
