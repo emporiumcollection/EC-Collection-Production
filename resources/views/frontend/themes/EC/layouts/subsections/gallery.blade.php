@@ -25,7 +25,7 @@
                 <div class="gallery-wrapper">
                     <div class="row justify-content-center">
                         <div class="col-8">
-                            <div class="grid-layout" id="gallery_hotel">
+                            <div class="grid-layout" id="location_gallery_hotel">
                                 <?php 
                                 $spanid = 1;
                                 $grid = 1;
