@@ -192,30 +192,6 @@
           $(this).closest('.hotel-list-onmap').removeClass('show');
         })
 
-
-        var locations = [
-          ['<b>Loaction Name</b>', 11.8166, 122.0942],
-        ];
-
-        if(!mapL){
-          mapL = L.map('map_results').setView([11.206051, 122.447886], 8);
-        }
-
-        var myIcon = L.icon({
-          iconUrl: 'images/basic_geolocalize-01.svg',
-          iconSize: [40, 45],
-        });
-        L.tileLayer(
-          'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          maxZoom: 18,
-        }).addTo(mapL);
-
-        for (var i = 0; i < locations.length; i++) {
-          marker = new L.marker([locations[i][1], locations[i][2]], { icon: myIcon })
-            .bindPopup(locations[i][0])
-            .addTo(mapL);
-        }
-
         var picker = $('#daterangepicker-inline').daterangepicker({
           parentEl: "#daterangepicker-inline-container",
           autoApply: true,
