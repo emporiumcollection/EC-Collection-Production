@@ -69,7 +69,7 @@
               <label class="custom-control-label" for="customCheck1">Search as I move the map </label>
             </div>
           </div>
-          <div id='map2' style='width: 100%; height: 100vh;'></div>
+          <div id='map_results' style='width: 100%; height: 100vh;'></div>
         </div>
       </div>
     </div>
@@ -84,7 +84,7 @@
       mapboxgl.accessToken = 'pk.eyJ1IjoiZmFyaXNzeWFpZnVkZGluIiwiYSI6ImNrb253OWNqOTA1ajUyd2w0Mm92ZXEzeWUifQ.2zZbnnViPfgP4-jHknMifQ';
 
         var mapOfResults = new mapboxgl.Map({
-          container: 'map2',
+          container: 'map_results',
           style: 'mapbox://styles/mapbox/light-v10',
           center: [<?php echo $center_coordinate;?>],
           zoom: 11.15
@@ -198,7 +198,7 @@
         ];
 
         if(!mapL){
-          mapL = L.map('map2').setView([11.206051, 122.447886], 8);
+          mapL = L.map('map_results').setView([11.206051, 122.447886], 8);
         }
 
         var myIcon = L.icon({
