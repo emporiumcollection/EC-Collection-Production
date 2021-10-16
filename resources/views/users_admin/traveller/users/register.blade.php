@@ -16,19 +16,19 @@
 
   <!-- Web Application Manifest -->
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="{{ asset('assets/css/css/styles.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/css/styles.css')}}">
 </head>
 
-<body class="auth-container">
+<body class="auth-container" style="background: url({{asset('themes/EC/images/auth_bg.png')}});">
     <div class="container-wrapper h-100">
         <div class="row h-100">
-            <div class="col-md-8 bg-white">
+            <div class="col-md-8 bg-white" style="overflow: auto">
                 <div class="mb-4">
                     <a href="main-page.html" class="back-abs">
                         <i class="ico ico-back"></i>
                     </a>
                 </div>
-                <div class="auth-container-inner wizard" style="margin-top: 70px;">
+                <div class="auth-container-inner wizard" style="margin-top:70px;top:0;transform: translate(-50%, 0);padding-bottom:70px">
 
                     <div class="mb-5">
                         <img src="images/logo.svg" alt="">
