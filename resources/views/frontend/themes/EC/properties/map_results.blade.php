@@ -12,6 +12,7 @@
 {{-- For Meta Description --}}
 @section('meta_description', '')
 {{-- For Page's Content Part --}}
+@section('content')
 <style>
     .experiences{
         cursor: pointer;
@@ -29,7 +30,6 @@
   var channelurl = '{{URL::to("getyoutubechannel/")}}';
   setTimeout("getDefaultChannel('<?php echo $location[0]['category_alias'];?>')", 5000);
 </script>
-@section('content')
 <div class="content-em pb-0">
     <div class="px-3 pt-5">
       <div class="title-main offset-381 mt-5 wow fadeInUp mobile-off">
@@ -69,7 +69,7 @@
               <label class="custom-control-label" for="customCheck1">Search as I move the map </label>
             </div>
           </div>
-          <div id='map_results' style='width: 100%; height: 100vh;'></div>
+          <div id='map2' style='width: 100%; height: 100vh;'></div>
         </div>
       </div>
     </div>
@@ -80,10 +80,11 @@
 @section('custom_js')
 @parent
 <script>
+      var mapL = null;
       mapboxgl.accessToken = 'pk.eyJ1IjoiZmFyaXNzeWFpZnVkZGluIiwiYSI6ImNrb253OWNqOTA1ajUyd2w0Mm92ZXEzeWUifQ.2zZbnnViPfgP4-jHknMifQ';
 
         var mapOfResults = new mapboxgl.Map({
-          container: 'map_results',
+          container: 'map2',
           style: 'mapbox://styles/mapbox/light-v10',
           center: [<?php echo $center_coordinate;?>],
           zoom: 11.15
@@ -196,7 +197,9 @@
           ['<b>Loaction Name</b>', 11.8166, 122.0942],
         ];
 
-        var mapL = L.map('map2').setView([11.206051, 122.447886], 8);
+        if(!mapL){
+          mapL = L.map('map2').setView([11.206051, 122.447886], 8);
+        }
 
         var myIcon = L.icon({
           iconUrl: 'images/basic_geolocalize-01.svg',
@@ -227,8 +230,30 @@
           $('.onrange').html(picker.startDate.format('DD-MM-YYYY') + ' -> ' + picker.endDate.format('DD-MM-YYYY'));
           $('.include-form').fadeIn("fast");
         });
-        picker.data('daterangepicker').hide = function () { };
-        picker.data('daterangepicker').show();
+        //picker.data('daterangepicker').hide = function () { };
+        //picker.data('daterangepicker').show();
 
 </script>
+
+
+@include('frontend.themes.EC.layouts.subsections.suites')
+@include('frontend.themes.EC.layouts.subsections.share')
+@include('frontend.themes.EC.layouts.subsections.policies')
+@include('frontend.themes.EC.layouts.subsections.availability')
+@include('frontend.themes.EC.layouts.subsections.policies')
+@include('frontend.themes.EC.layouts.subsections.my_collections')
+@include('frontend.themes.EC.layouts.subsections.reservation')
+@include('frontend.themes.EC.layouts.subsections.suiteinfo')
+@include('frontend.themes.EC.layouts.subsections.suite_deal')
+@include('frontend.themes.EC.layouts.subsections.filter')
+@include('frontend.themes.EC.layouts.subsections.priceinfo')
+@include('frontend.themes.EC.layouts.subsections.location_info')
+@include('frontend.themes.EC.layouts.subsections.quick_info')
+@include('frontend.themes.EC.layouts.subsections.reviews')
+@include('frontend.themes.EC.layouts.subsections.gallery')
+@include('frontend.themes.EC.layouts.subsections.property_gallery')
+@include('frontend.themes.EC.layouts.subsections.search_history')
+@include('frontend.themes.EC.layouts.subsections.ask_question')
+@include('frontend.themes.EC.layouts.subsections.videos')
+
 @endsection
