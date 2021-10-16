@@ -118,7 +118,7 @@
 </head>
 <body>
     @include('frontend.themes.EC.layouts.sections.preloader')
-
+<?php exit;?>
     <!--@include('frontend.themes.EC.layouts.sections.preloader')-->
 
     @if(isset($layout_type) && $layout_type == 'old')
