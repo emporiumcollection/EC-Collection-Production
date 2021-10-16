@@ -49,6 +49,7 @@ class container extends Sximo  {
 		$folderId = $folder[0]['id'];
 		$files = ContainerFiles::select(['id','file_name'])
 		->where('folder_id', '=', $folderId)
+		->orderBy('file_sort_num', 'asc')
 		->limit(10)
 		->get()
 		->toArray();

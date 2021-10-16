@@ -535,9 +535,10 @@ trait Property {
         $all = [];
         $allservices = availableservices::whereIn('id', explode(',', $commaSeperated))
         ->get()->toArray();
+        
         if(!empty($allservices)){
             foreach($allservices as $service){
-                $all[] = $service['amenity_title'];
+                $all[] = $service['title'];
             }
         }
         if(!empty($all)){
