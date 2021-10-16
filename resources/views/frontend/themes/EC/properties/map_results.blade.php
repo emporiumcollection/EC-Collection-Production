@@ -69,7 +69,7 @@
               <label class="custom-control-label" for="customCheck1">Search as I move the map </label>
             </div>
           </div>
-          <div id='map_results' style='width: 100%; height: 100vh;'></div>
+          <div id='map_results'></div>
         </div>
       </div>
     </div>
