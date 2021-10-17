@@ -66,7 +66,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
                 class="mCS_img_loaded desaturate">
               <div class="headingoverlay">
                 <span class="destinationTitle"><?php echo $categoryInfo->category_name?><br>
-                  <span class="hashTag">#loveluxury<?php echo strtolower($categoryInfo->category_image)?></span>
+                  <span class="hashTag">#loveluxury<?php echo strtolower($categoryInfo->category_name)?></span>
                 </span>
               </div>
             </div>
