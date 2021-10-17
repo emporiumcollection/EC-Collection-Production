@@ -60,15 +60,14 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
             <div class="line"></div>
             <div class="line"></div>
           </div>
-            <div class="onstickmainpage2 nav-collapse main-nav-sidebar">
-              <div class="navheadimage">
-                <img src="/property-image/resize/270x315/category_imgs/<?php echo $categoryInfo->category_image?>/category-image" alt=""
-                  class="mCS_img_loaded desaturate">
-                <div class="headingoverlay">
-                  <span class="destinationTitle"><?php echo $categoryInfo->category_name?><br>
-                    <span class="hashTag">#loveluxury<?php echo strtolower($categoryInfo->category_image)?></span>
-                  </span>
-                </div>
+          <div class="onstickmainpage2 nav-collapse main-nav-sidebar">
+            <div class="navheadimage">
+              <img src="/property-image/resize/270x315/category_imgs/<?php echo $categoryInfo->category_image?>/category-image" alt=""
+                class="mCS_img_loaded desaturate">
+              <div class="headingoverlay">
+                <span class="destinationTitle"><?php echo $categoryInfo->category_name?><br>
+                  <span class="hashTag">#loveluxury<?php echo strtolower($categoryInfo->category_image)?></span>
+                </span>
               </div>
             </div>
             <a href="#" class="close-second-menu">
@@ -103,7 +102,6 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               </li>
             </ul>
           </div>
-
         </div>
       </div>
       <div class="col-lg-9 content-lg">
