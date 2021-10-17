@@ -67,8 +67,8 @@
                 <img src="/property-image/resize/270x315/category_imgs/<?php echo $categoryInfo->category_image?>/category-image" alt=""
                   class="mCS_img_loaded desaturate">
                 <div class="headingoverlay">
-                  <span class="destinationTitle">Austria<br>
-                    <span class="hashTag">#loveluxuryaustria</span>
+                  <span class="destinationTitle"><?php echo $categoryInfo->category_name?><br>
+                    <span class="hashTag">#loveluxury<?php echo strtolower($categoryInfo->category_image)?></span>
                   </span>
                 </div>
               </div>
