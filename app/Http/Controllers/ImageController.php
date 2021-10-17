@@ -27,6 +27,8 @@ class ImageController extends Controller {
             $this->restrurantImageResize($scale, $path, $file);
         }elseif($type == 'spa-image'){
             $this->spaImageResize($scale, $path, $file);
+        }elseif($type == 'category-image'){
+            $this->categoryImageResize($scale, $path, $file);
         }else{
             $this->propertyImageResize($scale, $path, $file);
         }
@@ -91,6 +93,24 @@ class ImageController extends Controller {
 
         $this->destination_dir = public_path() .
         '/cached-images/container_user_files/locations/' .
+        $path .
+        '/resized';
+
+        $this->resizeImage();
+    }
+
+    public function categoryImageResize($scale, $path, $file)
+    {
+        $this->initializeValues($scale, $file);
+
+        $this->file_path = $this->image_path .
+        '/' .
+        $path .
+        '/' .
+        $this->file;
+
+        $this->destination_dir = public_path() .
+        '/cached-images/container_user_files/categories/' .
         $path .
         '/resized';
 

@@ -51,7 +51,6 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
         <input type="hidden" name="m_type" value="{{$m_type}}" />
         <input type="hidden" name="hid_propid" value="" />
       </div>
-
     </div>
     <div class="row mt-5 mmt-0" id="main-content">
       <div class="col-lg-3 col-sm-3 position-relative">
@@ -61,14 +60,15 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
             <div class="line"></div>
             <div class="line"></div>
           </div>
-
-          <div class="onstickmainpage2 nav-collapse main-nav-sidebar">
-            <div class="navheadimage">
-              <img src="https://emporium-voyage.com/uploads/category_imgs/1522478496-67775161.jpg" alt="" class="mCS_img_loaded desaturate">
-              <div class="headingoverlay">
-                <span class="destinationTitle">Austria<br>
-                  <span class="hashTag">#loveluxuryaustria</span>
-                </span>
+            <div class="onstickmainpage2 nav-collapse main-nav-sidebar">
+              <div class="navheadimage">
+                <img src="/property-image/resize/270x315/category_imgs/<?php echo $categoryInfo->category_image?>/category-image" alt=""
+                  class="mCS_img_loaded desaturate">
+                <div class="headingoverlay">
+                  <span class="destinationTitle">Austria<br>
+                    <span class="hashTag">#loveluxuryaustria</span>
+                  </span>
+                </div>
               </div>
             </div>
             <a href="#" class="close-second-menu">

@@ -66,9 +66,9 @@ function replacePropertyData(id){
       $(this).html(imageview);
   });
 
-  replaceGalleryImages(id, 'restrurant-images', 'restaurantList');
-  replaceGalleryImages(id, 'bar-images', 'barList');
-  replaceGalleryImages(id, 'spa-images', 'spaList');
+  replaceGalleryImages(id, 'restrurant-images', 'restaurantList', 'restrurant-image');
+  replaceGalleryImages(id, 'bar-images', 'barList', 'bar-image');
+  replaceGalleryImages(id, 'spa-images', 'spaList', 'spa-image');
   initializeAllGalleries();
 
   $('#experience_gallery-tab').parents('li').hide();
@@ -130,7 +130,7 @@ function initializeAllGalleries(){
   });
 }
 
-function replaceGalleryImages(id, place, list){
+function replaceGalleryImages(id, place, list, image_path){
   $('[data-place="' + place + '"]').each(function() {
       // field = $(this).attr('data-replace');
       //console.log(properties[id][field]);
@@ -143,7 +143,7 @@ function replaceGalleryImages(id, place, list){
       for (const [key, e] of Object.entries(values)) {
         if(e.gallery.files){          
           e.gallery.files.forEach(function(rgallery){          
-            imgUrl = '/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/restrurant-image';
+            imgUrl = '/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
             imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
             spanid=2;
             grid++;
