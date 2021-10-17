@@ -64,7 +64,7 @@
 
             <div class="onstickmainpage2 nav-collapse main-nav-sidebar">
               <div class="navheadimage">
-                <img src="https://emporium-voyage.com/uploads/category_imgs/1522478496-67775161.jpg" alt=""
+                <img src="/property-image/resize/270x315/category_imgs/<?php echo $categoryInfo->category_image?>/category-image" alt=""
                   class="mCS_img_loaded desaturate">
                 <div class="headingoverlay">
                   <span class="destinationTitle">Austria<br>
