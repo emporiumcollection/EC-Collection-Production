@@ -1,4 +1,3 @@
-
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -24,7 +23,7 @@
           <a href="#" class="backwizard btn-backwizard">
             <i class="ico ico-back mr-3"></i>
           </a>
-          Your (Pavilion Suite) overview:{!! Session::get('suit_id') !!}
+          Your (Pavilion Suite) overview:
         </h2>
         <div class="row">
           <div class="col-lg-9 col-md-8">
@@ -40,13 +39,14 @@
                 <li>Access to 24 hour business centre</li>
               </ul>
             </div>
+
           @foreach($suites[0]->suites as $suite)  
             <div class="suite-list section-shadow mb-5">
               <div class="suite-tumb">
                 <div class="row align-items">
                   @foreach($property as $image)
                     <div class="col-lg-6">
-                      <div class="img-offset-slide">
+                      {{-- <div class="img-offset-slide">
                         <div>
                           <a href="detail-page.html">                  
                             <img src="{{ asset('/room-image/resize/493x276/'.$image->suites[0]->rooms[0]->images[0]['file']['file_name'])}}"
@@ -65,7 +65,7 @@
                               class="img-full" alt="">
                           </a>
                         </div>
-                      </div>
+                      </div> --}}
                     </div>
                   @endforeach                                      
                     <div class="col-lg-6">
@@ -78,7 +78,13 @@
                           <div class="col-8">
                             <p class="mb-0">From: <b>€1.099 per night</b></p>
                             <p>inclusive of all taxes and fees</p>
-                          </div>
+                            <?php $i = $suite->total_guests ;?>
+                            <select name="total_guest" id="total_guest" class="form-control">
+                              @for($j = 1;$j <= $i;$j++)  
+                                <option value="total_guest"> {{ $j }}</option>
+                              @endfor
+                            </select>   
+                          </div>              
                           <div class="col-4">
                             <div class="text-right">      
                               <a href="javascript:void()" class="btn btn-dark  px-4 btn-nextwizard rounded-0 select_suite" data-suite-id="{{ $suite->id }}">Select</a>

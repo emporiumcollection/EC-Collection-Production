@@ -230,21 +230,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 
 {{-- Site Base URL --}}
-
-<script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
-
-<script type="text/javascript" src="{{ asset('js/moment.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/daterangepicker.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/plugin/jquery.mousewheel.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/plugin/simpleLightbox.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/mediaelement-and-player.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/jquery.rangecalendar.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/plugin/owl.carousel.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/plugin/select2/select2.full.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/plugin/wow.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/color-thief.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/plugin/mapbox-gl.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/all.js')}}"></script>
 <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/jquery-3.5.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/leaflet.js') }}"></script>
@@ -426,22 +411,26 @@ $(function() {
     });
 
 
-    $(document).on('click', ".select_suite", function(){
-        var suit_id = $(this).data('suite-id');
-        $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: 'POST',            
-            url:'{{URL::to("/suite")}}',
-            data: {suit_id:suit_id },
-            dataType:'json',                    
-            success: function(response){
+    $( document ).ready(function() {
+        // var suit_id= new Array();
+        $(document).on('click', ".select_suite", function(){
+            var suit_id = $(this).data('suite-id');
+            // suit_id.push($(this).data('suite-id'));
+    
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',            
+                url:'{{URL::to("/suite")}}',
+                data: {suit_id:suit_id },
+                dataType:'json',                    
+                success: function(response){
 
-                window.location.href('/reservation/suiteboard');
-            }
+                }
+            });
         });
-    });
+    });        
 
     $(document).on('click', ".add_companion", function(){        
         var first_name = $('#comapnion_f_name').val();
@@ -586,7 +575,19 @@ $(function() {
         });
         });
     });
-                
+            
+    function myFunction() {
+        var copyText = document.getElementById("myAnchor").title;
+        document.addEventListener('copy', function(event) {
+            event.clipboardData.setData('text/plain', copyText);
+            event.preventDefault();
+            document.removeEventListener('copy', handler, true);
+        }, true);
+        document.execCommand('copy');        
+        }
+    document.getElementById('myAnchor').addEventListener('click', myFunction);
+
+
     $(document).on('click', ".dest-collection", function(e){
         e.preventDefault();
         //var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');

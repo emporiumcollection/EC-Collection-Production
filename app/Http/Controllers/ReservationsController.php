@@ -93,7 +93,8 @@ class ReservationsController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
 
-        $this->data['suites'] = properties::with('suites')->where('id',\Session::get('property_id'))->get();
+        $this->data['suites'] = properties::with('suites')->where('id',\Session::get('property_id'))->get();  
+             // echo "<pre>";print_r($this->data['suites']) 
         $this->data['property'] = properties::select(['id'])
         ->where('id',\Session::get('property_id'))->get();
         $this->formatPropertyRecords($this->data['property']);
@@ -139,8 +140,8 @@ class ReservationsController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';        
-
-        $this->data['policies'] = PropertyCategoryTypes::select('id','property_id','category_name','booking_policy')->where('id',\Session::get('suit_id'))->first();
+        // echo "<pre>";print_r(\Session::get('suit_id'));exit;
+        // $this->data['policies'] = PropertyCategoryTypes::select('id','property_id','category_name','booking_policy')->where('id',\Session::get('suit_id'))->first();
         $this->data['termDetail'] = \DB::table('tb_properties_custom_plan')->where('property_id',\Session::get('property_id'))->get();
         $this->data['global_terms'] = \DB::table('tb_policies')->get();
         $file_name = 'frontend.themes.EC.reservation.suitepolicies';
@@ -166,8 +167,9 @@ class ReservationsController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
         $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->get();
-
+        // printf(\Session::get('suit_id'));exit;
         $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',\Session::get('suit_id'))->first();
+        // print_r($this->data['suites']);exit;
 
         $this->data['address'] = User::find(\Session::get('uid'));
         $this->data['layout_type'] = 'old';
@@ -271,27 +273,34 @@ class ReservationsController extends Controller {
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
 
-        $arrival = \Session::get('arrival_date');
-        // $this->data['arival_date'] = date('Y-m-d',$arrival);   
-        
-        // echo "<pre>";print_r($this->data['arival_date']);exit;
+        $this->data['properties'] = properties::where('id',\Session::get('property_id'))->get();
+        // echo "<pre>";print_r($this->data['properties']);exit;
+        $hotel_name = $this->data['properties'][0]->property_short_name;
 
-        $this->data['policies'] = PropertyCategoryTypes::where('id',\Session::get('suit_id'))->first();
+        $words = explode(' ', $hotel_name);
+        $this->data['hotel_name'] = $words[0][0].$words[1][0];
+
+        $this->data['randomnum'] = mt_rand(0370,9999);        
+        $arrival_date = explode("-",\Session::get('arrival_date'));
+        $departure_date = explode("-",\Session::get('departure_date'));
+        
+        $this->data['arrive'] = $arrival_date[0];
+        $this->data['departure'] = $departure_date[0];
+        $this->data['year'] = $departure_date[1];
+        $this->data['month'] = date('M', $departure_date[2]);
+        
+        $this->data['policies'] = PropertyCategoryTypes::where('id',\Session::get('suit_id'))->first();        
 
         $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',\Session::get('suit_id'))->first();
-                
+                    
         $file_name = 'frontend.themes.EC.reservation.booking_summary';
         return view($file_name, $this->data);   
     }
 
     public function selected_suite(Request $request)
-    {  
+    {          
         $suits_id = $request->suit_id;
-        \Session::put('suit_id', $suits_id);
-        $request->session()->put('suit_id', $suits_id);
-        $data = 'data';
-        echo json_encode($data);
-        die;
+        $name = $request->session()->put('suit_id',$suits_id);
     }
 
     public function storecompanionTosession(Request $request)
