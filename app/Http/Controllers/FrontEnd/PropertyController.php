@@ -2868,7 +2868,9 @@ class PropertyController extends Controller {
         $cacheKey = 'location_photos'.$keyword;
         if (Cache::has($cacheKey)) {
             $photos = Cache::get($cacheKey);
-        }else{
+        }
+
+        if(empty($photos)){
             $us = new UnsplashSearch();
             $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
             Cache::store('file')->put($cacheKey, $photos, 100000);
