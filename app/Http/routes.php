@@ -61,6 +61,7 @@ Route::post('/users/CardDetail', 'UserController@userCardDetail');
 Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');
 Route::post('/users/invite', 'UserController@postInvite');
 // Route::get('/users/reservation', 'ReservationsController@getReservation');
+
 Route::get('reservation/when', 'ReservationsController@when');
 Route::get('reservation/where', 'ReservationsController@where');
 Route::get('reservation/suite', 'ReservationsController@suite');
@@ -76,6 +77,8 @@ Route::post('/suite', 'ReservationsController@selected_suite');
 Route::post('/addresses', 'ReservationsController@addresses');
 Route::post('/addcompanion', 'ReservationsController@addcompanion');
 Route::post('/storeinTosession', 'ReservationsController@storecompanionTosession');
+
+Route::get('/reservation/dashboard', 'ReservationsController@reservationDashboard');
 
 // Route::post('/users/bookingsummary', 'UserController@bookingsummary');
 

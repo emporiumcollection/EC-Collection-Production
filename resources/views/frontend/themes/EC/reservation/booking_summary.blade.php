@@ -100,7 +100,7 @@
                         <label class="custom-control-label" for="check-ste">
                           Your reservation is made subject to our
                           <a href="#" class="underline"><b>Terms &amp; Conditions</b>
-                          </a>(available
+                          </a>(available  
                           in other
                           languages <a href="#" class="underline"><b>here</b></a>), and the
                           specific
@@ -155,6 +155,9 @@
                               <div class="w-100">
                                 <p class="mb-0 month-nav">{{ $i }}.
                                 {{ $month }}. {{ $year }}</p>
+                                
+                                <?php  $store = $i.-$month_int.-$year;?>
+                                <p>{{ date('l',strtotime($store)) }}</p>
                                 @if($i == $arrive)
                                  <p class="mb-0"><b>Arrival date</b></p>
                                 @endif
@@ -171,7 +174,7 @@
                 </div>              
                 <div class="col-md-7">
                   <div class="mb-4">
-                    <a href="guest/dashboard.html" class="btn btn-primary rounded-0 btn-lg btn-block">
+                    <a href="/reservation/dashboard" class="btn btn-primary rounded-0 btn-lg btn-block">
                     Get receipt
                   </a>
                   </div>                     
