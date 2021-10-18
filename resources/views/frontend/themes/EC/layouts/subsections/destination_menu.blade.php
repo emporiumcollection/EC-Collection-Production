@@ -1,285 +1,120 @@
+<?php
+$destinationTabContent = '';
+$destinationTemplate = '
+<div class="tab-pane fade show active" id="<!--LEVEL1-CATALIAS-->">
+    <div class="row">
+        <div class="col-2 br-001 col--01920">
+            <nav class="nav flex-column nav-dest">
+                <!--LEVEL1-LINKS-->
+            </nav>
+        </div>
+        <div class="col-10">
+            <div class="tab-content">
+                <!--LEVEL1-TABS-->
+            </div>
+        </div>
+    </div>
+</div>';
+
+$level1TabTemplate = '<div class="tab-pane fade show active" id="<!--LEVEL2-CATALIAS-->">
+                    <div class="row">
+                        <div class="col-2 col--1223 br-001">
+                            <nav class="nav flex-column nav-dest">
+                                <!--LEVEL2-LINKS-->
+                            </nav>
+                        </div>
+                        <div class="col-10 col--12929">
+                            <div class="tab-content h-100">
+                                <!--LEVEL2-TABS-->
+                            </div>
+                        </div>
+                    </div>
+                </div>';
+
+$level2TabTemplate = '<div class="tab-pane fade show active h-100" id="<!--LEVEL3-CATALIAS-->">
+                        <div class="row h-100">
+                            <div class="col-3 col--819281 br-001 ">
+                                <div class="destination-img">
+                                    <img src="images/Emporium-Collection_129.jpg" class="img-fluid"
+                                        alt="">
+                                    <div class="destinatios-cntay--00">
+                                        <p class="mb-0">Germany</p>
+                                        <p class="mb-0">#loveluxurygermany</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-9 col--71812 h-100">
+                                <div class="row h-100">
+                                    <div class="col-3 col--98121 br-001 h-100">
+                                        <nav class="nav flex-column nav-dest">
+                                            <!--LEVEL3-LINKS-->
+                                        </nav>
+                                    </div>
+                                    <div class="col-4 col--9819281">
+                                        <!--LEVEL4-LINK-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>';
+?>
 <div class="desktop-view ">
+                    <?php
+                    $destinationLevel1 = '';
+                    foreach($destinationMenu as $destination):
+                        $destinationLevel1 .= '<li class="nav-item">
+                            <a class="nav-link active" href="#'.$destination['category_alias'].'" data-toggle="tab" role="tab">'.$destination['category_name'].'</a>
+                        </li>';
+
+                        $level2TabContent = '';
+                        $destinationLevel1 = '';
+                        $destinationLevel2 = '';
+                        $destinationLevel3 = '';
+                        $destinationLevel4 = '';
+                        foreach($destination['children'] as $level2){
+                            $destinationLevel2 .= '
+                            <a class="nav-link active" href="#'.$level2['category_alias'].'" data-toggle="tab" role="tab">
+                                '.$level2['category_name'].'
+                            </a>'; 
+
+                            
+                            $destinationLevel3 = '';
+                            $level3Content = '';
+                            foreach($level2['children'] as $level3){
+                                $destinationLevel3 .= '<a class="nav-link " href="#'.$level3['category_alias'].'" data-toggle="tab" role="tab">'.$level3['category_name'].'</a>';
+                                
+                                $destinationLevel4 = '';
+                                foreach($level3['children'] as $level4){
+                                    $destinationLevel4 .= '<a class="nav-link " href="#'.$level4['category_alias'].'" data-toggle="tab" role="tab">'.$level4['category_name'].'</a>';
+                                }
+
+                                $level3Content .= str_replace('<!--LEVEL3-CATALIAS-->', $level3['category_alias'], $level2TabTemplate);
+                                $level3Content .= str_replace('<!--LEVEL3-LINKS-->', $destinationLevel4, $level3Content);
+                            }
+
+                            $level2Content = str_replace('<!--LEVEL2-CATALIAS-->', $level2['category_alias'], $level1TabTemplate);
+                            $level2Content = str_replace('<!--LEVEL2-LINKS-->', $destinationLevel3, $level2Content);
+                            $level2Content = str_replace('<!--LEVEL2-TABS-->', $level3Content, $level2Content);
+                            
+                            $level2TabContent .= $level2Content;        
+                        }
+                    
+                        $tabContent = str_replace('<!--LEVEL1-CATALIAS-->', $destination['category_alias'], $destinationTemplate);
+
+                        $tabContent = str_replace('<!--LEVEL1-LINKS-->', $destinationLevel2, $tabContent);
+
+                        $tabContent = str_replace('<!--LEVEL1-TABS-->', $level2TabContent, $tabContent);
+
+                        $destinationTabContent .= $tabContent;
+                    endforeach;
+                    ?>
     <ul class="nav nav-pills nav-clr mb-5">
-        <li class="nav-item">
-            <a class="nav-link active" href="#europe" data-toggle="tab" role="tab">Europe</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#indian" data-toggle="tab" role="tab">Indian Ocean</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#oceania" data-toggle="tab" role="tab">Oceania</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#asia" data-toggle="tab" role="tab">Asia</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="#america" data-toggle="tab" role="tab">The Americas</a>
-        </li>
+        <?php echo $destinationLevel1;?>
     </ul>
     <p><b>Current Destination : New York</b></p>
     <div class="tab-content">
         <!-- Europe tab content -->
-        <div class="tab-pane fade show active" id="europe">
-            <div class="row">
-                <div class="col-2 br-001 col--01920">
-                    <nav class="nav flex-column nav-dest">
-                        <a class="nav-link active" href="#centralEurope" data-toggle="tab" role="tab">Central Europe</a>
-                        <a class="nav-link" href="#northenEurope" data-toggle="tab" role="tab">Northen
-                            Europe</a>
-                        <a class="nav-link" href="#southernEurope" data-toggle="tab" role="tab">Southern
-                            Europe</a>
-                        <a class="nav-link" href="#easternEurope" data-toggle="tab" role="tab">Eastern
-                            Europe</a>
-                        <a class="nav-link" href="#westernEurope" data-toggle="tab" role="tab">Western
-                            Europe</a>
-                    </nav>
-                </div>
-                <div class="col-10">
-                    <div class="tab-content">
-                        <div class="tab-pane fade show active" id="centralEurope">
-                            <div class="row">
-                                <div class="col-2 col--1223 br-001">
-                                    <nav class="nav flex-column nav-dest">
-                                        <a class="nav-link active" href="#germany" data-toggle="tab"
-                                            role="tab">Germany</a>
-                                        <a class="nav-link" href="#austria" data-toggle="tab" role="tab">Austria</a>
-                                        <a class="nav-link" href="#france" data-toggle="tab" role="tab">France</a>
-                                        <a class="nav-link" href="#switzerland" data-toggle="tab"
-                                            role="tab">Switzerland</a>
-                                        <a class="nav-link" href="#belgium" data-toggle="tab" role="tab">Belgium</a>
-                                        <a class="nav-link" href="#holland" data-toggle="tab" role="tab">Holland</a>
-                                        <a class="nav-link" href="#croatia" data-toggle="tab" role="tab">Croatia</a>
-                                        <a class="nav-link" href="#slovenia" data-toggle="tab" role="tab">Slovenia</a>
-                                    </nav>
-                                </div>
-                                <div class="col-10 col--12929">
-                                    <div class="tab-content h-100">
-                                        <div class="tab-pane fade show active h-100" id="germany">
-                                            <div class="row h-100">
-                                                <div class="col-3 col--819281 br-001 ">
-                                                    <div class="destination-img">
-                                                        <img src="images/Emporium-Collection_129.jpg" class="img-fluid"
-                                                            alt="">
-                                                        <div class="destinatios-cntay--00">
-                                                            <p class="mb-0">Germany</p>
-                                                            <p class="mb-0">#loveluxurygermany</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-9 col--71812 h-100">
-                                                    <div class="row h-100">
-                                                        <div class="col-3 col--98121 br-001 h-100">
-                                                            <nav class="nav flex-column nav-dest">
-                                                                <a class="nav-link " href="#frankfurt" data-toggle="tab"
-                                                                    role="tab">Frankfurt</a>
-                                                                <a class="nav-link active" href="#hamburg"
-                                                                    data-toggle="tab" role="tab">Hamburg</a>
-                                                                <a class="nav-link" href="#munich" data-toggle="tab"
-                                                                    role="tab">Munich</a>
-                                                                <a class="nav-link" href="#berlin" data-toggle="tab"
-                                                                    role="tab">Berlin</a>
-                                                                <a class="nav-link" href="#cologne" data-toggle="tab"
-                                                                    role="tab">Cologne</a>
-                                                                <a class="nav-link" href="#bremen" data-toggle="tab"
-                                                                    role="tab">Bremen</a>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-4 col--9819281">
-                                                            <a href="#destinationSection" data-scroll>
-                                                                <div class="destination-img">
-                                                                    <img src="images/e8150591299245.5e2eb7c1e4d56.jpg"
-                                                                        class="img-fluid" alt="">
-                                                                    <div class="destinatios-cntay--00">
-                                                                        <p class="mb-0">Humburg</p>
-                                                                        <p class="mb-0">
-                                                                            #loveluxuryhumburg</p>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade h-100" id="austria">
-                                            <div class="row h-100">
-                                                <div class="col-3 col--819281 br-001 ">
-                                                    <div class="destination-img">
-                                                        <img src="images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg"
-                                                            class="img-fluid" alt="">
-                                                        <div class="destinatios-cntay--00">
-                                                            <p class="mb-0">Austria</p>
-                                                            <p class="mb-0">#loveluxuryAustria</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-9 col--71812 h-100">
-                                                    <div class="row h-100">
-                                                        <div class="col-3 col--98121 br-001 h-100">
-                                                            <nav class="nav flex-column nav-dest">
-                                                                <a class="nav-link " href="#klagen" data-toggle="tab"
-                                                                    role="tab">Klagenfurt</a>
-                                                                <a class="nav-link active" href="#sankt"
-                                                                    data-toggle="tab" role="tab">Sankt
-                                                                    Veit</a>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-4 col--9819281">
-                                                            <div class="tab-content">
-                                                                <div class="tab-pane fade show active" id="klagen">
-                                                                    <div class="destination-img">
-                                                                        <img src="images/53511811337-49267444221.jpg"
-                                                                            class="img-fluid" alt="">
-                                                                        <div class="destinatios-cntay--00">
-                                                                            <p class="mb-0">
-                                                                                Klagenfurt</p>
-                                                                            <p class="mb-0">
-                                                                                #loveluxuryKlagenfurt
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="sankt">
-                                                                    <div class="destination-img">
-                                                                        <img src="images/97678356576-24898814906.jpg"
-                                                                            class="img-fluid" alt="">
-                                                                        <div class="destinatios-cntay--00">
-                                                                            <p class="mb-0">Sankt
-                                                                            </p>
-                                                                            <p class="mb-0">
-                                                                                #loveluxurysankt
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                        <div class="tab-pane fade" id="northenEurope">
-                            <div class="row">
-                                <div class="col-2 col--1223 br-001">
-                                    <nav class="nav flex-column nav-dest">
-                                        <a class="nav-link active" href="#estonia" data-toggle="tab"
-                                            role="tab">Estonia</a>
-                                        <a class="nav-link" href="#latvia" data-toggle="tab" role="tab">Latvia</a>
-                                    </nav>
-                                </div>
-                                <div class="col-10 col--12929">
-                                    <div class="tab-content h-100">
-                                        <div class="tab-pane fade show active h-100" id="estonia">
-                                            <div class="row h-100">
-                                                <div class="col-3 col--819281 br-001 ">
-                                                    <div class="destination-img">
-                                                        <img src="images/Emporium-Collection_129.jpg" class="img-fluid"
-                                                            alt="">
-                                                        <div class="destinatios-cntay--00">
-                                                            <p class="mb-0">Estonia</p>
-                                                            <p class="mb-0">#loveluxuryestonia</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-9 col--71812 h-100">
-                                                    <div class="row h-100">
-                                                        <div class="col-3 col--98121 br-001 h-100">
-                                                            <nav class="nav flex-column nav-dest">
-                                                                <a class="nav-link " href="#frankfurt" data-toggle="tab"
-                                                                    role="tab">Tallinn</a>
-                                                                <a class="nav-link active" href="#hamburg"
-                                                                    data-toggle="tab" role="tab">Tartu</a>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-4 col--9819281">
-                                                            <a href="#destinationSection" data-scroll>
-                                                                <div class="destination-img">
-                                                                    <img src="images/e8150591299245.5e2eb7c1e4d56.jpg"
-                                                                        class="img-fluid" alt="">
-                                                                    <div class="destinatios-cntay--00">
-                                                                        <p class="mb-0">Tallinn</p>
-                                                                        <p class="mb-0">
-                                                                            #loveluxuryhumburg</p>
-                                                                    </div>
-                                                                </div>
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="tab-pane fade h-100" id="latvia">
-                                            <div class="row h-100">
-                                                <div class="col-3 col--819281 br-001 ">
-                                                    <div class="destination-img">
-                                                        <img src="images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg"
-                                                            class="img-fluid" alt="">
-                                                        <div class="destinatios-cntay--00">
-                                                            <p class="mb-0">Austria</p>
-                                                            <p class="mb-0">#loveluxuryAustria</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="col-9 col--71812 h-100">
-                                                    <div class="row h-100">
-                                                        <div class="col-3 col--98121 br-001 h-100">
-                                                            <nav class="nav flex-column nav-dest">
-                                                                <a class="nav-link " href="#klagen" data-toggle="tab"
-                                                                    role="tab">Klagenfurt</a>
-                                                                <a class="nav-link active" href="#sankt"
-                                                                    data-toggle="tab" role="tab">Sankt
-                                                                    Veit</a>
-                                                            </nav>
-                                                        </div>
-                                                        <div class="col-4 col--9819281">
-                                                            <div class="tab-content">
-                                                                <div class="tab-pane fade show active" id="klagen">
-                                                                    <div class="destination-img">
-                                                                        <img src="images/53511811337-49267444221.jpg"
-                                                                            class="img-fluid" alt="">
-                                                                        <div class="destinatios-cntay--00">
-                                                                            <p class="mb-0">
-                                                                                Klagenfurt</p>
-                                                                            <p class="mb-0">
-                                                                                #loveluxuryKlagenfurt
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="tab-pane fade" id="sankt">
-                                                                    <div class="destination-img">
-                                                                        <img src="images/97678356576-24898814906.jpg"
-                                                                            class="img-fluid" alt="">
-                                                                        <div class="destinatios-cntay--00">
-                                                                            <p class="mb-0">Sankt
-                                                                            </p>
-                                                                            <p class="mb-0">
-                                                                                #loveluxurysankt
-                                                                            </p>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php echo $destinationTabContent;?>
         <!-- Europe tab content End -->
 
         <div class="tab-pane fade" id="indian">

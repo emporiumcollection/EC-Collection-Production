@@ -9,11 +9,13 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Validator, Input, Redirect ;
-
+use App\Models\categories;
+use App\Http\Traits\Category;
 
 abstract class Controller extends BaseController {
 
 	use DispatchesJobs, ValidatesRequests;
+	use Category;
     
     var $is_public = true;
 	public function __construct()
@@ -30,6 +32,8 @@ abstract class Controller extends BaseController {
 		->where('category_published', 1)
 		->where('parent_category_id', 8)
 		->get();
+
+		$this->data['destinationMenu'] = $this->destinationTree();
 
 		$this->middleware('ipblocked');
 		
@@ -748,4 +752,3 @@ abstract class Controller extends BaseController {
     }
     
 }
-

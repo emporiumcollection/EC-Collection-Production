@@ -29,6 +29,7 @@
                                 <?php 
                                 $spanid = 1;
                                 $grid = 1;
+                                if(!empty($photos->results)):
                                 foreach($photos->results as $photo):?>
                                 <a href="<?php echo $photo->urls->regular; ?>"
                                     data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-<?php echo $grid;?> span-<?php echo $spanid;?>">
@@ -37,7 +38,8 @@
                                 <?php 
                                 $spanid=2;
                                 $grid++;
-                                endforeach;?>
+                                endforeach;
+                                endif;?>
                             </div>
                         </div>
                     </div>

@@ -2871,6 +2871,7 @@ class PropertyController extends Controller {
         }else{
             $us = new UnsplashSearch();
             $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+            Cache::store('file')->put($cacheKey, $photos, 100000);
         }
         $this->data['photos'] = json_decode($photos);
 
