@@ -2865,16 +2865,17 @@ class PropertyController extends Controller {
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
 
-        $cacheKey = 'location_photos'.$keyword;
+/*        $cacheKey = 'location_photos'.$keyword;
         if (Cache::has($cacheKey)) {
             $photos = Cache::get($cacheKey);
         }
-
-        if(empty($photos)){
+*/
+//        if(empty($photos)){
             $us = new UnsplashSearch();
             $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-            Cache::store('file')->put($cacheKey, $photos, 100000);
-        }
+//            Cache::store('file')->put($cacheKey, $photos, 100000);
+//        }
+//        print_r(json_decode($photos));exit;
         $this->data['photos'] = json_decode($photos);
 
         $type = $request->input('type');
