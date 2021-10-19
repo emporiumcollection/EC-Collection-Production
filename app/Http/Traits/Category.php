@@ -7,8 +7,8 @@ use App\Models\Categories;
 trait Category {
     private $VOYAGE_ROOT_DESTINATIONS = [38, 39, 40, 41, 42, 43, 44, 64];
     private $SPA_ROOT_DESTINATIONS = [38, 39, 40, 41, 42, 43, 44, 64];
-    private $ISLAND_ROOT_DESTINATIONS = [38, 39, 40, 41, 42, 43, 44, 64];
-    private $SAFARI_ROOT_DESTINATIONS = [38, 39, 40, 41, 42, 43, 44, 64];
+    private $ISLAND_ROOT_DESTINATIONS = [38, 41, 827, 854, 907, 968, 979, 1004];
+    private $SAFARI_ROOT_DESTINATIONS = [38, 720, 722, 725, 828, 838, 843, 858];
 
     public function destinationTree(){
         $rootCategories = Categories::whereIn('id', $this->VOYAGE_ROOT_DESTINATIONS)
