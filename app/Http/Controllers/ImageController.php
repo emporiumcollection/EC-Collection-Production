@@ -173,10 +173,21 @@ class ImageController extends Controller {
                 $height = $this->width;
             }
 
-            $thumbnail = Image::open($this->file_path)
-                    ->thumbnail(new Imagine\Image\Box($width, $height));
+            //$thumbnail = Image::open($this->file_path)
+            //        ->thumbnail(new Imagine\Image\Box($width, $height));
             //$thumbnail->effects()->grayscale();
-            $thumbnail->save($this->destination_path);
+
+            $canvas = Image::canvas($this->width, $this->height);
+            $image  = Image::make($this->file_path)
+            ->resize($width, $height, function($constraint)
+            {
+                $constraint->aspectRatio();
+            });
+
+            $canvas->insert($image, 'center');
+            $canvas->save($this->destination_path);
+
+            //$thumbnail->save($this->destination_path);
             /*
             Image::make($this->file_path,array(
             'width' => $this->width,
