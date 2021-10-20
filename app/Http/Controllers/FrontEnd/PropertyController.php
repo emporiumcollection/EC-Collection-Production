@@ -2952,15 +2952,15 @@ class PropertyController extends Controller {
         $this->data['categoryInfo'] = $objcat;
         $this->data['experiences'] = $exp;
 
-/*        $cities = [];
+        $cities = [];
         $this->getCities($keyword, $cities);
         if(empty($cities)){
             $cities[] = $keyword;
         }
-*/
+
         if($request->get('view') != 'map'){
             //Get editor's choice properties
-            $this->data['editorsProperties'] = $this->getEditorChoiceProperties($keyword);
+            $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities);
 
             if(!empty($this->data['editorsProperties']->toArray())){
                 foreach($this->data['editorsProperties'] as $k => $editorProperty){
@@ -2971,7 +2971,7 @@ class PropertyController extends Controller {
             }
 
             //Get featured choice properties
-            $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
+            $this->data['featureProperties'] = $this->getFeaturedProperties($cities);
 
             if(!empty($this->data['featureProperties']->toArray())){
                 foreach($this->data['featureProperties'] as $k => $featureProperty){
@@ -2987,7 +2987,7 @@ class PropertyController extends Controller {
         }
 
         //Get featured choice properties
-        $this->data['propertyResults'] = $this->searchPropertiesByKeyword($keyword);
+        $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities);
 
         if(!empty($this->data['propertyResults']->toArray())){
             foreach($this->data['propertyResults'] as $k => $propertyRecord){
