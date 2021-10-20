@@ -1,3 +1,4 @@
+
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -389,47 +390,53 @@
           <div class="col-lg-3 col-md-4">
             
           @include('frontend.themes.EC.reservation.reservation-summary')
-
-            <div class="reservation-summary section-shadow">
-              <h4>SUITE 1</h4>
-              <p><b>{{ $suites->category_name }}</b></p>
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Guests</td>
-                  <td class="px-0 py-1 text-right">{!! Session::get('Guests') !!}</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Suite</td>
-                  <td class="px-0 py-1 text-right">€4.299.00</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Tax</td>
-                  <td class="px-0 py-1 text-right">€299.00</td>
-                </tr>
-              </table>
-              <hr class="mb-2">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Gourmet Experience</td>
-                  <td class="px-0 py-1 text-right">2</td>
-                </tr>
-              </table>
-              <hr class="mt-2">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Subtotal</td>
-                  <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                </tr>
-              </table>
-            </div>
-            <div class="reservation-total">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Total</td>
-                  <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                </tr>
-              </table>
-            </div>
+          @foreach($suites as $suite)
+            @foreach($suite as $value)
+              <div class="reservation-summary section-shadow">
+                <h4>SUITE 1</h4>
+                <p><b>{{ $value->category_name }}</b></p>
+                <table class="table table-borderless mb-0">
+                  @foreach($selected_suite as $key => $select_suite)
+                    <tr>
+                      <td class="px-0 py-1">Guests</td>
+                      <td class="px-0 py-1 text-right">{{ $key == $value->id ? $select_suite :'' }}</td>
+                    </tr>
+                    
+                  @endforeach
+                  <tr>
+                    <td class="px-0 py-1">Suite</td>
+                    <td class="px-0 py-1 text-right">€4.299.00</td>
+                  </tr>
+                  <tr>
+                    <td class="px-0 py-1">Tax</td>
+                    <td class="px-0 py-1 text-right">€299.00</td>
+                  </tr>
+                </table>
+                <hr class="mb-2">
+                <table class="table table-borderless mb-0">
+                  <tr>
+                    <td class="px-0 py-1">Gourmet Experience</td>
+                    <td class="px-0 py-1 text-right">2</td>
+                  </tr>
+                </table>
+                <hr class="mt-2">
+                <table class="table table-borderless mb-0">
+                  <tr>
+                    <td class="px-0 py-1">Subtotal</td>
+                    <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="reservation-total">
+                <table class="table table-borderless mb-0">
+                  <tr>
+                    <td class="px-0 py-1">Total</td>
+                    <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                  </tr>
+                </table>
+              </div>
+            @endforeach
+          @endforeach  
           </div>
           <div class="col-md-9">
             <div class="text-right">

@@ -75,15 +75,20 @@
                           {{ $suite->room_desc }}
                         </p>
                         <div class="row align-items-center mt-5">
-                          <div class="col-8">
+                          <div class="col-8 guestvalue">
                             <p class="mb-0">From: <b>€1.099 per night</b></p>
                             <p>inclusive of all taxes and fees</p>
                             <?php $i = $suite->total_guests ;?>
-                            <select name="total_guest" id="total_guest" class="form-control">
-                              @for($j = 1;$j <= $i;$j++)  
-                                <option value="total_guest"> {{ $j }}</option>
+                            <input type="hidden" name="select_guest" class="select_guest" id="select_guest" value="">
+
+                            <select name="total_guest" id="select_suite_guest_{{ $suite->id }}" class="form-control select_suite_guest">
+                              <option value="">Select guest(S)</option>
+                              @for($j = 1;$j <= $i;$j++)
+                                @foreach($selected_suite as $selected_suite)  
+                                  <option value="{{ $j }}" {{ $selected_suite ? $selected_suite : '' }}> {{ $j }}</option>
+                                @endforeach
                               @endfor
-                            </select>   
+                            </select>
                           </div>              
                           <div class="col-4">
                             <div class="text-right">      
@@ -107,6 +112,9 @@
                   <td class="px-0 py-1 text-right"></td>
                 </tr>
               </table>
+            </div>
+            <div>
+              <a href="/reservation/suiteboard" class="btn btn-dark  px-4 btn-nextwizard rounded-0 continue_step">Continue</a>
             </div>
           </div>
         </div>

@@ -24,68 +24,71 @@
               <div class="row">
                 <div class="col-md-7">
                   <div class="bg-grey px-3 py-2 mb-3">
-                    <h4>Your booking at <b>{{ $suites->category_name }}</b> in
+                    <h4>Your booking at <b>{!! Session::get('suite_name') !!}</b> in
                       Limone sul Garda, Italy</h4>
-                    <p class="mb-0">Confirm number: {{ $hotel_name }}-{{ $randomnum }}</p>
+                    <p class="mb-0">Confirm number: EC-{{ $hotel_name }}-{{ $randomnum }}</p>
                   </div>
                   
           @include('frontend.themes.EC.reservation.reservation-summary')
-
-                  <div class="reservation-summary section-shadow">
-                    <div class="row align-items-center mb-3">
-                      <div class="col-3 pr-0">
-                        <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}"
-                          class="img-full" alt="">
+                @foreach($suites as $suite)
+                  @foreach($suite as $value)
+                    <div class="reservation-summary section-shadow">
+                      <div class="row align-items-center mb-3">
+                        <div class="col-3 pr-0">
+                          <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}"
+                            class="img-full" alt="">
+                        </div>
+                        <div class="col-9">
+                          <h4>SUITE 1</h4>
+                          <p class="mb-0"><b>{{ $value->category_name }}</b></p>
+                        </div>
                       </div>
-                      <div class="col-9">
-                        <h4>SUITE 1</h4>
-                        <p class="mb-0"><b>{{ $suites->category_name }}</b></p>
-                      </div>
+                      <table class="table table-borderless mb-0">
+                        <tr>
+                          <td class="px-0 py-1">Guests</td>
+                          <td class="px-0 py-1 text-right">{!! Session::get('Guests') !!}</td>
+                        </tr>
+                        <tr>
+                          <td class="px-0 py-1">Suite</td>
+                          <td class="px-0 py-1 text-right">€4.299.00</td>
+                        </tr>
+                        <tr>
+                          <td class="px-0 py-1">Tax</td>
+                          <td class="px-0 py-1 text-right">€299.00</td>
+                        </tr>
+                        <tr>
+                          <td class="px-0 py-1" colspan="2">
+                            <a href="#" class="underline color-grey" type="button" data-toggle="modal"
+                              data-target="#priceModal"><i>Details and
+                                conditions</i></a>
+                          </td>
+                        </tr>
+                      </table>
+                      <hr class="mb-2">
+                      <table class="table table-borderless mb-0">
+                        <tr>
+                          <td class="px-0 py-1">Gourmet Experience</td>
+                          <td class="px-0 py-1 text-right">2</td>
+                        </tr>
+                      </table>
+                      <hr class="mt-2">
+                      <table class="table table-borderless mb-0">
+                        <tr>
+                          <td class="px-0 py-1">Subtotal</td>
+                          <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                        </tr>
+                      </table>
                     </div>
-                    <table class="table table-borderless mb-0">
-                      <tr>
-                        <td class="px-0 py-1">Guests</td>
-                        <td class="px-0 py-1 text-right">{!! Session::get('Guests') !!}</td>
-                      </tr>
-                      <tr>
-                        <td class="px-0 py-1">Suite</td>
-                        <td class="px-0 py-1 text-right">€4.299.00</td>
-                      </tr>
-                      <tr>
-                        <td class="px-0 py-1">Tax</td>
-                        <td class="px-0 py-1 text-right">€299.00</td>
-                      </tr>
-                      <tr>
-                        <td class="px-0 py-1" colspan="2">
-                          <a href="#" class="underline color-grey" type="button" data-toggle="modal"
-                            data-target="#priceModal"><i>Details and
-                              conditions</i></a>
-                        </td>
-                      </tr>
-                    </table>
-                    <hr class="mb-2">
-                    <table class="table table-borderless mb-0">
-                      <tr>
-                        <td class="px-0 py-1">Gourmet Experience</td>
-                        <td class="px-0 py-1 text-right">2</td>
-                      </tr>
-                    </table>
-                    <hr class="mt-2">
-                    <table class="table table-borderless mb-0">
-                      <tr>
-                        <td class="px-0 py-1">Subtotal</td>
-                        <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                      </tr>
-                    </table>
-                  </div>
-                  <div class="reservation-total">
-                    <table class="table table-borderless mb-0">
-                      <tr>
-                        <td class="px-0 py-1">Total</td>
-                        <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                      </tr>
-                    </table>
-                  </div>
+                    <div class="reservation-total">
+                      <table class="table table-borderless mb-0">
+                        <tr>
+                          <td class="px-0 py-1">Total</td>
+                          <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                        </tr>
+                      </table>
+                    </div>
+                  @endforeach
+                @endforeach  
                   <div class="policies" id="policies">
                     <h3>Policies</h3>
                     <div class="card card-body rounded-0">
@@ -174,7 +177,7 @@
                 </div>              
                 <div class="col-md-7">
                   <div class="mb-4">
-                    <a href="/reservation/dashboard" class="btn btn-primary rounded-0 btn-lg btn-block">
+                    <a href="javascript:void();" class="btn btn-primary rounded-0 btn-lg btn-block reserve_data">
                     Get receipt
                   </a>
                   </div>                     

@@ -78,7 +78,9 @@ Route::post('/addresses', 'ReservationsController@addresses');
 Route::post('/addcompanion', 'ReservationsController@addcompanion');
 Route::post('/storeinTosession', 'ReservationsController@storecompanionTosession');
 
-Route::get('/reservation/dashboard', 'ReservationsController@reservationDashboard');
+Route::get('/reservation/receipt', 'ReservationsController@reservationDashboard');
+
+Route::get('/reserve_data', 'ReservationsController@addReservationData');
 
 // Route::post('/users/bookingsummary', 'UserController@bookingsummary');
 
@@ -96,8 +98,10 @@ Route::get('book/reservation', 'PhaseOne\ReservationController@index');
 
 //Datatable route
 Route::get('/users/companiondata', 'DatatableController@getDatatable');
+Route::get('/users/reservations', 'DatatableController@getreservations');
 Route::get('/users/inviteGuest', 'DatatableController@getInviteGuest');
 Route::get('/users/preferenceDatatable', 'DatatableController@getPreferencesData');
+Route::get('/users/reservations', 'DatatableController@getreservation');
 
 /**
  * New Admin backend routes.

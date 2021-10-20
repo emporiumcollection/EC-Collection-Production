@@ -420,10 +420,16 @@ $(function() {
 
 
     $( document ).ready(function() {
-        // var suit_id= new Array();
+
+        var suit_id = new Array();
+        var guest = new Array();
+
         $(document).on('click', ".select_suite", function(){
-            var suit_id = $(this).data('suite-id');
-            // suit_id.push($(this).data('suite-id'));
+
+            var suite_id = $(this).data('suite-id');
+            var selected_guest = $('#select_suite_guest_'+suite_id).val();
+            suit_id.push($(this).data('suite-id'));
+            guest.push(selected_guest);
     
             $.ajax({
                 headers: {
@@ -431,14 +437,49 @@ $(function() {
                 },
                 type: 'POST',            
                 url:'{{URL::to("/suite")}}',
-                data: {suit_id:suit_id },
+                data: { suit_id:suit_id,
+                        guest: guest },
                 dataType:'json',                    
                 success: function(response){
 
                 }
             });
         });
-    });        
+
+        $(document).on('click', ".reserve_data", function(){
+    
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'get',            
+                url:'{{URL::to("/reserve_data")}}',
+                success: function(response){
+                    window.location.href ="/reservation/receipt";
+                }
+            });
+        });
+    });
+
+    $(document).on('click', ".step_where", function(){
+        var arrival_date = $("#arrival_date").val();
+        var departure_date = $("#departure_date").val();
+
+        if ((arrival_date == '') && (departure_date == '')) {
+            alert();
+            $.ajax({
+                type: 'get',            
+                url:'{{URL::to("/reservation/when")}}',                
+                success: function(response){
+
+                    $('#error').html(response);
+                    window.location.href ="/reservation/when";
+                }
+            });            
+        }else{ 
+            window.location.href = "/reservation/where";
+        }        
+    });            
 
     $(document).on('click', ".add_companion", function(){        
         var first_name = $('#comapnion_f_name').val();
@@ -513,7 +554,6 @@ $(function() {
             }
         });
     });
-
 
     $(document).on('click', ".add_address", function(){
 

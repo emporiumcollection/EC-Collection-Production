@@ -40,7 +40,7 @@
             <!--begin::Item-->
             <li class="nav-item mb-3 " data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="Reservations">
-                <a href="{{ URL::to('/reservation/dashboard')}}" class="nav-link btn btn-icon btn-clean btn-lg">
+                <a href="{{ URL::to('/reservation/receipt')}}" class="nav-link btn btn-icon btn-clean btn-lg">
                     <i class="flaticon-calendar"></i>
                 </a>
             </li>

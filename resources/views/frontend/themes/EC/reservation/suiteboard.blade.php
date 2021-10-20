@@ -1,3 +1,4 @@
+
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -17,13 +18,13 @@
     <div class="container ">
 
       @include('frontend.themes.EC.reservation.nav_wizard')
-     
+      
       <div id="step-4" class="tab-pane" role="tabpanel">
         <h2 class="mb-5 d-flex align-items-center">
           <a href="#" class="backwizard btn-backwizard">
             <i class="ico ico-back mr-3"></i>
           </a>
-          Suite Board{{ session(['suit_id' => request()->all()]) }}
+          Suite Board 
         </h2>
       <div class="row">
       <div class="col-lg-9 col-md-8">
