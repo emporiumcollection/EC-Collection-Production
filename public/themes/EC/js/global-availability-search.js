@@ -279,8 +279,8 @@ function replaceSuiteList(id){
 
   });
   setTimeout('appendResultGridSlider()', 2000);    
-  setTimeout("$('#suites-loader').hide();", 2000);
-  setTimeout("$('#suites-popup').show();", 2000);
+  setTimeout("$('#suites-loader').hide();", 4000);
+  setTimeout("$('#suites-popup').show();", 4000);
 }
 
 function replaceSuiteDetail(property_id, category_id){
@@ -312,8 +312,8 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);
   replacePropertyData(property_id);
-  setTimeout("$('#suites-loader').hide();", 2000);
-  setTimeout("$('#suites-popup').show();", 2000);
+  setTimeout("$('#suites-loader').hide();", 4000);
+  setTimeout("$('#suites-popup').show();", 4000);
 }
 
 function replaceSuiteBoard(){
