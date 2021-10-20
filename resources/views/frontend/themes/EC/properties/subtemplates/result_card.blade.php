@@ -4,10 +4,11 @@
 </script>
 <div class="col-lg-6 col-md-6 mb-5 ">
   <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-    <div class="pr-lst result-grid global-search-resultbox">
+
+    <div class="pr-lst result-grid">
       <?php foreach($property->propertyImages as $image):?>
         <div>
-          <img src="<?php echo 'property-image/resize/450x320/'.$property['container']['name'].'/'.$image['file_name'].'/property-image';?>" alt="">
+          <img src="<?php echo 'property-image/resize/615x419/'.$property['container']['name'].'/'.$image['file_name'].'/property-image';?>" class="w-100" alt="">
         </div>
       <?php endforeach;?>
     </div>
@@ -25,14 +26,17 @@
 
     </div>
     <div class="hotel-meta full-width is-small">
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
-        Suite(s)
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
+        Reviews
       </a>
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Quick info
       </a>
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery
+      </a>
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
+        Suite(s)
       </a>
       <div class="hotel-prices hotel-price-detail d-flex">
         <div class="row align-items-center justify-content-center">
@@ -48,7 +52,6 @@
         </div>
 
       </div>
-
     </div>
     <div class="hotel-meta-mobile">
       <a href="detail-page.html" class="btn rounded-0">
