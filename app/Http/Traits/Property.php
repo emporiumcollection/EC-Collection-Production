@@ -71,7 +71,7 @@ trait Property {
         return $parent;
     }
 
-    public function getEditorChoiceProperties($cities){
+    public function getEditorChoiceProperties($keyword){
         return properties::select([
             'id', 
             'property_name', 
@@ -119,14 +119,14 @@ trait Property {
 
                 }])->limit(20);
             }])
-        ->whereIn('city', $cities)
+        ->where('city', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
         //->limit(4)
         ->get();
     }
 
-    public function getFeaturedProperties($cities){
+    public function getFeaturedProperties($keyword){
         return properties::select([
             'id', 
             'property_name', 
@@ -182,14 +182,14 @@ trait Property {
                 }])->limit(20);
             }
         ])
-        ->whereIn('city', $cities)
+        ->where('city', '=', $keyword)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
         //->limit(4)
         ->get();        
     }
 
-    public function searchPropertiesByKeyword($cities){
+    public function searchPropertiesByKeyword($keyword){
         return properties::select([
             'id', 
             'property_name', 
@@ -248,7 +248,7 @@ trait Property {
                 }])->limit(20);
             }
         ])
-        ->whereIn('city', $cities)
+        ->where('city', '=', $keyword)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
         ->where('property_status', '=', 1)
