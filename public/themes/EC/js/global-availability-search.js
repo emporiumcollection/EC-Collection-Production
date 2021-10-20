@@ -222,7 +222,7 @@ function replacePropertySuites(id){
   $('[data-place="property-suites"]').each(function() {
       suiteview += `<li class="nav-item">
           <a class="nav-link" id="suiteslist-tab" data-toggle="pill" href="#suiteslist" role="tab"
-              aria-controls="suiteslist" aria-selected="true">Suites</a>
+              aria-controls="suiteslist" aria-selected="true">All Suites</a>
       </li>`;
       var values = properties[id]['suites'];
       values.forEach(function(e){

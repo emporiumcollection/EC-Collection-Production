@@ -18,10 +18,11 @@
             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="suiteDetail">
                 <a class="dropdown-item btn-sidebar" href="#"
                     data-sidebar="#suiteinfo">Suite Info</a>
-                <a class="dropdown-item btn-sidebar" href="#"
+<!--                <a class="dropdown-item btn-sidebar" href="#"
                     data-sidebar="#reviews">Reviews</a>
                 <a class="dropdown-item btn-sidebar" href="#"
                     data-sidebar="#availability">Availability</a>
+-->
                 <a class="dropdown-item btn-sidebar" href="#"
                     data-sidebar="#myCollection">Add to Collection</a>
                 <a class="dropdown-item btn-sidebar" href="#"
@@ -68,19 +69,20 @@
             </div>
         </a>
         <div class="hotel-meta full-width hotel-meta-details">
-            <a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews">
+            <!--<a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews">
                 Reviews
             </a>
             <a href="#" class="view btn-sidebar i-none" data-sidebar="#availability">
                 Availability
-            </a>
+            </a>-->
             <a href="#" class="view btn-sidebar i-none" data-sidebar="#suiteinfo" onclick="replaceSuiteBoard();">
                 Suite Info
             </a>
-            <div class="hotel-title i-none">
+            <!--<div class="hotel-title i-none">
                 <p class="mb-0 inc">Includes</p>
                 <p class="mb-0">2 Bedrooms</p>
             </div>
+            -->
             <div class="hotel-prices hotel-price-detail d-flex">
                 <div class="row align-items-center justify-content-center">
                     <div class="mr-2">
