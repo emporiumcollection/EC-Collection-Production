@@ -175,7 +175,6 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
         <div class="tab-content pt-5" id="myTabContent">
           <?php if (!empty($propertyResultsForView['lifestyle'])) : ?>
           <div class="tab-pane fade show" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
-            <div class="row">
               <?php
               foreach ($editorsProperties as $editorChoice) :
               ?>
@@ -191,6 +190,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               <?php
               endforeach;
               ?>
+              <div class="row">
               <?php
               foreach ($propertyResultsForView['lifestyle'] as $lifestyleProp) :
               ?>
@@ -199,6 +199,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               <?php
               endforeach;
               ?>
+            </div>
           </div>
           <?php endif; ?>
           <?php if (!empty($propertyResultsForView['dedicated'])) : ?>
@@ -218,6 +219,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               <?php
               endforeach;
               ?>
+              <div class="row">
               <?php
               foreach ($propertyResultsForView['dedicated'] as $lifestyleProp) :
               ?>
@@ -226,6 +228,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               <?php
               endforeach;
               ?>
+            </div>
           </div>
           <?php endif; ?>
           <?php if (!empty($propertyResultsForView['bespoke'])) : ?>
@@ -245,6 +248,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               <?php
               endforeach;
               ?>
+              <div class="row">
               <?php
               foreach ($propertyResultsForView['bespoke'] as $lifestyleProp) :
               ?>
