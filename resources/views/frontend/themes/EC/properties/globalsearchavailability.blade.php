@@ -115,7 +115,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
                 </h2>
               </div>
               <div class="pl-4 pt-3">
-                <?php print count($propertyResultsForView['lifestyle']) + count($propertyResultsForView['bespoke']) + count($propertyResultsForView['dedicated']); ?> exceptional hotels</p> exceptional hotels
+                <?php print count($propertyResultsForView['lifestyle']) + count($propertyResultsForView['bespoke']) + count($propertyResultsForView['dedicated']); ?> exceptional hotels</p>
               </div>
             </div>
           </div>
@@ -128,7 +128,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               foreach ($path as $cid => $cat) : 
               ?>
                 <li class="nav-item">
-                  <a class="nav-link" href="#"><?php echo $cat ?></a>
+                  <a class="nav-link" href="/globalsearchavailability?s=<?php echo $cat ?>"><?php echo $cat ?></a>
                 </li>
               <?php 
               //active pr-0

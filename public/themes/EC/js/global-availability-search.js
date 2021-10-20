@@ -239,6 +239,8 @@ function replacePropertySuites(id){
 }
 
 function replaceSuiteList(id){
+  $('#suites-popup').hide();
+  $('#suites-loader').show();
   currentPropertyId = id;
   if(!suiteTemplate){
     suiteTemplate = $('#suiteslist').html();
@@ -273,7 +275,9 @@ function replaceSuiteList(id){
     }
 
   });
-  setTimeout('appendResultGridSlider()', 2000);
+  setTimeout('appendResultGridSlider()', 2000);    
+  setTimeout("$('#suites-loader').hide();", 2000);
+  setTimeout("$('#suites-popup').show();", 2000);
 }
 
 function replaceSuiteDetail(property_id, category_id){

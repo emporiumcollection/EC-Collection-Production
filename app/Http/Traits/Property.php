@@ -71,7 +71,7 @@ trait Property {
         return $parent;
     }
 
-    public function getEditorChoiceProperties($keyword){
+    public function getEditorChoiceProperties($cities){
         return properties::select([
             'id', 
             'property_name', 
@@ -119,14 +119,14 @@ trait Property {
 
                 }])->limit(20);
             }])
-        ->where('city', '=', $keyword)
+        ->whereIn('city', $cities)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
         //->limit(4)
         ->get();
     }
 
-    public function getFeaturedProperties($keyword){
+    public function getFeaturedProperties($cities){
         return properties::select([
             'id', 
             'property_name', 
@@ -182,14 +182,14 @@ trait Property {
                 }])->limit(20);
             }
         ])
-        ->where('city', '=', $keyword)
+        ->whereIn('city', $cities)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
         //->limit(4)
         ->get();        
     }
 
-    public function searchPropertiesByKeyword($keyword){
+    public function searchPropertiesByKeyword($cities){
         return properties::select([
             'id', 
             'property_name', 
@@ -248,7 +248,7 @@ trait Property {
                 }])->limit(20);
             }
         ])
-        ->where('city', '=', $keyword)
+        ->whereIn('city', $cities)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
         ->where('property_status', '=', 1)
@@ -605,6 +605,27 @@ trait Property {
         ->toArray();
 
         return $roomImages;
+    }
+
+    public function getCities($keyword, &$cities){
+        $locations = Categories::select(['id', 'category_name'])
+        ->where('category_name', 'like', "%$keyword%")
+        ->get()
+        ->toArray();
+
+        if(empty($locations)){
+            $cities[] = $keyword;
+        }else{
+            foreach($locations as $location){
+                $childs = Categories::where('parent_category_id', '=', $location['id'])
+                ->get()
+                ->toArray();
+                foreach($childs as $child){
+                    $cities[] = $child['category_name'];
+                    $this->getCities($child['category_name'], $cities);
+                }
+            }
+        }
     }
 
 }

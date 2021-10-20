@@ -1,3 +1,12 @@
+<style type="text/css">
+    .suites-loader{
+        width: 75%;
+        text-align: center;
+        display: inline-block;
+        margin: auto;
+        padding-left: 20%;
+    }
+</style>
 <div class="sidebar-main pt-4" id="suiteside">
     <a href="#" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
@@ -16,12 +25,15 @@
                 <i class="ico ico-back"></i>
             </a>
             <h3 class="title-second title-line mb-0">
-                Your (Pavilion Suite) overview:
+                Your (<span data-place="property" data-replace="property_short_name"></span>) overview:
             </h3>
         </div>
 
         <!-- <h3 class="title-second title-line mb-5">The Ludlow Hotel</h3> -->
-        <div class="row h-100">
+        <div class="row h-100" id="suites-loader">
+            <img src="/themes/EC/images/suites-loader.jpg" class="suites-loader">
+        </div>
+        <div class="row h-100" id="suites-popup">
             <div class="col-lg-3">
                 <div class="sidebar-nav-section">
                     <div class="humburger-menu-sidebar">
