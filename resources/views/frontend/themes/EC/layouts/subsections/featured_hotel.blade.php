@@ -27,16 +27,13 @@ if(isset($featureProperties[0])):
 
       </div>
       <div class="hotel-meta full-width">
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-          Reviews
-        </a>
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $featureProperties[0]->id;?>)">
           Quick info
         </a>
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $featureProperties[0]->id;?>)">
           Gallery
         </a>
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $featureProperties[0]->id;?>)">
           Suite(s)
         </a>
         <div class="hotel-prices hotel-price-detail d-flex">
