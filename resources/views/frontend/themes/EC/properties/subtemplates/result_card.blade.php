@@ -32,7 +32,7 @@
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Quick info
       </a>
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery
       </a>
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">

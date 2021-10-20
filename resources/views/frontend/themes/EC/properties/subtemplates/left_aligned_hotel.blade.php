@@ -83,7 +83,7 @@
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">Hotel Info</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#gallery" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">Gallery</a>
+              <a class="nav-link btn-sidebar" href="#" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">Gallery</a>
             </li>
             <li class="nav-item">
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">Suites</a>

@@ -109,13 +109,13 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
                 <i class="ico ico-back"></i>
               </a>
               <div class="title-main pl-0">
-                <h2><span data-toggle="tooltip" title="Your selected destination experience">New York</span> <a
+                <h2><span data-toggle="tooltip" title="Your selected destination experience">{{$keyword}}</span> <a
                     href="#searchF" data-toggle="collapse"><i class="ico ico-reload reload-offset"
                       title="Reset your search result" data-toggle="tooltip"></i></a>
                 </h2>
               </div>
               <div class="pl-4 pt-3">
-                360 exceptional hotels
+                <?php print count($propertyResultsForView['lifestyle']) + count($propertyResultsForView['bespoke']) + count($propertyResultsForView['dedicated']); ?> exceptional hotels</p> exceptional hotels
               </div>
             </div>
           </div>
@@ -124,15 +124,16 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               <li class="nav-item">
                 <a class="nav-link" href="#">Home</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Oceania</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Asia</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link active pr-0" href="#">The Americas</a>
-              </li>
+              <?php 
+              foreach ($path as $cid => $cat) : 
+              ?>
+                <li class="nav-item">
+                  <a class="nav-link" href="#"><?php echo $cat ?></a>
+                </li>
+              <?php 
+              //active pr-0
+              endforeach; 
+              ?>
             </ul>
           </div>
         </div>
@@ -157,8 +158,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
         </div>
         <div class="dropdown dropdown-block mobile-on">
           <button class="btn btn-outline-dark btn-block dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <p><?php print count($propertyResultsForView['lifestyle']) + count($propertyResultsForView['bespoke']) + count($propertyResultsForView['dedicated']); ?> exceptional hotels</p>
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            
           </button>
           <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
             <?php if (!empty($propertyResultsForView['lifestyle'])) : ?>
@@ -199,7 +199,6 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               <?php
               endforeach;
               ?>
-            </div>
           </div>
           <?php endif; ?>
           <?php if (!empty($propertyResultsForView['dedicated'])) : ?>
@@ -227,7 +226,6 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               <?php
               endforeach;
               ?>
-            </div>
           </div>
           <?php endif; ?>
           <?php if (!empty($propertyResultsForView['bespoke'])) : ?>
