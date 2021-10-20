@@ -174,7 +174,7 @@ class ImageController extends Controller {
             }*/
 
             $thumbnail = Image::open($this->file_path)
-                    ->thumbnail(new Imagine\Image\Box($this->width, $this->height), 'outbound')
+                    ->thumbnail(new Imagine\Image\Box($this->width, $this->height), 'outbound');
             //$thumbnail->effects()->grayscale();
             $thumbnail->save($this->destination_path);
             /*
