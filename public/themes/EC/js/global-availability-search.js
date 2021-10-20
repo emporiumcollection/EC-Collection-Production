@@ -34,7 +34,7 @@ function replacePropertyData(id){
       var imgUrl = '';
       values.forEach(function(e){
         imgUrl = '/property-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image';
-        imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file_title + '" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+        imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file_title + '" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid lazy" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -56,7 +56,7 @@ function replacePropertyData(id){
           if(r.images!=undefined){          
             rimages.forEach(function(e){
               imgUrl = '/room-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name;
-              imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+              imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid lazy" alt=""></a>';
               spanid=2;
               grid++;
             });
@@ -88,6 +88,7 @@ function replacePropertyData(id){
   replaceGalleryNames(id);
 
   setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
+  $('.lazy').lazy();
 }
 
 function initializeAllGalleries(){
@@ -144,7 +145,7 @@ function replaceGalleryImages(id, place, list, image_path){
         if(e.gallery.files){          
           e.gallery.files.forEach(function(rgallery){          
             imgUrl = '/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
-            imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+            imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid lazy" alt=""></a>';
             spanid=2;
             grid++;
           });  
@@ -265,7 +266,7 @@ function replaceSuiteList(id){
       suite.rooms[0].images.forEach(function(rm){
         if(onlyThree < 3){        
           roomimages += `<div>
-              <img src="/room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+              <img src="/room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100 lazy" alt="">
             </div>`;  
         }
         onlyThree++; 
@@ -301,7 +302,7 @@ function replaceSuiteDetail(property_id, category_id){
   var roomimages = ``;
   suite.rooms[0].images.forEach(function(rm){
     roomimages += `<div>
-      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid lazy" alt="">
     </div>`;
   });
 
@@ -363,7 +364,7 @@ function replaceRooms(property_id, category_id){
     roomimages = ``;
     r.images.forEach(function(rm){
       roomimages += `<div>
-        <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+        <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100 lazy" alt="">
       </div>`;
     });
     roomview += `<div>
@@ -575,5 +576,9 @@ $(document).ready(function(){
       $('body').css('overflow', 'auto');
       $('.sidebar-overlay').remove();      
     }
+  });
+
+  $(function() {
+      $('.lazy').lazy();
   });
 });

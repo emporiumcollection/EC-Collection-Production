@@ -8,7 +8,7 @@ if(isset($featureProperties[0])):
         <?php foreach($featureProperties[0]->propertyImages as $image):?>
           <div>
             <a href="suite.html">
-              <img src="<?php echo 'property-image/resize/418x285/'.$featureProperties[0]['container']['name'].'/'.$image['file_name'].'/property-image';?>" class="img-fluid" alt="">
+              <img src="<?php echo 'property-image/resize/418x285/'.$featureProperties[0]['container']['name'].'/'.$image['file_name'].'/property-image';?>" class="img-fluid lazy" alt="">
             </a>
           </div>
         <?php endforeach;?>

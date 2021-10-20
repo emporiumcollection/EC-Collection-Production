@@ -37,7 +37,7 @@
       <div class="col-lg-6">
         <div class="hero-item">
           <?php if(!empty($propertyImages)):?>
-            <img src="<?php echo 'property-image/resize/627x627/'.$editorChoice['container']['name'].'/'.$propertyImages[0]['file_name'].'/property-image';?>" alt="">
+            <img src="<?php echo 'property-image/resize/627x627/'.$editorChoice['container']['name'].'/'.$propertyImages[0]['file_name'].'/property-image';?>" class="lazy" alt="">
           <?php endif;?>
           <div class="hero-desc">
             <h4><?php echo $editorChoice->detail_section1_title;?></h4>
@@ -62,7 +62,7 @@
           foreach($propertyImages as $editorImage):?>
             <div class="col-md-6">
               <div class="hero-item">
-                <img src="<?php echo 'property-image/resize/311x311/'.$editorChoice['container']['name'].'/'.$editorImage['file_name'].'/property-image';?>" alt="">
+                <img src="<?php echo 'property-image/resize/311x311/'.$editorChoice['container']['name'].'/'.$editorImage['file_name'].'/property-image';?>" class="lazy" alt="">
               </div>
             </div>
           <?php 
