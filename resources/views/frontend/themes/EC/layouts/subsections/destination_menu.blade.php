@@ -67,6 +67,7 @@ $level4TabTemplate = '<div class="tab-pane fade" id="<!--LEVEL4-CATALIAS-->">
                                     </p>
                                 </div>
                             </div>
+                            <a href="/globalsearchavailability?s=<!--LEVEL4-NAME-->"><button class="btn btn-primary">View <!--LEVEL4-NAME--></button></a>
                         </div>';                    
 ?>
 <div class="desktop-view ">
