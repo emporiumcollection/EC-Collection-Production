@@ -174,7 +174,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
         </div>
         <div class="tab-content pt-5" id="myTabContent">
           <?php if (!empty($propertyResultsForView['lifestyle'])) : ?>
-          <div class="tab-pane fade active" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
+          <div class="tab-pane fade show active" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
             <div class="row">
               <?php
               foreach ($editorsProperties as $editorChoice) :
