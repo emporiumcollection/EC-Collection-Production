@@ -59,7 +59,9 @@
         <div class="row">
           <?php
           $imageNum = 0; 
-          foreach($propertyImages as $editorImage):?>
+          foreach($propertyImages as $pi => $editorImage):
+            if($pi==0) continue;
+          ?>
             <div class="col-md-6">
               <div class="hero-item">
                 <img src="<?php echo 'property-image/resize/311x311/'.$editorChoice['container']['name'].'/'.$editorImage['file_name'].'/property-image';?>" alt="">
