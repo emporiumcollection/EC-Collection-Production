@@ -15,7 +15,6 @@ if(isset($featureProperties[0])):
         break;
         endforeach;
       ?>
-    </div>
   </div>
   <div class="col">
     <div class="fetaruer py-5 pl-2 pr-2">
