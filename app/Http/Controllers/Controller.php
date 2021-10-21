@@ -42,6 +42,9 @@ abstract class Controller extends BaseController {
             Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 100000);
         }
 
+        $this->data['currentdomain'] = config('app.currentdomain');
+
+
 		$this->middleware('ipblocked');
 		
         $driver             = config('database.default');

@@ -115,6 +115,9 @@
         @include('frontend.themes.EC.layouts.sections.header')
     @show
     @yield('content')
+    
+    @include('frontend.themes.EC.layouts.subsections.sidebar_collection')
+
 {{-- Site Base URL --}}
 <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>    
 <script type="text/javascript" src="{{ asset('themes/EC/js/jquery.min.js') }}"></script>

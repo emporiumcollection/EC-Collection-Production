@@ -8,7 +8,7 @@
     <div class="pr-lst result-grid">
       <?php foreach($property->propertyImages as $image):?>
         <div>
-          <img src="<?php echo 'property-image/resize/615x419/'.$property['container']['name'].'/'.$image['file_name'].'/property-image';?>" class="w-100 lazy" alt="">
+          <img src="<?php echo 'property-image/resize/615x419/'.$property['container']['name'].'/'.$image['file_name'].'/property-image';?>" class="w-100" alt="">
         </div>
       <?php endforeach;?>
     </div>

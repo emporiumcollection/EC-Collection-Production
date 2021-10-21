@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\Models\properties;
 use App\Http\Traits\Property;
+use App\Http\Traits\Category;
 use App\Models\amenities;
 use DB,Validator, Input, Redirect, CustomQuery, Image;
 use UnsplashSearch;
@@ -18,6 +19,7 @@ use Cache;
 class PropertyController extends Controller {
     // Uses Property trait
     use Property;
+    use Category;
 
     var $pckages_id = array();
     var $pckages_ids = array();
@@ -2865,17 +2867,19 @@ class PropertyController extends Controller {
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
 
-/*        $cacheKey = 'location_photos'.$keyword;
+        /*
+        $cacheKey = 'location_photos'.$keyword;
         if (Cache::has($cacheKey)) {
             $photos = Cache::get($cacheKey);
         }
-*/
-//        if(empty($photos)){
+
+        if(empty($photos)){
             $us = new UnsplashSearch();
             $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-//            Cache::store('file')->put($cacheKey, $photos, 100000);
-//        }
-//        print_r(json_decode($photos));exit;
+            Cache::store('file')->put($cacheKey, $photos, 100000);
+        }
+        */
+        $photos = '{}';
         $this->data['photos'] = json_decode($photos);
 
         $type = $request->input('type');
@@ -3002,8 +3006,7 @@ class PropertyController extends Controller {
                     }
                 }
                 if(isset($propertyRecord->container) && $propertyRecord->container){
-                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);   
-                    //$this->data['propertyResults'][$k]->folder = $propertyRecord->container;
+                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
                 }else{
                     $this->data['propertyResults'][$k]->propertyImages = [];
                 }
@@ -3011,8 +3014,8 @@ class PropertyController extends Controller {
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
 
-//        print_r($this->data['propertyResults']->toArray());exit;
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
+        $this->data['trendingFilters'] = $this->getTrendingFilters();
 
         $membershiptype = '';
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
@@ -3031,7 +3034,6 @@ class PropertyController extends Controller {
         $this->data['query_str'] = $query_str;
         $this->data['layout_type'] = 'old';
         $this->data['view'] = $request->get('view');
-        // dump($this->data); die;
 
         if($request->get('view') == 'map'){
             $this->data['propertyResultsForMap'] = $this->formatRecordsMap($this->data['propertyResults']);

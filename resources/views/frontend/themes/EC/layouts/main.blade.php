@@ -119,7 +119,7 @@
 </head>
 <body>
     @include('frontend.themes.EC.layouts.sections.preloader')
-
+    @include('frontend.themes.EC.layouts.subsections.sidebar_collection')
     <!--@include('frontend.themes.EC.layouts.sections.preloader')-->
 
     @if(isset($layout_type) && $layout_type == 'old')

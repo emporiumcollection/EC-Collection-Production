@@ -144,7 +144,7 @@ function replaceGalleryImages(id, place, list, image_path){
         if(e.gallery.files){          
           e.gallery.files.forEach(function(rgallery){          
             imgUrl = '/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
-            imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid lazy" alt=""></a>';
+            imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
             spanid=2;
             grid++;
           });  
@@ -301,7 +301,7 @@ function replaceSuiteDetail(property_id, category_id){
   var roomimages = ``;
   suite.rooms[0].images.forEach(function(rm){
     roomimages += `<div>
-      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid lazy" alt="">
+      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
     </div>`;
   });
 
@@ -568,16 +568,20 @@ $(document).ready(function(){
   });
 
   $('body').click(function (e) {
-    console.log(e.target);
     if(!$(e.target).hasClass('sidebar-main') && !$(e.target).parents('div').hasClass('sidebar-main')){
-      console.log('close it');
       $('.sidebar-main').removeClass('show');
       $('body').css('overflow', 'auto');
       $('.sidebar-overlay').remove();      
     }
   });
 
-  $('.lazy').Lazy({
+  $('.city-f').click(function (e) {
+    $('.search-f').trigger("click");
+    $('.where').val($('span',$(this)).html());
+    $('.where').trigger("keyup");
+  });
+
+  /*$('.lazy').Lazy({
       // your configuration goes here
       scrollDirection: 'both',
       effect: 'fadeIn',
@@ -585,5 +589,5 @@ $(document).ready(function(){
       onError: function(element) {
           console.log('error loading ' + element.data('src'));
       }
-  });
+  });*/
 });

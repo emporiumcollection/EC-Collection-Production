@@ -77,6 +77,12 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
+    'currentdomain' => 'voyage',
+    'spadomain' => 'emporium-spa.com',
+    'safaridomain' => 'emporium-safari.com',
+    'islandsdomain' => 'emporium-islands.com',
+    'voyagedomain' => 'emporium-voyage.com',
+    'magazinedomain' => 'emporium-magazine.com',
 
     'key' => env('APP_KEY', 'ASDFASDF12341234ASDFASDF12341234'),
     

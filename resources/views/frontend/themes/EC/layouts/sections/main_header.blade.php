@@ -12,13 +12,10 @@
                 aria-controls="searchF">
                 <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
               </a>
-              <a href="#cityList" class="menu-nav text-menu city-f" data-toggle="collapse" role="button"
-                aria-expanded="false" aria-controls="cityList">
-                <!-- <span class="label-city" style="background: green;"></span>  -->
+              <a href="#cityList" class="menu-nav text-menu city-f">
                 <span data-toggle="tooltip" title="Change destination">{{$keyword}}</span>
               </a>
-              <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false"
-                aria-controls="calcF">
+              <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
                 <span class="cal-date" data-toggle="tooltip" title="Change availability">{{ date("M d",strtotime($arrive)) }} - {{ date("M d",strtotime($departure)) }}</span>
               </a>
               <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
@@ -34,7 +31,7 @@
             </div>
           </div>
           <div class="col-md-2 col-4 text-center">
-            <a href="#">
+            <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
               <i class="t-logo logo-2"></i>
             </a>
           </div>
@@ -361,7 +358,7 @@
     <div class="px-4 pt-2">
       <div class="row">
         <div class="col-4 mobile-off">
-          <a href="#">
+          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
             <i class="t-logo logo-2"></i>
           </a>
         </div>
@@ -439,31 +436,41 @@
   <div class="menunav-group">
     <div class="collapse clp dash-clp" id="dashF" data-parent="#menunav">
       <div class="drop-grid">
-        <a href="#">
+        <?php if($currentdomain != 'voyage'):?>
+        <a href="https://emporium-voyage.com/globalsearchavailability?s=<?php echo $keyword;?>">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-building mr-2"></i> <span>Voyage</span>
           </div>
         </a>
-        <a href="#">
+        <?php endif;?>
+        <?php if($currentdomain != 'safari'):?>
+        <a href="https://emporium-safari.com/globalsearchavailability?s=<?php echo $keyword;?>">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-safari mr-2"></i> <span>Safari</span>
           </div>
         </a>
-        <a href="#">
+        <?php endif;?>
+        <?php if($currentdomain != 'spa'):?>
+        <a href="https://emporium-spa.com/globalsearchavailability?s=<?php echo $keyword;?>">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-spa-i mr-2"></i> <span>Spa</span>
           </div>
         </a>
-        <a href="#">
+        <?php endif;?>
+        <?php if($currentdomain != 'islands'):?>
+        <a href="https://emporium-islands.com/globalsearchavailability?s=<?php echo $keyword;?>">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-islands mr-2"></i> <span>Islands</span>
           </div>
         </a>
-        <a href="#">
+        <?php endif;?>
+        <?php if($currentdomain != 'golf'):?>
+        <a href="https://emporium-golf.com/globalsearchavailability?s=<?php echo $keyword;?>">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-golf mr-2"></i> <span>Golf</span>
           </div>
         </a>
+        <?php endif;?>
       </div>
     </div>
     <div class="collapse clp" id="cityList" data-parent="#menunav">
@@ -494,82 +501,9 @@
     </div>
 
     <div class="collapse clp" id="searchF" data-parent="#menunav">
-      <div class="search-field">
-        <div class="row">
-          <div class="col">
-            <div class="input-group align-items-center">
-              <div class="input-group-prepend">
-                <i class="ico ico-search"></i>
-              </div>
-              <input type="text" class="form-control form-control-em border-0 where" id="inlineFormInputGroup"
-                placeholder="Where" autocomplete="off">
-              <div class="clear-btn" id="clear_search">
-                <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <title>Close</title>
-                  <path
-                    d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
-                  </path>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="search-suggest">
-          <div>
-            <h5>Popular Now</h5>
-            <a href="#" class="suggest-item">New York</a>
-            <a href="#" class="suggest-item">London</a>
-            <a href="#" class="suggest-item">Paris</a>
-            <a href="#" class="suggest-item">Hongkong</a>
-            <a href="#" class="suggest-item">Marrakech</a>
-            <a href="#" class="suggest-item">Los Angeles</a>
-          </div>
-          <div>
-            <h5>Inspiration</h5>
-            <a href="#" class="suggest-item">Spa</a>
-            <a href="#" class="suggest-item">Golf</a>
-            <a href="#" class="suggest-item">Beach</a>
-            <a href="#" class="suggest-item">Diving</a>
-            <a href="#" class="suggest-item">Ski</a>
-          </div>
-        </div>
-        <div class="wherepopup">
-          <div class="whereinner">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Map</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Private Jet</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Cuisine</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Channel</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Experiences</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class="search-field">        
+        @include('frontend.themes.EC.minitemplates.filter_bar')
+        @include('frontend.themes.EC.minitemplates.where_popup')
       </div>
     </div>
 
@@ -839,4 +773,3 @@
     </div>
   </div>
 </header>
-
