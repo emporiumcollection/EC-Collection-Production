@@ -151,7 +151,6 @@
 <script src="{{ asset('themes/EC/js/plugin/datepick/jquery.plugin.js') }}"></script>
 <script src="{{ asset('themes/EC/js/plugin/datepick/jquery.datepick.js') }}"></script>
 <script src="{{ asset('themes/EC/js/plugin/mapbox-gl.js') }}"></script>
-
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js') }}"></script>
 </body>
 </html>

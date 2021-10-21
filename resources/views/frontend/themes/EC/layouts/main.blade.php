@@ -174,7 +174,6 @@
 <script type="text/javascript" src="{{ asset('js/color-thief.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/plugin/mapbox-gl.js')}}"></script>
 <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/jquery-3.5.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/leaflet.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/bootstrap.min.js') }}"></script>
