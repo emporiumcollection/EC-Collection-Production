@@ -104,7 +104,7 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4">
                         <div class="kkasdkl">
-                            <img src="{{ asset('themes/EC/images/emporium-islands.jpg') }}" class="img-fluid" alt="">
+                            <img src="{{ asset('themes/EC/images/emporium-Islands.jpg') }}" class="img-fluid" alt="">
                             <span>
                                 <i class="ico ico-islands icon-lg"></i>
                             </span>
