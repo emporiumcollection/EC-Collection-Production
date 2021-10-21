@@ -279,6 +279,9 @@ $level4TabTemplate = '<div class="tab-pane fade" id="<!--LEVEL4-CATALIAS-->">
             </div>
         </div>
     </div>
-
-
 </div>
+<script type="text/javascript">
+    $(function() {
+      $('.lazy').lazy();
+  });
+</script>
