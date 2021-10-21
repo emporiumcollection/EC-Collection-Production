@@ -578,7 +578,13 @@ $(document).ready(function(){
     }
   });
 
-  $(function() {
-      $('.lazy').lazy();
+  $('.lazy').Lazy({
+      // your configuration goes here
+      scrollDirection: 'both',
+      effect: 'fadeIn',
+      visibleOnly: true,
+      onError: function(element) {
+          console.log('error loading ' + element.data('src'));
+      }
   });
 });
