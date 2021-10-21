@@ -1164,8 +1164,13 @@ var ajaxReq = 'ToCancelPrevReq';
   $('.close-header').click(function(e){
     e.preventDefault()
     $('.collapse').collapse('hide');
-  })
-  
+  });
+
+  $('#clear_search').click(function(){
+    $(this).closest('.search-field').find('.where').val("");
+    $('#searchF').collapse('hide')
+  });
+
   var clHeight = $('#cityList').height();
   $('#cityList').on('shown.bs.collapse', function () {
     $('.onstick').css({
