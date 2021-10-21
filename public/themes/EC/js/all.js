@@ -1161,6 +1161,11 @@ var ajaxReq = 'ToCancelPrevReq';
     });
   });
 
+  $('.close-header').click(function(e){
+    e.preventDefault()
+    $('.collapse').collapse('hide');
+  })
+  
   var clHeight = $('#cityList').height();
   $('#cityList').on('shown.bs.collapse', function () {
     $('.onstick').css({
