@@ -115,6 +115,7 @@
     @endif
 
     <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('themes/EC/js/jquery.lazy.js') }}"></script>
 </head>
 <body>
     @include('frontend.themes.EC.layouts.sections.preloader')
@@ -207,7 +208,6 @@
 <script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reservation.js') }}"></script>
-<script type="text/javascript" src="{{ asset('themes/EC/js/jquery.lazy.js') }}"></script>
 
 @section('custom_js')
     @parent
