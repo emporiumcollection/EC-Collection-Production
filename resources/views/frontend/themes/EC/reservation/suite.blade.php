@@ -1,3 +1,4 @@
+
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -78,16 +79,16 @@
                           <div class="col-8 guestvalue">
                             <p class="mb-0">From: <b>€1.099 per night</b></p>
                             <p>inclusive of all taxes and fees</p>
-                            <?php $i = $suite->total_guests ;?>
+                            <?php $i = $suites[0]->suites[0]->total_guests; ?>
                             <input type="hidden" name="select_guest" class="select_guest" id="select_guest" value="">
 
                             <select name="total_guest" id="select_suite_guest_{{ $suite->id }}" class="form-control select_suite_guest">
                               <option value="">Select guest(S)</option>
-                              @for($j = 1;$j <= $i;$j++)
-                                @foreach($selected_suite as $selected_suite)  
-                                  <option value="{{ $j }}" {{ $selected_suite ? $selected_suite : '' }}> {{ $j }}</option>
-                                @endforeach
-                              @endfor
+                              @foreach($selected_suite as $select_suite)
+                                @for($j = 1;$j <= $i;$j++)      
+                                  <option value="{{ $j }}"{{ $select_suite == $j ? "selected" : $j }}>{{ $j }}</option>
+                                @endfor
+                              @endforeach                                
                             </select>
                           </div>              
                           <div class="col-4">

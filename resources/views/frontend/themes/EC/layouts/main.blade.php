@@ -471,7 +471,6 @@ $(function() {
                 type: 'get',            
                 url:'{{URL::to("/reservation/when")}}',                
                 success: function(response){
-
                     $('#error').html(response);
                     window.location.href ="/reservation/when";
                 }

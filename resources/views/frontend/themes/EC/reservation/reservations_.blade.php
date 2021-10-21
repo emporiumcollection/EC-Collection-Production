@@ -3793,13 +3793,18 @@ License: You must have a valid license purchased only from themeforest(the above
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 mb-4">
+                                                            <?php $pos=1 ?>
+
+                                                            @foreach($suites[0] as $value)
                                                             <div class="reservation-summary section-shadow">
-                                                          <h4>SUITE 1</h4>
-                                                          <p><b>{!! Session::get('Guests') !!}</b></p>
+                                                          <h4>SUITE &nbsp; {{ $pos++ }}</h4>
+                                                          <p><b>{{ $value['category_name']}}</b></p>
                                                           <table class="table table-borderless mb-0">
                                                             <tr>
                                                               <td class="px-0 py-1">Guests</td>
-                                                              <td class="px-0 py-1 text-right">2</td>
+                                                              @foreach($selected_suite as $key => $select_suite)
+                                                              <td class="px-0 py-1 text-right">{{ $key == $value['id'] ?  $select_suite : ''}}</td>
+                                                            @endforeach
                                                             </tr>
                                                             <tr>
                                                               <td class="px-0 py-1">Suite</td>
@@ -3833,6 +3838,8 @@ License: You must have a valid license purchased only from themeforest(the above
                                                             </tr>
                                                           </table>
                                                         </div>
+                                                        @endforeach
+                                                        
                                                         </div>
                                                     </div>
                                                 </div>

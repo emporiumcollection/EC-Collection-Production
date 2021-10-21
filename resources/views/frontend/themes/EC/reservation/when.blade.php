@@ -24,7 +24,7 @@
           <h2 class="mb-5">Your date and suite</h2>
           <hr>
           <h5 class="mb-4 mt-5">Your selected dates include: </h5>
-          <div class="alert alert-danger alert-dismissible fade show">
+          <div class="alert alert-danger alert-dismissible fade error">
               <button type="button" class="close" data-dismiss="alert">&times;</button>
               <span id="error">Please Select arrival and departure date</span>
             </div>

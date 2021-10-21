@@ -78,7 +78,7 @@ Route::post('/addresses', 'ReservationsController@addresses');
 Route::post('/addcompanion', 'ReservationsController@addcompanion');
 Route::post('/storeinTosession', 'ReservationsController@storecompanionTosession');
 
-Route::get('/reservation/receipt', 'ReservationsController@reservationDashboard');
+Route::get('/reservation/receipt', 'ReservationsController@reservationList');
 
 Route::get('/reserve_data', 'ReservationsController@addReservationData');
 
