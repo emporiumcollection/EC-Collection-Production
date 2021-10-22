@@ -447,8 +447,6 @@ $(function() {
         });
 
         $(document).on('click', ".reserve_data", function(){
->>>>>>> 8a6a1557f0db6196e0e6ab67268263c2227fb75e
-    
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
