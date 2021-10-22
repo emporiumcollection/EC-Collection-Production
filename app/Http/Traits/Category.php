@@ -13,7 +13,9 @@ trait Category {
     private $parents = [];
 
     public function destinationTree(){
-        $rootCategories = Categories::whereIn('id', $this->VOYAGE_ROOT_DESTINATIONS)
+        $rootCategories = Categories::select(['id', 'parent_category_id', 'category_name', 'category_image', 'category_instagram_tag', 'category_alias'])
+        ->whereIn('id', $this->VOYAGE_ROOT_DESTINATIONS)
+        ->where('is_hotels_available', '=', 1)
         ->orderBy('category_order_num', 'asc')
         ->get()
         ->toArray();
@@ -26,7 +28,9 @@ trait Category {
     }
 
     private function getCategoryChild($parent_id){
-        $categories = Categories::where('parent_category_id', '=', $parent_id)
+        $categories = Categories::select(['id', 'parent_category_id', 'category_name', 'category_image', 'category_instagram_tag', 'category_alias'])
+        ->where('parent_category_id', '=', $parent_id)
+        ->where('is_hotels_available', '=', 1)
         ->orderBy('category_order_num', 'asc')
         ->get()
         ->toArray();

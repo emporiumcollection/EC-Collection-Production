@@ -36,11 +36,12 @@ abstract class Controller extends BaseController {
 
         $cacheKey = 'destinationsmenu';
         if (Cache::has($cacheKey)) {
-            $this->data['destinationMenu'] = Cache::get($cacheKey);
+//            $this->data['destinationMenu'] = Cache::get($cacheKey);
         }else{
-			$this->data['destinationMenu'] = $this->destinationTree();
-            Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 100000);
+//			$this->data['destinationMenu'] = $this->destinationTree();
+//            Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 100000);
         }
+		$this->data['destinationMenu'] = $this->destinationTree();
 
         $this->data['currentdomain'] = config('app.currentdomain');
 

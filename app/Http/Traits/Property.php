@@ -630,8 +630,16 @@ trait Property {
 
     public function storeSession($adults, $childs,
         $arrive_date,$departure_date){
-        $adult = $adults[0];
-        $child = $childs[0];
+
+        $adult = 0;
+        $child = 0;
+        if(isset($adults[0])){
+            $adult = $adults[0];
+        }
+        if(isset($childs[0])){
+            $child = $childs[0];
+        }
+        
         $Guests = $adult + $child; 
         \session()->put('adult',$adult);
         \session()->put('suites',4);          
