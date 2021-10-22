@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <html lang="">
-
-<head>
-    
+<head>    
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Emporium</title>
-
   <meta name="msapplication-tap-highlight" content="no">
-
   <!-- Web Application Manifest -->
   <link rel="manifest" href="manifest.json">
-
   <link rel="stylesheet" href="{{ asset('assets/css/css/styles.css')}}">
-
+  <script type="text/javascript">
+    function validate(){
+        alert('here');return false;
+    }
+  </script>
 </head>
 
 <body class="auth-container">
@@ -41,7 +40,7 @@
                         </div>
                     @endif
 
-                    <form method="post" action="/sendinvitation" onsubmit="return validateform()" name = "form">
+                    <form method="post" action="/sendinvitation" onsubmit="return validateform()" name="form">
                         <div class="mt-5 mb-3">
                             <h3 class="font-2 mb-4">Invite companion </h3>
 
@@ -135,10 +134,8 @@
             minimumResultsForSearch: -1
 
         });
-
         $(document).ready(function() {
-            $(".send").click(function (e) { 
-                alert();
+            $(".send").click(function (e) {
                 $("input").focusout(function() { 
                     if($(this).val()=='') { 
                         $(this).css('border', 'solid 2px red');

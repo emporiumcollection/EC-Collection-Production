@@ -44,8 +44,9 @@
                         </div>
                         <div class="form-group">                  
                             <label class="font-2 label-2">{{ Lang::get('core.email') }}</label>
-                            <input type="text" name="email" class="form-control" placeholder="First name">
+                            <input type="text" name="email" class="form-control" placeholder="Email">
                         </div>
+                        
                         <div class="form-group">
                             <label class="font-2 label-2">Password</label>
                             <input type="password" name="password" class="form-control" placeholder="Password">

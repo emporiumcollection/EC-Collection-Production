@@ -41,7 +41,7 @@ class UserController extends Controller {
 
     public function EmailInvitation(Request $request)
     {
-        // echo "<pre>";print_r($m);exit;
+        // echo "<pre>";print_r($request->all());exit;
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -61,7 +61,7 @@ class UserController extends Controller {
             }
             return Redirect::to('dashboard');
         }
-        return Redirect::to('/sendinvitation');
+        return Redirect::to('/invitecompanion');
     }
 
     public function postCreate(Request $request) {
@@ -726,7 +726,7 @@ class UserController extends Controller {
     }
     
     public function postSavetravellerprofile(Request $request) {
-       // echo"<pre>";print_r($request->all());exit;   
+        
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -744,6 +744,9 @@ class UserController extends Controller {
         if ($validator->passes()) { 
             
             if (!is_null($request->profile_avatar)) {
+
+                $newfilename = "";
+
                 $file = $request->profile_avatar;
                 
                 $image_name = time() . '.' . $file->getClientOriginalExtension();
@@ -752,27 +755,28 @@ class UserController extends Controller {
                 $newfilename = \Session::get('uid') . '.' . $extension;
                 // echo "<pre>";print_r($newfilename);exit(); 
                 $file->move($destinationPath,$newfilename);
-            }
-                
-            $user = User::find(\Session::get('uid'));
-            $user->first_name = $request->input('firstname');
-            $user->last_name = $request->input('lastname');
-            $user->email = $request->input('email');
-            $user->landline_number = $request->input('landline_number');
-            $user->mobile_number = $request->input('mobile_number');
-            $user->gender = $request->input('gender');              
-            $user->prefer_communication_with = $request->input('prefer_communication_with');
-            $user->preferred_currency = $request->preferred_currency;
-            $user->avatar = $newfilename;            
-            $user->save();        
-            //insert contracts
-            //\CommonHelper::submit_contracts($contracts,'sign-up');
-            //End
-            return redirect::to('/users/profile')->with('massage', 'Profile has been saved!');
 
-            // return redirect::to('/users/profile')->with('massage','Profile has been saved!');
+                $user = User::find(\Session::get('uid'));
+                $user->first_name = $request->input('firstname');
+                $user->last_name = $request->input('lastname');
+                $user->email = $request->input('email');
+                $user->landline_number = $request->input('landline_number');
+                $user->mobile_number = $request->input('mobile_number');
+                $user->gender = $request->input('gender');              
+                $user->prefer_communication_with = $request->input('prefer_communication_with');
+                $user->preferred_currency = $request->preferred_currency;
+                $user->avatar = $newfilename;            
+                $user->save();        
+                //insert contracts
+                //\CommonHelper::submit_contracts($contracts,'sign-up');
+                //End
+                return redirect::to('/users/profile')->with('massage', 'Profile has been saved!');
+                }else{
+                    return redirect::to('/users/profile')->with('Errmassage', 'Please uupload your Avator!');   
+                }
+
         } else {
-            return Redirect::to('/users/profile')->with('Errmessage', 'Error Ocured!');
+            return Redirect::to('/users/profile')->with('Errmassage', 'Error Ocured!');
         }
     }
     
@@ -2752,13 +2756,20 @@ class UserController extends Controller {
         exit;
     }
 
-    public function deletePreferences($id){
-        $deleted = \DB::table('tb_personalized_services')
-                    ->where('ps_id','=',$id)
-                    ->delete();
-        return Redirect::to('/dashboard');
+    public function deletePreferences($id)
+    {
+        if (!\Auth::check())
+            return redirect('user/login');
+
+        \DB::table('tb_personalized_services')
+            ->where('ps_id','=',$id)
+            ->delete();
+        
+        return redirect::to('/users/my-preferences')->with('massage','Preference Deleted succesfully!');
     }
     public function editPreferences($id){   
+        if (!\Auth::check())
+            return redirect('user/login');
 
         $data = \DB::table('tb_personalized_services')
         ->select( 
