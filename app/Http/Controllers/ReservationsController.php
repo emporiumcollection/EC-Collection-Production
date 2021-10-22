@@ -302,7 +302,7 @@ class ReservationsController extends Controller {
         $arr = [];
         foreach($suite_id as $suite_id)
         {
-            $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suite_id)->get();
+            $this->data['suites'] = PropertyCategoryTypes::where('id',$suite_id)->get();
             
             $arr[] = $this->data['suites'];
         }
