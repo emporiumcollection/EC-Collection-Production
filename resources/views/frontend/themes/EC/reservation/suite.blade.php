@@ -1,4 +1,3 @@
-
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -31,6 +30,7 @@
             <div class="suite-fasility section-shadow mb-5">
               <h3>ALL STAYS INCLUDE</h3>
               <ul>
+                {{-- {!! preg_replace("/,/", "<br/>", ($suites[0]->always_included)) !!} --}}
                 <li>WiFi</li>
                 <li>Daily bottled water</li>
                 <li>Daily à la carte breakfast</li>
@@ -40,7 +40,7 @@
                 <li>Access to 24 hour business centre</li>
               </ul>
             </div>
-
+        @if(!empty($suites))
           @foreach($suites[0]->suites as $suite)  
             <div class="suite-list section-shadow mb-5">
               <div class="suite-tumb">
@@ -102,7 +102,10 @@
                   </div>
                 </div>
               </div>
-            @endforeach      
+            @endforeach
+            @else
+              <h2>Suite Not found</h2>
+            @endif              
         </div>
           <div class="col-lg-3 col-md-4">
           @include('frontend.themes.EC.reservation.reservation-summary')

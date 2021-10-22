@@ -82,6 +82,11 @@ return [
     
     'cipher' => 'AES-256-CBC',
 
+    'EmporiumSpa' => 'ES',
+    'EmporiumVoyage' => 'EV',
+    'EmporiumIslands' =>'EI',
+    'EmporiumSafari' => 'ESF',
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration

@@ -397,6 +397,7 @@
             
           @include('frontend.themes.EC.reservation.reservation-summary')
           <?php $pos=1 ?>
+        @if(!empty($suites))          
           @foreach($suites as $suite)
             @foreach($suite as $value)
               <div class="reservation-summary section-shadow">
@@ -433,18 +434,21 @@
                   </tr>
                 </table>
               </div>
-              <div class="reservation-total">
-                <table class="table table-borderless mb-0">
-                  <tr>
-                    <td class="px-0 py-1">Total</td>
-                    <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                  </tr>
-                </table>
-              </div>
             @endforeach
-          @endforeach  
-          </div>
+          @endforeach
+          @else
+            <h2>Suite Not Found</h2>
+        @endif    
+          <div class="reservation-total">
+            <table class="table table-borderless mb-0">
+              <tr>
+                <td class="px-0 py-1">Total</td>
+                <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+              </tr>
+            </table>
+          </div>  
         </div>
+      </div>
   </div>
 </div>
 </div>
