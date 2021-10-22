@@ -41,6 +41,8 @@ $level2TabTemplate = '<div class="tab-pane fade show h-100" id="<!--LEVEL3-CATAL
                                         <p class="mb-0"><!--LEVEL3-TAG--></p>
                                     </div>
                                 </div>
+                                <a href="/globalsearchavailability?s=<!--LEVEL3-NAME-->">   <button class="btn btn-primary" style="width:100%; margin-top:10px;">View <!--LEVEL3-NAME--> Collection</button>
+                                </a>
                             </div>
                             <div class="col-9 col--71812 h-100">
                                 <div class="row h-100">
@@ -67,7 +69,7 @@ $level4TabTemplate = '<div class="tab-pane fade" id="<!--LEVEL4-CATALIAS-->">
                                     </p>
                                 </div>
                             </div>
-                            <a href="/globalsearchavailability?s=<!--LEVEL4-NAME-->"><button class="btn btn-primary">View <!--LEVEL4-NAME--></button></a>
+                            <a href="/globalsearchavailability?s=<!--LEVEL4-NAME-->"><button class="btn btn-primary" style="width:100%; margin-top:10px;">View <!--LEVEL4-NAME--> Collection</button></a>
                         </div>';                    
 ?>
 <div class="desktop-view ">
