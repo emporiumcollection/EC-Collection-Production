@@ -1,3 +1,4 @@
+var SHOW_PARENT_CITIES = 0;
 var ajaxReq = 'ToCancelPrevReq';
 (function ($) {
 
@@ -474,7 +475,7 @@ var ajaxReq = 'ToCancelPrevReq';
     var _token = $('meta[name="csrf-token"]').attr('content');
     $('.ico-reload').show();
     ajaxReq = $.ajax({
-        url: BaseURL + '/destination/global-search',
+        url: BaseURL + '/destination/global-search?showParent=' + SHOW_PARENT_CITIES,
         type: "get",
         dataType: "json",
         data: {'keyword':searcValue, 'sitename':sitename, '_token':_token},

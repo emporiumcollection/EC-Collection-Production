@@ -4,6 +4,7 @@ namespace App\Http\Controllers\FrontEnd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ContainerController;
 use App\Models\Container;
+use App\Models\categories;
 use App\Http\Controllers\Controller;
 use DB,Validator, Input, Redirect;
 
@@ -533,6 +534,7 @@ class DestinationController extends Controller {
     public function getGlobalSearch(Request $request) {
         $keyword = trim($request->keyword);
         $sitename = trim($request->sitename);
+        $showparent = trim($request->showParent);
 
         $res = $respns = array();
         $voyages = array();
@@ -548,10 +550,10 @@ class DestinationController extends Controller {
             $spaconn = "spaconn";
             $islandconn = "islandconn";
 
-            $voyages = $this->_searchDBs($voyageconn, $keyword);
-            $spas = $this->_searchDBs($spaconn, $keyword);
-            $safaris = $this->_searchDBs($safariconn, $keyword);
-            $islands = $this->_searchDBs($islandconn, $keyword);
+            $voyages = $this->_searchDBs($voyageconn, $keyword, $showparent);
+            $spas = $this->_searchDBs($spaconn, $keyword, $showparent);
+            $safaris = $this->_searchDBs($safariconn, $keyword, $showparent);
+            $islands = $this->_searchDBs($islandconn, $keyword, $showparent);
 
             $results['voyage'] = $voyages;
             $results['spa'] = $spas;
@@ -743,7 +745,7 @@ class DestinationController extends Controller {
         return $folder_tree_array;
     }
 
-    private function _searchDBs($conn, $keyword){
+    private function _searchDBs($conn, $keyword, $showparent){
         $data = [];
         $our_coll_id = '';
         $our_collection = \DB::connection($conn)
@@ -772,6 +774,17 @@ class DestinationController extends Controller {
             $data['collection'] = $fetchcollection;
         }
 
+        $parent_id = 0;
+        if($showparent){
+            $parentCategory = categories::select(['id', 'parent_category_id', 'category_name'])
+            ->where('category_name', '=', $keyword)
+            ->get()
+            ->toArray();
+
+            if(!empty($parentCategory)){
+                $parent_id = $parentCategory[0]['parent_category_id'];
+            }
+        }
 
         $str_des_keyword = 'SELECT 
         tb_categories.id, 
@@ -788,8 +801,12 @@ class DestinationController extends Controller {
         tb_categories.id!='.$our_coll_id.' AND 
         tb_categories.parent_category_id!='.$our_coll_id;
 
-        if($keyword!=''){
-            $str_des_keyword .= " and MATCH (tb_categories.category_name) AGAINST ('\"".trim($keyword)."\"')";
+        if($parent_id && $showparent){
+            $str_des_keyword .= " and tb_categories.parent_category_id = $parent_id";
+        }else{
+            if($keyword!=''){
+                $str_des_keyword .= " and MATCH (tb_categories.category_name) AGAINST ('\"".trim($keyword)."\"')";
+            }
         }
 
         $fetchdestinations =  \DB::connection($conn)

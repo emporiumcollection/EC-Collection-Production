@@ -576,6 +576,7 @@ $(document).ready(function(){
   });
 
   $('.city-f').click(function (e) {
+    SHOW_PARENT_CITIES = 1;
     $('.search-f').trigger("click");
     $('.where').val($('span',$(this)).html());
     $('.where').trigger("keyup");
