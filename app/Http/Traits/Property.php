@@ -1,6 +1,7 @@
 <?php // ./app/Traits/Datatable.php
 
 namespace App\Http\Traits;
+use Illuminate\Http\Request;
 
 use App\Models\PropertyRoomPrices;
 use App\Models\PropertyImages;
@@ -190,7 +191,17 @@ trait Property {
     }
 
     public function searchPropertiesByKeyword($cities){
-        return properties::select([
+        $experience_id = false;
+        if(request()->get('experience')){
+            $experience = categories::select(['id'])
+            ->where('category_alias', '=', request()->get('experience'))
+            ->get()
+            ->toArray();
+
+            $experience_id = $experience[0]['id'];
+        }
+
+        $properties = properties::select([
             'id', 
             'property_name', 
             'property_short_name', 
@@ -251,9 +262,13 @@ trait Property {
         ->whereIn('city', $cities)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
-        ->where('property_status', '=', 1)
-        //->limit(4)
-        ->get();        
+        ->where('property_status', '=', 1);     
+
+        if($experience_id){
+            $properties->where('property_category_id', 'like', "%,$experience_id%");
+        }   
+
+        return $properties->get();
     }
 
     public function formatPropertyRecords(&$properties){
@@ -639,7 +654,7 @@ trait Property {
         if(isset($childs[0])){
             $child = $childs[0];
         }
-        
+
         $Guests = $adult + $child; 
         \session()->put('adult',$adult);
         \session()->put('suites',4);          

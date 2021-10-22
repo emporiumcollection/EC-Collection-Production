@@ -582,6 +582,10 @@ $(document).ready(function(){
     $('.where').trigger("keyup");
   });
 
+  $('.menu-s .dropdown-menu .dropdown-item').on("click",function(){
+    document.location = $(this).attr("href");
+  });
+
   /*$('.lazy').Lazy({
       // your configuration goes here
       scrollDirection: 'both',

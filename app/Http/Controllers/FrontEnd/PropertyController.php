@@ -2953,7 +2953,7 @@ class PropertyController extends Controller {
         $objcat = \DB::table('tb_categories')->where('category_name', '=',$keyword)->where('category_approved', 1)->where('category_published', 1)->first();
         $exp = array();
         if(!empty($objcat)){
-            $query = 'SELECT DISTINCT(category_id), tb_categories.category_name FROM property_categories_split_in_rows JOIN tb_categories ON tb_categories.id= property_categories_split_in_rows.category_id WHERE property_categories_split_in_rows.id IN (SELECT id FROM property_categories_split_in_rows WHERE category_id= '.$objcat->id.' AND property_status=1) AND tb_categories.category_approved=1 AND tb_categories.category_published=1 AND property_categories_split_in_rows.category_id<>'.$objcat->id.' AND property_categories_split_in_rows.category_id<>8 AND tb_categories.parent_category_id=8 ORDER BY property_categories_split_in_rows.category_id ASC';
+            $query = 'SELECT DISTINCT(category_id), tb_categories.category_alias, tb_categories.category_name FROM property_categories_split_in_rows JOIN tb_categories ON tb_categories.id= property_categories_split_in_rows.category_id WHERE property_categories_split_in_rows.id IN (SELECT id FROM property_categories_split_in_rows WHERE category_id= '.$objcat->id.' AND property_status=1) AND tb_categories.category_approved=1 AND tb_categories.category_published=1 AND property_categories_split_in_rows.category_id<>'.$objcat->id.' AND property_categories_split_in_rows.category_id<>8 AND tb_categories.parent_category_id=8 ORDER BY property_categories_split_in_rows.category_id ASC';
             $exp = \DB::select($query);
         }
         $this->data['categoryInfo'] = $objcat;

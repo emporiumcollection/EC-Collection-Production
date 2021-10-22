@@ -38,7 +38,7 @@
             <h2><?php echo $keyword;?> <a href="index.html"><i class="ico ico-reload reload-offset"></i></a></h2>
           </div>
           <div class="col-3 text-right">
-            <a href="main-page.html" class="m-none">
+            <a class="m-none" href="<?php echo str_replace('&view=map','',Request::fullUrl());?>">
               <i class="ico ico-menu-grid mr-2"></i>
             </a>
           </div>

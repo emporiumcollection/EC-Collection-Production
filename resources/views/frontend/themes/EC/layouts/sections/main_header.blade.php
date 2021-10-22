@@ -30,13 +30,13 @@
               </a>
             </div>
           </div>
-          <div class="col-md-2 col-4 text-center">
+          <div class="col-md-5 col-4 text-center">
             <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
               <i class="t-logo logo-2"></i>
             </a>
           </div>
-          <div class="col-md-5 col-4 text-right mobile-flex">
-          <a href="register.html" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
+          <div class="col-md-2 col-4 text-right mobile-flex">
+          <a href="/register" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
             <div class="user-profile-img">
               <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
               <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
@@ -65,7 +65,7 @@
                     $lmenus = [];
                     foreach($menu_experiences as $experience):?>
                         <li class="nav-item">
-                          <a class="nav-link active" href="/globalsearchavailability?experience=<?php echo $experience->category_alias;?>"><?php echo $experience->category_name;?></a>
+                          <a class="nav-link active" href="<?php echo createSearchUrl('experience', $experience->category_alias);?>"><?php echo $experience->category_name;?></a>
                         </li>
                     <?php endforeach;?>
                     </ul>
@@ -120,12 +120,19 @@
               </a>
             </li>
             <li class="nav-item">
+              <?php if(Request::get('view') == 'map'):?>
+              <a class="nav-link" href="<?php echo str_replace('&view=map','',Request::fullUrl());?>">
+                <i class="ico ico-menu-grid mr-2"></i>
+              </a>
+              <?php endif;?>
+              <?php if(!Request::get('view')):?>
               <a class="nav-link" href="<?php echo Request::fullUrl().'&view=map';?>">
                 <i class="ico ico-place"></i>
               </a>
+              <?php endif;?>              
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">
+              <a class="nav-link btn-sidebar" href="#" data-sidebar="#videos">
                 <i class="ico ico-video"></i>
               </a>
             </li>
@@ -148,7 +155,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                 @foreach($experiences as $exp)
-                  <a href="#" class="dropdown-item">{{ $exp->category_name }}</a>
+                  <a href="<?php echo createSearchUrl('experience', $exp->category_alias);?>" class="dropdown-item">{{ $exp->category_name }}</a>
                 @endforeach                
               </div>
             </li>

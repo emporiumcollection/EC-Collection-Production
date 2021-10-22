@@ -43,7 +43,7 @@ if(isset($trendingFilters)):
   ?>
 </div>
 <?php endif;?>
-<div class="wherepopup">
+<div class="wherepopup" style="display:none;">
   <div class="whereinner">
     <div class="row">
       <div class="col-6" id="destisresults">
