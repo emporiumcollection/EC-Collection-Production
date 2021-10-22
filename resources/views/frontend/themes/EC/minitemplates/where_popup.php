@@ -1,3 +1,12 @@
+<style type="text/css">
+  .wherepopup{
+    display: block;
+    overflow: scroll;
+    overflow-x: hidden;
+    min-height: 0px;
+    max-height: 500px;
+  }
+</style>
 <?php 
 if(isset($trendingFilters)):
 ?>

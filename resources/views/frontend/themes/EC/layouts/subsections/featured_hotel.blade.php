@@ -2,7 +2,9 @@
 if(isset($featureProperties[0])):
 ?>
 <div class="row">
-  <div class="col-7 col-lk--0991">
+  <div class="col-7 col-lk--0991" style="padding-left: 0px;">
+      <div class="hotel-tag-label" style="background: #89a49f;">
+      Featured    </div>
       <?php 
         foreach($featureProperties[0]->propertyImages as $image):
       ?>
