@@ -61,16 +61,27 @@ Route::post('/users/CardDetail', 'UserController@userCardDetail');
 Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');
 Route::post('/users/invite', 'UserController@postInvite');
 // Route::get('/users/reservation', 'ReservationsController@getReservation');
+
 Route::get('reservation/when', 'ReservationsController@when');
 Route::get('reservation/where', 'ReservationsController@where');
 Route::get('reservation/suite', 'ReservationsController@suite');
 Route::get('reservation/suiteboard', 'ReservationsController@suiteBoard');
-Route::get('reservation/suitepolicies', 'ReservationsController@suitePolicies');
-Route::get('reservation/aditionalservices', 'ReservationsController@aditionalServices');
+Route::get('policies', 'ReservationsController@Policies');
+Route::get('reservation/services', 'ReservationsController@aditionalServices');
 Route::get('reservation/whoistravelling','ReservationsController@whoistravelling');
 Route::get('reservation/paymentmethod', 'ReservationsController@paymentmethod');
 Route::get('reservation/hotelpolicies', 'ReservationsController@hotelpolicies');
 Route::get('reservation/bookingsummary', 'ReservationsController@bookingsummary');
+Route::post('/suite', 'ReservationsController@selected_suite');
+
+Route::post('/addresses', 'ReservationsController@addresses');
+Route::post('/addcompanion', 'ReservationsController@addcompanion');
+Route::post('/storeinTosession', 'ReservationsController@storecompanionTosession');
+
+Route::get('/reservation/receipt', 'ReservationsController@reservationList');
+
+Route::get('/reserve_data', 'ReservationsController@addReservationData');
+
 // Route::post('/users/bookingsummary', 'UserController@bookingsummary');
 
 /**
@@ -87,8 +98,10 @@ Route::get('book/reservation', 'PhaseOne\ReservationController@index');
 
 //Datatable route
 Route::get('/users/companiondata', 'DatatableController@getDatatable');
+Route::get('/users/reservations', 'DatatableController@getreservations');
 Route::get('/users/inviteGuest', 'DatatableController@getInviteGuest');
 Route::get('/users/preferenceDatatable', 'DatatableController@getPreferencesData');
+Route::get('/users/reservations', 'DatatableController@getreservation');
 
 /**
  * New Admin backend routes.

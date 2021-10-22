@@ -867,6 +867,13 @@
                           <input class="form-qty" type="number" id="1" value="1" min="1" />
                           <button type="button" id="add" class="add btn-qty">+</button>
                         </div>
+                        <div class="field-count-reservation align-items-center qty-button mb-4">
+                          <button type="button" class="min">-</button>
+                          <div class="col text-center">
+                            <span class="mr-1 child-val form-qty">{!! Session::get('children') !!} </span>
+                          </div>
+                          <button type="button" class="plus mr-3">+</button>
+                        </div>
                         <p class="qty-label">€16.00</p>
                       </div>
                       <div class="confirm-qty">
@@ -887,28 +894,7 @@
       </div>
     </div>
     <div class="col-lg-3 col-md-4 mb-4">
-      <div class="reservation-summary">
-        <h4>YOUR RESERVATION</h4>
-        <p><b>Belmond Jimbaran Puri</b></p>
-        <table class="table table-borderless mb-0">
-          <tr>
-            <td class="px-0 py-1">Guests</td>
-            <td class="px-0 py-1 text-right">2 Guests</td>
-          </tr>
-          <tr>
-            <td class="px-0 py-1">Check-in</td>
-            <td class="px-0 py-1 text-right">15 Aug 2020</td>
-          </tr>
-          <tr>
-            <td class="px-0 py-1">Check-out</td>
-            <td class="px-0 py-1 text-right">16 Aug 2020</td>
-          </tr>
-          <tr>
-            <td class="px-0 py-1">Suites</td>
-            <td class="px-0 py-1 text-right">Pavilion suite</td>
-          </tr>
-        </table>
-      </div>
+      @include('frontend.themes.EC.reservation.reservation-summary')
       <div class="reservation-summary section-shadow">
         <div class="row align-items-center mb-3">
           <div class="col-lg-3 pr-0 asd-sad">

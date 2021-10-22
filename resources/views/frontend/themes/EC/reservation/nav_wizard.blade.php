@@ -1,4 +1,4 @@
-<div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
+      <div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
         <div class="block-res-title">
           Reservation Progress
         </div>
@@ -16,7 +16,7 @@
             <span class="" data-id="step-3">4. Suite Board</span>
           </div>
           <div class="nv-wz">
-            <span class="" data-id="step-4">5. Suite Policies</span>
+            <span class="" data-id="step-4">5.Policies</span>
           </div>
           <div class="nv-wz">
             <span class="" data-id="step-5">6. Additional Services</span>
@@ -56,15 +56,15 @@
             </a>
           </li>
           <li>
-            <a class="nav-link {{ Request::is('reservation/suitepolicies') ? 'active' : ''}}" href="/reservation/suitepolicies">
-              Suite Policies
+            <a class="nav-link {{ Request::is('policies') ? 'active' : ''}}" href="/policies">
+              Policies
             </a>
           </li>
-          <li>
-            <a class="nav-link {{ Request::is('reservation/aditionalservices') ? 'active' : ''}}" href="/reservation/aditionalservices">
+         {{--  <li>
+            <a class="nav-link {{ Request::is('reservation/services') ? 'active' : ''}}" href="/reservation/services">
               Additional Services
             </a>
-          </li>
+          </li> --}}
           <li>
             <a class="nav-link {{ Request::is('reservation/whoistravelling') ? 'active' : ''}}" href="/reservation/whoistravelling">
               Who’s travelling
@@ -75,11 +75,11 @@
               Payment Method
             </a>
           </li>
-          <li>
+          {{-- <li>
             <a class="nav-link {{ Request::is('reservation/hotelpolicies') ? 'active' : ''}}" href="/reservation/hotelpolicies">
               Hotel Policies
             </a>
-          </li>
+          </li> --}}
           <li>
             <a class="nav-link {{ Request::is('reservation/bookingsummary') ? 'active' : ''}}" href="/reservation/bookingsummary">
               Booking Summary

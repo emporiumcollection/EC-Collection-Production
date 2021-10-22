@@ -498,7 +498,7 @@
             $("#laxury_traveller").change(function(){
                 $("select option:selected").each(function(){
                     if($(this).attr("value")=="38"){
-                        $("#dedicated").hide();
+                        $("#dedicated").hide(); 
                         $("#bespoke").hide();
                         $("#lifestyle").show();                        
                     }

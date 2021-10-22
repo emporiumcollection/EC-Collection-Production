@@ -1,3 +1,4 @@
+
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -55,7 +56,7 @@
                 <label>Credit/Debit card: </label>
               </div>
               <div class="col-md-8 form-group">
-                <select class="form-control">
+                <select class="form-control" name="card_type" id="card_type">
                   <option value="">Visa</option>
                   <option value="">Master Card</option>
                   <option value="">American Express</option>
@@ -67,7 +68,7 @@
                 <label>Card number: </label>
               </div>
               <div class="col-md-8 form-group">
-                <input type="text" class="form-control" placeholder="****_****_****_****">
+                <input type="text" class="form-control" name="card_number" id="card_number" placeholder="****_****_****_****">
               </div>
             </div>
             <div class="row align-items-center">
@@ -75,7 +76,7 @@
                 <label>Expiration: </label>
               </div>
               <div class="col-md-4 form-group">
-                <select class="form-control">
+                <select class="form-control" name="expire_month" id="expire_month">
                   <option value="">Month</option>
                   <option value="1">1</option>
                   <option value="2">2</option>
@@ -92,7 +93,7 @@
                 </select>
               </div>
               <div class="col-md-4 form-group">
-                <select class="form-control">
+                <select class="form-control" name="expire_year" id="expire_year">
                   <option value=""> Year</option>
                   <option value="2020">2020</option>
                   <option value="2021">2021</option>
@@ -131,76 +132,61 @@
                 </div>
               </div>
             </div>
-            .
+            <div class="col-md-9">
+            <div class="text-right">
+              <a href="/reservation/bookingsummary" class="btn btn-dark px-5 btn-nextwizard">Next</a>
+            </div>
+          </div>
           </div>
           <div class="col-lg-3 col-md-4">
-            <div class="reservation-summary">
-              <h4>YOUR RESERVATION</h4>
-              <p><b>Belmond Jimbaran Puri</b></p>
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Guests</td>
-                  <td class="px-0 py-1 text-right">2 Guests</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Check-in</td>
-                  <td class="px-0 py-1 text-right">15 Aug 2020</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Check-out</td>
-                  <td class="px-0 py-1 text-right">16 Aug 2020</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Suites</td>
-                  <td class="px-0 py-1 text-right">Pavilion suite</td>
-                </tr>
-              </table>
-            </div>
-            <div class="reservation-summary section-shadow">
-              <h4>SUITE 1</h4>
-              <p><b>Superior Double Room Garden or Village View </b></p>
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Guests</td>
-                  <td class="px-0 py-1 text-right">2</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Suite</td>
-                  <td class="px-0 py-1 text-right">€4.299.00</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Tax</td>
-                  <td class="px-0 py-1 text-right">€299.00</td>
-                </tr>
-              </table>
-              <hr class="mb-2">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Gourmet Experience</td>
-                  <td class="px-0 py-1 text-right">2</td>
-                </tr>
-              </table>
-              <hr class="mt-2">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Subtotal</td>
-                  <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                </tr>
-              </table>
-            </div>
-            <div class="reservation-total">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Total</td>
-                  <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                </tr>
-              </table>
-            </div>
-          </div>
-          <div class="col-md-9">
-            <div class="text-right">
-              <a href="/reservation/hotelpolicies" class="btn btn-dark px-5 btn-nextwizard">Next</a>
-            </div>
+          @include('frontend.themes.EC.reservation.reservation-summary')
+          <?php $pos=1 ?>
+            @foreach($suites as $suite)
+            @foreach($suite as $value)
+              <div class="reservation-summary section-shadow">
+                <h4>SUITE &nbsp; {{ $pos++ }}</h4>
+                <p><b>{{ $value->category_name }}</b></p>
+                <table class="table table-borderless mb-0"> 
+                    <tr>
+                      <td class="px-0 py-1">Guests</td>
+                      @foreach($selected_suite as $key => $select_suite)
+                      <td class="px-0 py-1 text-right">{{ $key == $value->id ?  $select_suite : ''}}</td>
+                      @endforeach
+                    </tr>
+                  <tr>
+                    <td class="px-0 py-1">Suite</td>
+                    <td class="px-0 py-1 text-right">€4.299.00</td>
+                  </tr>
+                  <tr>
+                    <td class="px-0 py-1">Tax</td>
+                    <td class="px-0 py-1 text-right">€299.00</td>
+                  </tr>
+                </table>
+                <hr class="mb-2">
+                <table class="table table-borderless mb-0">
+                  <tr>
+                    <td class="px-0 py-1">Gourmet Experience</td>
+                    <td class="px-0 py-1 text-right">2</td>
+                  </tr>
+                </table>
+                <hr class="mt-2">
+                <table class="table table-borderless mb-0">
+                  <tr>
+                    <td class="px-0 py-1">Subtotal</td>
+                    <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="reservation-total">
+                <table class="table table-borderless mb-0">
+                  <tr>
+                    <td class="px-0 py-1">Total</td>
+                    <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                  </tr>
+                </table>
+              </div>
+            @endforeach
+          @endforeach 
           </div>
         </div>
 
