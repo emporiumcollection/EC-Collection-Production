@@ -62,12 +62,15 @@
                   <div class="col-sm-4">
                     <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
                     <?php 
+                    if(!empty($menu_experiences)):
                     $lmenus = [];
                     foreach($menu_experiences as $experience):?>
                         <li class="nav-item">
                           <a class="nav-link active" href="<?php echo createSearchUrl('experience', $experience->category_alias);?>"><?php echo $experience->category_name;?></a>
                         </li>
-                    <?php endforeach;?>
+                    <?php endforeach;
+                    endif;
+                    ?>
                     </ul>
                     <div class="menu-media">
                       <a href="#" class="nav-sos"><i class="fa fa-facebook" aria-hidden="true"></i></a>

@@ -1441,7 +1441,9 @@
                         <div class="side-detail mb-3">
                           <p>Free cancelation before <b>18 Feb 2020</b></p>
                           <p>Reserve now, pay at the Hotel</p>
-                          <a href="#" class="btn btn-dark btn-block btn-sidebar" data-sidebar="#reservation">Reservation</a>
+                          <!--<a href="#" class="btn btn-dark btn-block btn-sidebar" data-sidebar="#reservation">Reservation</a>-->
+                          <a href="#" class="btn btn-dark btn-block"
+                        data-sidebar="/reservation/when">Reservation</a>
                         </div>
         
                         <div class="side-detail text-left mb-3 px-2">
