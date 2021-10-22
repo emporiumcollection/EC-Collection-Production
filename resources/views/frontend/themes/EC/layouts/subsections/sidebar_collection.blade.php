@@ -24,63 +24,10 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4">
                         <div class="kkasdkl">
-                            <img src="{{ asset('themes/EC/images/emporium-spa.png') }}" class="img-fluid" alt="">
-                            <span>
-                                <i class="ico ico-building icon-lg"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-lg-9 col-md-8">
-                        <h5 class="mb-3 font-weight-bold">Emporium-Spa</h5>
-                        <div class="row align-items-center">
-                            <div class="col-lg-8 col-md-6">
-                                <p class="mb-0">
-                                    Emporium Spa Luxury Travel is the entailment of the cluster of sumptuous and highly acclaimed spas for its beau monde clientele. The wellness centers reflect our resolve of bringing only the nonpareil for our respected members. With the elaborative and highly sophisticated set of skills, the centers offer a splendid opportunity to peek into the delicacies of a truly magical luxury trip. The opportunity translates into a quality proposition for the wellness havens to cater to the exclusive of the audiences. Emporium emphasizes the comfort of its’ distinguished guests, which is outlined by the replenishing experience afforded by our spas.
-                                </p>
-                            </div>
-                            <div class="col-lg-4 col-md-6 text-right">
-                                <a href="https://www.<?php echo config('app.spadomain');?>">View Collection</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="search-list-item">
-                <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-4">
-                        <div class="kkasdkl">
-                            <img src="{{ asset('themes/EC/images/emporium-safari.jpg') }}" class="img-fluid" alt="">
-                            <span>
-                                <i class="ico ico-safari icon-lg"></i>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="col-lg-9 col-md-8">
-                        <h5 class="mb-3 font-weight-bold">Emporium-Safari</h5>
-                        <div class="row align-items-center">
-                            <div class="col-lg-8 col-md-6">
-                                <p class="mb-0">
-                                    Emporium Safari luxury travel is the winsome culmination of luxury travel with the natures’ uniqueness. The platform poses as an invigorating escape for the minds who are vying for a life-changing and mindful experience. We provide an exclusive opportunity for our clientele to delve into the charms of the natural wilderness along with the luxury companionship of our concierge services, the highlight of which is air transportation to our picturesque safari camps. From providing a harmonious blend of safari entertainment and premier hospitality services to flaunting an exclusive clientele, Safari certainly delivers an enticing proposition for its coveted members. 
-
-                                </p>
-                            </div>
-                            <div class="col-lg-4 col-md-6 text-right">
-                                <a href="https://www.<?php echo config('app.safaridomain');?>">View Collection</a>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-            <div class="search-list-item">
-                <div class="row align-items-center">
-                    <div class="col-lg-3 col-md-4">
-                        <div class="kkasdkl">
                             <img src="{{ asset('themes/EC/images/emporium-voyage.jpg') }}" class="img-fluid" alt="">
-                            <span>
+                            <!--<span>
                                 <i class="ico ico-spa-i icon-lg"></i>
-                            </span>
+                            </span>-->
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8">
@@ -104,10 +51,63 @@
                 <div class="row align-items-center">
                     <div class="col-lg-3 col-md-4">
                         <div class="kkasdkl">
+                            <img src="{{ asset('themes/EC/images/emporium-spa.png') }}" class="img-fluid" alt="">
+                            <!--<span>
+                                <i class="ico ico-building icon-lg"></i>
+                            </span>-->
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8">
+                        <h5 class="mb-3 font-weight-bold">Emporium-Spa</h5>
+                        <div class="row align-items-center">
+                            <div class="col-lg-8 col-md-6">
+                                <p class="mb-0">
+                                    Emporium Spa Luxury Travel is the entailment of the cluster of sumptuous and highly acclaimed spas for its beau monde clientele. The wellness centers reflect our resolve of bringing only the nonpareil for our respected members. With the elaborative and highly sophisticated set of skills, the centers offer a splendid opportunity to peek into the delicacies of a truly magical luxury trip. The opportunity translates into a quality proposition for the wellness havens to cater to the exclusive of the audiences. Emporium emphasizes the comfort of its’ distinguished guests, which is outlined by the replenishing experience afforded by our spas.
+                                </p>
+                            </div>
+                            <div class="col-lg-4 col-md-6 text-right">
+                                <a href="https://www.<?php echo config('app.spadomain');?>">View Collection</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="search-list-item">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="kkasdkl">
+                            <img src="{{ asset('themes/EC/images/emporium-safari.jpg') }}" class="img-fluid" alt="">
+                            <!--<span>
+                                <i class="ico ico-safari icon-lg"></i>
+                            </span>-->
+                        </div>
+                    </div>
+                    <div class="col-lg-9 col-md-8">
+                        <h5 class="mb-3 font-weight-bold">Emporium-Safari</h5>
+                        <div class="row align-items-center">
+                            <div class="col-lg-8 col-md-6">
+                                <p class="mb-0">
+                                    Emporium Safari luxury travel is the winsome culmination of luxury travel with the natures’ uniqueness. The platform poses as an invigorating escape for the minds who are vying for a life-changing and mindful experience. We provide an exclusive opportunity for our clientele to delve into the charms of the natural wilderness along with the luxury companionship of our concierge services, the highlight of which is air transportation to our picturesque safari camps. From providing a harmonious blend of safari entertainment and premier hospitality services to flaunting an exclusive clientele, Safari certainly delivers an enticing proposition for its coveted members. 
+
+                                </p>
+                            </div>
+                            <div class="col-lg-4 col-md-6 text-right">
+                                <a href="https://www.<?php echo config('app.safaridomain');?>">View Collection</a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div class="search-list-item">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4">
+                        <div class="kkasdkl">
                             <img src="{{ asset('themes/EC/images/emporium-Islands.jpg') }}" class="img-fluid" alt="">
-                            <span>
+                            <!--<span>
                                 <i class="ico ico-islands icon-lg"></i>
-                            </span>
+                            </span>-->
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8">
@@ -132,9 +132,9 @@
                     <div class="col-lg-3 col-md-4">
                         <div class="kkasdkl">
                             <img src="{{ asset('themes/EC/images/emporium-lifestyle.jpg') }}" class="img-fluid" alt="">
-                            <span>
+                            <!--<span>
                                 <i class="ico ico-golf icon-lg"></i>
-                            </span>
+                            </span>-->
                         </div>
                     </div>
                     <div class="col-lg-9 col-md-8">

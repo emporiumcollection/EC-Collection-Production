@@ -1,3 +1,6 @@
+<?php 
+if(isset($trendingFilters)):
+?>
 <div class="search-suggest">
   <div>
     <h5>Popular Now</h5>
@@ -30,6 +33,7 @@
     endforeach;
   ?>
 </div>
+<?php endif;?>
 <div class="wherepopup">
   <div class="whereinner">
     <div class="row">
