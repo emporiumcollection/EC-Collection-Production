@@ -595,12 +595,22 @@ $(function() {
     });
 
     $(document).ready(function(){
+        var companion = new Array();
+
         $('input[type="checkbox"]').click(function(){
             if($(this).prop("checked") == true){
                 var companion_id = $(this).closest('div.tagvalue').find('.companion_id').val();
                 var companion_name = $(this).closest('div.tagvalue').find('.companion_name').text();
                 var companion_email = $(this).closest('div.tagvalue').find('.companion_email').text();
                 var companion_phone = $(this).closest('div.tagvalue').find('.companion_phone').text();
+                // guest.push(selected_guest);
+
+                companion.push( {
+                    id: (companion_id ),
+                    name: (companion_name ),
+                    email:( companion_email),
+                    phone:( companion_phone)
+                });
             }
 
             $.ajax({
@@ -610,10 +620,7 @@ $(function() {
             type: 'POST',            
             url:'{{URL::to("/storeinTosession")}}',
             data:{  
-                    companion_id: companion_id,
-                    companion_name: companion_name,
-                    companion_email: companion_email,
-                    companion_phone: companion_phone
+                    companion: companion,
                 },
             dataType:'json',                    
             success: function(response){

@@ -286,7 +286,7 @@ class ReservationsController extends Controller {
             return redirect('user/login');
 
         $arr = $this->reserveSuite();
-
+        
         $selected_suite = \Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
@@ -328,10 +328,6 @@ class ReservationsController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
-
-        // if (Request::is('http://development.emporium-voyage.com/')){
-        //  $db = Config::get("app.EmporiumSpa");
-        // }
   
         $this->data['properties'] = properties::where('id',\Session::get('property_id'))->get();
         $hotel_name = $this->data['properties'][0]->property_short_name;
@@ -339,6 +335,8 @@ class ReservationsController extends Controller {
         $words = explode(' ', $hotel_name);
         $this->data['hotel_name'] = $words[0][0].$words[1][0];
 
+        $this->data['db'] = $this->databaseName();
+        
         $this->data['randomnum'] = mt_rand(0370,9999);        
         $arrival_date = explode("-",\Session::get('arrival_date'));
         $departure_date = explode("-",\Session::get('departure_date'));
@@ -375,15 +373,18 @@ class ReservationsController extends Controller {
 
 
     public function storecompanionTosession(Request $request)
-    {
-        $arr = array(
-                    "companion_id" => $request->companion_id, 
-                    "companion_name" => $request->companion_name,
-                    "companion_email" => $request->companion_email,
-                    "companion_phone" => $request->companion_phone   
-                    );
-        $request->session()->put(['companion_data', $arr]);    
-    }
+    {   
+        $companion_data = $request->companion;
+
+        $companion_array = [];
+        foreach($companion_data as $key => $data)
+        {    
+            $companion_array[] = [ $key => $data ];
+        }
+
+        \Session::put('companion_data',$companion_array);
+        $request->session()->put('companion_data', $companion_array); 
+    }   
 
     public function reservationList()
     {
@@ -404,11 +405,12 @@ class ReservationsController extends Controller {
         
         $suite_id = \Session::get('suit_id');
 
+        $this->data['db'] = $this->databaseName();
+
         $arr = [];
         foreach($suite_id as $suite_id)
         {
             $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suite_id)->get();
-            // echo "<pre>";print_r($this->data['suites'][0]->category_name);exit;
             $arr[] = $this->data['suites'];
         }
         $selected_suite = \Session::get('suite_array');
@@ -422,15 +424,43 @@ class ReservationsController extends Controller {
         $this->data['month_int'] = $departure_date[2];
 
         $suite_id = \Session::get('suit_id');
-
-        $this->data['policies'] = PropertyCategoryTypes::where('id',$suite_id)->first();        
-
+        $companion = \Session::get('companion_data');
+        
         $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->get();
         
         $this->data['count'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->count();
 
+        $this->data['policies'] = PropertyCategoryTypes::where('id',$suite_id)->first();        
         $file_name = 'frontend.themes.EC.reservation.reservations_';
         return view($file_name, $this->data);   
+    }
+
+    public function databaseName(){
+
+        if(request()->getHost() == 'development.emporium-voyage.com'){
+
+        $db = Config::get('app.EmporiumVoyage');   
+
+        }
+
+        if(request()->getHost() == 'emporium-safari.com'){
+
+        $db = Config::get('app.EmporiumSafari');   
+
+        }
+
+        if(request()->getHost() == 'emporium-spa.com'){
+
+        $db = Config::get('app.EmporiumSpa');   
+
+        }
+
+        if(request()->getHost() == 'emporium-islands.com'){
+
+        $db = Config::get('app.EmporiumIslands');   
+
+        }
+        return $db; 
     }
 
     public function addReservationData()
@@ -441,7 +471,6 @@ class ReservationsController extends Controller {
         $data['adult'] = \Session::get('adult');           
         $data['junior'] = \Session::get('children');
         
-
         \DB::table('tb_reservations')->insert($data);
     }
 
@@ -451,12 +480,11 @@ class ReservationsController extends Controller {
         if ($this->access['is_view'] == 0)
             return Redirect::to('dashboard')
                             ->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus', 'error');
-
         $sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id');
         $order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
-        // End Filter sort and order for query 
-        // Filter Search for query		
+
         $filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
+
         if (\Auth::user()->group_id != 1) {
             $filter .= " AND (user_id='" . $uid . "')";
         }

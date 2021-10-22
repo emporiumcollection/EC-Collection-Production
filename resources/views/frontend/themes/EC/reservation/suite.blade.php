@@ -12,6 +12,9 @@
     }
 </style>
 @section('content')
+<?php
+print_r(\Session::get('suite_array'));
+?>
 <div class="content-em">
   <div class="top-wrapper">
     <div class="container ">
@@ -86,7 +89,7 @@
                               <option value="">Select guest(S)</option>
                               
                                 @for($j = 1;$j <= $i;$j++)      
-                                  <option value="{{ $j }}">{{ $j }}</option>
+                                  <option value="{{ $j }}" {{ array_key_exists($suite->id, \Session::get('suite_array')) && \Session::get('suite_array')[$suite->id] == $j ? 'selected' : '' }}>{{ $j }}</option>
                                 @endfor
                                                               
                             </select>

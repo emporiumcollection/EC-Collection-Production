@@ -26,7 +26,7 @@
                   <div class="bg-grey px-3 py-2 mb-3">
                     <h4>Your booking at <b>{!! Session::get('suite_name') !!}</b> in
                       Limone sul Garda, Italy</h4>
-                    <p class="mb-0">Confirm number: EC-{{ $hotel_name }}-{{ $randomnum }}</p>
+                    <p class="mb-0">Confirm number: EC-{{ $db }}-{{ $hotel_name }}-{{ $randomnum }}</p>
                   </div>
                   
           @include('frontend.themes.EC.reservation.reservation-summary')

@@ -4911,7 +4911,7 @@
                                             <div class="d-flex itinirary-list py-5 align-items-center">
                                                 <div class="w-100">
                                                     <p class="mb-0"><b>Confirmation Code</b></p>
-                                                    <p class="mb-0">EC-{{ $hotel_name }}-{{ $randomnum }}</p>
+                                                    <p class="mb-0">EC-{{ $db }}-{{ $hotel_name }}-{{ $randomnum }}</p>
                                                 </div>
                                             </div>
                                             <div class="d-flex itinirary-list py-5 align-items-center">
