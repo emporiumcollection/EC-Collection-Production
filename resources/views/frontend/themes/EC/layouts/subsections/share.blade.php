@@ -13,12 +13,35 @@
     <div class="sidebar-scroller">
         <h3>Share this accommodation with friends and family</h3>
         <nav class="nav flex-column nav-line">
-            <a class="nav-link media-s" href="#"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
-            <a class="nav-link media-s" href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
-            <a class="nav-link media-s" href="#"><i class="fa fa-link" aria-hidden="true"></i> Copy Link</a>
-            <a class="nav-link media-s" href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Email</a>
-            <a class="nav-link media-s" href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i> Whatsapp</a>
-            <a class="nav-link media-s" href="#"><i class="fa fa-commenting" aria-hidden="true"></i> SMS</a>
+           <a class="nav-link media-s" href="https://www.facebook.com/sharer/sharer.php?u= {{  Request::url() }}">
+                <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
+            </a>
+            <a  class="nav-link media-s" href="https://twitter.com/intent/tweet?url={{  Request::url() }}" target="_blank">
+                <i class="fa fa-twitter" aria-hidden="true"></i>Twitter
+            </a>
+            <a class="nav-link media-s copy_text" href="{{  Request::url() }}"><i class="fa fa-link" aria-hidden="true"></i> Copy Link</a>
+
+            <a class="nav-link media-s" href="mailto:{{  Request::url() }}?subject=Share email link&amp;body={{  Request::url() }}"
+            title="Share by Email"><i class="fa fa-envelope" aria-hidden="true"></i>Email</a>
+
+            <a class="nav-link media-s" href="https://api.whatsapp.com/send?text=www.google.com" data-action="share/whatsapp/share"><i class="fa fa-whatsapp" aria-hidden="true"></i> Whatsapp</a>
+            {{-- <a class="nav-link media-s" href="#"><i class="fa fa-commenting" aria-hidden="true"></i> SMS</a> --}}
         </nav>
     </div>
 </div>
+
+<script>
+    $('.copy_text').click(function (e) {
+   e.preventDefault();
+   var copyText = $(this).attr('href');
+
+   document.addEventListener('copy', function(e) {
+      e.clipboardData.setData('text/plain', copyText);
+      e.preventDefault();
+   }, true);
+
+   document.execCommand('copy');  
+   console.log('copied text : ', copyText);
+   // alert('copied text: ' + copyText); 
+ });
+</script>
