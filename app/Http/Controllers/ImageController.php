@@ -172,6 +172,7 @@ class ImageController extends Controller {
                 $width = $this->width*$ratio;
                 $height = $this->width;
             }*/
+            if(!$this->destination_path){
 
             $thumbnail = Image::open($this->file_path)
                     ->thumbnail(new Imagine\Image\Box($this->width, $this->height), 'outbound');
@@ -184,6 +185,11 @@ class ImageController extends Controller {
             'grayscale' => true
             ))->save($this->destination_path);
             */
+            }
+            else{
+                $this->destination_path = public_path() .
+                '/uploads/images/default-hotel.png';
+            }   
         }
 
         $file_extension = strtolower(substr(strrchr($this->file,"."),1));

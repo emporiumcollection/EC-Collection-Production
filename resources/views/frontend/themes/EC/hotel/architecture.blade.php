@@ -29,9 +29,13 @@
     <div class="sidebar-scroller">
         <h3>Share this accommodation with friends and family</h3>
         <nav class="nav flex-column nav-line">
-            <a class="nav-link media-s" href="#"><i class="fa fa-facebook" aria-hidden="true"></i> Facebook</a>
+             <a href="https://www.facebook.com/sharer/sharer.php?u= {{  Request::url() }}">
+                <i class="fa fa-facebook" aria-hidden="true"></i> Facebook
+            </a>
             <a class="nav-link media-s" href="#"><i class="fa fa-twitter" aria-hidden="true"></i> Twitter</a>
             <a class="nav-link media-s" href="#"><i class="fa fa-link" aria-hidden="true"></i> Copy Link</a>
+            <a href="mailto:?subject={{  Request::url() }}&amp;body={{  Request::url() }}"
+            title="Share by Email">Email</a>
             <a class="nav-link media-s" href="#"><i class="fa fa-envelope" aria-hidden="true"></i> Email</a>
             <a class="nav-link media-s" href="#"><i class="fa fa-whatsapp" aria-hidden="true"></i> Whatsapp</a>
             <a class="nav-link media-s" href="#"><i class="fa fa-commenting" aria-hidden="true"></i> SMS</a>
