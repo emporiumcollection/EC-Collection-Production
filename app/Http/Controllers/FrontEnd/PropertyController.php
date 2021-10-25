@@ -7313,7 +7313,7 @@ class PropertyController extends Controller {
             'restaurant_ids'
         ])
         ->selectRaw(
-            'ROUND((3959 * acos (cos ( radians('.$lat.') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('.$lng.') ) + sin ( radians('.$lat.') ) * sin( radians( latitude ) ))), 0) as distance',
+            'ROUND((3959 * acos (cos ( radians('.$lat.') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('.$lng.') ) + sin ( radians('.$lat.') ) * sin( radians( latitude ) ))), 0) as distance'
         )
         ->with([
             'propertyImages' => function($query){
