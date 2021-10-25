@@ -123,7 +123,7 @@ trait Property {
         ->whereIn('city', $cities)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
-        //->limit(4)
+        ->limit(1)
         ->get();
     }
 
@@ -186,7 +186,7 @@ trait Property {
         ->whereIn('city', $cities)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
-        //->limit(4)
+        ->limit(1)
         ->get();        
     }
 
@@ -268,7 +268,9 @@ trait Property {
             $properties->where('property_category_id', 'like', "%,$experience_id%");
         }   
 
-        return $properties->get();
+        return $properties
+        ->limit(1)
+        ->get();
     }
 
     public function formatPropertyRecords(&$properties){

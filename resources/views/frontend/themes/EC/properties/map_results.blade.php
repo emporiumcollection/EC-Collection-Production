@@ -65,8 +65,8 @@
         <div class="map-box">
           <div class="map-checkbox">
             <div class="custom-control custom-checkbox">
-              <input type="checkbox" class="custom-control-input" id="customCheck1">
-              <label class="custom-control-label" for="customCheck1">Search as I move the map </label>
+              <input type="checkbox" class="custom-control-input" id="refresh_marker">
+              <label class="custom-control-label" for="refresh_marker">Search as I move the map </label>
             </div>
           </div>
           <div id='map2'></div>
@@ -98,6 +98,28 @@
         };
 
         mapOfResults.on('load', function () {
+          loadMarkers();
+        });
+
+        mapOfResults.on('dragend', function() {
+          if($('#refresh_marker').prop('checked') === false) return false;
+          var newCoordinates = mapOfResults.getCenter();
+          $.ajax({
+            url: '/property/refresh-map/'+newCoordinates.lat+'/'+newCoordinates.lng,
+            type: 'get',
+            dataType: 'json',
+            success: function(response){
+              // marker.remove();
+              geojsonFeatures.features = response;
+              loadMarkers();
+            },
+            error: function(response){
+              console.log('Error: '+response);
+            }
+          });
+        });
+
+        function loadMarkers(){
           geojsonFeatures.features.forEach(function (marker) {
             var el = document.createElement('div');
             el.className = 'marker';
@@ -145,6 +167,8 @@
 
             el.markerInstance = tmpMarker;
 
+            tmpMarker.remove();
+
             tmpMarker
               .setLngLat(marker.geometry.coordinates)
               .setPopup(popup)
@@ -180,7 +204,7 @@
             });
 
           })
-        });
+        }
 
         $('.close-view').click(function (e) {
           e.preventDefault();
