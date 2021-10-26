@@ -3008,11 +3008,12 @@ class PropertyController extends Controller {
                         $this->data['propertyResults'][$k]->container = $container[0];
                     }
                 }
+                /*
                 if(isset($propertyRecord->container) && $propertyRecord->container){
                     $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
                 }else{
                     $this->data['propertyResults'][$k]->propertyImages = [];
-                }
+                }*/
             }
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
