@@ -3008,12 +3008,11 @@ class PropertyController extends Controller {
                         $this->data['propertyResults'][$k]->container = $container[0];
                     }
                 }
-                /*
                 if(isset($propertyRecord->container) && $propertyRecord->container){
                     $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
                 }else{
                     $this->data['propertyResults'][$k]->propertyImages = [];
-                }*/
+                }
             }
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
@@ -7317,72 +7316,16 @@ class PropertyController extends Controller {
             'ROUND((3959 * acos (cos ( radians('.$lat.') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('.$lng.') ) + sin ( radians('.$lat.') ) * sin( radians( latitude ) ))), 0) as distance'
         )
         ->with([
-            'boards',
-            'container',
-            'images',
-            'PropertyCategoryPackages' => function($query){
-                $query->with(['package']);
-            },
-            'suites' => function($query){
-                return $query->with(['rooms', 'amenities']);
-            },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
                 }])->limit(20);
-            }, 
-            'roomImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
-            'hotelBrochureImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }
+            },
         ])
-        ->having('distance', '<=', 5)
+        ->having('distance', '<=', 20)
         ->get();
-        if(!empty($properties->toArray())){
-            $this->tmpfunction($properties);
-        }
-        $markers = $this->formatRecordsMap($properties);
-        $property_card_html = '';
-        if(count($properties) > 0){
-            foreach($properties as $key => $property){
-                $property_card_html .= view('frontend.themes.EC.properties.subtemplates.map_property_card', ['property' => $property])->render();
-            }
-        }else{
-            $property_card_html .= '<h3 class="title-second is-small title-line mb-0">No properties near this location</h3>';
-        }
-        return json_encode([
-            'property_card_html' => $property_card_html,
-            'markers' => $markers
-        ]);
-    }
-
-    private function tmpfunction(&$propertyResults){
-        foreach($propertyResults as $k => $propertyRecord){
-            if(empty($propertyRecord->container)){
-                $container = Container::
-                where('display_name', '=', $propertyRecord->property_name)
-                ->get();
-
-                if(!empty($container->toArray())){
-                    $propertyRecord->container = $container[0];
-                    $propertyResults[$k]->container = $container[0];
-                }
-            }
-            if(isset($propertyRecord->container) && $propertyRecord->container){
-                $propertyResults[$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
-            }else{
-                $propertyResults[$k]->propertyImages = [];
-            }
-        }
-        $this->formatPropertyRecords($propertyResults);
+        $map = $this->formatRecordsMap($properties);
+        return $map;
     }
 }
