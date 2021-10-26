@@ -799,7 +799,8 @@ class DestinationController extends Controller {
         tb_categories.id!=8 AND 
         tb_categories.parent_category_id!=8 AND 
         tb_categories.id!='.$our_coll_id.' AND 
-        tb_categories.parent_category_id!='.$our_coll_id;
+        tb_categories.parent_category_id!='.$our_coll_id.' AND
+        tb_categories.is_hotels_available = 1';
 
         if($parent_id && $showparent){
             $str_des_keyword .= " and tb_categories.parent_category_id = $parent_id";
@@ -814,7 +815,6 @@ class DestinationController extends Controller {
         if(!empty($fetchdestinations)){
             $data['dest'] = $fetchdestinations;
         }
-
         return $data;
     }
 

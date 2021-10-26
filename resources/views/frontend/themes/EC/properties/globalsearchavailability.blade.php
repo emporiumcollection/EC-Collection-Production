@@ -347,6 +347,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
       }
     });
   });
+   
 </script>
 
 

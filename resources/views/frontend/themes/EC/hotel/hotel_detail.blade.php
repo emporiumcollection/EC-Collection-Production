@@ -3302,7 +3302,7 @@
                         <div class="btn btn-add-collection">
                             +
                         </div>
-                        <p class="m---019">Add Yours</p>
+                        <p class="m---019">Add Yourssdsff</p>
                     </a>
                 </div>
                 <div class="right-collection pl-3">
