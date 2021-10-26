@@ -307,7 +307,7 @@
             </div>
             <div class="collapse bg-grey" id="addCollaction" data-parent="#collections">
                 <div class="p-4">
-                    <form action="#">
+                    {{-- <form method="post" enctype="multipart/form-data" id="myform"> --}}
                         <div class="row">
                             <div class="col-xl-7 col-lg-12">
                                 <div class="form-group row">
@@ -315,8 +315,9 @@
                                         <label>Name of Collection <sup>*</sup> </label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control" placeholder="Name ">
+                                        <input type="text" class="form-control" name="collection_name" id="collection_name" placeholder="Name ">
                                     </div>
+                                    <input type="hidden" name="property_id" id="property_id" value="">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-4">
@@ -335,11 +336,11 @@
                             </div>
                             <div class="col-12">
                                 <div class="text-right mt-4">
-                                    <button class="btn btn-dark rounded-0 px-5">Save</button>
+                                    <button class="btn btn-dark rounded-0 px-5  collection_">Save</button>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    {{-- </form> --}}
                 </div>
 
             </div>

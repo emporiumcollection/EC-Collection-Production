@@ -504,6 +504,22 @@ function replaceRooms(property_id, category_id){
   });
 }
 
+// function getcollection(id){
+//   alert(id);
+//   // var property_id = id;
+// }
+
+// $(document).ready(function(){
+//   $(document).on('click', ".collection_", function(){
+    
+//     var form = $("#myform")[0];
+//     alert(form);
+    
+//     // var start_End_date = $(".daterangepicker-inline").val();
+//     // alert(start_End_date);
+//   });
+// }); 
+
 function getDefaultChannel(catt){            
     $.ajax({
         url: channelurl,
@@ -527,7 +543,7 @@ function getDefaultChannel(catt){
             });
         }
     });
-}    
+}     
 
 function replacePrices(cat_id){
     $.ajax({

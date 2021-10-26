@@ -424,6 +424,12 @@ $(function() {
         var suit_id = new Array();
         var guest = new Array();
 
+        $(document).on('click', ".collection_", function(){
+          alert("here");
+          var collection_name = $("#collection_name");;
+          // var start_End_date = $(".daterangepicker-inline");
+        });
+
         $(document).on('click', ".select_suite", function(){
 
             var suite_id = $(this).data('suite-id');

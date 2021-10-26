@@ -1847,7 +1847,7 @@ License: You must have a valid license purchased only from themeforest(the above
                 <div class="col-xl-7 col-lg-12">
                   <div class="form-group row">
                     <div class="col-4">
-                      <label>Name of Collection <sup>*</sup> </label>
+                      <label>Name of Collection sdsdsd<sup>*</sup> </label>
                     </div>
                     <div class="col-8">
                       <input type="text" class="form-control" placeholder="Name ">

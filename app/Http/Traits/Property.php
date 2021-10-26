@@ -73,7 +73,7 @@ trait Property {
     }
 
     public function getEditorChoiceProperties($cities){
-        return properties::select([
+        return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
             'property_short_name', 
@@ -123,12 +123,13 @@ trait Property {
         ->whereIn('city', $cities)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
-        ->limit(1)
+        ->limit(2)
         ->get();
+
     }
 
     public function getFeaturedProperties($cities){
-        return properties::select([
+        return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
             'property_short_name', 
@@ -186,8 +187,8 @@ trait Property {
         ->whereIn('city', $cities)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
-        ->limit(1)
-        ->get();        
+        ->limit(2)
+        ->get();
     }
 
     public function searchPropertiesByKeyword($cities){
