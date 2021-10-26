@@ -270,7 +270,7 @@ trait Property {
         }   
 
         return $properties
-        ->limit(1)
+        //->limit(1)
         ->get();
     }
 
