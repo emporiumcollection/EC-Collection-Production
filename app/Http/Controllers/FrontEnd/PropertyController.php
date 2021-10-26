@@ -7281,4 +7281,51 @@ class PropertyController extends Controller {
         echo json_encode($this->data);
         exit;
     }
+
+    public function refreshMap($lat, $lng){
+        $properties = properties::select([
+            'id', 
+            'property_name', 
+            'property_short_name', 
+            'detail_section1_title', 
+            'detail_section1_description_box1', 
+            'detail_section1_description_box2', 
+            'detail_section1_description_box2', 
+            'roomamenities', 
+            'assign_amenities', 
+            'latitude',
+            'longitude',
+            'address', 
+            'internetpublic',
+            'internetroom',
+            'children_policy',
+            'checkin',
+            'checkout',
+            'transfer',
+            'smookingpolicy',
+            'smookingrooms',
+            'numberofrooms',
+            'availableservices',
+            'pets',
+            'carpark',
+            'bar_ids',
+            'spa_ids',
+            'restaurant_ids'
+        ])
+        ->selectRaw(
+            'ROUND((3959 * acos (cos ( radians('.$lat.') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('.$lng.') ) + sin ( radians('.$lat.') ) * sin( radians( latitude ) ))), 0) as distance'
+        )
+        ->with([
+            'propertyImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }])->limit(20);
+            },
+        ])
+        ->having('distance', '<=', 20)
+        ->get();
+        $map = $this->formatRecordsMap($properties);
+        return $map;
+    }
 }

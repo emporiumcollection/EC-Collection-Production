@@ -189,8 +189,6 @@ trait Property {
         ->where('property_status', '=', 1)
         ->limit(2)
         ->get();
-        // echo "<pre>";print_r($data);exit;
-
     }
 
     public function searchPropertiesByKeyword($cities){
