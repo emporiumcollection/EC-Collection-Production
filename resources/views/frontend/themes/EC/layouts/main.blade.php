@@ -1172,7 +1172,7 @@ console.log(sp_darr);
       $('.slider-detail').not('.slick-initialized').slick('setPosition');
     });
 });
-function setMapLocation(lat, long){
+/*function setMapLocation(lat, long){
     var locations = [
       ['<b>Loaction Name</b>', lat, long],
     ];
@@ -1190,7 +1190,7 @@ function setMapLocation(lat, long){
         .bindPopup(locations[i][0])
         .addTo(map);
     }
-}
+}*/
 </script>
 
 <script type="text/javascript">

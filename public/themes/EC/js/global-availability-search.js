@@ -262,14 +262,17 @@ function replaceSuiteList(id){
       suiteItem = '<div class="property-suite-p'+sid+'">' + suiteTemplate + '</div>';
 
       roomimages = '';
-      suite.rooms[0].images.forEach(function(rm){
-        if(onlyThree < 3){        
-          roomimages += `<div>
-              <img src="/room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
-            </div>`;  
-        }
-        onlyThree++; 
-      });
+      console.log(properties[id]);
+      if('undefined' !== typeof suite.rooms[0].images){
+        suite.rooms[0].images.forEach(function(rm){
+          if(onlyThree < 3){        
+            roomimages += `<div>
+                <img src="/room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+              </div>`;  
+          }
+          onlyThree++; 
+        });
+      }
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid);  
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
@@ -300,11 +303,14 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_amenities"]').html(suite.suiteamenities);
 
   var roomimages = ``;
-  suite.rooms[0].images.forEach(function(rm){
-    roomimages += `<div>
-      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
-    </div>`;
-  });
+  console.log(properties[property_id]);
+  if('undefined' !== typeof suite.rooms[0].images){
+    suite.rooms[0].images.forEach(function(rm){
+      roomimages += `<div>
+        <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      </div>`;
+    });
+  }
 
   $('[data-place="price-icon"]').html(`<i class="ico ico-info-green pointer btn-sidebar" type="button"
                                 data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
