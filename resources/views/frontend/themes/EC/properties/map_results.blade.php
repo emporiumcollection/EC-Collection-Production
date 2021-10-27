@@ -67,7 +67,7 @@
               foreach ($editorsProperties as $property) :
               ?>
                 @include('frontend.themes.EC.properties.subtemplates.map_property_card', 
-                    ['property' => $property, 'block_title' => 'Editor\'s Choice])
+                    ['property' => $property, 'block_title' => 'Editor\'s Choice'])
               <?php
               endforeach;
               ?>
