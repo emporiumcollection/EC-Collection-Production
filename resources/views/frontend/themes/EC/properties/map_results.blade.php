@@ -24,6 +24,11 @@
     .slide-arrow{
       height: 200px;
     }
+    .refresh-loader{
+      width: auto;
+      height: 14px;
+      margin-left: 5px;
+    }
 </style>
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript">
@@ -57,19 +62,21 @@
               </path>
             </svg>
           </a>
-          <?php foreach($propertyResults as $property):?>
-            @include('frontend.themes.EC.properties.subtemplates.map_property_card', 
-                  ['property' => $property])
-          <?php endforeach;?>
+          <div id="property_cards_wrap">
+            <?php foreach($propertyResults as $property): ?>
+              @include('frontend.themes.EC.properties.subtemplates.map_property_card', 
+                    ['property' => $property])
+            <?php endforeach;?>
+          </div>
         </div>
         <div class="map-box">
           <div class="map-checkbox">
             <div class="custom-control custom-checkbox">
               <input type="checkbox" class="custom-control-input" id="refresh_marker">
-              <label class="custom-control-label" for="refresh_marker">Search as I move the map </label>
+              <label class="custom-control-label" for="refresh_marker">Search as I move the map <img src="{{ asset('themes/EC/images/ajax-loader.gif') }}" class="refresh-loader" style="display: none;"></label>
             </div>
           </div>
-          <div id='map2'></div>
+          <div id="properties_map" style="height: 800px; width: 100%; z-index: 1;"></div>
         </div>
       </div>
     </div>
@@ -84,7 +91,7 @@
       mapboxgl.accessToken = 'pk.eyJ1IjoiZmFyaXNzeWFpZnVkZGluIiwiYSI6ImNrb253OWNqOTA1ajUyd2w0Mm92ZXEzeWUifQ.2zZbnnViPfgP4-jHknMifQ';
 
         var mapOfResults = new mapboxgl.Map({
-          container: 'map2',
+          container: 'properties_map',
           style: 'mapbox://styles/mapbox/light-v10',
           center: [<?php echo $center_coordinate;?>],
           zoom: 11.15
@@ -104,14 +111,38 @@
         mapOfResults.on('dragend', function() {
           if($('#refresh_marker').prop('checked') === false) return false;
           var newCoordinates = mapOfResults.getCenter();
+          $('.mapboxgl-marker').not('.marker').remove();
+          var ele = document.createElement('div');
+          ele.className = 'marker';
+          ele.style.backgroundImage = 'url(images/basic_geolocalize-01.png)';
+          ele.style.width = 40 + 'px';
+          ele.style.height = 40 + 'px';
+          ele.style.backgroundRepeat = 'no-repeat',
+          ele.style.backgroundSize = "contain",
+          ele.style.backgroundPosition = "center center"
+          var popup2 = new mapboxgl.Popup({ offset: 25 }).setHTML('Center').setMaxWidth("400px");
+          var tmpMarker2 = new mapboxgl.Marker();
+          tmpMarker2
+            .setLngLat(newCoordinates)
+            // .setPopup(popup2)
+            .addTo(mapOfResults);
           $.ajax({
             url: '/property/refresh-map/'+newCoordinates.lat+'/'+newCoordinates.lng,
             type: 'get',
             dataType: 'json',
+            beforeSend: function(){
+              $('.refresh-loader').show();
+            },
             success: function(response){
-              // marker.remove();
-              geojsonFeatures.features = response;
+              $('.mapboxgl-marker').remove();
+              tmpMarker2
+                .setLngLat(newCoordinates)
+                // .setPopup(popup2)
+                .addTo(mapOfResults);
+              $('#property_cards_wrap').html(response.property_card_html);
+              geojsonFeatures.features = $.parseJSON(response.markers);
               loadMarkers();
+              $('.refresh-loader').hide();
             },
             error: function(response){
               console.log('Error: '+response);
@@ -160,14 +191,11 @@
               '<p class="map-hotel-price">Night from <span>' + price + '</span></p>' +
               '</div>' +
               '</div>';
-            console.log(popupContent);
             var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent).setMaxWidth("400px");
 
             var tmpMarker = new mapboxgl.Marker(el);
 
             el.markerInstance = tmpMarker;
-
-            tmpMarker.remove();
 
             tmpMarker
               .setLngLat(marker.geometry.coordinates)
