@@ -524,21 +524,14 @@ $(document).ready(function(){
 
 
 function collection(id){
-  alert(id);
-    var collection_id = id;
-    alert(collection_id);
-    return collection_id;
-  }
+  var collection_id = id;
+  return collection_id;
+}
 var id = collection_id(id);
 
 $(document).ready(function(){
-
   $(document).on('click', ".collection_", function(){
-
-    
     var collection_name = $("#collection_name").val();
-    alert(id);
-
     $.ajax({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
