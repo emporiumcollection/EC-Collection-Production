@@ -275,8 +275,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 @section('custom_js')
     @parent
 @show
-
 <script type="text/javascript" src="{{ asset('themes/EC/js/common-footer.js') }}"></script>
+
 <script>
     function openForm() {
       document.getElementById("myForm").style.display = "block";
@@ -1265,5 +1265,7 @@ $(document).ready(function(){
     });
 </script>
 
+=======
+>>>>>>> 851bf4f7fd30d5e82ff8aa5d0f4856c7edbbdc05
 </body>
 </html>

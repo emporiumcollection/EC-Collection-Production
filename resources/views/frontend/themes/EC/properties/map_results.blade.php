@@ -87,180 +87,177 @@
 @section('custom_js')
 @parent
 <script>
-      var mapL = null;
-      mapboxgl.accessToken = 'pk.eyJ1IjoiZmFyaXNzeWFpZnVkZGluIiwiYSI6ImNrb253OWNqOTA1ajUyd2w0Mm92ZXEzeWUifQ.2zZbnnViPfgP4-jHknMifQ';
+  var mapL = null;
+  mapboxgl.accessToken = 'pk.eyJ1IjoiZmFyaXNzeWFpZnVkZGluIiwiYSI6ImNrb253OWNqOTA1ajUyd2w0Mm92ZXEzeWUifQ.2zZbnnViPfgP4-jHknMifQ';
 
-        var mapOfResults = new mapboxgl.Map({
-          container: 'properties_map',
-          style: 'mapbox://styles/mapbox/light-v10',
-          center: [<?php echo $center_coordinate;?>],
-          zoom: 11.15
-        });
-        mapOfResults.addControl(new mapboxgl.NavigationControl());
+    var mapOfResults = new mapboxgl.Map({
+      container: 'properties_map',
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [<?php echo $center_coordinate;?>],
+      zoom: 11.15
+    });
+    mapOfResults.addControl(new mapboxgl.NavigationControl());
 
-        var geojsonFeatures = 
-        {
-          type: 'FeatureCollection',
-          features: <?php echo $propertyResultsForMap;?>
-        };
+    var geojsonFeatures = 
+    {
+      type: 'FeatureCollection',
+      features: <?php echo $propertyResultsForMap;?>
+    };
 
-        mapOfResults.on('load', function () {
-          loadMarkers();
-        });
+    mapOfResults.on('load', function () {
+      loadMarkers();
+    });
 
-        mapOfResults.on('dragend', function() {
-          if($('#refresh_marker').prop('checked') === false) return false;
-          var newCoordinates = mapOfResults.getCenter();
-          $('.mapboxgl-marker').not('.marker').remove();
-          var ele = document.createElement('div');
-          ele.className = 'marker';
-          ele.style.backgroundImage = 'url(images/basic_geolocalize-01.png)';
-          ele.style.width = 40 + 'px';
-          ele.style.height = 40 + 'px';
-          ele.style.backgroundRepeat = 'no-repeat',
-          ele.style.backgroundSize = "contain",
-          ele.style.backgroundPosition = "center center"
-          var popup2 = new mapboxgl.Popup({ offset: 25 }).setHTML('Center').setMaxWidth("400px");
-          var tmpMarker2 = new mapboxgl.Marker();
+    mapOfResults.on('dragend', function() {
+      if($('#refresh_marker').prop('checked') === false) return false;
+      var newCoordinates = mapOfResults.getCenter();
+      $('.mapboxgl-marker').not('.marker').remove();
+      var ele = document.createElement('div');
+      ele.className = 'marker';
+      ele.style.backgroundImage = 'url(images/basic_geolocalize-01.png)';
+      ele.style.width = 40 + 'px';
+      ele.style.height = 40 + 'px';
+      ele.style.backgroundRepeat = 'no-repeat',
+      ele.style.backgroundSize = "contain",
+      ele.style.backgroundPosition = "center center"
+      var popup2 = new mapboxgl.Popup({ offset: 25 }).setHTML('Center').setMaxWidth("400px");
+      var tmpMarker2 = new mapboxgl.Marker();
+      tmpMarker2
+        .setLngLat(newCoordinates)
+        // .setPopup(popup2)
+        .addTo(mapOfResults);
+      $.ajax({
+        url: '/property/refresh-map/'+newCoordinates.lat+'/'+newCoordinates.lng,
+        type: 'get',
+        dataType: 'json',
+        beforeSend: function(){
+          $('.refresh-loader').show();
+        },
+        success: function(response){
+          $('.mapboxgl-marker').remove();
           tmpMarker2
             .setLngLat(newCoordinates)
             // .setPopup(popup2)
             .addTo(mapOfResults);
-          $.ajax({
-            url: '/property/refresh-map/'+newCoordinates.lat+'/'+newCoordinates.lng,
-            type: 'get',
-            dataType: 'json',
-            beforeSend: function(){
-              $('.refresh-loader').show();
-            },
-            success: function(response){
-              $('.mapboxgl-marker').remove();
-              tmpMarker2
-                .setLngLat(newCoordinates)
-                // .setPopup(popup2)
-                .addTo(mapOfResults);
-              $('#property_cards_wrap').html(response.property_card_html);
-              geojsonFeatures.features = $.parseJSON(response.markers);
-              loadMarkers();
-              $('.refresh-loader').hide();
-            },
-            error: function(response){
-              console.log('Error: '+response);
-            }
-          });
-        });
-
-        function loadMarkers(){
-          geojsonFeatures.features.forEach(function (marker) {
-            var el = document.createElement('div');
-            el.className = 'marker';
-            el.style.backgroundImage = 'url(images/basic_geolocalize-01.png)';
-            el.style.width = 40 + 'px';
-            el.style.height = 40 + 'px';
-            el.style.backgroundRepeat = 'no-repeat',
-              el.style.backgroundSize = "contain",
-              el.style.backgroundPosition = "center center"
-            var description = marker.properties.description;
-            var title = marker.properties.title;
-            var price = marker.properties.price;
-            var images = marker.properties.images;
-            var dataId = marker.properties.dataId;
-
-            var slideshowContent = ""
-
-            for (var i = 0; i < images.length; i++) {
-              var img = images[i];
-
-              slideshowContent += '<div class="image-list' + (i === 1 ? ' active' : '') + '">' +
-                '<img src="' + img + '" class="img-fluid" />' +
-                '</div>';
-            }
-            var popupContent = '<div class="map-detail-container">' +
-              '<div class="map-hotel-img">' +
-              '<div class="popup-slider">' +
-              slideshowContent +
-              '</div>' +
-              // '<div class="popup-nav">' +
-              // '<div class="popup-btn popup-prev"></div>' +
-              // '<div class="popup-btn popup-next"></div>' +
-              // '</div>' +
-              '</div>' +
-              '<div class="map-hotel-description">' +
-              '<strong class="saol-font">' + title + '</strong>' +
-              '<p>' + description + '</p>' +
-              '<p class="map-hotel-price">Night from <span>' + price + '</span></p>' +
-              '</div>' +
-              '</div>';
-            var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent).setMaxWidth("400px");
-
-            var tmpMarker = new mapboxgl.Marker(el);
-
-            el.markerInstance = tmpMarker;
-
-            tmpMarker
-              .setLngLat(marker.geometry.coordinates)
-              .setPopup(popup)
-              .addTo(mapOfResults);
-
-            el.addEventListener("click", e => {
-              let coords = e.target.markerInstance.getLngLat();
-              mapOfResults.flyTo({
-                center: coords,
-                zoom: 12
-              });
-
-              // popup.on('close', function (e) {
-              //   $('.hotel-info-content').removeClass('active');
-              //   $('.hotel-item-map').removeClass('active');
-              //   $('.hotel-item-map').removeClass('not-active');
-              //   $('.close-view').css('display', 'none')
-              // })
-              $('.hotel-item-map').removeClass('active').addClass('not-active');
-              $('#' + dataId).addClass('active').removeClass('not-active');
-              $('.hotel-info-content').removeClass('active');
-              $('#' + dataId).find('.hotel-info-content').addClass('active');
-              $('.close-view').css('display', 'flex')
-              setTimeout(function () {
-                $('.popup-slider').slick({
-                  slidesToShow: 1,
-                  prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-                  nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-                });
-                $('.popup-slider').addClass('show');
-              }, 100);
-              $('.hotel-list-onmap').addClass('show');
-            });
-
-          })
+          $('#property_cards_wrap').html(response.property_card_html);
+          geojsonFeatures.features = $.parseJSON(response.markers);
+          loadMarkers();
+          $('.refresh-loader').hide();
+        },
+        error: function(response){
+          console.log('Error: '+response);
         }
+      });
+    });
 
-        $('.close-view').click(function (e) {
-          e.preventDefault();
+    function loadMarkers(){
+      geojsonFeatures.features.forEach(function (marker) {
+        var el = document.createElement('div');
+        el.className = 'marker';
+        el.style.backgroundImage = 'url(images/basic_geolocalize-02.png)';
+        el.style.width = 40 + 'px';
+        el.style.height = 40 + 'px';
+        el.style.backgroundRepeat = 'no-repeat',
+          el.style.backgroundSize = "contain",
+          el.style.backgroundPosition = "center center"
+        var description = marker.properties.description;
+        var title = marker.properties.title;
+        var price = marker.properties.price;
+        var images = marker.properties.images;
+        var dataId = marker.properties.dataId;
+
+        var slideshowContent = ""
+
+        for (var i = 0; i < images.length; i++) {
+          var img = images[i];
+
+          slideshowContent += '<div class="image-list' + (i === 1 ? ' active' : '') + '">' +
+            '<img src="' + img + '" class="img-fluid" />' +
+            '</div>';
+        }
+        var popupContent = '<div class="map-detail-container">' +
+          '<div class="map-hotel-img">' +
+          '<div class="popup-slider">' +
+          slideshowContent +
+          '</div>' +
+          // '<div class="popup-nav">' +
+          // '<div class="popup-btn popup-prev"></div>' +
+          // '<div class="popup-btn popup-next"></div>' +
+          // '</div>' +
+          '</div>' +
+          '<div class="map-hotel-description">' +
+          '<strong class="saol-font">' + title + '</strong>' +
+          '<p>' + description + '</p>' +
+          '<p class="map-hotel-price">Night from <span>' + price + '</span></p>' +
+          '</div>' +
+          '</div>';
+        var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(popupContent).setMaxWidth("400px");
+
+        var tmpMarker = new mapboxgl.Marker(el);
+
+        el.markerInstance = tmpMarker;
+
+        tmpMarker
+          .setLngLat(marker.geometry.coordinates)
+          .setPopup(popup)
+          .addTo(mapOfResults);
+
+        el.addEventListener("click", e => {
+          let coords = e.target.markerInstance.getLngLat();
+          mapOfResults.flyTo({
+            center: coords,
+            zoom: 12
+          });
+
+          // popup.on('close', function (e) {
+          //   $('.hotel-info-content').removeClass('active');
+          //   $('.hotel-item-map').removeClass('active');
+          //   $('.hotel-item-map').removeClass('not-active');
+          //   $('.close-view').css('display', 'none')
+          // })
+          $('.hotel-item-map').removeClass('active').addClass('not-active');
+          $('#' + dataId).addClass('active').removeClass('not-active');
           $('.hotel-info-content').removeClass('active');
-          $('.hotel-item-map').removeClass('active');
-          $('.hotel-item-map').removeClass('not-active');
-          $('.close-view').css('display', 'none');
-          $('.mapboxgl-popup').remove();
-          $(this).closest('.hotel-list-onmap').removeClass('show');
-        })
-
-        var picker = $('#daterangepicker-inline').daterangepicker({
-          parentEl: "#daterangepicker-inline-container",
-          autoApply: true,
-          minDate: new Date(),
-          autoUpdateInput: false,
-          locale: {
-            cancelLabel: 'Clear',
-          }
+          $('#' + dataId).find('.hotel-info-content').addClass('active');
+          $('.close-view').css('display', 'flex')
+          setTimeout(function () {
+            $('.popup-slider').slick({
+              slidesToShow: 1,
+              prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+              nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+            });
+            $('.popup-slider').addClass('show');
+          }, 100);
+          $('.hotel-list-onmap').addClass('show');
         });
 
-        picker.on('apply.daterangepicker', function (ev, picker) {
-          $('.onrange').html(picker.startDate.format('DD-MM-YYYY') + ' -> ' + picker.endDate.format('DD-MM-YYYY'));
-          $('.include-form').fadeIn("fast");
-        });
-        //picker.data('daterangepicker').hide = function () { };
-        //picker.data('daterangepicker').show();
+      })
+    }
 
+    $('.close-view').click(function (e) {
+      e.preventDefault();
+      $('.hotel-info-content').removeClass('active');
+      $('.hotel-item-map').removeClass('active');
+      $('.hotel-item-map').removeClass('not-active');
+      $('.close-view').css('display', 'none');
+      $('.mapboxgl-popup').remove();
+      $(this).closest('.hotel-list-onmap').removeClass('show');
+    })
+
+    var picker = $('#daterangepicker-inline').daterangepicker({
+      parentEl: "#daterangepicker-inline-container",
+      autoApply: true,
+      minDate: new Date(),
+      autoUpdateInput: false,
+      locale: {
+        cancelLabel: 'Clear',
+      }
+    });
+
+    picker.on('apply.daterangepicker', function (ev, picker) {
+      $('.onrange').html(picker.startDate.format('DD-MM-YYYY') + ' -> ' + picker.endDate.format('DD-MM-YYYY'));
+      $('.include-form').fadeIn("fast");
+    });
 </script>
 
 

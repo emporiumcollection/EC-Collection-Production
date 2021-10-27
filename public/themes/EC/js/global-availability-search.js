@@ -9,8 +9,6 @@ function replacePropertyData(id){
   var field = '';
   $('[data-place="property"]').each(function() {
       field = $(this).attr('data-replace');
-      console.log(properties[id][field]);
-      console.log(field);
       $(this).html(properties[id][field]);
   });
 
@@ -498,6 +496,7 @@ function replaceRooms(property_id, category_id){
     nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
   });
 }
+
 function getDefaultChannel(catt){            
     $.ajax({
         url: channelurl,
