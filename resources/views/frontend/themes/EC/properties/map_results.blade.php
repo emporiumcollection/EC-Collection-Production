@@ -81,7 +81,7 @@
               ?>
             <?php foreach($propertyResults as $property): ?>
               @include('frontend.themes.EC.properties.subtemplates.map_property_card', 
-                    ['property' => $property])
+                    ['property' => $property, 'block_title' => ''])
             <?php endforeach;?>
           </div>
         </div>
