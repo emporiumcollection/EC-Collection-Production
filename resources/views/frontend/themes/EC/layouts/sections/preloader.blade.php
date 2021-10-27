@@ -3,7 +3,7 @@
   $loaderTitle = 'Loading Luxury-Collection-Name';
   $loaderDescription = 'We are working to get collection of your choice.';
 
-  if(isset($loaderImages) && !empty($loaderImages)){
+  if(isset($loaderImages[0]['files']) && !empty($loaderImages[0]['files'])){
     $loaderImage = $loaderImages[0]['files'][0]['file_name'];
     $loaderImage = 'uploads/container_user_files/emotional-gallery-loader/' . $loaderImages[0]['name'] . '/' . $loaderImage;
 
