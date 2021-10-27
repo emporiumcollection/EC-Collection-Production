@@ -63,6 +63,22 @@
             </svg>
           </a>
           <div id="property_cards_wrap">
+            <?php
+              foreach ($editorsProperties as $property) :
+              ?>
+                @include('frontend.themes.EC.properties.subtemplates.map_property_card', 
+                    ['property' => $property, 'block_title' => 'Editor\'s Choice])
+              <?php
+              endforeach;
+              ?>
+              <?php
+              foreach ($featureProperties as $property) :
+              ?>
+                @include('frontend.themes.EC.properties.subtemplates.map_property_card', 
+                    ['property' => $property, 'block_title' => 'Featured'])
+              <?php
+              endforeach;
+              ?>
             <?php foreach($propertyResults as $property): ?>
               @include('frontend.themes.EC.properties.subtemplates.map_property_card', 
                     ['property' => $property])

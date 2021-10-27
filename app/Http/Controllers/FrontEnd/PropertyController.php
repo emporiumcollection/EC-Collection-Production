@@ -2965,33 +2965,33 @@ class PropertyController extends Controller {
             $cities[] = $keyword;
         }
 
-        if($request->get('view') != 'map'){
+        //if($request->get('view') != 'map'){
             //Get editor's choice properties
-            $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities);
+        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities);
 
-            if(!empty($this->data['editorsProperties']->toArray())){
-                foreach($this->data['editorsProperties'] as $k => $editorProperty){
-                    $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);
-                }
-                
-                $this->formatPropertyRecords($this->data['editorsProperties']);
+        if(!empty($this->data['editorsProperties']->toArray())){
+            foreach($this->data['editorsProperties'] as $k => $editorProperty){
+                $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);
             }
-
-            //Get featured choice properties
-            $this->data['featureProperties'] = $this->getFeaturedProperties($cities);
-
-            if(!empty($this->data['featureProperties']->toArray())){
-                foreach($this->data['featureProperties'] as $k => $featureProperty){
-                    if(isset($featureProperty->container) && $featureProperty->container){
-                        $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
-                    }else{
-                        $this->data['featureProperties'][$k]->propertyImages = [];
-                    }
-                }
-
-                $this->formatPropertyRecords($this->data['featureProperties']);
-            }
+            
+            $this->formatPropertyRecords($this->data['editorsProperties']);
         }
+
+        //Get featured choice properties
+        $this->data['featureProperties'] = $this->getFeaturedProperties($cities);
+
+        if(!empty($this->data['featureProperties']->toArray())){
+            foreach($this->data['featureProperties'] as $k => $featureProperty){
+                if(isset($featureProperty->container) && $featureProperty->container){
+                    $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+                }else{
+                    $this->data['featureProperties'][$k]->propertyImages = [];
+                }
+            }
+
+            $this->formatPropertyRecords($this->data['featureProperties']);
+        }
+        //}
 
         //Get featured choice properties
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities);
