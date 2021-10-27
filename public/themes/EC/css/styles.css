@@ -36529,7 +36529,15 @@ footer {
   .hotel-page-list .hotel-prices.hotel-price-detail {
     padding: 7px 2px; }
   .dropdown-bs {
-    padding: 10px 5px; } }
+    padding: 10px 5px; }
+  .second-header .ico {
+    margin-top: 3px; }
+  .menu-nav {
+    padding-right: 12px; } }
+
+@media (max-width: 398.98px) {
+  .menu-nav.text-menu {
+    padding: 7px 3px; } }
 
 @media (max-width: 321.98px) {
   .menu-s .title-main {
@@ -36568,4 +36576,6 @@ footer {
     margin-right: 0 !important; }
   .menu-nav.text-menu {
     padding: 7px 1px;
-    font-size: 12px; } }
+    font-size: 12px; }
+  .menu-nav.text-menu {
+    padding: 7px 2px; } }

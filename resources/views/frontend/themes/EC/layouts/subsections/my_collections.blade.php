@@ -307,7 +307,7 @@
             </div>
             <div class="collapse bg-grey" id="addCollaction" data-parent="#collections">
                 <div class="p-4">
-                    {{-- <form method="post" enctype="multipart/form-data" id="myform"> --}}
+                    {{-- <form enctype="multipart/form-data" id="myform" method="post" name="myform"> --}}
                         <div class="row">
                             <div class="col-xl-7 col-lg-12">
                                 <div class="form-group row">
@@ -315,22 +315,17 @@
                                         <label>Name of Collection <sup>*</sup> </label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control" name="collection_name" id="collection_name" placeholder="Name ">
+                                        <input type="text" class="form-control " name="collection_name" id="collection_name" placeholder="Name ">
                                     </div>
-                                    <input type="hidden" name="property_id" id="property_id" value="">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-4">
                                         <label>Start Date - End Date</label>
                                     </div>
                                     <div class="col-8">
-                                        <div class="range-calendar calendar-collection" id="calendar-pick">
-                                            <div id="daterangepicker-inline-container" class="daterangepicker-inline">
-                                            </div>
-                                            <input type="hidden" id="daterangepicker-inline">
-                                            <div class="clearfix"></div>
-                                        </div>
+                                        <input type="text" name="datefilter" id="from_to_end" class="form-control"/>
                                     </div>
+                                        {{-- <span class="span_date"></span> --}}
 
                                 </div>
                             </div>

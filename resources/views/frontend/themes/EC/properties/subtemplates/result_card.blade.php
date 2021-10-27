@@ -18,9 +18,9 @@
           <i class="ico ico-diamon diamon-label"></i>
         </a>
         <div class="dropdown-menu">
-          <a href="#" class="dropdown-item">Add to collection</a>
+          <a href="#" class="dropdown-item" >Add to collection</a>
           <a href="#" class="dropdown-item btn-sidebar create-collection"
-            data-sidebar="#myCollection" onclick="getcollection({{ $property->id }})">Create new collection</a>
+            data-sidebar="#myCollection" onclick="collection(<?php echo $property->id;?>)">Create new collection</a>
         </div>
       </div>
 

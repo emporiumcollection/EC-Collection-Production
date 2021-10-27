@@ -237,7 +237,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/moment.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/mediaelement-and-player.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/plugin/owl.carousel.min.js')}}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/plugin/owl.carousel.min.js')}}"></script> --}}
 <script type="text/javascript" src="{{ asset('js/plugin/select2/select2.full.min.js')}}"></script>
 <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/leaflet.js') }}"></script>
@@ -403,27 +403,7 @@ $(function() {
       }
     });
 
-    $('.logo-list').slick({
-      slidesToShow: 7,
-      slidesToScroll: 3,
-      arrows: false,
-      dots: false,
-      variableWidth: true,
-      autoplay: true,
-      autoplayTimeout: 3000,
-    })
-    $('.img-main-banner').slick({
-      infinite: true,
-      speed: 600,
-      fade: true,
-      cssEase: 'linear',
-      autoplay: true,
-      autoplaySpeed: 5000,
-      arrows: false,
-      slidesToShow: 1,
-
-    });
-
+    
     $(document).on('click', ".add_new_addres", function(){
 
         var title = $( "#title option:selected" ).val("");
@@ -1194,7 +1174,7 @@ console.log(sp_darr);
     });
 });
 
-/*function setMapLocation(lat, long){
+function setMapLocation(lat, long){
     var locations = [
       ['<b>Loaction Name</b>', lat, long],
     ];
@@ -1212,7 +1192,39 @@ console.log(sp_darr);
         .bindPopup(locations[i][0])
         .addTo(map);
     }
-}*/
+}
+
+    
+    function collection(id){
+
+        collection_data = id;
+    }
+
+$(document).ready(function(){
+  $(document).on('click', ".collection_", function(){
+    alert(collection_data);
+    var id = collection_data;
+    var start_date = $("#from_to_end").val();
+    var collection_name = $("#collection_name").val(); 
+
+    $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',            
+            url:'{{URL::to("/add_collection")}}',
+            data: { id: id,
+                    collection_name: collection_name,
+                    start_date: start_date,},
+            dataType:'json',                    
+            success: function(response){
+
+            }
+    });
+
+  });
+}); 
+
 </script>
 
 <script type="text/javascript">
@@ -1232,6 +1244,24 @@ console.log(sp_darr);
         });
         pickerDate.data('daterangepicker').hide = function () { };
         pickerDate.data('daterangepicker').show();
+    });
+
+    $(function() {
+
+        $('input[name="datefilter"]').daterangepicker({
+            autoUpdateInput: false,
+            locale: {
+              cancelLabel: 'Clear'
+            }
+        });
+
+        $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+            $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+        });
+
+        $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+          $(this).val('');
+        });
     });
 </script>
 
