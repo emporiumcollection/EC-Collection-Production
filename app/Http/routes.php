@@ -51,6 +51,7 @@ Route::get('/hotel/location','FrontEnd\HotelDetailController@location');
 Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
 Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
 Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
+Route::post('/add_collection','FrontEnd\HotelDetailController@add_collection');
 
 
 Route::get('/users/security', 'UserController@getSecurity');
