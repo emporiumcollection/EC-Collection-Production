@@ -5,9 +5,11 @@
 </script>
 <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
     <div class="pr-lst result-grid">
+      <?php if($block_title):?>
       <div class="hotel-tag-label" style="background: #89a49f;">
         <?php echo $block_title;?>
       </div>
+      <?php endif;?>
       <?php foreach($property->propertyImages as $image):?>
       <div>
         <img src="<?php echo 'property-image/resize/383x261/'.$property['container']['name'].'/'.$image['file_name'].'/property-image';?>" class="w-100" alt="">
