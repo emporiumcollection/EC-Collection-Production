@@ -628,9 +628,13 @@ $(document).ready(function(){
 });
 
 function getContainerName(id){
-  if(properties[id]['container'] !== undefined){
-    return properties[id]['container']['name'];
-  }else{
-    return properties[id]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
-  }  
+  try{    
+    if(properties[id]['container']){
+      return properties[id]['container']['name'];
+    }else{
+      return properties[id]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
+    }  
+  }catch(){
+
+  }
 }
