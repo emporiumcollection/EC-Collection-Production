@@ -1,3 +1,47 @@
+<div class="logo-list-container">
+    <div class="logo-list">
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On1.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On2.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On7.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On3.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On2.svg') }}images/Emporium-Collection-As-Seen-On4.svg" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/images/Emporium-Collection-As-Seen-On5.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On8.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On9.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On10.svg') }}" class="img-fluid" alt="">
+        </div>
+       
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On11.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On12.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On13.svg') }}" class="img-fluid" alt="">
+        </div>
+        <div>
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On14.svg') }}" class="img-fluid" alt="">
+        </div>
+    </div>
+</div>
 <footer>
     <div class="container mb-0">
         <div class="footer-top pb-4">

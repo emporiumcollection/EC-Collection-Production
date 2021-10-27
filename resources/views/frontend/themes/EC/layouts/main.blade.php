@@ -403,6 +403,27 @@ $(function() {
       }
     });
 
+    $('.logo-list').slick({
+      slidesToShow: 7,
+      slidesToScroll: 3,
+      arrows: false,
+      dots: false,
+      variableWidth: true,
+      autoplay: true,
+      autoplayTimeout: 3000,
+    })
+    $('.img-main-banner').slick({
+      infinite: true,
+      speed: 600,
+      fade: true,
+      cssEase: 'linear',
+      autoplay: true,
+      autoplaySpeed: 5000,
+      arrows: false,
+      slidesToShow: 1,
+
+    });
+
     $(document).on('click', ".add_new_addres", function(){
 
         var title = $( "#title option:selected" ).val("");
@@ -423,12 +444,6 @@ $(function() {
 
         var suit_id = new Array();
         var guest = new Array();
-
-        $(document).on('click', ".collection_", function(){
-          alert("here");
-          var collection_name = $("#collection_name");;
-          // var start_End_date = $(".daterangepicker-inline");
-        });
 
         $(document).on('click', ".select_suite", function(){
 
@@ -1178,6 +1193,7 @@ console.log(sp_darr);
       $('.slider-detail').not('.slick-initialized').slick('setPosition');
     });
 });
+
 function setMapLocation(lat, long){
     var locations = [
       ['<b>Loaction Name</b>', lat, long],
@@ -1197,6 +1213,8 @@ function setMapLocation(lat, long){
         .addTo(map);
     }
 }
+
+
 </script>
 
 <script type="text/javascript">
