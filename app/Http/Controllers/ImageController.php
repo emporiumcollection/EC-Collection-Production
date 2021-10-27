@@ -174,7 +174,7 @@ class ImageController extends Controller {
             }*/
             if (!file_exists($this->file_path)) {
                 $this->file_path = public_path() .
-                '/uploads/images/default-hotel.png';
+                '/images/default-hotel.png';
             }
 
             $thumbnail = Image::open($this->file_path)
