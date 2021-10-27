@@ -321,7 +321,7 @@ function replaceSuiteDetail(property_id, category_id){
   replacePropertyData(property_id);
   setTimeout("$('#suites-loader').hide();", 4000);
   setTimeout("$('#suites-popup').show();", 4000);
-  setTimeout("$('.result-grid').slick('setPosition');", 4000);  
+  setTimeout("$('.suite-popup').slick('setPosition');", 4000);  
 }
 
 function replaceSuiteBoard(){
