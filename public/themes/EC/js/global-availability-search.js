@@ -3,6 +3,7 @@ var suiteTemplate = '';
 var boardTemplate = '';
 var currentPropertyId = '';
 var priceTemplate = '';
+
 function replacePropertyData(id){
   currentPropertyId = id;
   var field = '';
@@ -510,22 +511,49 @@ function replaceRooms(property_id, category_id){
   });
 }
 
-// function getcollection(id){
-//   alert(id);
-//   // var property_id = id;
-// }
 
-// $(document).ready(function(){
-//   $(document).on('click', ".collection_", function(){
-    
-//     var form = $("#myform")[0];
-//     alert(form);
-    
-//     // var start_End_date = $(".daterangepicker-inline").val();
-//     // alert(start_End_date);
-//   });
-// }); 
 
+$(document).ready(function(){
+  $(document).on('click', ".collection_", function(){
+    
+    var collection_name = $("#collection_name").val();
+    alert(id);
+
+  });
+}); 
+
+
+function collection(id){
+  alert(id);
+    var collection_id = id;
+    alert(collection_id);
+    return collection_id;
+  }
+var id = collection_id(id);
+
+$(document).ready(function(){
+
+  $(document).on('click', ".collection_", function(){
+
+    
+    var collection_name = $("#collection_name").val();
+    alert(id);
+
+    $.ajax({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',            
+            url:'{{URL::to("/add_collection")}}',
+            data: { id:id,
+                    collection_name: collection_name },
+            dataType:'json',                    
+            success: function(response){
+
+            }
+    });
+
+}); 
 function getDefaultChannel(catt){            
     $.ajax({
         url: channelurl,
