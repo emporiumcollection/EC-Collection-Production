@@ -7347,7 +7347,7 @@ class PropertyController extends Controller {
         ->having('distance', '<=', 5)
         ->get();
         if(!empty($properties->toArray())){
-            $this->tmpfunction($properties);
+            $this->commanPropertyRecordsFormat($properties);
         }
         $markers = $this->formatRecordsMap($properties);
         $property_card_html = '';
@@ -7364,7 +7364,7 @@ class PropertyController extends Controller {
         ]);
     }
 
-    private function tmpfunction(&$propertyResults){
+    private function commanPropertyRecordsFormat(&$propertyResults){
         foreach($propertyResults as $k => $propertyRecord){
             if(empty($propertyRecord->container)){
                 $container = Container::
