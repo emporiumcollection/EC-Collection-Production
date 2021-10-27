@@ -628,13 +628,9 @@ $(document).ready(function(){
 });
 
 function getContainerName(id){
-  try{    
-    if(properties[id]['container']){
-      return properties[id]['container']['name'];
-    }else{
-      return properties[id]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
-    }  
-  }catch(){
-
-  }
+  if(properties[id]['container']){
+    return properties[id]['container']['name'];
+  }else{
+    return properties[id]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
+  }  
 }
