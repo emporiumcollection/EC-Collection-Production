@@ -511,42 +511,12 @@ function replaceRooms(property_id, category_id){
   });
 }
 
-
-
 $(document).ready(function(){
-  $(document).on('click', ".collection_", function(){
-    
+  $(document).on('click', ".collection_", function(){    
     var collection_name = $("#collection_name").val();
-    alert(id);
-
   });
-}); 
+});
 
-
-function collection(id){
-  var collection_id = id;
-  return collection_id;
-}
-var id = collection_id(id);
-
-$(document).ready(function(){
-  $(document).on('click', ".collection_", function(){
-    var collection_name = $("#collection_name").val();
-    $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
-            type: 'POST',            
-            url:'{{URL::to("/add_collection")}}',
-            data: { id:id,
-                    collection_name: collection_name },
-            dataType:'json',                    
-            success: function(response){
-
-            }
-    });
-
-}); 
 function getDefaultChannel(catt){            
     $.ajax({
         url: channelurl,
