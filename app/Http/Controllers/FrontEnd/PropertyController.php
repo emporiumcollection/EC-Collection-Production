@@ -2967,11 +2967,19 @@ class PropertyController extends Controller {
 
         //if($request->get('view') != 'map'){
             //Get editor's choice properties
+        $emptyPropertyImages = json_encode([
+            'id' => 0,
+            'file_name' => 'default-image.png',
+        ]);
         $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities);
 
         if(!empty($this->data['editorsProperties']->toArray())){
             foreach($this->data['editorsProperties'] as $k => $editorProperty){
-                $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);
+                if(isset($editorProperty->container) && $editorProperty->container){
+                    $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
+                }else{
+                    $this->data['editorsProperties'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
+                }
             }
             
             $this->formatPropertyRecords($this->data['editorsProperties']);
@@ -2985,7 +2993,7 @@ class PropertyController extends Controller {
                 if(isset($featureProperty->container) && $featureProperty->container){
                     $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
                 }else{
-                    $this->data['featureProperties'][$k]->propertyImages = [];
+                    $this->data['featureProperties'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
                 }
             }
 
@@ -3011,13 +3019,11 @@ class PropertyController extends Controller {
                 if(isset($propertyRecord->container) && $propertyRecord->container){
                     $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
                 }else{
-                    $this->data['propertyResults'][$k]->propertyImages = [];
+                    $this->data['propertyResults'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
                 }
             }
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
-
-        print_r($this->data['propertyResults']->toArray());exit;
 
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
         $this->data['trendingFilters'] = $this->getTrendingFilters();

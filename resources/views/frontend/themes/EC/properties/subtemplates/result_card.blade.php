@@ -6,11 +6,27 @@
   <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
 
     <div class="pr-lst result-grid">
-      <?php foreach($property->propertyImages as $image):?>
+      <?php 
+      foreach($property->propertyImages as $image):
+        if(isset($property['container']['name'])){
+          $container_name = $property['container']['name'];
+        }else{
+          $container_name = strtolower(str_replace("-", " ", trim($property->property_name)));
+        }
+
+        if(is_array($image)){
+          $file_name = $image['file_name'];
+        }elseif(is_object($image)){
+          $file_name = $image->file_name;
+        }else{
+          $file_name = 'default-image.png';
+        }
+      ?>
         <div>
-          <img src="<?php echo 'property-image/resize/615x419/'.$property['container']['name'].'/'.$image['file_name'].'/property-image';?>" class="w-100" alt="">
+          <img src="<?php echo 'property-image/resize/615x419/'.$container_name.'/'.$file_name.'/property-image';?>" class="w-100" alt="">
         </div>
-      <?php endforeach;?>
+      <?php 
+      endforeach;?>
     </div>
     <div class="my-dropdown">
       <div class="btn-group dropleft">

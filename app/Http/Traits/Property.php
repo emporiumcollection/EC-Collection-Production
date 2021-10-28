@@ -290,7 +290,7 @@ trait Property {
                 foreach($property->suites as $sk => $suite){
                     $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
                     $suiteNameList[] = $suite->cat_short_name;
-                    if(!empty($suite->rooms)){
+                    if(!empty($suite->rooms->toArray())){
                         foreach($suite->rooms as $rk => $room){
                             //$properties[$k]->suites[$sk]->rooms[$rk]->price = $this->getRoomPrice($room->id);
 
@@ -304,7 +304,6 @@ trait Property {
                             $properties[$k]->suites[$sk]->suiteamenities = $this->formatRoomAmenities($amenity->amenity_ids, 'li');
                         }
                     }else{
-                        print 'here';exit;
                         $properties[$k]->suites[$sk]->rooms[0] = [
                             'id' => 0,
                             'images' => [
