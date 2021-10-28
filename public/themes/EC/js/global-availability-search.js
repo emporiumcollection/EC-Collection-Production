@@ -583,9 +583,29 @@ $(document).ready(function(){
     $('.where').trigger("keyup");
   });
 
-  $('.menu-s .dropdown-menu .dropdown-item').on("click",function(){
-    document.location = $(this).attr("href");
+  $('.menu-s #experience_dropdown .dropdown-menu .dropdown-item').on("click",function(){
+    var url = createSearchUrl($(this).attr("data-value"));
+    searchResults(url);
   });
+
+  $('#atmosphere_dropdown .custom-control-input').on("click",function(){
+    var url = createSearchUrl();
+    searchResults(url);
+    return true;
+  });
+
+  $('#facilities_dropdown .custom-control-input').on("click",function(){
+    var url = createSearchUrl();
+    searchResults(url);
+    return true;
+  });
+
+  $('#style_dropdown .custom-control-input').on("click",function(){
+    var url = createSearchUrl();
+    searchResults(url);
+    return true;
+  });
+
 
   /*$('.lazy').Lazy({
       // your configuration goes here
@@ -597,3 +617,64 @@ $(document).ready(function(){
       }
   });*/
 });
+
+function searchResults(url){
+  var urls = url;
+  $.ajax({
+        url: urls,
+        dataType:'html',
+        type: 'get',
+        async:false,
+        success: function(response){ 
+          $('#myTabContent').html(response);
+          setTimeout(function () {
+            $('body').css('overflow', 'auto');
+            $('.pageload').hide();
+          }, 3000)
+        }
+    });
+}
+
+function getUrlParam(p){
+  $.urlParam = function (name) {
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+                          .exec(window.location.search);
+        return (results !== null) ? results[1] || 0 : false;
+    }
+  return $.urlParam(p);
+}
+
+function createSearchUrl(experience = ''){
+  $('.pageload').show();
+
+  var atmospheres = [];
+  var facilities = [];
+  alert(facilities);
+  var styles = [];
+
+  $("input[name='atmosphere[]']").each(function(){
+    if($(this).prop('checked') === true){
+      atmospheres.push($(this).val());
+    }
+  });
+  $("input[name='facilities[]']").each(function(){
+    if($(this).prop('checked') === true){
+      facilities.push($(this).val());
+    }
+  });
+  $("input[name='style[]']").each(function(){
+    if($(this).prop('checked') === true){
+      styles.push($(this).val());
+    }
+  });
+
+  var keyword = getUrlParam('s');
+  var atmosphere_ids = atmospheres.join(',');
+  var facility_ids = facilities.join(',');
+  var style_ids = styles.join(',');
+  
+  var url = document.location.origin + document.location.pathname + `?s=`+keyword+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience;
+
+  window.history.pushState({}, '', url);
+  return url + '&view=ajax';
+}

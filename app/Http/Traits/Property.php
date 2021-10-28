@@ -263,7 +263,20 @@ trait Property {
         ->whereIn('city', $cities)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
-        ->where('property_status', '=', 1);     
+        ->where('property_status', '=', 1);
+
+        $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
+        foreach($atmosphere_ids as $id){
+             $properties->orWhere('atmosphere_ids', 'like', "%,$id%");
+        }
+        $facilityes_ids = explode(",",request()->get('facility_ids'));
+        foreach($facilityes_ids as $id){
+             $properties->orWhere('facility_ids', 'like', "%,$$id%");
+        }
+        $style_ids = explode(",",request()->get('style_ids'));
+        foreach($style_ids as $id){
+             $properties->orWhere('style_ids', 'like', "%,$id%");
+        }
 
         if($experience_id){
             $properties->where('property_category_id', 'like', "%,$experience_id%");
@@ -665,5 +678,32 @@ trait Property {
         \session()->put('Guests',$Guests);
         \session()->put('arrival_date',$arrive_date);
         \session()->put('departure_date',$departure_date);        
+    }
+     public function setFitlerOptions(){
+        $this->data['experiences_data'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 8)
+        ->get();
+
+        $this->data['atmosphere'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 886)
+        ->get();
+
+        $this->data['facilities'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 897)
+        ->get();
+
+        $this->data['style'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 909)
+        ->get();
+
+        return $this->data;
     }
 }

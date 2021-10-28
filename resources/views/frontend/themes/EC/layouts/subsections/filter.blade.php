@@ -36,130 +36,39 @@
                 </div>
             </div>
             <div class="filter-list">
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        <h5 class="filter-title">By experience</h5>
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="experiencefilter"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="experiencefilter"></label>
+                <h5 class="filter-title mb-4">By Experience</h5>
+                
+                @foreach($experiences_data as $exp)     
+                    <div class="row align-items-center">
+                        <div class="col-8">
+                            <h5 class="filter-title">{{ $exp->category_name }}</h5>
+                        </div>
+                        <div class="col-4">
+                            <div class="onoffswitch ml-auto">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="experiencefilter{{ $exp->id }}"
+                                    tabindex="0">
+                                <label class="onoffswitch-label" for="experiencefilter{{ $exp->id }}"></label>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endforeach    
             </div>
             <div class="filter-list">
                 <h5 class="filter-title mb-4">By facility</h5>
-
-                <div class="row form-group align-items-center">
-                    <div class="col-8">
-                        Wheelchair friendly
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="wheelchair"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="wheelchair"></label>
+                @foreach($facilities as $fac)
+                    <div class="row form-group align-items-center">
+                        <div class="col-8">
+                            {{ $fac->category_name }}
+                        </div>
+                        <div class="col-4">
+                            <div class="onoffswitch ml-auto">
+                                <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="wheelchair{{ $fac->id }}"
+                                    tabindex="0">
+                                <label class="onoffswitch-label" for="wheelchair{{ $fac->id }}"></label>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="row form-group align-items-center">
-                    <div class="col-8">
-                        Pets Allowed
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="pets"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="pets"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row form-group align-items-center">
-                    <div class="col-8">
-                        Limousine Service
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="limousine"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="limousine"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row form-group align-items-center">
-                    <div class="col-8">
-                        Personalized Service
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="personalized"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="personalized"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row form-group align-items-center">
-                    <div class="col-8">
-                        Covid 19 +  Cancellation Flexibility
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="covid"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="covid"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row form-group align-items-center">
-                    <div class="col-8">
-                        Free Wifi
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="wifi"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="wifi"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row form-group align-items-center">
-                    <div class="col-8">
-                        Pool
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="pool"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="pool"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row form-group align-items-center">
-                    <div class="col-8">
-                        Gym
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="gym"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="gym"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="row align-items-center">
-                    <div class="col-8">
-                        Smoking allowed
-                    </div>
-                    <div class="col-4">
-                        <div class="onoffswitch ml-auto">
-                            <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="smoking"
-                                tabindex="0">
-                            <label class="onoffswitch-label" for="smoking"></label>
-                        </div>
-                    </div>
-                </div>
+                @endforeach
             </div>
             <div class="filter-list">
                 <h5 class="filter-title mb-4">By Suite type</h5>
