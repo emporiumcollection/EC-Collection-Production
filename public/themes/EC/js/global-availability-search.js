@@ -610,7 +610,7 @@ $(document).ready(function(){
     return true;
   });
 
-  $('.nav-link').on("click", function(){
+  $('.menunav-group .nav-link').on("click", function(){
      var divid = $(this).attr("href");
      $('img', $(divid)).attr("src",$('img', $(divid)).attr("data-src"));
   });
