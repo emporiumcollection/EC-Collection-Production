@@ -303,6 +303,16 @@ trait Property {
                             ->get()->toArray();
                             $properties[$k]->suites[$sk]->suiteamenities = $this->formatRoomAmenities($amenity->amenity_ids, 'li');
                         }
+                    }else{
+                        print 'here';exit;
+                        $properties[$k]->suites[$sk]->rooms[0] = [
+                            'id' => 0,
+                            'images' => [
+                                'id' => 0,
+                                'file_name' => 'default-image.png',
+                                'name' => 'room-1',
+                            ]
+                        ];
                     }
                 }
             }

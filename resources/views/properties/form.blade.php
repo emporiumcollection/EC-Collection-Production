@@ -377,6 +377,70 @@
 
                                     </div>
                                 </div>
+                                <div class="form-group  " >
+                                    <label for="Experiences" class=" control-label col-md-4 text-left"> Experiences</label>
+                                    <div class="col-md-6">
+
+                                        <select name='experiences[]' id="experience_ids" rows='5'   class='select2 ' multiple="multiple"   > 
+                                            <option  value ="0">-- Select Category --</option> 
+                                            @foreach($categories as $val)
+
+                                            <option  value ="{{$val->id}}" {{(isset($row['property_category_id']) && in_array($val->id,explode(',',$row['property_category_id']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
+                                            @endforeach                     
+                                        </select> 
+                                    </div> 
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
+                                <div class="form-group  " >
+                                    <label for="Facilities" class=" control-label col-md-4 text-left"> Facilities</label>
+                                    <div class="col-md-6">
+
+                                        <select name='facilities[]' id="facility_ids" rows='5'   class='select2 ' multiple="multiple"   > 
+                                            <option  value ="0">-- Select Category --</option> 
+                                            @foreach($categories as $val)
+
+                                            <option  value ="{{$val->id}}" {{(isset($row['property_category_id']) && in_array($val->id,explode(',',$row['property_category_id']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
+                                            @endforeach                     
+                                        </select> 
+                                    </div> 
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
+                                <div class="form-group  " >
+                                    <label for="Atmospheres" class=" control-label col-md-4 text-left"> Atmospheres</label>
+                                    <div class="col-md-6">
+
+                                        <select name='atmospheres[]' id="atmosphere_ids" rows='5'   class='select2 ' multiple="multiple"   > 
+                                            <option  value ="0">-- Select Category --</option> 
+                                            @foreach($categories as $val)
+
+                                            <option  value ="{{$val->id}}" {{(isset($row['property_category_id']) && in_array($val->id,explode(',',$row['property_category_id']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
+                                            @endforeach                     
+                                        </select> 
+                                    </div> 
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
+                                <div class="form-group  " >
+                                    <label for="Styles" class=" control-label col-md-4 text-left"> Styles</label>
+                                    <div class="col-md-6">
+
+                                        <select name='styles[]' id="style_ids" rows='5'   class='select2 ' multiple="multiple"   > 
+                                            <option  value ="0">-- Select Category --</option> 
+                                            @foreach($categories as $val)
+
+                                            <option  value ="{{$val->id}}" {{(isset($row['property_category_id']) && in_array($val->id,explode(',',$row['property_category_id']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
+                                            @endforeach                     
+                                        </select> 
+                                    </div> 
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
 
                                 <div class="form-group  " >
                                     <label for="Copy Amenities" class=" control-label col-md-4 text-left"> Use Default Seasons </label>

@@ -2837,6 +2837,30 @@ function property_images_wetransfer(Request $request) {
                 $data['property_category_id'] = '';
             }
 
+            if (!empty($request->input('experiences'))) {
+                $data['experiene_ids'] = implode(',', $request->input('experiences'));
+            } else {
+                $data['experiene_ids'] = '';
+            }
+
+            if (!empty($request->input('facilities'))) {
+                $data['facility_ids'] = implode(',', $request->input('facilities'));
+            } else {
+                $data['facility_ids'] = '';
+            }
+
+            if (!empty($request->input('styles'))) {
+                $data['style_ids'] = implode(',', $request->input('styles'));
+            } else {
+                $data['style_ids'] = '';
+            }
+
+            if (!empty($request->input('atmospheres'))) {
+                $data['atmosphere_ids'] = implode(',', $request->input('atmospheres'));
+            } else {
+                $data['atmosphere_ids'] = '';
+            }
+
 
             if (!is_null($request->input('default_seasons'))) {
                 $data['default_seasons'] = $request->input('default_seasons');

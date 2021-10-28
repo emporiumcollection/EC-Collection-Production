@@ -3017,6 +3017,8 @@ class PropertyController extends Controller {
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
 
+        print_r($this->data['propertyResults']->toArray());exit;
+
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
         $this->data['trendingFilters'] = $this->getTrendingFilters();
 
