@@ -36,8 +36,22 @@
     <div class="row hero-row mt-4">
       <div class="col-lg-6">
         <div class="hero-item">
-          <?php if(!empty($propertyImages)):?>
-            <img src="<?php echo 'property-image/resize/627x627/'.$editorChoice['container']['name'].'/'.$propertyImages[0]['file_name'].'/property-image';?>" alt="">
+          <?php if(!empty($propertyImages)):
+              if(isset($editorChoice['container']['name'])){
+                $container_name = $editorChoice['container']['name'];
+              }else{
+                $container_name = strtolower(str_replace("-", " ", trim($editorChoice->property_name)));
+              }
+
+              if(is_array($propertyImages[0])){
+                $file_name = $propertyImages[0]['file_name'];
+              }elseif(is_object($propertyImages[0])){
+                $file_name = $propertyImages[0]->file_name;
+              }else{
+                $file_name = 'default-image.png';
+              }
+            ?>
+            <img src="<?php echo 'property-image/resize/627x627/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
           <?php endif;?>
           <div class="hero-desc">
             <h4><?php echo $editorChoice->detail_section1_title;?></h4>
@@ -61,10 +75,24 @@
           $imageNum = 0; 
           foreach($propertyImages as $pi => $editorImage):
             if($pi==0) continue;
+
+            if(isset($editorChoice['container']['name'])){
+              $container_name = $editorChoice['container']['name'];
+            }else{
+              $container_name = strtolower(str_replace("-", " ", trim($editorChoice->property_name)));
+            }
+
+            if(is_array($editorImage)){
+              $file_name = $editorImage['file_name'];
+            }elseif(is_object($editorImage)){
+              $file_name = $editorImage->file_name;
+            }else{
+              $file_name = 'default-image.png';
+            }
           ?>
             <div class="col-md-6">
               <div class="hero-item">
-                <img src="<?php echo 'property-image/resize/311x311/'.$editorChoice['container']['name'].'/'.$editorImage['file_name'].'/property-image';?>" alt="">
+                <img src="<?php echo 'property-image/resize/311x311/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
               </div>
             </div>
           <?php 
