@@ -10,9 +10,23 @@
         <?php echo $block_title;?>
       </div>
       <?php endif;?>
-      <?php foreach($property->propertyImages as $image):?>
+      <?php foreach($property->propertyImages as $image):
+          if(isset($property['container']['name'])){
+            $container_name = $property['container']['name'];
+          }else{
+            $container_name = strtolower(str_replace("-", " ", trim($property->property_name)));
+          }
+
+          if(is_array($image)){
+            $file_name = $image['file_name'];
+          }elseif(is_object($image)){
+            $file_name = $image->file_name;
+          }else{
+            $file_name = 'default-image.png';
+          }
+      ?>
       <div>
-        <img src="<?php echo 'property-image/resize/383x261/'.$property['container']['name'].'/'.$image['file_name'].'/property-image';?>" class="w-100" alt="">
+        <img src="<?php echo 'property-image/resize/383x261/'.$container_name.'/'.$file_name.'/property-image';?>" class="w-100" alt="">
       </div>
       <?php endforeach;?>
     </div>
