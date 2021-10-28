@@ -609,7 +609,7 @@ function getContainerName(id){
     }else{
       return properties[id]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
     }
-  }catch(){
+  }catch(e){
 
   }
 }
