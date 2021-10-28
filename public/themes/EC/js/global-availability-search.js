@@ -667,9 +667,12 @@ function getUrlParam(p){
 function createSearchUrl(experience = ''){
   $('.pageload').show();
 
+  if(!experience){
+    experience = getUrlParam('experience');
+  }
+
   var atmospheres = [];
-  var facilities = [];
-  alert(facilities);
+  var facilities = [];  
   var styles = [];
 
   $("input[name='atmosphere[]']").each(function(){
