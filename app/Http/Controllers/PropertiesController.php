@@ -556,9 +556,9 @@ class PropertiesController extends Controller {
             }
 
             if (!empty($request->input('experiences'))) {
-                $data['experiene_ids'] = implode(',', $request->input('experiences'));
+                $data['experience_ids'] = implode(',', $request->input('experiences'));
             } else {
-                $data['experiene_ids'] = '';
+                $data['experience_ids'] = '';
             }
 
             if (!empty($request->input('facilities'))) {
@@ -2862,9 +2862,9 @@ function property_images_wetransfer(Request $request) {
             }
 
             if (!empty($request->input('experiences'))) {
-                $data['experiene_ids'] = implode(',', $request->input('experiences'));
+                $data['experience_ids'] = implode(',', $request->input('experiences'));
             } else {
-                $data['experiene_ids'] = '';
+                $data['experience_ids'] = '';
             }
 
             if (!empty($request->input('facilities'))) {
