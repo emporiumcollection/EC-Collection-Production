@@ -31,8 +31,9 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       var imgUrl = '';
+      var containerName = getContainerName(id);
       values.forEach(function(e){
-        imgUrl = '/property-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image';
+        imgUrl = '/property-image/resize/600x500/' + containerName + '/' + e.file_name + '/property-image';
         imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file_title + '" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
@@ -48,13 +49,15 @@ function replacePropertyData(id){
       var spanid = 1;
       var grid = 1;
       var imgUrl = '';
+      var containerName = getContainerName(id);
+
       suites.forEach(function(s){
         rooms = s.rooms;
         rooms.forEach(function(r){
           rimages = r.images;
           if(r.images!=undefined){          
             rimages.forEach(function(e){
-              imgUrl = '/room-image/resize/600x500/' + properties[id]['container']['name'] + '/' + e['file']['name'] + '/' + e.file.file_name;
+              imgUrl = '/room-image/resize/600x500/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
               imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
@@ -259,12 +262,12 @@ function replaceSuiteList(id){
       onlyThree = 0;
       sid = suite['id'];
       suiteItem = '<div class="property-suite-p'+sid+'">' + suiteTemplate + '</div>';
-
+      var containerName = getContainerName(id);
       roomimages = '';
       suite.rooms[0].images.forEach(function(rm){
         if(onlyThree < 3){        
           roomimages += `<div>
-              <img src="/room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+              <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
             </div>`;  
         }
         onlyThree++; 
@@ -297,11 +300,11 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_category_name"]').html(suite.category_name);
   $('[data-place="suite_description"]').html(suite.room_desc);
   $('[data-place="suite_amenities"]').html(suite.suiteamenities);
-
+  var containerName = getContainerName(property_id);
   var roomimages = ``;
   suite.rooms[0].images.forEach(function(rm){
     roomimages += `<div>
-      <img src="/room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
     </div>`;
   });
 
@@ -360,11 +363,12 @@ function replaceRooms(property_id, category_id){
 
   var roomview = ``;
   var roomimages = ``;
+  var containerName = getContainerName(property_id);
   suite.rooms.forEach(function(r){
     roomimages = ``;
     r.images.forEach(function(rm){
       roomimages += `<div>
-        <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+        <img src="uploads/container_user_files/locations/` + containerName + `/rooms-images/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
       </div>`;
     });
     roomview += `<div>
@@ -597,3 +601,15 @@ $(document).ready(function(){
       }
   });*/
 });
+
+function getContainerName(id){
+  try{
+    if(properties[id]['container']){
+      return properties[id]['container']['name'];
+    }else{
+      return properties[id]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
+    }
+  }catch(){
+
+  }
+}
