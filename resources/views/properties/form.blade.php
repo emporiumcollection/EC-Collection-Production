@@ -385,7 +385,7 @@
                                             <option  value ="0">-- Select Category --</option> 
                                             @foreach($categories as $val)
 
-                                            <option  value ="{{$val->id}}" {{(isset($row['property_category_id']) && in_array($val->id,explode(',',$row['property_category_id']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
+                                            <option  value ="{{$val->id}}" {{(isset($row['experience_ids']) && in_array($val->id,explode(',',$row['experience_ids']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
                                             @endforeach                     
                                         </select> 
                                     </div> 
@@ -401,7 +401,7 @@
                                             <option  value ="0">-- Select Category --</option> 
                                             @foreach($categories as $val)
 
-                                            <option  value ="{{$val->id}}" {{(isset($row['property_category_id']) && in_array($val->id,explode(',',$row['property_category_id']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
+                                            <option  value ="{{$val->id}}" {{(isset($row['facility_ids']) && in_array($val->id,explode(',',$row['facility_ids']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
                                             @endforeach                     
                                         </select> 
                                     </div> 
@@ -417,7 +417,7 @@
                                             <option  value ="0">-- Select Category --</option> 
                                             @foreach($categories as $val)
 
-                                            <option  value ="{{$val->id}}" {{(isset($row['property_category_id']) && in_array($val->id,explode(',',$row['property_category_id']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
+                                            <option  value ="{{$val->id}}" {{(isset($row['atmosphere_ids']) && in_array($val->id,explode(',',$row['atmosphere_ids']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
                                             @endforeach                     
                                         </select> 
                                     </div> 
@@ -433,7 +433,7 @@
                                             <option  value ="0">-- Select Category --</option> 
                                             @foreach($categories as $val)
 
-                                            <option  value ="{{$val->id}}" {{(isset($row['property_category_id']) && in_array($val->id,explode(',',$row['property_category_id']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
+                                            <option  value ="{{$val->id}}" {{(isset($row['style_ids']) && in_array($val->id,explode(',',$row['style_ids']))) ? " selected='selected' " : '' }}>{{$val->category_name}}</option>                       
                                             @endforeach                     
                                         </select> 
                                     </div> 
