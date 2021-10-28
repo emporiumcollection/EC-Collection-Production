@@ -34,7 +34,7 @@ $level2TabTemplate = '<div class="tab-pane fade show h-100" id="<!--LEVEL3-CATAL
                         <div class="row h-100">
                             <div class="col-3 col--819281 br-001 ">
                                 <div class="destination-img">
-                                    <img src="<!--LEVEL3-IMAGE-LINK-->" class="img-fluid"
+                                    <img data-src="<!--LEVEL3-IMAGE-LINK-->" class="img-fluid"
                                         alt="">
                                     <div class="destinatios-cntay--00">
                                         <p class="mb-0"><!--LEVEL3-NAME--></p>
@@ -62,7 +62,7 @@ $level2TabTemplate = '<div class="tab-pane fade show h-100" id="<!--LEVEL3-CATAL
                     </div>';
 $level4TabTemplate = '<div class="tab-pane fade" id="<!--LEVEL4-CATALIAS-->">
                             <div class="destination-img">
-                                <a href="/globalsearchavailability?s=<!--LEVEL4-NAME-->"><img src="<!--LEVEL4-IMAGE-LINK-->" class="img-fluid" alt=""></a>
+                                <a href="/globalsearchavailability?s=<!--LEVEL4-NAME-->"><img data-src="<!--LEVEL4-IMAGE-LINK-->" class="img-fluid" alt=""></a>
                                 <div class="destinatios-cntay--00">
                                     <p class="mb-0"><!--LEVEL4-NAME--></p>
                                     <p class="mb-0"><!--LEVEL4-TAG-->
