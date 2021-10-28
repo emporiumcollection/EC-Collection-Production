@@ -7353,7 +7353,7 @@ class PropertyController extends Controller {
         $property_card_html = '';
         if(count($properties) > 0){
             foreach($properties as $key => $property){
-                $property_card_html .= view('frontend.themes.EC.properties.subtemplates.map_property_card', ['property' => $property])->render();
+                $property_card_html .= view('frontend.themes.EC.properties.subtemplates.map_property_card', ['property' => $property, 'block_title' => ''])->render();
             }
         }else{
             $property_card_html .= '<h3 class="title-second is-small title-line mb-0">No properties near this location</h3>';
