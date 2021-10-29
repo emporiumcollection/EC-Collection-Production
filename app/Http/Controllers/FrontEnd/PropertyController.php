@@ -2965,33 +2965,41 @@ class PropertyController extends Controller {
             $cities[] = $keyword;
         }
 
-        if($request->get('view') != 'map'){
+        //if($request->get('view') != 'map'){
             //Get editor's choice properties
-            $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities);
+        $emptyPropertyImages = json_encode([
+            'id' => 0,
+            'file_name' => 'default-image.png',
+        ]);
+        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities);
 
-            if(!empty($this->data['editorsProperties']->toArray())){
-                foreach($this->data['editorsProperties'] as $k => $editorProperty){
-                    $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);
+        if(!empty($this->data['editorsProperties']->toArray())){
+            foreach($this->data['editorsProperties'] as $k => $editorProperty){
+                if(isset($editorProperty->container) && $editorProperty->container){
+                    $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
+                }else{
+                    $this->data['editorsProperties'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
                 }
-                
-                $this->formatPropertyRecords($this->data['editorsProperties']);
             }
-
-            //Get featured choice properties
-            $this->data['featureProperties'] = $this->getFeaturedProperties($cities);
-
-            if(!empty($this->data['featureProperties']->toArray())){
-                foreach($this->data['featureProperties'] as $k => $featureProperty){
-                    if(isset($featureProperty->container) && $featureProperty->container){
-                        $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
-                    }else{
-                        $this->data['featureProperties'][$k]->propertyImages = [];
-                    }
-                }
-
-                $this->formatPropertyRecords($this->data['featureProperties']);
-            }
+            
+            $this->formatPropertyRecords($this->data['editorsProperties']);
         }
+
+        //Get featured choice properties
+        $this->data['featureProperties'] = $this->getFeaturedProperties($cities);
+
+        if(!empty($this->data['featureProperties']->toArray())){
+            foreach($this->data['featureProperties'] as $k => $featureProperty){
+                if(isset($featureProperty->container) && $featureProperty->container){
+                    $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+                }else{
+                    $this->data['featureProperties'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
+                }
+            }
+
+            $this->formatPropertyRecords($this->data['featureProperties']);
+        }
+        //}
 
         //Get featured choice properties
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities);
@@ -3011,7 +3019,7 @@ class PropertyController extends Controller {
                 if(isset($propertyRecord->container) && $propertyRecord->container){
                     $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
                 }else{
-                    $this->data['propertyResults'][$k]->propertyImages = [];
+                    $this->data['propertyResults'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
                 }
             }
             $this->formatPropertyRecords($this->data['propertyResults']);
@@ -7353,7 +7361,7 @@ class PropertyController extends Controller {
         $property_card_html = '';
         if(count($properties) > 0){
             foreach($properties as $key => $property){
-                $property_card_html .= view('frontend.themes.EC.properties.subtemplates.map_property_card', ['property' => $property])->render();
+                $property_card_html .= view('frontend.themes.EC.properties.subtemplates.map_property_card', ['property' => $property, 'block_title' => ''])->render();
             }
         }else{
             $property_card_html .= '<h3 class="title-second is-small title-line mb-0">No properties near this location</h3>';

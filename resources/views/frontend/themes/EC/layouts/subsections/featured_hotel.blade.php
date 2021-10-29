@@ -7,10 +7,23 @@ if(isset($featureProperties[0])):
       Featured    </div>
       <?php 
         foreach($featureProperties[0]->propertyImages as $image):
+          if(isset($featureProperties[0]['container']['name'])){
+            $container_name = $featureProperties[0]['container']['name'];
+          }else{
+            $container_name = strtolower(str_replace("-", " ", trim($featureProperties[0]->property_name)));
+          }
+
+          if(is_array($image)){
+            $file_name = $image['file_name'];
+          }elseif(is_object($image)){
+            $file_name = $image->file_name;
+          }else{
+            $file_name = 'default-image.png';
+          }
       ?>
         <div>
           <a href="suite.html">
-            <img src="<?php echo 'property-image/resize/480x432/'.$featureProperties[0]['container']['name'].'/'.$image['file_name'].'/property-image';?>" class="img-fluid" alt="">
+            <img src="<?php echo 'property-image/resize/480x432/'.$container_name.'/'.$file_name.'/property-image';?>" class="img-fluid" alt="">
           </a>
         </div>
       <?php 

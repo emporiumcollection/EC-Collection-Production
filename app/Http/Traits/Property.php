@@ -290,7 +290,7 @@ trait Property {
                 foreach($property->suites as $sk => $suite){
                     $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
                     $suiteNameList[] = $suite->cat_short_name;
-                    if(!empty($suite->rooms)){
+                    if(!empty($suite->rooms->toArray())){
                         foreach($suite->rooms as $rk => $room){
                             //$properties[$k]->suites[$sk]->rooms[$rk]->price = $this->getRoomPrice($room->id);
 
@@ -303,6 +303,15 @@ trait Property {
                             ->get()->toArray();
                             $properties[$k]->suites[$sk]->suiteamenities = $this->formatRoomAmenities($amenity->amenity_ids, 'li');
                         }
+                    }else{
+                        $properties[$k]->suites[$sk]->rooms[0] = [
+                            'id' => 0,
+                            'images' => [
+                                'id' => 0,
+                                'file_name' => 'default-image.png',
+                                'name' => 'room-1',
+                            ]
+                        ];
                     }
                 }
             }
@@ -390,7 +399,21 @@ trait Property {
 
             $images = [];
             foreach($property->propertyImages as $image){
-                $images[] = 'uploads/container_user_files/locations/'.$property['container']['name'].'/property-images/'.$image['file_name'];
+                  if(isset($property['container']['name'])){
+                    $container_name = $property['container']['name'];
+                  }else{
+                    $container_name = strtolower(str_replace("-", " ", trim($property->property_name)));
+                  }
+
+                  if(is_array($image)){
+                    $file_name = $image['file_name'];
+                  }elseif(is_object($image)){
+                    $file_name = $image->file_name;
+                  }else{
+                    $file_name = 'default-image.png';
+                  }
+
+                $images[] = 'uploads/container_user_files/locations/'.$container_name.'/property-images/'.$file_name;
             }
 
             $row['properties'] = [

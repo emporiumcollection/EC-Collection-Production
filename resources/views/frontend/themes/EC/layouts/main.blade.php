@@ -237,7 +237,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/moment.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/mediaelement-and-player.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/plugin/owl.carousel.min.js')}}"></script>
+{{-- <script type="text/javascript" src="{{ asset('js/plugin/owl.carousel.min.js')}}"></script> --}}
 <script type="text/javascript" src="{{ asset('js/plugin/select2/select2.full.min.js')}}"></script>
 <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/leaflet.js') }}"></script>

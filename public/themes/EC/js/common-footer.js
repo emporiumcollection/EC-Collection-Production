@@ -62,6 +62,27 @@
 
     });
 
+    $('.logo-list').slick({
+      slidesToShow: 7,
+      slidesToScroll: 3,
+      arrows: false,
+      dots: false,
+      variableWidth: true,
+      autoplay: true,
+      autoplayTimeout: 3000,
+    })
+    $('.img-main-banner').slick({
+      infinite: true,
+      speed: 600,
+      fade: true,
+      cssEase: 'linear',
+      autoplay: true,
+      autoplaySpeed: 5000,
+      arrows: false,
+      slidesToShow: 1,
+
+    });
+    
     $(".availability-check").on("click", function () {
       $('#smartwizard').smartWizard("next");
       $('.img-offset-slide').slick('setPosition');

@@ -555,6 +555,30 @@ class PropertiesController extends Controller {
                 $data['property_category_id'] = '';
             }
 
+            if (!empty($request->input('experiences'))) {
+                $data['experience_ids'] = implode(',', $request->input('experiences'));
+            } else {
+                $data['experience_ids'] = '';
+            }
+
+            if (!empty($request->input('facilities'))) {
+                $data['facility_ids'] = implode(',', $request->input('facilities'));
+            } else {
+                $data['facility_ids'] = '';
+            }
+
+            if (!empty($request->input('styles'))) {
+                $data['style_ids'] = implode(',', $request->input('styles'));
+            } else {
+                $data['style_ids'] = '';
+            }
+
+            if (!empty($request->input('atmospheres'))) {
+                $data['atmosphere_ids'] = implode(',', $request->input('atmospheres'));
+            } else {
+                $data['atmosphere_ids'] = '';
+            }
+
             if (!empty($request->input('propertyusp'))) {
                 $data['property_usp_id'] = implode(',', $request->input('propertyusp'));
             } else {
@@ -2839,6 +2863,30 @@ function property_images_wetransfer(Request $request) {
                 $data['property_category_id'] = '';
             }
 
+            if (!empty($request->input('experiences'))) {
+                $data['experience_ids'] = implode(',', $request->input('experiences'));
+            } else {
+                $data['experience_ids'] = '';
+            }
+
+            if (!empty($request->input('facilities'))) {
+                $data['facility_ids'] = implode(',', $request->input('facilities'));
+            } else {
+                $data['facility_ids'] = '';
+            }
+
+            if (!empty($request->input('styles'))) {
+                $data['style_ids'] = implode(',', $request->input('styles'));
+            } else {
+                $data['style_ids'] = '';
+            }
+
+            if (!empty($request->input('atmospheres'))) {
+                $data['atmosphere_ids'] = implode(',', $request->input('atmospheres'));
+            } else {
+                $data['atmosphere_ids'] = '';
+            }
+
 
             if (!is_null($request->input('default_seasons'))) {
                 $data['default_seasons'] = $request->input('default_seasons');
@@ -4346,6 +4394,30 @@ function property_images_wetransfer(Request $request) {
                 $data['property_category_id'] = implode(',', $request->input('destinations'));
             } else {
                 $data['property_category_id'] = '';
+            }
+
+            if (!empty($request->input('experiences'))) {
+                $data['experience_ids'] = implode(',', $request->input('experiences'));
+            } else {
+                $data['experience_ids'] = '';
+            }
+
+            if (!empty($request->input('facilities'))) {
+                $data['facility_ids'] = implode(',', $request->input('facilities'));
+            } else {
+                $data['facility_ids'] = '';
+            }
+
+            if (!empty($request->input('atmospheres'))) {
+                $data['atmosphere_ids'] = implode(',', $request->input('atmospheres'));
+            } else {
+                $data['atmosphere_ids'] = '';
+            }
+
+            if (!empty($request->input('styles'))) {
+                $data['style_ids'] = implode(',', $request->input('styles'));
+            } else {
+                $data['style_ids'] = '';
             }
 
 			$data['primary_airport'] = $request->input('primary_airport');
