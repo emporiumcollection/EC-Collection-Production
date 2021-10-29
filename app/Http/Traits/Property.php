@@ -266,17 +266,25 @@ trait Property {
         ->where('longitude', '!=', '')
         ->where('property_status', '=', 1);
 
-        $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
-        foreach($atmosphere_ids as $id){
-             $properties->orWhere(DB::raw("atmosphere_ids like '%,$id%' or atmosphere_ids like '%$id,%'"));
+        if(request()->get('atmosphere_ids')){            
+            $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
+            foreach($atmosphere_ids as $id){
+                 $properties->orWhere(DB::raw("atmosphere_ids like '%,$id%' or atmosphere_ids like '%$id,%'"));
+            }    
         }
-        $facility_ids = explode(",",request()->get('facility_ids'));
-        foreach($facility_ids as $id){
-             $properties->orWhere(DB::raw("facility_ids like '%,$id%' or facility_ids like '%$id,%'"));
+
+        if(request()->get('facility_ids')){
+            $facility_ids = explode(",",request()->get('facility_ids'));
+            foreach($facility_ids as $id){
+                 $properties->orWhere(DB::raw("facility_ids like '%,$id%' or facility_ids like '%$id,%'"));
+            }            
         }
-        $style_ids = explode(",",request()->get('style_ids'));
-        foreach($style_ids as $id){
-             $properties->orWhere(DB::raw("style_ids like '%,$id%' or style_ids like '%$id,%'"));
+
+        if(request()->get('style_ids')){
+            $style_ids = explode(",",request()->get('style_ids'));
+            foreach($style_ids as $id){
+                 $properties->orWhere(DB::raw("style_ids like '%,$id%' or style_ids like '%$id,%'"));
+            }            
         }
 
         if($experience_id){
