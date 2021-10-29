@@ -2872,14 +2872,9 @@ class PropertyController extends Controller {
         if (Cache::has($cacheKey)) {
             $photos = Cache::get($cacheKey);
         }
-
-        if(empty($photos)){
-            $us = new UnsplashSearch();
-            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-            Cache::store('file')->put($cacheKey, $photos, 100000);
-        }
-        */
-        $photos = '{}';
+    */
+        $us = new UnsplashSearch();
+        $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
         $this->data['photos'] = json_decode($photos);
 
         $type = $request->input('type');
@@ -2944,11 +2939,10 @@ class PropertyController extends Controller {
         }
         $this->data['collections'] = $cat_collection;
         /** End **/
-        $this->data['experiences'] = \DB::table('tb_categories')
-        ->where('category_approved', 1)
-        ->where('category_published', 1)
-        ->where('parent_category_id', 8)
-        ->get();
+
+        $this->data = $this->setFitlerOptions();
+        // echo "<pre>";print_r($this->data['experiences_data']);exit;
+
 
         $objcat = \DB::table('tb_categories')->where('category_name', '=',$keyword)->where('category_approved', 1)->where('category_published', 1)->first();
         $exp = array();
@@ -3025,6 +3019,8 @@ class PropertyController extends Controller {
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
 
+        
+
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
         $this->data['trendingFilters'] = $this->getTrendingFilters();
 
@@ -3053,7 +3049,11 @@ class PropertyController extends Controller {
                 $this->data['center_coordinate'] = $this->data['propertyResults'][0]->longitude.','.$this->data['propertyResults'][0]->latitude;
             }
             return view('frontend.themes.EC.properties.map_results', $this->data);
-        }else{            
+        }else if($request->get('view') == 'ajax'){            
+            $this->data['propertyResultsForView'] = $this->seperatedByPackage($this->data['propertyResults']);
+            return view('frontend.themes.EC.properties.subtemplates.results_grid', $this->data);
+        }
+        else{            
             $this->data['propertyResultsForView'] = $this->seperatedByPackage($this->data['propertyResults']);
             return view('frontend.themes.EC.properties.globalsearchavailability', $this->data);
         }

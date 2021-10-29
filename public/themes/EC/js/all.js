@@ -2165,6 +2165,24 @@ function getDestinationHtml(result, collection_name){
 }
 
 $(document).ready(function () {
+  $("#price_range").slider({
+    min: 0,
+    max: 900,
+    step: 1,
+    range: true,
+    values: [80, 824],
+    slide: function (event, ui) {
+      for (var i = 0; i < ui.values.length; ++i) {
+        $(".priceValue[data-index=" + i + "]").val(ui.values[i]);
+      }
+    }
+  });
+
+  $(".priceValue").change(function () {
+    var $this = $(this);
+    $("#price_range").slider("values", $this.data("index"), $this.val());
+  });
+  
   $(".who").click(function (e) {
      var dest = $("#inlineFormInputGroup").val();
      $("#collection").val('View ' + dest + ' Collection');

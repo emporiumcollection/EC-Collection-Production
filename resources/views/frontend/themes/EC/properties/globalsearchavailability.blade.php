@@ -172,94 +172,144 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
             <?php endif; ?>
           </div>
         </div>
-        <div class="tab-content pt-5" id="myTabContent">
-          <?php if (!empty($propertyResultsForView['lifestyle'])) : ?>
-          <div class="tab-pane fade active show" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
-              <?php
-              foreach ($editorsProperties as $editorChoice) :
-              ?>
-                @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice' => $editorChoice, 'propertyImages' => $editorChoice->propertyImages, 'block_title' => 'Editor\'s Choice'])
-              <?php
-              endforeach;
-              ?>
-              <?php
-              foreach ($featureProperties as $featureProp) :
-              ?>
-                @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel',
-                ['editorChoice' => $featureProp, 'propertyImages' => $featureProp->propertyImages, 'block_title' => 'Featured'])
-              <?php
-              endforeach;
-              ?>
-              <div class="row">
-              <?php
-              foreach ($propertyResultsForView['lifestyle'] as $lifestyleProp) :
-              ?>
-                @include('frontend.themes.EC.properties.subtemplates.result_card',
-                ['property' => $lifestyleProp, 'propertyImages' => $lifestyleProp->propertyImages])
-              <?php
-              endforeach;
-              ?>
-            </div>
-          </div>
-          <?php endif; ?>
-          <?php if (!empty($propertyResultsForView['dedicated'])) : ?>
-          <div class="tab-pane fade" id="dedicated" role="tabpanel" aria-labelledby="dedicated-tab">
-              <?php
-              foreach ($editorsProperties as $editorChoice) :
-              ?>
-                @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice' => $editorChoice, 'propertyImages' => $editorChoice->propertyImages, 'block_title' => 'Editor\'s Choice'])
-              <?php
-              endforeach;
-              ?>
-              <?php
-              foreach ($featureProperties as $featureProp) :
-              ?>
-                @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel',
-                ['editorChoice' => $featureProp, 'propertyImages' => $featureProp->propertyImages, 'block_title' => 'Featured'])
-              <?php
-              endforeach;
-              ?>
-              <div class="row">
-              <?php
-              foreach ($propertyResultsForView['dedicated'] as $lifestyleProp) :
-              ?>
-                @include('frontend.themes.EC.properties.subtemplates.result_card',
-                ['property' => $lifestyleProp, 'propertyImages' => $lifestyleProp->propertyImages])
-              <?php
-              endforeach;
-              ?>
-            </div>
-          </div>
-          <?php endif; ?>
-          <?php if (!empty($propertyResultsForView['bespoke'])) : ?>
-          <div class="tab-pane fade" id="bespoke" role="tabpanel" aria-labelledby="bespoke-tab">
-              <?php
-              foreach ($editorsProperties as $editorChoice) :
-              ?>
-                @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel', ['editorChoice' => $editorChoice, 'propertyImages' => $editorChoice->propertyImages, 'block_title' => 'Editor\'s Choice'])
-              <?php
-              endforeach;
-              ?>
-              <?php
-              foreach ($featureProperties as $featureProp) :
-              ?>
-                @include('frontend.themes.EC.properties.subtemplates.left_aligned_hotel',
-                ['editorChoice' => $featureProp, 'propertyImages' => $featureProp->propertyImages, 'block_title' => 'Featured'])
-              <?php
-              endforeach;
-              ?>
-              <div class="row">
-              <?php
-              foreach ($propertyResultsForView['bespoke'] as $lifestyleProp) :
-              ?>
-                @include('frontend.themes.EC.properties.subtemplates.result_card',
-                ['property' => $lifestyleProp, 'propertyImages' => $lifestyleProp->propertyImages])
-              <?php
-              endforeach;
-              ?>
-            </div>
-          </div>
-          <?php endif; ?>
+        <ul class="nav nav-tags my-4">
+          <li class="nav-item">
+            <span class="nav-link">
+              <a class="" href="#">
+                <span class="taxonomyTags-roundedArrow">
+                  <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
+                    style="vertical-align: auto;">
+                    <path
+                      d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
+                      fill="currentColor" fill-rule="evenodd"></path>
+                  </svg>
+                </span>
+                <span class="taxonomyTags-tagTitle">
+                  Design Hotels
+                </span>
+                <span class="ml-1">57</span>
+              </a>
+              <a href="#" class="delete">
+                <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                  </path>
+                </svg>
+              </a>
+            </span>
+          </li>
+          <li class="nav-item">
+            <span class="nav-link">
+              <a class="" href="#">
+                <span class="taxonomyTags-roundedArrow">
+                  <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
+                    style="vertical-align: auto;">
+                    <path
+                      d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
+                      fill="currentColor" fill-rule="evenodd"></path>
+                  </svg>
+                </span>
+                <span class="taxonomyTags-tagTitle">
+                  Evasion
+                </span>
+                <span class="ml-1">85</span>
+              </a>
+              <a href="#" class="delete">
+                <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                  </path>
+                </svg>
+              </a>
+            </span>
+
+          </li>
+          <li class="nav-item">
+            <span class="nav-link">
+              <a class="" href="#">
+                <span class="taxonomyTags-roundedArrow">
+                  <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
+                    style="vertical-align: auto;">
+                    <path
+                      d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
+                      fill="currentColor" fill-rule="evenodd"></path>
+                  </svg>
+                </span>
+                <span class="taxonomyTags-tagTitle">
+                  Evasion
+                </span>
+                <span class="ml-1">85</span>
+              </a>
+              <a href="#" class="delete">
+                <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                  </path>
+                </svg>
+              </a>
+            </span>
+
+          </li>
+          <li class="nav-item">
+            <span class="nav-link">
+              <a class="" href="#">
+                <span class="taxonomyTags-roundedArrow">
+                  <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
+                    style="vertical-align: auto;">
+                    <path
+                      d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
+                      fill="currentColor" fill-rule="evenodd"></path>
+                  </svg>
+                </span>
+                <span class="taxonomyTags-tagTitle">
+                  Evasion
+                </span>
+                <span class="ml-1">85</span>
+              </a>
+              <a href="#" class="delete">
+                <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                  </path>
+                </svg>
+              </a>
+            </span>
+
+          </li>
+          <li class="nav-item">
+            <span class="nav-link">
+              <a class="" href="#">
+                <span class="taxonomyTags-roundedArrow">
+                  <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
+                    style="vertical-align: auto;">
+                    <path
+                      d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
+                      fill="currentColor" fill-rule="evenodd"></path>
+                  </svg>
+                </span>
+                <span class="taxonomyTags-tagTitle">
+                  Evasion
+                </span>
+                <span class="ml-1">85</span>
+              </a>
+              <a href="#" class="delete">
+                <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                  xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                  </path>
+                </svg>
+              </a>
+            </span>
+
+          </li>
+        </ul>
+        <div class="tab-content pt-5" id="search-results-content">
+          @include('frontend.themes.EC.properties.subtemplates.results_grid')          
         </div>
       </div>
     </div>

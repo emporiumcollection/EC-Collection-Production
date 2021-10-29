@@ -19,6 +19,7 @@ use App\Models\Bar;
 use App\Models\Spa;
 
 use DateTime;
+use DB;
 trait Property {
     
     public function getLocationDescription($keyword){
@@ -263,12 +264,39 @@ trait Property {
         ->whereIn('city', $cities)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
-        ->where('property_status', '=', 1);     
+        ->where('property_status', '=', 1);
+
+        if(request()->get('atmosphere_ids')){            
+            $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
+            $aWhere = [];
+            foreach($atmosphere_ids as $id){
+                $aWhere[] = "atmosphere_ids = '$id' or atmosphere_ids like '%,$id%' or atmosphere_ids like '%$id,%' ";
+            }    
+            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
+        }
+
+        if(request()->get('facility_ids')){
+            $facility_ids = explode(",",request()->get('facility_ids'));
+            $aWhere = [];
+            foreach($facility_ids as $id){
+                $aWhere[] = "facility_ids = '$id' or facility_ids like '%,$id%' or facility_ids like '%$id,%' ";
+            }    
+            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
+        }
+
+        if(request()->get('style_ids')){
+            $style_ids = explode(",",request()->get('style_ids'));
+            $aWhere = [];
+            foreach($style_ids as $id){
+                $aWhere[] = "style_ids = '$id' or style_ids like '%,$id%' or style_ids like '%$id,%' ";
+            }    
+            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
+        }
 
         if($experience_id){
-            $properties->where('property_category_id', 'like', "%,$experience_id%");
+            $properties->whereRaw("(experience_ids = '$experience_id' or experience_ids like '%,$experience_id%' or experience_ids like '%$experience_id,%')");
         }   
-
+        //print $properties->toSql();
         return $properties
         //->limit(1)
         ->get();
@@ -688,5 +716,32 @@ trait Property {
         \session()->put('Guests',$Guests);
         \session()->put('arrival_date',$arrive_date);
         \session()->put('departure_date',$departure_date);        
+    }
+     public function setFitlerOptions(){
+        $this->data['experiences_data'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 8)
+        ->get();
+
+        $this->data['atmosphere'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 886)
+        ->get();
+
+        $this->data['facilities'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 897)
+        ->get();
+
+        $this->data['style'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 909)
+        ->get();
+
+        return $this->data;
     }
 }

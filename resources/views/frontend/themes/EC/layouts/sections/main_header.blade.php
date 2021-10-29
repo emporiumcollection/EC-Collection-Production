@@ -139,6 +139,11 @@
                 <i class="ico ico-video"></i>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar">
+                <i class="ico ico-info-rounded"></i>
+              </a>
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="#">
                 <i class="ico ico-instagram"></i>
@@ -152,159 +157,72 @@
               </a>
             </li>
             @if(!empty($experiences))
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" id="experience_dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Experiences
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                 @foreach($experiences as $exp)
-                  <a href="<?php echo createSearchUrl('experience', $exp->category_alias);?>" class="dropdown-item">{{ $exp->category_name }}</a>
+                  <a href="javascript:void(0)" data-value="<?php echo $exp->category_alias;?>" class="dropdown-item">{{ $exp->category_name }}</a>
                 @endforeach                
               </div>
             </li>
             @endif
-            <li class="nav-item dropdown">
+            @if(!empty($atmosphere))
+            <li class="nav-item dropdown" id="atmosphere_dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Atmosphere
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-inner filter-checkbox">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting1">
-                    <label class="custom-control-label" for="setting1">Charm (229)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting2">
-                    <label class="custom-control-label" for="setting2">Nature (111)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting3">
-                    <label class="custom-control-label" for="setting3">Trendy (111)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting5">
-                    <label class="custom-control-label" for="setting5">Intimate (86)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting6">
-                    <label class="custom-control-label" for="setting6">Evasion (85)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting7">
-                    <label class="custom-control-label" for="setting7">Tropical (56)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting8">
-                    <label class="custom-control-label" for="setting8">Myth (49)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting9">
-                    <label class="custom-control-label" for="setting9">Castle life (38)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting10">
-                    <label class="custom-control-label" for="setting10">Country house (25)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting11">
-                    <label class="custom-control-label" for="setting11">Colonial (24)</label>
-                  </div>
+                  @foreach($atmosphere as $atm)
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="atmosphere[]" class="custom-control-input" id="setting1{{ $atm->id}}" 
+                      value="{{ $atm->id }}">
+                      <label class="custom-control-label" for="setting1{{ $atm->id}}">{{ $atm->category_name }}</label>
+                    </div>
+                  @endforeach
                 </div>
               </div>
             </li>
-            <li class="nav-item dropdown">
+            @endif
+            @if(!empty($facilities))
+            <li class="nav-item dropdown" id="facilities_dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Facilities
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-inner filter-checkbox">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities6">
-                    <label class="custom-control-label" for="fasilities6">Fitness (383)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities7">
-                    <label class="custom-control-label" for="fasilities7">Spa (361)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities8">
-                    <label class="custom-control-label" for="fasilities8">Outdoor pool (246)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities9">
-                    <label class="custom-control-label" for="fasilities9">Outdoor pool (246)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities10">
-                    <label class="custom-control-label" for="fasilities10">Indoor pool (150)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities11">
-                    <label class="custom-control-label" for="fasilities11">Indoor pool (150)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities12">
-                    <label class="custom-control-label" for="fasilities12">Kids club (117)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities13">
-                    <label class="custom-control-label" for="fasilities13">Beach (105)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities14">
-                    <label class="custom-control-label" for="fasilities14">Pets (86)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities15">
-                    <label class="custom-control-label" for="fasilities15">Water sports (54)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities16">
-                    <label class="custom-control-label" for="fasilities16">Diving (47)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities17">
-                    <label class="custom-control-label" for="fasilities17">Golf (33)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities18">
-                    <label class="custom-control-label" for="fasilities18">Ski (11)</label>
-                  </div>
+                  @foreach($facilities as $fac)
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="facilities[]" class="custom-control-input" id="fasilities{{ $fac->id }}" value="{{ $fac->id }}">
+                      <label class="custom-control-label" for="fasilities{{ $fac->id }}">{{ $fac->category_name }} </label>
+                    </div>
+                  @endforeach  
                 </div>
               </div>
             </li>
-            <li class="nav-item dropdown">
+            @endif
+            @if(!empty($style))
+            <li class="nav-item dropdown" id="style_dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Style
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-inner filter-checkbox">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style6">
-                    <label class="custom-control-label" for="style6">Classic (114)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style7">
-                    <label class="custom-control-label" for="style7">Contemporary (112)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style8">
-                    <label class="custom-control-label" for="style8">Historical (85)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style9">
-                    <label class="custom-control-label" for="style9">Unusual (18)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style10">
-                    <label class="custom-control-label" for="style10">Unusual (18)</label>
-                  </div>
+                  @foreach($style as $sty)
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="style[]" class="custom-control-input" id="style{{ $sty->id }}" value="{{ $sty->id }}">
+                      <label class="custom-control-label" for="style{{ $sty->id }}">{{ $sty->category_name }}</label>
+                    </div>
+                  @endforeach
                 </div>
               </div>
             </li>
+            @endif
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -313,12 +231,28 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-inner filter-checkbox">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="price7">
-                    <label class="custom-control-label" for="price7">Price (ascending)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="price8">
-                    <label class="custom-control-label" for="price8">Price (descending)</label>
+                    <div class="filter-list">
+                    <h5 class="filter-title mb-4">By price</h5>
+                      <div class="px-2">
+                          <div id="price_range" class="price-range"></div>
+                      </div>
+                      <div class="row align-items-center price-input">
+                          <div class="col">
+                              <label>Min:</label>
+                              <div class="input-filter">
+                                  <span>€</span>
+                                  <input type="text" class="priceValue form-control" data-index="0" value="80" />
+                              </div>
+                          </div>
+                          <div class="col">
+                              <label>Max:</label>
+                              <div class="input-filter">
+                                  <span>€</span>
+                                  <input type="text" class="priceValue form-control" data-index="1" value="824" />
+                              </div>
+                          </div>  
+                      </div>
+                    </div>  
                   </div>
                 </div>
               </div>
@@ -348,6 +282,7 @@
                 <i class="ico ico-share-2"></i>
               </a>
             </li>
+            
             <li class="nav-item dropdown">
               <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">
