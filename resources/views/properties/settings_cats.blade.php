@@ -98,7 +98,7 @@
 												</div>
 											</div>
 											<div class="form-group col-lg-3">
-												<label for="bads">Bads</label>
+												<label for="bads"># Beds</label>
 												<input name="bads" id="bads" type="text" class="form-control input-sm" value="{{$cat->bads}}" data-rule-number="true" required="required" /> 
 											</div>
 										</div>
@@ -179,7 +179,7 @@
 											</div>
 										</div>
 										<div class="form-group col-lg-3">
-											<label for="bads">Bads</label>
+											<label for="bads"># Beds</label>
 											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
 									</div>
@@ -258,7 +258,7 @@
 											</div>
 										</div>
 										<div class="form-group col-lg-3">
-											<label for="bads">Bads</label>
+											<label for="bads"># Beds</label>
 											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
 									</div>
