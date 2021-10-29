@@ -2872,14 +2872,9 @@ class PropertyController extends Controller {
         if (Cache::has($cacheKey)) {
             $photos = Cache::get($cacheKey);
         }
-
-        if(empty($photos)){
-            $us = new UnsplashSearch();
-            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-            Cache::store('file')->put($cacheKey, $photos, 100000);
-        }
-        */
-        $photos = '{}';
+    */
+        $us = new UnsplashSearch();
+        $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
         $this->data['photos'] = json_decode($photos);
 
         $type = $request->input('type');
