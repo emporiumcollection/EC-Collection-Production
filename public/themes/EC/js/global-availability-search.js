@@ -669,6 +669,9 @@ function createSearchUrl(experience = ''){
 
   if(!experience){
     experience = getUrlParam('experience');
+    if(!experience){
+      experience = '';
+    }
   }
 
   var atmospheres = [];
