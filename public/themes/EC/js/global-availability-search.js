@@ -349,6 +349,14 @@ function appendResultGridSlider(){
   });
 }
 
+function appendSearchGridSlider(){
+  $('.result-grid', $('#search-results-content')).slick({
+    slidesToShow: 1,
+    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+  });
+}
+
 function replaceRooms(property_id, category_id){
   var suite;
   properties[property_id]['suites'].forEach(function(e){
@@ -643,6 +651,7 @@ function searchResults(url){
         async:false,
         success: function(response){ 
           $('#search-results-content').html(response);
+          appendSearchGridSlider();
           setTimeout("$('.result-grid').slick('setPosition');", 1000);  
 
           setTimeout(function () {
