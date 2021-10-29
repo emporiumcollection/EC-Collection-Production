@@ -268,29 +268,35 @@ trait Property {
 
         if(request()->get('atmosphere_ids')){            
             $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
+            $aWhere = [];
             foreach($atmosphere_ids as $id){
-                 $properties->orWhere(DB::raw("atmosphere_ids like '%,$id%' or atmosphere_ids like '%$id,%'"));
+                $aWhere[] = "atmosphere_ids like '%,$id%' or atmosphere_ids like '%$id,%' "
             }    
+            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
         }
 
         if(request()->get('facility_ids')){
             $facility_ids = explode(",",request()->get('facility_ids'));
+            $aWhere = [];
             foreach($facility_ids as $id){
-                 $properties->orWhere(DB::raw("facility_ids like '%,$id%' or facility_ids like '%$id,%'"));
-            }            
+                $aWhere[] = "facility_ids like '%,$id%' or facility_ids like '%$id,%' "
+            }    
+            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
         }
 
         if(request()->get('style_ids')){
             $style_ids = explode(",",request()->get('style_ids'));
+            $aWhere = [];
             foreach($style_ids as $id){
-                 $properties->orWhere(DB::raw("style_ids like '%,$id%' or style_ids like '%$id,%'"));
-            }            
+                $aWhere[] = "style_ids like '%,$id%' or style_ids like '%$id,%' "
+            }    
+            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
         }
 
         if($experience_id){
-            $properties->where(DB::raw("experience_ids like '%,$id%' or experience_ids like '%$id,%'"));
+            $properties->whereRaw("(experience_ids like '%,$id%' or experience_ids like '%$id,%')");
         }   
-
+        print $properties->toSql();exit;
         return $properties
         //->limit(1)
         ->get();
