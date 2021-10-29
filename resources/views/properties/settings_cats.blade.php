@@ -97,6 +97,10 @@
 													</label>
 												</div>
 											</div>
+											<div class="form-group col-lg-3">
+												<label for="bads">Bads</label>
+												<input name="bads" id="bads" type="text" class="form-control input-sm" value="{{$cat->bads}}" data-rule-number="true" required="required" /> 
+											</div>
 										</div>
                                         <div class="row">
                                             <div class="form-group col-lg-12">
