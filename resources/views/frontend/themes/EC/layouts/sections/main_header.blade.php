@@ -210,8 +210,8 @@
                 <div class="dropdown-inner filter-checkbox">
                   @foreach($style as $sty)
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="style[]" class="custom-control-input" id="style{{ $fac->id }}" value="{{ $fac->id }}">
-                      <label class="custom-control-label" for="style{{ $fac->id }}">{{ $sty->category_name }}</label>
+                      <input type="checkbox" name="style[]" class="custom-control-input" id="style{{ $sty->id }}" value="{{ $sty->id }}">
+                      <label class="custom-control-label" for="style{{ $sty->id }}">{{ $sty->category_name }}</label>
                     </div>
                   @endforeach
                 </div>
