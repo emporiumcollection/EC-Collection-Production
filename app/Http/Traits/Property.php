@@ -294,7 +294,7 @@ trait Property {
         }
 
         if($experience_id){
-            $properties->whereRaw("(experience_ids like '%,$id%' or experience_ids like '%$id,%')");
+            $properties->whereRaw("(experience_ids like '%,$experience_id%' or experience_ids like '%$experience_id,%')");
         }   
         //print $properties->toSql();exit;
         return $properties
