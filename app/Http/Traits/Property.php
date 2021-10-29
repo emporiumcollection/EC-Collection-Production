@@ -270,7 +270,7 @@ trait Property {
             $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
             $aWhere = [];
             foreach($atmosphere_ids as $id){
-                $aWhere[] = "atmosphere_ids like '%,$id%' or atmosphere_ids like '%$id,%' ";
+                $aWhere[] = "atmosphere_ids = '$id%' or atmosphere_ids like '%,$id%' or atmosphere_ids like '%$id,%' ";
             }    
             $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
         }
@@ -279,7 +279,7 @@ trait Property {
             $facility_ids = explode(",",request()->get('facility_ids'));
             $aWhere = [];
             foreach($facility_ids as $id){
-                $aWhere[] = "facility_ids like '%,$id%' or facility_ids like '%$id,%' ";
+                $aWhere[] = "facility_ids = '$id%' or facility_ids like '%,$id%' or facility_ids like '%$id,%' ";
             }    
             $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
         }
@@ -288,15 +288,15 @@ trait Property {
             $style_ids = explode(",",request()->get('style_ids'));
             $aWhere = [];
             foreach($style_ids as $id){
-                $aWhere[] = "style_ids like '%,$id%' or style_ids like '%$id,%' ";
+                $aWhere[] = "style_ids = '$id%' or style_ids like '%,$id%' or style_ids like '%$id,%' ";
             }    
             $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
         }
 
         if($experience_id){
-            $properties->whereRaw("(experience_ids like '%,$experience_id%' or experience_ids like '%$experience_id,%')");
+            $properties->whereRaw("(experience_ids = '$experience_id%' or experience_ids like '%,$experience_id%' or experience_ids like '%$experience_id,%')");
         }   
-        //print $properties->toSql();exit;
+        print $properties->toSql();
         return $properties
         //->limit(1)
         ->get();
