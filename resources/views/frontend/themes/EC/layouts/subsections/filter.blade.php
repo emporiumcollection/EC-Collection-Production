@@ -41,7 +41,7 @@
                 @foreach($experiences_data as $exp)     
                     <div class="row align-items-center">
                         <div class="col-8">
-                            <h5 class="filter-title">{{ $exp->category_name }}</h5>
+                            {{ $exp->category_name }}
                         </div>
                         <div class="col-4">
                             <div class="onoffswitch ml-auto">

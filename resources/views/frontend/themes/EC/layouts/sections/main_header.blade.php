@@ -139,6 +139,11 @@
                 <i class="ico ico-video"></i>
               </a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar">
+                <i class="ico ico-info-rounded"></i>
+              </a>
+            </li>
             <!-- <li class="nav-item">
               <a class="nav-link" href="#">
                 <i class="ico ico-instagram"></i>
@@ -226,12 +231,28 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-inner filter-checkbox">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="price7">
-                    <label class="custom-control-label" for="price7">Price (ascending)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="price8">
-                    <label class="custom-control-label" for="price8">Price (descending)</label>
+                    <div class="filter-list">
+                    <h5 class="filter-title mb-4">By price</h5>
+                      <div class="px-2">
+                          <div id="price_range" class="price-range"></div>
+                      </div>
+                      <div class="row align-items-center price-input">
+                          <div class="col">
+                              <label>Min:</label>
+                              <div class="input-filter">
+                                  <span>€</span>
+                                  <input type="text" class="priceValue form-control" data-index="0" value="80" />
+                              </div>
+                          </div>
+                          <div class="col">
+                              <label>Max:</label>
+                              <div class="input-filter">
+                                  <span>€</span>
+                                  <input type="text" class="priceValue form-control" data-index="1" value="824" />
+                              </div>
+                          </div>  
+                      </div>
+                    </div>  
                   </div>
                 </div>
               </div>
@@ -261,6 +282,7 @@
                 <i class="ico ico-share-2"></i>
               </a>
             </li>
+            
             <li class="nav-item dropdown">
               <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
                 aria-expanded="false">

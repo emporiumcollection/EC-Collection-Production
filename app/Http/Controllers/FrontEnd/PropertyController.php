@@ -3024,6 +3024,8 @@ class PropertyController extends Controller {
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
 
+        
+
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
         $this->data['trendingFilters'] = $this->getTrendingFilters();
 
