@@ -619,6 +619,13 @@ $(document).ready(function(){
      $('img', $(divid)).attr("src",$('img', $(divid)).attr("data-src"));
   });
 
+  $('.nav-item .dropdown-menu .filter-list .price-input .filter_price').on("click", function(){
+    var url = createSearchUrl();
+    searchResults(url);
+
+    
+
+  });
 
   /*$('.lazy').Lazy({
       // your configuration goes here
@@ -701,12 +708,15 @@ function createSearchUrl(experience = ''){
     }
   });
 
+  var min = $("#min").val();
+  var max = $("#max").val();
+
   var keyword = getUrlParam('s');
   var atmosphere_ids = atmospheres.join(',');
   var facility_ids = facilities.join(',');
   var style_ids = styles.join(',');
   
-  var url = document.location.origin + document.location.pathname + `?s=`+keyword+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience;
+  var url = document.location.origin + document.location.pathname + `?s=`+keyword+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience+`&min=`+min+`&max=`+max;
 
   window.history.pushState({}, '', url);
   return url + '&view=ajax';

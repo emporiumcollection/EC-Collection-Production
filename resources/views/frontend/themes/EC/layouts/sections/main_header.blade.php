@@ -241,16 +241,24 @@
                               <label>Min:</label>
                               <div class="input-filter">
                                   <span>€</span>
-                                  <input type="text" class="priceValue form-control" data-index="0" value="80" />
+                                  <input type="text" class="priceValue form-control" data-index="0" id="min" value="80" />
                               </div>
                           </div>
                           <div class="col">
                               <label>Max:</label>
                               <div class="input-filter">
                                   <span>€</span>
-                                  <input type="text" class="priceValue form-control" data-index="1" value="824" />
+                                  <input type="text" class="priceValue form-control" data-index="1" id="max" value="10000" />
                               </div>
-                          </div>  
+                          </div>
+                      </div>
+                      <div class="row align-items-left price-input">
+                        <div class="col">
+                          <div class="input-filter">
+                            <a href="javascript:void(0);" class="btn btn-primary  filter_price">Filter Price</a>
+                          </div> 
+                        </div>
+                      </div>  
                       </div>
                     </div>  
                   </div>
