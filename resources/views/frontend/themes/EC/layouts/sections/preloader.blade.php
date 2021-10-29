@@ -5,10 +5,9 @@
 
   if(isset($loaderImages[0]['files']) && !empty($loaderImages[0]['files'])){
     foreach($loaderImages as $limage){      
-      $loaderImage = $limage['files'][0]['file_name'];
-      if(file_exists(public_path().'uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $loaderImage)){
+      if(file_exists(public_path().'/uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $limage['files'][0]['file_name'])){
 
-        $loaderImage = 'uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $loaderImage;
+        $loaderImage = 'uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $limage['files'][0]['file_name'];
 
         $loaderTitle = $limage['title'];
         $loaderDescription = $limage['description'];    
