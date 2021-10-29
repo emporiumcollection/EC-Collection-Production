@@ -4,11 +4,17 @@
   $loaderDescription = 'We are working to get collection of your choice.';
 
   if(isset($loaderImages[0]['files']) && !empty($loaderImages[0]['files'])){
-    $loaderImage = $loaderImages[0]['files'][0]['file_name'];
-    $loaderImage = 'uploads/container_user_files/emotional-gallery-loader/' . $loaderImages[0]['name'] . '/' . $loaderImage;
+    foreach($loaderImages as $limage){      
+      $loaderImage = $limage['files'][0]['file_name'];
+      if(file_exists(public_path().'uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $loaderImage)){
 
-    $loaderTitle = $loaderImages[0]['title'];
-    $loaderDescription = $loaderImages[0]['description'];
+        $loaderImage = 'uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $loaderImage;
+
+        $loaderTitle = $limage['title'];
+        $loaderDescription = $limage['description'];    
+        break;
+      }
+    }
   }
 ?>
 <div class="pageload" style="background-image: url(<?php echo $loaderImage;?>);">
