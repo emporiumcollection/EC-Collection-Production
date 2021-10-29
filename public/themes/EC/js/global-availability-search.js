@@ -281,14 +281,12 @@ function replaceSuiteList(id){
 
   });
   setTimeout('appendResultGridSlider()', 2000);    
-  setTimeout("$('#suites-loader').hide();", 4000);
-  setTimeout("$('#suites-popup').show();", 4000);
-  setTimeout("$('.result-grid').slick('setPosition');", 4000);  
+  setTimeout("$('#suites-loader').hide();", 3000);
+  setTimeout("$('#suites-popup').show();", 3000);
+  setTimeout("$('.result-grid').slick('setPosition');", 1000);  
 }
 
 function replaceSuiteDetail(property_id, category_id){
-  $('#suites-popup').hide();
-  $('#suites-loader').show();
   currentPropertyId = property_id;
   var suite;
   properties[property_id]['suites'].forEach(function(e){
@@ -315,8 +313,6 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);
   replacePropertyData(property_id);
-  setTimeout("$('#suites-loader').hide();", 4000);
-  setTimeout("$('#suites-popup').show();", 4000);
   setTimeout("$('.suite-popup').slick('setPosition');", 4000);  
 }
 
@@ -647,6 +643,8 @@ function searchResults(url){
         async:false,
         success: function(response){ 
           $('#search-results-content').html(response);
+          setTimeout("$('.result-grid').slick('setPosition');", 1000);  
+
           setTimeout(function () {
             $('body').css('overflow', 'auto');
             $('.pageload').hide();
