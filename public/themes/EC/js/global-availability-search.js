@@ -646,7 +646,7 @@ function searchResults(url){
         type: 'get',
         async:false,
         success: function(response){ 
-          $('#myTabContent').html(response);
+          $('#search-results-content').html(response);
           setTimeout(function () {
             $('body').css('overflow', 'auto');
             $('.pageload').hide();

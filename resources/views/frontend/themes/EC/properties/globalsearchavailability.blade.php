@@ -172,7 +172,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
             <?php endif; ?>
           </div>
         </div>
-        <div class="tab-content pt-5" id="myTabContent">
+        <div class="tab-content pt-5" id="search-results-content">
           @include('frontend.themes.EC.properties.subtemplates.results_grid')          
         </div>
       </div>
