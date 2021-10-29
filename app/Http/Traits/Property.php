@@ -296,7 +296,7 @@ trait Property {
         if($experience_id){
             $properties->whereRaw("(experience_ids like '%,$id%' or experience_ids like '%$id,%')");
         }   
-        print $properties->toSql();exit;
+        //print $properties->toSql();exit;
         return $properties
         //->limit(1)
         ->get();
