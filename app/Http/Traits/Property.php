@@ -19,6 +19,7 @@ use App\Models\Bar;
 use App\Models\Spa;
 
 use DateTime;
+use DB;
 trait Property {
     
     public function getLocationDescription($keyword){
