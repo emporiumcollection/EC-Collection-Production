@@ -1926,6 +1926,7 @@ class PropertiesController extends Controller {
         $rules['guests_adult'] = 'required|numeric';
         $rules['guests_junior'] = 'required|numeric';
         $rules['guests_babies'] = 'required|numeric';
+        $rules['bads'] = 'required|numeric';
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
             $data['property_id'] = $request->input('property_id');
@@ -1938,6 +1939,7 @@ class PropertiesController extends Controller {
             $data['guests_adults'] = $request->input('guests_adult');
             $data['guests_juniors'] = $request->input('guests_junior');
             $data['guests_babies'] = $request->input('guests_babies');
+            $data['bads'] = $request->input('bads');
             //$data['booking_policy'] =  $request->input('bookingPolicy');
 
             if (!is_null($request->input('count_baby'))) {
