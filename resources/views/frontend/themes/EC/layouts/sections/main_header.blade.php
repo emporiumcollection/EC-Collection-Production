@@ -138,7 +138,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar" onclick="getDefaultChannel('<?php echo strtolower(str_replace(" ", "-", $keyword)); ?>')">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar">
               <i class="ico ico-info-rounded"></i>
             </a>
           </li>

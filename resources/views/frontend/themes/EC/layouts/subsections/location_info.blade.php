@@ -33,7 +33,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#videosTab" data-toggle="tab" role="tab" aria-selected="false">
+                        <a class="nav-link" href="#videosTab" data-toggle="tab" role="tab" aria-selected="false" onclick="getDefaultChannel('<?php echo strtolower(str_replace(" ", "-", $keyword)); ?>')">
                             Videos
                         </a>
                     </li>
