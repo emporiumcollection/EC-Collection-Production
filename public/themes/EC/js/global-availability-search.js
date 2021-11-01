@@ -266,7 +266,7 @@ function replaceSuiteList(id){
       roomimages = '';
 
       console.log(suite.rooms[0].images.length);
-      if(suite.rooms[0].images !== undefined){        
+      if(suite.rooms[0].images.length !== undefined){        
         suite.rooms[0].images.forEach(function(rm){
           if(onlyThree < 3){        
             roomimages += `<div>
