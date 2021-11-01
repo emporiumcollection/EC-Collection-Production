@@ -276,6 +276,9 @@ trait Property {
         ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
+        ->where('feature_property', '!=', '1')
+        ->where('editor_choice_property', '!=', '1')
+        ->where('longitude', '!=', '')
         ->where('property_status', '=', 1);
 
         if(request()->get('atmosphere_ids')){            
