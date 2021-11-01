@@ -265,6 +265,7 @@ function replaceSuiteList(id){
       var containerName = getContainerName(id);
       roomimages = '';
 
+      console.log(suite.rooms[0].images.length);
       if(suite.rooms[0].images !== undefined){        
         suite.rooms[0].images.forEach(function(rm){
           if(onlyThree < 3){        
@@ -275,7 +276,7 @@ function replaceSuiteList(id){
           onlyThree++; 
         });  
       }
-      
+
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid);  
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
