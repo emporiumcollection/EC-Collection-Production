@@ -101,7 +101,8 @@ trait Property {
             'carpark',
             'bar_ids',
             'spa_ids',
-            'restaurant_ids'
+            'restaurant_ids',
+            'city'
             ])
         ->with([
             'boards',
@@ -160,7 +161,8 @@ trait Property {
             'carpark',
             'bar_ids',
             'spa_ids',
-            'restaurant_ids'
+            'restaurant_ids',
+            'city'
         ])
         ->with([
             'boards',
@@ -237,7 +239,8 @@ trait Property {
             'carpark',
             'bar_ids',
             'spa_ids',
-            'restaurant_ids'
+            'restaurant_ids',
+            'city'
         ])
         ->with([
             'boards',
