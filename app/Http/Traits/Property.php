@@ -113,13 +113,15 @@ trait Property {
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }])
         ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
         ->orWhere('country', $keyword)
@@ -171,19 +173,22 @@ trait Property {
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }
         ])
         ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
@@ -248,19 +253,22 @@ trait Property {
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }
         ])
         //->whereIn('city', $cities)

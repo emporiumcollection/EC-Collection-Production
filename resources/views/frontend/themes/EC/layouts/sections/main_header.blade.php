@@ -1,41 +1,41 @@
 <header>
   <div class="top-header">
-      <div class="top-header-inner">
-        <div class="row align-items-md-end align-items-center">
-          <div class="col-md-5 col-4">
-            <div id="menunav">
-              <a href="#dashF" class="mr-2 menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
-                aria-controls="dashF">
-                <i class="ico ico-dash" data-toggle="tooltip" title="Navigate to our collection"></i>
-              </a>
-              <a href="#searchF" class="menu-nav search-f" data-toggle="collapse" role="button" aria-expanded="false"
-                aria-controls="searchF">
-                <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
-              </a>
-              <a href="#cityList" class="menu-nav text-menu city-f">
-                <span data-toggle="tooltip" title="Change destination">{{$keyword}}</span>
-              </a>
-              <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
-                <span class="cal-date" data-toggle="tooltip" title="Change availability">{{ date("M d",strtotime($arrive)) }} - {{ date("M d",strtotime($departure)) }}</span>
-              </a>
-              <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
-                aria-controls="whoF">
-                <div class="filter-lst expand filter-guest filter-white">
-                  <div class="input-group">
-                    <div class="gust-dropdown">
-                      <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ $total_guests }}</span> Guests</div>
-                    </div>
+    <div class="top-header-inner">
+      <div class="row align-items-md-end align-items-center">
+        <div class="col-md-5 col-4">
+          <div id="menunav">
+            <a href="#dashF" class="mr-2 menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
+              aria-controls="dashF">
+              <i class="ico ico-dash" data-toggle="tooltip" title="Navigate to our collection"></i>
+            </a>
+            <a href="#searchF" class="menu-nav search-f" data-toggle="collapse" role="button" aria-expanded="false"
+              aria-controls="searchF">
+              <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
+            </a>
+            <a href="#cityList" class="menu-nav text-menu city-f">
+              <span data-toggle="tooltip" title="Change destination">{{$keyword}}</span>
+            </a>
+            <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
+              <span class="cal-date" data-toggle="tooltip" title="Change availability">{{ date("M d",strtotime($arrive)) }} - {{ date("M d",strtotime($departure)) }}</span>
+            </a>
+            <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
+              aria-controls="whoF">
+              <div class="filter-lst expand filter-guest filter-white">
+                <div class="input-group">
+                  <div class="gust-dropdown">
+                    <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ $total_guests }}</span> Guests</div>
                   </div>
                 </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-5 col-4 text-center">
-            <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
-              <i class="t-logo logo-2"></i>
+              </div>
             </a>
           </div>
-          <div class="col-md-2 col-4 text-right mobile-flex">
+        </div>
+        <div class="col-md-5 col-4 text-center">
+          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
+            <i class="t-logo logo-2"></i>
+          </a>
+        </div>
+        <div class="col-md-2 col-4 text-right mobile-flex">
           <a href="/register" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
             <div class="user-profile-img">
               <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
@@ -43,7 +43,6 @@
             </div>
           </a>
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
-
             <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
               <div class="line"></div>
               <div class="line"></div>
@@ -110,47 +109,46 @@
             </div>
           </div>
         </div>
-        </div>
       </div>
-      <hr class="mb-0">
-
-      <div class="menu-s">
-        <div class="d-flex align-items-center">
-          <ul class="nav nav-left mobile-off">
-            {{-- <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#filterbar">
-                <i class="ico ico-mixer"></i>
-              </a>
-            </li> --}}
-            <li class="nav-item">
-              <?php if(Request::get('view') == 'map'):?>
-              <a class="nav-link" href="<?php echo str_replace('&view=map','',Request::fullUrl());?>">
-                <i class="ico ico-menu-grid mr-2"></i>
-              </a>
-              <?php endif;?>
-              <?php if(!Request::get('view')):?>
-              <a class="nav-link" href="<?php echo Request::fullUrl().'&view=map';?>">
-                <i class="ico ico-place"></i>
-              </a>
-              <?php endif;?>              
-            </li>
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#videos">
-                <i class="ico ico-video"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar">
-                <i class="ico ico-info-rounded"></i>
-              </a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="ico ico-instagram"></i>
-              </a>
-            </li> -->
-          </ul>
-          <ul class="nav nav-text mobile-off">
+    </div>    
+    <hr class="mb-0">
+    <div class="menu-s">
+      <div class="d-flex align-items-center">
+        <ul class="nav nav-left mobile-off">
+          {{-- <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#filterbar">
+              <i class="ico ico-mixer"></i>
+            </a>
+          </li> --}}
+          <li class="nav-item">
+            <?php if(Request::get('view') == 'map'):?>
+            <a class="nav-link" href="<?php echo str_replace('&view=map','',Request::fullUrl());?>">
+              <i class="ico ico-menu-grid mr-2"></i>
+            </a>
+            <?php endif;?>
+            <?php if(!Request::get('view')):?>
+            <a class="nav-link" href="<?php echo Request::fullUrl().'&view=map';?>">
+              <i class="ico ico-place"></i>
+            </a>
+            <?php endif;?>              
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#videos">
+              <i class="ico ico-video"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar">
+              <i class="ico ico-info-rounded"></i>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="ico ico-instagram"></i>
+            </a>
+          </li> -->
+        </ul>
+        <ul class="nav nav-text mobile-off">
             <li class="nav-item">
               <a class="nav-link" href="#destination-menu" data-toggle="collapse">
                 Destinations
@@ -232,80 +230,76 @@
                 <div class="dropdown-inner filter-checkbox">
                   <div class="custom-control custom-checkbox">
                     <div class="filter-list">
-                    <h5 class="filter-title mb-4">By price</h5>
-                      <div class="px-2">
-                          <div id="price_range" class="price-range"></div>
-                      </div>
-                      <div class="row align-items-center price-input">
-                          <div class="col">
-                              <label>Min:</label>
-                              <div class="input-filter">
-                                  <span>€</span>
-                                  <input type="text" class="priceValue form-control" data-index="0" id="min" value="80" />
-                              </div>
-                          </div>
-                          <div class="col">
-                              <label>Max:</label>
-                              <div class="input-filter">
-                                  <span>€</span>
-                                  <input type="text" class="priceValue form-control" data-index="1" id="max" value="10000" />
-                              </div>
-                          </div>
-                      </div>
-                      <div class="row align-items-left price-input">
-                        <div class="col">
-                          <div class="input-filter">
-                            <a href="javascript:void(0);" class="btn btn-primary  filter_price">Filter Price</a>
-                          </div> 
+                        <h5 class="filter-title mb-4">By price</h5>
+                        <div class="px-2">
+                            <div id="price_range" class="price-range"></div>
                         </div>
-                      </div>  
-                      </div>
-                    </div>  
-                  </div>
+                        <div class="row align-items-center price-input">
+                            <div class="col">
+                                <label>Min:</label>
+                                <div class="input-filter">
+                                    <span>€</span>
+                                    <input type="text" class="priceValue form-control" data-index="0" id="min" value="80" />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label>Max:</label>
+                                <div class="input-filter">
+                                    <span>€</span>
+                                    <input type="text" class="priceValue form-control" data-index="1" id="max" value="10000" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-left price-input">
+                          <div class="col">
+                            <div class="input-filter">
+                              <a href="javascript:void(0);" class="btn btn-primary  filter_price">Filter Price</a>
+                            </div> 
+                          </div>
+                        </div>  
+                    </div>
+                  </div>  
                 </div>
               </div>
             </li>
           </ul>
-
-          <div class="menu-mobile">
-            <div class="humburger-second-menu" id="secondMenu">
-              <div class="line"></div>
-              <div class="line"></div>
-              <div class="line"></div>
-            </div>
+        <div class="menu-mobile">
+          <div class="humburger-second-menu" id="secondMenu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
           </div>
-          <ul class="nav nav-right ml-auto">
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#searchHistory">
-                <i class="ico ico-layer"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
-                <i class="ico ico-convertation"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#share">
-                <i class="ico ico-share-2"></i>
-              </a>
-            </li>
-            
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <i class="ico ico-diamon"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Add to collection</a>
-                <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Create new collection</a>
-              </div>
-            </li>
-          </ul>
         </div>
-
+        <ul class="nav nav-right ml-auto">
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#searchHistory">
+              <i class="ico ico-layer"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
+              <i class="ico ico-convertation"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#share">
+              <i class="ico ico-share-2"></i>
+            </a>
+          </li>
+          
+          <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="ico ico-diamon"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Add to collection</a>
+              <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Create new collection</a>
+            </div>
+          </li>
+        </ul>
       </div>
-
+    </div>
   </div>
   <div class="second-header">
     <div class="px-4 pt-2">
@@ -381,7 +375,6 @@
               </ul>
             </div>
           </div>
-
         </div>
       </div>
     </div>
