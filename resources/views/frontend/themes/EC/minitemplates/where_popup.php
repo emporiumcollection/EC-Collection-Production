@@ -10,7 +10,7 @@
 <?php 
 if(isset($trendingFilters)):
 ?>
-<div class="search-suggest">
+<!-- <div class="search-suggest">
   <div>
     <h5>Popular Now</h5>
     <?php 
@@ -41,7 +41,7 @@ if(isset($trendingFilters)):
       endif;
     endforeach;
   ?>
-</div>
+</div> -->
 <?php endif;?>
 <div class="wherepopup" style="display:none;">
   <div class="whereinner">

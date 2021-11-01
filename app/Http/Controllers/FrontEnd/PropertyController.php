@@ -2970,7 +2970,7 @@ class PropertyController extends Controller {
             'id' => 0,
             'file_name' => 'default-image.png',
         ]);
-        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities);
+        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
 
         if(!empty($this->data['editorsProperties']->toArray())){
             foreach($this->data['editorsProperties'] as $k => $editorProperty){
@@ -2985,7 +2985,7 @@ class PropertyController extends Controller {
         }
 
         //Get featured choice properties
-        $this->data['featureProperties'] = $this->getFeaturedProperties($cities);
+        $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
 
         if(!empty($this->data['featureProperties']->toArray())){
             foreach($this->data['featureProperties'] as $k => $featureProperty){
@@ -3001,7 +3001,9 @@ class PropertyController extends Controller {
         //}
 
         //Get featured choice properties
-        $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities);
+        $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
+
+        //print count($this->data['propertyResults']->toArray());exit;
 
         if(!empty($this->data['propertyResults']->toArray())){
             foreach($this->data['propertyResults'] as $k => $propertyRecord){
@@ -3026,6 +3028,10 @@ class PropertyController extends Controller {
 
         //price filter
 
+        if($request->get('max') && $request->get('min')){
+            $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
+        }
+
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
         $this->data['trendingFilters'] = $this->getTrendingFilters();
 
@@ -3040,7 +3046,7 @@ class PropertyController extends Controller {
         $this->data['departure_date'] = $departure_date;
         $this->data['total_guests'] = $total_guests;
         $this->data['rooms'] = $rooms;
-        $this->data['adults'] = $adults;
+        $this->data['adults'] = $adults;        
         $this->data['childs'] = $childs;
         $this->data['number_of_nights'] = $number_of_nights;
         $this->data['query_str'] = $query_str;

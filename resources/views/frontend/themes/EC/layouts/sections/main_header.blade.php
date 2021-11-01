@@ -117,11 +117,11 @@
       <div class="menu-s">
         <div class="d-flex align-items-center">
           <ul class="nav nav-left mobile-off">
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#filterbar">
                 <i class="ico ico-mixer"></i>
               </a>
-            </li>
+            </li> --}}
             <li class="nav-item">
               <?php if(Request::get('view') == 'map'):?>
               <a class="nav-link" href="<?php echo str_replace('&view=map','',Request::fullUrl());?>">
@@ -673,7 +673,13 @@
                           <div class="row field-count-guest align-items-center">
                             <button type="button" class="min">-</button>
                             <div class="col text-center">
-                              <span class="mr-1 adult-val">1 </span>
+                              <span class="mr-1 adult-val">
+                                @if(!empty($adults))
+                                  {{ $adults[0] ? $adults[0] : '' }}
+                                @else
+                                    1  
+                                @endif  
+                            </span>
                             </div>
                             <button type="button" class="plus mr-3">+</button>
                           </div>
@@ -687,7 +693,13 @@
                           <div class="row field-count-guest align-items-center">
                             <button type="button" class="min">-</button>
                             <div class="col text-center">
-                              <span class="mr-1 child-val">1 </span>
+                              <span class="mr-1 child-val">
+                                @if(!empty($adults))
+                                  {{ $adults[0] ? $adults[0] : '' }}
+                                @else
+                                    1  
+                                @endif
+                              </span>
                             </div>
                             <button type="button" class="plus mr-3">+</button>
                           </div>
