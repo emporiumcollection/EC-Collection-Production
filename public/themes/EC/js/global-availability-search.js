@@ -525,7 +525,7 @@ function getDefaultChannel(catt){
             
         },
         success: function(data){ 
-            if(!$('.yt-rvideos').length) return false;
+            if(!$('.yt-rvideos').length && !$('.yt-rvideos-2').length) return false;
 
             $('.yt-rvideos').yottie({  
                 key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
