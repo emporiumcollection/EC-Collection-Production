@@ -285,7 +285,7 @@ function replaceSuiteList(id){
   setTimeout('appendResultGridSlider()', 2000);    
   setTimeout("$('#suites-loader').hide();", 3000);
   setTimeout("$('#suites-popup').show();", 3000);
-  setTimeout("$('.result-grid').slick('setPosition');", 1000);  
+  setTimeout("$('.result-grid').slick('setPosition');", 3000);  
 }
 
 function replaceSuiteDetail(property_id, category_id){
