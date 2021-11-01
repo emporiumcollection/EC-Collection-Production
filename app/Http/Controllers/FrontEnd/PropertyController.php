@@ -2969,6 +2969,16 @@ class PropertyController extends Controller {
 
         if(!empty($this->data['editorsProperties']->toArray())){
             foreach($this->data['editorsProperties'] as $k => $editorProperty){
+                if(empty($editorProperty->container)){
+                    $container = Container::
+                    where('display_name', '=', $editorProperty->property_name)
+                    ->get();
+
+                    if(!empty($container->toArray())){
+                        $editorProperty->container = $container[0];
+                        $this->data['editorsProperties'][$k]->container = $container[0];
+                    }
+                }
                 if(isset($editorProperty->container) && $editorProperty->container){
                     $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
                 }else{
@@ -2984,6 +2994,16 @@ class PropertyController extends Controller {
 
         if(!empty($this->data['featureProperties']->toArray())){
             foreach($this->data['featureProperties'] as $k => $featureProperty){
+                if(empty($featureProperty->container)){
+                    $container = Container::
+                    where('display_name', '=', $featureProperty->property_name)
+                    ->get();
+
+                    if(!empty($container->toArray())){
+                        $featureProperty->container = $container[0];
+                        $this->data['featureProperties'][$k]->container = $container[0];
+                    }
+                }
                 if(isset($featureProperty->container) && $featureProperty->container){
                     $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
                 }else{
