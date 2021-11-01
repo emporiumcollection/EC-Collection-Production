@@ -535,6 +535,15 @@ function getDefaultChannel(catt){
                     rows: 2
                 },
             });
+
+            $('.yt-rvideos-2').yottie({  
+                key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+                channel: data.channel_url,
+                content: {
+                    columns: 4,
+                    rows: 2
+                },
+            });
         }
     });
 }     

@@ -77,7 +77,7 @@
                                 <i class="ico ico-print"></i>
                             </a>
                         </div>
-                        <div class="yt-rvideos">
+                        <div class="yt-rvideos-2">
                         </div>
                     </div>
                 </div>
