@@ -264,14 +264,18 @@ function replaceSuiteList(id){
       suiteItem = '<div class="property-suite-p'+sid+'">' + suiteTemplate + '</div>';
       var containerName = getContainerName(id);
       roomimages = '';
-      suite.rooms[0].images.forEach(function(rm){
-        if(onlyThree < 3){        
-          roomimages += `<div>
-              <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
-            </div>`;  
-        }
-        onlyThree++; 
-      });
+
+      if(suite.rooms[0].images !== undefined){        
+        suite.rooms[0].images.forEach(function(rm){
+          if(onlyThree < 3){        
+            roomimages += `<div>
+                <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+              </div>`;  
+          }
+          onlyThree++; 
+        });  
+      }
+      
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid);  
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
