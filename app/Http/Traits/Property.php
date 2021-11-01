@@ -125,7 +125,6 @@ trait Property {
                 //->limit(20);
             }])
         ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
-        ->orWhere('country', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
         ->limit(2)
@@ -194,7 +193,6 @@ trait Property {
             }
         ])
         ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
-        ->orWhere('country', $keyword)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
         ->limit(2)
