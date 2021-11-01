@@ -275,6 +275,8 @@ function replaceSuiteList(id){
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid);  
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
+      suiteItem = suiteItem.replace('<!--SUITE-NO-BEDS-->', suite.bads);
+      suiteItem = suiteItem.replace('<!--SUITE-SIZE-->', suite.suite_size);      
       
       $('#suiteslist').append(suiteItem);
     }
@@ -309,6 +311,8 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="price-icon"]').html(`<i class="ico ico-info-green pointer btn-sidebar" type="button"
                                 data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
   $('[data-place="suite-price"]').html(suite.price);
+  $('[data-place="suite-beds"]').html(suite.bads);
+  $('[data-place="suite-size"]').html(suite.suite_size);
 
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);

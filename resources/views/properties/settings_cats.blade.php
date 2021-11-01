@@ -101,6 +101,10 @@
 												<label for="bads"># Beds</label>
 												<input name="bads" id="bads" type="text" class="form-control input-sm" value="{{$cat->bads}}" data-rule-number="true" required="required" /> 
 											</div>
+											<div class="form-group col-lg-3">
+												<label for="suite_size">Suite Size</label>
+												<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="{{$cat->suite_size}}" data-rule-number="true" required="required" /> 
+											</div>
 										</div>
                                         <div class="row">
                                             <div class="form-group col-lg-12">
@@ -182,6 +186,10 @@
 											<label for="bads"># Beds</label>
 											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
+										<div class="form-group col-lg-3">
+											<label for="suite_size">Suite Size</label>
+											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
+										</div>
 									</div>
                                     <div class="row">
                                         <div class="form-group col-lg-12">
@@ -260,6 +268,10 @@
 										<div class="form-group col-lg-3">
 											<label for="bads"># Beds</label>
 											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="suite_size">Suite Size</label>
+											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
 									</div>
                                     <div class="row">
