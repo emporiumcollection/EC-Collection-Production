@@ -5,6 +5,7 @@
   properties[<?php echo $editorChoice->id;?>] = <?php echo json_encode($editorChoice);?>;
   properties[<?php echo $editorChoice->id;?>]['images'] = <?php echo json_encode($propertyImages);?>;
 </script>
+<?php $propertyImages = $editorChoice->propertyImages->toArray();?>
 <div class="mb-5">
   <div class="row align-items-center">
     <div class="col-md-6">
