@@ -98,7 +98,7 @@
 												</div>
 											</div>
 											<div class="form-group col-lg-3">
-												<label for="bads">Bads</label>
+												<label for="bads"># Beds</label>
 												<input name="bads" id="bads" type="text" class="form-control input-sm" value="{{$cat->bads}}" data-rule-number="true" required="required" /> 
 											</div>
 										</div>
@@ -178,6 +178,10 @@
 												</label>
 											</div>
 										</div>
+										<div class="form-group col-lg-3">
+											<label for="bads"># Beds</label>
+											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
+										</div>
 									</div>
                                     <div class="row">
                                         <div class="form-group col-lg-12">
@@ -252,6 +256,10 @@
 													<input type="checkbox" name="count_baby" value="1"> Infants count toward total
 												</label>
 											</div>
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="bads"># Beds</label>
+											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
 									</div>
                                     <div class="row">
