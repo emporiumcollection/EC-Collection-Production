@@ -3018,7 +3018,7 @@ class PropertyController extends Controller {
         //Get featured choice properties
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
 
-        print count($this->data['propertyResults']->toArray());exit;
+        print_r($this->data['propertyResults']->toArray());exit;
 
         if(!empty($this->data['propertyResults']->toArray())){
             foreach($this->data['propertyResults'] as $k => $propertyRecord){
