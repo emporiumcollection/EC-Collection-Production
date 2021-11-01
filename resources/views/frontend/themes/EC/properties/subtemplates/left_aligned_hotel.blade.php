@@ -40,7 +40,7 @@
               if(isset($editorChoice['container']['name'])){
                 $container_name = $editorChoice['container']['name'];
               }else{
-                $container_name = strtolower(str_replace("-", " ", trim($editorChoice->property_name)));
+                $container_name = strtolower(str_replace(" ", "-", trim($editorChoice->property_name)));
               }
 
               if(is_array($propertyImages[0])){
