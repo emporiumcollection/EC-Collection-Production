@@ -50,7 +50,7 @@
 		</p>		
 	   </div>
 		<div class="col-sm-4">			 
-	  {!! $pagination->appends($pager)->render() !!}
+	  {!! $pagination->appends(request()->query())->render() !!}
 	  </div>
 	  </div>
 	</div>	

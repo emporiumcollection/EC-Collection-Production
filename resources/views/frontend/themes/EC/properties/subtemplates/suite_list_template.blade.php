@@ -4,11 +4,11 @@
             <div class="title-main offset-930 pr-3 title-subs">
                 <h2>Premiere Suite</h2>
             </div>
-            <!--<div class="meta-title">
+            <div class="meta-title">
                 <span>Sleeps</span>
-                <span>2 Queens beds </span>
-                <span>Suite size: 643 ft</span>
-            </div>-->
+                <span><!--SUITE-NO-BEDS--> beds </span>
+                <span>Suite size: <!--SUITE-SIZE--> ft</span>
+            </div>
         </div>
         <div class="dropdown ipad-view">
             <button class="btn dropdown-toggle p-0" type="button" id="suiteDetail"
