@@ -2873,9 +2873,9 @@ class PropertyController extends Controller {
             $photos = Cache::get($cacheKey);
         }
     */
-        $us = new UnsplashSearch();
-        $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-        $this->data['photos'] = json_decode($photos);
+        //$us = new UnsplashSearch();
+        //$photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+        $this->data['photos'] = [];//json_decode($photos);
 
         $type = $request->input('type');
         $arrive = $request->input('arrive');

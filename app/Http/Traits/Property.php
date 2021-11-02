@@ -106,7 +106,7 @@ trait Property {
             ])
         ->with([
             'boards',
-            'container',
+            'container'/*,
             'suites' => function($query){
                 return $query->with(['rooms', 'amenities']);
             }, 
@@ -123,7 +123,8 @@ trait Property {
 
                 }]);
                 //->limit(20);
-            }])
+            }*/
+        ])
         ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
@@ -165,7 +166,7 @@ trait Property {
         ])
         ->with([
             'boards',
-            'container',
+            'container'/*,
             'images',
             'suites' => function($query){
                 return $query->with(['rooms', 'amenities']);
@@ -190,7 +191,7 @@ trait Property {
 
                 }]);
                 //->limit(20);
-            }
+            }*/
         ])
         ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
         ->where('feature_property', '=', 1)
@@ -242,7 +243,7 @@ trait Property {
         ])
         ->with([
             'boards',
-            'container',
+            'container'/*,
             'images',
             'PropertyCategoryPackages' => function($query){
                 $query->with(['package']);
@@ -270,7 +271,7 @@ trait Property {
 
                 }]);
                 //->limit(20);
-            }
+            }*/
         ])
         //->whereIn('city', $cities)
         ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
