@@ -2869,6 +2869,7 @@ class PropertyController extends Controller {
 
         
         $cacheKey = 'location_photos'.strtolower(str_replace(" ", "", $keyword));
+        $photos = json_encode([]);
         if (Cache::has($cacheKey)) {
             $photos = Cache::get($cacheKey);
         }
@@ -2876,6 +2877,7 @@ class PropertyController extends Controller {
         if(empty(json_decode($photos))){
             $us = new UnsplashSearch();
             $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+            Cache::store('file')->put($cacheKey, $photos, 100000);
         }
         $this->data['photos'] = json_decode($photos);
 

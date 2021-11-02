@@ -34,19 +34,17 @@ abstract class Controller extends BaseController {
 		->where('parent_category_id', 8)
 		->get();
 
-        $cacheKey = 'destinationsmenu';
-        if (Cache::has($cacheKey)) {
-//            $this->data['destinationMenu'] = Cache::get($cacheKey);
-        }else{
-//			$this->data['destinationMenu'] = $this->destinationTree();
-//            Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 100000);
-        }
-
         $routePath = request()->route()->getActionName();
         if(!strpos($routePath, 'HomeController')){
-			$this->data['destinationMenu'] = $this->destinationTree();
+	        $cacheKey = 'destinationsmenu';
+	        if (Cache::has($cacheKey)) {
+	            $this->data['destinationMenu'] = Cache::get($cacheKey);
+	        }else{
+				$this->data['destinationMenu'] = $this->destinationTree();
+	            Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 100000);
+	        }
 		}
-		
+
         $this->data['currentdomain'] = config('app.currentdomain');
 
 
