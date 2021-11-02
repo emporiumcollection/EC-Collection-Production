@@ -642,10 +642,8 @@ $(document).ready(function(){
     searchResults(url);
   });
 
-  $('.results-media').each(function(e){
-    $(this).attr("src", $(this).attr("data-src"));
-  });
 
+  setTimeout("lazyLoadMe('.results-media');", 2000);
   /*$('.lazy').Lazy({
       // your configuration goes here
       scrollDirection: 'both',
@@ -656,6 +654,12 @@ $(document).ready(function(){
       }
   });*/
 });
+
+function lazyLoadMe(selector){
+  $(selector).each(function(e){
+    $(this).attr("src", $(this).attr("data-src"));
+  });
+}
 
 function getContainerName(id){
   try{
