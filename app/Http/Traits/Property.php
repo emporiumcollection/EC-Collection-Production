@@ -277,7 +277,7 @@ trait Property {
         ])
         //->whereIn('city', $cities)
         ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
-        ->where('country', '=', $keyword)
+        //->where('country', '=', $keyword)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
         ->where('feature_property', '!=', '1')
