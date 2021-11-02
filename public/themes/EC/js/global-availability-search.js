@@ -643,7 +643,7 @@ $(document).ready(function(){
   });
 
 
-  setTimeout("lazyLoadMe('.results-media');", 2000);
+  // setTimeout("lazyLoadMe('.results-media');", 2000);
   /*$('.lazy').Lazy({
       // your configuration goes here
       scrollDirection: 'both',
