@@ -161,7 +161,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                 @foreach($experiences as $exp)
-                  <a href="javascript:void(0)" data-value="<?php echo $exp->category_alias;?>" class="dropdown-item">{{ $exp->category_name }}</a>
+                  <a href="javascript:void(0);" data-value="<?php echo $exp->category_alias;?>" class="dropdown-item">{{ $exp->category_name }}</a>
                 @endforeach                
               </div>
             </li>

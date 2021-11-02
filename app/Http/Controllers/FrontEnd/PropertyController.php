@@ -2941,7 +2941,47 @@ class PropertyController extends Controller {
         /** End **/
 
         $this->data = $this->setFitlerOptions();
-        // echo "<pre>";print_r($this->data['experiences_data']);exit;
+
+        if(request()->get('atmosphere_ids')){
+            $atmospheres_ids = explode(",",request()->get('atmosphere_ids'));
+            $atmosphere_ = [];
+            foreach($atmospheres_ids as $atm_ids){
+                $atmosphere_[] = \DB::table('tb_categories')
+                    ->where('category_approved', 1)
+                    ->where('category_published', 1)
+                    ->where('id', $atm_ids)
+                    ->get();        
+            }
+            $this->data['atmosphere_data'] = $atmosphere_;
+            // echo "<pre>";print_r($this->data['atmosphere_data']);exit;
+        }
+
+        if(request()->get('facility_ids')){
+            $facility_ids = explode(",",request()->get('facility_ids'));
+            $facility_ = [];
+            foreach($facility_ids as $fac_id){
+                $facility_[] = \DB::table('tb_categories')
+                    ->where('category_approved', 1)
+                    ->where('category_published', 1)
+                    ->where('id', $fac_id)
+                    ->get();        
+            }
+            $this->data['facility_data'] = $facility_;
+        }
+
+        if(request()->get('style_ids')){
+            $style_ids = explode(",",request()->get('style_ids'));
+            $style_ = [];
+            foreach($style_ids as $sty_id){
+                $style_[] = \DB::table('tb_categories')
+                    ->where('category_approved', 1)
+                    ->where('category_published', 1)
+                    ->where('id',$sty_id)
+                    ->get();        
+            }
+
+            $this->data['selected_style'] = $style_;
+        }
 
 
         $objcat = \DB::table('tb_categories')->where('category_name', '=',$keyword)->where('category_approved', 1)->where('category_published', 1)->first();
