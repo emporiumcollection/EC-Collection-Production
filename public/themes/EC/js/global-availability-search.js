@@ -643,7 +643,7 @@ $(document).ready(function(){
   });
 
 
-  // setTimeout("lazyLoadMe('.results-media');", 2000);
+  setTimeout("lazyLoadMe('results-media');", 1000);
   /*$('.lazy').Lazy({
       // your configuration goes here
       scrollDirection: 'both',
@@ -656,9 +656,11 @@ $(document).ready(function(){
 });
 
 function lazyLoadMe(selector){
-  $(selector).each(function(e){
+  $('.'.selector).each(function(e){
     $(this).attr("src", $(this).attr("data-src"));
+    $(this).removeClass(selector);
   });
+  setTimeout("lazyLoadMe('results-media');", 1000);
 }
 
 function getContainerName(id){
