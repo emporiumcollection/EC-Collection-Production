@@ -640,9 +640,10 @@ $(document).ready(function(){
   $('.nav-item .dropdown-menu .filter-list .price-input .filter_price').on("click", function(){
     var url = createSearchUrl();
     searchResults(url);
+  });
 
-    
-
+  $('.results-media').each(function(e){
+    $(this).attr("src", $(this).attr("data-src"));
   });
 
   /*$('.lazy').Lazy({
