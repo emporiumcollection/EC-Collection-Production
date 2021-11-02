@@ -656,7 +656,7 @@ $(document).ready(function(){
 });
 
 function lazyLoadMe(selector){
-  $('.'.selector).each(function(e){
+  $('.' + selector).each(function(e){
     $(this).attr("src", $(this).attr("data-src"));
     $(this).removeClass(selector);
   });
