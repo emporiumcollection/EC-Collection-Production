@@ -656,6 +656,7 @@ $(document).ready(function(){
 
 $(window).on('load', function() {
   lazyLoadMe('results-media');
+  lazyLoadMe('location-photos');  
 });
 
 function lazyLoadMe(selector){

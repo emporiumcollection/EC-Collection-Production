@@ -56,7 +56,7 @@
                                             ?>
                                             <a href="<?php echo $photo->urls->regular; ?>"
                                                 data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-<?php echo $grid;?> span-<?php //echo $spanid;?>">
-                                                <img src="<?php echo $photo->urls->regular; ?>" alt="">
+                                                <img data-src="<?php echo $photo->urls->regular; ?>" alt="" class="location-photos">
                                             </a>
                                             <?php
                                             $spanid=2;
