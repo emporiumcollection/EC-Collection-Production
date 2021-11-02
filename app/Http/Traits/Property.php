@@ -125,7 +125,8 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+//        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        ->where('country', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
         ->limit(2)
@@ -193,7 +194,8 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        //->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        ->where('country', '=', $keyword)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
         ->limit(2)
@@ -274,7 +276,8 @@ trait Property {
             }
         ])
         //->whereIn('city', $cities)
-        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        //->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        ->where('country', '=', $keyword)
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
         ->where('feature_property', '!=', '1')
