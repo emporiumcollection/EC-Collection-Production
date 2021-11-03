@@ -209,7 +209,7 @@ trait Property {
         request()->get('atmosphere_ids').
         request()->get('style_ids'));
 
-        return Cache::get($key, function () {
+        return Cache::get($key, function ($keyword) {
             //Query starts
             $experience_id = false;
             if(request()->get('experience')){
