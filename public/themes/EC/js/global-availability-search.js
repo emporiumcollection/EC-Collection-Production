@@ -773,7 +773,8 @@ function removeMe(e, id){
     $('#'+id).prop("checked", false);
   }
   $(e).parents("li").remove();
-  createSearchUrl();
+  var url = createSearchUrl();   
+  searchResults(url);
 }
 
 function setBreadcrumb(elem){
