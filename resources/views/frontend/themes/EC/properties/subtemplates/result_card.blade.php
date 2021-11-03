@@ -78,7 +78,7 @@
       </a>
     </div>
   </div>
-  <a href="#">
+  <a href="/hotel/hoteldetail/{{ $property->id }}">
     <div class="title-offset mt-5 ">
       <h3 class="title-second title-line mb-0"><?php echo $property->property_name;?></h3>
       <h4 class="title-font-2 title-third"><?php echo $property->city;?></h4>

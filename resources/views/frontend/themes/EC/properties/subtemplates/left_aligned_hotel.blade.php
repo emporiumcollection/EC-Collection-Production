@@ -1,3 +1,4 @@
+
 <script type="text/javascript">
   if(properties === undefined){
     var properties = [];
@@ -121,7 +122,7 @@
           </ul>
         </div>
         <div class="right-meta align-self-center">
-          <a href="#" class="btn btn-primary btn-block rounded-0">Reservation</a>
+          <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-primary btn-block rounded-0">Reservation</a>
         </div>
       </div>
     </div>

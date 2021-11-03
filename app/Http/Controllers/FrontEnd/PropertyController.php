@@ -2941,48 +2941,7 @@ class PropertyController extends Controller {
         /** End **/
 
         $this->data = $this->setFitlerOptions();
-
-        if(request()->get('atmosphere_ids')){
-            $atmospheres_ids = explode(",",request()->get('atmosphere_ids'));
-            $atmosphere_ = [];
-            foreach($atmospheres_ids as $atm_ids){
-                $atmosphere_[] = \DB::table('tb_categories')
-                    ->where('category_approved', 1)
-                    ->where('category_published', 1)
-                    ->where('id', $atm_ids)
-                    ->get();        
-            }
-            $this->data['atmosphere_data'] = $atmosphere_;
-            // echo "<pre>";print_r($this->data['atmosphere_data']);exit;
-        }
-
-        if(request()->get('facility_ids')){
-            $facility_ids = explode(",",request()->get('facility_ids'));
-            $facility_ = [];
-            foreach($facility_ids as $fac_id){
-                $facility_[] = \DB::table('tb_categories')
-                    ->where('category_approved', 1)
-                    ->where('category_published', 1)
-                    ->where('id', $fac_id)
-                    ->get();        
-            }
-            $this->data['facility_data'] = $facility_;
-        }
-
-        if(request()->get('style_ids')){
-            $style_ids = explode(",",request()->get('style_ids'));
-            $style_ = [];
-            foreach($style_ids as $sty_id){
-                $style_[] = \DB::table('tb_categories')
-                    ->where('category_approved', 1)
-                    ->where('category_published', 1)
-                    ->where('id',$sty_id)
-                    ->get();        
-            }
-
-            $this->data['selected_style'] = $style_;
-        }
-
+        $this->data = $this->getFilterParameter();
 
         $objcat = \DB::table('tb_categories')->where('category_name', '=',$keyword)->where('category_approved', 1)->where('category_published', 1)->first();
         $exp = array();
@@ -3060,8 +3019,6 @@ class PropertyController extends Controller {
             }
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
-
-        //price filter
 
         if($request->get('max') && $request->get('min')){
             $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
@@ -3388,6 +3345,12 @@ class PropertyController extends Controller {
 
         return view('frontend.themes.emporium.properties.globalsearchavailability', $this->data);
 
+    }
+
+    public function Get_Property($id){
+        $this->data['hotel_data'] = $this->getProperty($id);
+
+        return view('frontend.themes.EC.hotel.hotel_detail', $this->data);
     }
 
     function globalsearchavailability_old(Request $request) {

@@ -768,4 +768,98 @@ trait Property {
 
         return $this->data;
     }
+
+    public function getFilterParameter(){
+
+        if(request()->get('atmosphere_ids')){
+            $atmospheres_ids = explode(",",request()->get('atmosphere_ids'));
+            $atmosphere_ = [];
+            foreach($atmospheres_ids as $atm_ids){
+                $atmosphere_[] = \DB::table('tb_categories')
+                    ->where('category_approved', 1)
+                    ->where('category_published', 1)
+                    ->where('id', $atm_ids)
+                    ->get();        
+            }
+            $this->data['atmosphere_data'] = $atmosphere_;
+            // echo "<pre>";print_r($this->data['atmosphere_data']);exit;
+        }
+
+        if(request()->get('facility_ids')){
+            $facility_ids = explode(",",request()->get('facility_ids'));
+            $facility_ = [];
+            foreach($facility_ids as $fac_id){
+                $facility_[] = \DB::table('tb_categories')
+                    ->where('category_approved', 1)
+                    ->where('category_published', 1)
+                    ->where('id', $fac_id)
+                    ->get();        
+            }
+            $this->data['facility_data'] = $facility_;
+        }
+
+        if(request()->get('style_ids')){
+            $style_ids = explode(",",request()->get('style_ids'));
+            $style_ = [];
+            foreach($style_ids as $sty_id){
+                $style_[] = \DB::table('tb_categories')
+                    ->where('category_approved', 1)
+                    ->where('category_published', 1)
+                    ->where('id',$sty_id)
+                    ->get();        
+            }
+
+            $this->data['selected_style'] = $style_;
+        }
+        return $this->data;
+    }
+
+    public function getProperty($id){
+        $properties = properties::select([
+            'id', 
+            'property_name', 
+            'property_short_name', 
+            'detail_section1_title', 
+            'detail_section1_description_box1', 
+            'detail_section1_description_box2', 
+            'detail_section1_description_box2', 
+            'roomamenities', 
+            'assign_amenities', 
+            'latitude',
+            'longitude',
+            'address', 
+            'internetpublic',
+            'internetroom',
+            'children_policy',
+            'checkin',
+            'checkout',
+            'transfer',
+            'smookingpolicy',
+            'smookingrooms',
+            'numberofrooms',
+            'availableservices',
+            'pets',
+            'carpark',
+            'bar_ids',
+            'spa_ids',
+            'restaurant_ids'
+        ])
+        ->with([
+            'container',
+            'propertyImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }]);
+                //->limit(20);
+            },
+        ])
+        ->where('id', '=', $id)
+        ->get();
+
+        $this->formatPropertyRecords($properties);
+
+        return $properties;
+    }
+
 }
