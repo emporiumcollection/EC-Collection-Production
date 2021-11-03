@@ -733,6 +733,7 @@ function createSearchUrl(experience = ''){
       experience = '';
     }
   }
+  console.log(experience);
 
   var atmospheres = [];
   var facilities = [];  
