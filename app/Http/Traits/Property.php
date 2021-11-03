@@ -318,7 +318,7 @@ trait Property {
 //        print $properties->toSql();
 //        exit;
         return $properties
-        //->limit(1)
+        ->limit(6)
         ->get();
     }
 
