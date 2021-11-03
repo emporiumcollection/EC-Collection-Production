@@ -710,7 +710,8 @@ function searchResults(url){
           setTimeout(function () {
             $('body').css('overflow', 'auto');
             $('.pageload').hide();
-          }, 3000)
+            lazyLoadMe('results-media');
+          }, 1000)
         }
     });
 }
