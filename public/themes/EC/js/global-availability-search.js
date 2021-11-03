@@ -264,17 +264,24 @@ function replaceSuiteList(id){
       suiteItem = '<div class="property-suite-p'+sid+'">' + suiteTemplate + '</div>';
       var containerName = getContainerName(id);
       roomimages = '';
-      suite.rooms[0].images.forEach(function(rm){
-        if(onlyThree < 3){        
-          roomimages += `<div>
-              <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
-            </div>`;  
-        }
-        onlyThree++; 
-      });
+
+      console.log(suite.rooms[0].images.length);
+      if(suite.rooms[0].images.length !== undefined){        
+        suite.rooms[0].images.forEach(function(rm){
+          if(onlyThree < 3){        
+            roomimages += `<div>
+                <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+              </div>`;  
+          }
+          onlyThree++; 
+        });  
+      }
+
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid);  
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
+      suiteItem = suiteItem.replace('<!--SUITE-NO-BEDS-->', suite.bads);
+      suiteItem = suiteItem.replace('<!--SUITE-SIZE-->', suite.suite_size);      
       
       $('#suiteslist').append(suiteItem);
     }
@@ -283,7 +290,7 @@ function replaceSuiteList(id){
   setTimeout('appendResultGridSlider()', 2000);    
   setTimeout("$('#suites-loader').hide();", 3000);
   setTimeout("$('#suites-popup').show();", 3000);
-  setTimeout("$('.result-grid').slick('setPosition');", 1000);  
+  setTimeout("$('.result-grid').slick('setPosition');", 3000);  
 }
 
 function replaceSuiteDetail(property_id, category_id){
@@ -309,6 +316,8 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="price-icon"]').html(`<i class="ico ico-info-green pointer btn-sidebar" type="button"
                                 data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
   $('[data-place="suite-price"]').html(suite.price);
+  $('[data-place="suite-beds"]').html(suite.bads);
+  $('[data-place="suite-size"]').html(suite.suite_size);
 
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);
@@ -516,9 +525,18 @@ function getDefaultChannel(catt){
             
         },
         success: function(data){ 
-            if(!$('.yt-rvideos').length) return false;
+            if(!$('.yt-rvideos').length && !$('.yt-rvideos-2').length) return false;
 
             $('.yt-rvideos').yottie({  
+                key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+                channel: data.channel_url,
+                content: {
+                    columns: 4,
+                    rows: 2
+                },
+            });
+
+            $('.yt-rvideos-2').yottie({  
                 key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
                 channel: data.channel_url,
                 content: {
@@ -633,8 +651,15 @@ $(document).ready(function(){
 
   $('.nav-item .dropdown-menu .filter-list .price-input .filter_price').on("click", function(){
     var url = createSearchUrl();
-    searchResults(url);   
+    searchResults(url);
   });
+
+  /*$('#resultsLoadMore').on("click", function(){
+    var currentPage = $('#currentPage').val();
+    var url = createSearchUrl();
+    url = url + '&view=paginate';
+    searchResults(url);
+  });*/
 
   /*$('.lazy').Lazy({
       // your configuration goes here
@@ -648,6 +673,17 @@ $(document).ready(function(){
 });
 
  
+$(window).on('load', function() {
+  lazyLoadMe('results-media');
+  lazyLoadMe('location-photos');  
+});
+
+function lazyLoadMe(selector){
+  $('.' + selector).each(function(e){
+    $(this).attr("src", $(this).attr("data-src"));
+  });
+}
+
 function getContainerName(id){
   try{
     if(properties[id]['container']){

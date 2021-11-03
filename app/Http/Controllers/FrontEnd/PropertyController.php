@@ -2867,14 +2867,18 @@ class PropertyController extends Controller {
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
 
-        /*
-        $cacheKey = 'location_photos'.$keyword;
+        
+        $cacheKey = 'location_photos'.strtolower(str_replace(" ", "", $keyword));
+        $photos = json_encode([]);
         if (Cache::has($cacheKey)) {
             $photos = Cache::get($cacheKey);
         }
-    */
-        $us = new UnsplashSearch();
-        $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+    
+        if(empty(json_decode($photos))){
+            $us = new UnsplashSearch();
+            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+            Cache::store('file')->put($cacheKey, $photos, 100000);
+        }
         $this->data['photos'] = json_decode($photos);
 
         $type = $request->input('type');
@@ -2994,10 +2998,11 @@ class PropertyController extends Controller {
         $this->data['experiences'] = $exp;
 
         $cities = [];
+        /*
         $this->getCities($keyword, $cities);
         if(empty($cities)){
             $cities[] = $keyword;
-        }
+        }*/
 
         //if($request->get('view') != 'map'){
             //Get editor's choice properties
@@ -3009,6 +3014,16 @@ class PropertyController extends Controller {
 
         if(!empty($this->data['editorsProperties']->toArray())){
             foreach($this->data['editorsProperties'] as $k => $editorProperty){
+                if(empty($editorProperty->container)){
+                    $container = Container::
+                    where('display_name', '=', $editorProperty->property_name)
+                    ->get();
+
+                    if(!empty($container->toArray())){
+                        $editorProperty->container = $container[0];
+                        $this->data['editorsProperties'][$k]->container = $container[0];
+                    }
+                }
                 if(isset($editorProperty->container) && $editorProperty->container){
                     $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
                 }else{
@@ -3024,6 +3039,16 @@ class PropertyController extends Controller {
 
         if(!empty($this->data['featureProperties']->toArray())){
             foreach($this->data['featureProperties'] as $k => $featureProperty){
+                if(empty($featureProperty->container)){
+                    $container = Container::
+                    where('display_name', '=', $featureProperty->property_name)
+                    ->get();
+
+                    if(!empty($container->toArray())){
+                        $featureProperty->container = $container[0];
+                        $this->data['featureProperties'][$k]->container = $container[0];
+                    }
+                }
                 if(isset($featureProperty->container) && $featureProperty->container){
                     $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
                 }else{
@@ -3060,8 +3085,6 @@ class PropertyController extends Controller {
             }
             $this->formatPropertyRecords($this->data['propertyResults']);
         }
-
-        //price filter
 
         if($request->get('max') && $request->get('min')){
             $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);

@@ -13,10 +13,10 @@
             <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On3.svg') }}" class="img-fluid" alt="">
         </div>
         <div>
-            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On2.svg') }}images/Emporium-Collection-As-Seen-On4.svg" class="img-fluid" alt="">
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On2.svg') }}" class="img-fluid" alt="">
         </div>
         <div>
-            <img src="{{ asset('/themes/EC/images/images/Emporium-Collection-As-Seen-On5.svg') }}" class="img-fluid" alt="">
+            <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On5.svg') }}" class="img-fluid" alt="">
         </div>
         <div>
             <img src="{{ asset('/themes/EC/images/Emporium-Collection-As-Seen-On8.svg') }}" class="img-fluid" alt="">
