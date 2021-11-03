@@ -642,6 +642,13 @@ $(document).ready(function(){
     searchResults(url);
   });
 
+  /*$('#resultsLoadMore').on("click", function(){
+    var currentPage = $('#currentPage').val();
+    var url = createSearchUrl();
+    url = url + '&view=paginate';
+    searchResults(url);
+  });*/
+
 
   /*$('.lazy').Lazy({
       // your configuration goes here

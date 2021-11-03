@@ -81,7 +81,11 @@
         ['property' => $lifestyleProp, 'propertyImages' => $lifestyleProp->propertyImages])
       <?php
       endforeach;
-      ?>
+      ?>      
+      <!--<div class="col-lg-12 col-md-12 mb-5" style="text-align:center;">
+        <input type="hidden" page="1" name="page" id="currentPage" />
+        <button id="resultsLoadMore" class="btn btn-primary">Load More</button>
+      </div>-->
     </div>
   </div>
   <?php endif; ?>
