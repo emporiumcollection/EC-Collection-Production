@@ -202,94 +202,95 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
             </li>
           @endif
           @if(!empty($atmosphere_data))
-            <li class="nav-item" id="atmosphere">
-              <span class="nav-link">
-                <a class="" href="#">
-                  <span class="taxonomyTags-roundedArrow">
-                    <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
-                      style="vertical-align: auto;">
+
+            @foreach($atmosphere_data as $atm)
+              <li class="nav-item" id="atmosphere">
+                <span class="nav-link">
+                  <a class="" href="#">
+                    <span class="taxonomyTags-roundedArrow">
+                      <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
+                        style="vertical-align: auto;">
+                        <path
+                          d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
+                          fill="currentColor" fill-rule="evenodd"></path>
+                      </svg>
+                    </span> 
+                    <span class="taxonomyTags-tagTitle">
+                      {{ $atm[0]->category_name }}
+                    </span>
+                    {{-- <span class="ml-1">85</span> --}}
+                  </a>
+                  <a href="javascript:void();" class="delete" onclick="removeMe(this,'setting1{{ $atm[0]->id }}')">
+                    <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                      xmlns="http://www.w3.org/2000/svg">
                       <path
-                        d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
-                        fill="currentColor" fill-rule="evenodd"></path>
+                        d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                      </path>
                     </svg>
-                  </span>
-                  @foreach($atmosphere_data as $atm) 
-                  <span class="taxonomyTags-tagTitle">
-                    {{ $atm[0]->category_name }}
-                  </span>
-                  @endforeach
-                  {{-- <span class="ml-1">85</span> --}}
-                </a>
-                <a href="javascript:void();" class="delete delete_atm">
-                  <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
-                    </path>
-                  </svg>
-                </a>
-              </span>
-            </li>
+                  </a>
+                </span>
+              </li>
+            @endforeach
           @endif
           @if(!empty($facility_data))
-            <li class="nav-item">
-              <span class="nav-link">
-                <a class="" href="#">
-                  <span class="taxonomyTags-roundedArrow">
-                    <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
-                      style="vertical-align: auto;">
+            @foreach($facility_data as $fac)
+              <li class="nav-item">
+                <span class="nav-link">
+                  <a class="" href="#">
+                    <span class="taxonomyTags-roundedArrow">
+                      <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
+                        style="vertical-align: auto;">
+                        <path
+                          d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
+                          fill="currentColor" fill-rule="evenodd"></path>
+                      </svg>
+                    </span>
+                    <span class="taxonomyTags-tagTitle">
+                      {{ $fac[0]->category_name }}
+                    </span>
+                    {{-- <span class="ml-1">85</span> --}}
+                  </a>
+                  <a href="javaScript:void();" class="delete" onclick="removeMe(this,'fasilities{{ $fac[0]->id }}')">
+                    <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                      xmlns="http://www.w3.org/2000/svg">
                       <path
-                        d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
-                        fill="currentColor" fill-rule="evenodd"></path>
+                        d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                      </path>
                     </svg>
-                  </span>
-                  @foreach($facility_data as $fac)
-                  <span class="taxonomyTags-tagTitle">
-                    {{ $fac[0]->category_name.',' }}
-                  </span>
-                  @endforeach
-                  {{-- <span class="ml-1">85</span> --}}
-                </a>
-                <a href="#" class="delete">
-                  <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
-                    </path>
-                  </svg>
-                </a>
-              </span>
-            </li>
+                  </a>
+                </span>
+              </li>
+            @endforeach
           @endif
           @if(!empty($selected_style))
-            <li class="nav-item">
-              <span class="nav-link">
-                <a class="" href="#">
-                  <span class="taxonomyTags-roundedArrow">
-                    <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
-                      style="vertical-align: auto;">
+            @foreach($selected_style as $sty)
+              <li class="nav-item">
+                <span class="nav-link">
+                  <a class="" href="#">
+                    <span class="taxonomyTags-roundedArrow">
+                      <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
+                        style="vertical-align: auto;">
+                        <path
+                          d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
+                          fill="currentColor" fill-rule="evenodd"></path>
+                      </svg>
+                    </span>
+                    <span class="taxonomyTags-tagTitle">
+                      {{ $sty[0]->category_name }}
+                    </span>
+                    {{-- <span class="ml-1">85</span> --}}
+                  </a>
+                  <a href="javaScript:void();" class="delete" onclick="removeMe(this,'style{{ $sty[0]->id }}')">
+                    <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                      xmlns="http://www.w3.org/2000/svg">
                       <path
-                        d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
-                        fill="currentColor" fill-rule="evenodd"></path>
+                        d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                      </path>
                     </svg>
-                  </span>
-                  @foreach($selected_style as $sty)
-                  <span class="taxonomyTags-tagTitle">
-                    {{ $sty[0]->category_name.',' }}
-                  </span>
-                  @endforeach
-                  {{-- <span class="ml-1">85</span> --}}
-                </a>
-                <a href="#" class="delete">
-                  <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
-                    </path>
-                  </svg>
-                </a>
-              </span>
-            </li>
+                  </a>
+                </span>
+              </li>
+            @endforeach
           @endif 
         </ul>
         <div class="tab-content pt-5" id="search-results-content">

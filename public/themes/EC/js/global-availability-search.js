@@ -602,27 +602,27 @@ $(document).ready(function(){
   $('.menu-s #experience_dropdown .dropdown-menu .dropdown-item').on("click",function(){
     setBreadcrumbSingle($(this));    
     var url = createSearchUrl($(this).attr("data-value"));
-    //searchResults(url);
+    searchResults(url);
   });
 
   $('#atmosphere_dropdown .custom-control-input').on("click",function(){
     setBreadcrumb($(this));
     var url = createSearchUrl();
-    //searchResults(url);
+    searchResults(url);
     return true;
   });
 
   $('#facilities_dropdown .custom-control-input').on("click",function(){
     setBreadcrumb($(this));
     var url = createSearchUrl();
-    //searchResults(url);
+    searchResults(url);
     return true;
   });
 
   $('#style_dropdown .custom-control-input').on("click",function(){
     setBreadcrumb($(this));
     var url = createSearchUrl();
-    //searchResults(url);
+    searchResults(url);
     return true;
   });
 
@@ -732,6 +732,7 @@ function createSearchUrl(experience = ''){
 }
 
 function removeMe(e, id){
+
   if(id){
     $('#'+id).prop("checked", false);
   }
