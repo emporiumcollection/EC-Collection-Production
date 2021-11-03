@@ -20,6 +20,7 @@ use App\Models\Spa;
 
 use DateTime;
 use DB;
+use Cache;
 trait Property {
     
     public function getLocationDescription($keyword){
