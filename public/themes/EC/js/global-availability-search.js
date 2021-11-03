@@ -680,6 +680,7 @@ function searchResults(url){
 }
 
 function getUrlParam(p){
+  
   $.urlParam = function (name) {
         var results = new RegExp('[\?&]' + name + '=([^&#]*)')
                           .exec(window.location.search);

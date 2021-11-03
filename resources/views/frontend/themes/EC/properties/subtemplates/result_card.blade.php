@@ -66,7 +66,6 @@
             <span class="pernight"></span>
           </div>
         </div>
-
       </div>
     </div>
     <div class="hotel-meta-mobile">
