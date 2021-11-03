@@ -724,7 +724,7 @@ function getUrlParam(p){
   return $.urlParam(p);
 }
 
-function createSearchUrl(experience = null){
+function createSearchUrl(experience = ''){
   $('.pageload').show();
 
   if(experience !== null){
@@ -771,9 +771,9 @@ function removeMe(e, id){
   var url = '';
   if(id){
     $('#'+id).prop("checked", false);
-    url = createSearchUrl('');   
-  }else{
     url = createSearchUrl();   
+  }else{
+    url = createSearchUrl(null);   
   }
   $(e).parents("li").remove();
   searchResults(url);
