@@ -732,7 +732,9 @@ function createSearchUrl(experience = ''){
     if(!experience){
       experience = '';
     }
-  }else{
+  }
+
+  if(experience === null){
     experience = '';    
   }
   console.log(experience);
