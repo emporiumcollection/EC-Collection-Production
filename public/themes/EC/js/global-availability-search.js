@@ -724,10 +724,10 @@ function getUrlParam(p){
   return $.urlParam(p);
 }
 
-function createSearchUrl(experience = ''){
+function createSearchUrl(experience = null){
   $('.pageload').show();
 
-  if(!experience){
+  if(experience !== null){
     experience = getUrlParam('experience');
     if(!experience){
       experience = '';
@@ -768,12 +768,14 @@ function createSearchUrl(experience = ''){
 }
 
 function removeMe(e, id){
-
+  var url = '';
   if(id){
     $('#'+id).prop("checked", false);
+    url = createSearchUrl();   
+  }else{
+    url = createSearchUrl('');   
   }
   $(e).parents("li").remove();
-  var url = createSearchUrl();   
   searchResults(url);
 }
 
