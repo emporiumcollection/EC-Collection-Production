@@ -727,7 +727,7 @@ function getUrlParam(p){
 function createSearchUrl(experience = ''){
   $('.pageload').show();
 
-  if(experience !== null){
+  if(experience !== null && !experience){
     experience = getUrlParam('experience');
     if(!experience){
       experience = '';
