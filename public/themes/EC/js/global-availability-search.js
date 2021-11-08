@@ -55,7 +55,7 @@ function replacePropertyData(id){
         rooms = s.rooms;
         rooms.forEach(function(r){
           rimages = r.images;
-          if(rimages!=undefined){          
+          if(rimages.length){          
             rimages.forEach(function(e){
               imgUrl = '/room-image/resize/600x500/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
               imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
