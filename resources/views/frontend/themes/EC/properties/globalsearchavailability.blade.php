@@ -110,7 +110,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               </a>
               <div class="title-main pl-0">
                 <h2><span data-toggle="tooltip" title="Your selected destination experience">{{$keyword}}</span> <a
-                    href="#searchF" data-toggle="collapse"><i class="ico ico-reload reload-offset"
+                    href="javascript:void(0)" onclick="resetSearch();" data-toggle="collapse"><i class="ico ico-reload reload-offset"
                       title="Reset your search result" data-toggle="tooltip"></i></a>
                 </h2>
               </div>

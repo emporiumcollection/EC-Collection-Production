@@ -785,6 +785,15 @@ function createSearchUrl(experience = ''){
   return url + '&view=ajax';
 }
 
+function resetSearch(){
+  $('.nav-tags').html('');
+  var keyword = '';
+  keyword = getUrlParam('s');
+  var url = document.location.origin + document.location.pathname + `?s=` + keyword + '&view=ajax'
+  window.history.pushState({}, '', url);
+  searchResults(url);
+}
+
 function removeMe(e, id){
   var url = '';
   if(id){
