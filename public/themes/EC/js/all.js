@@ -1060,7 +1060,6 @@ var ajaxReq = 'ToCancelPrevReq';
     $("#collection_search").submit();
   });
 
-
   $('.whereinner').on('click', '.nav-link', function(e){
     e.preventDefault();
     var result = $(this).find('span').html();
@@ -2101,12 +2100,12 @@ function getNavitems(location, collection_name){
   var searchResultsChannelUrl = "/globalsearchavailability?view=channel&s="+location+"&arrive="+$("#arrive").val()+"&departure="+$("#departure").val()+"&type=destination&rac=r0a2c1#";
 
   return `<li class="nav-item">
-      <a class="nav-link nav-link-map" href="`+searchResultsPageUrl+`">
+      <a class="nav-link nav-link-map" data-page="map" href="`+searchResultsPageUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Map</span>
       </a>
     </li>
    <li class="nav-item">
-      <a class="nav-link nav-link-map" href="`+searchResultsChannelUrl+`">
+      <a class="nav-link nav-link-map" data-page="channel" href="`+searchResultsChannelUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Channel</span>
       </a>
     </li>
