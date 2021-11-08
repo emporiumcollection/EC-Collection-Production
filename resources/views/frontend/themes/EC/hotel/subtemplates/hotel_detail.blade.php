@@ -47,36 +47,37 @@
       </video>
     </div>
     <!-- Data video popup end -->
-    <div class="slider-detail" id="sliderDetail">
-      <div>
-        <a href="images/53511811337-49267444221.jpg" class="slider-item-inner">
-          <img src="images/53511811337-49267444221.jpg" id="heading-img" class="img-fluid" alt="">
-          <div class="view-images-btn">
-            <i class="ico icon-camera"></i> View Images
-          </div>
-        </a>
+    @foreach($hotel_data as $img)
+      <div class="slider-detail" id="sliderDetail">
+        <div>
+          <a href="images/53511811337-49267444221.jpg" class="slider-item-inner">
+            <img src="images/53511811337-49267444221.jpg" id="heading-img" class="img-fluid" alt="">
+            <div class="view-images-btn">
+              <i class="ico icon-camera"></i> View Images
+            </div>
+          </a>
+        </div>
+        {{-- <div>
+          <a data-html="#video1" data-poster="images/video-cover.jpg" data-sub-html="video caption1"
+            class="slider-item-inner">
+            <img src="images/video-cover.jpg" id="heading-img" class="img-fluid" alt="">
+            <div class="play-button">
+              <img src="images/video-play.png" alt="">
+            </div>
+            <div class="view-images-btn">
+              <i class="ico icon-camera"></i> View Images
+            </div>
+          </a>
+        </div> --}}
+        <div>
+          <a href="images/53511811337-49267444221.jpg" class="slider-item-inner">
+            <img src="images/53511811337-49267444221.jpg" id="heading-img" class="img-fluid " alt="">
+            <div class="view-images-btn">
+              <i class="ico icon-camera"></i> View Images
+            </div>
+          </a>
+        </div>
       </div>
-      <div>
-        <a data-html="#video1" data-poster="images/video-cover.jpg" data-sub-html="video caption1"
-          class="slider-item-inner">
-          <img src="images/video-cover.jpg" id="heading-img" class="img-fluid" alt="">
-          <div class="play-button">
-            <img src="images/video-play.png" alt="">
-          </div>
-          <div class="view-images-btn">
-            <i class="ico icon-camera"></i> View Images
-          </div>
-        </a>
-      </div>
-      <div>
-        <a href="images/53511811337-49267444221.jpg" class="slider-item-inner">
-          <img src="images/53511811337-49267444221.jpg" id="heading-img" class="img-fluid " alt="">
-          <div class="view-images-btn">
-            <i class="ico icon-camera"></i> View Images
-          </div>
-        </a>
-      </div>
-    </div>
     <div class="prev"><i class="ico ico-back"></i></div>
     <div class="next"><i class="ico ico-next"></i></div>
     <div class="hotel-meta full-width hotel-meta-details">
@@ -182,9 +183,9 @@
           <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
           <div class="row mb-4">
             @if(!empty($hotel_data))
-              @foreach($name as $amenitie)              
+              @foreach($hotel_data as $amenitie)              
               <div class="col-md-4 mb-4">
-                <p class="mb-0">{{ $amenitie->amenities_eng }}</p>
+                <p class="mb-0">{{ $amenitie->suites[0]->amenities[0]->amenities_eng }}</p>
               </div>
               @endforeach
             @else

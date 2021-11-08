@@ -1,3 +1,4 @@
+<?php echo "<pre>"; print_r($hotel_data);exit; ?>
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
