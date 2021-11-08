@@ -574,10 +574,10 @@ trait Property {
     }
 
     public function setGalleryAndFormat(&$properties){
-        $emptyPropertyImages = json_encode([
+        /*$emptyPropertyImages = json_encode([
             'id' => 0,
             'file_name' => 'default-image.png',
-        ]);
+        ]);*/
 
         if(!empty($properties->toArray())){
             foreach($properties as $k => $editorProperty){
@@ -593,9 +593,10 @@ trait Property {
                 }
                 if(isset($editorProperty->container) && $editorProperty->container){
                     $properties[$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
-                }else{
-                    $properties[$k]->propertyImages[0] = json_decode($emptyPropertyImages);
                 }
+                /*else{
+                    $properties[$k]->propertyImages[0] = json_decode($emptyPropertyImages);
+                }*/
             }
             
             $this->formatPropertyRecords($properties);
