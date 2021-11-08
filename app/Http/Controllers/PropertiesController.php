@@ -66,8 +66,21 @@ class PropertiesController extends Controller {
 		}
 		if(!is_null($request->input('selstatus')) && $request->input('selstatus')!='')
 		{
-			$pstatus = ($request->input('selstatus')=='active') ? 1 : 0;
-			$filter .= ' AND property_status = '.$pstatus;
+			if($request->input('selstatus')=='active'){
+                $filter .= ' AND property_status = 1';
+            }
+            if($request->input('selstatus')=='inactive'){
+                $filter .= ' AND property_status = 0';
+            }
+
+            if($request->input('selstatus')=='featured_property'){
+                $filter .= ' AND feature_property = 1';
+            }
+            
+            if($request->input('selstatus')=='editor_choice'){
+                $filter .= ' AND editor_choice_property = 1';
+            }
+
 			$this->data['curstatus'] = $request->input('selstatus');
 		}
 
@@ -79,6 +92,7 @@ class PropertiesController extends Controller {
         }
         $page = $request->input('page', 1);
         $params = array(
+            'status'=>1,
             'page' => $page,
             'limit' => (!is_null($request->input('rows')) ? filter_var($request->input('rows'), FILTER_VALIDATE_INT) : static::$per_page ),
             'sort' => $sort,
@@ -1926,6 +1940,7 @@ class PropertiesController extends Controller {
         $rules['guests_adult'] = 'required|numeric';
         $rules['guests_junior'] = 'required|numeric';
         $rules['guests_babies'] = 'required|numeric';
+        $rules['suite_size'] = 'required|numeric';
         $rules['bads'] = 'required|numeric';
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
@@ -1940,6 +1955,7 @@ class PropertiesController extends Controller {
             $data['guests_juniors'] = $request->input('guests_junior');
             $data['guests_babies'] = $request->input('guests_babies');
             $data['bads'] = $request->input('bads');
+            $data['suite_size'] = $request->input('suite_size');
             //$data['booking_policy'] =  $request->input('bookingPolicy');
 
             if (!is_null($request->input('count_baby'))) {

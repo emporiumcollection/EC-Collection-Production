@@ -20,6 +20,7 @@ use App\Models\Spa;
 
 use DateTime;
 use DB;
+use Cache;
 trait Property {
     
     public function getLocationDescription($keyword){
@@ -101,7 +102,8 @@ trait Property {
             'carpark',
             'bar_ids',
             'spa_ids',
-            'restaurant_ids'
+            'restaurant_ids',
+            'city'
             ])
         ->with([
             'boards',
@@ -122,9 +124,10 @@ trait Property {
 
                 }]);
                 //->limit(20);
-            }])
-        ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
-        ->orWhere('country', $keyword)
+            }
+        ])
+        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        //->where('country', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
         ->limit(2)
@@ -160,12 +163,13 @@ trait Property {
             'carpark',
             'bar_ids',
             'spa_ids',
-            'restaurant_ids'
+            'restaurant_ids',
+            'city'
         ])
         ->with([
             'boards',
             'container',
-            'images',
+            //'images',
             'suites' => function($query){
                 return $query->with(['rooms', 'amenities']);
             },
@@ -191,8 +195,8 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
-        ->orWhere('country', $keyword)
+        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        //->where('country', '=', $keyword)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
         ->limit(2)
@@ -200,118 +204,131 @@ trait Property {
     }
 
     public function searchPropertiesByKeyword($cities, $keyword){
-        $experience_id = false;
-        if(request()->get('experience')){
-            $experience = categories::select(['id'])
-            ->where('category_alias', '=', request()->get('experience'))
-            ->get()
-            ->toArray();
+        $key = md5($keyword.request()->get('experience').
+        request()->get('facility_ids').
+        request()->get('atmosphere_ids').
+        request()->get('style_ids'));
 
-            $experience_id = $experience[0]['id'];
-        }
+        return Cache::get($key, function () {
+            $keyword = request()->get('s');
+            //Query starts
+            $experience_id = false;
+            if(request()->get('experience')){
+                $experience = categories::select(['id'])
+                ->where('category_alias', '=', request()->get('experience'))
+                ->get()
+                ->toArray();
 
-        $properties = properties::select([
-            'id', 
-            'property_name', 
-            'property_short_name', 
-            'detail_section1_title', 
-            'detail_section1_description_box1', 
-            'detail_section1_description_box2', 
-            'detail_section1_description_box2', 
-            'roomamenities', 
-            'assign_amenities', 
-            'latitude',
-            'longitude',
-            'address', 
-            'internetpublic',
-            'internetroom',
-            'children_policy',
-            'checkin',
-            'checkout',
-            'transfer',
-            'smookingpolicy',
-            'smookingrooms',
-            'numberofrooms',
-            'availableservices',
-            'pets',
-            'carpark',
-            'bar_ids',
-            'spa_ids',
-            'restaurant_ids'
-        ])
-        ->with([
-            'boards',
-            'container',
-            'images',
-            'PropertyCategoryPackages' => function($query){
-                $query->with(['package']);
-            },
-            'suites' => function($query){
-                return $query->with(['rooms', 'amenities']);
-            },
-            'propertyImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }]);
-                //->limit(20);
-            }, 
-            'roomImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }]);
-                //->limit(20);
-            }, 
-            'hotelBrochureImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }]);
-                //->limit(20);
+                $experience_id = $experience[0]['id'];
             }
-        ])
-        //->whereIn('city', $cities)
-        ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
-        ->where('latitude', '!=', '')
-        ->where('longitude', '!=', '')
-        ->where('property_status', '=', 1);
 
-        if(request()->get('atmosphere_ids')){            
-            $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
-            $aWhere = [];
-            foreach($atmosphere_ids as $id){
-                $aWhere[] = "atmosphere_ids = '$id' or atmosphere_ids like '%,$id%' or atmosphere_ids like '%$id,%' ";
-            }    
-            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
-        }
+            $properties = properties::select([
+                'id', 
+                'property_name', 
+                'property_short_name', 
+                'detail_section1_title', 
+                'detail_section1_description_box1', 
+                'detail_section1_description_box2', 
+                'detail_section1_description_box2', 
+                'roomamenities', 
+                'assign_amenities', 
+                'latitude',
+                'longitude',
+                'address', 
+                'internetpublic',
+                'internetroom',
+                'children_policy',
+                'checkin',
+                'checkout',
+                'transfer',
+                'smookingpolicy',
+                'smookingrooms',
+                'numberofrooms',
+                'availableservices',
+                'pets',
+                'carpark',
+                'bar_ids',
+                'spa_ids',
+                'restaurant_ids',
+                'city'
+            ])
+            ->with([
+                'boards',
+                'container',
+                //'images',
+                'PropertyCategoryPackages' => function($query){
+                    $query->with(['package']);
+                },
+                'suites' => function($query){
+                    return $query->with(['rooms', 'amenities']);
+                },
+                'propertyImages' => function($query){
+                    return $query->with(['file' => function($query){
+                        return $query->select(['id','file_name']);
 
-        if(request()->get('facility_ids')){
-            $facility_ids = explode(",",request()->get('facility_ids'));
-            $aWhere = [];
-            foreach($facility_ids as $id){
-                $aWhere[] = "facility_ids = '$id' or facility_ids like '%,$id%' or facility_ids like '%$id,%' ";
-            }    
-            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
-        }
+                    }]);
+                    //->limit(20);
+                }, 
+                'roomImages' => function($query){
+                    return $query->with(['file' => function($query){
+                        return $query->select(['id','file_name']);
 
-        if(request()->get('style_ids')){
-            $style_ids = explode(",",request()->get('style_ids'));
-            $aWhere = [];
-            foreach($style_ids as $id){
-                $aWhere[] = "style_ids = '$id' or style_ids like '%,$id%' or style_ids like '%$id,%' ";
-            }    
-            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
-        }
+                    }]);
+                    //->limit(20);
+                }, 
+                'hotelBrochureImages' => function($query){
+                    return $query->with(['file' => function($query){
+                        return $query->select(['id','file_name']);
 
-        if($experience_id){
-            $properties->whereRaw("(experience_ids = '$experience_id' or experience_ids like '%,$experience_id%' or experience_ids like '%$experience_id,%')");
-        }   
-//        print $properties->toSql();
-//        exit;
-        return $properties
-        //->limit(1)
-        ->get();
+                    }]);
+                    //->limit(20);
+                }
+            ])
+            //->whereIn('city', $cities)
+            ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+            //->where('country', '=', $keyword)
+            ->where('latitude', '!=', '')
+            ->where('longitude', '!=', '')
+            ->where('feature_property', '!=', '1')
+            ->where('editor_choice_property', '!=', '1')
+            ->where('longitude', '!=', '')
+            ->where('property_status', '=', 1);
+
+            if(request()->get('atmosphere_ids')){            
+                $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
+                $aWhere = [];
+                foreach($atmosphere_ids as $id){
+                    $aWhere[] = "atmosphere_ids = '$id' or atmosphere_ids like '%,$id%' or atmosphere_ids like '%$id,%' ";
+                }    
+                $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
+            }
+
+            if(request()->get('facility_ids')){
+                $facility_ids = explode(",",request()->get('facility_ids'));
+                $aWhere = [];
+                foreach($facility_ids as $id){
+                    $aWhere[] = "facility_ids = '$id' or facility_ids like '%,$id%' or facility_ids like '%$id,%' ";
+                }    
+                $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
+            }
+
+            if(request()->get('style_ids')){
+                $style_ids = explode(",",request()->get('style_ids'));
+                $aWhere = [];
+                foreach($style_ids as $id){
+                    $aWhere[] = "style_ids = '$id' or style_ids like '%,$id%' or style_ids like '%$id,%' ";
+                }    
+                $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
+            }
+
+            if($experience_id){
+                $properties->whereRaw("(experience_ids = '$experience_id' or experience_ids like '%,$experience_id%' or experience_ids like '%$experience_id,%')");
+            }   
+
+            return $properties
+            //->limit(6)
+            ->get();
+        });            
     }
 
     private function filterByprice($max,$min,&$propertyResults){

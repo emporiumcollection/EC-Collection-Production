@@ -119,11 +119,11 @@
                 <div class="title-main mt-0 mb-3">
                     <h2 data-place="suite_category_name">Suite Name</h2>
                 </div>
-                <!--<div class="meta-title meta-title-lg mb-3">
+                <div class="meta-title meta-title-lg mb-3">
                     <span>Sleeps</span>
-                    <span>2 Queens beds </span>
-                    <span>Suite size: 643 ft</span>
-                </div>-->
+                    <span><span data-place="suite-beds"></span> beds </span>
+                    <span>Suite size: <span data-place="suite-size"></span>ft</span>
+                </div>
                 <p data-place="suite_description">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas eum
                     laborum enim hic quia ipsa

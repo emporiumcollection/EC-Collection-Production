@@ -60,6 +60,8 @@
 				<option value="">-Status-</option>
 				<option value="active" <?php echo ($curstatus == 'active') ? " selected='selected' " : "selected='selected'" ; ?>>Active</option>
 				<option value="inactive" <?php echo ($curstatus == 'inactive') ? " selected='selected' " : '' ; ?>>Inactive</option>
+				<option value="featured_property" <?php echo ($curstatus == 'featured_property') ? " selected='selected' " : '' ; ?>>Featured Property</option>
+				<option value="editor_choice" <?php echo ($curstatus == 'editor_choice') ? " selected='selected' " : '' ; ?>>Editor Choice</option>
 			</select>
 
 			<div id="searchform-navbar" class="searchform-navbar" style="float:right;">
@@ -77,8 +79,14 @@
 				<th class="number"> No </th>
 				<th> <input type="checkbox" class="checkall" /></th>
 				<th>Property Name</th>
+				<th>Country</th>
+				<th>Property Category</th>
 				<th>Property City</th>
+				<th>Property Status</th>
+				<th>Editor Choice Property</th>
+				<th>Featured Property</th>
 				<th>Website</th>
+				<th>Phone</th>
 				<th>Email</th>
 				<th width="210" >{{ Lang::get('core.btn_action') }}</th>
 			  </tr>
@@ -90,9 +98,15 @@
 					<td width="30"> {{ ++$i }} </td>
 					<td width="50"><input type="checkbox" class="ids" name="ids[]" value="{{ $row->id }}" />  </td>									
 					<td> <a target="_blank" href="{{URL::to($row->property_slug)}}">{{$row->property_name}}</a> </td>
+					<td> <a target="_blank" href="{{URL::to($row->property_slug)}}">{{$row->country}}</a> </td>
+					<td> <a target="_blank">{{$row->property_category_id}}</a> </td>
 					<td> <a target="_blank" href="{{URL::to('search?s='.$row->city)}}">{{$row->city}}</a> </td>
+					<td> <a target="_blank">{{ $row->property_status=='1' ? 'Active' : 'Inactive' }}</a> </td>
+					<td> <a target="_blank">{{ $row->editor_choice_property=='1' ? 'Yes' : 'No' }}</a> </td>
+					<td> <a target="_blank">{{ $row->feature_property=='1' ? 'Yes' : 'No' }}</a> </td>
 					<td> <a target="_blank" href="{{(strpos($row->website, 'http') !== false) ? $row->website : 'http://'.$row->website }}">{{$row->website}}</a> </td>
-					<td> {{$row->email}} </td>
+					<td> <a href="tel:{{$row->phone}}">{{$row->phone}}</a> </td>
+					<td><a target="_blank" href="mailto:{{$row->email}}"> {{$row->email}}</a> </td>
 				 <td>
 						@if($row->assign_detail_city!='0' && $row->assign_detail_city!='')
 							<a href="#" class="tips btn btn-xs btn-primary" title="City Assigned"><i class="fa  fa-check "></i></a>
@@ -125,7 +139,6 @@
                 </tr>
 				
             @endforeach
-              
         </tbody>
       
     </table>
