@@ -65,7 +65,7 @@
                     $lmenus = [];
                     foreach($menu_experiences as $experience):?>
                         <li class="nav-item">
-                          <a class="nav-link active" href="<?php echo createSearchUrl('experience', $experience->category_alias);?>"><?php echo $experience->category_name;?></a>
+                          <a class="nav-link active" href="<?php //echo createSearchUrl('experience', $experience->category_alias);?>"><?php echo $experience->category_name;?></a>
                         </li>
                     <?php endforeach;
                     endif;

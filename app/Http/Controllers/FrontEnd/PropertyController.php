@@ -2884,6 +2884,7 @@ class PropertyController extends Controller {
         $type = $request->input('type');
         $arrive = $request->input('arrive');
         $departure = $request->input('departure');
+
         $rac = $request->input('rac');
         $query_str = $request->query();
         // dump($query_str); die;
@@ -2924,8 +2925,8 @@ class PropertyController extends Controller {
             }
         }
 
-        $this->storeSession($adults, $childs, $arrive_date,
-            $departure_date);
+        $this->storeSession($adults, $childs, $arrive,
+            $departure);
 
         //Get Number of night
         $number_of_nights = '';
