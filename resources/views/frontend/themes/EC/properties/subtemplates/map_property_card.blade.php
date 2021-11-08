@@ -86,7 +86,7 @@
       <h3 class="title-second is-small title-line mb-0"><?php echo $property->property_name;?></h3>
     </div>
   </a>
-  <?php if(isset($property->suites[0]->rooms[0])):?>
+  <?php if(isset($property->suites[0]->rooms[0]) && $property->suites[0]->rooms[0]):?>
     <div class="hotel-info-content px-3 font-2">
       <div class="row align-items-center mb-3">
         <div class="col-md-7">
