@@ -145,7 +145,7 @@ function replaceGalleryImages(id, place, list, image_path){
       for (const [key, e] of Object.entries(values)) {
         if(e.gallery.files){          
           e.gallery.files.forEach(function(rgallery){          
-            imgUrl = '/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
+            imgUrl = '/property-image/resize/1200x700/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
             imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
             spanid=2;
             grid++;
