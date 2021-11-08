@@ -45,7 +45,7 @@
 
               if(is_array($propertyImages[0])){
                 $file_name = $propertyImages[0]['file_name'];
-              }elseif(is_object($propertyImages[0])){
+              }elseif(is_object($propertyImages[0]) && isset($propertyImages[0]->file->file_name)){
                 $file_name = $propertyImages[0]->file->file_name;
               }else{
                 $file_name = 'default-image.png';
@@ -84,7 +84,7 @@
 
             if(is_array($editorImage)){
               $file_name = $editorImage['file_name'];
-            }elseif(is_object($editorImage)){
+            }elseif(is_object($editorImage) && isset($editorImage->file->file_name)){
               $file_name = $editorImage->file->file_name;
             }else{
               $file_name = 'default-image.png';
