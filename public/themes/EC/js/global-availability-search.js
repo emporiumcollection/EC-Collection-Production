@@ -610,6 +610,10 @@ $(document).ready(function(){
     }
   });
 
+  $('#menunav .search-f').click(function (e) {
+    SHOW_PARENT_CITIES = 1;
+  });
+
   $('.city-f').click(function (e) {
     SHOW_PARENT_CITIES = 1;
     $('.search-f').trigger("click");

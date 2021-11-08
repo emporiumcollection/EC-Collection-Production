@@ -554,10 +554,10 @@ var ajaxReq = 'ToCancelPrevReq';
   $(document).on('click', '.wherepopup .nav-link', function(){
     
     var location = $(this).find('.city-l').html();
- //   if(SHOW_PARENT_CITIES == 1){
+    if(SHOW_PARENT_CITIES == 1){
       document.location = '/globalsearchavailability?s=' + location;
       return true;
- //   }
+    }
 
     $('.where').val(location);
     $("#where_selection").html('');
