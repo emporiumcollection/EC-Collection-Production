@@ -37,11 +37,11 @@ class PropertyController extends Controller {
      *   Description : The Methos is using for property detai page (PDP)
     */
 
-	public function getPropertyGridListByCategory(Request $request)
-	{
+    public function getPropertyGridListByCategory(Request $request)
+    {
 
-		$this->data['slug'] = $request->slug;
-		$this->data['dateslug'] = '';
+        $this->data['slug'] = $request->slug;
+        $this->data['dateslug'] = '';
 
         $this->data['slider'] = \DB::table('tb_sliders')->select('slider_category','slider_title','slider_description','slider_img','slider_link','slide_type')->where('slider_category', $request->slug)->where('slider_status',1)->orderBy('sort_num','asc')->get();
 
@@ -83,7 +83,7 @@ class PropertyController extends Controller {
         $OrderByQry =  " order by RAND() LIMIT 4 ";
 
 
-		$editorQuery = $query.' '.$whereClause.' '.$OrderByQry;
+        $editorQuery = $query.' '.$whereClause.' '.$OrderByQry;
 
 
         $editorData = DB::select($editorQuery);
@@ -94,53 +94,53 @@ class PropertyController extends Controller {
         $featureData = DB::select($featureQuery);
 
 
-		$this->data['featurePropertiesArr']=$featureData;
+        $this->data['featurePropertiesArr']=$featureData;
         $this->data['propertiesArr'] = $propertiesArr;
         $this->data['total_record'] = $getRec[0]->total_record;
         $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
         $this->data['active_page']=$pageNumber;
-		return view('frontend.themes.emporium.properties.list_hotel', $this->data);
-	}
+        return view('frontend.themes.emporium.properties.list_hotel', $this->data);
+    }
 
     function propertySearch_new(Request $request) {
 
-		$selCurrency=$request->input("currencyOption");
+        $selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
 
-		$this->data["convertedOneUnitPrice"]=0;
+        $this->data["convertedOneUnitPrice"]=0;
         $keyword = trim($request->cat);
         $show = 'asc';
         if($request->segment(1)=='search'){
            $keyword = $request->s;
         }
 
-		$sldkeyword = str_replace('-',' ',$keyword);
+        $sldkeyword = str_replace('-',' ',$keyword);
 
-		$this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
+        $this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
 
 
-		$this->data['dateslug'] = '';
-		$arrive = $departure = $adult = $childs = '';
+        $this->data['dateslug'] = '';
+        $arrive = $departure = $adult = $childs = '';
         $arrive_new = $departure_new = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive_date', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive_date', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
             $arrive_new = \CommonHelper::dateformat(trim($request->arrive));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure_date', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure_date', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
             $departure_new = \CommonHelper::dateformat(trim($request->departure));
-		}
+        }
 
-		$catprops = '';
+        $catprops = '';
 
 
-		//$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        //$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
         $cateObj = \DB::table('tb_categories')->where('category_name', $sldkeyword)->where('category_published', 1)->first();
 
         $chldIds = array();
@@ -158,8 +158,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
                 if(strlen(trim($arrive_new)) > 0){
@@ -185,21 +185,21 @@ class PropertyController extends Controller {
             $catprops = " OR pr.id in(".$timplod.") ";
         }
 
-		$perPage = 20;
-		$pageNumber = 1;
-		if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+        $perPage = 20;
+        $pageNumber = 1;
+        if(isset($request->page) && $request->page>0){
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
-		/*$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        /*$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-		$limit = " LIMIT ". $pageStart.",".$perPage;
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+        $limit = " LIMIT ". $pageStart.",".$perPage;
         $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;*/
-		//$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        //$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
 
         //print_r($finalQry); die;
         $query = "Select pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price  ";
@@ -217,49 +217,49 @@ class PropertyController extends Controller {
 
         $CountRecordQry = "Select count(*) as total_record from tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
         //print_r($finalQry); die;
-			//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
-		$query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
-        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-        if($arrive_new != '' && $departure_new != ''){
-            $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
-            $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
-        }
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-
-		  //Editor choice editor_choice_property
+            //Feature Query
         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
-		$query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
+        $query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         if($arrive_new != '' && $departure_new != ''){
             $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
             $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
         }
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+
+          //Editor choice editor_choice_property
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
+        $query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        if($arrive_new != '' && $departure_new != ''){
+            $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
+            $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
+        }
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $editorData = DB::select($editorQuery);
-		//dd($editorData);
+        //dd($editorData);
         $this->data['editorPropertiesArr']=$editorData;
 //echo $finalQry; die;
-		$property = DB::select($finalQry);
-		$getRec = DB::select($CountRecordQry);
-		$featureData = DB::select($featureQuery);
+        $property = DB::select($finalQry);
+        $getRec = DB::select($CountRecordQry);
+        $featureData = DB::select($featureQuery);
 
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
-		$this->data['total_record'] = $getRec[0]->total_record;
-		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$this->data['active_page']=$pageNumber;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
+        $this->data['total_record'] = $getRec[0]->total_record;
+        $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -269,35 +269,35 @@ class PropertyController extends Controller {
         }
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
-
-		$this->data['slug'] = $keyword;
-
-		$this->data['action']=request()->segments(1);
-        $this->data['destination_category'] =0;
-
-		if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
-            $this->data['destination_category']=$cateObj->id;
-			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
         }
 
-		return view('frontend.themes.emporium.properties.list', $this->data);
+        $this->data['slug'] = $keyword;
+
+        $this->data['action']=request()->segments(1);
+        $this->data['destination_category'] =0;
+
+        if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+            $this->data['destination_category']=$cateObj->id;
+            $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+        }
+
+        return view('frontend.themes.emporium.properties.list', $this->data);
 
     }
 
     function propertySearch(Request $request) {
         $membershiptype =  $request->membershiptype;
 
-		$selCurrency=$request->input("currencyOption");
+        $selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
 
-		$this->data["convertedOneUnitPrice"]=0;
+        $this->data["convertedOneUnitPrice"]=0;
 
         $keyword = trim($request->cat);
         $show = 'asc';
@@ -306,31 +306,31 @@ class PropertyController extends Controller {
            $keyword = $request->s;
         }
 
-		$sldkeyword = str_replace('-',' ',$keyword);
-		$this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
+        $sldkeyword = str_replace('-',' ',$keyword);
+        $this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
 
 
-		$this->data['dateslug'] = '';
-		$arrive = $departure = $adult = $childs = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
-		}
+        $this->data['dateslug'] = '';
+        $arrive = $departure = $adult = $childs = '';
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
 
 
-		$catprops = '';
+        $catprops = '';
         $catname = '';
         $catalias = '';
         $catid = '';
-		/* Default package */
+        /* Default package */
         $pckages_ids = '';
         $default_package = '';
 
@@ -378,12 +378,12 @@ class PropertyController extends Controller {
         //print_r($pckages_ids); die;
         /* End */
 
-		$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 
 
-		$this->data['slug'] = $keyword;
+        $this->data['slug'] = $keyword;
 
-		$this->data['action']=request()->segments(1);
+        $this->data['action']=request()->segments(1);
         $this->data['destination_category'] =0;
 
         $search_for = '';
@@ -402,7 +402,7 @@ class PropertyController extends Controller {
         $channel_url = '';
         $instagram_url = '';
         $dest_url = array();
-		if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+        if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
             $channel_url = $cateObj->category_youtube_channel_url;
 
             $this->data['destination_category']=$cateObj->id;
@@ -431,22 +431,22 @@ class PropertyController extends Controller {
                         $selected_category = $destinations[0]->category_name;
                         foreach($destinations as $dest){
                             $subdest = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_youtube_channel_url')->where('parent_category_id', $dest->id)->get();
-        					$getcats = '';
-        					$chldIds = array();
-        					if (!empty($subdest)) {
-        						$chldIds = $this->fetchcategoryChildListIds($dest->id);
-        						array_unshift($chldIds, $dest->id);
-        					} else {
-        						$chldIds[] = $dest->id;
-        					}
+                            $getcats = '';
+                            $chldIds = array();
+                            if (!empty($subdest)) {
+                                $chldIds = $this->fetchcategoryChildListIds($dest->id);
+                                array_unshift($chldIds, $dest->id);
+                            } else {
+                                $chldIds[] = $dest->id;
+                            }
 
                             $getcats = "";
                             if (count($chldIds) > 0) { $getcats = " AND (category_id IN(".implode(",",$chldIds)."))"; }
                             $preprops = DB::select(DB::raw("SELECT COUNT(id) AS total_rows FROM property_categories_split_in_rows WHERE property_status = '1' ".$getcats));
 
-        					if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
-        						$destarr[] = $dest;
-        					}
+                            if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
+                                $destarr[] = $dest;
+                            }
 
                         }
                     }
@@ -461,7 +461,7 @@ class PropertyController extends Controller {
 
                 if (!empty($cateObj)) {
                     if($cateObj->id>0){
-        				$dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
+                        $dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
                     }
                     $catname = $cateObj->category_name;
                     $catalias = $cateObj->category_alias;
@@ -486,7 +486,7 @@ class PropertyController extends Controller {
             //print_r($cObj);
             if (!empty($cObj)) {
                 if($cObj->id>0){
-    				$dest_url = array_reverse($this->fetchcategorybc($cObj->id));
+                    $dest_url = array_reverse($this->fetchcategorybc($cObj->id));
                     //$bc_dest[]= $dest_url;
                 }
             }
@@ -501,22 +501,22 @@ class PropertyController extends Controller {
 
             foreach($dd_destinations as $dd_dest){
                 $dd_subdest = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_youtube_channel_url', 'category_instagram_channel')->where('parent_category_id', $dd_dest->id)->get();
-				$dd_getcats = '';
-				$dd_chldIds = array();
-				if (!empty($dd_subdest)) {
-					$dd_chldIds = $this->fetchcategoryChildListIds($dd_dest->id);
-					array_unshift($dd_chldIds, $dd_dest->id);
-				} else {
-					$dd_chldIds[] = $dd_dest->id;
-				}
+                $dd_getcats = '';
+                $dd_chldIds = array();
+                if (!empty($dd_subdest)) {
+                    $dd_chldIds = $this->fetchcategoryChildListIds($dd_dest->id);
+                    array_unshift($dd_chldIds, $dd_dest->id);
+                } else {
+                    $dd_chldIds[] = $dd_dest->id;
+                }
 
                 $dd_getcats = "";
                 if (count($dd_chldIds) > 0) { $dd_getcats = " AND (category_id IN(".implode(",",$dd_chldIds)."))"; }
                 $dd_preprops = DB::select(DB::raw("SELECT COUNT(id) AS total_rows FROM property_categories_split_in_rows WHERE property_status = '1' ".$dd_getcats));
 
-				if (isset($dd_preprops[0]->total_rows) && $dd_preprops[0]->total_rows > 0) {
-					$dd_destarr[] = $dd_dest;
-				}
+                if (isset($dd_preprops[0]->total_rows) && $dd_preprops[0]->total_rows > 0) {
+                    $dd_destarr[] = $dd_dest;
+                }
 
             }
         }
@@ -583,7 +583,7 @@ class PropertyController extends Controller {
         if(!empty($cateObj)){
             $this->data['metatags'] = \DB::table('tb_category_metatags')->where('category_id', $cateObj->id)->first();
         }
-		return view('frontend.themes.emporium.properties.list', $this->data);
+        return view('frontend.themes.emporium.properties.list', $this->data);
 
     }
 
@@ -591,39 +591,39 @@ class PropertyController extends Controller {
         //print_r(date('Y-m-d', '1560988800000')); die;
         $membershiptype =  $request->membershiptype;
 
-		$selCurrency=$request->input("currencyOption");
+        $selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
 
-		$this->data["convertedOneUnitPrice"]=0;
+        $this->data["convertedOneUnitPrice"]=0;
         $keyword = trim($request->cat);
         $show = 'asc';
         if($request->segment(1)=='search'){
            $keyword = $request->s;
         }
 
-		$sldkeyword = str_replace('-',' ',$keyword);
-		$this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
+        $sldkeyword = str_replace('-',' ',$keyword);
+        $this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
 
 
-		$this->data['dateslug'] = '';
-		$arrive = $departure = $adult = $childs = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
-		}
+        $this->data['dateslug'] = '';
+        $arrive = $departure = $adult = $childs = '';
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
 
 
-		$catprops = '';
+        $catprops = '';
 
-		/* Default package */
+        /* Default package */
         $pckages_ids = '';
 
         $public_package = \DB::table('tb_packages')->select('id')->where('package_category', 'B2C')->where('is_public', 1)->first();
@@ -651,7 +651,7 @@ class PropertyController extends Controller {
         //print_r($pckages_ids); die;
         /* End */
 
-		$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 //print_r($cateObj); die;
         $chldIds = array();
         $getcatsID = array();
@@ -669,8 +669,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
                 if(strlen(trim($arrive)) > 0){
@@ -697,55 +697,55 @@ class PropertyController extends Controller {
             $catprops = " AND pr.id in(".$timplod.") ";
         }
 
-		$perPage = 20;
-		$pageNumber = 1;
-		if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+        $perPage = 20;
+        $pageNumber = 1;
+        if(isset($request->page) && $request->page>0){
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." ";
         //print_r($whereClause); die;
-		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-		$limit = " LIMIT ". $pageStart.",".$perPage;
+        $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+        $limit = " LIMIT ". $pageStart.",".$perPage;
         $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $whereClauseAll =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 ".$catprops." ";
         $finalQryAll = "SELECT * FROM (".$query.$whereClauseAll." ORDER BY price DESC) tempX GROUP BY id ".$orderBy ;
 
-		$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        $CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
 
-			//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
-        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-        $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-
-		  //Editor choice editor_choice_property
+            //Feature Query
         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+
+          //Editor choice editor_choice_property
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE  pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND pr.editor_choice_property = 1 ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $editorData = DB::select($editorQuery);
-		//dd($editorData);
+        //dd($editorData);
         $this->data['editorPropertiesArr']=$editorData;
 
-		$property = DB::select($finalQry);
-		$getRec = DB::select($CountRecordQry);
-		$featureData = DB::select($featureQuery);
+        $property = DB::select($finalQry);
+        $getRec = DB::select($CountRecordQry);
+        $featureData = DB::select($featureQuery);
 
         /*--  Get all the property by membership  --*/
         //echo "<pre>";
@@ -776,15 +776,15 @@ class PropertyController extends Controller {
         //print_r($prop_by_package); die;
         $this->data['prop_packages'] = $prop_by_package;
         /*--  End --*/
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
-		$this->data['total_record'] = $getRec[0]->total_record;
-		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$this->data['active_page']=$pageNumber;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
+        $this->data['total_record'] = $getRec[0]->total_record;
+        $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -812,25 +812,25 @@ class PropertyController extends Controller {
 
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
+        }
 
-		$this->data['slug'] = $keyword;
+        $this->data['slug'] = $keyword;
 
-		$this->data['action']=request()->segments(1);
+        $this->data['action']=request()->segments(1);
         $this->data['destination_category'] =0;
 
         $search_for = '';
 
         $destarr = array();
-		if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+        if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
             $this->data['destination_category']=$cateObj->id;
-			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+            $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
 
 
             $m_collection = \DB::table('tb_categories')->where('category_alias', 'our-collection')->where('category_approved', 1)->where('category_published', 1)->first();
@@ -852,22 +852,22 @@ class PropertyController extends Controller {
                     if(!empty($destinations)){
                         foreach($destinations as $dest){
                             $subdest = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_youtube_channel_url')->where('parent_category_id', $dest->id)->get();
-        					$getcats = '';
-        					$chldIds = array();
-        					if (!empty($subdest)) {
-        						$chldIds = $this->fetchcategoryChildListIds($dest->id);
-        						array_unshift($chldIds, $dest->id);
-        					} else {
-        						$chldIds[] = $dest->id;
-        					}
+                            $getcats = '';
+                            $chldIds = array();
+                            if (!empty($subdest)) {
+                                $chldIds = $this->fetchcategoryChildListIds($dest->id);
+                                array_unshift($chldIds, $dest->id);
+                            } else {
+                                $chldIds[] = $dest->id;
+                            }
 
                             $getcats = "";
                             if (count($chldIds) > 0) { $getcats = " AND (category_id IN(".implode(",",$chldIds)."))"; }
                             $preprops = DB::select(DB::raw("SELECT COUNT(id) AS total_rows FROM property_categories_split_in_rows WHERE property_status = '1' ".$getcats));
 
-        					if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
-        						$destarr[] = $dest;
-        					}
+                            if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
+                                $destarr[] = $dest;
+                            }
 
                         }
                     }
@@ -882,7 +882,7 @@ class PropertyController extends Controller {
 
                 if (!empty($cateObj)) {
                     if($cateObj->id>0){
-        				$dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
+                        $dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
                     }
                 }
 
@@ -902,11 +902,11 @@ class PropertyController extends Controller {
         $this->data['sel_exp'] = trim($request->cat);
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
 
-		return view('frontend.themes.emporium.properties.list_latest', $this->data);
+        return view('frontend.themes.emporium.properties.list_latest', $this->data);
 
     }
 
-   	public function fetchcategoryaliaspath($id = 0, $child_category_array = '') {
+    public function fetchcategoryaliaspath($id = 0, $child_category_array = '') {
 
         if (!is_array($child_category_array))
             $child_category_array = array();
@@ -921,42 +921,42 @@ class PropertyController extends Controller {
         return $child_category_array;
     }
 
-	function propertySearch_old(Request $request) {
+    function propertySearch_old(Request $request) {
 
-		$selCurrency=$request->input("currencyOption");
+        $selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
 
-		$this->data["convertedOneUnitPrice"]=0;
+        $this->data["convertedOneUnitPrice"]=0;
         $keyword = trim($request->cat);
         $show = 'asc';
         if($request->segment(1)=='search'){
            $keyword = $request->s;
         }
 
-		$sldkeyword = str_replace('-',' ',$keyword);
-		$this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
+        $sldkeyword = str_replace('-',' ',$keyword);
+        $this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
 
 
-		$this->data['dateslug'] = '';
-		$arrive = $departure = $adult = $childs = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive_date', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure_date', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
-		}
+        $this->data['dateslug'] = '';
+        $arrive = $departure = $adult = $childs = '';
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive_date', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure_date', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
 
 
-		$catprops = '';
+        $catprops = '';
 
 
-		$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 
         $chldIds = array();
         $getcatsID = array();
@@ -973,8 +973,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
                 if(strlen(trim($arrive)) > 0){
@@ -1000,57 +1000,57 @@ class PropertyController extends Controller {
             $catprops = " OR pr.id in(".$timplod.") ";
         }
 
-		$perPage = 20;
-		$pageNumber = 1;
-		if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+        $perPage = 20;
+        $pageNumber = 1;
+        if(isset($request->page) && $request->page>0){
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-		$limit = " LIMIT ". $pageStart.",".$perPage;
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+        $limit = " LIMIT ". $pageStart.",".$perPage;
         $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-		$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        $CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
 
-			//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+            //Feature Query
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
-		  //Editor choice editor_choice_property
+          //Editor choice editor_choice_property
          $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $editorData = DB::select($editorQuery);
-		//dd($editorData);
+        //dd($editorData);
         $this->data['editorPropertiesArr']=$editorData;
 
-		$property = DB::select($finalQry);
-		$getRec = DB::select($CountRecordQry);
-		$featureData = DB::select($featureQuery);
+        $property = DB::select($finalQry);
+        $getRec = DB::select($CountRecordQry);
+        $featureData = DB::select($featureQuery);
 
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
-		$this->data['total_record'] = $getRec[0]->total_record;
-		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$this->data['active_page']=$pageNumber;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
+        $this->data['total_record'] = $getRec[0]->total_record;
+        $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -1078,29 +1078,29 @@ class PropertyController extends Controller {
 
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
-
-		$this->data['slug'] = $keyword;
-
-		$this->data['action']=request()->segments(1);
-        $this->data['destination_category'] =0;
-
-		if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
-            $this->data['destination_category']=$cateObj->id;
-			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
         }
 
-		return view('frontend.themes.emporium.properties.list', $this->data);
+        $this->data['slug'] = $keyword;
+
+        $this->data['action']=request()->segments(1);
+        $this->data['destination_category'] =0;
+
+        if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+            $this->data['destination_category']=$cateObj->id;
+            $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+        }
+
+        return view('frontend.themes.emporium.properties.list', $this->data);
 
     }
 
-	function fetchcategoryChildListIds($id = 0, $child_category_array = array()) {
+    function fetchcategoryChildListIds($id = 0, $child_category_array = array()) {
 
         /*if (!is_array($child_category_array))
             $child_category_array = array();
@@ -1125,10 +1125,10 @@ class PropertyController extends Controller {
         return $child_category_array;
     }
 
-	public function getPropertyDetail(Request $request) {
+    public function getPropertyDetail(Request $request) {
         $propertiesArr = array();
-		$crpropertiesArr = array();
-		$relatedgridpropertiesArr = array();
+        $crpropertiesArr = array();
+        $relatedgridpropertiesArr = array();
         $this->data['slug'] = rtrim($request->slug,'-');
 
         //$props = \DB::table('tb_properties')->where('property_slug', $request->slug)->first();
@@ -1165,10 +1165,10 @@ class PropertyController extends Controller {
             $propertiesArr['propimage_containerpath'] = '';
             if(!empty($propertiesArr['propimage'])){
                 $propertiesArr['propimage_thumbpath'] = (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id);
-    			$propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id)));
+                $propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id)));
                 $propertiesArr['propimage_containerpath'] = (new ContainerController)->getContainerUserPath($propertiesArr['propimage'][0]->folder_id);
-			}
-			$this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
+            }
+            $this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
 
             if ($props->property_category_id != '') {
                 $catss = explode(',', $props->property_category_id);
@@ -1181,58 +1181,58 @@ class PropertyController extends Controller {
                 $crpropertiesArr = DB::select(DB::raw("SELECT tb_properties.property_name, tb_properties.property_slug, tb_container_files.file_name, tb_container_files.folder_id FROM tb_properties JOIN tb_properties_images ON tb_properties_images.property_id = tb_properties.id JOIN tb_container_files ON tb_container_files.id = tb_properties_images.file_id JOIN tb_properties_category_package ON tb_properties_category_package.property_id = tb_properties.id WHERE tb_properties.property_type='" . $props->property_type . "' AND tb_properties.property_status = '1' AND tb_properties.id!='" . $props->id . "' AND tb_properties_images.type = 'Property Images' AND tb_properties_category_package.package_id IN (".$this->pckages_ids.")  $getcats GROUP BY  tb_properties.property_slug ORDER BY tb_properties.id desc, tb_container_files.file_sort_num asc LIMIT 2"));
 
 
-				$relatedgridquery = "SELECT tb_properties.editor_choice_property,tb_properties.property_usp,tb_properties.feature_property,tb_properties.id,tb_properties.property_name,tb_properties.property_slug,tb_properties.property_category_id FROM tb_properties JOIN tb_properties_category_package ON tb_properties_category_package.property_id = tb_properties.id WHERE property_type='Hotel' AND tb_properties.assign_detail_city = '".$props->assign_detail_city."' AND property_status = '1' AND tb_properties.id != '".$props->id."' AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price WHERE tb_properties_category_rooms_price.property_id = tb_properties.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, editor_choice_property desc, feature_property desc LIMIT 4";
+                $relatedgridquery = "SELECT tb_properties.editor_choice_property,tb_properties.property_usp,tb_properties.feature_property,tb_properties.id,tb_properties.property_name,tb_properties.property_slug,tb_properties.property_category_id FROM tb_properties JOIN tb_properties_category_package ON tb_properties_category_package.property_id = tb_properties.id WHERE property_type='Hotel' AND tb_properties.assign_detail_city = '".$props->assign_detail_city."' AND property_status = '1' AND tb_properties.id != '".$props->id."' AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price WHERE tb_properties_category_rooms_price.property_id = tb_properties.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, editor_choice_property desc, feature_property desc LIMIT 4";
 
-				$relatedgridprops = DB::select(DB::raw($relatedgridquery));
-				if (!empty($relatedgridprops)) {
-					$pr = 0;
-					foreach ($relatedgridprops as $rgprop) {
-						$relatedgridpropertiesArr[$pr]['data'] = $rgprop;
-						$relatedgridpropertiesArr[$pr]['data']->price = '';
-						$checkseasonPrice = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('property_id', $rgprop->id)->orderBy('rack_rate', 'DESC')->first();
-						if (!empty($checkseasonPrice)) {
-							$relatedgridpropertiesArr[$pr]['data']->price = $checkseasonPrice->rack_rate;
-						}
+                $relatedgridprops = DB::select(DB::raw($relatedgridquery));
+                if (!empty($relatedgridprops)) {
+                    $pr = 0;
+                    foreach ($relatedgridprops as $rgprop) {
+                        $relatedgridpropertiesArr[$pr]['data'] = $rgprop;
+                        $relatedgridpropertiesArr[$pr]['data']->price = '';
+                        $checkseasonPrice = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('property_id', $rgprop->id)->orderBy('rack_rate', 'DESC')->first();
+                        if (!empty($checkseasonPrice)) {
+                            $relatedgridpropertiesArr[$pr]['data']->price = $checkseasonPrice->rack_rate;
+                        }
 
-						$relatedgridpropertiesArr[$pr]['data']->category_name = '';
-						$cateObjtm = \DB::table('tb_categories')->select('category_name')->where('id', $rgprop->property_category_id)->where('category_published', 1)->first();
-						if (!empty($cateObjtm)) {
-							$relatedgridpropertiesArr[$pr]['data']->category_name = $cateObjtm->category_name;
-						}
+                        $relatedgridpropertiesArr[$pr]['data']->category_name = '';
+                        $cateObjtm = \DB::table('tb_categories')->select('category_name')->where('id', $rgprop->property_category_id)->where('category_published', 1)->first();
+                        if (!empty($cateObjtm)) {
+                            $relatedgridpropertiesArr[$pr]['data']->category_name = $cateObjtm->category_name;
+                        }
 
-						$fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.file_id', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $rgprop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
-						if (!empty($fileArr)) {
-							$relatedgridpropertiesArr[$pr]['image'] = $fileArr;
-							$relatedgridpropertiesArr[$pr]['image']->imgsrc = (new ContainerController)->getThumbpath($fileArr->folder_id);
-						}
-						$pr++;
-					}
-				}
+                        $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.file_id', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $rgprop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
+                        if (!empty($fileArr)) {
+                            $relatedgridpropertiesArr[$pr]['image'] = $fileArr;
+                            $relatedgridpropertiesArr[$pr]['image']->imgsrc = (new ContainerController)->getThumbpath($fileArr->folder_id);
+                        }
+                        $pr++;
+                    }
+                }
             }
 
-			$cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $props->id)->where('status', 0)->where('show_on_booking', 1)->get();
+            $cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $props->id)->where('status', 0)->where('show_on_booking', 1)->get();
             if (!empty($cat_types)) {
                 $c = 0;
                 foreach ($cat_types as $type) {
                     $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-					$type_cale = '';
+                    $type_cale = '';
                     $filen = array();
                     if (!empty($roomfileArr)) {
-						$propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
-						$propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
-						$propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
+                        $propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
+                        $propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
+                        $propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
                         $propertiesArr['typedata'][$c] = $type;
                         $propertiesArr['typedata'][$c]->price = '';
                         $curnDate = date('Y-m-d');
                         if ($props->default_seasons != 1) {
-							$checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
-							//print_r($checkseason); die;
+                            $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
+                            //print_r($checkseason); die;
                         } else {
                             $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->first();
                         }
 
-						if (!empty($checkseason)) {
-							 $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
+                        if (!empty($checkseason)) {
+                             $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
                              $propertiesArr['typedata'][$c]->season = $checkseason->season_name;
                         } else {
                             $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $type->id)->first();
@@ -1255,7 +1255,7 @@ class PropertyController extends Controller {
 
                         $propertiesArr['typedata'][$c]->room_calendar = $type_cale;
 
-						$c++;
+                        $c++;
                     }
 
 
@@ -1311,14 +1311,14 @@ class PropertyController extends Controller {
 
             $this->data['propertyDetail'] = $propertiesArr;
             $this->data['relatedproperties'] = $crpropertiesArr;
-    		$this->data['relatedgridpropertiesArr'] = $relatedgridpropertiesArr;
+            $this->data['relatedgridpropertiesArr'] = $relatedgridpropertiesArr;
 
-    		$this->data['propertyEvents'] = \DB::table('tb_events')->where('property_id', $props->id)->get();
+            $this->data['propertyEvents'] = \DB::table('tb_events')->where('property_id', $props->id)->get();
 
             $this->data['packages'] = \DB::table('tb_packages')->where('package_category', 'B2C')->where('package_status', 1)->get();
 
             $this->data['metatags'] = \DB::table('tb_property_metatags')->where('property_id',  $props->id)->first();
-    		//dd($this->data['propertyEvents']);
+            //dd($this->data['propertyEvents']);
             return view('frontend.themes.emporium.properties.detail', $this->data);
 
         }else
@@ -1327,10 +1327,10 @@ class PropertyController extends Controller {
         }
     }
 
-	public function getPropertyRoomimageGalleryView(Request $request) {
+    public function getPropertyRoomimageGalleryView(Request $request) {
         $propertiesArr = array();
 
-		if ($request->id!='') {
+        if ($request->id!='') {
             $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.category_id', $request->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
             //print_r($fileArr);
             $pr = 0;
@@ -1346,7 +1346,7 @@ class PropertyController extends Controller {
         exit;
     }
 
-	public function getPropertyTypeQuickView(Request $request) {
+    public function getPropertyTypeQuickView(Request $request) {
         $propertiesArr = array();
         $cat_types = \DB::table('tb_properties_category_types')->where('id', $request->id)->where('status', 0)->first();
         if (!empty($cat_types)) {
@@ -1424,8 +1424,8 @@ class PropertyController extends Controller {
         if (!is_null($request->childs) && $request->childs != '') {
             $childs = $request->childs;
         }
-		$filter_max_price = '';
-		if (!is_null($request->filter_max_price) && $request->filter_max_price != '') {
+        $filter_max_price = '';
+        if (!is_null($request->filter_max_price) && $request->filter_max_price != '') {
             $filter_max_price = $request->filter_max_price;
         }
 
@@ -1468,7 +1468,7 @@ class PropertyController extends Controller {
 
         }
 
-		if ($filter_max_price != '') {
+        if ($filter_max_price != '') {
 
             $getPriceQry =" , (SELECT pcrp.rack_rate FROM tb_properties_category_rooms_price pcrp   where pr.id=pcrp.property_id and pcrp.rack_rate between '0' and '".$filter_max_price."' order by pcrp.rack_rate DESC limit 0,1 ) as price " ;
             $filterPriceQry = " and pr.id in(SELECT pr.id FROM tb_properties_category_rooms_price pcrp, tb_properties pr   where pr.id=pcrp.property_id and pcrp.rack_rate between '0' and '".$filter_max_price."' group by pr.id order by pcrp.rack_rate DESC) ";
@@ -1485,7 +1485,7 @@ class PropertyController extends Controller {
         $pageStart = ($pageNumber -1) * $perPage;
 
         $query = "SELECT pr.editor_choice_property,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id ";
-		$query .= $getPriceQry;
+        $query .= $getPriceQry;
         //$query .= ", (SELECT pcrp.rack_rate FROM tb_properties_category_rooms_price pcrp  where pr.id=pcrp.property_id  order by pcrp.rack_rate DESC limit 0,1 ) as price " ;
         $query .= " FROM tb_properties pr ";
         $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1  ".$filterPriceQry;
@@ -1497,104 +1497,104 @@ class PropertyController extends Controller {
         $property = DB::select($finalQry);
         $getRec = DB::select($CountRecordQry);
 
-		/*foreach($property as $prop)
-		{
-			$containerObj = new \App\Http\Controllers\ContainerController;
-			$proertyObj = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $prop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
-			$prop->img_src = '';
-			if(!empty($proertyObj))
-			{
-				$prop->img_src = $containerObj->getThumbpath($proertyObj->folder_id).$proertyObj->file_name;
-			}
-		}*/
+        /*foreach($property as $prop)
+        {
+            $containerObj = new \App\Http\Controllers\ContainerController;
+            $proertyObj = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.*', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $prop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
+            $prop->img_src = '';
+            if(!empty($proertyObj))
+            {
+                $prop->img_src = $containerObj->getThumbpath($proertyObj->folder_id).$proertyObj->file_name;
+            }
+        }*/
 
-		usort($property, function($a, $b) {
-			return trim($a->price) < trim($b->price);
-		});
+        usort($property, function($a, $b) {
+            return trim($a->price) < trim($b->price);
+        });
 
         $this->data['properties'] = $property;
         $this->data['total_record'] = $getRec[0]->total_record;
         $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$adscatid = 'Hotel';
-		if (!empty($cateObj)) { $adscatid = $cateObj->id; }
-		$this->data['resultads'] = \DB::table('tb_advertisement')->select('adv_img', 'adv_link', 'adv_title')->where('adv_type', 'sidebar')->where('adv_status', 1)->where('adv_position', 'grid_results')->where('ads_cat_id', $adscatid)->orderByRaw('RAND()')->first();
+        $adscatid = 'Hotel';
+        if (!empty($cateObj)) { $adscatid = $cateObj->id; }
+        $this->data['resultads'] = \DB::table('tb_advertisement')->select('adv_img', 'adv_link', 'adv_title')->where('adv_type', 'sidebar')->where('adv_status', 1)->where('adv_position', 'grid_results')->where('ads_cat_id', $adscatid)->orderByRaw('RAND()')->first();
 
         return response()->json($this->data);
     }
 
-	public function getContainerImageById(Request $request)
-	{
-	    $image = '';
-		$propid = $request->id;
-		$containerImgObj = \DB::table('tb_container_files')->select('id','file_name','folder_id')->where('id', $propid)->first();
+    public function getContainerImageById(Request $request)
+    {
+        $image = '';
+        $propid = $request->id;
+        $containerImgObj = \DB::table('tb_container_files')->select('id','file_name','folder_id')->where('id', $propid)->first();
         if(isset($containerImgObj->file_name)){
             $img_src = $containerObj->getThumbpath($containerImgObj->folder_id).$containerImgObj->file_name;
             header("Content-type: image/jpeg");
-			$data = file_get_contents($img_src);
-			$image = 'data:image/jpeg;base64,' . base64_encode($data);
+            $data = file_get_contents($img_src);
+            $image = 'data:image/jpeg;base64,' . base64_encode($data);
         }else
         {
             return false;
         }
-		return $image;
-	}
+        return $image;
+    }
 
-	public function getPropertyImageById(Request $request)
-	{
+    public function getPropertyImageById(Request $request)
+    {
 
-		$propid = $request->propid;
-		$props = \DB::table('tb_properties')->select('property_name')->where('id', $propid)->first();
-		$propertyName = strtolower(str_replace(' ','',$props->property_name));
-		$propertyImage = CustomQuery::getPropertyImage($propid);
-		$remoteImage = $propertyImage->containerfolder_src;
-		$propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
-		if(file_exists($propertyNameImg)){
-			header("Content-type: image/jpeg");
-			$data = file_get_contents($propertyNameImg);
-			$image = 'data:image/jpeg;base64,' . base64_encode($data);
-		} else {
-			if(!empty($propertyImage)) {
-				$tObj = Image::make($remoteImage);
+        $propid = $request->propid;
+        $props = \DB::table('tb_properties')->select('property_name')->where('id', $propid)->first();
+        $propertyName = strtolower(str_replace(' ','',$props->property_name));
+        $propertyImage = CustomQuery::getPropertyImage($propid);
+        $remoteImage = $propertyImage->containerfolder_src;
+        $propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
+        if(file_exists($propertyNameImg)){
+            header("Content-type: image/jpeg");
+            $data = file_get_contents($propertyNameImg);
+            $image = 'data:image/jpeg;base64,' . base64_encode($data);
+        } else {
+            if(!empty($propertyImage)) {
+                $tObj = Image::make($remoteImage);
                 $width = $tObj->width();
                 $height = $tObj->height();
 
                 $height1 = 400 * $height /$width;
-				$image = $tObj->resize(400,$height1)->response('jpg');
-			} else {
-				return false;
-			}
-		}
-		return $image;
-	}
-	public function getPropertySliderImageById(Request $request)
-	{
+                $image = $tObj->resize(400,$height1)->response('jpg');
+            } else {
+                return false;
+            }
+        }
+        return $image;
+    }
+    public function getPropertySliderImageById(Request $request)
+    {
 
-		$propid = $request->propid;
-		$props = \DB::table('tb_properties')->select('property_name')->where('id', $propid)->first();
-		$propertyName = strtolower(str_replace(' ','',$props->property_name));
-		$propertyImage = CustomQuery::getPropertyImage($propid);
-		$remoteImage = $propertyImage->containerfolder_src;
-		$propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
-		$width = Image::make($remoteImage)->width();
-		$height = Image::make($remoteImage)->height();
-		if(file_exists($propertyNameImg)){
-			header("Content-type: image/jpeg");
-			$data = file_get_contents($propertyNameImg);
-			$image = 'data:image/jpeg;base64,' . base64_encode($data);
-		} else {
-			if(!empty($propertyImage)) {
-				$height1 = 600 * $height /$width;
-				$image = Image::make($remoteImage)->resize(600,$height1)->response('jpg');
-			} else {
-				return false;
-			}
-		}
-		return $image;
-	}
+        $propid = $request->propid;
+        $props = \DB::table('tb_properties')->select('property_name')->where('id', $propid)->first();
+        $propertyName = strtolower(str_replace(' ','',$props->property_name));
+        $propertyImage = CustomQuery::getPropertyImage($propid);
+        $remoteImage = $propertyImage->containerfolder_src;
+        $propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
+        $width = Image::make($remoteImage)->width();
+        $height = Image::make($remoteImage)->height();
+        if(file_exists($propertyNameImg)){
+            header("Content-type: image/jpeg");
+            $data = file_get_contents($propertyNameImg);
+            $image = 'data:image/jpeg;base64,' . base64_encode($data);
+        } else {
+            if(!empty($propertyImage)) {
+                $height1 = 600 * $height /$width;
+                $image = Image::make($remoteImage)->resize(600,$height1)->response('jpg');
+            } else {
+                return false;
+            }
+        }
+        return $image;
+    }
 
     public function getPropertyAjaxFilesByID(Request $request)
-	{
-		$propid = $request->propid;
+    {
+        $propid = $request->propid;
         $limit = (int) $request->limit;
         $limit = (($limit > 0)?$limit:0);
 
@@ -1605,42 +1605,42 @@ class PropertyController extends Controller {
             $featdatasrc[] = array('src'=> \URL::to('radtempimage/'.$propid.'/'.$si_img->file_id));
         }
 
-		return json_encode($featdatasrc);
-	}
+        return json_encode($featdatasrc);
+    }
 
     public function getPropertyImageByFileID(Request $request)
-	{
-		$propid = $request->propid;
+    {
+        $propid = $request->propid;
         $fileid = $request->fileid;
 
         $props = \DB::table('tb_properties')->select('property_name')->where('id', $propid)->first();
-		$propertyName = strtolower(str_replace(' ','',$props->property_name));
-		$propertyImage = CustomQuery::getPropertyImagesFromDBByFileId($fileid);
-		$remoteImage = $propertyImage->containerfolder_src;
-		$propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
-		$width = Image::make($remoteImage)->width();
-		$height = Image::make($remoteImage)->height();
-		if(file_exists($propertyNameImg)){
-			header("Content-type: image/jpeg");
-			$data = file_get_contents($propertyNameImg);
-			$image = 'data:image/jpeg;base64,' . base64_encode($data);
-		} else {
-			if(!empty($propertyImage)) {
-				$height1 = 600 * $height /$width;
-				$image = Image::make($remoteImage)->resize(600,$height1)->response('jpg');
-			} else {
-				return false;
-			}
-		}
-		return $image;
-	}
+        $propertyName = strtolower(str_replace(' ','',$props->property_name));
+        $propertyImage = CustomQuery::getPropertyImagesFromDBByFileId($fileid);
+        $remoteImage = $propertyImage->containerfolder_src;
+        $propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
+        $width = Image::make($remoteImage)->width();
+        $height = Image::make($remoteImage)->height();
+        if(file_exists($propertyNameImg)){
+            header("Content-type: image/jpeg");
+            $data = file_get_contents($propertyNameImg);
+            $image = 'data:image/jpeg;base64,' . base64_encode($data);
+        } else {
+            if(!empty($propertyImage)) {
+                $height1 = 600 * $height /$width;
+                $image = Image::make($remoteImage)->resize(600,$height1)->response('jpg');
+            } else {
+                return false;
+            }
+        }
+        return $image;
+    }
 
 
-	public function getEventsDetail(Request $request) {
+    public function getEventsDetail(Request $request) {
 
         $propertiesArr = array();
-		$crpropertiesArr = array();
-		$relatedgridpropertiesArr = array();
+        $crpropertiesArr = array();
+        $relatedgridpropertiesArr = array();
         $props = \DB::table('tb_properties')->where('property_slug', $request->slug)->first();
 
         $this->data['slug'] = $request->slug;
@@ -1649,23 +1649,23 @@ class PropertyController extends Controller {
             $propertiesArr['propimage'] = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
 
             $propertiesArr['propimage_thumbpath'] = (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id);
-			$propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id)));
+            $propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id)));
             $propertiesArr['propimage_containerpath'] = (new ContainerController)->getContainerUserPath($propertiesArr['propimage'][0]->folder_id);
 
-			$this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
+            $this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
 
          }
           $this->data['pageTitle'] = "Hotel Events";
         $this->data['pageMetakey'] = "Hotel Events";
         $this->data['pageMetadesc'] = "Hotel Events";
 
-		$this->data['propertyEvents'] = \DB::table('tb_events')->where('property_id', $props->id)->get();
+        $this->data['propertyEvents'] = \DB::table('tb_events')->where('property_id', $props->id)->get();
 
-		return view('frontend.themes.emporium.properties.events', $this->data);
+        return view('frontend.themes.emporium.properties.events', $this->data);
     }
     public function getPropertyGridListByCollectionCategory(Request $request)
-	{
-		$this->data['slug'] = $request->slug;
+    {
+        $this->data['slug'] = $request->slug;
         $this->data['type'] = $request->type;
         $type = $request->type;
         $f_type = "";
@@ -1703,7 +1703,7 @@ class PropertyController extends Controller {
             $this->pckages_id = 0;
         }
 
-		$this->data['dateslug'] = '';
+        $this->data['dateslug'] = '';
 
         $this->data['slider'] = \DB::table('tb_sliders')->select('slider_category','slider_title','slider_description','slider_img','slider_link','slide_type')->where('slider_category', $s_type)->where('slider_status',1)->orderBy('sort_num','asc')->get();
 
@@ -1744,7 +1744,7 @@ class PropertyController extends Controller {
         $whereClause = " WHERE pr.property_type='" . $request->slug . "' AND pr.property_status = '1' AND pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_id.") ";
         $OrderByQry =  " order by RAND() LIMIT 4 ";
 
-		$editorQuery = $query.' '.$whereClause.' '.$OrderByQry;
+        $editorQuery = $query.' '.$whereClause.' '.$OrderByQry;
 
         $editorData = DB::select($editorQuery);
         $this->data['editorPropertiesArr']=$editorData;
@@ -1769,7 +1769,7 @@ class PropertyController extends Controller {
         }
         $this->data['is_access'] = $is_access;
         //print_r($is_access); die;
-		$this->data['featurePropertiesArr']=$featureData;
+        $this->data['featurePropertiesArr']=$featureData;
         $this->data['propertiesArr'] = $propertiesArr;
         $this->data['total_record'] = $getRec[0]->total_record;
         $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
@@ -1779,8 +1779,8 @@ class PropertyController extends Controller {
         //print_r($pckages); die;
         $this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
         //print_r($this->data['pckages_ids']); die;
-		return view('frontend.themes.emporium.properties.listbytype', $this->data);
-	}
+        return view('frontend.themes.emporium.properties.listbytype', $this->data);
+    }
 
     function viewcalendar($type, $currentDt){
         //$current_date =  date('Y-m-d');
@@ -2078,7 +2078,7 @@ class PropertyController extends Controller {
         //echo $pid."-".$arrive."-".$departure."-".$booking_rooms."-".$booking_adults."-".$booking_children."-".$roomType; die;
 
         $propertiesArr = array();
-		$relatedgridpropertiesArr = array();
+        $relatedgridpropertiesArr = array();
         $this->data['slug'] = rtrim($request->slug,'-');
 
         $props = \DB::table('tb_properties')->select('tb_properties.*')->join('tb_properties_category_package','tb_properties_category_package.property_id','=','tb_properties.id')->whereIn('tb_properties_category_package.package_id', explode(',',$this->pckages_ids))->whereRaw("TRIM(TRAILING '-' FROM property_slug ) = ?", [$this->data['slug']])->first();
@@ -2191,11 +2191,11 @@ class PropertyController extends Controller {
                     $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
 
                     if (!empty($roomfileArr)) {
-						$propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
-						$propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
-						$propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
+                        $propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
+                        $propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
+                        $propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
                         $propertiesArr['typedata'][$c] = $type;
-						$c++;
+                        $c++;
                     }
 
                 }
@@ -2419,8 +2419,8 @@ class PropertyController extends Controller {
             //print_r($available_rooms);
             usort($available_rooms, function($a, $b) {
                //echo($a['price']); echo($b['price']); die;
-			   return (float)$a['price'] < (float)$b['price'];
-		    });
+               return (float)$a['price'] < (float)$b['price'];
+            });
             //print_r($available_rooms); die;
             $this->data['pid'] = $pid;
             $this->data['arrive'] = $arrive;
@@ -2445,65 +2445,65 @@ class PropertyController extends Controller {
     }
 
     private function getThumbpath($id)
-	{
-		$fpath = \URL::to('uploads/container_user_files').'/';
-		//echo $fpath; die;
-		$folds = array_reverse($this->fetchFolderParentList($id));
-		if(!empty($folds))
-		{
-			foreach($folds as $fold)
-			{
-				$fpath .= $fold.'/';
-			}
-		}
-		return $fpath;
-	}
+    {
+        $fpath = \URL::to('uploads/container_user_files').'/';
+        //echo $fpath; die;
+        $folds = array_reverse($this->fetchFolderParentList($id));
+        if(!empty($folds))
+        {
+            foreach($folds as $fold)
+            {
+                $fpath .= $fold.'/';
+            }
+        }
+        return $fpath;
+    }
 
     private function fetchFolderParentList($id = 0, $parent_folders_array = '') {
 
-		if (!is_array($parent_folders_array))
-		$parent_folders_array = array();
+        if (!is_array($parent_folders_array))
+        $parent_folders_array = array();
 
-		$filter = " AND id='".$id."'";
+        $filter = " AND id='".$id."'";
 
-		$params = array(
-			'params'	=> $filter,
-			'order'		=> 'asc'
-		);
-		// Get Query
+        $params = array(
+            'params'    => $filter,
+            'order'     => 'asc'
+        );
+        // Get Query
         $ttmodel = new Container();
-		$results = $ttmodel->getRows( $params );
-	  if ($results) {
-		foreach($results['rows'] as $row) {
-			$parent_folders_array[] = $row->name;
-			$parent_folders_array = $this->fetchFolderParentList($row->parent_id, $parent_folders_array);
-		}
-	  }
-	  return $parent_folders_array;
-	}
+        $results = $ttmodel->getRows( $params );
+      if ($results) {
+        foreach($results['rows'] as $row) {
+            $parent_folders_array[] = $row->name;
+            $parent_folders_array = $this->fetchFolderParentList($row->parent_id, $parent_folders_array);
+        }
+      }
+      return $parent_folders_array;
+    }
 
     function propertySearchAvailability(Request $request) {
         $membershiptype =  $request->membershiptype;
         $keyword = '';
         $show = 'asc';
 
-		$this->data['dateslug'] = '';
-		$arrive = $departure = $adult = $childs = '';
+        $this->data['dateslug'] = '';
+        $arrive = $departure = $adult = $childs = '';
         $arrive_new = $departure_new = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
             $arrive_new = \CommonHelper::dateformat(trim($request->arrive));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
             $departure_new = \CommonHelper::dateformat(trim($request->departure));
-		}
+        }
 
         /* Default package */
         $pckages_ids = '';
@@ -2554,40 +2554,40 @@ class PropertyController extends Controller {
         $this->data['collections'] = $cat_collection;
 
         $this->data['default_package'] = $default_package;
-		$this->data['slug'] = $keyword;
-		$this->data['destination_category'] =0;
+        $this->data['slug'] = $keyword;
+        $this->data['destination_category'] =0;
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
-		return view('frontend.themes.emporium.properties.searchavailabilitylist', $this->data);
+        return view('frontend.themes.emporium.properties.searchavailabilitylist', $this->data);
     }
 
     function propertySearchAvailability_old(Request $request) {
         $keyword = '';
         $show = 'asc';
 
-		$this->data['dateslug'] = '';
-		$arrive = $departure = $adult = $childs = '';
+        $this->data['dateslug'] = '';
+        $arrive = $departure = $adult = $childs = '';
         $arrive_new = $departure_new = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
             $arrive_new = \CommonHelper::dateformat(trim($request->arrive));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
             $departure_new = \CommonHelper::dateformat(trim($request->departure));
-		}
+        }
 
-		$perPage = 20;
-		$pageNumber = 1;
-		if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+        $perPage = 20;
+        $pageNumber = 1;
+        if(isset($request->page) && $request->page>0){
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
         $query = "Select pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price  ";
         $query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
@@ -2605,49 +2605,49 @@ class PropertyController extends Controller {
         $CountRecordQry = "Select count(*) as total_record from tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
         //print_r($finalQry); die;
 
-		//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
-		$query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
-        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE 1=1 AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-        if($arrive_new != '' && $departure_new != ''){
-            $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
-            $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
-        }
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-
-		  //Editor choice editor_choice_property
+        //Feature Query
         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
-		$query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
+        $query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE 1=1 AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $whereClause =" WHERE 1=1 AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         if($arrive_new != '' && $departure_new != ''){
             $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
             $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
         }
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+
+          //Editor choice editor_choice_property
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
+        $query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+        $whereClause =" WHERE 1=1 AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        if($arrive_new != '' && $departure_new != ''){
+            $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
+            $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
+        }
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $editorData = DB::select($editorQuery);
-		//dd($editorData);
+        //dd($editorData);
         $this->data['editorPropertiesArr']=$editorData;
 //echo $finalQry; die;
-		$property = DB::select($finalQry);
-		$getRec = DB::select($CountRecordQry);
-		$featureData = DB::select($featureQuery);
+        $property = DB::select($finalQry);
+        $getRec = DB::select($CountRecordQry);
+        $featureData = DB::select($featureQuery);
 
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
-		$this->data['total_record'] = $getRec[0]->total_record;
-		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$this->data['active_page']=$pageNumber;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
+        $this->data['total_record'] = $getRec[0]->total_record;
+        $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         /*$emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -2657,25 +2657,25 @@ class PropertyController extends Controller {
         }*/
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
-
-		$this->data['slug'] = $keyword;
-
-		$this->data['action']=request()->segments(1);
-        $this->data['destination_category'] =0;
-
-		if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
-            $this->data['destination_category']=$cateObj->id;
-			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
         }
 
-		return view('frontend.themes.emporium.properties.searchavailabilitylist', $this->data);
+        $this->data['slug'] = $keyword;
+
+        $this->data['action']=request()->segments(1);
+        $this->data['destination_category'] =0;
+
+        if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+            $this->data['destination_category']=$cateObj->id;
+            $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+        }
+
+        return view('frontend.themes.emporium.properties.searchavailabilitylist', $this->data);
 
     }
 
@@ -2715,10 +2715,10 @@ class PropertyController extends Controller {
         //print_r($prop_package);
     }
 
-
     function propertyglobalavailability(Request $request) {
         $coll_type = $request->input("coll_type");
         $coll_where = $request->input("destination");
+        $target = $request->input("target_page");
 
         $arrive = $request->input("arrive");
         if($arrive!=''){
@@ -2760,7 +2760,7 @@ class PropertyController extends Controller {
 
         // dump($request->all()); exit;
 
-        $querry_string = $site_url."/globalsearchavailability?s=".$coll_where."&arrive=".$arrive."&departure=".$departure."&type=".$coll_type."&rac=".$rac;
+        $querry_string = $site_url."/globalsearchavailability?s=".$coll_where."&arrive=".$arrive."&departure=".$departure."&type=".$coll_type."&rac=".$rac . "&view=" . $target;
 
         return Redirect::to($querry_string);
     }
@@ -2965,85 +2965,16 @@ class PropertyController extends Controller {
 
         //if($request->get('view') != 'map'){
             //Get editor's choice properties
-        $emptyPropertyImages = json_encode([
-            'id' => 0,
-            'file_name' => 'default-image.png',
-        ]);
         $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
-
-        if(!empty($this->data['editorsProperties']->toArray())){
-            foreach($this->data['editorsProperties'] as $k => $editorProperty){
-                if(empty($editorProperty->container)){
-                    $container = Container::
-                    where('display_name', '=', $editorProperty->property_name)
-                    ->get();
-
-                    if(!empty($container->toArray())){
-                        $editorProperty->container = $container[0];
-                        $this->data['editorsProperties'][$k]->container = $container[0];
-                    }
-                }
-                if(isset($editorProperty->container) && $editorProperty->container){
-                    $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
-                }else{
-                    $this->data['editorsProperties'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
-                }
-            }
-            
-            $this->formatPropertyRecords($this->data['editorsProperties']);
-        }
+        $this->setGalleryAndFormat($this->data['editorsProperties']);
 
         //Get featured choice properties
         $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
-
-        if(!empty($this->data['featureProperties']->toArray())){
-            foreach($this->data['featureProperties'] as $k => $featureProperty){
-                if(empty($featureProperty->container)){
-                    $container = Container::
-                    where('display_name', '=', $featureProperty->property_name)
-                    ->get();
-
-                    if(!empty($container->toArray())){
-                        $featureProperty->container = $container[0];
-                        $this->data['featureProperties'][$k]->container = $container[0];
-                    }
-                }
-                if(isset($featureProperty->container) && $featureProperty->container){
-                    $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
-                }else{
-                    $this->data['featureProperties'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
-                }
-            }
-
-            $this->formatPropertyRecords($this->data['featureProperties']);
-        }
-        //}
+        $this->setGalleryAndFormat($this->data['featureProperties']);
 
         //Get featured choice properties
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
-
-        //print count($this->data['propertyResults']->toArray());exit;
-
-        if(!empty($this->data['propertyResults']->toArray())){
-            foreach($this->data['propertyResults'] as $k => $propertyRecord){
-                if(empty($propertyRecord->container)){
-                    $container = Container::
-                    where('display_name', '=', $propertyRecord->property_name)
-                    ->get();
-
-                    if(!empty($container->toArray())){
-                        $propertyRecord->container = $container[0];
-                        $this->data['propertyResults'][$k]->container = $container[0];
-                    }
-                }
-                if(isset($propertyRecord->container) && $propertyRecord->container){
-                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
-                }else{
-                    $this->data['propertyResults'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
-                }
-            }
-            $this->formatPropertyRecords($this->data['propertyResults']);
-        }
+        $this->setGalleryAndFormat($this->data['propertyResults']);
 
         if($request->get('max') && $request->get('min')){
             $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
@@ -3173,7 +3104,7 @@ class PropertyController extends Controller {
         $HotelDataArr = array();
         $DestinationDataArr = array();
 
-		$relatedgridpropertiesArr = array();
+        $relatedgridpropertiesArr = array();
         $this->data['slug'] = rtrim($request->slug,'-');
         $arr_hotels = array();
         if($hotels!=''){
@@ -3437,7 +3368,7 @@ class PropertyController extends Controller {
         $HotelDataArr = array();
         $DestinationDataArr = array();
 
-		$relatedgridpropertiesArr = array();
+        $relatedgridpropertiesArr = array();
         $this->data['slug'] = rtrim($request->slug,'-');
         $arr_hotels = array();
         if($hotels!=''){
@@ -3560,11 +3491,11 @@ class PropertyController extends Controller {
                         $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $prop->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
 
                         if (!empty($roomfileArr)) {
-    						$propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
-    						$propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
-    						$propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
+                            $propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
+                            $propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
+                            $propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
                             $propertiesArr['typedata'][$c] = $type;
-    						$c++;
+                            $c++;
                         }
 
                     }
@@ -3776,8 +3707,8 @@ class PropertyController extends Controller {
                 }
 
                 usort($available_rooms, function($a, $b) {
-    			   return (float)$a['price'] < (float)$b['price'];
-    		    });
+                   return (float)$a['price'] < (float)$b['price'];
+                });
 
                 //$HotelDataArr[]['pid'] = $pid;
                 //$HotelDataArr[]['roomavailability'] = $available_rooms;
@@ -3831,40 +3762,40 @@ class PropertyController extends Controller {
 
     function globalPropertySearch(Request $request) {
 
-		$selCurrency=$request->input("currencyOption");
+        $selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
 
-		$this->data["convertedOneUnitPrice"]=0;
+        $this->data["convertedOneUnitPrice"]=0;
         $keyword = trim($request->cat);
         $show = 'asc';
         if($request->segment(1)=='search'){
            $keyword = $request->s;
         }
 
-		$sldkeyword = str_replace('-',' ',$keyword);
-		$this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
+        $sldkeyword = str_replace('-',' ',$keyword);
+        $this->data['slider'] = \DB::table('tb_sliders')->where('slider_category', $sldkeyword)->where('slider_status',1)->orderBy('sort_num','asc')->get();
 
 
-		$this->data['dateslug'] = '';
-		$arrive = $departure = $adult = $childs = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
-		}
+        $this->data['dateslug'] = '';
+        $arrive = $departure = $adult = $childs = '';
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
 
 
-		$catprops = '';
+        $catprops = '';
 
 
-		$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 //print_r($cateObj); die;
         $chldIds = array();
         $getcatsID = array();
@@ -3882,8 +3813,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
                 if(strlen(trim($arrive)) > 0){
@@ -3909,57 +3840,57 @@ class PropertyController extends Controller {
             $catprops = " OR pr.id in(".$timplod.") ";
         }
 
-		$perPage = 20;
-		$pageNumber = 1;
-		if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+        $perPage = 20;
+        $pageNumber = 1;
+        if(isset($request->page) && $request->page>0){
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-		$limit = " LIMIT ". $pageStart.",".$perPage;
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+        $limit = " LIMIT ". $pageStart.",".$perPage;
         $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-		$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        $CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
 
-			//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+            //Feature Query
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
-		  //Editor choice editor_choice_property
+          //Editor choice editor_choice_property
          $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $editorData = DB::select($editorQuery);
-		//dd($editorData);
+        //dd($editorData);
         $this->data['editorPropertiesArr']=$editorData;
 
-		$property = DB::select($finalQry);
-		$getRec = DB::select($CountRecordQry);
-		$featureData = DB::select($featureQuery);
+        $property = DB::select($finalQry);
+        $getRec = DB::select($CountRecordQry);
+        $featureData = DB::select($featureQuery);
 
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
-		$this->data['total_record'] = $getRec[0]->total_record;
-		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$this->data['active_page']=$pageNumber;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
+        $this->data['total_record'] = $getRec[0]->total_record;
+        $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -3987,25 +3918,25 @@ class PropertyController extends Controller {
 
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
-
-		$this->data['slug'] = $keyword;
-
-		$this->data['action']=request()->segments(1);
-        $this->data['destination_category'] =0;
-
-		if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
-            $this->data['destination_category']=$cateObj->id;
-			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
         }
 
-		return view('frontend.themes.emporium.properties.list', $this->data);
+        $this->data['slug'] = $keyword;
+
+        $this->data['action']=request()->segments(1);
+        $this->data['destination_category'] =0;
+
+        if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+            $this->data['destination_category']=$cateObj->id;
+            $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+        }
+
+        return view('frontend.themes.emporium.properties.list', $this->data);
 
     }
     function propcollection(Request $request){
@@ -4053,7 +3984,7 @@ class PropertyController extends Controller {
             $cateObj = \DB::table('tb_categories')->where('category_alias', $cat)->where('category_published', 1)->first();
             if (!empty($cateObj)) {
                 if($cateObj->id>0){
-    				$dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
+                    $dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
                     $res['dest_url']= $dest_url;
                 }
             }
@@ -4134,20 +4065,20 @@ class PropertyController extends Controller {
         $show = 'asc';
 
 
-		$this->data['dateslug'] = '';
-		$arrive = $departure = $adult = $childs = '';
-		if (!is_null($check_in) && $check_in != '') {
-			\Session::put('arrive', $check_in);
-			$arrive = $check_in;
-		}
-		if (!is_null($check_out) && $check_out != '') {
-			\Session::put('departure', $check_out);
-			$departure = $check_out;
-		}
+        $this->data['dateslug'] = '';
+        $arrive = $departure = $adult = $childs = '';
+        if (!is_null($check_in) && $check_in != '') {
+            \Session::put('arrive', $check_in);
+            $arrive = $check_in;
+        }
+        if (!is_null($check_out) && $check_out != '') {
+            \Session::put('departure', $check_out);
+            $departure = $check_out;
+        }
 
-		$catprops = '';
+        $catprops = '';
 
-		/* Default package */
+        /* Default package */
         $pckages_ids = '';
 
         $public_package = \DB::table('tb_packages')->select('id')->where('package_category', 'B2C')->where('is_public', 1)->first();
@@ -4172,7 +4103,7 @@ class PropertyController extends Controller {
         }
         /* End */
 
-		$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 
         $chldIds = array();
         $getcatsID = array();
@@ -4190,8 +4121,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
                 if(strlen(trim($arrive)) > 0){
@@ -4218,55 +4149,55 @@ class PropertyController extends Controller {
             $catprops = " AND pr.id in(".$timplod.") ";
         }
 
-		$perPage = 20;
-		$pageNumber = 1;
-		if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+        $perPage = 20;
+        $pageNumber = 1;
+        if(isset($request->page) && $request->page>0){
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." ";
         //print_r($whereClause); die;
-		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-		$limit = " LIMIT ". $pageStart.",".$perPage;
+        $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+        $limit = " LIMIT ". $pageStart.",".$perPage;
         $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $whereClauseAll =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 ".$catprops." ";
         $finalQryAll = "SELECT * FROM (".$query.$whereClauseAll." ORDER BY price DESC) tempX GROUP BY id ".$orderBy ;
 
-		$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        $CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
 
-			//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
-        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-        $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-
-		  //Editor choice editor_choice_property
+            //Feature Query
         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+
+          //Editor choice editor_choice_property
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE  pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND pr.editor_choice_property = 1 ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $editorData = DB::select($editorQuery);
-		//dd($editorData);
+        //dd($editorData);
         $this->data['editorPropertiesArr']=$editorData;
 
-		$property = DB::select($finalQry);
-		$getRec = DB::select($CountRecordQry);
-		$featureData = DB::select($featureQuery);
+        $property = DB::select($finalQry);
+        $getRec = DB::select($CountRecordQry);
+        $featureData = DB::select($featureQuery);
 
         /*--  Get all the property by membership  --*/
         //echo "<pre>";
@@ -4297,15 +4228,15 @@ class PropertyController extends Controller {
         //print_r($prop_by_package); die;
         $this->data['prop_packages'] = $prop_by_package;
         /*--  End --*/
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
-		$this->data['total_record'] = $getRec[0]->total_record;
-		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$this->data['active_page']=$pageNumber;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
+        $this->data['total_record'] = $getRec[0]->total_record;
+        $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -4333,22 +4264,22 @@ class PropertyController extends Controller {
 
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
+        }
 
-		$this->data['slug'] = $keyword;
+        $this->data['slug'] = $keyword;
 
-		$this->data['action']=request()->segments(1);
+        $this->data['action']=request()->segments(1);
         $this->data['destination_category'] =0;
 
-		if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+        if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
             $this->data['destination_category']=$cateObj->id;
-			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+            $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
 
             $this->data['experiences'] = \DB::table('tb_categories')->where('parent_category_id', 8)->where('category_approved', 1)->where('category_published', 1)->get();
             $m_collection = \DB::table('tb_categories')->where('category_alias', 'our-collection')->where('category_approved', 1)->where('category_published', 1)->first();
@@ -4363,7 +4294,7 @@ class PropertyController extends Controller {
         $this->data['sel_exp'] = trim($request->cat);
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
 
-		return view('frontend.themes.emporium.properties.ajax_list', $this->data);
+        return view('frontend.themes.emporium.properties.ajax_list', $this->data);
 
     }
 
@@ -4374,24 +4305,24 @@ class PropertyController extends Controller {
         $membershiptype =  $coll_type;
         $keyword = $cat;
 
-		$catprops = '';
+        $catprops = '';
 
         $arrive = $departure = $adult = $childs = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
-		}
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
 
         $req_for = $request->input('req_for');
-		/* Default package */
+        /* Default package */
         $pckages_ids = '';
 
         $public_package = \DB::table('tb_packages')->select('id')->where('package_category', 'B2C')->where('is_public', 1)->first();
@@ -4419,7 +4350,7 @@ class PropertyController extends Controller {
         //print_r($pckages_ids); die;
         /* End */
         //echo $keyword; die;
-		$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 //print_r($cateObj); die;
         $chldIds = array();
         $getcatsID = array();
@@ -4437,8 +4368,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
                 if(strlen(trim($arrive)) > 0){
@@ -4465,55 +4396,55 @@ class PropertyController extends Controller {
             $catprops = " AND pr.id in(".$timplod.") ";
         }
 
-		$perPage = 20;
-		$pageNumber = 1;
-		if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+        $perPage = 20;
+        $pageNumber = 1;
+        if(isset($request->page) && $request->page>0){
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." ";
         //print_r($whereClause); die;
-		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-		$limit = " LIMIT ". $pageStart.",".$perPage;
+        $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+        $limit = " LIMIT ". $pageStart.",".$perPage;
         $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $whereClauseAll =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 ".$catprops." ";
         $finalQryAll = "SELECT * FROM (".$query.$whereClauseAll." ORDER BY price DESC) tempX GROUP BY id ".$orderBy ;
 
-		$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        $CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
 
-			//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
-        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-        $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-
-		  //Editor choice editor_choice_property
+            //Feature Query
         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+
+          //Editor choice editor_choice_property
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE  pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND pr.editor_choice_property = 1 ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $editorData = DB::select($editorQuery);
-		//dd($editorData);
+        //dd($editorData);
         $this->data['editorPropertiesArr']=$editorData;
 
-		$property = DB::select($finalQry);
-		$getRec = DB::select($CountRecordQry);
-		$featureData = DB::select($featureQuery);
+        $property = DB::select($finalQry);
+        $getRec = DB::select($CountRecordQry);
+        $featureData = DB::select($featureQuery);
 
         /*--  Get all the property by membership  --*/
         //echo "<pre>";
@@ -4544,15 +4475,15 @@ class PropertyController extends Controller {
         //print_r($prop_by_package); die;
         $this->data['prop_packages'] = $prop_by_package;
         /*--  End --*/
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
-		$this->data['total_record'] = $getRec[0]->total_record;
-		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$this->data['active_page']=$pageNumber;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
+        $this->data['total_record'] = $getRec[0]->total_record;
+        $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -4580,20 +4511,20 @@ class PropertyController extends Controller {
 
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
+        }
         $this->data['destination_category'] =0;
         $resultads = array();
         if($req_for == 'luxury_destinations' || $req_for=='luxury_experience' ){
             if($cateObj->id > 0){
-    		//if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+            //if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
                 $this->data['destination_category']=$cateObj->id;
-    			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+                $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
             //}
             }
 
@@ -4610,7 +4541,7 @@ class PropertyController extends Controller {
 
         echo json_encode(array('data'=>$this->data));
         exit();
-		//return view('frontend.themes.emporium.properties.ajax_list', $this->data);
+        //return view('frontend.themes.emporium.properties.ajax_list', $this->data);
 
     }
 
@@ -4621,27 +4552,27 @@ class PropertyController extends Controller {
         $membershiptype =  $coll_type;
         $keyword = $cat;
 
-		$catprops = '';
+        $catprops = '';
 
         $arrive = $departure = $adult = $childs = '';
         $this->data['dateslug'] = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
             $arrive_new = \CommonHelper::dateformat(trim($request->arrive));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
             $departure_new = \CommonHelper::dateformat(trim($request->departure));
-		}
+        }
 
         $req_for = $request->input('req_for');
-		/* Default package */
+        /* Default package */
         $pckages_ids = '';
         $default_package = '';
 
@@ -4686,7 +4617,7 @@ class PropertyController extends Controller {
         //print_r($pckages_ids); die;
         /* End */
         //echo $keyword; die;
-		$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 //print_r($cateObj); die;
         $chldIds = array();
         $getcatsID = array();
@@ -4704,8 +4635,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
                 if(strlen(trim($arrive)) > 0){
@@ -4732,18 +4663,18 @@ class PropertyController extends Controller {
             $catprops = " AND pr.id in(".$timplod.") ";
         }
 
-		$perPage = 20;
-		$pageNumber = 1;
-		if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+        $perPage = 20;
+        $pageNumber = 1;
+        if(isset($request->page) && $request->page>0){
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price, tb_properties_category_package.package_id";
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price, tb_properties_category_package.package_id";
         $query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
 
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$pckages_ids.") ";
         if($arrive_new != '' && $departure_new != ''){
             $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
@@ -4751,8 +4682,8 @@ class PropertyController extends Controller {
         }
 
         //print_r($whereClause); die;
-		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-		$limit = " LIMIT ". $pageStart.",".$perPage;
+        $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+        $limit = " LIMIT ". $pageStart.",".$perPage;
         $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $whereClauseAll =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 ".$catprops." ";
@@ -4762,45 +4693,45 @@ class PropertyController extends Controller {
         }
         $finalQryAll = "SELECT * FROM (".$query.$whereClauseAll." ORDER BY price DESC) tempX GROUP BY id ".$orderBy ;
 
-		//$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
-		$CountRecordQry = "Select count(*) as total_record from tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        //$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        $CountRecordQry = "Select count(*) as total_record from tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
         //print_r($CountRecordQry); die;
-			//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
-		$query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
+            //Feature Query
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
+        $query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") AND pr.property_status = 1 AND  pr.feature_property = 1 ";
         if($arrive_new != '' && $departure_new != ''){
             $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
             $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
         }
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
-		  //Editor choice editor_choice_property
+          //Editor choice editor_choice_property
         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,0 as price ";
-		$query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
+        $query .= " FROM tb_properties_category_rooms pcr INNER JOIN tb_properties pr ON pr.id = pcr.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE  pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND pr.editor_choice_property = 1 ";
         if($arrive_new != '' && $departure_new != ''){
             $whereClause .= " and pcr.room_active_from <='".$arrive_new."' and pcr.room_active_to >='".$departure_new."'";
             $whereClause .= "  and pcr.id not IN (select td_reserved_rooms.room_id from tb_reservations INNER join td_reserved_rooms on td_reserved_rooms.reservation_id=tb_reservations.id where '".$arrive_new."' BETWEEN checkin_date and checkout_date or '".$departure_new."' BETWEEN checkin_date and checkout_date)";
         }
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $editorData = DB::select($editorQuery);
-		//dd($editorData);
+        //dd($editorData);
         $this->data['editorPropertiesArr']=$editorData;
 
-		$property = DB::select($finalQry);
-		$getRec = DB::select($CountRecordQry);
+        $property = DB::select($finalQry);
+        $getRec = DB::select($CountRecordQry);
         //print_r($getRec); die;
-		$featureData = DB::select($featureQuery);
+        $featureData = DB::select($featureQuery);
 
         /*--  Get all the property by membership  --*/
         //echo "<pre>";
@@ -4831,15 +4762,15 @@ class PropertyController extends Controller {
         //print_r($prop_by_package); die;
         $this->data['prop_packages'] = $prop_by_package;
         /*--  End --*/
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
-		$this->data['total_record'] = $getRec[0]->total_record;
-		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$this->data['active_page']=$pageNumber;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
+        $this->data['total_record'] = $getRec[0]->total_record;
+        $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -4867,20 +4798,20 @@ class PropertyController extends Controller {
 
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
+        }
         $this->data['destination_category'] =0;
         $resultads = array();
         if($req_for == 'luxury_destinations' || $req_for=='luxury_experience' ){
             if($cateObj->id > 0){
-    		//if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+            //if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
                 $this->data['destination_category']=$cateObj->id;
-    			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+                $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
             //}
             }
 
@@ -4897,7 +4828,7 @@ class PropertyController extends Controller {
 
         echo json_encode(array('data'=>$this->data));
         exit();
-		//return view('frontend.themes.emporium.properties.ajax_list', $this->data);
+        //return view('frontend.themes.emporium.properties.ajax_list', $this->data);
 
     }
 
@@ -4909,9 +4840,9 @@ class PropertyController extends Controller {
         $membershiptype =  $coll_type;
         $keyword = $cat;
 
-		$catprops = '';
+        $catprops = '';
 
-		/* Default package */
+        /* Default package */
         $pckages_ids = '';
 
         $public_package = \DB::table('tb_packages')->select('id')->where('package_category', 'B2C')->where('is_public', 1)->first();
@@ -4939,7 +4870,7 @@ class PropertyController extends Controller {
         //print_r($pckages_ids); die;
         /* End */
         //echo $keyword; die;
-		$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 //print_r($cateObj); die;
         $chldIds = array();
         $getcatsID = array();
@@ -4957,8 +4888,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
 
@@ -4979,55 +4910,55 @@ class PropertyController extends Controller {
             $catprops = " AND pr.id in(".$timplod.") ";
         }
 
-		$perPage = 20;
-		$pageNumber = 1;
-		if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+        $perPage = 20;
+        $pageNumber = 1;
+        if(isset($request->page) && $request->page>0){
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." ";
         //print_r($whereClause); die;
-		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-		$limit = " LIMIT ". $pageStart.",".$perPage;
+        $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+        $limit = " LIMIT ". $pageStart.",".$perPage;
         $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $whereClauseAll =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 ".$catprops." ";
         $finalQryAll = "SELECT * FROM (".$query.$whereClauseAll." ORDER BY price DESC) tempX GROUP BY id ".$orderBy ;
 
-		$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+        $CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
 
-			//Feature Query
-		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
-        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-        $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-
-		  //Editor choice editor_choice_property
+            //Feature Query
         $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
         $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+        $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+
+          //Editor choice editor_choice_property
+        $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
+        $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+        $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+        //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
         $whereClause =" WHERE  pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND pr.editor_choice_property = 1 ";
-		$orderBy = "ORDER BY RAND()  ";
-		$limit = " LIMIT 4";
-		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+        $orderBy = "ORDER BY RAND()  ";
+        $limit = " LIMIT 4";
+        $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
         $editorData = DB::select($editorQuery);
-		//dd($editorData);
+        //dd($editorData);
         $this->data['editorPropertiesArr']=$editorData;
 
-		$property = DB::select($finalQry);
-		$getRec = DB::select($CountRecordQry);
-		$featureData = DB::select($featureQuery);
+        $property = DB::select($finalQry);
+        $getRec = DB::select($CountRecordQry);
+        $featureData = DB::select($featureQuery);
 
         /*--  Get all the property by membership  --*/
         //echo "<pre>";
@@ -5058,15 +4989,15 @@ class PropertyController extends Controller {
         //print_r($prop_by_package); die;
         $this->data['prop_packages'] = $prop_by_package;
         /*--  End --*/
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
-		$this->data['total_record'] = $getRec[0]->total_record;
-		$this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
-		$this->data['active_page']=$pageNumber;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
+        $this->data['total_record'] = $getRec[0]->total_record;
+        $this->data['total_pages'] = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -5094,24 +5025,24 @@ class PropertyController extends Controller {
 
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
+        }
         $this->data['destination_category'] =0;
 
-		//if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+        //if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
             $this->data['destination_category']=$cateObj->id;
-			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+            $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
         //}
         $this->data['sel_exp'] = trim($keyword);
 
         $this->data['slug'] = $keyword;
         $this->data['dateslug'] = '';
-		return view('frontend.themes.emporium.properties.ajax_list', $this->data);
+        return view('frontend.themes.emporium.properties.ajax_list', $this->data);
 
     }
     public function fetchcategorybc($id = 0, $child_category_array = '') {
@@ -5145,29 +5076,29 @@ class PropertyController extends Controller {
                 $selected_category = $destinations[0]->category_name;
                 foreach($destinations as $dest){
                     $subdest = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_youtube_channel_url')->where('parent_category_id', $dest->id)->get();
-					$getcats = '';
-					$chldIds = array();
-					if (!empty($subdest)) {
-						$chldIds = $this->fetchcategoryChildListIds($dest->id);
-						array_unshift($chldIds, $dest->id);
-					} else {
-						$chldIds[] = $dest->id;
-					}
+                    $getcats = '';
+                    $chldIds = array();
+                    if (!empty($subdest)) {
+                        $chldIds = $this->fetchcategoryChildListIds($dest->id);
+                        array_unshift($chldIds, $dest->id);
+                    } else {
+                        $chldIds[] = $dest->id;
+                    }
 
                     $getcats = "";
                     if (count($chldIds) > 0) { $getcats = " AND (category_id IN(".implode(",",$chldIds)."))"; }
                     $preprops = DB::select(DB::raw("SELECT COUNT(id) AS total_rows FROM property_categories_split_in_rows WHERE property_status = '1' ".$getcats));
 
-					if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
-						$destarr[] = $dest;
-					}
+                    if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
+                        $destarr[] = $dest;
+                    }
 
                 }
             }
             if (!empty($cateObj)) {
                 if($cateObj->id>0){
                     $dest_url = array_reverse($this->fetchcategorybc($cateObj->id));
-    				//$dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
+                    //$dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
                 }
                 $catname = $cateObj->category_name;
                 $catalias = $cateObj->category_alias;
@@ -5219,29 +5150,29 @@ class PropertyController extends Controller {
                 $selected_category = $destinations[0]->category_name;
                 foreach($destinations as $dest){
                     $subdest = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_youtube_channel_url')->where('parent_category_id', $dest->id)->get();
-					$getcats = '';
-					$chldIds = array();
-					if (!empty($subdest)) {
-						$chldIds = $this->fetchcategoryChildListIds($dest->id);
-						array_unshift($chldIds, $dest->id);
-					} else {
-						$chldIds[] = $dest->id;
-					}
+                    $getcats = '';
+                    $chldIds = array();
+                    if (!empty($subdest)) {
+                        $chldIds = $this->fetchcategoryChildListIds($dest->id);
+                        array_unshift($chldIds, $dest->id);
+                    } else {
+                        $chldIds[] = $dest->id;
+                    }
 
                     $getcats = "";
                     if (count($chldIds) > 0) { $getcats = " AND (category_id IN(".implode(",",$chldIds)."))"; }
                     $preprops = DB::select(DB::raw("SELECT COUNT(id) AS total_rows FROM property_categories_split_in_rows WHERE property_status = '1' ".$getcats));
 
-					if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
-						$destarr[] = $dest;
-					}
+                    if (isset($preprops[0]->total_rows) && $preprops[0]->total_rows > 0) {
+                        $destarr[] = $dest;
+                    }
 
                 }
             }
             if (!empty($cateObj)) {
                 if($cateObj->id>0){
                     $dest_url = array_reverse($this->fetchcategorybc($cateObj->id));
-    				//$dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
+                    //$dest_url = implode('/',array_reverse($this->fetchcategoryaliaspath($cateObj->id)));
                 }
                 $catname = $cateObj->category_name;
                 $catalias = $cateObj->category_alias;
@@ -5365,8 +5296,8 @@ class PropertyController extends Controller {
         $total_guests = (int)$adults + (int)(($child=='') ? 0 : $child);
 
         $propertiesArr = array();
-		$crpropertiesArr = array();
-		$relatedgridpropertiesArr = array();
+        $crpropertiesArr = array();
+        $relatedgridpropertiesArr = array();
         $props = \DB::table('tb_properties')->select('tb_properties.*')->where("property_name", $p_name)->first();
 
         $number_of_nights = 1;
@@ -5386,10 +5317,10 @@ class PropertyController extends Controller {
             $propertiesArr['propimage_containerpath'] = '';
             if(!empty($propertiesArr['propimage'])){
                 $propertiesArr['propimage_thumbpath'] = (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id);
-    			$propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id)));
+                $propertiesArr['propimage_thumbpath_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propertiesArr['propimage'][0]->folder_id)));
                 $propertiesArr['propimage_containerpath'] = (new ContainerController)->getContainerUserPath($propertiesArr['propimage'][0]->folder_id);
-			}
-			$this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
+            }
+            $this->data['currency'] = \DB::table('tb_settings')->select('content')->where('key_value', 'default_currency')->first();
 
             if ($props->property_category_id != '') {
                 $catss = explode(',', $props->property_category_id);
@@ -5402,37 +5333,37 @@ class PropertyController extends Controller {
                 $crpropertiesArr = DB::select(DB::raw("SELECT tb_properties.property_name, tb_properties.property_slug, tb_container_files.file_name, tb_container_files.folder_id FROM tb_properties JOIN tb_properties_images ON tb_properties_images.property_id = tb_properties.id JOIN tb_container_files ON tb_container_files.id = tb_properties_images.file_id JOIN tb_properties_category_package ON tb_properties_category_package.property_id = tb_properties.id WHERE tb_properties.property_type='" . $props->property_type . "' AND tb_properties.property_status = '1' AND tb_properties.id!='" . $props->id . "' AND tb_properties_images.type = 'Property Images' AND tb_properties_category_package.package_id IN (".$this->pckages_ids.")  $getcats GROUP BY  tb_properties.property_slug ORDER BY tb_properties.id desc, tb_container_files.file_sort_num asc LIMIT 2"));
 
 
-				$relatedgridquery = "SELECT tb_properties.editor_choice_property,tb_properties.property_usp,tb_properties.feature_property,tb_properties.id,tb_properties.property_name,tb_properties.property_slug,tb_properties.property_category_id FROM tb_properties JOIN tb_properties_category_package ON tb_properties_category_package.property_id = tb_properties.id WHERE property_type='Hotel' AND tb_properties.assign_detail_city = '".$props->assign_detail_city."' AND property_status = '1' AND tb_properties.id != '".$props->id."' AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price WHERE tb_properties_category_rooms_price.property_id = tb_properties.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, editor_choice_property desc, feature_property desc LIMIT 4";
+                $relatedgridquery = "SELECT tb_properties.editor_choice_property,tb_properties.property_usp,tb_properties.feature_property,tb_properties.id,tb_properties.property_name,tb_properties.property_slug,tb_properties.property_category_id FROM tb_properties JOIN tb_properties_category_package ON tb_properties_category_package.property_id = tb_properties.id WHERE property_type='Hotel' AND tb_properties.assign_detail_city = '".$props->assign_detail_city."' AND property_status = '1' AND tb_properties.id != '".$props->id."' AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ORDER BY (SELECT rack_rate FROM tb_properties_category_rooms_price WHERE tb_properties_category_rooms_price.property_id = tb_properties.id ORDER BY rack_rate DESC LIMIT 1) * 1 DESC, editor_choice_property desc, feature_property desc LIMIT 4";
 
-				$relatedgridprops = DB::select(DB::raw($relatedgridquery));
-				if (!empty($relatedgridprops)) {
-					$pr = 0;
-					foreach ($relatedgridprops as $rgprop) {
-						$relatedgridpropertiesArr[$pr]['data'] = $rgprop;
-						$relatedgridpropertiesArr[$pr]['data']->price = '';
-						$checkseasonPrice = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('property_id', $rgprop->id)->orderBy('rack_rate', 'DESC')->first();
-						if (!empty($checkseasonPrice)) {
-							$relatedgridpropertiesArr[$pr]['data']->price = $checkseasonPrice->rack_rate;
-						}
+                $relatedgridprops = DB::select(DB::raw($relatedgridquery));
+                if (!empty($relatedgridprops)) {
+                    $pr = 0;
+                    foreach ($relatedgridprops as $rgprop) {
+                        $relatedgridpropertiesArr[$pr]['data'] = $rgprop;
+                        $relatedgridpropertiesArr[$pr]['data']->price = '';
+                        $checkseasonPrice = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('property_id', $rgprop->id)->orderBy('rack_rate', 'DESC')->first();
+                        if (!empty($checkseasonPrice)) {
+                            $relatedgridpropertiesArr[$pr]['data']->price = $checkseasonPrice->rack_rate;
+                        }
 
-						$relatedgridpropertiesArr[$pr]['data']->category_name = '';
-						$cateObjtm = \DB::table('tb_categories')->select('category_name')->where('id', $rgprop->property_category_id)->where('category_published', 1)->first();
-						if (!empty($cateObjtm)) {
-							$relatedgridpropertiesArr[$pr]['data']->category_name = $cateObjtm->category_name;
-						}
+                        $relatedgridpropertiesArr[$pr]['data']->category_name = '';
+                        $cateObjtm = \DB::table('tb_categories')->select('category_name')->where('id', $rgprop->property_category_id)->where('category_published', 1)->first();
+                        if (!empty($cateObjtm)) {
+                            $relatedgridpropertiesArr[$pr]['data']->category_name = $cateObjtm->category_name;
+                        }
 
-						$fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.file_id', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $rgprop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
-						if (!empty($fileArr)) {
-							$relatedgridpropertiesArr[$pr]['image'] = $fileArr;
-							$relatedgridpropertiesArr[$pr]['image']->imgsrc = (new ContainerController)->getThumbpath($fileArr->folder_id);
-						}
-						$pr++;
-					}
-				}
+                        $fileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_properties_images.file_id', 'tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $rgprop->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->first();
+                        if (!empty($fileArr)) {
+                            $relatedgridpropertiesArr[$pr]['image'] = $fileArr;
+                            $relatedgridpropertiesArr[$pr]['image']->imgsrc = (new ContainerController)->getThumbpath($fileArr->folder_id);
+                        }
+                        $pr++;
+                    }
+                }
             }
-			$new_result = array();
+            $new_result = array();
             $no_of_rooms = '';
-			//$cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $props->id)->where('status', 0)->where('show_on_booking', 1)->get();
+            //$cat_types = \DB::table('tb_properties_category_types')->select('id','category_name','room_desc')->where('property_id', $props->id)->where('status', 0)->where('show_on_booking', 1)->get();
 
             $query = "SELECT COUNT(id) as noOfRooms, property_id, category_id FROM tb_properties_category_rooms where 1=1 and ";
             $query .=" (CASE WHEN tb_properties_category_rooms.active_full_year = 0 THEN ";
@@ -5474,24 +5405,24 @@ class PropertyController extends Controller {
                             print_r($check_availability); die; */
 
                             $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-        					$type_cale = '';
+                            $type_cale = '';
                             $filen = array();
                             if (!empty($roomfileArr)) {
-        						$propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
-        						$propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
-        						$propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
+                                $propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
+                                $propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
+                                $propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
                                 $propertiesArr['typedata'][$c] = $type;
                                 $propertiesArr['typedata'][$c]->price = '';
                                 $curnDate = date('Y-m-d');
                                 if ($props->default_seasons != 1) {
-        							$checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
-        							//print_r($checkseason); die;
+                                    $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
+                                    //print_r($checkseason); die;
                                 } else {
                                     $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->first();
                                 }
 
-        						if (!empty($checkseason)) {
-        							 $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
+                                if (!empty($checkseason)) {
+                                     $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
                                      $propertiesArr['typedata'][$c]->season = $checkseason->season_name;
                                 } else {
                                     $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $type->id)->first();
@@ -5511,7 +5442,7 @@ class PropertyController extends Controller {
 
                                 $propertiesArr['typedata'][$c]->room_calendar = $type_cale;
 
-        						$c++;
+                                $c++;
                             }
 
                         }
@@ -5545,8 +5476,8 @@ class PropertyController extends Controller {
             $this->data['propertyPackage'] = $isPackage;
             $this->data['propertyDetail'] = $propertiesArr;
             $this->data['relatedproperties'] = $crpropertiesArr;
-    		$this->data['relatedgridpropertiesArr'] = $relatedgridpropertiesArr;
-    		$this->data['propertyEvents'] = \DB::table('tb_events')->where('property_id', $props->id)->get();
+            $this->data['relatedgridpropertiesArr'] = $relatedgridpropertiesArr;
+            $this->data['propertyEvents'] = \DB::table('tb_events')->where('property_id', $props->id)->get();
             $this->data['packages'] = \DB::table('tb_packages')->where('package_category', 'B2C')->where('package_status', 1)->get();
         }
         echo json_encode($this->data);
@@ -5574,7 +5505,7 @@ class PropertyController extends Controller {
         $membershiptype =  $coll_type;
         $keyword = $cat;
 
-		$catprops = '';
+        $catprops = '';
 
         $arrive_date = '';
         if(\Session::has('arrive')){
@@ -5662,8 +5593,8 @@ class PropertyController extends Controller {
         $total_guests = (int)$adults + (int)(($child=='') ? 0 : $child);
 
         $propertiesArr = array();
-		$crpropertiesArr = array();
-		$relatedgridpropertiesArr = array();
+        $crpropertiesArr = array();
+        $relatedgridpropertiesArr = array();
 
 
         $number_of_nights = 1;
@@ -5675,21 +5606,21 @@ class PropertyController extends Controller {
         }
 
         /*$arrive = $departure = $adult = $childs = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
-		}*/
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }*/
 
         $req_for = $request->input('req_for');
-		/* Default package */
+        /* Default package */
         $pckages_ids = '';
 
         $public_package = \DB::table('tb_packages')->select('id')->where('package_category', 'B2C')->where('is_public', 1)->first();
@@ -5739,7 +5670,7 @@ class PropertyController extends Controller {
         //print_r($pckages_ids); die;
         /* End */
         //echo $keyword; die;
-		$cateObj = \DB::table('tb_categories')->where('category_name', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_name', $keyword)->where('category_published', 1)->first();
 
 
         $chldIds = array();
@@ -5773,8 +5704,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 if($exp_cat!=''){
                     $objexp = \DB::table('tb_categories')->where('category_name', $exp_cat)->where('category_published', 1)->first();
@@ -5814,12 +5745,12 @@ class PropertyController extends Controller {
         }
 
         $perPage = 20;
-		$pageNumber = 1;
+        $pageNumber = 1;
 
         if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
         $editorData = array();
         $property = array();
@@ -5890,44 +5821,44 @@ class PropertyController extends Controller {
 
 
             $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id, (SELECT MIN(rack_rate) FROM tb_properties_category_rooms_price WHERE property_id=pr.id) as prc ";
-    		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+            $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
             $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-    		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+            //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
             $whereClause =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." ";
             //print_r($whereClause); die;
-    		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-    		$limit = " LIMIT ". $pageStart.",".$perPage;
+            $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+            $limit = " LIMIT ". $pageStart.",".$perPage;
             $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
             $whereClauseAll =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 ".$catprops." ";
             $finalQryAll = "SELECT * FROM (".$query.$whereClauseAll." ORDER BY price DESC) tempX GROUP BY id ".$orderBy ;
 
-    		$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+            $CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
 
-    		//Feature Query
-    		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id, (SELECT MIN(rack_rate) FROM tb_properties_category_rooms_price WHERE property_id=pr.id) as prc ";
-    		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
-            $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-    		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-            $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
-    		$orderBy = "ORDER BY RAND()  ";
-    		$limit = " LIMIT 2";
-    		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-
-    		//Editor choice editor_choice_property
+            //Feature Query
             $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id, (SELECT MIN(rack_rate) FROM tb_properties_category_rooms_price WHERE property_id=pr.id) as prc ";
-    		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+            $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
             $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-    		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+            //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+            $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
+            $orderBy = "ORDER BY RAND()  ";
+            $limit = " LIMIT 2";
+            $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+
+            //Editor choice editor_choice_property
+            $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id, (SELECT MIN(rack_rate) FROM tb_properties_category_rooms_price WHERE property_id=pr.id) as prc ";
+            $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+            $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+            //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
             $whereClause =" WHERE  pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND pr.editor_choice_property = 1 ";
-    		$orderBy = "ORDER BY RAND()  ";
-    		$limit = " LIMIT 2";
-    		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+            $orderBy = "ORDER BY RAND()  ";
+            $limit = " LIMIT 2";
+            $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
             $editorData = DB::select($editorQuery);
-    		$property = DB::select($finalQry);
-    		$getRec = DB::select($CountRecordQry);
-    		$featureData = DB::select($featureQuery);
+            $property = DB::select($finalQry);
+            $getRec = DB::select($CountRecordQry);
+            $featureData = DB::select($featureQuery);
 
             /*--  Get all the property by membership  --*/
             //echo "<pre>";
@@ -5961,21 +5892,21 @@ class PropertyController extends Controller {
         /*--  End --*/
 
         $this->data['editorPropertiesArr']=$editorData;
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
         $total_rec = 0;
         $total_pages = 0;
         if(!empty($getRec)){
             $total_rec =  $getRec[0]->total_record;
             $total_pages = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
         }
-		$this->data['total_record'] = $total_rec;
-		$this->data['total_pages'] = $total_pages;
-		$this->data['active_page']=$pageNumber;
+        $this->data['total_record'] = $total_rec;
+        $this->data['total_pages'] = $total_pages;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -6003,20 +5934,20 @@ class PropertyController extends Controller {
 
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
+        }
         $this->data['destination_category'] =0;
         $resultads = array();
         if($req_for == 'luxury_destinations' || $req_for=='luxury_experience' ){
             if($cateObj->id > 0){
-    		//if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+            //if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
                 $this->data['destination_category']=$cateObj->id;
-    			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+                $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
             //}
             }
 
@@ -6033,7 +5964,7 @@ class PropertyController extends Controller {
 
         echo json_encode(array('data'=>$this->data));
         exit();
-		//return view('frontend.themes.emporium.properties.ajax_list', $this->data);
+        //return view('frontend.themes.emporium.properties.ajax_list', $this->data);
 
     }
 
@@ -6044,7 +5975,7 @@ class PropertyController extends Controller {
         $membershiptype =  $coll_type;
         $keyword = $cat;
 
-		$catprops = '';
+        $catprops = '';
 
         $arrive_date = '';
         if(\Session::has('arrive')){
@@ -6132,8 +6063,8 @@ class PropertyController extends Controller {
         $total_guests = (int)$adults + (int)(($child=='') ? 0 : $child);
 
         $propertiesArr = array();
-		$crpropertiesArr = array();
-		$relatedgridpropertiesArr = array();
+        $crpropertiesArr = array();
+        $relatedgridpropertiesArr = array();
 
 
         $number_of_nights = 1;
@@ -6145,21 +6076,21 @@ class PropertyController extends Controller {
         }
 
         /*$arrive = $departure = $adult = $childs = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$this->data['arrive_date'] = $request->arrive;
-			$this->data['dateslug'] = $request->arrive;
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$this->data['departure_date'] = $request->departure;
-			$this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
-		}*/
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $this->data['arrive_date'] = $request->arrive;
+            $this->data['dateslug'] = $request->arrive;
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $this->data['departure_date'] = $request->departure;
+            $this->data['dateslug'] = $this->data['dateslug'].' to '.$request->departure;
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }*/
 
         $req_for = $request->input('req_for');
-		/* Default package */
+        /* Default package */
         $pckages_ids = '';
 
         $public_package = \DB::table('tb_packages')->select('id')->where('package_category', 'B2C')->where('is_public', 1)->first();
@@ -6207,7 +6138,7 @@ class PropertyController extends Controller {
         //print_r($pckages_ids); die;
         /* End */
         //echo $keyword; die;
-		$cateObj = \DB::table('tb_categories')->where('category_name', $keyword)->where('category_published', 1)->first();
+        $cateObj = \DB::table('tb_categories')->where('category_name', $keyword)->where('category_published', 1)->first();
 
 
         $chldIds = array();
@@ -6240,8 +6171,8 @@ class PropertyController extends Controller {
                 $impload_ids = implode(',',$chldIds);
                 $catcond = " AND (pr.category_id IN(".$impload_ids."))";
                 /*$catcond = " AND (" . implode(" || ", array_map(function($v) {
-									return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
-								}, array_values($chldIds))) . ")";*/
+                                    return sprintf("FIND_IN_SET('%s', pr.property_category_id)", $v);
+                                }, array_values($chldIds))) . ")";*/
 
                 $ch_queries = "SELECT pr.id FROM property_categories_split_in_rows pr WHERE pr.property_status='1' ".$catcond." GROUP BY pr.id";
 
@@ -6265,12 +6196,12 @@ class PropertyController extends Controller {
         }
 
         $perPage = 20;
-		$pageNumber = 1;
+        $pageNumber = 1;
 
         if(isset($request->page) && $request->page>0){
-			$pageNumber = $request->page;
-		}
-		$pageStart = ($pageNumber -1) * $perPage;
+            $pageNumber = $request->page;
+        }
+        $pageStart = ($pageNumber -1) * $perPage;
 
         $editorData = array();
         $property = array();
@@ -6342,44 +6273,44 @@ class PropertyController extends Controller {
 
 
             $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-    		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+            $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
             $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-    		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+            //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
             $whereClause =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." ";
             //print_r($whereClause); die;
-    		$orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
-    		$limit = " LIMIT ". $pageStart.",".$perPage;
+            $orderBy = "ORDER BY price DESC, editor_choice_property DESC  ";
+            $limit = " LIMIT ". $pageStart.",".$perPage;
             $finalQry = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
             $whereClauseAll =" WHERE pr.property_type = 'Hotel' AND pr.property_status = 1 AND  pr.feature_property = 0 ".$catprops." ";
             $finalQryAll = "SELECT * FROM (".$query.$whereClauseAll." ORDER BY price DESC) tempX GROUP BY id ".$orderBy ;
 
-    		$CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
+            $CountRecordQry = "Select count(*) as total_record from tb_properties pr  JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ".$whereClause ;
 
-    			//Feature Query
-    		$query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-    		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
-            $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-    		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
-            $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
-    		$orderBy = "ORDER BY RAND()  ";
-    		$limit = " LIMIT 4";
-    		$featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
-
-    		  //Editor choice editor_choice_property
+                //Feature Query
             $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
-    		$query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+            $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
             $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
-    		//$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+            //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.feature_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
+            $whereClause =" WHERE pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND  pr.feature_property = 1 ";
+            $orderBy = "ORDER BY RAND()  ";
+            $limit = " LIMIT 4";
+            $featureQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+
+              //Editor choice editor_choice_property
+            $query = "SELECT pr.editor_choice_property,pr.property_usp,pr.feature_property,pr.id,pr.property_name,pr.property_slug,pr.property_category_id,pcrp.rack_rate as price, tb_properties_category_package.package_id ";
+            $query .= " FROM tb_properties pr LEFT JOIN tb_properties_category_rooms_price pcrp ON pr.id = pcrp.property_id ";
+            $query .= " JOIN tb_properties_category_package ON tb_properties_category_package.property_id = pr.id ";
+            //$whereClause =" WHERE ((pr.property_name LIKE '%".$keyword."%' AND pr.property_type = 'Hotel') OR city LIKE '%".$keyword."%' ".$catprops." ) AND pr.property_status = 1 AND  pr.editor_choice_property = 1 AND tb_properties_category_package.package_id IN (".$this->pckages_ids.") ";
             $whereClause =" WHERE  pr.property_type = 'Hotel'  AND tb_properties_category_package.package_id IN (".$pckages_ids.") ".$catprops." AND pr.property_status = 1 AND pr.editor_choice_property = 1 ";
-    		$orderBy = "ORDER BY RAND()  ";
-    		$limit = " LIMIT 4";
-    		$editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
+            $orderBy = "ORDER BY RAND()  ";
+            $limit = " LIMIT 4";
+            $editorQuery = "SELECT * FROM (".$query.$whereClause." ORDER BY price DESC) tempX GROUP BY id ".$orderBy.$limit ;
 
             $editorData = DB::select($editorQuery);
-    		$property = DB::select($finalQry);
-    		$getRec = DB::select($CountRecordQry);
-    		$featureData = DB::select($featureQuery);
+            $property = DB::select($finalQry);
+            $getRec = DB::select($CountRecordQry);
+            $featureData = DB::select($featureQuery);
 
             /*--  Get all the property by membership  --*/
             //echo "<pre>";
@@ -6412,21 +6343,21 @@ class PropertyController extends Controller {
         //print_r($prop_by_package); die;
         $this->data['prop_packages'] = $prop_by_package;
         /*--  End --*/
-		$this->data['featurePropertiesArr']=$featureData;
-		$this->data['propertiesArr'] = $property;
+        $this->data['featurePropertiesArr']=$featureData;
+        $this->data['propertiesArr'] = $property;
         $total_rec = 0;
         $total_pages = 0;
         if(!empty($getRec)){
             $total_rec =  $getRec[0]->total_record;
             $total_pages = (isset($getRec[0]->total_record) && $getRec[0]->total_record>0)?(int)ceil($getRec[0]->total_record / $perPage):0;
         }
-		$this->data['total_record'] = $total_rec;
-		$this->data['total_pages'] = $total_pages;
-		$this->data['active_page']=$pageNumber;
+        $this->data['total_record'] = $total_rec;
+        $this->data['total_pages'] = $total_pages;
+        $this->data['active_page']=$pageNumber;
 
-		$uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
+        $uid = isset(\Auth::user()->id) ? \Auth::user()->id : '';
 
-		//get emotional gallery
+        //get emotional gallery
         $emotional_gallery_array = array();
         $emtional_parentFolder = \DB::table('tb_container')->select('id')->where('name','emotion-gallery')->first();
         if(isset($emtional_parentFolder->id)){
@@ -6454,20 +6385,20 @@ class PropertyController extends Controller {
 
         $this->data['emotional_gallery'] = $emotional_gallery_array;
         //End
-		$tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
-		$tagsArr = array();
-		if (!empty($tags_Arr)) {
-			foreach ($tags_Arr as $tags) {
-				$tagsArr[$tags->parent_tag_id][] = $tags;
-			}
-		}
+        $tags_Arr = \DB::table('tb_tags_manager')->where('tag_status', 1)->get();
+        $tagsArr = array();
+        if (!empty($tags_Arr)) {
+            foreach ($tags_Arr as $tags) {
+                $tagsArr[$tags->parent_tag_id][] = $tags;
+            }
+        }
         $this->data['destination_category'] =0;
         $resultads = array();
         if($req_for == 'luxury_destinations' || $req_for=='luxury_experience' ){
             if($cateObj->id > 0){
-    		//if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
+            //if(request()->segment(1)=='luxury_destinations' || request()->segment(1)=='luxury_experience'){
                 $this->data['destination_category']=$cateObj->id;
-    			$this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
+                $this->data['destination_category_instagram']=$cateObj->category_instagram_channel;
             //}
             }
 
@@ -6484,38 +6415,38 @@ class PropertyController extends Controller {
 
         echo json_encode(array('data'=>$this->data));
         exit();
-		//return view('frontend.themes.emporium.properties.ajax_list', $this->data);
+        //return view('frontend.themes.emporium.properties.ajax_list', $this->data);
 
     }
 
     function allPropertySearch(Request $request) {
         $membershiptype =  $request->membershiptype;
 
-		$selCurrency=$request->input("currencyOption");
+        $selCurrency=$request->input("currencyOption");
         \Session::put('currencyOption', $selCurrency);
 
-		$this->data["convertedOneUnitPrice"]=0;
+        $this->data["convertedOneUnitPrice"]=0;
 
         $keyword = trim($request->cat);
         $show = 'asc';
 
         $this->data['dateslug'] = '';
-		$arrive = $departure = $adult = $childs = '';
-		if (!is_null($request->arrive) && $request->arrive != '') {
-			\Session::put('arrive', $request->arrive);
-			$arrive = date("Y-m-d", strtotime(trim($request->arrive)));
-		}
-		if (!is_null($request->departure) && $request->departure != '') {
-			\Session::put('departure', $request->departure);
-			$departure = date("Y-m-d", strtotime(trim($request->departure)));
-		}
+        $arrive = $departure = $adult = $childs = '';
+        if (!is_null($request->arrive) && $request->arrive != '') {
+            \Session::put('arrive', $request->arrive);
+            $arrive = date("Y-m-d", strtotime(trim($request->arrive)));
+        }
+        if (!is_null($request->departure) && $request->departure != '') {
+            \Session::put('departure', $request->departure);
+            $departure = date("Y-m-d", strtotime(trim($request->departure)));
+        }
 
 
-		$catprops = '';
+        $catprops = '';
         $catname = '';
         $catalias = '';
         $catid = '';
-		/* Default package */
+        /* Default package */
         $pckages_ids = '';
         $default_package = '';
 
@@ -6562,12 +6493,12 @@ class PropertyController extends Controller {
         $this->data['default_package'] = $default_package;
         /* End */
 
-		//$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
+        //$cateObj = \DB::table('tb_categories')->where('category_alias', $keyword)->where('category_published', 1)->first();
 
 
-		$this->data['slug'] = $keyword;
+        $this->data['slug'] = $keyword;
 
-		$this->data['action']=request()->segments(1);
+        $this->data['action']=request()->segments(1);
         $this->data['destination_category'] =0;
 
         $search_for = '';
@@ -6596,7 +6527,7 @@ class PropertyController extends Controller {
         $this->data['catid'] = $catid;
         $this->data['m_type'] = ($membershiptype !='' ? $membershiptype : 'lifestyle-collection');
 
-		return view('frontend.themes.emporium.properties.list', $this->data);
+        return view('frontend.themes.emporium.properties.list', $this->data);
 
     }
 
@@ -6636,9 +6567,9 @@ class PropertyController extends Controller {
                     $propimage_containerpath = '';
                     if(!empty($propimage)){
                         $propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
-            			//$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
+                        //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
                         //$propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
-        			}
+                    }
                     $prop['propimage'] = $propimage;
                     $prop['thumb'] = $propimage_thumbpath;
                     //$prop['thumb_dir'] = $propimage_thumbpath_dir;
@@ -6658,9 +6589,9 @@ class PropertyController extends Controller {
                     $propimage_containerpath = '';
                     if(!empty($propimage)){
                         $propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
-            			//$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
+                        //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
                         //$propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
-        			}
+                    }
                     $prop['propimage'] = $propimage;
                     $prop['thumb'] = $propimage_thumbpath;
                     //$prop['thumb_dir'] = $propimage_thumbpath_dir;
@@ -6679,9 +6610,9 @@ class PropertyController extends Controller {
                     $propimage_containerpath = '';
                     if(!empty($propimage)){
                         $propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
-            			//$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
+                        //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
                         //$propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
-        			}
+                    }
                     $prop['propimage'] = $propimage;
                     $prop['thumb'] = $propimage_thumbpath;
                     //$prop['thumb_dir'] = $propimage_thumbpath_dir;
@@ -6700,9 +6631,9 @@ class PropertyController extends Controller {
                     $propimage_containerpath = '';
                     if(!empty($propimage)){
                         $propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
-            			//$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
+                        //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
                         //$propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
-        			}
+                    }
                     $prop['propimage'] = $propimage;
                     $prop['thumb'] = $propimage_thumbpath;
                     //$prop['thumb_dir'] = $propimage_thumbpath_dir;
@@ -6729,31 +6660,31 @@ class PropertyController extends Controller {
     }
 
     public function propertyimagesbypid(Request $request) {
-		$propid = $request->propid;
-		$props = \DB::table('tb_properties')->select('property_name')->where('id', $propid)->first();
-		$propertyName = strtolower(str_replace(' ','',$props->property_name));
-		$propertyImages = CustomQuery::getPropertyImageByPid($propid);
+        $propid = $request->propid;
+        $props = \DB::table('tb_properties')->select('property_name')->where('id', $propid)->first();
+        $propertyName = strtolower(str_replace(' ','',$props->property_name));
+        $propertyImages = CustomQuery::getPropertyImageByPid($propid);
 
-		/*$remoteImage = $propertyImage->containerfolder_src;
-		$propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
-		if(file_exists($propertyNameImg)){
-			header("Content-type: image/jpeg");
-			$data = file_get_contents($propertyNameImg);
-			$image = 'data:image/jpeg;base64,' . base64_encode($data);
-		} else {
-			if(!empty($propertyImages)) {
-				$tObj = Image::make($remoteImage);
+        /*$remoteImage = $propertyImage->containerfolder_src;
+        $propertyNameImg = $propertyImage->containerfolder_path_src.'emporium-voyage_'.$propertyName.'.jpeg';
+        if(file_exists($propertyNameImg)){
+            header("Content-type: image/jpeg");
+            $data = file_get_contents($propertyNameImg);
+            $image = 'data:image/jpeg;base64,' . base64_encode($data);
+        } else {
+            if(!empty($propertyImages)) {
+                $tObj = Image::make($remoteImage);
                 $width = $tObj->width();
                 $height = $tObj->height();
 
                 $height1 = 400 * $height /$width;
-				$image = $tObj->resize(400,$height1)->response('jpg');
-			} else {
-				return false;
-			}
-		}*/
-		return json_encode($propertyImages);
-	}
+                $image = $tObj->resize(400,$height1)->response('jpg');
+            } else {
+                return false;
+            }
+        }*/
+        return json_encode($propertyImages);
+    }
 
     public function suites(Request $request){
         $prop_slug = $request->slug;
@@ -6781,24 +6712,24 @@ class PropertyController extends Controller {
                 $c = 0;
                 foreach ($cat_types as $type) {
                     $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-					$type_cale = '';
+                    $type_cale = '';
                     $filen = array();
                     if (!empty($roomfileArr)) {
-						$propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
-						$propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
-						$propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
+                        $propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
+                        $propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
+                        $propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
                         $propertiesArr['typedata'][$c] = $type;
                         $propertiesArr['typedata'][$c]->price = '';
                         $curnDate = date('Y-m-d');
                         if ($props->default_seasons != 1) {
-							$checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
-							//print_r($checkseason); die;
+                            $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
+                            //print_r($checkseason); die;
                         } else {
                             $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->first();
                         }
 
-						if (!empty($checkseason)) {
-							 $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
+                        if (!empty($checkseason)) {
+                             $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
                              $propertiesArr['typedata'][$c]->season = $checkseason->season_name;
                         } else {
                             $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $type->id)->first();
@@ -6818,7 +6749,7 @@ class PropertyController extends Controller {
 
                         $propertiesArr['typedata'][$c]->room_calendar = $type_cale;
 
-						$c++;
+                        $c++;
                     }
 
                     /*------- Custom Plan ---------*/
@@ -6893,7 +6824,7 @@ class PropertyController extends Controller {
                     $r_id = $obj_res[0]->id;
 
                     $fetchresgalleryfolder = array();
-            		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'res')->first();
+                    $resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'res')->first();
 
                     if(!empty($resfileArr)){
                         $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
@@ -6923,7 +6854,7 @@ class PropertyController extends Controller {
                     $r_id = $obj_res[0]->id;
 
                     $fetchresgalleryfolder = array();
-            		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'bar')->first();
+                    $resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'bar')->first();
 
                     if(!empty($resfileArr)){
                         $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
@@ -6952,7 +6883,7 @@ class PropertyController extends Controller {
                     $r_id = $obj_res[0]->id;
 
                     $fetchresgalleryfolder = array();
-            		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'spa')->first();
+                    $resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'spa')->first();
 
                     if(!empty($resfileArr)){
                         $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
@@ -7003,7 +6934,7 @@ class PropertyController extends Controller {
         $filen = array();
         $fetchresgalleryfolder = array();
         if($type=='res'){
-    		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'res')->first();
+            $resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'res')->first();
 
             if(!empty($resfileArr)){
                 $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
@@ -7019,7 +6950,7 @@ class PropertyController extends Controller {
             }
             $arr_data['imgs'] = $filen;
         }elseif($type=='bar'){
-    		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'bar')->first();
+            $resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'bar')->first();
 
             if(!empty($resfileArr)){
                 $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
@@ -7035,7 +6966,7 @@ class PropertyController extends Controller {
             }
             $arr_data['imgs'] = $filen;
         }elseif($type=='spa'){
-    		$resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'spa')->first();
+            $resfileArr = \DB::table('tb_images_res_spa_bar')->where('parent_id', $r_id)->where('type', 'spa')->first();
 
             if(!empty($resfileArr)){
                 $fetchresgalleryfolder = \DB::table('tb_container')->join('tb_container_files', 'tb_container.id', '=', 'tb_container_files.folder_id')->where('tb_container.parent_id', $resfileArr->folder_id)->where('tb_container.name', 'Gallery')->get();
@@ -7106,24 +7037,24 @@ class PropertyController extends Controller {
                 $c = 0;
                 foreach ($cat_types as $type) {
                     $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $type->id)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-					$type_cale = '';
+                    $type_cale = '';
                     $filen = array();
                     if (!empty($roomfileArr)) {
-						$propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
-						$propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
-						$propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
+                        $propertiesArr['roomimgs'][$type->id]['imgs'] = $roomfileArr;
+                        $propertiesArr['roomimgs'][$type->id]['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
+                        $propertiesArr['roomimgs'][$type->id]['imgsrc_dir'] = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id)));
                         $propertiesArr['typedata'][$c] = $type;
                         $propertiesArr['typedata'][$c]->price = '';
                         $curnDate = date('Y-m-d');
                         if ($props->default_seasons != 1) {
-							$checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
-							//print_r($checkseason); die;
+                            $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
+                            //print_r($checkseason); die;
                         } else {
                             $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $type->id)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->first();
                         }
 
-						if (!empty($checkseason)) {
-							 $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
+                        if (!empty($checkseason)) {
+                             $propertiesArr['typedata'][$c]->price = $checkseason->rack_rate;
                              $propertiesArr['typedata'][$c]->season = $checkseason->season_name;
                         } else {
                             $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $type->id)->first();
@@ -7137,7 +7068,7 @@ class PropertyController extends Controller {
 
                         $propertiesArr['typedata'][$c]->seasonwiseprice = $cat_rooms_price;
 
-						$c++;
+                        $c++;
                     }
 
                 }
@@ -7172,22 +7103,22 @@ class PropertyController extends Controller {
             if(!empty($proptype)){
                 $f_catid = $proptype->id;
                 $roomfileArr = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.file_name', 'tb_container_files.file_size', 'tb_container_files.file_type', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.category_id', $f_catid)->where('tb_properties_images.type', 'Rooms Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-				$type_cale = '';
+                $type_cale = '';
                 $filen = array();
                 if (!empty($roomfileArr)) {
-					$propertiesArr['imgs'] = $roomfileArr;
-					$propertiesArr['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
+                    $propertiesArr['imgs'] = $roomfileArr;
+                    $propertiesArr['imgsrc'] = (new ContainerController)->getThumbpath($roomfileArr[0]->folder_id);
 
                     $curnDate = date('Y-m-d');
                     if ($props->default_seasons != 1) {
-						$checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $f_catid)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
-						//print_r($checkseason); die;
+                        $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $f_catid)->where('tb_seasons.property_id', $props->id)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->orderBy('tb_seasons.season_priority', 'asc')->first();
+                        //print_r($checkseason); die;
                     } else {
                         $checkseason = \DB::table('tb_properties_category_rooms_price')->join('tb_seasons','tb_seasons.id','=','tb_properties_category_rooms_price.season_id')->join('tb_seasons_dates','tb_seasons_dates.season_id','=','tb_seasons.id')->select('tb_properties_category_rooms_price.rack_rate', 'tb_seasons.season_name')->where('tb_properties_category_rooms_price.property_id', $props->id)->where('tb_properties_category_rooms_price.category_id', $f_catid)->where('tb_seasons.property_id', 0)->where('tb_seasons_dates.season_from_date', '<=', $curnDate)->where('tb_seasons_dates.season_to_date', '>=', $curnDate)->first();
                     }
 
-					if (!empty($checkseason)) {
-						 $propertiesArr['price'] = $checkseason->rack_rate;
+                    if (!empty($checkseason)) {
+                         $propertiesArr['price'] = $checkseason->rack_rate;
                          $propertiesArr['season'] = $checkseason->season_name;
                     } else {
                         $checkseasonPrice_ifnotanyseason = \DB::table('tb_properties_category_rooms_price')->select('rack_rate')->where('season_id', 0)->where('property_id', $props->id)->where('category_id', $f_catid)->first();
@@ -7425,5 +7356,11 @@ class PropertyController extends Controller {
             }
         }
         $this->formatPropertyRecords($propertyResults);
+    }
+
+    public function apiPropertyDetail($id){
+        $property = $this->getPropertyById($id);
+        return response()->json($property);
+        exit;
     }
 }

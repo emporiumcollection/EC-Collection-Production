@@ -117,6 +117,13 @@ trait Property {
 
                 }]);
                 //->limit(20);
+            },
+            'propertyImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }]);
+                //->limit(20);
             }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -291,7 +298,6 @@ trait Property {
             ->where('longitude', '!=', '')
             ->where('feature_property', '!=', '1')
             ->where('editor_choice_property', '!=', '1')
-            ->where('longitude', '!=', '')
             ->where('property_status', '=', 1);
 
             if(request()->get('atmosphere_ids')){            
@@ -329,6 +335,74 @@ trait Property {
             //->limit(6)
             ->get();
         });            
+    }
+
+    public function getPropertyById($id){
+        $property = properties::select([
+            'id', 
+            'property_name', 
+            'property_short_name', 
+            'detail_section1_title', 
+            'detail_section1_description_box1', 
+            'detail_section1_description_box2', 
+            'detail_section1_description_box2', 
+            'roomamenities', 
+            'assign_amenities', 
+            'latitude',
+            'longitude',
+            'address', 
+            'internetpublic',
+            'internetroom',
+            'children_policy',
+            'checkin',
+            'checkout',
+            'transfer',
+            'smookingpolicy',
+            'smookingrooms',
+            'numberofrooms',
+            'availableservices',
+            'pets',
+            'carpark',
+            'bar_ids',
+            'spa_ids',
+            'restaurant_ids',
+            'city'
+        ])
+        ->with([
+            'boards',
+            'container',
+            //'images',
+            'PropertyCategoryPackages' => function($query){
+                $query->with(['package']);
+            },
+            'suites' => function($query){
+                return $query->with(['rooms', 'amenities']);
+            },
+            'propertyImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }]);
+                //->limit(20);
+            }, 
+            'roomImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }]);
+                //->limit(20);
+            }, 
+            'hotelBrochureImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }]);
+                //->limit(20);
+            }
+        ])
+        ->where('id', '=', $id);
+
+        return $property->get();
     }
 
     private function filterByprice($max,$min,&$propertyResults){
@@ -476,8 +550,8 @@ trait Property {
 
                   if(is_array($image)){
                     $file_name = $image['file_name'];
-                  }elseif(is_object($image)){
-                    $file_name = $image->file_name;
+                  }elseif(is_object($image) && isset($image->file->file_name)){
+                    $file_name = $image->file->file_name;
                   }else{
                     $file_name = 'default-image.png';
                   }
@@ -496,6 +570,38 @@ trait Property {
         }
 
         return json_encode($mapResults);
+    }
+
+    public function setGalleryAndFormat(&$properties){
+        /*$emptyPropertyImages = json_encode([
+            'id' => 0,
+            'file_name' => 'default-image.png',
+        ]);*/
+
+        if(!empty($properties->toArray())){
+            foreach($properties as $k => $editorProperty){
+                if(empty($editorProperty->container)){
+                    $dname = explode(',', $editorProperty->property_name)[0];
+
+                    $container = Container::
+                    where('display_name', '=', $dname)
+                    ->get();
+
+                    if(!empty($container->toArray())){
+                        $editorProperty->container = $container[0];
+                        $properties[$k]->container = $container[0];
+                    }
+                }
+                if(isset($editorProperty->container) && $editorProperty->container){
+                    $properties[$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
+                }
+                /*else{
+                    $properties[$k]->propertyImages[0] = json_decode($emptyPropertyImages);
+                }*/
+            }
+            
+            $this->formatPropertyRecords($properties);
+        }
     }
 
     public function seperatedByPackage($results){

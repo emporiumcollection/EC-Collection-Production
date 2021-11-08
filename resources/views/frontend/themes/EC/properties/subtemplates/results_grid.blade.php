@@ -1,4 +1,4 @@
-<?php if (!empty($propertyResultsForView['lifestyle'])) : ?>
+<?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
   <div class="tab-pane fade active show" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
       <?php
       foreach ($editorsProperties as $editorChoice) :

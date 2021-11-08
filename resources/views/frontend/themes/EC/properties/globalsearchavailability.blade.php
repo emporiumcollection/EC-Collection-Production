@@ -110,7 +110,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
               </a>
               <div class="title-main pl-0">
                 <h2><span data-toggle="tooltip" title="Your selected destination experience">{{$keyword}}</span> <a
-                    href="#searchF" data-toggle="collapse"><i class="ico ico-reload reload-offset"
+                    href="javascript:void(0)" onclick="resetSearch();" data-toggle="collapse"><i class="ico ico-reload reload-offset"
                       title="Reset your search result" data-toggle="tooltip"></i></a>
                 </h2>
               </div>
@@ -139,7 +139,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
         </div>
         <div class="mobile-off">          
           <ul class="nav nav-pills tabs-w3" id="myTab" role="tablist">
-            <?php if (!empty($propertyResultsForView['lifestyle'])) : ?>
+            <?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
               <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true">LIFESTYLE</a>
               </li>

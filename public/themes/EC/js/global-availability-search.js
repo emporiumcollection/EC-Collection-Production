@@ -55,9 +55,9 @@ function replacePropertyData(id){
         rooms = s.rooms;
         rooms.forEach(function(r){
           rimages = r.images;
-          if(r.images!=undefined){          
+          if(rimages.length){          
             rimages.forEach(function(e){
-              imgUrl = '/room-image/resize/600x500/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
+              imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
               imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
@@ -145,7 +145,7 @@ function replaceGalleryImages(id, place, list, image_path){
       for (const [key, e] of Object.entries(values)) {
         if(e.gallery.files){          
           e.gallery.files.forEach(function(rgallery){          
-            imgUrl = '/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
+            imgUrl = '/property-image/resize/1200x700/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
             imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
             spanid=2;
             grid++;
@@ -610,6 +610,10 @@ $(document).ready(function(){
     }
   });
 
+  $('#menunav .search-f').click(function (e) {
+    SHOW_PARENT_CITIES = 1;
+  });
+
   $('.city-f').click(function (e) {
     SHOW_PARENT_CITIES = 1;
     $('.search-f').trigger("click");
@@ -710,7 +714,8 @@ function searchResults(url){
           setTimeout(function () {
             $('body').css('overflow', 'auto');
             $('.pageload').hide();
-          }, 3000)
+            lazyLoadMe('results-media');
+          }, 1000)
         }
     });
 }
@@ -725,14 +730,26 @@ function getUrlParam(p){
   return $.urlParam(p);
 }
 
-function createSearchUrl(experience = ''){
-  //$('.pageload').show();
+var currentSearch = '';
+function filterDestination(dest){
+  currentSearch = dest;
+  $('.close-collapse').trigger("click");
+  var url = createSearchUrl();
+  searchResults(url);
+}
 
-  if(!experience){
+function createSearchUrl(experience = ''){
+  $('.pageload').show();
+
+  if(experience !== null && !experience){
     experience = getUrlParam('experience');
     if(!experience){
       experience = '';
     }
+  }
+
+  if(experience === null){
+    experience = '';    
   }
 
   var atmospheres = [];
@@ -758,7 +775,12 @@ function createSearchUrl(experience = ''){
   var min = $("#min").val();
   var max = $("#max").val();
 
-  var keyword = getUrlParam('s');
+  var keyword = '';
+  if(currentSearch){
+    keyword = currentSearch;
+  }else{
+    keyword = getUrlParam('s');
+  }
   var atmosphere_ids = atmospheres.join(',');
   var facility_ids = facilities.join(',');
   var style_ids = styles.join(',');
@@ -768,13 +790,25 @@ function createSearchUrl(experience = ''){
   return url + '&view=ajax';
 }
 
-function removeMe(e, id){
+function resetSearch(){
+  $('.nav-tags').html('');
+  var keyword = '';
+  keyword = getUrlParam('s');
+  var url = document.location.origin + document.location.pathname + `?s=` + keyword;
+  window.history.pushState({}, '', url);
+  searchResults(url + '&view=ajax');
+}
 
+function removeMe(e, id){
+  var url = '';
   if(id){
     $('#'+id).prop("checked", false);
+    url = createSearchUrl();   
+  }else{
+    url = createSearchUrl(null);   
   }
   $(e).parents("li").remove();
-  createSearchUrl();
+  searchResults(url);
 }
 
 function setBreadcrumb(elem){
