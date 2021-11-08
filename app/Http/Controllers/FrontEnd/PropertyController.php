@@ -3006,10 +3006,6 @@ class PropertyController extends Controller {
 
         //if($request->get('view') != 'map'){
             //Get editor's choice properties
-        $emptyPropertyImages = json_encode([
-            'id' => 0,
-            'file_name' => 'default-image.png',
-        ]);
         $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
         $this->setGalleryAndFormat($this->data['editorsProperties']);
 

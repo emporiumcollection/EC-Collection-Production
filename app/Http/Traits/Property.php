@@ -574,6 +574,11 @@ trait Property {
     }
 
     public function setGalleryAndFormat(&$properties){
+        $emptyPropertyImages = json_encode([
+            'id' => 0,
+            'file_name' => 'default-image.png',
+        ]);
+
         if(!empty($properties->toArray())){
             foreach($properties as $k => $editorProperty){
                 if(empty($editorProperty->container)){
