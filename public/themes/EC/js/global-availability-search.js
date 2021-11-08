@@ -725,6 +725,12 @@ function getUrlParam(p){
   return $.urlParam(p);
 }
 
+var currentSearch = '';
+function filterDestination(dest){
+  currentSearch = dest;
+  createSearchUrl();
+}
+
 function createSearchUrl(experience = ''){
   $('.pageload').show();
 
@@ -738,7 +744,6 @@ function createSearchUrl(experience = ''){
   if(experience === null){
     experience = '';    
   }
-  console.log(experience);
 
   var atmospheres = [];
   var facilities = [];  
@@ -763,7 +768,12 @@ function createSearchUrl(experience = ''){
   var min = $("#min").val();
   var max = $("#max").val();
 
-  var keyword = getUrlParam('s');
+  var keyword = '';
+  if(currentSearch){
+    keyword = currentSearch;
+  }else{
+    keyword = getUrlParam('s');
+  }
   var atmosphere_ids = atmospheres.join(',');
   var facility_ids = facilities.join(',');
   var style_ids = styles.join(',');
