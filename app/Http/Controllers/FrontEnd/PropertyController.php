@@ -3011,80 +3011,15 @@ class PropertyController extends Controller {
             'file_name' => 'default-image.png',
         ]);
         $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
-
-        if(!empty($this->data['editorsProperties']->toArray())){
-            foreach($this->data['editorsProperties'] as $k => $editorProperty){
-                if(empty($editorProperty->container)){
-                    $container = Container::
-                    where('display_name', '=', $editorProperty->property_name)
-                    ->get();
-
-                    if(!empty($container->toArray())){
-                        $editorProperty->container = $container[0];
-                        $this->data['editorsProperties'][$k]->container = $container[0];
-                    }
-                }
-                if(isset($editorProperty->container) && $editorProperty->container){
-                    $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);   
-                }else{
-                    $this->data['editorsProperties'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
-                }
-            }
-            
-            $this->formatPropertyRecords($this->data['editorsProperties']);
-        }
+        $this->setGalleryAndFormat($this->data['editorsProperties']);
 
         //Get featured choice properties
         $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
-
-        if(!empty($this->data['featureProperties']->toArray())){
-            foreach($this->data['featureProperties'] as $k => $featureProperty){
-                if(empty($featureProperty->container)){
-                    $container = Container::
-                    where('display_name', '=', $featureProperty->property_name)
-                    ->get();
-
-                    if(!empty($container->toArray())){
-                        $featureProperty->container = $container[0];
-                        $this->data['featureProperties'][$k]->container = $container[0];
-                    }
-                }
-                if(isset($featureProperty->container) && $featureProperty->container){
-                    $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
-                }else{
-                    $this->data['featureProperties'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
-                }
-            }
-
-            $this->formatPropertyRecords($this->data['featureProperties']);
-        }
-        //}
+        $this->setGalleryAndFormat($this->data['featureProperties']);
 
         //Get featured choice properties
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
-
-        //print count($this->data['propertyResults']->toArray());exit;
-
-        if(!empty($this->data['propertyResults']->toArray())){
-            foreach($this->data['propertyResults'] as $k => $propertyRecord){
-                if(empty($propertyRecord->container)){
-                    $container = Container::
-                    where('display_name', '=', $propertyRecord->property_name)
-                    ->get();
-
-                    if(!empty($container->toArray())){
-                        $propertyRecord->container = $container[0];
-                        $this->data['propertyResults'][$k]->container = $container[0];
-                    }
-                }
-                if(isset($propertyRecord->container) && $propertyRecord->container){
-                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
-                }else{
-                    $this->data['propertyResults'][$k]->propertyImages[0] = json_decode($emptyPropertyImages);
-                }
-            }
-            $this->formatPropertyRecords($this->data['propertyResults']);
-        }
+        $this->setGalleryAndFormat($this->data['propertyResults']);
 
         if($request->get('max') && $request->get('min')){
             $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
@@ -7460,5 +7395,11 @@ class PropertyController extends Controller {
             }
         }
         $this->formatPropertyRecords($propertyResults);
+    }
+
+    public function apiPropertyDetail($id){
+        $property = $this->getPropertyById($id);
+        return response()->json($property);
+        exit;
     }
 }
