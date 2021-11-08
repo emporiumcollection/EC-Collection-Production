@@ -139,7 +139,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
         </div>
         <div class="mobile-off">          
           <ul class="nav nav-pills tabs-w3" id="myTab" role="tablist">
-            <?php if (!empty($propertyResultsForView['lifestyle'])) : ?>
+            <?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
               <li class="nav-item" role="presentation">
                 <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true">LIFESTYLE</a>
               </li>
