@@ -2719,6 +2719,7 @@ class PropertyController extends Controller {
     function propertyglobalavailability(Request $request) {
         $coll_type = $request->input("coll_type");
         $coll_where = $request->input("destination");
+        $target = $request->input("target_page");
 
         $arrive = $request->input("arrive");
         if($arrive!=''){
@@ -2760,7 +2761,7 @@ class PropertyController extends Controller {
 
         // dump($request->all()); exit;
 
-        $querry_string = $site_url."/globalsearchavailability?s=".$coll_where."&arrive=".$arrive."&departure=".$departure."&type=".$coll_type."&rac=".$rac;
+        $querry_string = $site_url."/globalsearchavailability?s=".$coll_where."&arrive=".$arrive."&departure=".$departure."&type=".$coll_type."&rac=".$rac . "&view=" . $target;
 
         return Redirect::to($querry_string);
     }
@@ -2867,18 +2868,19 @@ class PropertyController extends Controller {
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
 
-        
-        $cacheKey = 'location_photos'.strtolower(str_replace(" ", "", $keyword));
-        $photos = json_encode([]);
+        /*
+        $cacheKey = 'location_photos'.$keyword;
         if (Cache::has($cacheKey)) {
             $photos = Cache::get($cacheKey);
         }
-    
-        if(empty(json_decode($photos))){
+
+        if(empty($photos)){
             $us = new UnsplashSearch();
             $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
             Cache::store('file')->put($cacheKey, $photos, 100000);
         }
+        */
+        $photos = '{}';
         $this->data['photos'] = json_decode($photos);
 
         $type = $request->input('type');
@@ -2924,9 +2926,6 @@ class PropertyController extends Controller {
             }
         }
 
-        $this->storeSession($adults, $childs, $arrive_date,
-            $departure_date);
-
         //Get Number of night
         $number_of_nights = '';
         if($arrive != '' && $departure != '') {
@@ -2943,82 +2942,77 @@ class PropertyController extends Controller {
         }
         $this->data['collections'] = $cat_collection;
         /** End **/
-
-        $this->data = $this->setFitlerOptions();
-
-        if(request()->get('atmosphere_ids')){
-            $atmospheres_ids = explode(",",request()->get('atmosphere_ids'));
-            $atmosphere_ = [];
-            foreach($atmospheres_ids as $atm_ids){
-                $atmosphere_[] = \DB::table('tb_categories')
-                    ->where('category_approved', 1)
-                    ->where('category_published', 1)
-                    ->where('id', $atm_ids)
-                    ->get();        
-            }
-            $this->data['atmosphere_data'] = $atmosphere_;
-            // echo "<pre>";print_r($this->data['atmosphere_data']);exit;
-        }
-
-        if(request()->get('facility_ids')){
-            $facility_ids = explode(",",request()->get('facility_ids'));
-            $facility_ = [];
-            foreach($facility_ids as $fac_id){
-                $facility_[] = \DB::table('tb_categories')
-                    ->where('category_approved', 1)
-                    ->where('category_published', 1)
-                    ->where('id', $fac_id)
-                    ->get();        
-            }
-            $this->data['facility_data'] = $facility_;
-        }
-
-        if(request()->get('style_ids')){
-            $style_ids = explode(",",request()->get('style_ids'));
-            $style_ = [];
-            foreach($style_ids as $sty_id){
-                $style_[] = \DB::table('tb_categories')
-                    ->where('category_approved', 1)
-                    ->where('category_published', 1)
-                    ->where('id',$sty_id)
-                    ->get();        
-            }
-
-            $this->data['selected_style'] = $style_;
-        }
-
+        $this->data['experiences'] = \DB::table('tb_categories')
+        ->where('category_approved', 1)
+        ->where('category_published', 1)
+        ->where('parent_category_id', 8)
+        ->get();
 
         $objcat = \DB::table('tb_categories')->where('category_name', '=',$keyword)->where('category_approved', 1)->where('category_published', 1)->first();
         $exp = array();
         if(!empty($objcat)){
-            $query = 'SELECT DISTINCT(category_id), tb_categories.category_alias, tb_categories.category_name FROM property_categories_split_in_rows JOIN tb_categories ON tb_categories.id= property_categories_split_in_rows.category_id WHERE property_categories_split_in_rows.id IN (SELECT id FROM property_categories_split_in_rows WHERE category_id= '.$objcat->id.' AND property_status=1) AND tb_categories.category_approved=1 AND tb_categories.category_published=1 AND property_categories_split_in_rows.category_id<>'.$objcat->id.' AND property_categories_split_in_rows.category_id<>8 AND tb_categories.parent_category_id=8 ORDER BY property_categories_split_in_rows.category_id ASC';
+            $query = 'SELECT DISTINCT(category_id), tb_categories.category_name FROM property_categories_split_in_rows JOIN tb_categories ON tb_categories.id= property_categories_split_in_rows.category_id WHERE property_categories_split_in_rows.id IN (SELECT id FROM property_categories_split_in_rows WHERE category_id= '.$objcat->id.' AND property_status=1) AND tb_categories.category_approved=1 AND tb_categories.category_published=1 AND property_categories_split_in_rows.category_id<>'.$objcat->id.' AND property_categories_split_in_rows.category_id<>8 AND tb_categories.parent_category_id=8 ORDER BY property_categories_split_in_rows.category_id ASC';
             $exp = \DB::select($query);
         }
         $this->data['categoryInfo'] = $objcat;
         $this->data['experiences'] = $exp;
 
         $cities = [];
-        /*
         $this->getCities($keyword, $cities);
         if(empty($cities)){
             $cities[] = $keyword;
-        }*/
+        }
 
-        //if($request->get('view') != 'map'){
+        if($request->get('view') != 'map'){
             //Get editor's choice properties
-        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
-        $this->setGalleryAndFormat($this->data['editorsProperties']);
+            $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities);
+
+            if(!empty($this->data['editorsProperties']->toArray())){
+                foreach($this->data['editorsProperties'] as $k => $editorProperty){
+                    $this->data['editorsProperties'][$k]->propertyImages = $editorProperty->container->PropertyImages($editorProperty->container->id);
+                }
+                
+                $this->formatPropertyRecords($this->data['editorsProperties']);
+            }
+
+            //Get featured choice properties
+            $this->data['featureProperties'] = $this->getFeaturedProperties($cities);
+
+            if(!empty($this->data['featureProperties']->toArray())){
+                foreach($this->data['featureProperties'] as $k => $featureProperty){
+                    if(isset($featureProperty->container) && $featureProperty->container){
+                        $this->data['featureProperties'][$k]->propertyImages = $featureProperty->container->PropertyImages($featureProperty->container->id);   
+                    }else{
+                        $this->data['featureProperties'][$k]->propertyImages = [];
+                    }
+                }
+
+                $this->formatPropertyRecords($this->data['featureProperties']);
+            }
+        }
 
         //Get featured choice properties
-        $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
-        $this->setGalleryAndFormat($this->data['featureProperties']);
+        $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities);
 
-        //Get featured choice properties
-        $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
-        $this->setGalleryAndFormat($this->data['propertyResults']);
+        if(!empty($this->data['propertyResults']->toArray())){
+            foreach($this->data['propertyResults'] as $k => $propertyRecord){
+                if(empty($propertyRecord->container)){
+                    $container = Container::
+                    where('display_name', '=', $propertyRecord->property_name)
+                    ->get();
 
-        if($request->get('max') && $request->get('min')){
-            $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
+                    if(!empty($container->toArray())){
+                        $propertyRecord->container = $container[0];
+                        $this->data['propertyResults'][$k]->container = $container[0];
+                    }
+                }
+                if(isset($propertyRecord->container) && $propertyRecord->container){
+                    $this->data['propertyResults'][$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
+                }else{
+                    $this->data['propertyResults'][$k]->propertyImages = [];
+                }
+            }
+            $this->formatPropertyRecords($this->data['propertyResults']);
         }
 
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
@@ -3035,7 +3029,7 @@ class PropertyController extends Controller {
         $this->data['departure_date'] = $departure_date;
         $this->data['total_guests'] = $total_guests;
         $this->data['rooms'] = $rooms;
-        $this->data['adults'] = $adults;        
+        $this->data['adults'] = $adults;
         $this->data['childs'] = $childs;
         $this->data['number_of_nights'] = $number_of_nights;
         $this->data['query_str'] = $query_str;
@@ -3049,11 +3043,7 @@ class PropertyController extends Controller {
                 $this->data['center_coordinate'] = $this->data['propertyResults'][0]->longitude.','.$this->data['propertyResults'][0]->latitude;
             }
             return view('frontend.themes.EC.properties.map_results', $this->data);
-        }else if($request->get('view') == 'ajax'){            
-            $this->data['propertyResultsForView'] = $this->seperatedByPackage($this->data['propertyResults']);
-            return view('frontend.themes.EC.properties.subtemplates.results_grid', $this->data);
-        }
-        else{            
+        }else{            
             $this->data['propertyResultsForView'] = $this->seperatedByPackage($this->data['propertyResults']);
             return view('frontend.themes.EC.properties.globalsearchavailability', $this->data);
         }
@@ -7287,115 +7277,6 @@ class PropertyController extends Controller {
         $this->data['totalUSDPrice'] = '$' . number_format($this->data['totalUSDPrice'], 0);
 
         echo json_encode($this->data);
-        exit;
-    }
-
-    public function refreshMap($lat, $lng){
-        $properties = properties::select([
-            'id', 
-            'property_name', 
-            'property_short_name', 
-            'detail_section1_title', 
-            'detail_section1_description_box1', 
-            'detail_section1_description_box2', 
-            'detail_section1_description_box2', 
-            'roomamenities', 
-            'assign_amenities', 
-            'latitude',
-            'longitude',
-            'address', 
-            'internetpublic',
-            'internetroom',
-            'children_policy',
-            'checkin',
-            'checkout',
-            'transfer',
-            'smookingpolicy',
-            'smookingrooms',
-            'numberofrooms',
-            'availableservices',
-            'pets',
-            'carpark',
-            'bar_ids',
-            'spa_ids',
-            'restaurant_ids'
-        ])
-        ->selectRaw(
-            'ROUND((3959 * acos (cos ( radians('.$lat.') ) * cos( radians( latitude ) ) * cos( radians( longitude ) - radians('.$lng.') ) + sin ( radians('.$lat.') ) * sin( radians( latitude ) ))), 0) as distance'
-        )
-        ->with([
-            'boards',
-            'container',
-            'images',
-            'PropertyCategoryPackages' => function($query){
-                $query->with(['package']);
-            },
-            'suites' => function($query){
-                return $query->with(['rooms', 'amenities']);
-            },
-            'propertyImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
-            'roomImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }, 
-            'hotelBrochureImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }])->limit(20);
-            }
-        ])
-        ->having('distance', '<=', 5)
-        ->get();
-        if(!empty($properties->toArray())){
-            $this->commanPropertyRecordsFormat($properties);
-        }
-        $markers = $this->formatRecordsMap($properties);
-        $property_card_html = '';
-        if(count($properties) > 0){
-            foreach($properties as $key => $property){
-                $property_card_html .= view('frontend.themes.EC.properties.subtemplates.map_property_card', ['property' => $property, 'block_title' => ''])->render();
-            }
-        }else{
-            $property_card_html .= '<h3 class="title-second is-small title-line mb-0">No properties near this location</h3>';
-        }
-        return json_encode([
-            'property_card_html' => $property_card_html,
-            'markers' => $markers
-        ]);
-    }
-
-    private function commanPropertyRecordsFormat(&$propertyResults){
-        foreach($propertyResults as $k => $propertyRecord){
-            if(empty($propertyRecord->container)){
-                $container = Container::
-                where('display_name', '=', $propertyRecord->property_name)
-                ->get();
-
-                if(!empty($container->toArray())){
-                    $propertyRecord->container = $container[0];
-                    $propertyResults[$k]->container = $container[0];
-                }
-            }
-            if(isset($propertyRecord->container) && $propertyRecord->container){
-                $propertyResults[$k]->propertyImages = $propertyRecord->container->PropertyImages($propertyRecord->container->id);
-            }else{
-                $propertyResults[$k]->propertyImages = [];
-            }
-        }
-        $this->formatPropertyRecords($propertyResults);
-    }
-
-    public function apiPropertyDetail($id){
-        $property = $this->getPropertyById($id);
-        return response()->json($property);
         exit;
     }
 }
