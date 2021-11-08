@@ -582,8 +582,10 @@ trait Property {
         if(!empty($properties->toArray())){
             foreach($properties as $k => $editorProperty){
                 if(empty($editorProperty->container)){
+                    $dname = explode(',', $editorProperty->property_name)[0];
+
                     $container = Container::
-                    where('display_name', '=', $editorProperty->property_name)
+                    where('display_name', '=', $dname)
                     ->get();
 
                     if(!empty($container->toArray())){
