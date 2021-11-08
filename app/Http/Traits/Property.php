@@ -328,7 +328,7 @@ trait Property {
             }
 
             if($experience_id){
-                $properties->whereRaw("(experience_ids = '$experience_id' or experience_ids like '%,$experience_id%' or experience_ids like '%$experience_id,%')");
+                $properties->whereRaw("(property_category_id = '$experience_id' or property_category_id like '%,$experience_id%' or property_category_id like '%$experience_id,%')");
             }   
 
             return $properties
