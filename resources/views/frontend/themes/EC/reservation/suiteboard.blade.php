@@ -43,8 +43,7 @@
             </div>
           </div>
           <div class="row suite-board-body">
-            @if(!empty($suitesboards))
-              @foreach($suitesboards[0]->boards as $data)
+            @foreach($suitesboards[0]->boards as $data)
               <div class="col-lg-4 col-md-12 suite-price-feature">
                 <div class="suite-board-main">
                   <h4>{{ $data->board_name }}</h4>
@@ -60,8 +59,7 @@
                   </div>
                 </div>
               </div>
-              @endforeach
-            @endif              
+              @endforeach              
           </div>            
         </div>
       </div>
@@ -69,6 +67,7 @@
 
         @include('frontend.themes.EC.reservation.reservation-summary')
         <?php $pos=1 ?>
+        @if(!empty($suites))
           @foreach($suites as $suite)
             @foreach($suite as $value)
               <div class="reservation-summary section-shadow">
@@ -105,21 +104,16 @@
                   </tr>
                 </table>
               </div>
-              <div class="reservation-total">
-                <table class="table table-borderless mb-0">
-                  <tr>
-                    <td class="px-0 py-1">Total</td>
-                    <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                  </tr>
-                </table>
-              </div>
             @endforeach
-          @endforeach  
+          @endforeach
+          @else
+            <h2>Suite Not Found</h2>
+        @endif  
         <div class="reservation-total">
           <table class="table table-borderless mb-0">
             <tr>
               <td class="px-0 py-1">Total</td>
-              <td class="px-0 py-1 text-right"></td>
+              <td class="px-0 py-1 text-right">€4.598.00</td>
             </tr>
           </table>
         </div>

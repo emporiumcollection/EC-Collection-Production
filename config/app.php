@@ -88,6 +88,11 @@ return [
     
     'cipher' => 'AES-256-CBC',
 
+    'EmporiumSpa' => 'ES',
+    'EmporiumVoyage' => 'EV',
+    'EmporiumIslands' =>'EI',
+    'EmporiumSafari' => 'ESF',
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -160,7 +165,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
         Kouz\LaravelAirbrake\ServiceProvider::class,
-        Folklore\Image\ImageServiceProvider::class,
+        // Folklore\Image\ImageServiceProvider::class,
 
     ],
 
