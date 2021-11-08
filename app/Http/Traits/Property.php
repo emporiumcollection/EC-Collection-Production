@@ -550,7 +550,7 @@ trait Property {
 
                   if(is_array($image)){
                     $file_name = $image['file_name'];
-                  }elseif(is_object($image)){
+                  }elseif(is_object($image) && isset($image->file->file_name)){
                     $file_name = $image->file->file_name;
                   }else{
                     $file_name = 'default-image.png';
