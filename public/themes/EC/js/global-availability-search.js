@@ -728,7 +728,9 @@ function getUrlParam(p){
 var currentSearch = '';
 function filterDestination(dest){
   currentSearch = dest;
-  createSearchUrl();
+  $('.close-collapse').trigger("click");
+  var url = createSearchUrl();
+  searchResults(url);
 }
 
 function createSearchUrl(experience = ''){
