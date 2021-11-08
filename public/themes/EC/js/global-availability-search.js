@@ -789,9 +789,9 @@ function resetSearch(){
   $('.nav-tags').html('');
   var keyword = '';
   keyword = getUrlParam('s');
-  var url = document.location.origin + document.location.pathname + `?s=` + keyword + '&view=ajax'
+  var url = document.location.origin + document.location.pathname + `?s=` + keyword;
   window.history.pushState({}, '', url);
-  searchResults(url);
+  searchResults(url + '&view=ajax');
 }
 
 function removeMe(e, id){
