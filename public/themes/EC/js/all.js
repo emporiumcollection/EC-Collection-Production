@@ -2010,6 +2010,14 @@ var ajaxReq = 'ToCancelPrevReq';
     escKey: false,
     closable: false
   });
+  lightGallery(document.getElementById('hotel_gallery'), {
+    thumbnail: true,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    escKey: false,
+    closable: false
+  });
   lightGallery(document.getElementById('gallery_restaurant'), {
     thumbnail: true,
     currentPagerPosition: 'middle',
