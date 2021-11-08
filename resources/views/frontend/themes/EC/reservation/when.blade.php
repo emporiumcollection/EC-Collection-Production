@@ -32,14 +32,14 @@
             <div class="col">
               <p><b>Arrival date</b></p>
               <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line fromdate" name="arrival_date" id="arrival_date"  value="{!! Session::get('arrival_date') !!}">
+                <input type="text" class="form-control form-line fromdate" name="arrival_date" id="arrival_date"  value="{!! date('d-M-Y', strtotime(Session::get('arrival_date')));  !!}">
                 <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
             </div>
             <div class="col">
               <p><b>Departure date</b></p>
               <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line todate" name="departure_date" id="departure_date" value="{!! Session::get('departure_date') !!}">
+                <input type="text" class="form-control form-line todate" name="departure_date" id="departure_date" value="{!! date('d-M-Y', strtotime(Session::get('arrival_date')));  !!}">
                 <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
             </div>
@@ -60,7 +60,7 @@
         </div>
         <div class="col-lg-9 col-md-8 mb-4">
           <div class="text-right">
-            <a href="javascript:void();" class="btn btn-dark px-5 goto-guest step_where">
+            <a href="#" class="btn btn-dark px-5 goto-guest step_where">
               Next
             </a>
           </div>

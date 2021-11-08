@@ -40,6 +40,8 @@ class ReservationsController extends Controller {
             'pageModule' => 'reservations',
             'return' => self::returnUrl()
         );
+
+        parent::__construct();
     }
 
     public function index(){

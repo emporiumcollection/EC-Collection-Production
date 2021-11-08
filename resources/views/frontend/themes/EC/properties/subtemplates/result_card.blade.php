@@ -8,6 +8,7 @@
     <div class="pr-lst result-grid">
       <?php 
       foreach($property->propertyImages as $image):
+        
         if(isset($property['container']['name'])){
           $container_name = $property['container']['name'];
         }else{

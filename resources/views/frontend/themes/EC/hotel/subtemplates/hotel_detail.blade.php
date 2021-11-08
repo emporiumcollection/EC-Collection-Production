@@ -1,3 +1,6 @@
+<script type="text/javascript">
+  properties[<?php echo $hotel_data[0]->id;?>] = <?php echo json_encode($hotel_data[0]);?>
+</script>
 <div class="col-lg-8 col-hotel-slider">
   <div class="text-right">
     <div class="dropdown dropdown-suite ipad-view mb-3">
@@ -40,56 +43,54 @@
     </div>
 
     <!-- Data video popup -->
-    <div style="display:none;" id="video1">
+    {{-- <div style="display:none;" id="video1">
       <video class="lg-video-object lg-html5" controls preload="none">
         <source src="images/Emporium-Hotel-South-Bank.mp4" type="video/mp4">
         Your browser does not support HTML5 video.
       </video>
-    </div>
+    </div> --}}
     <!-- Data video popup end -->
-    @foreach($hotel_data as $img)
-      <div class="slider-detail" id="sliderDetail">
+    <div class="slider-detail" id="sliderDetail">
+     <?php 
+     foreach($hotel_data[0]->propertyImages as $image): 
+
+      if(isset($hotel_data[0]['container']['name'])){
+          $container_name = $hotel_data[0]['container']['name'];
+        }else{
+          $container_name = strtolower(str_replace("-", " ", trim($hotel_data[0]->property_name)));
+        }
+
+        if(is_array($image)){
+          $file_name = $image['file_name'];
+        }elseif(is_object($image)){
+          $file_name = $image->file_name;
+        }else{
+          $file_name = 'default-image.png';
+        }
+
+      ?>
         <div>
-          <a href="images/53511811337-49267444221.jpg" class="slider-item-inner">
-            <img src="images/53511811337-49267444221.jpg" id="heading-img" class="img-fluid" alt="">
+          <a href="" class="slider-item-inner">
+            <img <?php echo 'src="property-image/resize/830x566/'.$container_name.'/'.$file_name.'/property-image"';?> id="heading-img" class="img-fluid" alt="">
             <div class="view-images-btn">
               <i class="ico icon-camera"></i> View Images
             </div>
           </a>
         </div>
-        {{-- <div>
-          <a data-html="#video1" data-poster="images/video-cover.jpg" data-sub-html="video caption1"
-            class="slider-item-inner">
-            <img src="images/video-cover.jpg" id="heading-img" class="img-fluid" alt="">
-            <div class="play-button">
-              <img src="images/video-play.png" alt="">
-            </div>
-            <div class="view-images-btn">
-              <i class="ico icon-camera"></i> View Images
-            </div>
-          </a>
-        </div> --}}
-        <div>
-          <a href="images/53511811337-49267444221.jpg" class="slider-item-inner">
-            <img src="images/53511811337-49267444221.jpg" id="heading-img" class="img-fluid " alt="">
-            <div class="view-images-btn">
-              <i class="ico icon-camera"></i> View Images
-            </div>
-          </a>
-        </div>
-      </div>
+    <?php endforeach; ?>
+    </div>
     <div class="prev"><i class="ico ico-back"></i></div>
     <div class="next"><i class="ico ico-next"></i></div>
     <div class="hotel-meta full-width hotel-meta-details">
       <a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews">
         Reviews
       </a>
-      <a href="#" class="view btn-sidebar i-none" data-sidebar="#quickinfo">
+      <a href="#" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $hotel_data[0]->id ;?>)" class="view btn-sidebar i-none">
         Hotel Info
       </a>
-      <a href="#" class="view btn-sidebar i-none" data-sidebar="#policies">
-        Policies
-      </a>
+
+      <a href="" class="view btn-sidebar i-none iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe" title="Privacy and cookie policy" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Privacy and cookie policy</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
+      <script src="https://cdn.iubenda.com/iubenda.js"></script><script src="https://cdn.iubenda.com/iubenda.js"></script><script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
 
       <div class="dropdown dropdown-bs mobile-on">
         <a href="#" class="btn dropdown-toggle btn-block text-left btn-sidebar" data-sidebar="#mobile_menu">
@@ -120,7 +121,7 @@
               <i class="ico ico-info-green"></i>
             </div>
             <h3 class="mb-0">
-              <span class="title-font-2 mr-1">From</span> <span class="color-primary"> € 1.299</span>
+              <span class="title-font-2 mr-1">From</span> <span class="color-primary"> {{ $hotel_data[0]->price }}</span>
             </h3>
             <div class="ml-2">
               <span class="pernight"></span>
@@ -169,14 +170,10 @@
           <h2>{{  $hotel_data[0]->property_name }}</h2>
         </div>
         <p>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum saepe unde expedita minus qui
-          quos
-          harum quasi explicabo distinctio, sunt laboriosam vitae asperiores aliquam at eum quaerat fugiat
-          laudantium repellat.
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Earum saepe unde expedita minus qui
-          quos
-          harum quasi explicabo distinctio, sunt laboriosam vitae asperiores aliquam at eum quaerat fugiat
-          laudantium repellat.
+          {{ $hotel_data[0]->detail_section1_description_box1 }}
+        </p>
+        <p>
+          {{ $hotel_data[0]->detail_section1_description_box2 }}
         </p>
 
         <div class="i-none">
@@ -203,7 +200,7 @@
           </div>
           <p>Reserve now, pay at the Hotel</p>
 
-          <a href="reservation.html" class="btn btn-dark btn-block">Reservation</a>
+          <a href="/reservation/when" class="btn btn-dark btn-block">Reservation</a>
         </div>
 
         <div class="side-detail text-left mb-3 px-2 i-none">
@@ -1061,7 +1058,7 @@
         </div>
       </div>
       <!-- display on ipad only end -->
-      <div class="card">
+      {{-- <div class="card">
         <div class="card-header" id="headingOne">
           <h2 class="mb-0">
             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse"
@@ -1934,7 +1931,7 @@
             </a>
           </h2>
         </div>
-      </div>
+      </div> --}}
 
     </div>
     <h4 class="mt-5 mb-4 color-dark-grey">Inspiration</h4>
@@ -1963,3 +1960,5 @@
     </div>
   </div>
 </div>
+
+@include('frontend.themes.EC.layouts.subsections.quick_info')

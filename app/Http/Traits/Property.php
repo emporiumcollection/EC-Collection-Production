@@ -831,7 +831,7 @@ trait Property {
         return $this->data;
     }
 
-    public function getProperty($id){
+    public function PropertiGet($id){
         $properties = properties::select([
             'id', 
             'property_name', 
