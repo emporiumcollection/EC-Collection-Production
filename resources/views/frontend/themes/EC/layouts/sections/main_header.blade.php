@@ -126,8 +126,8 @@
               <i class="ico ico-menu-grid mr-2"></i>
             </a>
             <?php endif;?>
-            <?php if(!Request::get('view')):?>
-            <a class="nav-link" href="<?php echo Request::fullUrl().'&view=map';?>">
+            <?php if(Request::get('view')!='map'):?>
+            <a class="nav-link" href="<?php echo str_replace('&view=channel','',Request::fullUrl()).'&view=map';?>">
               <i class="ico ico-place"></i>
             </a>
             <?php endif;?>              

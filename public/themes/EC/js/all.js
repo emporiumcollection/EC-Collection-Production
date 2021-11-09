@@ -2109,11 +2109,11 @@ function getNavitems(location, collection_name){
         <span class="city-l">` + location + `</span> <span class="cat-l">Channel</span>
       </a>
     </li>
-   <li class="nav-item">
+   <!--<li class="nav-item">
       <a class="nav-link nav-link-map" href="`+searchResultsPageUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Cuisine</span>
       </a>
-    </li>`;
+    </li>-->`;
 }
 
 function getHotelHtml(result, collection_name){
@@ -2142,7 +2142,7 @@ function getDestinationHtml(result, collection_name){
   var result_html_destination = '';
   $('.wherepopup .' + collection_name + '-destination').hide();
   $('#' + collection_name + '-desti-header').hide();
-    
+
   $('.wherepopup .' + collection_name + '-destination').html(result_html_destination);
   if(result.dest != undefined){
     $(result.dest).each(function(key, val){
