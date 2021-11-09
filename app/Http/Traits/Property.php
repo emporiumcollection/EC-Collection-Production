@@ -215,9 +215,20 @@ trait Property {
         request()->get('facility_ids').
         request()->get('atmosphere_ids').
         request()->get('style_ids'));
+        $destinationId = 0;
 
         return Cache::get($key, function () {
             $keyword = request()->get('s');
+
+            $destination = categories::select(['id'])
+            ->where('category_name', '=', $keyword)
+            ->get()
+            ->toArray();
+            if(!empty($destination)){
+                $destinationId = $destination[0]['id'];
+            }
+
+
             //Query starts
             $experience_id = false;
             if(request()->get('experience')){
@@ -292,7 +303,7 @@ trait Property {
                 }
             ])
             //->whereIn('city', $cities)
-            ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+            ->whereRaw(" (city = '$keyword' or parent_category_id = '$destinationId' or parent_category_id like '%,$destinationId%' or parent_category_id like '%$destinationId,%' ) ")
             //->where('country', '=', $keyword)
             ->where('latitude', '!=', '')
             ->where('longitude', '!=', '')

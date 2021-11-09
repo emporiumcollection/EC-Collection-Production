@@ -114,9 +114,6 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
                       title="Reset your search result" data-toggle="tooltip"></i></a>
                 </h2>
               </div>
-              <div class="pl-4 pt-3">
-                <?php print count($propertyResultsForView['lifestyle']) + count($propertyResultsForView['bespoke']) + count($propertyResultsForView['dedicated']); ?> exceptional hotels</p>
-              </div>
             </div>
           </div>
           <div class="col-md-6">
@@ -141,17 +138,17 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
           <ul class="nav nav-pills tabs-w3" id="myTab" role="tablist">
             <?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
               <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true">LIFESTYLE</a>
+                <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true">LIFESTYLE (<?php print count($propertyResultsForView['lifestyle'])?>)</a>
               </li>
             <?php endif; ?>
             <?php if (!empty($propertyResultsForView['dedicated'])) : ?>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="dedicated-tab" data-toggle="pill" href="#dedicated" role="tab" aria-controls="dedicated" aria-selected="false">DEDICATED</a>
+                <a class="nav-link" id="dedicated-tab" data-toggle="pill" href="#dedicated" role="tab" aria-controls="dedicated" aria-selected="false">DEDICATED (<?php print count($propertyResultsForView['dedicated'])?>)</a>
               </li>
             <?php endif; ?>
             <?php if (!empty($propertyResultsForView['bespoke'])) : ?>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="bespoke-tab" data-toggle="pill" href="#bespoke" role="tab" aria-controls="bespoke" aria-selected="false">BESPOKE</a>
+                <a class="nav-link" id="bespoke-tab" data-toggle="pill" href="#bespoke" role="tab" aria-controls="bespoke" aria-selected="false">BESPOKE (<?php print count($propertyResultsForView['bespoke'])?>)</a>
               </li>
             <?php endif; ?>
           </ul>

@@ -2140,6 +2140,9 @@ function getHotelHtml(result, collection_name){
 function getDestinationHtml(result, collection_name){
   var searchedLocation = '';
   var result_html_destination = '';
+  $('.wherepopup .' + collection_name + '-destination').hide();
+  $('#' + collection_name + '-desti-header').hide();
+    
   $('.wherepopup .' + collection_name + '-destination').html(result_html_destination);
   if(result.dest != undefined){
     $(result.dest).each(function(key, val){
@@ -2157,14 +2160,10 @@ function getDestinationHtml(result, collection_name){
        result_html_destination += getNavitems(searchedLocation, collection_name);
     }
 
-    if(result_html_destination != ''){
+    if(result_html_destination !== ''){
       $('.wherepopup .' + collection_name + '-destination').html(result_html_destination);
       $('.wherepopup .' + collection_name + '-destination').show();
       $('#' + collection_name + '-desti-header').show();
-    }
-    else{
-      $('.wherepopup .' + collection_name + '-destination').hide();
-      $('#' + collection_name + '-desti-header').hide();
     }
 
     return result_html_destination;
