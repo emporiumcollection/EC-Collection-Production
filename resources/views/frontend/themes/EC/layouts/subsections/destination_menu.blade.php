@@ -1,7 +1,7 @@
 <?php
 $destinationTabContent = '';
 $destinationTemplate = '
-<div class="tab-pane fade show" id="<!--LEVEL1-CATALIAS-->">
+<div class="tab-pane fade <!--LEVEL1-SHOWCLASS--> show" id="<!--LEVEL1-CATALIAS-->">
     <div class="row">
         <div class="col-2 br-001 col--01920">
             <nav class="nav flex-column nav-dest">
@@ -16,7 +16,7 @@ $destinationTemplate = '
     </div>
 </div>';
 
-$level1TabTemplate = '<div class="tab-pane fade show" id="<!--LEVEL2-CATALIAS-->">
+$level1TabTemplate = '<div class="tab-pane fade <!--LEVEL2-SHOWCLASS-->" id="<!--LEVEL2-CATALIAS-->">
                     <div class="row">
                         <div class="col-2 col--1223 br-001">
                             <nav class="nav flex-column nav-dest">
@@ -30,11 +30,11 @@ $level1TabTemplate = '<div class="tab-pane fade show" id="<!--LEVEL2-CATALIAS-->
                         </div>
                     </div>
                 </div>';
-$level2TabTemplate = '<div class="tab-pane fade show h-100" id="<!--LEVEL3-CATALIAS-->">
+$level2TabTemplate = '<div class="tab-pane fade h-100 <!--LEVEL3-SHOWCLASS-->" id="<!--LEVEL3-CATALIAS-->">
                         <div class="row h-100">
                             <div class="col-3 col--819281 br-001 ">
                                 <div class="destination-img">
-                                    <img data-src="<!--LEVEL3-IMAGE-LINK-->" class="img-fluid"
+                                    <img src="<!--LEVEL3-IMAGE-SELECTED-->" data-src="<!--LEVEL3-IMAGE-LINK-->" class="img-fluid"
                                         alt="">
                                     <div class="destinatios-cntay--00">
                                         <p class="mb-0"><!--LEVEL3-NAME--></p>
@@ -60,9 +60,9 @@ $level2TabTemplate = '<div class="tab-pane fade show h-100" id="<!--LEVEL3-CATAL
                             </div>
                         </div>
                     </div>';
-$level4TabTemplate = '<div class="tab-pane fade" id="<!--LEVEL4-CATALIAS-->">
+$level4TabTemplate = '<div class="tab-pane fade <!--LEVEL4-SHOWCLASS-->" id="<!--LEVEL4-CATALIAS-->">
                             <div class="destination-img">
-                                <a href="/globalsearchavailability?s=<!--LEVEL4-NAME-->"><img data-src="<!--LEVEL4-IMAGE-LINK-->" class="img-fluid" alt=""></a>
+                                <a href="/globalsearchavailability?s=<!--LEVEL4-NAME-->"><img  src="<!--LEVEL4-IMAGE-SELECTED-->" data-src="<!--LEVEL4-IMAGE-LINK-->" class="img-fluid" alt=""></a>
                                 <div class="destinatios-cntay--00">
                                     <p class="mb-0"><!--LEVEL4-NAME--></p>
                                     <p class="mb-0"><!--LEVEL4-TAG-->
@@ -99,12 +99,19 @@ $level4TabTemplate = '<div class="tab-pane fade" id="<!--LEVEL4-CATALIAS-->">
                                 foreach($level3['children'] as $level4){
                                     $destinationLevel4 .= '<a class="nav-link " href="#'.$level4['category_alias'].'" data-toggle="tab" role="tab">'.$level4['category_name'].'</a>';
 
+
                                     $level4Content = str_replace('<!--LEVEL4-NAME-->', $level4['category_name'], $level4TabTemplate);
+
                                     $level4Content = str_replace('<!--LEVEL4-CATALIAS-->', $level4['category_alias'], $level4Content);
                                     $level4Content = str_replace('<!--LEVEL4-TAG-->', $level4['category_instagram_tag'], $level4Content);
 
                                     $link = '/property-image/resize/187x244/category_imgs/'.$level4['category_image'] . '/category-image';
                                     $level4Content = str_replace('<!--LEVEL4-IMAGE-LINK-->', $link, $level4Content);
+
+                                    if(in_array($level4['category_name'], $path)){
+                                        $level4Content = str_replace('<!--LEVEL4-SHOWCLASS-->', ' show active ', $level4Content);
+                                        $level4Content = str_replace('<!--LEVEL4-IMAGE-SELECTED-->', $link, $level4Content);
+                                    }                                    
 
                                     $level4TabContent .= $level4Content;
                                 }
@@ -112,6 +119,10 @@ $level4TabTemplate = '<div class="tab-pane fade" id="<!--LEVEL4-CATALIAS-->">
                                 $level3Content = str_replace('<!--LEVEL3-CATALIAS-->', $level3['category_alias'], $level2TabTemplate);
 
                                 $link = '/property-image/resize/270x315/category_imgs/'.$level3['category_image'] . '/category-image';
+                                if(in_array($level3['category_name'], $path)){
+                                    $level3Content = str_replace('<!--LEVEL3-SHOWCLASS-->', ' show active ', $level3Content);
+                                    $level3Content = str_replace('<!--LEVEL3-IMAGE-SELECTED-->', $link, $level3Content);
+                                }
                                 $level3Content = str_replace('<!--LEVEL3-IMAGE-LINK-->', $link, $level3Content);
                                 $level3Content = str_replace('<!--LEVEL3-NAME-->', $level3['category_name'], $level3Content);
                                 $level3Content = str_replace('<!--LEVEL3-TAG-->', $level3['category_instagram_tag'], $level3Content);
@@ -120,15 +131,22 @@ $level4TabTemplate = '<div class="tab-pane fade" id="<!--LEVEL4-CATALIAS-->">
 
                                 $level3TabContent .= $level3Content;
                             }
-
+                                                        
                             $level2Content = str_replace('<!--LEVEL2-CATALIAS-->', $level2['category_alias'], $level1TabTemplate);
+                            if(in_array($level2['category_name'], $path)){
+                                $level2Content = str_replace('<!--LEVEL2-SHOWCLASS-->', ' active show ', $level2Content);
+                            }
                             $level2Content = str_replace('<!--LEVEL2-LINKS-->', $destinationLevel3, $level2Content);
                             $level2Content = str_replace('<!--LEVEL2-TABS-->', $level3TabContent, $level2Content);
                             
                             $level2TabContent .= $level2Content;        
                         }
-                    
+                                            
                         $tabContent = str_replace('<!--LEVEL1-CATALIAS-->', $destination['category_alias'], $destinationTemplate);
+
+                        if(in_array($destination['category_name'], $path)){
+                            $tabContent = str_replace('<!--LEVEL1-SHOWCLASS-->', ' active show ', $tabContent);
+                        }
 
                         $tabContent = str_replace('<!--LEVEL1-LINKS-->', $destinationLevel2, $tabContent);
 
