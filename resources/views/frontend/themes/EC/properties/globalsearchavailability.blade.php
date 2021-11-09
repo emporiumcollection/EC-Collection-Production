@@ -111,7 +111,9 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
 @parent
 <script>
   <?php if ($view == 'channel') : ?>
-    $('#locationViews').trigger("click");
+    $(window).on('load', function() {
+      $('.ico-video').parents("a").trigger("click");
+    });
   <?php endif; ?>
   $('.img-main-banner').slick({
     infinite: true,
