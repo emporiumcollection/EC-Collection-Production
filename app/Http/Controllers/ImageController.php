@@ -4,7 +4,7 @@ use App\Http\Controllers\controller;
 use Illuminate\Http\Request;
 use Imagine;
 use File;
-use Imagine\Imagick\Image;
+use Image;
 
 class ImageController extends Controller {
 
@@ -177,18 +177,10 @@ class ImageController extends Controller {
                 '/images/default-hotel.png';
             }
 
-            try{
-                $thumbnail = Image::open($this->file_path)
-                        ->thumbnail(new Imagine\Image\Box($this->width, $this->height), 'outbound');
-                //$thumbnail->effects()->grayscale();
-                $thumbnail->save($this->destination_path);
-            }catch(Exception $e){
-                /*Image::make($this->file_path,array(
-                    'width' => $this->width,
-                    'height' => $this->height,
-                //'grayscale' => true
-                ))->save($this->destination_path);*/
-            }
+            $thumbnail = Image::open($this->file_path)
+                    ->thumbnail(new Imagine\Image\Box($this->width, $this->height), 'outbound');
+            //$thumbnail->effects()->grayscale();
+            $thumbnail->save($this->destination_path);
         }
 
         $file_extension = strtolower(substr(strrchr($this->file,"."),1));
