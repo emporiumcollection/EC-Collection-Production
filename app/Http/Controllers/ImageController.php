@@ -177,10 +177,19 @@ class ImageController extends Controller {
                 '/images/default-hotel.png';
             }
 
-            $thumbnail = Image::open($this->file_path)
-                    ->thumbnail(new Imagine\Image\Box($this->width, $this->height), 'outbound');
-            //$thumbnail->effects()->grayscale();
-            $thumbnail->save($this->destination_path);
+            /*try{
+                $thumbnail = Image::open($this->file_path)
+                        ->thumbnail(new Imagine\Image\Box($this->width, $this->height), 'outbound');
+                //$thumbnail->effects()->grayscale();
+                $thumbnail->save($this->destination_path);
+            }catch(Exception $e){*/
+                Image::make($this->file_path,array(
+                    'width' => $this->width,
+                    'height' => $this->height,
+                    'crop' => true,
+                //'grayscale' => true
+                ))->save($this->destination_path);
+            //}
         }
 
         $file_extension = strtolower(substr(strrchr($this->file,"."),1));
