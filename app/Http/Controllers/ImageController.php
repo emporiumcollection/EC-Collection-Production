@@ -4,7 +4,7 @@ use App\Http\Controllers\controller;
 use Illuminate\Http\Request;
 use Imagine;
 use File;
-use Image;
+use Imagine\Imagick\Image;
 
 class ImageController extends Controller {
 
@@ -183,11 +183,11 @@ class ImageController extends Controller {
                 //$thumbnail->effects()->grayscale();
                 $thumbnail->save($this->destination_path);
             }catch(Exception $e){
-                Image::make($this->file_path,array(
+                /*Image::make($this->file_path,array(
                     'width' => $this->width,
                     'height' => $this->height,
                 //'grayscale' => true
-                ))->save($this->destination_path);
+                ))->save($this->destination_path);*/
             }
         }
 
