@@ -797,6 +797,7 @@ function resetSearch(){
   var url = document.location.origin + document.location.pathname + `?s=` + keyword;
   window.history.pushState({}, '', url);
   searchResults(url + '&view=ajax');
+  $('.city-f').trigger('click');
 }
 
 function removeMe(e, id){
