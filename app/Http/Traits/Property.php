@@ -303,7 +303,7 @@ trait Property {
                 }
             ])
             //->whereIn('city', $cities)
-            ->whereRaw(" (city = '$keyword' or parent_category_id = '$destinationId' or parent_category_id like '%,$destinationId%' or parent_category_id like '%$destinationId,%' ) ")
+            ->whereRaw(" (city = '$keyword' or property_category_id = '$destinationId' or property_category_id like '%,$destinationId%' or property_category_id like '%$destinationId,%' ) ")
             //->where('country', '=', $keyword)
             ->where('latitude', '!=', '')
             ->where('longitude', '!=', '')
