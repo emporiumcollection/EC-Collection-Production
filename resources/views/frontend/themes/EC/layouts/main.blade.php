@@ -232,14 +232,13 @@ body {font-family: Arial, Helvetica, sans-serif;}
         @include('frontend.themes.EC.layouts.sections.footer')
     @show
 
-
-{{-- Site Base URL --}}
-<script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/moment.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/mediaelement-and-player.min.js')}}"></script>
-{{-- <script type="text/javascript" src="{{ asset('js/plugin/owl.carousel.min.js')}}"></script> --}}
+<script type="text/javascript" src="{{ asset('js/plugin/owl.carousel.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/plugin/select2/select2.full.min.js')}}"></script>
+
+
 <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/jquery-3.5.1.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/leaflet.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/bootstrap.min.js') }}"></script>
@@ -269,6 +268,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/mapbox-gl.js') }}"></script>
 <script src="{{ asset('themes/EC/js/plugin/rellax.min.js') }}"></script>
 <script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
+<script type="text/javascript" src="{{ asset('js/all.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reservation.js') }}"></script>
 <script src="{{ asset('js/reservation.js')}}"></script>
@@ -459,6 +459,29 @@ $(function() {
                 }
             });
         });
+
+
+        $(document).on('click', ".select_guest_", function(){
+            var child = $(".child_val").text();
+            var adult = $(".adult_val").text();
+            alert('Here');
+            $.ajax({
+                /*headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },*/
+                type: 'POST',            
+                url: '{{URL::to("/select/guest")}}',
+                // dataType:'json',                    
+                data: {
+                    child:child,
+                    adult:adult
+                },
+                success: function(response){
+                    window.location.href ="/reservation/suite";
+                },
+            });
+        });
+        
     });
 
     $(document).on('click', ".step_where", function(){
@@ -696,6 +719,28 @@ $(function() {
             }
         });
     });
+
+    $('.logo-list').slick({
+      slidesToShow: 7,
+      slidesToScroll: 3,
+      arrows: false,
+      dots: false,
+      variableWidth: true,
+      autoplay: true,
+      autoplayTimeout: 3000,
+    })
+    $('.img-main-banner').slick({
+      infinite: true,
+      speed: 600,
+      fade: true,
+      cssEase: 'linear',
+      autoplay: true,
+      autoplaySpeed: 5000,
+      arrows: false,
+      slidesToShow: 1,
+
+    });
+
     $(".suites-slider").not('.slick-initialized').slick({
         infinite: true,
         speed: 300,
@@ -1220,7 +1265,5 @@ function setMapLocation(lat, long){
         pickerDate.data('daterangepicker').show();
     });
 </script>
-
->>>>>>> abb5c865ffd76737d81172ae9f237c5b49553df0
 </body>
 </html>

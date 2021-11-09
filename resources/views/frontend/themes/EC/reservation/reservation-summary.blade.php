@@ -4,7 +4,7 @@
   <table class="table table-borderless mb-0">
     <tr>
       <td class="px-0 py-1">Guests</td>
-      <td class="px-0 py-1 text-right">{!! Session::get('Guests') !!}</td>
+      <td class="px-0 py-1 text-right">{{ \Session::get('selected_guests') ? \Session::get('selected_guests') : \Session::get('Guests') }} </td>
     </tr>
     <tr>
       <td class="px-0 py-1">Check-in</td>

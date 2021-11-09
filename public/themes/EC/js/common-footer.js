@@ -34,9 +34,10 @@
 
       });
 
-    } // End Daterange Picker
+} // End Daterange Picker
 
-    $(document).on("click", ".btn-use-addr", function (e) {
+$(document).ready(function(){
+  $(document).on("click", ".btn-use-addr", function (e) {
       e.preventDefault();
       $('.btn-use-addr').removeClass('active')
       $(this).addClass('active')
@@ -51,17 +52,6 @@
       $(this).remove();
     });
 
-    $('#smartwizard').smartWizard({
-      theme: 'arrows',
-      selected: 0,
-      enableURLhash: false,
-      toolbarSettings: {
-        showNextButton: false,
-        showPreviousButton: false,
-      },
-
-    });
-
     $('.logo-list').slick({
       slidesToShow: 7,
       slidesToScroll: 3,
@@ -70,7 +60,18 @@
       variableWidth: true,
       autoplay: true,
       autoplayTimeout: 3000,
-    })
+    });
+
+    /*$('#smartwizard').smartWizard({
+      theme: 'arrows',
+      selected: 0,
+      enableURLhash: false,
+      toolbarSettings: {
+        showNextButton: false,
+        showPreviousButton: false,
+      },
+
+    });*/
     $('.img-main-banner').slick({
       infinite: true,
       speed: 600,
@@ -232,6 +233,8 @@
         $(this).closest('.field-count-reservation').find('.min').addClass('disable');
       }
     });
+});
+    
 
 $(function() {
 

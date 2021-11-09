@@ -174,6 +174,7 @@
                     <ul class="nav nav-step5 flex-column">
                       <li class="nav-item">
                         @if(!empty($arrive))
+                        
                           @for($i = $arrive; $i <= $departure;$i++)
                             <a class="nav-link" href="#">
                               <div class="d-flex align-items-center">

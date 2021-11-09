@@ -995,6 +995,9 @@
         </div>
     </div>
 </div>
+
+@include('frontend.themes.EC.hotel.gallery')
+
 @section('experience_script')
         <script>
         $('.booking-select').click(function (e) {
