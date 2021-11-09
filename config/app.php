@@ -165,7 +165,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
         Kouz\LaravelAirbrake\ServiceProvider::class,
-        // Folklore\Image\ImageServiceProvider::class,
+        Folklore\Image\ImageServiceProvider::class,
 
     ],
 
@@ -236,8 +236,8 @@ return [
         'UnsplashUsers' => shweshi\LaravelUnsplashWrapper\UnsplashUsers::class,
         'UnsplashPhotos' => shweshi\LaravelUnsplashWrapper\UnsplashPhotos::class,
         'UnsplashCollections' => shweshi\LaravelUnsplashWrapper\UnsplashCollections::class,
-        'Image' => Imagine\Imagick\Imagine::class,
-        //'Image' => Folklore\Image\Facades\Image::class,
+        //'Image' => Imagine\Imagick\Imagine::class,
+        'Image' => Folklore\Image\Facades\Image::class,
     ],
 
 ];
