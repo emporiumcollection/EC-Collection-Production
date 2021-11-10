@@ -386,12 +386,7 @@ $(document).ready(function(){
                     zip_code:zip_code },
             dataType:'json',                    
             success: function(response){
-                var mem_types = response.data;
-                if( !empty(mem_types) ) {
-                    var link = 'reservation/suiteboard';
-                    window.location.href = link;
-                }
-                $('#addPayment').modal('toggle');
+                
             }
         });
     });

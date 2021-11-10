@@ -67,7 +67,7 @@ Route::get('reservation/when', 'ReservationsController@when');
 Route::get('reservation/where', 'ReservationsController@where');
 Route::get('reservation/suite', 'ReservationsController@suite');
 Route::get('reservation/suiteboard', 'ReservationsController@suiteBoard');
-Route::get('policies', 'ReservationsController@Policies');
+Route::get('reservation/policies', 'ReservationsController@Policies');
 Route::get('reservation/services', 'ReservationsController@aditionalServices');
 Route::get('reservation/whoistravelling','ReservationsController@whoistravelling');
 Route::get('reservation/paymentmethod', 'ReservationsController@paymentmethod');
@@ -103,7 +103,7 @@ Route::get('/users/companiondata', 'DatatableController@getDatatable');
 Route::get('/users/reservations', 'DatatableController@getreservations');
 Route::get('/users/inviteGuest', 'DatatableController@getInviteGuest');
 Route::get('/users/preferenceDatatable', 'DatatableController@getPreferencesData');
-Route::get('/users/reservations', 'DatatableController@getreservation');
+// Route::get('/users/reservations', 'DatatableController@getreservation');
 
 /**
  * New Admin backend routes.

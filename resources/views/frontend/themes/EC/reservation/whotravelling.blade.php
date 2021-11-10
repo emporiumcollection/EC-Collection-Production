@@ -502,9 +502,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold"
-                        data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Card</button>
+                    
+                    <button type="submit" class="btn btn-primary font-weight-bold add_companion" data-dismiss="modal">Add Card</button>
                 </div>
         </div>
     </div>

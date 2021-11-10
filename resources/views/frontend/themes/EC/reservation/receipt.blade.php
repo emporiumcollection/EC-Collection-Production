@@ -3707,8 +3707,7 @@
                                             </h3> -->
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Hotel Name</span>
-                                                <span class="text-dark flex-root font-weight-bold text-right">The Ludlow
-                                                    Hotel</span>
+                                                <span class="text-dark flex-root font-weight-bold text-right">{{ $properties[0]->property_name   }}</span>
                                             </div>
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Total Stay
