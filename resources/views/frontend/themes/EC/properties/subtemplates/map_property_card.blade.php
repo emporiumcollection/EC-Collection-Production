@@ -4,11 +4,11 @@
   properties[<?php echo $property->id;?>]['images'] = <?php echo json_encode($property->propertyImages);?>;
 </script>
 <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
+    <div class="hotel-tag-label" style="background: #89a49f;">
+      <?php echo $block_title;?>
+    </div>
     <div class="pr-lst result-grid">
       <?php if($block_title):?>
-      <div class="hotel-tag-label" style="background: #89a49f;">
-        <?php echo $block_title;?>
-      </div>
       <?php endif;?>
       <?php foreach($property->propertyImages as $image):
           if(isset($property['container']['name'])){
@@ -19,8 +19,8 @@
 
           if(is_array($image)){
             $file_name = $image['file_name'];
-          }elseif(is_object($image)){
-            $file_name = $image->file_name;
+          }elseif(is_object($image) && isset($image->file->file_name)){
+            $file_name = $image->file->file_name;
           }else{
             $file_name = 'default-image.png';
           }
@@ -86,7 +86,7 @@
       <h3 class="title-second is-small title-line mb-0"><?php echo $property->property_name;?></h3>
     </div>
   </a>
-  <?php if(isset($property->suites[0]->rooms[0])):?>
+  <?php if(isset($property->suites[0]->rooms[0]->room_name) && $property->suites[0]->rooms[0]->room_name):?>
     <div class="hotel-info-content px-3 font-2">
       <div class="row align-items-center mb-3">
         <div class="col-md-7">

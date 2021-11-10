@@ -40,7 +40,7 @@ Route::get('/users/companion', 'UserController@getCompanion');
 
 //HotelDetail Routes
 
-Route::get('/hotel/hoteldetail', 'FrontEnd\HotelDetailController@hoteldetail');
+Route::get('/hotel/hoteldetail/{id}', 'FrontEnd\PropertyController@getProperty');
 Route::get('/hotel/suite/{property_id}', 'FrontEnd\HotelDetailController@suites');
 Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
 Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture');
@@ -571,6 +571,7 @@ Route::get('searchavailability', 'FrontEnd\PropertyController@propertySearchAvai
 Route::get('featuredproperty', 'FrontEnd\PropertyController@featuredProperty');
 Route::get('property/prices', 'FrontEnd\PropertyController@propertyRoomPrices');
 Route::get('property/refresh-map/{lat}/{lng}', 'FrontEnd\PropertyController@refreshMap');
+Route::get('api/property/{id}', 'FrontEnd\PropertyController@apiPropertyDetail');
 
 Route::post('getyoutubechannel', 'FrontEnd\FrontendPagesController@getyoutubechannel');
 Route::post('getinstagramchannel', 'FrontEnd\FrontendPagesController@getinstagramchannel');

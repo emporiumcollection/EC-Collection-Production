@@ -1,4 +1,3 @@
-
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -13,6 +12,9 @@
     }
 </style>
 @section('content')
+<?php
+print_r(\Session::get('suite_array'));
+?>
 <div class="content-em">
   <div class="top-wrapper">
     <div class="container ">
@@ -31,6 +33,7 @@
             <div class="suite-fasility section-shadow mb-5">
               <h3>ALL STAYS INCLUDE</h3>
               <ul>
+                {{-- {!! preg_replace("/,/", "<br/>", ($suites[0]->always_included)) !!} --}}
                 <li>WiFi</li>
                 <li>Daily bottled water</li>
                 <li>Daily à la carte breakfast</li>
@@ -40,7 +43,7 @@
                 <li>Access to 24 hour business centre</li>
               </ul>
             </div>
-
+        @if(!empty($suites))
           @foreach($suites[0]->suites as $suite)  
             <div class="suite-list section-shadow mb-5">
               <div class="suite-tumb">
@@ -86,7 +89,7 @@
                               <option value="">Select guest(S)</option>
                               
                                 @for($j = 1;$j <= $i;$j++)      
-                                  <option value="{{ $j }}">{{ $j }}</option>
+                                  <option value="{{ $j }}" {{ array_key_exists($suite->id, \Session::get('suite_array')) && \Session::get('suite_array')[$suite->id] == $j ? 'selected' : '' }}>{{ $j }}</option>
                                 @endfor
                                                               
                             </select>
@@ -102,7 +105,10 @@
                   </div>
                 </div>
               </div>
-            @endforeach      
+            @endforeach
+            @else
+              <h2>Suite Not found</h2>
+            @endif              
         </div>
           <div class="col-lg-3 col-md-4">
           @include('frontend.themes.EC.reservation.reservation-summary')

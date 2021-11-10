@@ -88,6 +88,11 @@ return [
     
     'cipher' => 'AES-256-CBC',
 
+    'EmporiumSpa' => 'ES',
+    'EmporiumVoyage' => 'EV',
+    'EmporiumIslands' =>'EI',
+    'EmporiumSafari' => 'ESF',
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration
@@ -231,6 +236,7 @@ return [
         'UnsplashUsers' => shweshi\LaravelUnsplashWrapper\UnsplashUsers::class,
         'UnsplashPhotos' => shweshi\LaravelUnsplashWrapper\UnsplashPhotos::class,
         'UnsplashCollections' => shweshi\LaravelUnsplashWrapper\UnsplashCollections::class,
+        //'Image' => Imagine\Imagick\Imagine::class,
         'Image' => Folklore\Image\Facades\Image::class,
     ],
 

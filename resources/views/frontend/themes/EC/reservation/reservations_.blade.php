@@ -1,23 +1,11 @@
 <!DOCTYPE html>
-<!--
-Template Name: Metronic - Bootstrap 4 HTML, React, Angular 11 & VueJS Admin Dashboard Theme
-Author: KeenThemes
-Website: http://www.keenthemes.com/
-Contact: support@keenthemes.com
-Follow: www.twitter.com/keenthemes
-Dribbble: www.dribbble.com/keenthemes
-Like: www.facebook.com/keenthemes
-Purchase: https://1.envato.market/EA4JP
-Renew Support: https://1.envato.market/EA4JP
-License: You must have a valid license purchased only from themeforest(the above link) in order to legally use the theme for your project.
--->
 <html lang="en">
 <!--begin::Head-->
 
 <head>
     <base href="">
     <meta charset="utf-8" />
-    <title>Metronic Live preview | Keenthemes</title>
+    <title>Emporium-Voyage</title>
     <meta name="description" content="Updates and statistics" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <link rel="canonical" href="https://keenthemes.com/metronic" />
@@ -36,9 +24,6 @@ License: You must have a valid license purchased only from themeforest(the above
     <link href="{{ asset('assets/users/assets/css/owl.carousel.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/users/assets/css/owl.theme.default.min.css')}}" rel="stylesheet" type="text/css" />
     <link href="{{ asset('assets/users/assets/css/custom.css')}}" rel="stylesheet" type="text/css" />
-    <!--end::Global Theme Styles-->
-    <!--begin::Layout Themes(used by all pages)-->
-    <!--end::Layout Themes-->
     <link rel="shortcut icon" href="{{ asset('assets/users/assets/media/logos/favicon.ico')}}" />
 </head>
 <!--end::Head-->
@@ -148,8 +133,6 @@ License: You must have a valid license purchased only from themeforest(the above
     <div class="aside-workspace scroll scroll-push my-2">
         <!--begin::Tab Content-->
         <div class="tab-content">
-
-
 
             <!--begin::Hotel List Panel-->
             <div id="hotelList" class="offcanvas offcanvas-left p-10">
@@ -3684,22 +3667,24 @@ License: You must have a valid license purchased only from themeforest(the above
                                             </h3>
                                         </div>
                                         <div class="bg-grey p-3 h-100 card-body">
-                                            @for($i = $arrive; $i <= $departure;$i++)
-                                            <div class="d-flex itinirary-list py-5 align-items-center">
-                                                <div class="itn-text">
-                                                    <p class="mb-1"><b>{{ $i }}.
-                                {{ $month }}. {{ $year }}</b></p>
-                                <?php  $store = $i.-$month_int.-$year;?>
-                                                    <p class="mb-0 font-weight-bolder">{{ date('l',strtotime($store)) }}</p>
-                                                    @if($i == $arrive)
-                                                    <p class="mb-0 font-weight-bolder">Arrival date</p>
-                                                    @endif
-                                                    @if($i == $departure)
-                                                    <p class="mb-0 font-weight-bolder">Departure date</p>
-                                                    @endif
+                                            @if(!empty($arrive))
+                                                @for($i = $arrive; $i <= $departure;$i++)
+                                                <div class="d-flex itinirary-list py-5 align-items-center">
+                                                    <div class="itn-text">
+                                                        <p class="mb-1"><b>{{ $i }}.
+                                                        {{ $month }}. {{ $year }}</b></p>
+                                                    <?php  $store = $i.-$month_int.-$year;?>
+                                                        <p class="mb-0 font-weight-bolder">{{ date('l',strtotime($store)) }}</p>
+                                                        @if($i == $arrive)
+                                                        <p class="mb-0 font-weight-bolder">Arrival date</p>
+                                                        @endif
+                                                        @if($i == $departure)
+                                                        <p class="mb-0 font-weight-bolder">Departure date</p>
+                                                        @endif
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            @endfor
+                                                @endfor
+                                            @endif                            
                                         </div>
                                     </div>
                                 </div>
@@ -3794,7 +3779,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 mb-4">
                                                             <?php $pos=1 ?>
-
+                                                        @if(!empty($suites))
                                                             @foreach($suites[0] as $value)
                                                             <div class="reservation-summary section-shadow">
                                                           <h4>SUITE &nbsp; {{ $pos++ }}</h4>
@@ -3839,7 +3824,9 @@ License: You must have a valid license purchased only from themeforest(the above
                                                           </table>
                                                         </div>
                                                         @endforeach
-                                                        
+                                                    @else
+                                                        <h2>Suite Not Selected</h2>
+                                                    @endif
                                                         </div>
                                                     </div>
                                                 </div>
@@ -4924,7 +4911,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                             <div class="d-flex itinirary-list py-5 align-items-center">
                                                 <div class="w-100">
                                                     <p class="mb-0"><b>Confirmation Code</b></p>
-                                                    <p class="mb-0">EC-{{ $hotel_name }}-{{ $randomnum }}</p>
+                                                    <p class="mb-0">EC-{{ $db }}-{{ $hotel_name }}-{{ $randomnum }}</p>
                                                 </div>
                                             </div>
                                             <div class="d-flex itinirary-list py-5 align-items-center">
@@ -4935,7 +4922,7 @@ License: You must have a valid license purchased only from themeforest(the above
                                                     <a href="#">Read more</a>
                                                 </div>
                                             </div>
-                                            <a href="#">
+                                            <a href="/reservation/whoistravelling">
                                                 <div class="d-flex itinirary-list py-5 align-items-center">
                                                     <div style="width: 40px;">
                                                         <i class="fas fa-users"

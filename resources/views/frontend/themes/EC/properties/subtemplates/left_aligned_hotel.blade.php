@@ -1,3 +1,4 @@
+
 <script type="text/javascript">
   if(properties === undefined){
     var properties = [];
@@ -8,7 +9,7 @@
 <div class="mb-5">
   <div class="row align-items-center">
     <div class="col-md-6">
-      <h3 class="title-second title-line mb-0"><?php echo $editorChoice->detail_section1_title;?></h3>
+      <h3 class="title-second title-line mb-0"><?php echo $editorChoice->property_name;?></h3>
     </div>
     <div class="col-md-6 text-right">
       <div class="d-flex justify-content-end align-items-center">
@@ -40,13 +41,13 @@
               if(isset($editorChoice['container']['name'])){
                 $container_name = $editorChoice['container']['name'];
               }else{
-                $container_name = strtolower(str_replace("-", " ", trim($editorChoice->property_name)));
+                $container_name = strtolower(str_replace(" ", "-", trim($editorChoice->property_name)));
               }
 
               if(is_array($propertyImages[0])){
                 $file_name = $propertyImages[0]['file_name'];
-              }elseif(is_object($propertyImages[0])){
-                $file_name = $propertyImages[0]->file_name;
+              }elseif(is_object($propertyImages[0]) && isset($propertyImages[0]->file->file_name)){
+                $file_name = $propertyImages[0]->file->file_name;
               }else{
                 $file_name = 'default-image.png';
               }
@@ -79,13 +80,13 @@
             if(isset($editorChoice['container']['name'])){
               $container_name = $editorChoice['container']['name'];
             }else{
-              $container_name = strtolower(str_replace("-", " ", trim($editorChoice->property_name)));
+              $container_name = strtolower(str_replace(" ", "-", trim($editorChoice->property_name)));
             }
 
             if(is_array($editorImage)){
               $file_name = $editorImage['file_name'];
-            }elseif(is_object($editorImage)){
-              $file_name = $editorImage->file_name;
+            }elseif(is_object($editorImage) && isset($editorImage->file->file_name)){
+              $file_name = $editorImage->file->file_name;
             }else{
               $file_name = 'default-image.png';
             }
@@ -121,7 +122,7 @@
           </ul>
         </div>
         <div class="right-meta align-self-center">
-          <a href="#" class="btn btn-primary btn-block rounded-0">Reservation</a>
+          <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-primary btn-block rounded-0">Reservation</a>
         </div>
       </div>
     </div>

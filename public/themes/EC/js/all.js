@@ -1060,7 +1060,6 @@ var ajaxReq = 'ToCancelPrevReq';
     $("#collection_search").submit();
   });
 
-
   $('.whereinner').on('click', '.nav-link', function(e){
     e.preventDefault();
     var result = $(this).find('span').html();
@@ -2010,6 +2009,14 @@ var ajaxReq = 'ToCancelPrevReq';
     escKey: false,
     closable: false
   });
+  lightGallery(document.getElementById('hotel_gallery'), {
+    thumbnail: true,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    escKey: false,
+    closable: false
+  });
   lightGallery(document.getElementById('gallery_restaurant'), {
     thumbnail: true,
     currentPagerPosition: 'middle',
@@ -2093,20 +2100,20 @@ function getNavitems(location, collection_name){
   var searchResultsChannelUrl = "/globalsearchavailability?view=channel&s="+location+"&arrive="+$("#arrive").val()+"&departure="+$("#departure").val()+"&type=destination&rac=r0a2c1#";
 
   return `<li class="nav-item">
-      <a class="nav-link nav-link-map" href="`+searchResultsPageUrl+`">
+      <a class="nav-link nav-link-map" data-page="map" href="`+searchResultsPageUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Map</span>
       </a>
     </li>
    <li class="nav-item">
-      <a class="nav-link nav-link-map" href="`+searchResultsChannelUrl+`">
+      <a class="nav-link nav-link-map" data-page="channel" href="`+searchResultsChannelUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Channel</span>
       </a>
     </li>
-   <li class="nav-item">
+   <!--<li class="nav-item">
       <a class="nav-link nav-link-map" href="`+searchResultsPageUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Cuisine</span>
       </a>
-    </li>`;
+    </li>-->`;
 }
 
 function getHotelHtml(result, collection_name){
@@ -2133,6 +2140,9 @@ function getHotelHtml(result, collection_name){
 function getDestinationHtml(result, collection_name){
   var searchedLocation = '';
   var result_html_destination = '';
+  $('.wherepopup .' + collection_name + '-destination').hide();
+  $('#' + collection_name + '-desti-header').hide();
+
   $('.wherepopup .' + collection_name + '-destination').html(result_html_destination);
   if(result.dest != undefined){
     $(result.dest).each(function(key, val){
@@ -2150,14 +2160,10 @@ function getDestinationHtml(result, collection_name){
        result_html_destination += getNavitems(searchedLocation, collection_name);
     }
 
-    if(result_html_destination != ''){
+    if(result_html_destination !== ''){
       $('.wherepopup .' + collection_name + '-destination').html(result_html_destination);
       $('.wherepopup .' + collection_name + '-destination').show();
       $('#' + collection_name + '-desti-header').show();
-    }
-    else{
-      $('.wherepopup .' + collection_name + '-destination').hide();
-      $('#' + collection_name + '-desti-header').hide();
     }
 
     return result_html_destination;

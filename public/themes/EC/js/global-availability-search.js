@@ -55,9 +55,9 @@ function replacePropertyData(id){
         rooms = s.rooms;
         rooms.forEach(function(r){
           rimages = r.images;
-          if(r.images!=undefined){          
+          if(rimages.length){          
             rimages.forEach(function(e){
-              imgUrl = '/room-image/resize/600x500/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
+              imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
               imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
@@ -145,7 +145,7 @@ function replaceGalleryImages(id, place, list, image_path){
       for (const [key, e] of Object.entries(values)) {
         if(e.gallery.files){          
           e.gallery.files.forEach(function(rgallery){          
-            imgUrl = '/property-image/resize/600x500/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
+            imgUrl = '/property-image/resize/1200x700/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
             imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
             spanid=2;
             grid++;
@@ -264,14 +264,19 @@ function replaceSuiteList(id){
       suiteItem = '<div class="property-suite-p'+sid+'">' + suiteTemplate + '</div>';
       var containerName = getContainerName(id);
       roomimages = '';
-      suite.rooms[0].images.forEach(function(rm){
-        if(onlyThree < 3){        
-          roomimages += `<div>
-              <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
-            </div>`;  
-        }
-        onlyThree++; 
-      });
+
+      console.log(suite.rooms[0].images.length);
+      if(suite.rooms[0].images.length !== undefined){        
+        suite.rooms[0].images.forEach(function(rm){
+          if(onlyThree < 3){        
+            roomimages += `<div>
+                <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+              </div>`;  
+          }
+          onlyThree++; 
+        });  
+      }
+
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid);  
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
@@ -285,7 +290,7 @@ function replaceSuiteList(id){
   setTimeout('appendResultGridSlider()', 2000);    
   setTimeout("$('#suites-loader').hide();", 3000);
   setTimeout("$('#suites-popup').show();", 3000);
-  setTimeout("$('.result-grid').slick('setPosition');", 1000);  
+  setTimeout("$('.result-grid').slick('setPosition');", 3000);  
 }
 
 function replaceSuiteDetail(property_id, category_id){
@@ -520,9 +525,18 @@ function getDefaultChannel(catt){
             
         },
         success: function(data){ 
-            if(!$('.yt-rvideos').length) return false;
+            if(!$('.yt-rvideos').length && !$('.yt-rvideos-2').length) return false;
 
             $('.yt-rvideos').yottie({  
+                key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+                channel: data.channel_url,
+                content: {
+                    columns: 4,
+                    rows: 2
+                },
+            });
+
+            $('.yt-rvideos-2').yottie({  
                 key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
                 channel: data.channel_url,
                 content: {
@@ -566,6 +580,14 @@ function replacePrices(cat_id){
 }
 
 $(document).ready(function(){
+
+  $(".nav-item .nav-link .delete_exp").click(function(e) {
+    e.preventDefault();
+    $("#experience").remove();
+    var url = createSearchUrl();   
+    searchResults(url);
+  });
+
   $(".close-sidebar, .sidebar-back").click(function (e) {
     e.preventDefault();
     $(this).closest('.sidebar-main').removeClass('show');
@@ -588,6 +610,10 @@ $(document).ready(function(){
     }
   });
 
+  $('#menunav .search-f').click(function (e) {
+    SHOW_PARENT_CITIES = 1;
+  });
+
   $('.city-f').click(function (e) {
     SHOW_PARENT_CITIES = 1;
     $('.search-f').trigger("click");
@@ -596,23 +622,27 @@ $(document).ready(function(){
   });
 
   $('.menu-s #experience_dropdown .dropdown-menu .dropdown-item').on("click",function(){
+    setBreadcrumbSingle($(this));    
     var url = createSearchUrl($(this).attr("data-value"));
     searchResults(url);
   });
 
   $('#atmosphere_dropdown .custom-control-input').on("click",function(){
+    setBreadcrumb($(this));
     var url = createSearchUrl();
     searchResults(url);
     return true;
   });
 
   $('#facilities_dropdown .custom-control-input').on("click",function(){
+    setBreadcrumb($(this));
     var url = createSearchUrl();
     searchResults(url);
     return true;
   });
 
   $('#style_dropdown .custom-control-input').on("click",function(){
+    setBreadcrumb($(this));
     var url = createSearchUrl();
     searchResults(url);
     return true;
@@ -626,10 +656,14 @@ $(document).ready(function(){
   $('.nav-item .dropdown-menu .filter-list .price-input .filter_price').on("click", function(){
     var url = createSearchUrl();
     searchResults(url);
-
-    
-
   });
+
+  /*$('#resultsLoadMore').on("click", function(){
+    var currentPage = $('#currentPage').val();
+    var url = createSearchUrl();
+    url = url + '&view=paginate';
+    searchResults(url);
+  });*/
 
   /*$('.lazy').Lazy({
       // your configuration goes here
@@ -641,6 +675,18 @@ $(document).ready(function(){
       }
   });*/
 });
+
+ 
+$(window).on('load', function() {
+  lazyLoadMe('results-media');
+  lazyLoadMe('location-photos');  
+});
+
+function lazyLoadMe(selector){
+  $('.' + selector).each(function(e){
+    $(this).attr("src", $(this).attr("data-src"));
+  });
+}
 
 function getContainerName(id){
   try{
@@ -654,9 +700,9 @@ function getContainerName(id){
   }
 }
 function searchResults(url){
-  var urls = url;
+
   $.ajax({
-        url: urls,
+        url: url,
         dataType:'html',
         type: 'get',
         async:false,
@@ -668,12 +714,14 @@ function searchResults(url){
           setTimeout(function () {
             $('body').css('overflow', 'auto');
             $('.pageload').hide();
-          }, 3000)
+            lazyLoadMe('results-media');
+          }, 1000)
         }
     });
 }
 
 function getUrlParam(p){
+  
   $.urlParam = function (name) {
         var results = new RegExp('[\?&]' + name + '=([^&#]*)')
                           .exec(window.location.search);
@@ -682,14 +730,26 @@ function getUrlParam(p){
   return $.urlParam(p);
 }
 
+var currentSearch = '';
+function filterDestination(dest){
+  currentSearch = dest;
+  $('.close-collapse').trigger("click");
+  var url = createSearchUrl();
+  searchResults(url);
+}
+
 function createSearchUrl(experience = ''){
   $('.pageload').show();
 
-  if(!experience){
+  if(experience !== null && !experience){
     experience = getUrlParam('experience');
     if(!experience){
       experience = '';
     }
+  }
+
+  if(experience === null){
+    experience = '';    
   }
 
   var atmospheres = [];
@@ -715,13 +775,75 @@ function createSearchUrl(experience = ''){
   var min = $("#min").val();
   var max = $("#max").val();
 
-  var keyword = getUrlParam('s');
+  var keyword = '';
+  if(currentSearch){
+    keyword = currentSearch;
+  }else{
+    keyword = getUrlParam('s');
+  }
   var atmosphere_ids = atmospheres.join(',');
   var facility_ids = facilities.join(',');
   var style_ids = styles.join(',');
   
   var url = document.location.origin + document.location.pathname + `?s=`+keyword+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience+`&min=`+min+`&max=`+max;
-
   window.history.pushState({}, '', url);
   return url + '&view=ajax';
+}
+
+function resetSearch(){
+  $('.nav-tags').html('');
+  var keyword = '';
+  keyword = getUrlParam('s');
+  var url = document.location.origin + document.location.pathname + `?s=` + keyword;
+  window.history.pushState({}, '', url);
+  searchResults(url + '&view=ajax');
+  $('.city-f').trigger('click');
+}
+
+function removeMe(e, id){
+  var url = '';
+  if(id){
+    $('#'+id).prop("checked", false);
+    url = createSearchUrl();   
+  }else{
+    url = createSearchUrl(null);   
+  }
+  $(e).parents("li").remove();
+  searchResults(url);
+}
+
+function setBreadcrumb(elem){
+  var lb = elem.parents('.custom-control').find("label").html();
+  var lbId = elem.attr("id");
+  appendBreadCrumb(lb, lbId);
+    
+}
+
+function setBreadcrumbSingle(elem){
+  var lb = elem.html();
+  appendBreadCrumb(lb, '');
+}
+
+function appendBreadCrumb(lb, lbId){
+  $("#Exp").append(`<li class="nav-item">
+      <span class="nav-link">
+        <a class="" href="#">
+          <span class="taxonomyTags-roundedArrow">
+            <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg" style="vertical-align: auto;">
+              <path d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z" fill="currentColor" fill-rule="evenodd"></path>
+            </svg>
+          </span>
+           
+          <span class="taxonomyTags-tagTitle">
+            ` + lb + `
+          </span>
+        </a>
+        <a href="javascript:void();" class="delete delete_atm" onclick="removeMe(this,'` + lbId + `')">
+          <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+            </path>
+          </svg>
+        </a>
+      </span>
+    </li>`);
 }

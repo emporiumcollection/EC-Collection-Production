@@ -26,7 +26,7 @@
           <div class="collapse " id="suite">
             <ul class="nav flex-column nav-sidebar is-small" data-place="property-suites">
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/suite">All Suites</a>
+                <a class="nav-link nav-link-sub" href="/hotel/suite/">All Suites</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link nav-link-sub" href="/hotel/detailsuite">The Mark Fire Bedroom Terrace Suite</a>

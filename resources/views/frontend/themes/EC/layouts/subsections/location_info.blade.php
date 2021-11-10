@@ -32,11 +32,11 @@
                             Gallery
                         </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#videosTab" data-toggle="tab" role="tab" aria-selected="false">
+                    <!--<li class="nav-item">
+                        <a class="nav-link" href="#videosTab" data-toggle="tab" role="tab" aria-selected="false" onclick="getDefaultChannel('<?php echo strtolower(str_replace(" ", "-", $keyword)); ?>')">
                             Videos
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
                 <div class="tab-content pt-4">
                     <div class="tab-pane fade show active" id="infoTab">
@@ -56,7 +56,7 @@
                                             ?>
                                             <a href="<?php echo $photo->urls->regular; ?>"
                                                 data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-<?php echo $grid;?> span-<?php //echo $spanid;?>">
-                                                <img src="<?php echo $photo->urls->regular; ?>" alt="">
+                                                <img data-src="<?php echo $photo->urls->regular; ?>" alt="" class="location-photos">
                                             </a>
                                             <?php
                                             $spanid=2;
@@ -77,7 +77,7 @@
                                 <i class="ico ico-print"></i>
                             </a>
                         </div>
-                        <div class="yt-rvideos">
+                        <div class="yt-rvideos-2">
                         </div>
                     </div>
                 </div>

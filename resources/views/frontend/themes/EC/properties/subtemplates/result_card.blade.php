@@ -8,6 +8,7 @@
     <div class="pr-lst result-grid">
       <?php 
       foreach($property->propertyImages as $image):
+        
         if(isset($property['container']['name'])){
           $container_name = $property['container']['name'];
         }else{
@@ -16,14 +17,14 @@
 
         if(is_array($image)){
           $file_name = $image['file_name'];
-        }elseif(is_object($image)){
-          $file_name = $image->file_name;
+        }elseif(is_object($image) && isset($image->file->file_name)){
+          $file_name = $image->file->file_name;
         }else{
           $file_name = 'default-image.png';
         }
       ?>
         <div>
-          <img src="<?php echo 'property-image/resize/615x419/'.$container_name.'/'.$file_name.'/property-image';?>" class="w-100" alt="">
+          <img <?php echo 'src="property-image/resize/615x419/'.$container_name.'/default-image.png/property-image"';?> <?php echo 'data-src="property-image/resize/615x419/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100 results-media" alt="">
         </div>
       <?php 
       endforeach;?>
@@ -66,7 +67,6 @@
             <span class="pernight"></span>
           </div>
         </div>
-
       </div>
     </div>
     <div class="hotel-meta-mobile">
@@ -78,7 +78,7 @@
       </a>
     </div>
   </div>
-  <a href="#">
+  <a href="/hotel/hoteldetail/{{ $property->id }}">
     <div class="title-offset mt-5 ">
       <h3 class="title-second title-line mb-0"><?php echo $property->property_name;?></h3>
       <h4 class="title-font-2 title-third"><?php echo $property->city;?></h4>

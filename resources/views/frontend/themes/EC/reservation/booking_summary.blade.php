@@ -26,11 +26,12 @@
                   <div class="bg-grey px-3 py-2 mb-3">
                     <h4>Your booking at <b>{!! Session::get('suite_name') !!}</b> in
                       Limone sul Garda, Italy</h4>
-                    <p class="mb-0">Confirm number: EC-{{ $hotel_name }}-{{ $randomnum }}</p>
+                    <p class="mb-0">Confirm number: EC-{{ $db }}-{{ $hotel_name }}-{{ $randomnum }}</p>
                   </div>
                   
           @include('frontend.themes.EC.reservation.reservation-summary')
               <?php $pos=1 ?>
+              @if(!empty($suites))
                 @foreach($suites as $suite)
                   @foreach($suite as $value)
                     <div class="reservation-summary section-shadow">
@@ -82,22 +83,31 @@
                           <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
                         </tr>
                       </table>
-                    </div>
-                    <div class="reservation-total">
+                    </div>                    
+                  @endforeach
+                @endforeach
+                @else
+                  <div class="reservation-summary section-shadow">
+                    <p>Suite Not Selected</p>
+                  </div>
+              @endif
+                <div class="reservation-total">
                       <table class="table table-borderless mb-0">
                         <tr>
                           <td class="px-0 py-1">Total</td>
                           <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
                         </tr>
                       </table>
-                    </div>
-                  @endforeach
-                @endforeach  
+                    </div>  
                   <div class="policies" id="policies">
                     <h3>Policies</h3>
                     <div class="card card-body rounded-0">
                       <p><b>Suite 1</b></p>
-                      {{ html_entity_decode($policies->booking_policy) }}
+                      @if(!empty($properties))
+                        {{ html_entity_decode($policies->booking_policy) }}
+                      @else
+                        <h3>Hotel has no policies</h3>
+                      @endif  
                     </div>
                     <hr>
                     <div class="booking-tearms">
@@ -134,10 +144,12 @@
                   <div class="bg-grey p-1 mb-5"></div>
                   <h4 class="mb-4">Getting there</h4>
                   <p class="mb-1"><b>Address</b></p>
-                  <p>{{ $properties[0]->address }}</p>
+                  @if(!empty($properties))
+                    <p>{{ $properties[0]->address }}</p>
+                  @endif
                   <ul class="nav nav-step5 flex-column mb-5">
                     <li class="nav-item">
-                      <a class="nav-link" title="{{ $properties[0]->address }}" href="#" id="myAnchor"><i class="fa fa-files-o" aria-hidden="true"></i> Copy address
+                      <a class="nav-link" title="@if (!empty($properties)){{ $properties[0]->address }} @endif" href="#" id="myAnchor"><i class="fa fa-files-o" aria-hidden="true"></i> Copy address
                         <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
                     </li>
                     <li class="nav-item">
@@ -146,7 +158,12 @@
                     </li>
                   </ul>
                   {{-- <div id="map"></div> --}}
-                  <iframe src="https://maps.google.com/maps?q={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}&t=&z=14&ie=UTF8&iwloc=&output=embed" width="99.9%" height="100%" frameborder="0" style="border: 1px solid #bfc1c3 !important; border-radius: 2px;" allowfullscreen="false" scrolling="no" aria-hidden="false" tabindex="0"></iframe> 
+                  @if(!empty($properties))
+                    <iframe src="https://maps.google.com/maps?q={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}&t=&z=14&ie=UTF8&iwloc=&output=embed" width="99.9%" height="100%" frameborder="0" style="border: 1px solid #bfc1c3 !important; border-radius: 2px;" allowfullscreen="false" scrolling="no" aria-hidden="false" tabindex="0"></iframe>
+                  @else
+                    <h2>Location Not Found</h2>
+                  @endif
+                     
                 </div>
               </div>
             </div>
@@ -156,25 +173,27 @@
                   <div class="bg-grey p-3 h-100">
                     <ul class="nav nav-step5 flex-column">
                       <li class="nav-item">
-                        @for($i = $arrive; $i <= $departure;$i++)
-                          <a class="nav-link" href="#">
-                            <div class="d-flex align-items-center">
-                              <div class="w-100">
-                                <p class="mb-0 month-nav">{{ $i }}.
-                                {{ $month }}. {{ $year }}</p>
-                                
-                                <?php  $store = $i.-$month_int.-$year;?>
-                                <p>{{ date('l',strtotime($store)) }}</p>
-                                @if($i == $arrive)
-                                 <p class="mb-0"><b>Arrival date</b></p>
-                                @endif
-                                @if($i == $departure)
-                                 <p class="mb-0"><b>Departure date</b></p>
-                                @endif
-                              </div class="w-100">      
-                            </div>
-                          </a>
-                        @endfor  
+                        @if(!empty($arrive))
+                          @for($i = $arrive; $i <= $departure;$i++)
+                            <a class="nav-link" href="#">
+                              <div class="d-flex align-items-center">
+                                <div class="w-100">
+                                  <p class="mb-0 month-nav">{{ $i }}.
+                                  {{ $month }}. {{ $year }}</p>
+                                  
+                                  <?php  $store = $i.-$month_int.-$year;?>
+                                  <p>{{ date('l',strtotime($store)) }}</p>
+                                  @if($i == $arrive)
+                                   <p class="mb-0"><b>Arrival date</b></p>
+                                  @endif
+                                  @if($i == $departure)
+                                   <p class="mb-0"><b>Departure date</b></p>
+                                  @endif
+                                </div class="w-100">      
+                              </div>
+                            </a>
+                          @endfor
+                        @endif    
                       </li>
                     </ul>
                   </div>

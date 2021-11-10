@@ -65,7 +65,7 @@
                     $lmenus = [];
                     foreach($menu_experiences as $experience):?>
                         <li class="nav-item">
-                          <a class="nav-link active" href="<?php echo createSearchUrl('experience', $experience->category_alias);?>"><?php echo $experience->category_name;?></a>
+                          <a class="nav-link active" href="<?php //echo createSearchUrl('experience', $experience->category_alias);?>"><?php echo $experience->category_name;?></a>
                         </li>
                     <?php endforeach;
                     endif;
@@ -126,8 +126,8 @@
               <i class="ico ico-menu-grid mr-2"></i>
             </a>
             <?php endif;?>
-            <?php if(!Request::get('view')):?>
-            <a class="nav-link" href="<?php echo Request::fullUrl().'&view=map';?>">
+            <?php if(Request::get('view')!='map'):?>
+            <a class="nav-link" href="<?php echo str_replace('&view=channel','',Request::fullUrl()).'&view=map';?>">
               <i class="ico ico-place"></i>
             </a>
             <?php endif;?>              
@@ -161,7 +161,7 @@
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                 @foreach($experiences as $exp)
-                  <a href="javascript:void(0)" data-value="<?php echo $exp->category_alias;?>" class="dropdown-item">{{ $exp->category_name }}</a>
+                  <a href="javascript:void(0);" data-value="<?php echo $exp->category_alias;?>" class="dropdown-item">{{ $exp->category_name }}</a>
                 @endforeach                
               </div>
             </li>
@@ -177,7 +177,12 @@
                   @foreach($atmosphere as $atm)
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="atmosphere[]" class="custom-control-input" id="setting1{{ $atm->id}}" 
-                      value="{{ $atm->id }}">
+                      value="{{ $atm->id }}" 
+                      @if(!empty($atmosphere_data)) 
+                        @foreach($atmosphere_data as $selected_atm)
+                        {{ $selected_atm[0]->id == $atm->id ? 'checked' : '' }} 
+                        @endforeach 
+                      @endif>
                       <label class="custom-control-label" for="setting1{{ $atm->id}}">{{ $atm->category_name }}</label>
                     </div>
                   @endforeach
@@ -195,7 +200,12 @@
                 <div class="dropdown-inner filter-checkbox">
                   @foreach($facilities as $fac)
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="facilities[]" class="custom-control-input" id="fasilities{{ $fac->id }}" value="{{ $fac->id }}">
+                      <input type="checkbox" name="facilities[]" class="custom-control-input" id="fasilities{{ $fac->id }}" value="{{ $fac->id }}" 
+                      @if(!empty($facility_data)) 
+                        @foreach($facility_data as $selected_fac)
+                          {{ $selected_fac[0]->id == $fac->id ? 'checked' : '' }}
+                        @endforeach 
+                      @endif>
                       <label class="custom-control-label" for="fasilities{{ $fac->id }}">{{ $fac->category_name }} </label>
                     </div>
                   @endforeach  
@@ -213,7 +223,12 @@
                 <div class="dropdown-inner filter-checkbox">
                   @foreach($style as $sty)
                     <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="style[]" class="custom-control-input" id="style{{ $sty->id }}" value="{{ $sty->id }}">
+                      <input type="checkbox" name="style[]" class="custom-control-input" id="style{{ $sty->id }}" value="{{ $sty->id }}" 
+                      @if(!empty($selected_style))
+                        @foreach($selected_style as $sty_sel) 
+                          {{ $sty_sel[0]->id == $sty->id ? 'checked' : '' }}
+                        @endforeach 
+                      @endif>
                       <label class="custom-control-label" for="style{{ $sty->id }}">{{ $sty->category_name }}</label>
                     </div>
                   @endforeach
@@ -271,7 +286,7 @@
           </div>
         </div>
         <ul class="nav nav-right ml-auto">
-          <li class="nav-item">
+          {{-- <li class="nav-item">
             <a class="nav-link btn-sidebar" href="#" data-sidebar="#searchHistory">
               <i class="ico ico-layer"></i>
             </a>
@@ -280,14 +295,14 @@
             <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
               <i class="ico ico-convertation"></i>
             </a>
-          </li>
+          </li> --}}
           <li class="nav-item">
             <a class="nav-link btn-sidebar" href="#" data-sidebar="#share">
               <i class="ico ico-share-2"></i>
             </a>
           </li>
           
-          <li class="nav-item dropdown">
+          {{-- <li class="nav-item dropdown">
             <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
               aria-expanded="false">
               <i class="ico ico-diamon"></i>
@@ -296,7 +311,7 @@
               <a class="dropdown-item" href="#">Add to collection</a>
               <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Create new collection</a>
             </div>
-          </li>
+          </li> --}}
         </ul>
       </div>
     </div>
@@ -347,11 +362,7 @@
                 </div>
               </div>
               <ul class="nav nav-right ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link " href="#searchHistory" data-toggle="collapse">
-                    <i class="ico ico-layer"></i>
-                  </a>
-                </li>
+                
                 <li class="nav-item">
                   <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
                     <i class="ico ico-convertation"></i>
