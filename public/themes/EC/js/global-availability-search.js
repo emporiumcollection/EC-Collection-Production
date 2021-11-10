@@ -23,7 +23,11 @@ function replacePropertyData(id){
       $(this).html(listview);
   });
 
-  console.log(properties[id]['latitude'], properties[id]['longitude']);
+  $('[data-place="property-book-button"]').each(function() {
+    $(this).html('<a href="/hotel/hoteldetail/' + id + '" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>');
+  });
+  
+  
   setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
 
   $('[data-place="property-images"]').each(function() {
