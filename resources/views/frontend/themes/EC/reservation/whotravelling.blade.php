@@ -354,13 +354,13 @@
               </div>                            
             </div>  
             <div class="row">              
-                <div class="col-md-2 form-group">
+                <div class="col-md-2 form-group" style="margin-right: 10px;">
                   <input type="button" name="confirm" class=" 
-                  btn btn-dark form-control confirm_address" value="Confirm Address">
+                  btn btn-dark confirm_address" value="Confirm Address">
                 </div>
                 <h4>or</h4>
                 <div class="col-md-2 form-group">
-                  <input type="button" name="confirm" class="btn btn-dark  form-control add_address" value="Add new Address">
+                  <input type="button" name="confirm" class="btn btn-dark add_address" value="Add new Address">
                 </div>                 
             </div>
             <hr class="mb-4">

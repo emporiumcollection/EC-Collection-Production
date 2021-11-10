@@ -39,7 +39,7 @@
 	                  <div class="row field-count-reservation align-items-center">
 	                    <button type="button" class="min-room disable">-</button>
 	                    <div class="col text-center">
-	                      <span class="mr-1 room-val">1</span>
+	                      <span class="mr-1 room-val">0</span>
 	                    </div>
 	                    <button type="button" class="plus-room mr-3">+</button>
 	                  </div>

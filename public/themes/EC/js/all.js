@@ -717,6 +717,12 @@ var ajaxReq = 'ToCancelPrevReq';
     $(this).parent().removeClass('active');
   })
 
+  $('select').select2({
+    theme: "bootstrap",
+    minimumResultsForSearch: -1
+  });
+
+
   $('select').niceSelect();
 
   $('.my-tooltip .ico').hover(function(){

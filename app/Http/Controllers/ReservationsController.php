@@ -98,10 +98,9 @@ class ReservationsController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
 
-        $this->data['suites'] = properties::with('suites')->where('id',\Session::get('property_id'))->get();
+        $this->data['property'] = properties::with(['suites', 'container'])->where('id',\Session::get('property_id'))->get();
 
-        $this->data['property'] = properties::select(['id'])
-        ->where('id',\Session::get('property_id'))->get();
+        //$this->data['property'] = properties::select(['id'])->where('id',\Session::get('property_id'))->get();
 
         $selected_suite = \Session::get('suite_array');
         

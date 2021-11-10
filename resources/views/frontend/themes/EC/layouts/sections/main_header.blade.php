@@ -114,6 +114,7 @@
     <hr class="mb-0">
     <div class="menu-s">
       <div class="d-flex align-items-center">
+        <?php if(strpos(request()->route()->getAction()['controller'], 'PropertyController')): ?>
         <ul class="nav nav-left mobile-off">
           {{-- <li class="nav-item">
             <a class="nav-link btn-sidebar" href="#" data-sidebar="#filterbar">
@@ -313,6 +314,8 @@
             </div>
           </li> --}}
         </ul>
+        <?php endif; ?>
+        <ul class="nav nav-right ml-auto"></ul>
       </div>
     </div>
   </div>
