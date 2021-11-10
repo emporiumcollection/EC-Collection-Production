@@ -32,11 +32,11 @@
                             Gallery
                         </a>
                     </li>
-                    <li class="nav-item">
+                    <!--<li class="nav-item">
                         <a class="nav-link" href="#videosTab" data-toggle="tab" role="tab" aria-selected="false" onclick="getDefaultChannel('<?php echo strtolower(str_replace(" ", "-", $keyword)); ?>')">
                             Videos
                         </a>
-                    </li>
+                    </li>-->
                 </ul>
                 <div class="tab-content pt-4">
                     <div class="tab-pane fade show active" id="infoTab">
