@@ -73,7 +73,7 @@ trait Property {
         return $parent;
     }
 
-    public function getEditorChoiceProperties($cities){
+    public function getEditorChoiceProperties($cities, $keyword){
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
@@ -113,15 +113,18 @@ trait Property {
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }])
-        ->whereIn('city', $cities)
+        ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
+        ->orWhere('country', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
         ->limit(2)
@@ -129,7 +132,7 @@ trait Property {
 
     }
 
-    public function getFeaturedProperties($cities){
+    public function getFeaturedProperties($cities, $keyword){
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
@@ -170,29 +173,33 @@ trait Property {
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }
         ])
-        ->whereIn('city', $cities)
+        ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
+        ->orWhere('country', $keyword)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
         ->limit(2)
         ->get();
     }
 
-    public function searchPropertiesByKeyword($cities){
+    public function searchPropertiesByKeyword($cities, $keyword){
         $experience_id = false;
         if(request()->get('experience')){
             $experience = categories::select(['id'])
@@ -246,22 +253,26 @@ trait Property {
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }, 
             'hotelBrochureImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
-                }])->limit(20);
+                }]);
+                //->limit(20);
             }
         ])
-        ->whereIn('city', $cities)
+        //->whereIn('city', $cities)
+        ->whereRaw(" (city in ('".implode("','", $cities)."') or country = '$keyword') ")
         ->where('latitude', '!=', '')
         ->where('longitude', '!=', '')
         ->where('property_status', '=', 1);
@@ -296,11 +307,24 @@ trait Property {
         if($experience_id){
             $properties->whereRaw("(experience_ids = '$experience_id' or experience_ids like '%,$experience_id%' or experience_ids like '%$experience_id,%')");
         }   
-        //print $properties->toSql();
+//        print $properties->toSql();
+//        exit;
         return $properties
         //->limit(1)
         ->get();
     }
+
+    private function filterByprice($max,$min,&$propertyResults){
+        foreach ($propertyResults as $k => $property) {
+            if($property->price >= $min && $property->price <= $max ){
+                
+            }else{  
+                unset($propertyResults[$k]);
+            }
+        }
+        // echo "<pre>";print_r($propertyResults);exit;
+    }
+
 
     public function formatPropertyRecords(&$properties){
         $roomamenitieslist = [];

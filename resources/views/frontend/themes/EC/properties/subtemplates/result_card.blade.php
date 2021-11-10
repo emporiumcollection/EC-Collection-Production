@@ -81,7 +81,7 @@
   <a href="#">
     <div class="title-offset mt-5 ">
       <h3 class="title-second title-line mb-0"><?php echo $property->property_name;?></h3>
-      <h4 class="title-font-2 title-third">experience</h4>
+      <h4 class="title-font-2 title-third"><?php echo $property->city;?></h4>
     </div>
   </a>
 </div>
