@@ -12,9 +12,6 @@
     }
 </style>
 @section('content')
-<?php
-print_r(\Session::get('suite_array'));
-?>
 <div class="content-em">
   <div class="top-wrapper">
     <div class="container ">
@@ -43,35 +40,30 @@ print_r(\Session::get('suite_array'));
                 <li>Access to 24 hour business centre</li>
               </ul>
             </div>
-        @if(!empty($suites))
-          @foreach($suites[0]->suites as $suite)  
+        @if(!empty($property[0]->toArray()))
+          @foreach($property[0]->suites as $suite)  
             <div class="suite-list section-shadow mb-5">
               <div class="suite-tumb">
                 <div class="row align-items">
-                  @foreach($property as $image)
                     <div class="col-lg-6">
-                      {{-- <div class="img-offset-slide">
-                        <div>
-                          <a href="detail-page.html">                  
-                            <img src="{{ asset('/room-image/resize/493x276/'.$image->suites[0]->rooms[0]->images[0]['file']['file_name'])}}"
-                              class="img-full" alt="">
-                          </a>
-                        </div>
-                        <div>
-                          <a href="detail-page.html">
-                            <img src="{{ asset('/room-image/resize/493x276/'.$image->suites[0]->rooms[0]->images[0]['file']['file_name'])}}"
-                              class="img-full" alt="">
-                          </a>
-                        </div>
-                        <div>
-                          <a href="detail-page.html">
-                            <img src="{{ asset('/room-image/resize/493x276/'.$image->suites[0]->rooms[0]->images[0]['file']['file_name'])}}"
-                              class="img-full" alt="">
-                          </a>
-                        </div>
-                      </div> --}}
+                      <div class="img-offset-slide">
+                        @foreach($suite->rooms[0]['images'] as $image)
+                        <?php
+                          if(isset($property[0]['container']['name'])){
+                            $container_name = $property[0]['container']['name'];
+                          }else{
+                            $container_name = strtolower(str_replace("-", " ", trim($property[0]->property_name)));
+                          }
+                        ?>
+                          <div>
+                            <a href="detail-page.html">                  
+                              <img src="{{ asset('/room-image/resize/493x276/'.$container_name.'/'.$image['file']['file_name']) }}"
+                                class="img-full" alt="">
+                            </a>
+                          </div>
+                        @endforeach                                      
+                      </div>
                     </div>
-                  @endforeach                                      
                     <div class="col-lg-6">
                       <div class="suite-desc">
                         <h3>{{ $suite->category_name }}</h3>
@@ -89,7 +81,7 @@ print_r(\Session::get('suite_array'));
                               <option value="">Select guest(S)</option>
                               
                                 @for($j = 1;$j <= $i;$j++)      
-                                  <option value="{{ $j }}" {{ array_key_exists($suite->id, \Session::get('suite_array')) && \Session::get('suite_array')[$suite->id] == $j ? 'selected' : '' }}>{{ $j }}</option>
+                                  <option value="{{ $j }}" {{ array_key_exists($suite->id, \Session::get('suite_array') ? \Session::get('suite_array') : [1] ) && \Session::get('suite_array')[$suite->id] == $j ? 'selected' : '' }}>{{ $j }}</option>
                                 @endfor
                                                               
                             </select>

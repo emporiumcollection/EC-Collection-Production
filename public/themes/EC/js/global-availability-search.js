@@ -33,7 +33,7 @@ function replacePropertyData(id){
       var imgUrl = '';
       var containerName = getContainerName(id);
       values.forEach(function(e){
-        imgUrl = '/property-image/resize/600x500/' + containerName + '/' + e.file_name + '/property-image';
+        imgUrl = '/property-image/resize/1200x700/' + containerName + '/' + e.file_name + '/property-image';
         imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file_title + '" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
@@ -709,13 +709,13 @@ function searchResults(url){
         success: function(response){ 
           $('#search-results-content').html(response);
           appendSearchGridSlider();
-          setTimeout("$('.result-grid').slick('setPosition');", 1000);  
+          setTimeout("$('.result-grid').slick('setPosition');", 1000);
 
           setTimeout(function () {
             $('body').css('overflow', 'auto');
             $('.pageload').hide();
             lazyLoadMe('results-media');
-          }, 1000)
+          }, 500)
         }
     });
 }

@@ -354,13 +354,13 @@
               </div>                            
             </div>  
             <div class="row">              
-                <div class="col-md-2 form-group">
+                <div class="col-md-2 form-group" style="margin-right: 10px;">
                   <input type="button" name="confirm" class=" 
-                  btn btn-dark form-control confirm_address" value="Confirm Address">
+                  btn btn-dark confirm_address" value="Confirm Address">
                 </div>
                 <h4>or</h4>
                 <div class="col-md-2 form-group">
-                  <input type="button" name="confirm" class="btn btn-dark  form-control add_address" value="Add new Address">
+                  <input type="button" name="confirm" class="btn btn-dark add_address" value="Add new Address">
                 </div>                 
             </div>
             <hr class="mb-4">
@@ -410,7 +410,7 @@
                     </tr>
                   <tr>
                     <td class="px-0 py-1">Suite</td>
-                    <td class="px-0 py-1 text-right">€4.299.00</td>
+                    <td class="px-0 py-1 text-right">€{{ $value->guests_in_base_price }}</td>
                   </tr>
                   <tr>
                     <td class="px-0 py-1">Tax</td>
@@ -428,7 +428,7 @@
                 <table class="table table-borderless mb-0">
                   <tr>
                     <td class="px-0 py-1">Subtotal</td>
-                    <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                    <td class="px-0 py-1 text-right"><b>€{{ $value->guests_in_base_price }}</b></td>
                   </tr>
                 </table>
               </div>

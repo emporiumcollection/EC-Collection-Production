@@ -121,7 +121,7 @@
                     </tr>
                   <tr>
                     <td class="px-0 py-1">Suite</td>
-                    <td class="px-0 py-1 text-right">€4.299.00</td>
+                    <td class="px-0 py-1 text-right">€{{ $value->guests_in_base_price }}</td>
                   </tr>
                   <tr>
                     <td class="px-0 py-1">Tax</td>
@@ -139,7 +139,7 @@
                 <table class="table table-borderless mb-0">
                   <tr>
                     <td class="px-0 py-1">Subtotal</td>
-                    <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                    <td class="px-0 py-1 text-right"><b>€{{ $value->guests_in_base_price }}</b></td>
                   </tr>
                 </table>
               </div>

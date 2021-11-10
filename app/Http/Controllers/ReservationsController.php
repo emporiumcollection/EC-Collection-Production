@@ -98,10 +98,9 @@ class ReservationsController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
 
-        $this->data['suites'] = properties::with('suites')->where('id',\Session::get('property_id'))->get();
+        $this->data['property'] = properties::with(['suites', 'container'])->where('id',\Session::get('property_id'))->get();
 
-        $this->data['property'] = properties::select(['id'])
-        ->where('id',\Session::get('property_id'))->get();
+        //$this->data['property'] = properties::select(['id'])->where('id',\Session::get('property_id'))->get();
 
         $selected_suite = \Session::get('suite_array');
         
@@ -118,6 +117,17 @@ class ReservationsController extends Controller {
         return view($file_name, $this->data);   
     }
 
+    public function guest(Request $request)
+    {
+        $child = $request->child;
+        $adult = $request->adult;
+        $guests = $child + $adult;
+        
+        \session()->put('selected_child',$child);
+        \session()->put('selected_adult',$adult);
+        \session()->put('selected_guests',$guests);
+    }
+
     public function reserveSuite()
     {
         $suite_id = \Session::get('suit_id');
@@ -125,7 +135,7 @@ class ReservationsController extends Controller {
         $arr = [];
         foreach($suite_id as $suite_id)
         {
-            $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suite_id)->get();
+            $this->data['suites'] = PropertyCategoryTypes::where('id',$suite_id)->get();
             
             $arr[] = $this->data['suites'];
         }
@@ -340,14 +350,14 @@ class ReservationsController extends Controller {
         $this->data['db'] = $this->databaseName();
         
         $this->data['randomnum'] = mt_rand(0370,9999);        
-        $arrival_date = explode("-",\Session::get('arrival_date'));
-        $departure_date = explode("-",\Session::get('departure_date'));
-        
-        $this->data['arrive'] = $arrival_date[0];
-        $this->data['departure'] = $departure_date[0];
-        $this->data['year'] = $departure_date[1];
-        $this->data['month'] = date('M', $departure_date[2]);
-        $this->data['month_int'] = $departure_date[2];
+        $arrival_date = explode("-",\Session::get('arrival'));
+        $departure_date = explode("-",\Session::get('departure'));
+        // echo "<pre>";print_r($departure_date);exit; 
+        $this->data['arrive'] = $arrival_date[2];
+        $this->data['departure'] = $departure_date[2];
+        $this->data['year'] = $departure_date[0];
+        $this->data['month'] = date('M', $departure_date[1]);
+        $this->data['month_int'] = $departure_date[1];
         
         $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',\Session::get('suit_id'))->first();
 
@@ -402,8 +412,14 @@ class ReservationsController extends Controller {
         $this->data['hotel_name'] = $words[0][0].$words[1][0];
 
         $this->data['randomnum'] = mt_rand(0370,9999);        
-        $arrival_date = explode("-",\Session::get('arrival_date'));
-        $departure_date = explode("-",\Session::get('departure_date'));
+         $arrival_date = explode("-",\Session::get('arrival'));
+        $departure_date = explode("-",\Session::get('departure'));
+        // echo "<pre>";print_r($departure_date);exit; 
+        $this->data['arrive'] = $arrival_date[2];
+        $this->data['departure'] = $departure_date[2];
+        $this->data['year'] = $departure_date[0];
+        $this->data['month'] = date('M', $departure_date[1]);
+        $this->data['month_int'] = $departure_date[1];
         
         $suite_id = \Session::get('suit_id');
 
@@ -418,12 +434,6 @@ class ReservationsController extends Controller {
         $selected_suite = \Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
-
-        $this->data['arrive'] = $arrival_date[0];
-        $this->data['departure'] = $departure_date[0];
-        $this->data['year'] = $departure_date[1];
-        $this->data['month'] = date('M', $departure_date[2]);
-        $this->data['month_int'] = $departure_date[2];
 
         $suite_id = \Session::get('suit_id');
         $companion = \Session::get('companion_data');

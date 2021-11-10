@@ -34,9 +34,10 @@
 
       });
 
-    } // End Daterange Picker
+} // End Daterange Picker
 
-    $(document).on("click", ".btn-use-addr", function (e) {
+$(document).ready(function(){
+  $(document).on("click", ".btn-use-addr", function (e) {
       e.preventDefault();
       $('.btn-use-addr').removeClass('active')
       $(this).addClass('active')
@@ -51,17 +52,6 @@
       $(this).remove();
     });
 
-    $('#smartwizard').smartWizard({
-      theme: 'arrows',
-      selected: 0,
-      enableURLhash: false,
-      toolbarSettings: {
-        showNextButton: false,
-        showPreviousButton: false,
-      },
-
-    });
-
     $('.logo-list').slick({
       slidesToShow: 7,
       slidesToScroll: 3,
@@ -70,7 +60,18 @@
       variableWidth: true,
       autoplay: true,
       autoplayTimeout: 3000,
-    })
+    });
+
+    /*$('#smartwizard').smartWizard({
+      theme: 'arrows',
+      selected: 0,
+      enableURLhash: false,
+      toolbarSettings: {
+        showNextButton: false,
+        showPreviousButton: false,
+      },
+
+    });*/
     $('.img-main-banner').slick({
       infinite: true,
       speed: 600,
@@ -146,53 +147,6 @@
       });
     });
 
-    $('.field-count-reservation').on('click', '.plus-room', function () {
-      if ($(this).prev().find('.mr-1').html() < 5) {
-        $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
-        $(this).closest('.field-count-reservation').find('.min-room').removeClass('disable');
-        var curr = $(this).closest('.guest-pick-container').find(".col-ews");
-        var currLength = curr.length + 1;
-        var temp = '<div class="col-6 col-ews mb-3" id="room-' + currLength + '">' +
-          '<p><b>Suite ' + currLength + '</b></p>' +
-          '<div class="row align-items-center py-2">' +
-          '<div class="col-7">' +
-          '<p class="mb-0"><b>Adults</b></p>' +
-          '</div>' +
-          '<div class="col-5">' +
-          '<div class="row field-count-reservation align-items-center">' +
-          '<button type="button" class="min">-</button>' +
-          '<div class="col text-center">' +
-          '<span class="mr-1 adult-val" >1 </span>' +
-          '</div>' +
-          '<button type="button" class="plus mr-3">+</button>' +
-          '</div>' +
-          '</div>' +
-          '</div>' +
-          '<div class="row align-items-center py-2">' +
-          '<div class="col-7">' +
-          '<p class="mb-0"><b>Children</b></p>' +
-          '</div>' +
-          '<div class="col-5">' +
-          '<div class="row field-count-reservation align-items-center">' +
-          '<button type="button" class="min">-</button>' +
-          '<div class="col text-center">' +
-          '<span class="mr-1 child-val">1 </span>' +
-          '</div>' +
-          '<button type="button" class="plus mr-3">+</button>' +
-          '</div>' +
-          '</div>' +
-          '</div>' +
-          '</div>';
-        $('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
-        $('.guest-pick-body .list-eoom').append(temp);
-      }
-      if ($(this).prev().find('.mr-1').html() > 4) {
-        $(this).closest('.field-count-reservation').find('.plus-room').addClass('disable');
-        $('.list-eoom').hide();
-        $('.room-limit').show();
-      }
-    });
-
     $('.field-count-reservation ').on('click', '.min-room', function () {
       $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
 
@@ -232,6 +186,8 @@
         $(this).closest('.field-count-reservation').find('.min').addClass('disable');
       }
     });
+});
+    
 
 $(function() {
 

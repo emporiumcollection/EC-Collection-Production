@@ -11,6 +11,7 @@
         cursor: pointer;
     }
 </style>
+
 @section('content')
 <div class="content-em">
   <div class="top-wrapper">

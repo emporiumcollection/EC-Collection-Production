@@ -873,7 +873,9 @@ trait Property {
         \session()->put('children',$child);
         \session()->put('Guests',$Guests);
         \session()->put('arrival_date',strtotime($arrive_date));
-        \session()->put('departure_date',strtotime($departure_date));        
+        \session()->put('arrival',$arrive_date);
+        \session()->put('departure_date',strtotime($departure_date));
+        \session()->put('departure',$departure_date);                
     }
      public function setFitlerOptions(){
         $this->data['experiences_data'] = \DB::table('tb_categories')

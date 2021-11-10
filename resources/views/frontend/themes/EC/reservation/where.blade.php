@@ -39,7 +39,7 @@
 	                  <div class="row field-count-reservation align-items-center">
 	                    <button type="button" class="min-room disable">-</button>
 	                    <div class="col text-center">
-	                      <span class="mr-1 room-val">1</span>
+	                      <span class="mr-1 room-val">0</span>
 	                    </div>
 	                    <button type="button" class="plus-room mr-3">+</button>
 	                  </div>
@@ -58,7 +58,7 @@
 	                      <div class="row field-count-reservation align-items-center">
 	                        <button type="button" class="min">-</button>
 	                        <div class="col text-center">
-	                          <span class="mr-1 adult-val">{!! Session::get('adult') !!}</span>
+	                          <span class="mr-1 adult-val adult_val">{{ \Session::get('selected_adult') ? \Session::get('selected_adult') : \Session::get('adult') }}</span>
 	                        </div>
 	                        <button type="button" class="plus mr-3">+</button>
 	                      </div>
@@ -72,7 +72,7 @@
 	                      <div class="row field-count-reservation align-items-center">
 	                        <button type="button" class="min">-</button>
 	                        <div class="col text-center">
-	                          <span class="mr-1 child-val">{!! Session::get('children') !!} </span>
+	                          <span class="mr-1 child-val child_val">{{ \Session::get('selected_child') ? \Session::get('selected_child') : \Session::get('children') }}</span>
 	                        </div>
 	                        <button type="button" class="plus mr-3">+</button>
 	                      </div>
@@ -146,7 +146,7 @@
 	      </div>
 	      <div class="col-lg-9 col-md-8 mb-4">
 	        <div class="text-right">
-	          <a href="/reservation/suite" class="btn btn-dark px-5 availability-check">
+	          <a href="javascript:void(0);" class="btn btn-dark px-5 availability-check select_guest_">
 	            Next
 	          </a>
 	        </div>
