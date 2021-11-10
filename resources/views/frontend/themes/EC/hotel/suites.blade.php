@@ -32,29 +32,5 @@
   </div>
 </div>
 </div>
-<script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
-<script type="text/javascript">
-    properties[<?php echo $property->id;?>] = <?php echo json_encode($property);?>;
-</script>
-<script type="text/javascript">
-    $(document).ready(function(){
-        replacePropertySuites(<?php echo $property->id;?>);
-
-        $('#suite .nav-item').click(function(){
-            $('#suiteslist').hide();
-            $('#suiteinfo').show();
-            setTimeout('appendSuiteSlider()', 500);
-        });
-    });
-
-    function appendSuiteSlider(){  
-      $('#suiteinfo .slider-detail').removeClass("slick-initialized slick-slider");
-      $('#suiteinfo .slider-detail').slick({
-        slidesToShow: 1,
-        prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-        nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-      });
-    }
-</script>
 @endsection
 

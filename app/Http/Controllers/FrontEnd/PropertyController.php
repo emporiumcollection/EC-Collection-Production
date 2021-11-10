@@ -3305,7 +3305,8 @@ class PropertyController extends Controller {
     }
 
     public function getProperty($id){
-        $this->data['hotel_data'] = $this->PropertiGet($id);
+        $this->data['hotel_data'] = $this->getPropertyById($id);
+        $this->formatPropertyRecords($this->data['hotel_data']);
 
         return view('frontend.themes.EC.hotel.hotel_detail', $this->data);
     }

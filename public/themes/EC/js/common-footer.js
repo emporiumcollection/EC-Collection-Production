@@ -264,7 +264,7 @@ function setMapLocation(lat, long){
     }
 
     var myIcon = L.icon({
-      iconUrl: 'images/basic_geolocalize-01.svg',
+      iconUrl: '/images/basic_geolocalize-01.svg',
       iconSize: [40, 45],
     });
     L.tileLayer(

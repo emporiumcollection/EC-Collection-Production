@@ -27,8 +27,9 @@ function replacePropertyData(id){
     $(this).html('<a href="/hotel/hoteldetail/' + id + '" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>');
   });
   
-  
-  setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
+  if($('#map2').length){
+    setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
+  }
 
   $('[data-place="property-images"]').each(function() {
       // field = $(this).attr('data-replace');

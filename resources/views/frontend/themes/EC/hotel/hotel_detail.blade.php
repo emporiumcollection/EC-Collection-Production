@@ -7,7 +7,6 @@
 @section('meta_description', '')
 {{-- For Page's Content Part --}}
 @section('content')
-<script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <div class="content-em">
 <div class="top-wrapper" id="main-content">
   <div class="slide-023k4"></div>

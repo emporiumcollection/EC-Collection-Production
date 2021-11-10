@@ -47,7 +47,7 @@ Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture')
 Route::get('/hotel/spa', 'FrontEnd\HotelDetailController@spa');
 Route::get('/hotel/restaurant', 'FrontEnd\HotelDetailController@restaurant');
 Route::get('/hotel/detailrestaurant','FrontEnd\HotelDetailController@detailrestaurant');
-Route::get('/hotel/location','FrontEnd\HotelDetailController@location');
+Route::get('/hotel/location/{id}','FrontEnd\HotelDetailController@location');
 Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
 Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
 Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');

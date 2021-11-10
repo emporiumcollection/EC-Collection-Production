@@ -1,3 +1,6 @@
+<script type="text/javascript">
+  properties[<?php echo $property->id;?>] = <?php echo json_encode($property);?>
+</script>
 <div class="col-lg-8 content-lg">
   <ul class="nav nav-pills nav-clr nav-breadcrumb nav-breadcrumb-ip mb-3 mt-3">
     <li class="nav-item">
@@ -29,11 +32,17 @@
     
     <div class="main-content p-0">
       <div class="map-location">
-        <iframe width="100%" height="100%" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"
-          src="https://maps.google.co.in/maps?f=q&amp;source=s_q&amp;hl=en&amp;geocode=&amp;q=Madurai,+Tamil+Nadu&amp;aq=0&amp;oq=madursi&amp;sll=10.782836,78.288503&amp;sspn=5.674603,10.755615&amp;ie=UTF8&amp;hq=&amp;hnear=Madurai,+Tamil+Nadu&amp;t=m&amp;z=12&amp;ll=9.925201,78.119775&amp;output=embed"></iframe>
-      </div>
+        
+        
+        <div id="map2"></div>
     </div>
   </div>
 </div>
-
+<script>
+  $(document).ready(function(){
+    var lat  = {{ $property->latitude}}
+    var long = {{ $property->longitude}}
+    setMapLocation(lat, long);
+  });
+</script>
 @include('frontend.themes.EC.hotel.gallery')

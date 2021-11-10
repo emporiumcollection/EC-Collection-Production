@@ -1,4 +1,7 @@
 <?php
+if(!isset($path)){
+    $path = [];
+}
 $destinationTabContent = '';
 $destinationTemplate = '
 <div class="tab-pane fade <!--LEVEL1-SHOWCLASS--> show" id="<!--LEVEL1-CATALIAS-->">
