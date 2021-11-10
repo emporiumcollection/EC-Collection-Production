@@ -26,7 +26,7 @@
             <a class="dropdown-item" href="#">Share</a>
           </div>
         </div>
-        <a href="#" class="btn btn-primary ml-2">Book This Suite</a>
+        <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-primary ml-2">Book This Suite</a>
       </div>
     </div>
   </div>
