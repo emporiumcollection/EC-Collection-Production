@@ -2115,11 +2115,11 @@ function getNavitems(location, collection_name){
         <span class="city-l">` + location + `</span> <span class="cat-l">Channel</span>
       </a>
     </li>
-   <li class="nav-item">
+   <!--<li class="nav-item">
       <a class="nav-link nav-link-map" href="`+searchResultsPageUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Cuisine</span>
       </a>
-    </li>`;
+    </li>-->`;
 }
 
 function getHotelHtml(result, collection_name){
@@ -2146,6 +2146,9 @@ function getHotelHtml(result, collection_name){
 function getDestinationHtml(result, collection_name){
   var searchedLocation = '';
   var result_html_destination = '';
+  $('.wherepopup .' + collection_name + '-destination').hide();
+  $('#' + collection_name + '-desti-header').hide();
+
   $('.wherepopup .' + collection_name + '-destination').html(result_html_destination);
   if(result.dest != undefined){
     $(result.dest).each(function(key, val){
@@ -2163,14 +2166,10 @@ function getDestinationHtml(result, collection_name){
        result_html_destination += getNavitems(searchedLocation, collection_name);
     }
 
-    if(result_html_destination != ''){
+    if(result_html_destination !== ''){
       $('.wherepopup .' + collection_name + '-destination').html(result_html_destination);
       $('.wherepopup .' + collection_name + '-destination').show();
       $('#' + collection_name + '-desti-header').show();
-    }
-    else{
-      $('.wherepopup .' + collection_name + '-destination').hide();
-      $('#' + collection_name + '-desti-header').hide();
     }
 
     return result_html_destination;

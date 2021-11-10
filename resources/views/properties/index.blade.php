@@ -290,7 +290,7 @@ function change_option(row,filed_name,row_id,act)
 
 function fetchpropertycategory(catg)
 {
-	window.location.href = "{{URL::to('properties')}}?selcat="+catg;
+	window.location.href = "{{URL::to('properties')}}?selcat="+catg+"&selstatus="+status;
 }
 
 function filterstatus(status)
