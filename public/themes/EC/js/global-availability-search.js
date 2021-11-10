@@ -23,6 +23,9 @@ function replacePropertyData(id){
       $(this).html(listview);
   });
 
+  console.log(properties[id]['latitude'], properties[id]['longitude']);
+  setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
+
   $('[data-place="property-images"]').each(function() {
       // field = $(this).attr('data-replace');
       //console.log(properties[id][field]);
@@ -88,8 +91,6 @@ function replacePropertyData(id){
   }
 
   replaceGalleryNames(id);
-
-  setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
 }
 
 function initializeAllGalleries(){

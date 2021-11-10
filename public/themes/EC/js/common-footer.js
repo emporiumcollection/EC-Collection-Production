@@ -257,7 +257,10 @@ function setMapLocation(lat, long){
     ];
 
     if(!map){
-      map = L.map('map2').setView([lat, long], 8);
+      map = L.map('map2');
+      map.setView([lat, long], 18);
+    }else{
+      map.setView([lat, long], 18);
     }
 
     var myIcon = L.icon({
@@ -266,7 +269,7 @@ function setMapLocation(lat, long){
     });
     L.tileLayer(
       'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 18,
+      maxZoom: 22,
     }).addTo(map);
 
     for (var i = 0; i < locations.length; i++) {
