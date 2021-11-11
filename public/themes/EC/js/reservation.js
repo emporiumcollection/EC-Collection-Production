@@ -121,7 +121,7 @@ $( document ).ready(function() {
     var guest = new Array();
 
     $(document).on('click', ".select_suite", function(){
-
+        $(this).text("Selected");
         var suite_id = $(this).data('suite-id');
         var selected_guest = $('#select_suite_guest_'+suite_id).val();
         suit_id.push($(this).data('suite-id'));
@@ -256,7 +256,7 @@ $(document).ready(function(){
 
 
     $('.field-count-reservation').on('click', '.plus-room', function () {
-        console.log("asd");
+        
         if ($(this).prev().find('.mr-1').html() < 5) {
             $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
             $(this).closest('.field-count-reservation').find('.min-room').removeClass('disable');

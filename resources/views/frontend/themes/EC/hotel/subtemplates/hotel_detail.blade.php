@@ -200,7 +200,7 @@
           </div>
           <p>Reserve now, pay at the Hotel</p>
 
-          <a href="/reservation/when" class="btn btn-dark btn-block">Reservation</a>
+          <a href="/reservation/when/{{ $hotel_data[0]->id }}" class="btn btn-dark btn-block">Reservation</a>
         </div>
 
         <div class="side-detail text-left mb-3 px-2 i-none">

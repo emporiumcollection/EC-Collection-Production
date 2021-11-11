@@ -106,7 +106,6 @@ $(document).ready(function(){
     });
 
     $('.goto-guest').on("click", function (e) {
-        alert();
       $('#smartwizard').smartWizard("next");
       var iis = $(this).closest('.tab-pane').attr('id');
       $(".nav-wizard-active span").removeClass('active');

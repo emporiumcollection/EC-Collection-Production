@@ -40,7 +40,7 @@
                 <li>Access to 24 hour business centre</li>
               </ul>
             </div>
-        @if(!empty($property[0]->toArray()))
+        @if(!empty($property[0]))
           @foreach($property[0]->suites as $suite)  
             <div class="suite-list section-shadow mb-5">
               <div class="suite-tumb">
@@ -72,7 +72,7 @@
                         </p>
                         <div class="row align-items-center mt-5">
                           <div class="col-8 guestvalue">
-                            <p class="mb-0">From: <b>€1.099 per night</b></p>
+                            <p class="mb-0">From: <b>€{{ $suite->guests_in_base_price }}</b></p>
                             <p>inclusive of all taxes and fees</p>
                             <?php $i = $suite->total_guests; ?>
                             <input type="hidden" name="select_guest" class="select_guest" id="select_guest" value="">

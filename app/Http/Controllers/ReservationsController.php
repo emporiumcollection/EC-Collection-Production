@@ -1,7 +1,4 @@
 <?php
-// <?php  echo "<pre>"; print_r($suites[0]->suites);
-// echo "<pre>"; print_r($selected_suite);exit; 
- 
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\controller;
@@ -57,14 +54,14 @@ class ReservationsController extends Controller {
         return view($file_name,compact('atmosphere','facilities','style'));
     }
 
-    public function when(Request $request)
+    public function when(Request $request,$id)
     {
         if (!\Auth::check())
             return redirect('user/login');
         $properties = PropertyCategoryTypes::first();
-               
+        \session()->put('property_id',$id);                
         $request->session()
-                ->put('property_id',$properties->property_id);
+                ->put('property_id',$id);
         $request->session()
                 ->put('suite_name',$properties->category_name);               
         $this->data['layout_type'] = 'old';
