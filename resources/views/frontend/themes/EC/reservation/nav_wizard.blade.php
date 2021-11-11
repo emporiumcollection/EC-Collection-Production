@@ -56,7 +56,7 @@
             </a>
           </li>
           <li>
-            <a class="nav-link {{ Request::is('policies') ? 'active' : ''}}" href="/policies">
+            <a class="nav-link {{ Request::is('reservation/policies') ? 'active' : ''}}" href="/reservation/policies">
               Policies
             </a>
           </li>

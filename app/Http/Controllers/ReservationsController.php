@@ -191,7 +191,7 @@ class ReservationsController extends Controller {
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
         
-        $this->data['policies'] = PropertyCategoryTypes::select('id','property_id','category_name','booking_policy')->where('id',\Session::get('suit_id'))->first();
+        $this->data['policies'] = PropertyCategoryTypes::select('id','property_id','category_name','booking_policy')->where('id',\Session::get('suit_id'))->get();
 
         $this->data['termDetail'] = \DB::table('tb_properties_custom_plan')->where('property_id',\Session::get('property_id'))->get();
 
@@ -405,7 +405,7 @@ class ReservationsController extends Controller {
             return redirect('user/login');
 
         $this->data['properties'] = properties::where('id',\Session::get('property_id'))->get();
-        
+        // echo "<pre>";print_r($this->data['properties']);exit;
         $hotel_name = $this->data['properties'][0]->property_short_name;
 
         $words = explode(' ', $hotel_name);
@@ -414,7 +414,7 @@ class ReservationsController extends Controller {
         $this->data['randomnum'] = mt_rand(0370,9999);        
          $arrival_date = explode("-",\Session::get('arrival'));
         $departure_date = explode("-",\Session::get('departure'));
-        // echo "<pre>";print_r($departure_date);exit; 
+        
         $this->data['arrive'] = $arrival_date[2];
         $this->data['departure'] = $departure_date[2];
         $this->data['year'] = $departure_date[0];
@@ -443,7 +443,7 @@ class ReservationsController extends Controller {
         $this->data['count'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->count();
 
         $this->data['policies'] = PropertyCategoryTypes::where('id',$suite_id)->first();        
-        $file_name = 'frontend.themes.EC.reservation.reservations_';
+        $file_name = 'frontend.themes.EC.reservation.receipt';
         return view($file_name, $this->data);   
     }
 

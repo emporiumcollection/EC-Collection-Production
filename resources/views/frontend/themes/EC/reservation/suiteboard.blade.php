@@ -55,7 +55,7 @@
                 <div class="suite-board-footer">                  
                   <div class="footer-sdse">
                     <p>€{{ $data->board_rackrate }} per night inclusive of all taxes and fees</p>
-                    <a href="/policies" class="btn btn-dark btn-block rounded-0 btn-nextwizard">Select</a>
+                    <a href="/reservation/policies" class="btn btn-dark btn-block rounded-0 btn-nextwizard">Select</a>
                   </div>
                 </div>
               </div>
