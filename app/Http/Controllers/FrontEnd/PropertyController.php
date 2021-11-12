@@ -7196,6 +7196,7 @@ class PropertyController extends Controller {
         $keyword = $request->query->get('keyword');
         //Get featured choice properties
         $this->data['featureProperties'] = $this->getFeaturedProperties([], $keyword);
+        $this->setGalleryAndFormat($this->data['featureProperties']);
         echo json_encode($this->data['featureProperties']);
         exit;
     }
