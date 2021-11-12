@@ -32537,8 +32537,9 @@ span.calElement.prev:hover {
   position: relative; }
 
 #suitesside-tabContent {
-  max-width: 780px;
-  padding-bottom: 130px; }
+  /*max-width: 780px;*/
+  padding-bottom: 130px; 
+}
 
 .content-img {
   width: 100%;
