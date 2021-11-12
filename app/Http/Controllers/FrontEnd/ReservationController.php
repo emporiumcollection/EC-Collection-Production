@@ -22,18 +22,21 @@ class ReservationController extends Controller {
 
     use Property;
 
-    public function when(Request $request,$id)
+    public function when(Request $request, $id)
     {
-        if (!\Auth::check())
+        //$request->session()
+        //       ->put('property_id', $id); 
+        \Session::put('property_id', $id);
+        
+        if (!\Auth::check()){
             return redirect('user/login');
+        }
+        \Session::put('property_id', $id);
         $properties = PropertyCategoryTypes::first();
-        \session()->put('property_id',$id); 
 
         $request->session()
-                ->put('property_id',$id);
+                ->put('suite_name',$properties->category_name); 
 
-        $request->session()
-                ->put('suite_name',$properties->category_name);               
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -45,10 +48,12 @@ class ReservationController extends Controller {
         return view($file_name, $this->data);   
     }
 
-    public function where()
+    public function where(Request $request)
     {
-        if (!\Auth::check())
+        if (!\Auth::check()){
             return redirect('user/login');
+        }
+
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -65,10 +70,8 @@ class ReservationController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
 
-        $this->data['property'] = properties::with(['suites', 'container'])->where('id',\Session::get('property_id'))->get();
-        
-        //$this->data['property'] = properties::select(['id'])->where('id',\Session::get('property_id'))->get();
-
+        $this->data['property'] = properties::with(['suites', 'container'])->where('id', \Session::get('property_id'))->get();
+            
         $selected_suite = \Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
@@ -97,16 +100,18 @@ class ReservationController extends Controller {
 
     public function reserveSuite()
     {
-        $suite_id = \Session::get('suit_id');
-
-        $arr = [];
-        foreach($suite_id as $suite_id)
-        {
-            $this->data['suites'] = PropertyCategoryTypes::where('id',$suite_id)->get();
+            $suite_id = \Session::get('suit_id');
+            $arr = [];
+            $count = 0;
+            foreach($suite_id as $suite_id)
+            {
+                $count = $count + 1;
+                $this->data['suites'] = PropertyCategoryTypes::where('id',$suite_id)->get();
+                
+                $arr[] = $this->data['suites'];
+            }
             
-            $arr[] = $this->data['suites'];
-        }
-        return $arr;
+            return $arr;           
     }
 
     public function suiteBoard()
@@ -116,27 +121,34 @@ class ReservationController extends Controller {
 
         $arr = $this->reserveSuite();
         
-        $selected_suite = \Session::get('suite_array');
-        
-        $this->data['selected_suite'] = $selected_suite;
-        $this->data['suites'] = $arr;
+        if(!empty($arr)){            
+
+            $selected_suite = \Session::get('suite_array');
+            
+            $this->data['selected_suite'] = $selected_suite;
+            $this->data['suites'] = $arr;
 
 
-        /*foreach($selected_suite as $suit_id)
-        {
-            $this->data['suites_board'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suit_id)->first();
-        } */
-        
-        $this->data['suitesboards'] = properties::with('boards')->where('id',\Session::get('property_id'))->get();
-        $this->data['layout_type'] = 'old';
-        $this->data['keyword'] = '';
-        $this->data['arrive'] = '';
-        $this->data['departure'] = '';
-        $this->data['total_guests'] = '';        
-        $this->data['location'] = '';        
+            /*foreach($selected_suite as $suit_id)
+            {
+                $this->data['suites_board'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suit_id)->first();
+            } */
+            
+            $this->data['suitesboards'] = properties::with('boards')->where('id',\Session::get('property_id'))->get();
 
-        $file_name = 'frontend.themes.EC.reservation.suiteboard';
-        return view($file_name, $this->data);   
+            
+            $this->data['layout_type'] = 'old';
+            $this->data['keyword'] = '';
+            $this->data['arrive'] = '';
+            $this->data['departure'] = '';
+            $this->data['total_guests'] = '';        
+            $this->data['location'] = '';        
+
+            $file_name = 'frontend.themes.EC.reservation.suiteboard';
+            return view($file_name, $this->data);
+        }else{
+            return redirect::to('/reservation/suite')->with('massage', 'Please select Guest!');
+        }               
     }
 
     public function Policies()
@@ -172,18 +184,21 @@ class ReservationController extends Controller {
     {           
         $suites = $request->suit_id;
         $guest = $request->guest;
-        
-        if (!\Auth::check())
-            return redirect('user/login');
-
+        $sum = 0;
+        foreach($guest as $value) {
+            $sum+= $value;
+        }
+        $count = 0;
         foreach($suites as $key => $suite)
         {    
+            $count = $count+1;
             $suite_array[$suite] = $guest[$key];
         }
-
         \Session::put('suite_array',$suite_array);
         \Session::put('suit_id',$suites);
-
+        \Session::put('selected_suite_guest',$sum);
+        \Session::put('selected_suite_number',$count);
+        
     }
 
     public function whoistravelling()
@@ -424,6 +439,34 @@ class ReservationController extends Controller {
         $data['junior'] = \Session::get('children');
         
         \DB::table('tb_reservations')->insert($data);
+    }
+
+    public function databaseName(){
+
+        if(request()->getHost() == 'development.emporium-voyage.com'){
+
+        $db = Config::get('app.EmporiumVoyage');   
+
+        }
+
+        if(request()->getHost() == 'emporium-safari.com'){
+
+        $db = Config::get('app.EmporiumSafari');   
+
+        }
+
+        if(request()->getHost() == 'emporium-spa.com'){
+
+        $db = Config::get('app.EmporiumSpa');   
+
+        }
+
+        if(request()->getHost() == 'emporium-islands.com'){
+
+        $db = Config::get('app.EmporiumIslands');   
+
+        }
+        return $db; 
     }
 
 }

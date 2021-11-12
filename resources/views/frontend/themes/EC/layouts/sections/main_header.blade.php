@@ -12,18 +12,27 @@
               aria-controls="searchF">
               <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
             </a>
-            <a href="#cityList" class="menu-nav text-menu city-f">
-              <span data-toggle="tooltip" title="Change destination">{{$keyword}}</span>
-            </a>
+            @if(!empty(\Session::get('keyword')))
+              <a href="#cityList" class="menu-nav text-menu city-f">
+                <span data-toggle="tooltip" title="Change destination">
+                {{ \Session::get('keyword') }}</span>
+              </a>
+            @endif  
             <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
-              <span class="cal-date" data-toggle="tooltip" title="Change availability">{{ date("M d",strtotime($arrive)) }} - {{ date("M d",strtotime($departure)) }}</span>
+              <span class="cal-date" data-toggle="tooltip" title="Change availability">
+                @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
+                  {{ \Session::get('arrival') }} - {{ \Session::get('departure') }}
+                @else
+                Selecte Date
+                @endif  
+            </span>
             </a>
             <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
               aria-controls="whoF">
               <div class="filter-lst expand filter-guest filter-white">
                 <div class="input-group">
                   <div class="gust-dropdown">
-                    <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ $total_guests }}</span> Guests</div>
+                    <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
                   </div>
                 </div>
               </div>
@@ -336,14 +345,16 @@
               </a>
               <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="calcF">
-                <span class="cal-date">{{ date("M d",strtotime($arrive)) }} - {{ date("M d",strtotime($departure)) }}</span>
+                <span class="cal-date">{{ \Session::get('arrival') }} - {{ \Session::get('departure') }}</span>
               </a>
               <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="whoF">
                 <div class="filter-lst expand filter-guest filter-white">
                   <div class="input-group">
                     <div class="gust-dropdown">
-                      <div class="guest-option rto"><span class="guest-count">{{ $total_guests }}</span> Guest</div>
+                      <div class="guest-option rto"><span class="guest-count">
+                        {{ \Session::get('Guests') }}
+                      </span> Guest</div>
                     </div>
                   </div>
                 </div>
@@ -397,35 +408,35 @@
     <div class="collapse clp dash-clp" id="dashF" data-parent="#menunav">
       <div class="drop-grid">
         <?php if($currentdomain != 'voyage'):?>
-        <a href="https://emporium-voyage.com/globalsearchavailability?s=<?php echo $keyword;?>">
+        <a href="https://emporium-voyage.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-building mr-2"></i> <span>Voyage</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'safari'):?>
-        <a href="https://emporium-safari.com/globalsearchavailability?s=<?php echo $keyword;?>">
+        <a href="https://emporium-safari.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-safari mr-2"></i> <span>Safari</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'spa'):?>
-        <a href="https://emporium-spa.com/globalsearchavailability?s=<?php echo $keyword;?>">
+        <a href="https://emporium-spa.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-spa-i mr-2"></i> <span>Spa</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'islands'):?>
-        <a href="https://emporium-islands.com/globalsearchavailability?s=<?php echo $keyword;?>">
+        <a href="https://emporium-islands.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-islands mr-2"></i> <span>Islands</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'golf'):?>
-        <a href="https://emporium-golf.com/globalsearchavailability?s=<?php echo $keyword;?>">
+        <a href="https://emporium-golf.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-golf mr-2"></i> <span>Golf</span>
           </div>

@@ -161,7 +161,7 @@ $level4TabTemplate = '<div class="tab-pane fade <!--LEVEL4-SHOWCLASS-->" id="<!-
     <ul class="nav nav-pills nav-clr mb-5">
         <?php echo $destinationLevel1;?>
     </ul>
-    <p><b>Current Destination : <?php echo $keyword;?></b></p>
+    <p><b>Current Destination : {{ \Session::get('keyword') }}</b></p>
     <div class="tab-content">
         <!-- Europe tab content -->
         <?php echo $destinationTabContent;?>

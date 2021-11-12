@@ -155,10 +155,7 @@ $( document ).ready(function() {
             }
         });
     });
-
-
-    
-    
+        
 });
 
 $(document).on('click', ".step_where", function(){

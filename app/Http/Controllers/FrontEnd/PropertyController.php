@@ -2926,7 +2926,7 @@ class PropertyController extends Controller {
         }
 
         $this->storeSession($adults, $childs, $arrive,
-            $departure);
+            $departure,$keyword);
 
         //Get Number of night
         $number_of_nights = '';
@@ -3307,7 +3307,7 @@ class PropertyController extends Controller {
     public function getProperty($id){
         $this->data['hotel_data'] = $this->getPropertyById($id);
         $this->formatPropertyRecords($this->data['hotel_data']);
-
+        $this->data['layout_type'] = 'old';
         return view('frontend.themes.EC.hotel.hotel_detail', $this->data);
     }
 

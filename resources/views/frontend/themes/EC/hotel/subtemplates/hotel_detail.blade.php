@@ -118,10 +118,10 @@
         <div class="hotel-prices hotel-price-detail d-flex h-100">
           <div class="row align-items-center justify-content-center">
             <div class="mr-2">
-              <i class="ico ico-info-green"></i>
+              <i class="ico ico-info-green" type="button" data-sidebar="#priceinfo"></i>
             </div>
             <h3 class="mb-0">
-              <span class="title-font-2 mr-1">From</span> <span class="color-primary"> {{ $hotel_data[0]->price }}</span>
+              <span class="title-font-2 mr-1">From €</span> <span class="color-primary"> {{ $hotel_data[0]->price }}</span>
             </h3>
             <div class="ml-2">
               <span class="pernight"></span>
@@ -1962,3 +1962,4 @@
 </div>
 
 @include('frontend.themes.EC.layouts.subsections.quick_info')
+@include('frontend.themes.EC.layouts.subsections.priceinfo')

@@ -6,9 +6,9 @@
   <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
 
     <div class="pr-lst result-grid">
-      <!-- <div>
+      <div>
         <img <?php echo 'src="/images/default-hotel.png"';?> <?php echo 'data-src="/images/default-hotel.png"';?> class="w-100 results-media" alt="">
-      </div> -->
+      </div>
       <?php 
       foreach($property->propertyImages as $image):
         
@@ -64,7 +64,7 @@
             <i class="ico ico-info-green"></i>
           </div>
           <h3 class="mb-0">
-            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ <?php echo $property->price;?> </span>
+            <span class="title-font-2 mr-1">From €</span> <span class="color-primary">€ <?php echo $property->price;?> </span>
           </h3>
           <div class="ml-2">
             <span class="pernight"></span>

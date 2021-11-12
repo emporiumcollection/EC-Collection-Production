@@ -43,24 +43,41 @@
             </div>
           </div>
           <div class="row suite-board-body">
-            @foreach($suitesboards[0]->boards as $data)
-              <div class="col-lg-4 col-md-12 suite-price-feature">
-                <div class="suite-board-main">
-                  <h4>{{ $data->board_name }}</h4>
-                  <ul class="pl-3">
-                    <li>Accommodation</li>
-                    <li>Daily breakfast</li>
-                  </ul>
-                </div>
-                <div class="suite-board-footer">                  
-                  <div class="footer-sdse">
-                    <p>€{{ $data->board_rackrate }} per night inclusive of all taxes and fees</p>
-                    <a href="/reservation/policies" class="btn btn-dark btn-block rounded-0 btn-nextwizard">Select</a>
+
+            @if(!empty($suitesboards[0]->boards))
+              @foreach($suitesboards[0]->boards as $data)
+                <div class="col-lg-4 col-md-12 suite-price-feature">
+                  <div class="suite-board-main">
+                    <h4>{{ $data->board_name }}</h4>
+                    <ul class="pl-3">
+                      <li>Accommodation</li>
+                      <li>Daily breakfast</li>
+                    </ul>
+                  </div>
+                  <div class="suite-board-footer">                  
+                    <div class="footer-sdse">
+                      <p>€{{ $data->board_rackrate }} per night inclusive of all taxes and fees</p>
+                      <a href="/reservation/policies" class="btn btn-dark btn-block rounded-0 btn-nextwizard">Select</a>
+                    </div>
                   </div>
                 </div>
-              </div>
-              @endforeach              
+              @endforeach
+            @endif
+            @if(empty($suitesboards))
+              <h2>Suite Boards are not available!</h2>                
+            @endif  
           </div>            
+        </div>
+      </div>
+      <br>
+      <br>
+      <br>
+
+      <div class="col-lg-9 col-md-8 mb-4">
+        <div class="text-right">
+          <a href="/reservation/policies" class="btn btn-dark px-5 availability-check ">
+            Next
+          </a>
         </div>
       </div>
       <div class="col-lg-3 col-md-4">

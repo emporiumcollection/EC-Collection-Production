@@ -444,33 +444,7 @@ class ReservationsController extends Controller {
         return view($file_name, $this->data);   
     }
 
-    public function databaseName(){
-
-        if(request()->getHost() == 'development.emporium-voyage.com'){
-
-        $db = Config::get('app.EmporiumVoyage');   
-
-        }
-
-        if(request()->getHost() == 'emporium-safari.com'){
-
-        $db = Config::get('app.EmporiumSafari');   
-
-        }
-
-        if(request()->getHost() == 'emporium-spa.com'){
-
-        $db = Config::get('app.EmporiumSpa');   
-
-        }
-
-        if(request()->getHost() == 'emporium-islands.com'){
-
-        $db = Config::get('app.EmporiumIslands');   
-
-        }
-        return $db; 
-    }
+    
 
     public function addReservationData()
     {
