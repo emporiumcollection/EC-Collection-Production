@@ -108,7 +108,7 @@
         <div class="left-meta">
           <ul class="nav nav-pills nav-fill">
             <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#reviews">Reviews</a>
+              <a class="nav-link btn-sidebar" href="#" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $editorChoice->id;?>)">Reviews</a>
             </li>
             <li class="nav-item">
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">Hotel Info</a>

@@ -45,9 +45,9 @@
 
     </div>
     <div class="hotel-meta full-width is-small">
-      <!--<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $property->id;?>)">
         Reviews
-      </a>-->
+      </a>
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Quick info
       </a>

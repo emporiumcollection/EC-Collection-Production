@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\properties;
 use App\Models\PropertyImages;
 use App\Models\amenities;
+use App\Models\reviews;
+use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -25,7 +27,10 @@ class HotelDetailController extends Controller
         $this->data['location'] = '';
         $this->data['photos'] = '';
 
-        $file_name = 'frontend.themes.EC.hotel.hotel_detail';      
+        $this->data['reviews'] = $this->getReviews();
+
+        $file_name = 'frontend.themes.EC.hotel.hotel_detail'; 
+             
         return view($file_name, $this->data);
     }
 
@@ -225,4 +230,5 @@ class HotelDetailController extends Controller
                 );
         \DB::table('tb_collection')->insert($collection_data);
     }
+    
 }

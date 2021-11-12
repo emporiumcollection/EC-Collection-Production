@@ -75,7 +75,7 @@ if(!isset($property)){
             </ul>
           </div>
         </li>
-        <li class="nav-item">
+        {{--<li class="nav-item">
           <a class="nav-link " href="/hotel/architecture">Architecture</a>
         </li>
         <li class="nav-item">
@@ -102,7 +102,7 @@ if(!isset($property)){
               </li>
             </ul>
           </div>
-        </li>
+        </li>--}}
         <li class="nav-item">
           <a class="nav-link @@locActive" href="/hotel/location/{{ $property->id }}">Location</a>
         </li>
@@ -112,11 +112,11 @@ if(!isset($property)){
         <li class="nav-item">
           <a class="nav-link btn-sidebar" href="#" onclick="replacePropertyData(<?php echo $property->id;?>)" data-sidebar="#property-gallery">Gallery</a>
         </li>
-        <li class="nav-item">
+       {{--<li class="nav-item">
           <a class="nav-link @@sosActive" href="/hotel/social">Social</a>
-        </li>
+        </li>--}}
         <li class="nav-item">
-          <a class="nav-link @@comActive" href="#">Video Channel</a>
+          <a class="nav-link @@comActive" href="#" data-sidebar="#videos" {{--onclick="getDefaultChannel()"--}}>Video Channel</a>
         </li>
         <li class="nav-item">
           <a class="nav-link @@faq" href="/hotel/faq">FAQ</a>

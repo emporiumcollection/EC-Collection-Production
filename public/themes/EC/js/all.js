@@ -2219,3 +2219,19 @@ $(document).ready(function () {
   picker.data('daterangepicker').show();
 
 });
+
+(function( func ) {
+  $.fn.addClass = function() { // replace the existing function on $.fn
+      func.apply( this, arguments ); // invoke the original function
+      this.trigger('classChanged'); // trigger the custom event
+      return this; // retain jQuery chainability
+  }
+})($.fn.addClass); // pass the original function as an argument
+
+(function( func ) {
+  $.fn.removeClass = function() {
+      func.apply( this, arguments );
+      //this.trigger('classChanged');
+      return this;
+  }
+})($.fn.removeClass);

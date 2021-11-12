@@ -52,7 +52,10 @@ Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
 Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
 Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
 Route::post('/add_collection','FrontEnd\HotelDetailController@add_collection');
-
+//HotelDetail Reviews
+Route::get('/hotel/get-reviews/{id}','FrontEnd\ReviewController@getPropertyReviews');
+Route::post('/hotel/add-reviews','FrontEnd\ReviewController@addreviews');
+//
 
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
