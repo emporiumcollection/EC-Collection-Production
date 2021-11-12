@@ -1255,9 +1255,6 @@ var ajaxReq = 'ToCancelPrevReq';
     $('.sidebar').removeClass('show');
   });
 
-
-
-
   $(document).on('click', '.btn-sidebar', function (e) {
     e.preventDefault();
     var dataClick = $(this).attr('data-sidebar');
@@ -2176,7 +2173,50 @@ function getDestinationHtml(result, collection_name){
   }
 }
 
+$(document).ready(function(){
+
+    $(function() {
+
+  $('input[name="datefilter"]').daterangepicker({
+      autoUpdateInput: false,
+      locale: {
+          cancelLabel: 'Clear'
+      }
+  });
+
+  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+  });
+
+  $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+      $(this).val('');
+  });
+
+});
+
+    
+});      
+
+function setWidth() {
+    var carWidth = $('.owl-stage').width() + 100;
+    $('.owl-stage').width(carWidth);
+  }
 $(document).ready(function () {
+
+  $('.swipe-collection').owlCarousel({
+    items: 4,
+    margin: 20,
+    autoWidth: true,
+    afterInit: setWidth()
+  });
+  
+  $('.swipe-action-btn').click(function () {
+    $(this).closest('.swipe-action').find('.swipe-action-content').toggleClass('clicked');
+  });
+  $('.swipe-item').mouseleave(function () {
+    $('.swipe-action-content').removeClass('clicked')
+  });
+
   $("#price_range").slider({
     min: 0,
     max: 900,

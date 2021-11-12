@@ -1,3 +1,4 @@
+
 <div class="sidebar-main" id="myCollection">
     <a href="#" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
@@ -319,15 +320,15 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-4">
+                                    <div class="col-4"> 
                                         <label>Start Date - End Date</label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" name="datefilter" id="from_to_end" class="form-control"/>
+                                        <input type="text" name="datefilter" value="" id="from_to_end" class="form-control"/>
                                     </div>
-                                        {{-- <span class="span_date"></span> --}}
 
                                 </div>
+                                <input type="hidden" name="id" value="">
                             </div>
                             <div class="col-12">
                                 <div class="text-right mt-4">

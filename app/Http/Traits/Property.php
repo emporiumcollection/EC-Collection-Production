@@ -142,7 +142,7 @@ trait Property {
 
     }
 
-    public function getFeaturedProperties($cities, $keyword){
+    public function getFeaturedProperties($cities,$keyword){
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 

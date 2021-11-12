@@ -6,6 +6,9 @@
   <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
 
     <div class="pr-lst result-grid">
+      <!-- <div>
+        <img <?php echo 'src="/images/default-hotel.png"';?> <?php echo 'data-src="/images/default-hotel.png"';?> class="w-100 results-media" alt="">
+      </div> -->
       <?php 
       foreach($property->propertyImages as $image):
         
@@ -35,7 +38,7 @@
           <i class="ico ico-diamon diamon-label"></i>
         </a>
         <div class="dropdown-menu">
-          <a href="#" class="dropdown-item" >Add to collection</a>
+          <a href="#" class="dropdown-item add_collection">Add to collection</a>
           <a href="#" class="dropdown-item btn-sidebar create-collection"
             data-sidebar="#myCollection" onclick="collection(<?php echo $property->id;?>)">Create new collection</a>
         </div>
@@ -45,7 +48,7 @@
     <div class="hotel-meta full-width is-small">
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
         Reviews
-      </a>
+      </a>  
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Quick info
       </a>

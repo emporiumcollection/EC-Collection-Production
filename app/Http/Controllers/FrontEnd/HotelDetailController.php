@@ -211,18 +211,20 @@ class HotelDetailController extends Controller
         return view($file_name, $this->data);
     }
 
-    public function add_collection(Request $request){
+    public function add_collection(Request $request)
+    {
 
-        $collection_date = $request->start_date;
+        $collection_date = $request->date;
         $explode_date = explode("-",$collection_date);
         $start_date = $explode_date[0];
         $end_date =$explode_date[1];
         $collection_data = array(
-                    'hotel_id'=>$request->id,
-                    'collection_name' => $request->collection_name,
+                    
+                    'collection_name' => $request->name,
                     'start_date' => $start_date,
                     'end_date' => $end_date,                   
                 );
         \DB::table('tb_collection')->insert($collection_data);
     }
 }
+

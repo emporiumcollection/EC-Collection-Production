@@ -25927,6 +25927,1310 @@ tr.introjs-showElement > th {
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f8fa', endColorstr='#FFF',GradientType=0 );
   /* IE6-9 */ }
 
+.ico {
+  display: inline-block;
+  vertical-align: center; }
+
+.ico-club {
+  background: url(../images/raster-17.png) no-repeat center center;
+  width: 33px;
+  height: 33px;
+  background-size: contain; }
+
+.ico-print {
+  background: url(../images/print.svg) no-repeat center center;
+  width: 33px;
+  height: 33px;
+  background-size: contain; }
+
+.ico-reload {
+  background: url(../images/reload.svg) no-repeat center center;
+  width: 24px;
+  height: 24px;
+  background-size: contain; }
+
+.ico-search {
+  background: url(../images/ico-search.svg) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-fullpage {
+  background: url(../images/fullpage.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-check {
+  background: url(../images/check.svg) no-repeat center center;
+  width: 15px;
+  height: 22px;
+  background-size: contain; }
+
+.ico-food {
+  background: url(../images/food.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-language {
+  background: url(../images/language.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-wheelchair {
+  background: url(../images/wheelchair.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-wifi-b {
+  background: url(../images/wifi-b.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-villa {
+  background: url(../images/ico-villa.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-magazine {
+  background: url(../images/ico-magazine.svg) no-repeat center center;
+  width: 30px;
+  height: 30px;
+  background-size: contain; }
+
+.ico-experience {
+  background: url(../images/ico-experience.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-swim-b {
+  background: url(../images/swim-b.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-restaurant {
+  background: url(../images/restaurant.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-garden {
+  background: url(../images/garden.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-bar {
+  background: url(../images/bar.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-restaurant-b {
+  background: url(../images/restaurant-b.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-conven {
+  background: url(../images/conven.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-nearby {
+  background: url(../images/nearby.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-family-2 {
+  background: url(../images/family-2.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-baby-boy {
+  background: url(../images/baby-boy.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-ticket {
+  background: url(../images/ticket.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-tour {
+  background: url(../images/tours.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-airport {
+  background: url(../images/airport.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-transportation {
+  background: url(../images/transportation.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-hospital {
+  background: url(../images/hospital.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-shop {
+  background: url(../images/shopping.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-store {
+  background: url(../images/store.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-withdraw {
+  background: url(../images/withdraw.svg) no-repeat center center;
+  width: 35px;
+  height: 35px;
+  background-size: contain; }
+
+.ico-btn-arrow {
+  background: url(../images/btn-arrow.svg) no-repeat center center;
+  width: 15px;
+  height: 10px;
+  background-size: contain; }
+
+.ico-family {
+  background: url(../images/family.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-footanim {
+  background: url(../images/footanim.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-facility {
+  background: url(../images/fasilities.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-security {
+  background: url(../images/security.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-spoon {
+  background: url(../images/spoon.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-service {
+  background: url(../images/service.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-user {
+  background: url(../images/user.svg) no-repeat center center;
+  width: 19px;
+  height: 19px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-message {
+  background: url(../images/message.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-messager {
+  background: url(../images/comments.svg) no-repeat center center;
+  width: 88px;
+  height: 100%;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-info {
+  background: url(../images/info.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-info-w {
+  background: url(../images/info-w.svg) no-repeat center center;
+  width: 16px;
+  height: 19px;
+  background-size: contain;
+  vertical-align: middle; }
+
+.ico-info-b {
+  background: url(../images/info-b.svg) no-repeat center center;
+  width: 16px;
+  height: 19px;
+  background-size: contain;
+  vertical-align: middle; }
+
+.ico-info-green {
+  background: url(../images/info-green.svg) no-repeat center center;
+  width: 18px;
+  height: 25px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-swim {
+  background: url(../images/swim.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-wifi {
+  background: url(../images/wifi.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-fitness {
+  background: url(../images/fitness.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-parking {
+  background: url(../images/parking.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-arrow-forward {
+  background: url(../images/arrow_forward.svg) no-repeat center center;
+  width: 19px;
+  height: 28px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-swim-d {
+  background: url(../images/swim-d.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-wifi-d {
+  background: url(../images/wifi-d.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-fitness-d {
+  background: url(../images/fitness-d.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-parking-d {
+  background: url(../images/parking-d.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain;
+  vertical-align: sub; }
+
+.ico-dummy {
+  background: #cecece;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%; }
+
+.ico-hotel {
+  background: url(../images/ico-hotel.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-gallery {
+  background: url(../images/ico-gallery.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-play {
+  background: url(../images/play.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-close {
+  background: url(../images/close.svg) no-repeat center center;
+  width: 15px;
+  height: 15px;
+  background-size: contain; }
+
+.ico-close-w {
+  background: url(../images/close-w.svg) no-repeat center center;
+  width: 15px;
+  height: 15px;
+  background-size: contain; }
+
+.ico-place {
+  background: url(../images/basic_geolocalize-01.svg) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-place-2 {
+  background: url(../images/place-2.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-share-2 {
+  background: url(../images/share.svg) no-repeat center center;
+  width: 26px;
+  height: 24px;
+  background-size: contain; }
+
+.ico-convertation {
+  background: url(../images/conversation.svg) no-repeat center center;
+  width: 26px;
+  height: 24px;
+  background-size: contain; }
+
+.ico-layer {
+  background: url(../images/layer.svg) no-repeat center center;
+  width: 26px;
+  height: 24px;
+  background-size: contain; }
+
+.ico-mail {
+  background: url(../images/mail.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-filter {
+  background: url(../images/filters-icon.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-information {
+  background: url(../images/ico-information.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-heart-b {
+  background: url(../images/ico-heart-b.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-scrool {
+  background: url(../images/ico-scroll.svg) no-repeat center center;
+  width: 60px;
+  height: 90px;
+  background-size: contain; }
+
+.ico-cart {
+  background: url(../images/ico-cart.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-compare {
+  background: url(../images/compare.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-covid {
+  background: url(../images/virus_Distance_keep_social_social_distancing_check_mark-256.png) no-repeat center center;
+  width: 53px;
+  height: 53px;
+  background-size: contain; }
+
+.ico-hotel-line {
+  background: url(../images/raster-36.png) no-repeat center center;
+  width: 53px;
+  height: 53px;
+  background-size: contain; }
+
+.ico-bells {
+  background: url(../images/raster-52.png) no-repeat center center;
+  width: 53px;
+  height: 53px;
+  background-size: contain; }
+
+.ico-gift {
+  background: url(../images/raster-43.png) no-repeat center center;
+  width: 53px;
+  height: 53px;
+  background-size: contain; }
+
+.ico-shield {
+  background: url(../images/raster-31.png) no-repeat center center;
+  width: 53px;
+  height: 53px;
+  background-size: contain; }
+
+.ico-pay {
+  background: url(../images/raster-81.png) no-repeat center center;
+  width: 53px;
+  height: 53px;
+  background-size: contain; }
+
+.ico-lock {
+  background: url(../images/raster-30.png) no-repeat center center;
+  width: 53px;
+  height: 53px;
+  background-size: contain; }
+
+.ico-share {
+  background: url(../images/ico-share.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-deal {
+  background: url(../images/deal.svg) no-repeat center center;
+  width: 33px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-mic {
+  background: url(../images/ico-mic.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-plane {
+  background: url(../images/airplane.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-food {
+  background: url(../images/restauran.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-spa {
+  background: url(../images/spa.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-search-w {
+  background: url(../images/ico-search-w.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-search-i {
+  background: url(../images/ico-search-i.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-calendar {
+  background: url(../images/calendar.svg) no-repeat center center;
+  width: 41px;
+  height: 51px;
+  background-size: contain; }
+
+.ico-dash {
+  background: url(../images/dash.svg) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-instagram {
+  background: url(../images/raster-9.png) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-video {
+  background: url(../images/basic_video.svg) no-repeat center center;
+  width: 32px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-info-rounded {
+  background: url(../images/icon-info.svg) no-repeat center center;
+  width: 32px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-diamon {
+  background: url(../images/diamon.svg) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-building {
+  background: url(../images/raster-11.png) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-safari {
+  background: url(../images/elephant.svg) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-islands {
+  background: url(../images/raster-7.png) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-golf {
+  background: url(../images/golf.png) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-spa-i {
+  background: url(../images/spa-i.svg) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-car-i {
+  background: url(../images/car-i.png) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-mixer {
+  background: url(../images/basic_mixer2.svg) no-repeat center center;
+  width: 24px;
+  height: 25px;
+  background-size: contain; }
+
+.ico-profile-pp {
+  background: url(../images/raster-3.png) no-repeat center center;
+  width: 41px;
+  height: 51px;
+  background-size: contain; }
+  .ico-profile-pp .pp-menu {
+    width: 42px;
+    height: 35px; }
+
+.ico-keranjang {
+  background: url(../images/supermarket.svg) no-repeat center center;
+  width: 17px;
+  height: 20px;
+  background-size: contain;
+  vertical-align: bottom; }
+
+.ico-calendar-2 {
+  background: url(../images/calendar-2.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-guests {
+  background: url(../images/ico-guests.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-mic-w {
+  background: url(../images/ico-mic-w.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-menu {
+  background: url(../images/ico-menu.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-user-single {
+  background: url(../images/user-single.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-user-single-2 {
+  background: url(../images/user-single-2.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-menu-b {
+  background: url(../images/ico-menu-b.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-heart {
+  background: url(../images/ico-heart.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-cart {
+  background: url(../images/ico-cart.svg) no-repeat center center;
+  width: 30px;
+  height: 31px;
+  background-size: contain; }
+
+.ico-office {
+  background: url(../images/office.svg) no-repeat center center;
+  width: 30px;
+  height: 31px;
+  background-size: contain; }
+
+.ico-plan {
+  background: url(../images/plan.svg) no-repeat center center;
+  width: 30px;
+  height: 31px;
+  background-size: contain; }
+
+.ico-cuisine {
+  background: url(../images/cuisine.png) no-repeat center center;
+  width: 30px;
+  height: 31px;
+  background-size: contain; }
+
+.ico-eye {
+  background: url(../images/eye_icon.png) no-repeat center center;
+  width: 30px;
+  height: 31px;
+  background-size: contain; }
+
+.ico-family-b {
+  background: url(../images/family-b.svg) no-repeat center center;
+  width: 30px;
+  height: 31px;
+  background-size: contain; }
+
+.ico-group-users {
+  background: url(../images/group-users.svg) no-repeat center center;
+  width: 30px;
+  height: 31px;
+  background-size: contain; }
+
+.ico-compare-arrow {
+  background: url(../images/compare-arrow.svg) no-repeat center center;
+  background-size: contain; }
+
+.ico-like {
+  background: url(../images/like.svg) no-repeat center center;
+  background-size: contain; }
+
+.ico-heart-bb {
+  background: url(../images/heart-bb.svg) no-repeat center center;
+  background-size: contain; }
+
+.ico-menu-grid {
+  background: url(../images/menu.svg) no-repeat center center;
+  background-size: contain;
+  width: 23px;
+  height: 25px; }
+
+.icon-security {
+  background: url(../images/icon-security.svg) no-repeat center center;
+  background-size: contain;
+  width: 23px;
+  height: 23px; }
+
+.icon-camera {
+  background: url(../images/photo-camera.svg) no-repeat center center;
+  background-size: contain;
+  width: 23px;
+  height: 23px; }
+
+.ico-ft-adult {
+  background: url(../images/adults-only.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-air-conditioner {
+  background: url(../images/air-con.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-airport-shuttle {
+  background: url(../images/airport-shuttle.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-bar {
+  background: url(../images/bar.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-beach {
+  background: url(../images/beach.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-bike-rental {
+  background: url(../images/bike-rental.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-city-center {
+  background: url(../images/city-centre.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-family {
+  background: url(../images/family.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-fine-dining {
+  background: url(../images/fine-dining.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-free-wifi {
+  background: url(../images/free-wifi.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-golf {
+  background: url(../images/golf.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-modern-design {
+  background: url(../images/modern-design.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-parking {
+  background: url(../images/parking.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-pet-friendly {
+  background: url(../images/pet-friendly.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-pool {
+  background: url(../images/pool.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-rooftop {
+  background: url(../images/rooftop.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-spa {
+  background: url(../images/spa.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-ft-watersports {
+  background: url(../images/watersports.svg) no-repeat center center;
+  background-size: contain;
+  width: 35px;
+  height: 35px; }
+
+.ico-fi-hotel {
+  background: url(../images/Emporium-Collection-Hotels.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-fi-villa {
+  background: url(../images/Emporium-Collection-Villas.svg) no-repeat center center;
+  width: 26px;
+  height: 26px;
+  background-size: contain; }
+
+.ico-fi-yacht {
+  background: url(../images/Emporium-Collection-yachts.svg) no-repeat center center;
+  width: 39px;
+  height: 22px;
+  background-size: contain; }
+
+.ico-fi-flight {
+  background: url(../images/Emporium-Collection-Jet.svg) no-repeat center center;
+  width: 39px;
+  height: 22px;
+  background-size: contain; }
+
+.ico-fi-magazine {
+  background: url(../images/Emporium-Collection-Magazine.svg) no-repeat center center;
+  width: 39px;
+  height: 22px;
+  background-size: contain; }
+
+.ico-fi-experience {
+  background: url(../images/Emporium-Collection-Experiences.svg) no-repeat center center;
+  width: 39px;
+  height: 37px;
+  background-size: contain; }
+
+.selectize-control.plugin-drag_drop.multi > .selectize-input > div.ui-sortable-placeholder {
+  visibility: visible !important;
+  background: #f2f2f2 !important;
+  background: rgba(0, 0, 0, 0.06) !important;
+  border: 0 none !important;
+  box-shadow: inset 0 0 12px 4px #fff; }
+
+.selectize-control.plugin-drag_drop .ui-sortable-placeholder::after {
+  content: "!";
+  visibility: hidden; }
+
+.selectize-control.plugin-drag_drop .ui-sortable-helper {
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); }
+
+.selectize-control .dropdown-header {
+  position: relative;
+  padding: 6px .75rem;
+  border-bottom: 1px solid #d0d0d0;
+  background: #f8f8f8;
+  border-radius: .25rem .25rem 0 0; }
+
+.selectize-control .dropdown-header-close {
+  position: absolute;
+  right: .75rem;
+  top: 50%;
+  color: #343a40;
+  opacity: .4;
+  margin-top: -12px;
+  line-height: 20px;
+  font-size: 20px !important; }
+
+.selectize-control .dropdown-header-close:hover {
+  color: #000; }
+
+.selectize-dropdown.plugin-optgroup_columns .selectize-dropdown-content {
+  display: flex; }
+
+.selectize-dropdown.plugin-optgroup_columns .optgroup {
+  border-right: 1px solid #f2f2f2;
+  border-top: 0 none;
+  flex-grow: 1;
+  flex-basis: 0;
+  min-width: 0; }
+
+.selectize-dropdown.plugin-optgroup_columns .optgroup:last-child {
+  border-right: 0 none; }
+
+.selectize-dropdown.plugin-optgroup_columns .optgroup:before {
+  display: none; }
+
+.selectize-dropdown.plugin-optgroup_columns .optgroup-header {
+  border-top: 0 none; }
+
+.selectize-control.plugin-remove_button .item {
+  display: inline-flex;
+  align-items: center;
+  padding-right: 0 !important; }
+
+.selectize-control.plugin-remove_button .item .remove {
+  color: inherit;
+  text-decoration: none;
+  vertical-align: middle;
+  display: inline-block;
+  padding: 1px 5px;
+  border-left: 1px solid #dee2e6;
+  border-radius: 0 2px 2px 0;
+  box-sizing: border-box;
+  margin-left: 5px; }
+
+.selectize-control.plugin-remove_button .item .remove:hover {
+  background: rgba(0, 0, 0, 0.05); }
+
+.selectize-control.plugin-remove_button .item.active .remove {
+  border-left-color: rgba(0, 0, 0, 0); }
+
+.selectize-control.plugin-remove_button .disabled .item .remove:hover {
+  background: none; }
+
+.selectize-control.plugin-remove_button .disabled .item .remove {
+  border-left-color: #fff; }
+
+.selectize-control.plugin-remove_button .remove-single {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-size: 23px; }
+
+.selectize-control {
+  position: relative; }
+
+.selectize-dropdown, .selectize-input, .selectize-input input {
+  color: #343a40;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: 1.5;
+  font-smoothing: inherit; }
+
+.selectize-input, .selectize-control.single .selectize-input.input-active {
+  background: #fff;
+  cursor: text;
+  display: inline-block; }
+
+.selectize-input {
+  border: 1px solid #ced4da;
+  padding: .375rem .75rem;
+  display: inline-block;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  box-shadow: none;
+  border-radius: .25rem; }
+
+.selectize-control.multi .selectize-input.has-items {
+  padding: calc( 0.375rem - 1px - 0px) 0.75rem calc( 0.375rem - 1px - 3px - 0px); }
+
+.selectize-input.full {
+  background-color: #fff; }
+
+.selectize-input.disabled, .selectize-input.disabled * {
+  cursor: default !important; }
+
+.selectize-input.focus {
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15); }
+
+.selectize-input.dropdown-active {
+  border-radius: .25rem .25rem 0 0; }
+
+.selectize-input > * {
+  vertical-align: baseline;
+  display: inline-block;
+  zoom: 1; }
+
+.selectize-control.multi .selectize-input > div {
+  cursor: pointer;
+  margin: 0 3px 3px 0;
+  padding: 1px 5px;
+  background: #efefef;
+  color: #343a40;
+  border: 0px solid #dee2e6; }
+
+.selectize-control.multi .selectize-input > div.active {
+  background: #007bff;
+  color: #fff;
+  border: 0px solid rgba(0, 0, 0, 0); }
+
+.selectize-control.multi .selectize-input.disabled > div, .selectize-control.multi .selectize-input.disabled > div.active {
+  color: #878787;
+  background: #fff;
+  border: 0px solid #fff; }
+
+.selectize-input > input {
+  display: inline-block !important;
+  padding: 0 !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  max-width: 100% !important;
+  margin: 0 !important;
+  text-indent: 0 !important;
+  border: 0 none !important;
+  background: none !important;
+  line-height: inherit !important;
+  user-select: auto !important;
+  box-shadow: none !important; }
+
+.selectize-input > input::-ms-clear {
+  display: none; }
+
+.selectize-input > input:focus {
+  outline: none !important; }
+
+.selectize-input > input[placeholder] {
+  box-sizing: initial; }
+
+.selectize-input.has-items > input {
+  margin: 0 0px !important; }
+
+.selectize-input::after {
+  content: " ";
+  display: block;
+  clear: left; }
+
+.selectize-input.dropdown-active::before {
+  content: " ";
+  display: block;
+  position: absolute;
+  background: #fff;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+.selectize-dropdown {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  z-index: 10;
+  border: 1px solid #d0d0d0;
+  background: #fff;
+  margin: -1px 0 0 0;
+  border-top: 0 none;
+  box-sizing: border-box;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 .25rem .25rem; }
+
+.selectize-dropdown [data-selectable] {
+  cursor: pointer;
+  overflow: hidden; }
+
+.selectize-dropdown [data-selectable] .highlight {
+  background: rgba(255, 237, 40, 0.4);
+  border-radius: 1px; }
+
+.selectize-dropdown .option, .selectize-dropdown .optgroup-header, .selectize-dropdown .no-results, .selectize-dropdown .create {
+  padding: 3px .75rem; }
+
+.selectize-dropdown .option, .selectize-dropdown [data-disabled], .selectize-dropdown [data-disabled] [data-selectable].option {
+  cursor: inherit;
+  opacity: .5; }
+
+.selectize-dropdown [data-selectable].option {
+  opacity: 1;
+  cursor: pointer; }
+
+.selectize-dropdown .optgroup:first-child .optgroup-header {
+  border-top: 0 none; }
+
+.selectize-dropdown .optgroup-header {
+  color: #6c757d;
+  background: #fff;
+  cursor: default; }
+
+.selectize-dropdown .active {
+  background-color: #e9ecef;
+  color: #16181b; }
+
+.selectize-dropdown .active.create {
+  color: #16181b; }
+
+.selectize-dropdown .create {
+  color: rgba(52, 58, 64, 0.5); }
+
+.selectize-dropdown-content {
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 200px;
+  overflow-scrolling: touch; }
+
+.selectize-dropdown-emptyoptionlabel {
+  text-align: center; }
+
+.selectize-dropdown .spinner {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  margin: 3px .75rem; }
+
+.selectize-dropdown .spinner:after {
+  content: " ";
+  display: block;
+  width: 24px;
+  height: 24px;
+  margin: 3px;
+  border-radius: 50%;
+  border: 5px solid #d0d0d0;
+  border-color: #d0d0d0 transparent #d0d0d0 transparent;
+  animation: lds-dual-ring 1.2s linear infinite; }
+
+@keyframes lds-dual-ring {
+  0% {
+    transform: rotate(0deg); }
+  100% {
+    transform: rotate(360deg); } }
+
+.selectize-control.single .selectize-input, .selectize-control.single .selectize-input input {
+  cursor: pointer; }
+
+.selectize-control.single .selectize-input.input-active, .selectize-control.single .selectize-input.input-active input {
+  cursor: text; }
+
+.selectize-control.single .selectize-input:after {
+  content: " ";
+  display: block;
+  position: absolute;
+  top: 50%;
+  right: calc(0.75rem + 5px);
+  margin-top: -3px;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 5px 5px 0 5px;
+  border-color: #343a40 transparent transparent transparent; }
+
+.selectize-control.single .selectize-input.dropdown-active:after {
+  margin-top: -4px;
+  border-width: 0 5px 5px 5px;
+  border-color: transparent transparent #343a40 transparent; }
+
+.selectize-control.rtl {
+  text-align: right; }
+
+.selectize-control.rtl.single .selectize-input:after {
+  left: calc(0.75rem + 5px);
+  right: auto; }
+
+.selectize-control.rtl .selectize-input > input {
+  margin: 0 4px 0 -2px !important; }
+
+.selectize-control .selectize-input.disabled {
+  opacity: .5;
+  background-color: #fff; }
+
+.selectize-dropdown, .selectize-dropdown.form-control {
+  height: auto;
+  padding: 0;
+  margin: 2px 0 0 0;
+  z-index: 1000;
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: .25rem;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.175); }
+
+.selectize-dropdown .optgroup-header {
+  font-size: .875rem;
+  line-height: 1.5; }
+
+.selectize-dropdown .optgroup:first-child:before {
+  display: none; }
+
+.selectize-dropdown .optgroup:before {
+  content: " ";
+  display: block;
+  height: 0;
+  margin: .5rem 0;
+  overflow: hidden;
+  border-top: 1px solid #e9ecef;
+  margin-left: -0.75rem;
+  margin-right: -0.75rem; }
+
+.selectize-dropdown .create {
+  padding-left: .75rem; }
+
+.selectize-dropdown-content {
+  padding: 5px 0; }
+
+.selectize-dropdown-emptyoptionlabel {
+  text-align: center; }
+
+.selectize-input {
+  min-height: calc(1.5em + 0.75rem + 2px);
+  transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out; }
+
+@media (prefers-reduced-motion: reduce) {
+  .selectize-input {
+    transition: none; } }
+
+.selectize-input.dropdown-active {
+  border-radius: .25rem; }
+
+.selectize-input.dropdown-active::before {
+  display: none; }
+
+.selectize-input.focus {
+  border-color: #80bdff;
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); }
+
+.is-invalid .selectize-input {
+  border-color: #dc3545;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075); }
+
+.is-invalid .selectize-input:focus {
+  border-color: #bd2130;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #eb8c95; }
+
+.selectize-control.form-control-sm .selectize-input.has-items {
+  min-height: calc(1.5em + 0.5rem + 2px) !important;
+  height: calc(1.5em + 0.5rem + 2px);
+  padding: .25rem .5rem !important;
+  font-size: .875rem;
+  line-height: 1.5; }
+
+.selectize-control.multi .selectize-input.has-items {
+  height: auto;
+  padding-left: calc(0.75rem - 5px);
+  padding-right: calc(0.75rem - 5px); }
+
+.selectize-control.multi .selectize-input > div {
+  border-radius: calc(0.25rem - 1px); }
+
+.form-control.selectize-control {
+  padding: 0;
+  height: auto;
+  border: none;
+  background: none;
+  box-shadow: none;
+  border-radius: 0; }
+
+.input-group .selectize-input {
+  overflow: unset;
+  border-radius: 0 .25rem .25rem 0; }
+
 .color-primary {
   color: #89a49f; }
 
@@ -26075,625 +27379,6 @@ h3 {
   flex: 0 0 185px;
   max-width: 185px;
   padding-top: 15px; }
-
-.ico {
-  display: inline-block;
-  vertical-align: center; }
-  .ico.ico-club {
-    background: url(../images/raster-17.png) no-repeat center center;
-    width: 33px;
-    height: 33px;
-    background-size: contain; }
-  .ico.ico-print {
-    background: url(../images/print.svg) no-repeat center center;
-    width: 33px;
-    height: 33px;
-    background-size: contain; }
-  .ico.ico-reload {
-    background: url(../images/reload.svg) no-repeat center center;
-    width: 24px;
-    height: 24px;
-    background-size: contain; }
-  .ico.ico-search {
-    background: url(../images/ico-search.svg) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-fullpage {
-    background: url(../images/fullpage.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-check {
-    background: url(../images/check.svg) no-repeat center center;
-    width: 15px;
-    height: 22px;
-    background-size: contain; }
-  .ico.ico-food {
-    background: url(../images/food.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-language {
-    background: url(../images/language.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-wheelchair {
-    background: url(../images/wheelchair.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-wifi-b {
-    background: url(../images/wifi-b.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-swim-b {
-    background: url(../images/swim-b.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-restaurant {
-    background: url(../images/restaurant.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-garden {
-    background: url(../images/garden.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-bar {
-    background: url(../images/bar.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-restaurant-b {
-    background: url(../images/restaurant-b.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-conven {
-    background: url(../images/conven.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-nearby {
-    background: url(../images/nearby.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-family-2 {
-    background: url(../images/family-2.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-baby-boy {
-    background: url(../images/baby-boy.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-ticket {
-    background: url(../images/ticket.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-tour {
-    background: url(../images/tours.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-airport {
-    background: url(../images/airport.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-transportation {
-    background: url(../images/transportation.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-hospital {
-    background: url(../images/hospital.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-shop {
-    background: url(../images/shopping.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-store {
-    background: url(../images/store.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-withdraw {
-    background: url(../images/withdraw.svg) no-repeat center center;
-    width: 35px;
-    height: 35px;
-    background-size: contain; }
-  .ico.ico-btn-arrow {
-    background: url(../images/btn-arrow.svg) no-repeat center center;
-    width: 15px;
-    height: 10px;
-    background-size: contain; }
-  .ico.ico-family {
-    background: url(../images/family.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-footanim {
-    background: url(../images/footanim.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-facility {
-    background: url(../images/fasilities.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-security {
-    background: url(../images/security.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-spoon {
-    background: url(../images/spoon.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-service {
-    background: url(../images/service.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-user {
-    background: url(../images/user.svg) no-repeat center center;
-    width: 19px;
-    height: 19px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-message {
-    background: url(../images/message.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-messager {
-    background: url(../images/comments.svg) no-repeat center center;
-    width: 88px;
-    height: 100%;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-info {
-    background: url(../images/info.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-info-w {
-    background: url(../images/info-w.svg) no-repeat center center;
-    width: 16px;
-    height: 19px;
-    background-size: contain;
-    vertical-align: middle; }
-  .ico.ico-info-b {
-    background: url(../images/info-b.svg) no-repeat center center;
-    width: 16px;
-    height: 19px;
-    background-size: contain;
-    vertical-align: middle; }
-  .ico.ico-info-green {
-    background: url(../images/info-green.svg) no-repeat center center;
-    width: 18px;
-    height: 25px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-swim {
-    background: url(../images/swim.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-wifi {
-    background: url(../images/wifi.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-fitness {
-    background: url(../images/fitness.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-parking {
-    background: url(../images/parking.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-arrow-forward {
-    background: url(../images/arrow_forward.svg) no-repeat center center;
-    width: 19px;
-    height: 28px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-swim-d {
-    background: url(../images/swim-d.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-wifi-d {
-    background: url(../images/wifi-d.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-fitness-d {
-    background: url(../images/fitness-d.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-parking-d {
-    background: url(../images/parking-d.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain;
-    vertical-align: sub; }
-  .ico.ico-dummy {
-    background: #cecece;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%; }
-  .ico.ico-hotel {
-    background: url(../images/ico-hotel.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-gallery {
-    background: url(../images/ico-gallery.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-play {
-    background: url(../images/play.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-close {
-    background: url(../images/close.svg) no-repeat center center;
-    width: 15px;
-    height: 15px;
-    background-size: contain; }
-  .ico.ico-close-w {
-    background: url(../images/close-w.svg) no-repeat center center;
-    width: 15px;
-    height: 15px;
-    background-size: contain; }
-  .ico.ico-place {
-    background: url(../images/basic_geolocalize-01.svg) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-place-2 {
-    background: url(../images/place-2.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-share-2 {
-    background: url(../images/share.svg) no-repeat center center;
-    width: 26px;
-    height: 24px;
-    background-size: contain; }
-  .ico.ico-convertation {
-    background: url(../images/conversation.svg) no-repeat center center;
-    width: 26px;
-    height: 24px;
-    background-size: contain; }
-  .ico.ico-layer {
-    background: url(../images/layer.svg) no-repeat center center;
-    width: 26px;
-    height: 24px;
-    background-size: contain; }
-  .ico.ico-mail {
-    background: url(../images/mail.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-filter {
-    background: url(../images/filters-icon.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-information {
-    background: url(../images/ico-information.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-heart-b {
-    background: url(../images/ico-heart-b.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-scrool {
-    background: url(../images/ico-scroll.svg) no-repeat center center;
-    width: 60px;
-    height: 90px;
-    background-size: contain; }
-  .ico.ico-cart {
-    background: url(../images/ico-cart.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-compare {
-    background: url(../images/compare.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-covid {
-    background: url(../images/virus_Distance_keep_social_social_distancing_check_mark-256.png) no-repeat center center;
-    width: 53px;
-    height: 53px;
-    background-size: contain; }
-  .ico.ico-hotel-line {
-    background: url(../images/raster-36.png) no-repeat center center;
-    width: 53px;
-    height: 53px;
-    background-size: contain; }
-  .ico.ico-bells {
-    background: url(../images/raster-52.png) no-repeat center center;
-    width: 53px;
-    height: 53px;
-    background-size: contain; }
-  .ico.ico-gift {
-    background: url(../images/raster-43.png) no-repeat center center;
-    width: 53px;
-    height: 53px;
-    background-size: contain; }
-  .ico.ico-shield {
-    background: url(../images/raster-31.png) no-repeat center center;
-    width: 53px;
-    height: 53px;
-    background-size: contain; }
-  .ico.ico-pay {
-    background: url(../images/raster-81.png) no-repeat center center;
-    width: 53px;
-    height: 53px;
-    background-size: contain; }
-  .ico.ico-lock {
-    background: url(../images/raster-30.png) no-repeat center center;
-    width: 53px;
-    height: 53px;
-    background-size: contain; }
-  .ico.ico-share {
-    background: url(../images/ico-share.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-deal {
-    background: url(../images/deal.svg) no-repeat center center;
-    width: 33px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-mic {
-    background: url(../images/ico-mic.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-plane {
-    background: url(../images/airplane.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-food {
-    background: url(../images/restauran.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-spa {
-    background: url(../images/spa.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-search-w {
-    background: url(../images/ico-search-w.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-search-i {
-    background: url(../images/ico-search-i.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-calendar {
-    background: url(../images/calendar.svg) no-repeat center center;
-    width: 41px;
-    height: 51px;
-    background-size: contain; }
-  .ico.ico-dash {
-    background: url(../images/dash.svg) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-instagram {
-    background: url(../images/raster-9.png) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-video {
-    background: url(../images/basic_video.svg) no-repeat center center;
-    width: 32px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-info-rounded {
-    background: url(../images/icon-info.svg) no-repeat center center;
-    width: 32px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-diamon {
-    background: url(../images/diamon.svg) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-building {
-    background: url(../images/raster-11.png) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-safari {
-    background: url(../images/elephant.svg) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-islands {
-    background: url(../images/raster-7.png) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-golf {
-    background: url(../images/golf.png) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-spa-i {
-    background: url(../images/spa-i.svg) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-car-i {
-    background: url(../images/car-i.png) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-mixer {
-    background: url(../images/basic_mixer2.svg) no-repeat center center;
-    width: 24px;
-    height: 25px;
-    background-size: contain; }
-  .ico.ico-profile-pp {
-    background: url(../images/raster-3.png) no-repeat center center;
-    width: 41px;
-    height: 51px;
-    background-size: contain; }
-    .ico.ico-profile-pp.pp-menu {
-      width: 42px;
-      height: 35px; }
-  .ico.ico-keranjang {
-    background: url(../images/supermarket.svg) no-repeat center center;
-    width: 17px;
-    height: 20px;
-    background-size: contain;
-    vertical-align: bottom; }
-  .ico.ico-calendar-2 {
-    background: url(../images/calendar-2.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-guests {
-    background: url(../images/ico-guests.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-mic-w {
-    background: url(../images/ico-mic-w.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-menu {
-    background: url(../images/ico-menu.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-user-single {
-    background: url(../images/user-single.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-user-single-2 {
-    background: url(../images/user-single-2.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-menu-b {
-    background: url(../images/ico-menu-b.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-heart {
-    background: url(../images/ico-heart.svg) no-repeat center center;
-    width: 26px;
-    height: 26px;
-    background-size: contain; }
-  .ico.ico-cart {
-    background: url(../images/ico-cart.svg) no-repeat center center;
-    width: 30px;
-    height: 31px;
-    background-size: contain; }
-  .ico.ico-office {
-    background: url(../images/office.svg) no-repeat center center;
-    width: 30px;
-    height: 31px;
-    background-size: contain; }
-  .ico.ico-plan {
-    background: url(../images/plan.svg) no-repeat center center;
-    width: 30px;
-    height: 31px;
-    background-size: contain; }
-  .ico.ico-cuisine {
-    background: url(../images/cuisine.png) no-repeat center center;
-    width: 30px;
-    height: 31px;
-    background-size: contain; }
-  .ico.ico-eye {
-    background: url(../images/eye_icon.png) no-repeat center center;
-    width: 30px;
-    height: 31px;
-    background-size: contain; }
-  .ico.ico-family-b {
-    background: url(../images/family-b.svg) no-repeat center center;
-    width: 30px;
-    height: 31px;
-    background-size: contain; }
-  .ico.ico-group-users {
-    background: url(../images/group-users.svg) no-repeat center center;
-    width: 30px;
-    height: 31px;
-    background-size: contain; }
-  .ico.ico-compare-arrow {
-    background: url(../images/compare-arrow.svg) no-repeat center center;
-    background-size: contain; }
-  .ico.ico-like {
-    background: url(../images/like.svg) no-repeat center center;
-    background-size: contain; }
-  .ico.ico-heart-bb {
-    background: url(../images/heart-bb.svg) no-repeat center center;
-    background-size: contain; }
-  .ico.ico-menu-grid {
-    background: url(../images/menu.svg) no-repeat center center;
-    background-size: contain;
-    width: 23px;
-    height: 25px; }
-  .ico.icon-security {
-    background: url(../images/icon-security.svg) no-repeat center center;
-    background-size: contain;
-    width: 23px;
-    height: 23px; }
-  .ico.icon-camera {
-    background: url(../images/photo-camera.svg) no-repeat center center;
-    background-size: contain;
-    width: 23px;
-    height: 23px; }
 
 .humburger-menu {
   width: 27px;
@@ -26906,6 +27591,27 @@ h3 {
       left: 43px;
       z-index: 9;
       transform: translateY(-50%); }
+
+.form-fl-jet {
+  position: absolute;
+  background: #222326;
+  left: 0;
+  right: 0;
+  top: 79px;
+  max-width: 1140px;
+  width: 89%;
+  margin: auto;
+  margin-top: 50px;
+  z-index: 9;
+  max-height: 85%;
+  overflow: auto;
+  color: #fff; }
+  .form-fl-jet hr {
+    border-top: 1px solid rgba(255, 255, 255, 0.1); }
+  .form-fl-jet .select2-container--bootstrap .select2-selection {
+    background: transparent; }
+  .form-fl-jet .form-control {
+    background: transparent; }
 
 .ppls-0 {
   padding: 5px 21px; }
@@ -30147,6 +30853,12 @@ span.calElement.prev:hover {
 .lg-thumb.group {
   margin: auto; }
 
+.lg-backdrop {
+  z-index: 9999; }
+
+.lg-outer {
+  z-index: 99999; }
+
 .lg-sub-html {
   padding-bottom: 20px; }
 
@@ -30489,7 +31201,7 @@ span.calElement.prev:hover {
       margin-top: -5px; }
 
 .title-third {
-  font-size: 27px;
+  font-size: 20px;
   text-decoration: underline; }
 
 .line-separate {
@@ -31825,7 +32537,7 @@ span.calElement.prev:hover {
   position: relative; }
 
 #suitesside-tabContent {
-  padding-right: 35%;
+  max-width: 780px;
   padding-bottom: 130px; }
 
 .content-img {
@@ -34864,6 +35576,12 @@ footer {
   color: #000 !important;
   border: 0; }
 
+.video-play {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); }
+
 .mobile-flex {
   display: flex;
   align-items: center; }
@@ -35456,9 +36174,362 @@ button#clear {
 button#clear span {
   display: block; }
 
+.content-container {
+  padding-top: 155px; }
+
+.main-row {
+  display: flex; }
+
+.left-side {
+  width: 14.28571%; }
+
+.right-side {
+  width: 85.71429%; }
+
+.sidebarstick {
+  padding: 27px; }
+
+.nav-sidebar-main .nav-link {
+  padding-left: 25px;
+  padding-right: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-family: "SaolDisplay-Regular", sans-serif;
+  position: relative;
+  font-size: 17px; }
+  .nav-sidebar-main .nav-link::before {
+    position: absolute;
+    content: "";
+    width: 17px;
+    height: 2px;
+    background: #262626;
+    left: 0;
+    top: 17px; }
+
+.featured-hotel {
+  overflow: auto; }
+
+.featured-icon {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #f7f7f7;
+  display: flex;
+  align-items: center;
+  justify-content: center; }
+
+.righ-side-content {
+  background: #fff;
+  position: relative;
+  margin-top: -188px; }
+
+.menu-list {
+  position: relative;
+  display: block; }
+  .menu-list:before {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: all 0.3s ease-in-out;
+    z-index: 8; }
+  .menu-list .menu-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-bottom: 0;
+    z-index: 1;
+    color: #000;
+    z-index: 9; }
+  .menu-list img {
+    opacity: 0;
+    transition: all 0.3s ease-in-out; }
+  .menu-list:hover img {
+    opacity: 1; }
+  .menu-list:hover:before {
+    background: rgba(0, 0, 0, 0.4); }
+  .menu-list:hover .menu-title {
+    color: #fff; }
+
+.row-menu-list .menu-bdr {
+  border: 1px rgba(0, 0, 0, 0.1) solid; }
+
+.jkk---920934 {
+  position: relative;
+  display: block;
+  padding: 20px 30px;
+  padding-right: 90px;
+  overflow: hidden;
+  height: 391px; }
+  .jkk---920934 .content---23 {
+    position: relative;
+    z-index: 9; }
+  .jkk---920934::before {
+    position: absolute;
+    content: "";
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0);
+    transition: all 0.3s ease-in-out;
+    z-index: 8; }
+  .jkk---920934 img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 7;
+    opacity: 0;
+    transition: all 0.3s ease-in-out; }
+  .jkk---920934:hover::before {
+    background: rgba(0, 0, 0, 0.4); }
+  .jkk---920934:hover img {
+    opacity: 1; }
+  .jkk---920934:hover .content---23 {
+    color: #fff; }
+  .jkk---920934:hover .title-line::before {
+    background: #fff; }
+
+.menu-dedicated {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  z-index: 99; }
+
+.wizard-nav {
+  width: 120px;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  bottom: 0;
+  background: #fff;
+  z-index: 9;
+  padding-top: 93px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 0.3s ease-in-out; }
+  .wizard-nav.show {
+    left: 0; }
+  .wizard-nav .nav-link {
+    text-align: center;
+    font-size: 14px;
+    padding: 15px 10px; }
+    .wizard-nav .nav-link.active, .wizard-nav .nav-link:hover {
+      background: rgba(137, 164, 159, 0.1);
+      color: #89a49f; }
+      .wizard-nav .nav-link.active .ico, .wizard-nav .nav-link:hover .ico {
+        filter: invert(67%) sepia(30%) saturate(170%) hue-rotate(119deg) brightness(90%) contrast(87%); }
+  .wizard-nav .ico-flight {
+    width: 41px;
+    height: 28px; }
+  .wizard-nav .ico-spa {
+    width: 35px;
+    height: 35px; }
+  .wizard-nav .icon-svg {
+    width: 28px;
+    margin: auto; }
+  .wizard-nav .wiza-title {
+    line-height: 13px;
+    margin-top: 8px; }
+
+.menu-index {
+  padding-left: 15px; }
+
+.trip-add {
+  display: flex; }
+  .trip-add .trip-dest {
+    width: 100%; }
+  .trip-add .trip-exchange {
+    width: 224px;
+    text-align: center; }
+
+.inline-form {
+  position: relative; }
+  .inline-form i {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%); }
+  .inline-form .select2-container--bootstrap .select2-selection--single .select2-selection__arrow b::before {
+    content: ""; }
+
+.trip-destionation {
+  position: relative; }
+
+.search-data {
+  display: none;
+  position: absolute;
+  top: 41px;
+  background: #fff;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  max-height: 300px;
+  overflow: auto; }
+
+.trip-lst-add .trip-lst {
+  border-top: 1px #d3d3d3 solid;
+  margin-top: 1rem;
+  padding-top: 1rem; }
+
+.btn-search-flight {
+  margin-top: 55px; }
+
+.jet-plane-lst {
+  margin-top: 60px; }
+
+.jet-checkbox {
+  padding-left: 0;
+  text-align: center; }
+  .jet-checkbox .img-plane {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    overflow: hidden;
+    margin: auto;
+    position: relative;
+    margin-top: -25px;
+    border: 4px #89a49f solid;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #fff; }
+    .jet-checkbox .img-plane img {
+      width: 100%; }
+  .jet-checkbox .custom-control-label::before,
+  .jet-checkbox .custom-control-label::after {
+    top: auto;
+    bottom: 19px;
+    left: 50%;
+    transform: translateX(-50%); }
+  .jet-checkbox h4 {
+    margin-bottom: 25px; }
+  .jet-checkbox h3 {
+    font-weight: 700;
+    font-size: 30px; }
+  .jet-checkbox .custom-control-label {
+    text-align: center;
+    padding: 15px 25px;
+    border-radius: 10px;
+    padding-bottom: 30px; }
+  .jet-checkbox .custom-control-input:checked ~ .custom-control-label {
+    background: #89a49f; }
+
+.btn-search-yacht {
+  margin-top: 70px; }
+
+.yacht-top {
+  top: 100px; }
+
+.ijkos-00 {
+  border: 1px #000 solid;
+  display: inline-flex;
+  border-radius: 5px; }
+
+.header-search-yacht {
+  max-width: 140px;
+  padding: 0 10px;
+  position: relative; }
+  .header-search-yacht:before {
+    position: absolute;
+    content: "";
+    right: 0;
+    z-index: 9;
+    top: 50%;
+    width: 1px;
+    height: 80%;
+    background: #000;
+    transform: translateY(-50%); }
+  .header-search-yacht:last-child::before {
+    display: none; }
+  .header-search-yacht .select2-container--bootstrap .select2-selection--single {
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    height: 26px;
+    background: transparent; }
+  .header-search-yacht .select2-container--bootstrap .select2-selection--single .select2-selection__arrow b {
+    display: none; }
+  .header-search-yacht label {
+    margin-bottom: 0;
+    color: #777;
+    font-size: 13px; }
+
+.bigdrop {
+  width: 400px !important;
+  left: -11px !important; }
+
+.desc-container {
+  background: #000;
+  color: #fff;
+  position: absolute;
+  top: 0px;
+  left: 3px;
+  right: 3px;
+  height: 0;
+  padding-bottom: 45.33333% !important; }
+
+.divider-h {
+  width: 100px;
+  height: 4px;
+  background: #fff; }
+
+.desc-0-01 {
+  position: relative;
+  bottom: 0;
+  background: linear-gradient(0deg, #020024 0%, black 35%, rgba(0, 0, 0, 0) 100%);
+  color: #fff;
+  left: 0;
+  right: 0;
+  padding: 22px;
+  padding-top: 80px;
+  padding-bottom: 63px;
+  margin-top: -134px; }
+
+.shrt-dsc {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  border-top: 1px #fff solid;
+  border-bottom: 1px #fff solid;
+  margin-bottom: -1px; }
+
+.modal-fullscreen {
+  padding-right: 0 !important; }
+  .modal-fullscreen .modal-dialog {
+    max-width: 100%;
+    margin: 0; }
+  .modal-fullscreen .modal-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    border-bottom: 0 !important;
+    background: #fff;
+    z-index: 1; }
+  .modal-fullscreen .modal-body {
+    padding-top: 100px; }
+  .modal-fullscreen .modal-dialog-scrollable {
+    max-height: 100%; }
+  .modal-fullscreen .modal-dialog-scrollable .modal-content {
+    max-height: 100vh; }
+
 @media (max-width: 1627.98px) {
   .hotel-book-container {
-    max-width: 94%; } }
+    max-width: 94%; }
+  #suitesside-tabContent {
+    max-width: 100%;
+    padding-bottom: 130px; }
+  .form-fl-jet {
+    width: 89%;
+    max-width: 1004px;
+    z-index: 3; } }
 
 @media (max-width: 1367.98px) {
   body {
@@ -35541,6 +36612,10 @@ button#clear span {
       font-size: 16px; } }
 
 @media (max-width: 1330px) {
+  .wizard-nav.show {
+    left: -100%; }
+  .wizard-nav {
+    left: 0; }
   .nav-sidebar.is-small .nav-item .nav-link {
     font-size: 20px; }
   .nav-sidebar .nav-item .nav-link.nav-link-sub {
@@ -35580,7 +36655,15 @@ button#clear span {
     margin-left: 7px;
     margin-right: 7px; }
   .nav-right .nav-item:last-child {
-    margin-right: 3px; } }
+    margin-right: 3px; }
+  .right-side {
+    width: 78.714%; }
+  .left-side {
+    width: 22.28571%; }
+  .content---23 .title-offset {
+    width: 100%; }
+  .jkk---920934 {
+    padding-right: 30px; } }
 
 @media (max-width: 1199.98px) {
   #calcF #calendar-pick {
@@ -35726,6 +36809,8 @@ button#clear span {
         padding-left: 10px; } }
 
 @media (max-width: 991.98px) {
+  .form-fl-jet {
+    max-height: 74%; }
   .nav-clr.mb-5 {
     margin-bottom: 20px !important; }
   .top-header .px-4 {
@@ -36172,6 +37257,17 @@ button#clear span {
     margin-left: 7px; } }
 
 @media (max-width: 767.98px) {
+  .form-fl-jet [class*='col-md'] {
+    margin-bottom: 15px; }
+  .form-fl-jet .jet-plane-lst [class*='col-md'] {
+    margin-bottom: 35px; }
+  .trip-add .trip-exchange {
+    width: 159px;
+    display: flex;
+    align-items: center;
+    justify-content: center; }
+    .trip-add .trip-exchange img {
+      width: 30px; }
   .humburger-second-menu {
     display: block;
     background: transparent; }
@@ -36495,7 +37591,12 @@ button#clear span {
     z-index: 1;
     border: 1px #e8e8e8 solid;
     background: #fff;
-    top: 0; }
+    top: 0;
+    flex-wrap: wrap; }
+    .hotel-meta-mobile .view-suite-btn {
+      display: none !important; }
+    .hotel-meta-mobile .btn-reservation-detail {
+      width: 50%; }
     .hotel-meta-mobile.sticky {
       position: fixed;
       left: 0;
@@ -36506,6 +37607,10 @@ button#clear span {
       -o-transition: all 0.4s ease-in-out;
       transition: all 0.4s ease-in-out;
       z-index: 2; }
+      .hotel-meta-mobile.sticky .view-suite-btn {
+        display: flex !important; }
+      .hotel-meta-mobile.sticky .btn-reservation-detail {
+        width: 100%; }
     .hotel-meta-mobile a {
       width: 100%;
       font-size: 14px;
@@ -36989,8 +38094,8 @@ button#clear span {
       padding-left: 15px;
       padding-right: 15px;
       background: #f0f0f0;
-      padding-top: 10px;
-      padding-bottom: 10px; }
+      padding-top: 15px;
+      padding-bottom: 15px; }
     .mobile-header-detail #menunav {
       padding-top: 10px;
       padding-left: 15px;
@@ -37056,7 +38161,32 @@ button#clear span {
     width: 219px; }
   .img-overlay .overlay.overlay-restaurant-reservation {
     opacity: 1;
-    background: rgba(0, 0, 0, 0.4); } }
+    background: rgba(0, 0, 0, 0.4); }
+  .content-detail-hotel .slider-detail {
+    margin-top: 0; }
+  .content-detail-hotel .row.mt-5 {
+    margin-top: 37px !important; }
+  .hotel-meta-mobile.sticky {
+    top: 58px; }
+  .main-row {
+    flex-direction: row; }
+    .main-row .left-side {
+      width: 100%; }
+    .main-row .right-side {
+      width: 100%; }
+  .righ-side-content {
+    margin-top: 0; }
+  .content-container {
+    padding-top: 73px; }
+  .row-menu-list {
+    margin-left: 0 !important; }
+  .mpl-3 {
+    padding-left: 15px !important; }
+  .jkk---920934 {
+    padding-left: 15px;
+    padding-right: 15px; }
+  .menu-dedicated {
+    display: block !important; } }
 
 @media (max-width: 575.98px) {
   .restaurant-slide .slick-slide {
@@ -37205,8 +38335,6 @@ button#clear span {
     margin-top: 3px; }
   .menu-nav {
     padding-right: 12px; }
-  .hotel-meta-mobile.sticky {
-    top: 100px; }
   .menu-group-detail {
     top: 51px; }
   .date-reserve .xdsoft_datetimepicker.xdsoft_inline {

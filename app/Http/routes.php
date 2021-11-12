@@ -56,7 +56,7 @@ Route::post('/add_collection','FrontEnd\HotelDetailController@add_collection');
 
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
-Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
+Route::post('/users/savetravelprofile', 'UserController@postSavetravellerprofile');
 Route::post('/users/questions', 'UserController@postSecurityQuestion');
 Route::post('/users/CardDetail', 'UserController@userCardDetail');
 Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');

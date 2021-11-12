@@ -14,6 +14,7 @@
     </ul>
 <br>
 <p>
+    
     In this section you manage personal preferences.
 </p>
 
