@@ -810,7 +810,7 @@ class DestinationController extends Controller {
                 $str_des_keyword .= " and MATCH (tb_categories.category_name) AGAINST ('\"".trim($keyword)."\"')";
             }
         }
-        $str_des_keyword .=  " and is_hotels_available = 1";
+        //$str_des_keyword .=  " and is_hotels_available = 1";
 
         $fetchdestinations =  \DB::connection($conn)
         ->SELECT($str_des_keyword);
