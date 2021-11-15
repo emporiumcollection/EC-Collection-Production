@@ -237,7 +237,7 @@ function replacePropertySuites(id){
           firstsuite = e.id;
         }
         suiteview += `<li class="nav-item" onclick="replaceSuiteDetail(` + id + `, ` + e.id + `)">
-            <a class="nav-link nav-link-sub" id="suitelist1-tab-` + e.id + `" data-toggle="pill"
+            <a class="nav-link nav-link-sub active" id="suitelist1-tab-` + e.id + `" data-toggle="pill"
                 href="#suitelist1" role="tab" aria-controls="suitelist1" aria-selected="false"> ` + e.category_name + `</a>
         </li>`;
       })
