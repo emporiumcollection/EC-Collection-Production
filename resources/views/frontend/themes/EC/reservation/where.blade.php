@@ -39,17 +39,21 @@
 	                  <div class="row field-count-reservation align-items-center">
 	                    <button type="button" class="min-room disable">-</button>
 	                    <div class="col text-center">
-	                      <span class="mr-1 room-val">1</span>
+	                      <span class="mr-1 room-val">{{ \Session::get('total_suite') }}</span>
+	                      <input type="hidden" name="suite[]" id="suites" class="suite" value="{{ \Session::get('total_suite') }}"/>
+
 	                    </div>
 	                    <button type="button" class="plus-room mr-3">+</button>
 	                  </div>
 	                </div>
 	              </div>
 	            </div>
+	            <?php  $suites = \Session::get('suites'); ?>
 	            <div class="guest-pick-body px-0">
+	            	@foreach($suites as $key => $val)
 	              <div class="row list-eoom">
 	                <div class="col-12 col-ews mb-5" id="room-1">
-	                  <p><b>Suite 1</b></p>
+	                  <p><b>Suite {{ ($key+1) }}</b></p>
 	                  <div class="row align-items-center py-2">
 	                    <div class="col-7">
 	                      <p class="mb-0"><b>Adults</b></p>
@@ -58,7 +62,9 @@
 	                      <div class="row field-count-reservation align-items-center">
 	                        <button type="button" class="min">-</button>
 	                        <div class="col text-center">
-	                          <span class="mr-1 adult-val adult_val">{{ \Session::get('selected_adult') ? \Session::get('selected_adult') : \Session::get('adult') }}</span>
+	                          <span class="mr-1 adult-val">{{ $val['adult'] }}</span>
+                            <input type="hidden" name="adult[]" class="inp-adult" id="adult" value="{{ $val['adult'] }}" />
+                            <input type="hidden" name="rooms[]" id="rooms"/>
 	                        </div>
 	                        <button type="button" class="plus mr-3">+</button>
 	                      </div>
@@ -72,7 +78,8 @@
 	                      <div class="row field-count-reservation align-items-center">
 	                        <button type="button" class="min">-</button>
 	                        <div class="col text-center">
-	                          <span class="mr-1 child-val child_val">{{ \Session::get('selected_child') ? \Session::get('selected_child') : \Session::get('children') }}</span>
+	                          <span class="mr-1 child-val">{{ $val['child'] }}</span>
+	                        	<input type="hidden" name="child[]" id="" class="inp-child" value="{{ $val['child'] }}" />
 	                        </div>
 	                        <button type="button" class="plus mr-3">+</button>
 	                      </div>
@@ -80,6 +87,7 @@
 	                  </div>
 	                </div>
 	              </div>
+	              @endforeach
 	              <div class="room-limit">
 	                <p><b>Does your booking involve more than 4 suites?</b></p>
 	                <p>Contact our Groups and Events team on 08989819281. and they'll take care of everything.

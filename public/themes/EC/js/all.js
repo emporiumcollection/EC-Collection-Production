@@ -642,14 +642,14 @@ var ajaxReq = 'ToCancelPrevReq';
       }
   });
 
+
   $(document).on('click', '.field-count-guest .plus', function () {
     $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
     var obj_adult = $(this).prev().find('.inp-adult');
     if(obj_adult.length > 0){
         var _adval = $(this).prev().find('.inp-adult').val();
         $(this).prev().find('.inp-adult').val(parseInt(_adval)+1)
-//        console.log(_adval);
-//        console.log('_adval');
+
     }
     var obj_child = $(this).prev().find('.inp-child');
     if(obj_child.length > 0){
@@ -1038,8 +1038,10 @@ var ajaxReq = 'ToCancelPrevReq';
   $(document).on('click', '.confirm-room-when', function(){
     var adultCount = 0;
     var childCount = 0;
+    // confirm-room-when
     $('.adult-val').each(function(){
       adultCount += parseFloat($(this).html());
+      alert(adultCount);
     });
     $('.child-val').each(function(){
       childCount += parseFloat($(this).html());

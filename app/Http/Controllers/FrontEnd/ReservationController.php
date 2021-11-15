@@ -89,13 +89,7 @@ class ReservationController extends Controller {
 
     public function guest(Request $request)
     {
-        $child = $request->child;
-        $adult = $request->adult;
-        $guests = $child + $adult;
-        
-        \session()->put('selected_child',$child);
-        \session()->put('selected_adult',$adult);
-        \session()->put('selected_guests',$guests);
+        $this->storeSession($request);
     }
 
     public function reserveSuite()

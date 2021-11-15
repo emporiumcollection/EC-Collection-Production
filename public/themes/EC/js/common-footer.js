@@ -173,7 +173,7 @@ $(document).ready(function(){
       }
     });
 
-    $(document).on('click', '.field-count-reservation .plus', function () {
+    /*$(document).on('click', '.field-count-reservation .plus', function () {
       $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
       $(this).closest('.field-count-reservation').find('.min').removeClass('disable');
     });
@@ -184,7 +184,7 @@ $(document).ready(function(){
       if ($(this).next().find('.mr-1').html() < 1) {
         $(this).closest('.field-count-reservation').find('.min').addClass('disable');
       }
-    });
+    });*/
 });
     
 
