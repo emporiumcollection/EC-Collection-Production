@@ -18,9 +18,8 @@
             <a href="#" class="sidebar-back">
                 <i class="ico ico-back"></i>
             </a>
-            <h3 class="title-second title-line mb-0">
-                The Ludlow Hotel
-                {{-- {{  $hotel_data[0]->property_name }} --}}
+            <h3 class="title-second title-line mb-0" id="hotelnm">
+                {{ isset($hotel_data[0]->property_name)?$hotel_data[0]->property_name:'' }}
             </h3>
             <!-- <div>
                 <a href="#" class="btn btn-primary">Add Review</a>
