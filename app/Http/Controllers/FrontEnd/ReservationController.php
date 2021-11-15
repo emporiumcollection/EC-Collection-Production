@@ -9,6 +9,7 @@ use App\Models\PropertyCategoryTypes;
 use App\Models\Addresses;
 use App\Models\properties;
 use App\Http\Traits\Property;
+use Illuminate\Support\Facades\Session;
 use App\User;
 use Config;
 use Response;
@@ -26,12 +27,15 @@ class ReservationController extends Controller {
     {
         //$request->session()
         //       ->put('property_id', $id); 
-        \Session::put('property_id', $id);
+        Session::put('property_id', $id);
         
         if (!\Auth::check()){
+            Session::put('reservation', [
+                'redirect_url' => $request->fullUrl()
+            ]);
             return redirect('user/login');
         }
-        \Session::put('property_id', $id);
+        Session::put('property_id', $id);
         $properties = PropertyCategoryTypes::first();
 
         $request->session()
