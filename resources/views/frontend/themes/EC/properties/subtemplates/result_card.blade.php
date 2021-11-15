@@ -12,7 +12,7 @@
         if(isset($property['container']['name'])){
           $container_name = $property['container']['name'];
         }else{
-          $container_name = strtolower(str_replace("-", " ", trim($property->property_name)));
+          $container_name = strtolower(str_replace(" ", "-", trim($property->property_name)));
         }
 
         if(is_array($image)){
