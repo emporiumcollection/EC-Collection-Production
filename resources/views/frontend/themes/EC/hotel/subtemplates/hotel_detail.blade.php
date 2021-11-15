@@ -1962,8 +1962,5 @@
 </div>
 
 @include('frontend.themes.EC.layouts.subsections.quick_info')
-<<<<<<< HEAD
 @include('frontend.themes.EC.layouts.subsections.reviews')
-=======
 @include('frontend.themes.EC.layouts.subsections.priceinfo')
->>>>>>> 998545451f331f5539142331432afff9b6c4c760

@@ -24,7 +24,7 @@ function replacePropertyData(id){
   });
 
   $('[data-place="property-book-button"]').each(function() {
-    $(this).html('<a href="/hotel/hoteldetail/' + id + '" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>');
+    $(this).html('<a href="/reservation/when/' + id + '" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>');
   });
   
   if($('#map2').length){
