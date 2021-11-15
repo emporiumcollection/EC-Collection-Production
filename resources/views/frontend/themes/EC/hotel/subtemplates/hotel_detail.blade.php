@@ -53,9 +53,7 @@
     <div class="slider-detail" id="sliderDetail">
      <?php
      foreach($hotel_data[0]->propertyImages as $image): 
-    //  echo "<pre>";
-    //  print_r($image);
-    //  die();
+    
         if(isset($hotel_data[0]['container']['name'])){
           $container_name = $hotel_data[0]['container']['name'];
         }else{
@@ -64,7 +62,7 @@
 
         if(is_array($image)){
           $file_name = $image['file_name'];
-        }elseif(is_object($image)){
+        }elseif(is_object($image) && isset($image->file->file_name)){
           $file_name = $image->file->file_name;
         }else{
           $file_name = 'default-image.png';
