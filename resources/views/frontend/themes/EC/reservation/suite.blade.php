@@ -60,7 +60,7 @@
                           if(isset($property[0]['container']['name'])){
                             $container_name = $property[0]['container']['name'];
                           }else{
-                            $container_name = strtolower(str_replace("-", " ", trim($property[0]->property_name)));
+                            $container_name = strtolower(str_replace(" ", "-", trim($property[0]->property_name)));
                           }
 
                           if(isset($image['file'])) $name = $image['file']['name'];
