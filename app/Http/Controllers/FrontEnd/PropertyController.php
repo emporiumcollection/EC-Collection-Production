@@ -2879,8 +2879,8 @@ class PropertyController extends Controller {
     
         if(empty(json_decode($photos))){
             $us = new UnsplashSearch();
-//            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-//            Cache::store('file')->put($cacheKey, $photos, 100000);
+            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+            Cache::store('file')->put($cacheKey, $photos, 100000);
         }
         $this->data['photos'] = json_decode($photos);
 
@@ -2929,7 +2929,7 @@ class PropertyController extends Controller {
         }
 
         $this->storeSession($adults, $childs, $arrive,
-            $departure);
+            $departure,$keyword);
 
         //Get Number of night
         $number_of_nights = '';
@@ -3311,6 +3311,7 @@ class PropertyController extends Controller {
         $this->data['hotel_data'] = $this->getPropertyById($id);
         $this->data['reviews'] = $this->getReviews($id);
         $this->formatPropertyRecords($this->data['hotel_data']);
+        $this->data['layout_type'] = 'old';
         return view('frontend.themes.EC.hotel.hotel_detail', $this->data);
     }
 
@@ -7198,7 +7199,8 @@ class PropertyController extends Controller {
     public function featuredProperty(Request $request){
         $keyword = $request->query->get('keyword');
         //Get featured choice properties
-        $this->data['featureProperties'] = $this->getFeaturedProperties($keyword);
+        $this->data['featureProperties'] = $this->getFeaturedProperties([], $keyword);
+        $this->setGalleryAndFormat($this->data['featureProperties']);
         echo json_encode($this->data['featureProperties']);
         exit;
     }

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="">
 
@@ -233,7 +234,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     @show
 
 <script type="text/javascript" src="{{ asset('js/mediaelement-and-player.min.js')}}"></script>
-<script type="text/javascript" src="{{ asset('js/plugin/owl.carousel.min.js')}}"></script>
+
 <script type="text/javascript" src="{{ asset('js/plugin/select2/select2.full.min.js')}}"></script>
 
 
@@ -271,6 +272,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <script src="{{ asset('themes/EC/js/plugin/rellax.min.js') }}"></script>
 <script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js')}}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/collection.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reservation.js') }}"></script>
 @section('custom_js')
     @parent

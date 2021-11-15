@@ -159,7 +159,7 @@
                   </ul>
                   {{-- <div id="map"></div> --}}
                   @if(!empty($properties))
-                    <iframe src="https://maps.google.com/maps?q={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}&t=&z=14&ie=UTF8&iwloc=&output=embed" width="99.9%" height="100%" frameborder="0" style="border: 1px solid #bfc1c3 !important; border-radius: 2px;" allowfullscreen="false" scrolling="no" aria-hidden="false" tabindex="0"></iframe>
+                    <iframe src="https://maps.google.com/maps?q={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}&t=&z=14&ie=UTF8&iwloc=&output=embed" width="99.9%" height="75%" frameborder="0" style="border: 1px solid #bfc1c3 !important; border-radius: 2px;" allowfullscreen="false" scrolling="no" aria-hidden="false" tabindex="0"></iframe>
                   @else
                     <h2>Location Not Found</h2>
                   @endif

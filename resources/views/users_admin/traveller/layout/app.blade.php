@@ -195,90 +195,91 @@
               @include('users_admin/traveller/layout/nav-user')
             </div>
             <div class="card-body">
-              {{-- Start Slider --}}
-              <div class="dashboard-slider">
-                <div>
-                  <a href="/dashboard">
-                    <div class="dashboard-slider-item">
-                      <img src="{{ asset('uploads/slider_images/1568213046-24002805.jpg')}}" class="w-100" alt="">
-                      <div class="slider-title">
-                        Welcome to the Emporium-Collection
+              @if(Request::is('dashboard'))  
+                <div class="dashboard-slider">
+                  <div>
+                    <a href="/dashboard">
+                      <div class="dashboard-slider-item">
+                        <img src="{{ asset('uploads/slider_images/1568213046-24002805.jpg')}}" class="w-100" alt="">
+                        <div class="slider-title">
+                          Welcome to the Emporium-Collection
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
-                <div>
-                  <a href="{{ URL::to('/users/profile')}}">
-                    <div class="dashboard-slider-item">
-                      <img src="{{ asset('uploads/slider_images/1568268146-96506761.jpg')}}" class="w-100" alt="">
-                      <div class="slider-title">
-                        My Profile
+                    </a>
+                  </div>
+                  <div>
+                    <a href="{{ URL::to('/users/profile')}}">
+                      <div class="dashboard-slider-item">
+                        <img src="{{ asset('uploads/slider_images/1568268146-96506761.jpg')}}" class="w-100" alt="">
+                        <div class="slider-title">
+                          My Profile
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
-                <div>
-                  <a href="reservations.html">
-                    <div class="dashboard-slider-item">
-                      <img src="{{ asset('uploads/slider_images/1568268487-93942589.jpg')}}" class="w-100" alt="">
-                      <div class="slider-title">
-                        My Reservations
+                    </a>
+                  </div>
+                  <div>
+                    <a href="reservations.html">
+                      <div class="dashboard-slider-item">
+                        <img src="{{ asset('uploads/slider_images/1568268487-93942589.jpg')}}" class="w-100" alt="">
+                        <div class="slider-title">
+                          My Reservations
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
-                <div>
-                  <a href="{{ URL::to('/users/companion')}}">
-                    <div class="dashboard-slider-item">
-                      <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
-                      <div class="slider-title">
-                        My Companion
+                    </a>
+                  </div>
+                  <div>
+                    <a href="{{ URL::to('/users/companion')}}">
+                      <div class="dashboard-slider-item">
+                        <img src="{{ asset('images/53511811337-49267444221.jpg')}}" class="w-100" alt="">
+                        <div class="slider-title">
+                          My Companion
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
-                <div>
-                  <a href="{{ URL::to('/users/guestinvite')}}">
-                    <div class="dashboard-slider-item">
-                      <img src="{{ asset('uploads/slider_images/1568269053-45751192.jpg')}}" class="w-100" alt="">
-                      <div class="slider-title">
-                        Invite Friends
+                    </a>
+                  </div>
+                  <div>
+                    <a href="{{ URL::to('/users/guestinvite')}}">
+                      <div class="dashboard-slider-item">
+                        <img src="{{ asset('uploads/slider_images/1568269053-45751192.jpg')}}" class="w-100" alt="">
+                        <div class="slider-title">
+                          Invite Friends
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
-                <div>
-                  <a href="{{ URL::to('/users/setting')}}">
-                    <div class="dashboard-slider-item">
-                      <img src="{{ asset('uploads/slider_images/1568270092-66288025.jpg')}}" class="w-100" alt="">
-                      <div class="slider-title">
-                        My Settings
+                    </a>
+                  </div>
+                  <div>
+                    <a href="{{ URL::to('/users/setting')}}">
+                      <div class="dashboard-slider-item">
+                        <img src="{{ asset('uploads/slider_images/1568270092-66288025.jpg')}}" class="w-100" alt="">
+                        <div class="slider-title">
+                          My Settings
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
+                    </a>
+                  </div>
 
-                <div>
-                  <a href="security-privacy.html">
-                    <div class="dashboard-slider-item">
-                      <img src="{{ asset('uploads/slider_images/1568270328-17372868.jpg')}}" class="w-100" alt="">
-                      <div class="slider-title">
-                        My Security & Privacy
+                  <div>
+                    <a href="security-privacy.html">
+                      <div class="dashboard-slider-item">
+                        <img src="{{ asset('uploads/slider_images/1568270328-17372868.jpg')}}" class="w-100" alt="">
+                        <div class="slider-title">
+                          My Security & Privacy
+                        </div>
                       </div>
-                    </div>
-                  </a>
-                </div>
-                <div>
-                  <a href="{{ URL::to('/users/my-preferences')}}">
-                    <div class="dashboard-slider-item">
-                      <img src="{{ asset('uploads/slider_images/1568270655-22658407.jpg')}}" class="w-100" alt="">
-                      <div class="slider-title">
-                        My Preferences
+                    </a>
+                  </div>
+                  <div>
+                    <a href="{{ URL::to('/users/my-preferences')}}">
+                      <div class="dashboard-slider-item">
+                        <img src="{{ asset('uploads/slider_images/1568270655-22658407.jpg')}}" class="w-100" alt="">
+                        <div class="slider-title">
+                          My Preferences
+                        </div>
                       </div>
-                    </div>
-                  </a>
+                    </a>
+                  </div>
                 </div>
-              </div>
+              @endif  
               @yield('content')
 
             </div>

@@ -26,7 +26,7 @@ class UpdateAvailableHotelLocations extends Command
      */
     protected $description = 'Backend process to collect hotel data and rates';
 
-    private $parents = [];
+    private $pts = [];
     /**
      * Execute the console command.
      *
@@ -60,8 +60,8 @@ class UpdateAvailableHotelLocations extends Command
             $this->formatAllCategories($categories[$key], $category['id']);
 
             //arrang parent => children
-            if(!empty($this->parents[$category['id']])){
-                foreach($this->parents[$category['id']] as $parent){
+            if(!empty($this->pts[$category['id']])){
+                foreach($this->pts[$category['id']] as $parent){
                     unset($categories[$key]['parent']);
                     $filters[$parent][] = $category;
                 }
@@ -82,7 +82,7 @@ class UpdateAvailableHotelLocations extends Command
     private function formatAllCategories($category, $cat_id){
         if(!empty($category['parent'])){
             foreach($category['parent'] as $parent){
-                $this->parents[$cat_id][] = $parent['category_name'];
+                $this->pts[$cat_id][] = $parent['category_name'];
                 $categories = $this->formatAllCategories($parent, $cat_id);
             }   
         }

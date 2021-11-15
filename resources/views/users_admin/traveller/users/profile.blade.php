@@ -46,7 +46,7 @@
 					<h5 class="text-dark font-weight-bold mb-10">
 						My Credentials
 					</h5>
-					<form method="post" action="/users/savetravel" enctype="multipart/form-data">
+					<form method="post" action="/users/savetravelprofile" enctype="multipart/form-data">
 						<!--begin::Group-->
 
 						<div class="form-group row">

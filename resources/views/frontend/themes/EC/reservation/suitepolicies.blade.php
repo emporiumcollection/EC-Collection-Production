@@ -28,14 +28,14 @@
         </h2>
         <div class="row">
           <div class="col-lg-9 col-md-8 mb-4">
-            <h3>Policies</h3>            
-              @if(!empty($policies->booking_policy))
-                <div class="card card-body rounded-0">
-                  @foreach($policies as $policy)
-                    <p>{{ $policy->booking_policy }}</p>
-                  @endforeach
-                </div>                
-              @endif
+            <h3>Policies</h3> 
+              @if(isset($policies))           
+                  <div class="card card-body rounded-0">
+                    @foreach($policies as $policy)
+                      <p>{{ $policy->booking_policy }}</p>
+                    @endforeach
+                  </div>                
+              @endif  
 
               @if(empty($policies))
                 @if(!empty($termDetail->terms_and_condition))
@@ -45,9 +45,8 @@
                     @endforeach
                 @endif
               @endif          
-            
             <hr>              
-                @if(!empty($global_terms))
+                @if(empty($termDetail))
                   @foreach($global_terms as $links)
                     <div class="form-group">
                         <a href="https://superdevresources.com/open-links-popup" class="iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe " title="Privacy and cookie policy" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Privacy and cookie policy</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>

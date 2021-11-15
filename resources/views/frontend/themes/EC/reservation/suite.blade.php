@@ -27,10 +27,17 @@
         </h2>
         <div class="row">
           <div class="col-lg-9 col-md-8">
+            @if(Session::has('massage'))      
+              <div class="alert alert-success alert-dismissible fade show">
+                  <button type="button" class="close" data-dismiss="alert">&times;</button>
+                  <strong>Success!</strong> {!! Session::get('massage') !!}.
+              </div>
+            @endif
+
             <div class="suite-fasility section-shadow mb-5">
               <h3>ALL STAYS INCLUDE</h3>
               <ul>
-                {{-- {!! preg_replace("/,/", "<br/>", ($suites[0]->always_included)) !!} --}}
+                
                 <li>WiFi</li>
                 <li>Daily bottled water</li>
                 <li>Daily à la carte breakfast</li>
@@ -40,13 +47,14 @@
                 <li>Access to 24 hour business centre</li>
               </ul>
             </div>
-        @if(!empty($property[0]->toArray()))
+        @if(!empty($property[0]))
           @foreach($property[0]->suites as $suite)  
             <div class="suite-list section-shadow mb-5">
               <div class="suite-tumb">
                 <div class="row align-items">
                     <div class="col-lg-6">
                       <div class="img-offset-slide">
+                        <?php if(!empty($suite->rooms[0]['images'])):?>
                         @foreach($suite->rooms[0]['images'] as $image)
                         <?php
                           if(isset($property[0]['container']['name'])){
@@ -54,14 +62,18 @@
                           }else{
                             $container_name = strtolower(str_replace("-", " ", trim($property[0]->property_name)));
                           }
+
+                          if(isset($image['file'])) $name = $image['file']['name'];
+                          if(isset($image['file'])) $file_name = $image['file']['file_name'];
                         ?>
                           <div>
                             <a href="detail-page.html">                  
-                              <img src="{{ asset('/room-image/resize/493x276/'.$container_name.'/'.$image['file']['file_name']) }}"
+                              <img src="{{ asset('/room-image/resize/500x700/' . $container_name . '/' . $name . '/' . $file_name) }}"
                                 class="img-full" alt="">
                             </a>
                           </div>
-                        @endforeach                                      
+                        @endforeach
+                        <?php endif;?>   
                       </div>
                     </div>
                     <div class="col-lg-6">
@@ -72,7 +84,7 @@
                         </p>
                         <div class="row align-items-center mt-5">
                           <div class="col-8 guestvalue">
-                            <p class="mb-0">From: <b>€1.099 per night</b></p>
+                            <p class="mb-0">From: <b>€{{ $suite->guests_in_base_price }}</b></p>
                             <p>inclusive of all taxes and fees</p>
                             <?php $i = $suite->total_guests; ?>
                             <input type="hidden" name="select_guest" class="select_guest" id="select_guest" value="">
@@ -122,4 +134,3 @@
 </div>
 </div>
 @endsection
-{{-- /room-image/resize/493x276/the-mark/courtyard-junior-suites/79795411974-32769521574.jpg --}}

@@ -142,7 +142,7 @@ trait Property {
 
     }
 
-    public function getFeaturedProperties($cities, $keyword){
+    public function getFeaturedProperties($cities,$keyword){
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
@@ -424,7 +424,6 @@ trait Property {
                 unset($propertyResults[$k]);
             }
         }
-        // echo "<pre>";print_r($propertyResults);exit;
     }
 
 
@@ -852,11 +851,11 @@ trait Property {
                     $this->getCities($child['category_name'], $cities);
                 }
             }
-        }
+        }   
     }
 
     public function storeSession($adults, $childs,
-        $arrive_date,$departure_date){
+        $arrive_date,$departure_date,$keyword){
 
         $adult = 0;
         $child = 0;
@@ -872,6 +871,7 @@ trait Property {
         \session()->put('suites',4);          
         \session()->put('children',$child);
         \session()->put('Guests',$Guests);
+        \session()->put('keyword',$keyword);
         \session()->put('arrival_date',strtotime($arrive_date));
         \session()->put('arrival',$arrive_date);
         \session()->put('departure_date',strtotime($departure_date));

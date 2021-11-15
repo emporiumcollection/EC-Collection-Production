@@ -22,6 +22,7 @@ class UserController extends Controller {
         parent::__construct();
     }
 
+
     public function getRegister($pid) {
 
         if (CNF_REGIST == 'false') :
@@ -772,7 +773,7 @@ class UserController extends Controller {
                 //End
                 return redirect::to('/users/profile')->with('massage', 'Profile has been saved!');
                 }else{
-                    return redirect::to('/users/profile')->with('Errmassage', 'Please uupload your Avator!');   
+                    return redirect::to('/users/profile')->with('Errmassage', 'Please upload your Avator!');   
                 }
 
         } else {

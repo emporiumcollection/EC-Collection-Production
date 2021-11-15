@@ -36,7 +36,7 @@
         </div>            
         <ul class="nav mt-4 mb-4 nav-wizard-primary">
           <li>
-            <a class="nav-link {{ Request::is('reservation/when') ? 'active' : ''}} " href="/reservation/when">
+            <a class="nav-link {{ Request::is('reservation/when') ? 'active' : ''}} " href="/reservation/when/{id}">
               When
             </a>
           </li>
@@ -56,7 +56,7 @@
             </a>
           </li>
           <li>
-            <a class="nav-link {{ Request::is('policies') ? 'active' : ''}}" href="/policies">
+            <a class="nav-link {{ Request::is('reservation/policies') ? 'active' : ''}}" href="/reservation/policies">
               Policies
             </a>
           </li>

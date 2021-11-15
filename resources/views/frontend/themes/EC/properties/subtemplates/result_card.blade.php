@@ -35,7 +35,7 @@
           <i class="ico ico-diamon diamon-label"></i>
         </a>
         <div class="dropdown-menu">
-          <a href="#" class="dropdown-item" >Add to collection</a>
+          <a href="#" class="dropdown-item add_collection">Add to collection</a>
           <a href="#" class="dropdown-item btn-sidebar create-collection"
             data-sidebar="#myCollection" onclick="collection(<?php echo $property->id;?>)">Create new collection</a>
         </div>
@@ -45,7 +45,7 @@
     <div class="hotel-meta full-width is-small">
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $property->id;?>)">
         Reviews
-      </a>
+      </a>  
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Quick info
       </a>
@@ -61,7 +61,7 @@
             <i class="ico ico-info-green"></i>
           </div>
           <h3 class="mb-0">
-            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ <?php echo $property->price;?> </span>
+            <span class="title-font-2 mr-1">From €</span> <span class="color-primary">€ <?php echo $property->price;?> </span>
           </h3>
           <div class="ml-2">
             <span class="pernight"></span>

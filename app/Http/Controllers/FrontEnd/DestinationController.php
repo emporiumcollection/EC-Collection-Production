@@ -778,6 +778,7 @@ class DestinationController extends Controller {
         if($showparent){
             $parentCategory = categories::select(['id', 'parent_category_id', 'category_name'])
             ->where('category_name', '=', $keyword)
+            ->where('is_hotels_available', '=', 1)
             ->get()
             ->toArray();
 
@@ -809,6 +810,7 @@ class DestinationController extends Controller {
                 $str_des_keyword .= " and MATCH (tb_categories.category_name) AGAINST ('\"".trim($keyword)."\"')";
             }
         }
+        //$str_des_keyword .=  " and is_hotels_available = 1";
 
         $fetchdestinations =  \DB::connection($conn)
         ->SELECT($str_des_keyword);
