@@ -53,8 +53,10 @@
     <div class="slider-detail" id="sliderDetail">
      <?php
      foreach($hotel_data[0]->propertyImages as $image): 
-
-      if(isset($hotel_data[0]['container']['name'])){
+    //  echo "<pre>";
+    //  print_r($image);
+    //  die();
+        if(isset($hotel_data[0]['container']['name'])){
           $container_name = $hotel_data[0]['container']['name'];
         }else{
           $container_name = strtolower(str_replace("-", " ", trim($hotel_data[0]->property_name)));
@@ -63,7 +65,7 @@
         if(is_array($image)){
           $file_name = $image['file_name'];
         }elseif(is_object($image)){
-          $file_name = $image->file_name;
+          $file_name = $image->file->file_name;
         }else{
           $file_name = 'default-image.png';
         }

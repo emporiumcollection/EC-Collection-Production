@@ -3312,6 +3312,8 @@ class PropertyController extends Controller {
         $this->data['reviews'] = $this->getReviews($id);
         $this->formatPropertyRecords($this->data['hotel_data']);
         $this->data['layout_type'] = 'old';
+        // echo "<pre>";
+        // print_r($this->data['hotel_data']->toArray());die();
         return view('frontend.themes.EC.hotel.hotel_detail', $this->data);
     }
 
