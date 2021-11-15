@@ -2,7 +2,7 @@
 
 namespace App\Http\Traits;
 
-use App\Models\reviews;
+use App\Models\Reviews;
 use App\Models\properties;
 // use DB;
 
