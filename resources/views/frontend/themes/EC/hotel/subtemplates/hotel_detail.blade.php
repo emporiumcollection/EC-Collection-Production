@@ -57,7 +57,7 @@
         if(isset($hotel_data[0]['container']['name'])){
           $container_name = $hotel_data[0]['container']['name'];
         }else{
-          $container_name = strtolower(str_replace("-", " ", trim($hotel_data[0]->property_name)));
+          $container_name = strtolower(str_replace(" ", "-", trim($hotel_data[0]->property_name)));
         }
 
         if(is_array($image)){
