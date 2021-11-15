@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use Illuminate\Http\Request;
-use App\Models\reviews;
+use App\Models\Reviews;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests;
