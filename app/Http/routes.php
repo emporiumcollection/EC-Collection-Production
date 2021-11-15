@@ -40,37 +40,53 @@ Route::get('/users/companion', 'UserController@getCompanion');
 
 //HotelDetail Routes
 
-Route::get('/hotel/hoteldetail', 'FrontEnd\HotelDetailController@hoteldetail');
-Route::get('/hotel/suite', 'FrontEnd\HotelDetailController@suites');
+Route::get('/hotel/hoteldetail/{id}', 'FrontEnd\PropertyController@getProperty');
+Route::get('/hotel/suite/{property_id}', 'FrontEnd\HotelDetailController@suites');
 Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
 Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture');
 Route::get('/hotel/spa', 'FrontEnd\HotelDetailController@spa');
 Route::get('/hotel/restaurant', 'FrontEnd\HotelDetailController@restaurant');
 Route::get('/hotel/detailrestaurant','FrontEnd\HotelDetailController@detailrestaurant');
-Route::get('/hotel/location','FrontEnd\HotelDetailController@location');
+Route::get('/hotel/location/{id}','FrontEnd\HotelDetailController@location');
 Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
 Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
 Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
-
+Route::post('/add_collection','FrontEnd\HotelDetailController@add_collection');
+//HotelDetail Reviews
+Route::get('/hotel/get-reviews/{id}','FrontEnd\ReviewController@getPropertyReviews');
+Route::post('/hotel/add-reviews','FrontEnd\ReviewController@addreviews');
+//
 
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
-Route::post('/users/savetravel', 'UserController@postSavetravellerprofile');
+Route::post('/users/savetravelprofile', 'UserController@postSavetravellerprofile');
 Route::post('/users/questions', 'UserController@postSecurityQuestion');
 Route::post('/users/CardDetail', 'UserController@userCardDetail');
 Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');
 Route::post('/users/invite', 'UserController@postInvite');
 // Route::get('/users/reservation', 'ReservationsController@getReservation');
-Route::get('reservation/when', 'ReservationsController@when');
-Route::get('reservation/where', 'ReservationsController@where');
-Route::get('reservation/suite', 'ReservationsController@suite');
-Route::get('reservation/suiteboard', 'ReservationsController@suiteBoard');
-Route::get('reservation/suitepolicies', 'ReservationsController@suitePolicies');
-Route::get('reservation/aditionalservices', 'ReservationsController@aditionalServices');
-Route::get('reservation/whoistravelling','ReservationsController@whoistravelling');
-Route::get('reservation/paymentmethod', 'ReservationsController@paymentmethod');
-Route::get('reservation/hotelpolicies', 'ReservationsController@hotelpolicies');
-Route::get('reservation/bookingsummary', 'ReservationsController@bookingsummary');
+
+Route::get('reservation/when/{id}', 'FrontEnd\ReservationController@when');
+Route::get('reservation/where', 'FrontEnd\ReservationController@where');
+Route::get('reservation/suite', 'FrontEnd\ReservationController@suite');
+Route::get('reservation/suiteboard', 'FrontEnd\ReservationController@suiteBoard');
+Route::get('reservation/policies', 'FrontEnd\ReservationController@Policies');
+Route::get('reservation/services', 'FrontEnd\ReservationController@aditionalServices');
+Route::get('reservation/whoistravelling','FrontEnd\ReservationController@whoistravelling');
+Route::get('reservation/paymentmethod', 'FrontEnd\ReservationController@paymentmethod');
+Route::get('reservation/hotelpolicies', 'FrontEnd\ReservationController@hotelpolicies');
+Route::get('reservation/bookingsummary', 'FrontEnd\ReservationController@bookingsummary');
+Route::post('/suite', 'FrontEnd\ReservationController@selected_suite');
+Route::post('/select/guest', 'FrontEnd\ReservationController@guest');
+
+Route::post('/addresses', 'FrontEnd\ReservationController@addresses');
+Route::post('/addcompanion', 'FrontEnd\ReservationController@addcompanion');
+Route::post('/storeinTosession', 'FrontEnd\ReservationController@storecompanionTosession');
+
+Route::get('/reservation/receipt', 'FrontEnd\ReservationController@reservationList');
+
+Route::get('/reserve_data', 'FrontEnd\ReservationController@addReservationData');
+
 // Route::post('/users/bookingsummary', 'UserController@bookingsummary');
 
 /**
@@ -87,8 +103,10 @@ Route::get('book/reservation', 'PhaseOne\ReservationController@index');
 
 //Datatable route
 Route::get('/users/companiondata', 'DatatableController@getDatatable');
+Route::get('/users/reservations', 'DatatableController@getreservations');
 Route::get('/users/inviteGuest', 'DatatableController@getInviteGuest');
 Route::get('/users/preferenceDatatable', 'DatatableController@getPreferencesData');
+// Route::get('/users/reservations', 'DatatableController@getreservation');
 
 /**
  * New Admin backend routes.
@@ -555,6 +573,9 @@ Route::post('getdestinationpage', 'FrontEnd\PropertyController@getdestinationpag
 Route::get('globalsearchavailability', 'FrontEnd\PropertyController@globalsearchavailability');
 Route::get('searchavailability', 'FrontEnd\PropertyController@propertySearchAvailability');
 Route::get('featuredproperty', 'FrontEnd\PropertyController@featuredProperty');
+Route::get('property/prices', 'FrontEnd\PropertyController@propertyRoomPrices');
+Route::get('property/refresh-map/{lat}/{lng}', 'FrontEnd\PropertyController@refreshMap');
+Route::get('api/property/{id}', 'FrontEnd\PropertyController@apiPropertyDetail');
 
 Route::post('getyoutubechannel', 'FrontEnd\FrontendPagesController@getyoutubechannel');
 Route::post('getinstagramchannel', 'FrontEnd\FrontendPagesController@getinstagramchannel');

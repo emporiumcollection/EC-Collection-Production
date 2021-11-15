@@ -34,38 +34,22 @@
             <div class="suite-board-body p-5">
                 <div class="row m-0 price-lst-table-head">
                     <div class="col-6 pl-0">DETAILS</div>
-                    <div class="col-3 text-right">USD</div>
-                    <div class="col-3 pr-0 text-right">ZAR</div>
+                    <div class="col-3 text-right">EURO</div>
+                    <div class="col-3 pr-0 text-right">USD</div>
                 </div>
                 <div class="row m-0 list-prs">
-                    <div class="col-6 pl-0"><a href="#" class="btn-prc-title" data-price="#pr-1">Subtotal for
-                            7
-                            nights <span class="arrow-down toup"></span></a></div>
-                    <div class="col-3 text-right">$2,250</div>
-                    <div class="col-3 pr-0 text-right">R33,202</div>
+                    <div class="col-6 pl-0"><a href="#" class="btn-prc-title" data-price="#pr-1">Subtotal for <span id="suite-total-night"></span> nights <span class="arrow-down toup"></span></a></div>
+                    <div class="col-3 text-right"><span id="suite-total-price"></span></div>
+                    <div class="col-3 pr-0 text-right"><span id="suite-total-usd-price"></span></div>
                     <div class="col-12 sub-price-content active" id="pr-1">
                         <div class="row subs-price">
-                            <div class="col-6">February 19, 2020</div>
-                            <div class="col-3 text-right">$375</div>
-                            <div class="col-3 text-right pr-0">R5,534</div>
-                        </div>
-                        <div class="row subs-price">
-                            <div class="col-6">February 19, 2020</div>
-                            <div class="col-3 text-right">$375</div>
-                            <div class="col-3 text-right pr-0">R5,534</div>
-                        </div>
-                        <div class="row subs-price">
-                            <div class="col-6">February 19, 2020</div>
-                            <div class="col-3 text-right">$375</div>
-                            <div class="col-3 text-right pr-0">R5,534</div>
-                        </div>
-                        <div class="row subs-price">
-                            <div class="col-6">February 19, 2020</div>
-                            <div class="col-3 text-right">$375</div>
-                            <div class="col-3 text-right pr-0">R5,534</div>
+                            <div class="col-6"><!--NIGHT-DATE--></div>
+                            <div class="col-3 text-right"><!--NIGHT-PRICE--></div>
+                            <div class="col-3 text-right pr-0"><!--NIGHT-USD-PRICE--></div>
                         </div>
                     </div>
                 </div>
+                <!--
                 <div class="row m-0 list-prs">
                     <div class="col-6 pl-0"><a href="#" class="btn-prc-title" data-price="#pr-2">Hotel
                             taxes & fees <span class="arrow-down toup"></span></a></div>
@@ -99,6 +83,7 @@
                     <div class="col-3 text-right">$2,250</div>
                     <div class="col-3 pr-0 text-right">R33,202</div>
                 </div>
+                -->
                 <div class="row m-0 mt-2 txt-do">
                     <div class="col-12 pl-0">
                         *All hotel prices are based on local currency. <br>

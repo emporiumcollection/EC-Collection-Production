@@ -17,86 +17,62 @@
     <div class="container ">
 
       @include('frontend.themes.EC.reservation.nav_wizard')
-     
-      <div id="step-7" class="tab-pane" role="tabpanel">
         <h2 class="mb-5 d-flex align-items-center">
           <a href="#" class="backwizard btn-backwizard">
             <i class="ico ico-back mr-3"></i>
           </a>
           Who’s travelling
-        </h2>
-        <div class="row">
+        </h2>        
+        <div class="row">          
           <div class="col-lg-9 col-md-8">
-            <hr class="mb-4">
-            <div class="row">
-              <div class="col-md-4 mb-4">
-                <p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Use this address</a></p>
-                Mr Riaan Kleynhans <br>
-                riaan@number7even.com <br>
-                +49 172 8937230 <br>
-                Eisolriederstrasse 12 <br>
-                Munich <br>
-                Germany
+            <hr class="mb-4 mt-4">            
+              <div class="row">
+                <div class="col-md-2">      
+                  <h5 class="mb-4 mt-5"><a href="/reservation/whoistravelling" class="">My Address</a></h5>
+                </div>
+                <div class="col-md-1">      
+                  <h5 class="mb-4 mt-5">or</h5>
+                </div>
+                <div class="col-md-3">
+                  <h5 class="mb-4 mt-5"><a href="#" class="add_new_addres">Add new address</a></h5>      
+                </div>
               </div>
-              <div class="col-md-4 mb-4">
-                <p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Use this address</a></p>
-                Mrs Obert <br>
-                riaan@number7even.com <br>
-                +49 172 8937230 <br>
-                Eisolriederstrasse 12 <br>
-                Munich <br>
-                Germany
-              </div>
-              <div class="col-md-4 mb-4">
-                <p class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Use this address</a></p>
-                Mr Obert<br>
-                riaan@number7even.com <br>
-                +49 172 8937230 <br>
-                Eisolriederstrasse 12 <br>
-                Munich <br>
-                Germany
-              </div>
-            </div>
-            <hr class="mb-4 mt-4">
-            <h5 class="mb-0 d-flex align-items-center">
-              Or Add New Address
-            </h5>
-            <h5 class="mb-4 mt-5">Your details <span class="small color-grey">(*Required)</span></h5>
+
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Title<sup>*</sup></label>
-                <select class="form-control">
-                  <option value="">Mr</option>
-                  <option value="">Mrs</option>
-                  <option value="">Miss</option>
-                  <option value="">Ms</option>
-                  <option value="">Dr</option>
-                  <option value="">Prof</option>
+                <select name="title" id="title" class="form-control title">
+                  <option value="Mr">Mr</option>
+                  <option value="Mrs">Mrs</option>
+                  <option value="Miss">Miss</option>
+                  <option value="Ms">Ms</option>
+                  <option value="Dr">Dr</option>
+                  <option value="Prof">Prof</option>
                 </select>
               </div>
               <div class="col-md-4 form-group">
                 <label>First name<sup>*</sup></label>
-                <input type="text" class="form-control">
+                <input type="text" name="first_name" id="first_name" class="form-control"  value="{{ $address->first_name ? $address->first_name : ''}}">
               </div>
             </div>
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Last name<sup>*</sup></label>
-                <input type="text" class="form-control">
+                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ $address->last_name ? $address->last_name : ''}}">
               </div>
               <div class="col-md-4 form-group">
                 <label>Email<sup>*</sup></label>
-                <input type="email" class="form-control">
+                <input type="text" name="email" id="email_" class="form-control" value="{{ $address->email ? $address->email : ''}}">
               </div>
             </div>
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Telephone<sup>*</sup></label>
-                <input type="text" class="form-control">
+                <input type="text" name="phone" id="phone" class="form-control" value="{{ $address->mobile_number ? $address->mobile_number : ''}}">
               </div>
               <div class="col-md-4 form-group">
                 <label>Country/Region<sup>*</sup></label>
-                <select class="form-control">
+                <select class="form-control" name="country" id="country">
                   <option value="">Please select...</option>
                   <option value="AF">Afghanistan</option>
                   <option value="AX">Aland Islands</option>
@@ -202,7 +178,7 @@
                   <option value="HU">Hungary</option>
                   <option value="IS">Iceland</option>
                   <option value="IN">India</option>
-                  <option value="ID" selected="">Indonesia</option>
+                  <option value="ID">Indonesia</option>
                   <option value="IQ">Iraq</option>
                   <option value="IE">Ireland</option>
                   <option value="IM">Isle of Man</option>
@@ -351,106 +327,186 @@
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Address 1<sup>*</sup></label>
-                <input type="text" class="form-control">
+                <input type="text" name="address1" id="address1" class="form-control" value="{{ $address->address ? $address->address : ''}}">
               </div>
               <div class="col-md-4 form-group">
                 <label>Address 2</label>
-                <input type="text" class="form-control">
+                <input type="text" name="address2" id="address2" class="form-control">
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>City/Town<sup>*</sup></label>
-                <input type="text" class="form-control">
+                <input type="text" name="city" id="city" class="form-control" value="{{ $address->city ? $address->city : ''}}">
               </div>
               <div class="col-md-4 form-group">
                 <label>County/State</label>
-                <select class="form-control">
-                  <option value="">NA</option>
+                <select class="form-control" name="state" id="state">
+                  <option value="NA">NA</option>
                 </select>
               </div>
             </div>
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Zip/Post code<sup>*</sup></label>
-                <input type="text" class="form-control">
+                <input type="text" name="zip_code" id="zip_code" class="form-control" value="{{ $address->zip_code ? $address->zip_code : ''}}">
+              </div>                            
+            </div>  
+            <div class="row">              
+                <div class="col-md-2 form-group" style="margin-right: 10px;">
+                  <input type="button" name="confirm" class=" 
+                  btn btn-dark confirm_address" value="Confirm Address">
+                </div>
+                <h4>or</h4>
+                <div class="col-md-2 form-group">
+                  <input type="button" name="confirm" class="btn btn-dark add_address" value="Add new Address">
+                </div>                 
+            </div>
+            <hr class="mb-4">
+            <br>
+            <h3>My Companions</h3>
+            <h3> <a href="#addPayment" data-toggle="modal">Add
+              new Companion</a></h3>
+            <hr class="mb-4">
+            <div class="row">
+              @foreach($companion as $data)
+              <div class="col-md-4 mb-4 tagvalue">
+                <input type="hidden" class="companion_id" value="{{$data->id}}">
+                <label class="companion_name" id="companion_name">{{ $data->first_name }}</label><br>
+                <label class="companion_email">{{ $data->email }}</label><br>
+                <label class="companion_phone">{{ $data->phone_number }}</label><br>
+                <br>
+                <label class="color-primary btn-use-addr">Select your Companion</label>
+                <input type="checkbox" name="chkcompanion" class="color-primary btn-use-addr chkcompanion">
+                <br>
               </div>
+              @endforeach
+              {{-- <div class="display_add"></div> --}}
+              
             </div>
-
-          </div>
-          <div class="col-lg-3 col-md-4">
-            <div class="reservation-summary">
-              <h4>YOUR RESERVATION</h4>
-              <p><b>Belmond Jimbaran Puri</b></p>
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Guests</td>
-                  <td class="px-0 py-1 text-right">2 Guests</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Check-in</td>
-                  <td class="px-0 py-1 text-right">15 Aug 2020</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Check-out</td>
-                  <td class="px-0 py-1 text-right">16 Aug 2020</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Suites</td>
-                  <td class="px-0 py-1 text-right">Pavilion suite</td>
-                </tr>
-              </table>
-            </div>
-            <div class="reservation-summary section-shadow">
-              <h4>SUITE 1</h4>
-              <p><b>Superior Double Room Garden or Village View </b></p>
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Guests</td>
-                  <td class="px-0 py-1 text-right">2</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Suite</td>
-                  <td class="px-0 py-1 text-right">€4.299.00</td>
-                </tr>
-                <tr>
-                  <td class="px-0 py-1">Tax</td>
-                  <td class="px-0 py-1 text-right">€299.00</td>
-                </tr>
-              </table>
-              <hr class="mb-2">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Gourmet Experience</td>
-                  <td class="px-0 py-1 text-right">2</td>
-                </tr>
-              </table>
-              <hr class="mt-2">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Subtotal</td>
-                  <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                </tr>
-              </table>
-            </div>
-            <div class="reservation-total">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Total</td>
-                  <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                </tr>
-              </table>
-            </div>
-          </div>
-          <div class="col-md-9">
+            <div class="col-md-9">
             <div class="text-right">
               <a href="/reservation/paymentmethod" class="btn btn-dark px-5 btn-nextwizard">Next</a>
             </div>
           </div>
+          </div>
+          <div class="col-lg-3 col-md-4">
+            
+          @include('frontend.themes.EC.reservation.reservation-summary')
+          <?php $pos=1 ?>
+        @if(!empty($suites))          
+          @foreach($suites as $suite)
+            @foreach($suite as $value)
+              <div class="reservation-summary section-shadow">
+                <h4>SUITE &nbsp; {{ $pos++ }}</h4>
+                <p><b>{{ $value->category_name }}</b></p>
+                <table class="table table-borderless mb-0"> 
+                    <tr>
+                      <td class="px-0 py-1">Guests</td>
+                      @foreach($selected_suite as $key => $select_suite)
+                      <td class="px-0 py-1 text-right">{{ $key == $value->id ?  $select_suite : ''}}</td>
+                      @endforeach
+                    </tr>
+                  <tr>
+                    <td class="px-0 py-1">Suite</td>
+                    <td class="px-0 py-1 text-right">€{{ $value->guests_in_base_price }}</td>
+                  </tr>
+                  <tr>
+                    <td class="px-0 py-1">Tax</td>
+                    <td class="px-0 py-1 text-right">€299.00</td>
+                  </tr>
+                </table>
+                <hr class="mb-2">
+                <table class="table table-borderless mb-0">
+                  <tr>
+                    <td class="px-0 py-1">Gourmet Experience</td>
+                    <td class="px-0 py-1 text-right">2</td>
+                  </tr>
+                </table>
+                <hr class="mt-2">
+                <table class="table table-borderless mb-0">
+                  <tr>
+                    <td class="px-0 py-1">Subtotal</td>
+                    <td class="px-0 py-1 text-right"><b>€{{ $value->guests_in_base_price }}</b></td>
+                  </tr>
+                </table>
+              </div>
+            @endforeach
+          @endforeach
+          @else
+            <h2>Suite Not Found</h2>
+        @endif    
+          <div class="reservation-total">
+            <table class="table table-borderless mb-0">
+              <tr>
+                <td class="px-0 py-1">Total</td>
+                <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+              </tr>
+            </table>
+          </div>  
         </div>
       </div>
   </div>
 </div>
 </div>
+<!-- Modal Add Payment-->
+<div class="modal fade" id="addPayment" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Add Companion</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+                <div class="modal-body">                    
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>First name <span class="text-danger">*</span></label>
+                            <input type="text" name="first_name" class="form-control" id="comapnion_f_name" placeholder="Enter your firsname">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Last Name <span class="text-danger">*</span></label>
+                            <input type="text" name="last_name" id="comapnion_l_name" class="form-control" placeholder="Enter your lastname">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Email<span class="text-danger">*</span></label>
+                            <input type="text" name="email" id="comapnion_email" class="form-control" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Phone<span class="text-danger">*</span></label>
+                            <input type="text" name="phone" id="comapnion_phone" class="form-control" placeholder="Enter your phone">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Gender<span class="text-danger">*</span></label>
+                            <select name="gender" class="form-control" id="gender">
+                              <option value="Man">Male</option>
+                              <option value="Woman">Woman</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Prefered Language<span class="text-danger">*</span></label>
+                            <select class="form-control" name="preferred_language" id="language">
+                              <option value="en" >English</option>
+                              <option value="de">Deutsch</option>
+                              <option value="es">Espanol</option>
+                              <option value="fr">Francais</option>
+                              <option value="it">Italiano</option>
+                              <option value="nl">Nederlands</option>
+                            </select>
+                        </div>                         
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    
+                    <button type="submit" class="btn btn-primary font-weight-bold add_companion" data-dismiss="modal">Add Card</button>
+                </div>
+        </div>
+    </div>
+</div>
+<!-- Popup Preferences -->
 @endsection

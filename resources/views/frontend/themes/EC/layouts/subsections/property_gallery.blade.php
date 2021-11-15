@@ -68,7 +68,7 @@
                 <div class="gallery-wrapper">
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <ul class="nav flex-column nav-sidebar ">
+                            <ul class="nav flex-column nav-sidebar" data-replace="restaurants">
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Restaurants</a>
                                 </li>
@@ -84,7 +84,9 @@
 
                             </ul>
                         </div>
-                        <div class="grid-layout" id="gallery_restaurant" data-place="restrurant-images" data-replace="restrurant-images">
+                        <div class="col-8">
+                            <div class="grid-layout" id="gallery_restaurant" data-place="restrurant-images" data-replace="restrurant-images">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -95,7 +97,7 @@
                 <div class="gallery-wrapper">
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <ul class="nav flex-column nav-sidebar ">
+                            <ul class="nav flex-column nav-sidebar" data-replace="bars">
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Restaurants</a>
                                 </li>
@@ -124,7 +126,7 @@
                 <div class="gallery-wrapper">
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <ul class="nav flex-column nav-sidebar ">
+                            <ul class="nav flex-column nav-sidebar" data-replace="spas">
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Restaurants</a>
                                 </li>
@@ -153,7 +155,7 @@
                 <div class="gallery-wrapper">
                     <div class="row justify-content-center">
                         <div class="col-4">
-                            <ul class="nav flex-column nav-sidebar ">
+                            <ul class="nav flex-column nav-sidebar" data-replace="suitenamelist">
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Restaurants</a>
                                 </li>

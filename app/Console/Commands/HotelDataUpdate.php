@@ -38,6 +38,7 @@ class HotelDataUpdate extends Command
 
         $properties = properties::select(['id', 'amadeus_hotel_id', 'property_name', 'isin_amadeus', 'season_year'])
         ->whereNotNull('amadeus_hotel_id')
+        ->where('id', '=', 2)
         ->get();
 
         foreach($properties as $property){
@@ -174,7 +175,9 @@ class HotelDataUpdate extends Command
                     ->where('season_from_date','=', $start_date)    
                     ->where('season_to_date','=', $end_date)    
                     ->get();
-                $season_id = $seasonDates[0]->season_id;
+                if(!empty($seasonDates)){
+                    $season_id = $seasonDates[0]->season_id;
+                }
             }
             $seasons[$key]['season_id'] = $season_id;
          }

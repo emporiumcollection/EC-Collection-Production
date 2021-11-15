@@ -1,3 +1,4 @@
+
 <div class="sidebar-main" id="myCollection">
     <a href="#" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
@@ -307,7 +308,7 @@
             </div>
             <div class="collapse bg-grey" id="addCollaction" data-parent="#collections">
                 <div class="p-4">
-                    <form action="#">
+                    {{-- <form enctype="multipart/form-data" id="myform" method="post" name="myform"> --}}
                         <div class="row">
                             <div class="col-xl-7 col-lg-12">
                                 <div class="form-group row">
@@ -315,31 +316,27 @@
                                         <label>Name of Collection <sup>*</sup> </label>
                                     </div>
                                     <div class="col-8">
-                                        <input type="text" class="form-control" placeholder="Name ">
+                                        <input type="text" class="form-control " name="collection_name" id="collection_name" placeholder="Name ">
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-4">
+                                    <div class="col-4"> 
                                         <label>Start Date - End Date</label>
                                     </div>
                                     <div class="col-8">
-                                        <div class="range-calendar calendar-collection" id="calendar-pick">
-                                            <div id="daterangepicker-inline-container" class="daterangepicker-inline">
-                                            </div>
-                                            <input type="hidden" id="daterangepicker-inline">
-                                            <div class="clearfix"></div>
-                                        </div>
+                                        <input type="text" name="datefilter" value="" id="from_to_end" class="form-control"/>
                                     </div>
 
                                 </div>
+                                <input type="hidden" name="id" value="">
                             </div>
                             <div class="col-12">
                                 <div class="text-right mt-4">
-                                    <button class="btn btn-dark rounded-0 px-5">Save</button>
+                                    <button class="btn btn-dark rounded-0 px-5  collection_">Save</button>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    {{-- </form> --}}
                 </div>
 
             </div>

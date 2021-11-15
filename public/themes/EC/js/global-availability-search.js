@@ -2,13 +2,13 @@ var properties = [];
 var suiteTemplate = '';
 var boardTemplate = '';
 var currentPropertyId = '';
+var priceTemplate = '';
+
 function replacePropertyData(id){
   currentPropertyId = id;
   var field = '';
   $('[data-place="property"]').each(function() {
       field = $(this).attr('data-replace');
-      console.log(properties[id][field]);
-      console.log(field);
       $(this).html(properties[id][field]);
   });
 
@@ -23,6 +23,14 @@ function replacePropertyData(id){
       $(this).html(listview);
   });
 
+  $('[data-place="property-book-button"]').each(function() {
+    $(this).html('<a href="/hotel/hoteldetail/' + id + '" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>');
+  });
+  
+  if($('#map2').length){
+    setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
+  }
+
   $('[data-place="property-images"]').each(function() {
       // field = $(this).attr('data-replace');
       //console.log(properties[id][field]);
@@ -30,8 +38,11 @@ function replacePropertyData(id){
       var imageview = '';
       var spanid = 1;
       var grid = 1;
+      var imgUrl = '';
+      var containerName = getContainerName(id);
       values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file_name + '/property-image" class="img-fluid" alt=""></a>';
+        imgUrl = '/property-image/resize/1200x700/' + containerName + '/' + e.file_name + '/property-image';
+        imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file_title + '" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
         spanid=2;
         grid++;
       })
@@ -45,13 +56,17 @@ function replacePropertyData(id){
       var imageview = '';
       var spanid = 1;
       var grid = 1;
+      var imgUrl = '';
+      var containerName = getContainerName(id);
+
       suites.forEach(function(s){
         rooms = s.rooms;
         rooms.forEach(function(r){
           rimages = r.images;
-          if(r.images!=undefined){          
+          if(rimages.length){          
             rimages.forEach(function(e){
-              imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="room-image/resize/320x320/' + properties[id]['container']['name'] + '/' + s.category_name.replaceAll(' ', '-').toLowerCase() + '/' + e.file.file_name + '" class="img-fluid" alt=""></a>';
+              imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
+              imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
               spanid=2;
               grid++;
             });
@@ -61,52 +76,147 @@ function replacePropertyData(id){
       $(this).html(imageview);
   });
 
-  $('[data-place="bar-images"]').each(function() {
+  replaceGalleryImages(id, 'restrurant-images', 'restaurantList', 'restrurant-image');
+  replaceGalleryImages(id, 'bar-images', 'barList', 'bar-image');
+  replaceGalleryImages(id, 'spa-images', 'spaList', 'spa-image');
+  initializeAllGalleries();
+
+  $('#experience_gallery-tab').parents('li').hide();
+  $('#restaurant_gallery-tab').parents('li').hide();
+  $('#bars_gallery-tab').parents('li').hide();  
+
+  if(properties[id]['barList'].toString().length > 0){
+    $('#bars_gallery-tab').parents('li').show();    
+  }
+  if(properties[id]['spaList'].toString().length > 0){
+    $('#experience_gallery-tab').parents('li').show();    
+  }
+  if(properties[id]['restaurantList'].toString().length > 0){
+    $('#restaurant_gallery-tab').parents('li').show();    
+  }
+
+  replaceGalleryNames(id);
+}
+
+function initializeAllGalleries(){
+
+  lightGallery(document.getElementById('gallery_hotel'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    escKey: false,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_restaurant'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_bars'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_experience'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+  lightGallery(document.getElementById('gallery_suite'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    closable: false
+  });
+}
+
+function replaceGalleryImages(id, place, list, image_path){
+  $('[data-place="' + place + '"]').each(function() {
       // field = $(this).attr('data-replace');
       //console.log(properties[id][field]);
-      var values = properties[id]['bar_images'];
+      var values = properties[id][list];
+
       var imageview = '';
       var spanid = 1;
       var grid = 1;
-      values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/bar-image" class="img-fluid" alt=""></a>';
-        spanid=2;
-        grid++;
-      })
+      var imgUrl = '';
+      for (const [key, e] of Object.entries(values)) {
+        if(e.gallery.files){          
+          e.gallery.files.forEach(function(rgallery){          
+            imgUrl = '/property-image/resize/1200x700/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
+            imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+            spanid=2;
+            grid++;
+          });  
+        }
+      }
       $(this).html(imageview);
   });
+}
 
-  $('[data-place="restrurant-images"]').each(function() {
-      // field = $(this).attr('data-replace');
-      //console.log(properties[id][field]);
-      var values = properties[id]['restrurant_images'];
-      var imageview = '';
-      var spanid = 1;
-      var grid = 1;
-      values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/restrurant-image" class="img-fluid" alt=""></a>';
-        spanid=2;
-        grid++;
-      })
-      $(this).html(imageview);
+function replaceGalleryNames(id){
+  var suitenamelist = `<li class="nav-item">
+        <a class="nav-link" href="#">Suites</a>
+      </li>`;
+  
+  properties[id]['suites'].forEach(function(s) {
+      suitenamelist += `<li class="nav-item">
+        <a class="nav-link" href="#" onclick="showSuiteImages(`+s.id+`)">` + s.cat_short_name + `</a>
+      </li>`;
   });
 
-  $('[data-place="spa-images"]').each(function() {
-      // field = $(this).attr('data-replace');
-      //console.log(properties[id][field]);
-      var values = properties[id]['spa_images'];
-      var imageview = '';
-      var spanid = 1;
-      var grid = 1;
-      values.forEach(function(e){
-        imageview += '<a href="#" data-sub-html="alter text" class="grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="property-image/resize/320x320/' + properties[id]['container']['name'] + '/' + e.file.file_name + '/spa-image" class="img-fluid" alt=""></a>';
-        spanid=2;
-        grid++;
-      })
-      $(this).html(imageview);
-  });
+  $('[data-replace="suitenamelist"]').html(suitenamelist);
 
-  setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
+  var restaurant = `<li class="nav-item">
+        <a class="nav-link" href="#">Restaurants</a>
+      </li>`;
+  for (const [key, value] of Object.entries(properties[id]['restaurantList'])) {
+    restaurant += `<li class="nav-item">
+        <a class="nav-link" href="#" onclick="showGalleryImages('restrurant-images','restrurant-images-id-` + key + `')">` + value.title + `</a>
+      </li>`;
+  }
+
+  $('[data-replace="restaurants"]').html(restaurant);
+
+  var bar = `<li class="nav-item">
+        <a class="nav-link" href="#">Bars</a>
+      </li>`;
+  for (const [key, value] of Object.entries(properties[id]['barList'])) {
+    bar += `<li class="nav-item">
+        <a class="nav-link" href="#" onclick="showGalleryImages('bar-images','bar-images-id-` + key + `')">` + value.title + `</a>
+      </li>`;
+  }
+
+  $('[data-replace="bars"]').html(bar);
+
+  var spa = `<li class="nav-item">
+        <a class="nav-link" href="#">Spas</a>
+      </li>`;
+  for (const [key, value] of Object.entries(properties[id]['spaList'])) {
+    spa += `<li class="nav-item">
+        <a class="nav-link" href="#" onclick="showGalleryImages('spa-images','spa-images-id-` + key + `')">` + value.title + `</a>
+      </li>`;
+  }
+
+  $('[data-replace="spas"]').html(spa);
+}
+
+function showSuiteImages(suite_id){
+  $('[class*="suite-id"]').hide();
+  $('.suite-id-' + suite_id).show();  
+}
+
+function showGalleryImages(gallery, divid){
+  $('[class*="'+gallery+'"]').hide();
+  $('.' + divid).show();  
 }
 
 function replacePropertySuites(id){
@@ -119,7 +229,7 @@ function replacePropertySuites(id){
   $('[data-place="property-suites"]').each(function() {
       suiteview += `<li class="nav-item">
           <a class="nav-link" id="suiteslist-tab" data-toggle="pill" href="#suiteslist" role="tab"
-              aria-controls="suiteslist" aria-selected="true">Suites</a>
+              aria-controls="suiteslist" aria-selected="true">All Suites</a>
       </li>`;
       var values = properties[id]['suites'];
       values.forEach(function(e){
@@ -137,6 +247,11 @@ function replacePropertySuites(id){
 }
 
 function replaceSuiteList(id){
+  $('#suites-popup').hide();
+  $('#suites-loader').show();
+
+  $('[data-replace="property_short_name"]').html(properties[id]['property_short_name']);
+
   currentPropertyId = id;
   if(!suiteTemplate){
     suiteTemplate = $('#suiteslist').html();
@@ -153,22 +268,35 @@ function replaceSuiteList(id){
       onlyThree = 0;
       sid = suite['id'];
       suiteItem = '<div class="property-suite-p'+sid+'">' + suiteTemplate + '</div>';
-
+      var containerName = getContainerName(id);
       roomimages = '';
-      suite.rooms[0].images.forEach(function(rm){
-        if(onlyThree < 3){        
-          roomimages += `<div>
-              <img src="room-image/resize/750x520/` + properties[id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
-            </div>`;  
-        }
-        onlyThree++; 
-      });
+
+      console.log(suite.rooms[0].images.length);
+      if(suite.rooms[0].images.length !== undefined){        
+        suite.rooms[0].images.forEach(function(rm){
+          if(onlyThree < 3){        
+            roomimages += `<div>
+                <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+              </div>`;  
+          }
+          onlyThree++; 
+        });  
+      }
+
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
+      suiteItem = suiteItem.replace('<!--SUITEID-->', sid);  
+      suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
+      suiteItem = suiteItem.replace('<!--SUITE-NO-BEDS-->', suite.bads);
+      suiteItem = suiteItem.replace('<!--SUITE-SIZE-->', suite.suite_size);      
+      
       $('#suiteslist').append(suiteItem);
     }
 
   });
-  setTimeout('appendResultGridSlider()', 2000);
+  setTimeout('appendResultGridSlider()', 2000);    
+  setTimeout("$('#suites-loader').hide();", 3000);
+  setTimeout("$('#suites-popup').show();", 3000);
+  setTimeout("$('.result-grid').slick('setPosition');", 3000);  
 }
 
 function replaceSuiteDetail(property_id, category_id){
@@ -183,17 +311,24 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_category_name"]').html(suite.category_name);
   $('[data-place="suite_description"]').html(suite.room_desc);
   $('[data-place="suite_amenities"]').html(suite.suiteamenities);
-
+  var containerName = getContainerName(property_id);
   var roomimages = ``;
   suite.rooms[0].images.forEach(function(rm){
     roomimages += `<div>
-      <img src="room-image/resize/750x520/` + properties[property_id]['container']['name'] + `/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      <img src="/room-image/resize/750x520/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
     </div>`;
   });
+
+  $('[data-place="price-icon"]').html(`<i class="ico ico-info-green pointer btn-sidebar" type="button"
+                                data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
+  $('[data-place="suite-price"]').html(suite.price);
+  $('[data-place="suite-beds"]').html(suite.bads);
+  $('[data-place="suite-size"]').html(suite.suite_size);
 
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);
   replacePropertyData(property_id);
+  setTimeout("$('.suite-popup').slick('setPosition');", 4000);  
 }
 
 function replaceSuiteBoard(){
@@ -229,6 +364,14 @@ function appendResultGridSlider(){
   });
 }
 
+function appendSearchGridSlider(){
+  $('.result-grid', $('#search-results-content')).slick({
+    slidesToShow: 1,
+    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+  });
+}
+
 function replaceRooms(property_id, category_id){
   var suite;
   properties[property_id]['suites'].forEach(function(e){
@@ -239,11 +382,12 @@ function replaceRooms(property_id, category_id){
 
   var roomview = ``;
   var roomimages = ``;
+  var containerName = getContainerName(property_id);
   suite.rooms.forEach(function(r){
     roomimages = ``;
     r.images.forEach(function(rm){
       roomimages += `<div>
-        <img src="uploads/container_user_files/locations/` + properties[property_id]['container']['name'] + `/rooms-images/` + suite.category_name.replaceAll(' ', '-').toLowerCase() + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+        <img src="uploads/container_user_files/locations/` + containerName + `/rooms-images/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
       </div>`;
     });
     roomview += `<div>
@@ -333,7 +477,7 @@ function replaceRooms(property_id, category_id){
               <div class="row align-items-center justify-content-center">
                   <div class="mr-2">
                       <i class="ico ico-info-green pointer btn-sidebar" type="button"
-                          data-sidebar="#priceinfo"></i>
+                          data-sidebar="#priceinfo" onclick="replacePrices(` + category_id + `)"></i>
                   </div>
                   <h3 class="mb-0">
                       <span class="title-font-2 mr-1">From</span> <span
@@ -387,7 +531,7 @@ function getDefaultChannel(catt){
             
         },
         success: function(data){ 
-            if(!$('.yt-rvideos').length) return false;
+            if(!$('.yt-rvideos').length && !$('.yt-rvideos-2').length) return false;
 
             $('.yt-rvideos').yottie({  
                 key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
@@ -397,6 +541,315 @@ function getDefaultChannel(catt){
                     rows: 2
                 },
             });
+
+            $('.yt-rvideos-2').yottie({  
+                key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+                channel: data.channel_url,
+                content: {
+                    columns: 4,
+                    rows: 2
+                },
+            });
         }
     });
-}    
+}     
+
+function replacePrices(cat_id){
+    $.ajax({
+        url: 'property/prices?category_id=' +  cat_id + '&property_id=' +  currentPropertyId + '&arrival=2021-10-05&departure=2021-10-10',
+        //dataType:'html',
+        dataType:'json',
+        type: 'get',
+        beforeSend: function(){
+            
+        },
+        success: function(data){ 
+            console.log(data);
+            $('#priceinfo #suite-total-night').html(data.numberOfNights);
+            $('#priceinfo #suite-total-price').html(data.totalPrice);
+            $('#priceinfo #suite-total-usd-price').html(data.totalUSDPrice);
+            if(!priceTemplate){              
+              priceTemplate = $('#priceinfo .sub-price-content').html();
+            }
+            var priceList = '';
+            
+            data.propertyPrices.forEach(function(p){
+              priceList += priceTemplate.
+              replace('<!--NIGHT-DATE-->', p.date).
+              replace('<!--NIGHT-PRICE-->', p.price).
+              replace('<!--NIGHT-USD-PRICE-->', p.usd_price);
+            });
+
+            $('#priceinfo .sub-price-content').html(priceList);
+        }
+    });
+}
+
+$(document).ready(function(){
+
+  $(".nav-item .nav-link .delete_exp").click(function(e) {
+    e.preventDefault();
+    $("#experience").remove();
+    var url = createSearchUrl();   
+    searchResults(url);
+  });
+
+  $(".close-sidebar, .sidebar-back").click(function (e) {
+    e.preventDefault();
+    $(this).closest('.sidebar-main').removeClass('show');
+    $(this).closest('body').css('overflow', 'auto');
+    $('.sidebar-overlay').remove();
+  });
+  
+  $('body').on('click', '.sidebar-overlay', function () {
+    $('.sidebar-main').removeClass('show');
+    $('.sidebar-overlay').remove();
+    $('body').css('overflow', 'auto');
+    $('.sidebar').removeClass('show');
+  });
+
+  $('body').click(function (e) {
+    if(!$(e.target).hasClass('sidebar-main') && !$(e.target).parents('div').hasClass('sidebar-main')){
+      $('.sidebar-main').removeClass('show');
+      $('body').css('overflow', 'auto');
+      $('.sidebar-overlay').remove();      
+    }
+  });
+
+  $('#menunav .search-f').click(function (e) {
+    SHOW_PARENT_CITIES = 1;
+  });
+
+  $('.city-f').click(function (e) {
+    SHOW_PARENT_CITIES = 1;
+    $('.search-f').trigger("click");
+    $('.where').val($('span',$(this)).html());
+    $('.where').trigger("keyup");
+  });
+
+  $('.menu-s #experience_dropdown .dropdown-menu .dropdown-item').on("click",function(){
+    setBreadcrumbSingle($(this));    
+    var url = createSearchUrl($(this).attr("data-value"));
+    searchResults(url);
+  });
+
+  $('#atmosphere_dropdown .custom-control-input').on("click",function(){
+    setBreadcrumb($(this));
+    var url = createSearchUrl();
+    searchResults(url);
+    return true;
+  });
+
+  $('#facilities_dropdown .custom-control-input').on("click",function(){
+    setBreadcrumb($(this));
+    var url = createSearchUrl();
+    searchResults(url);
+    return true;
+  });
+
+  $('#style_dropdown .custom-control-input').on("click",function(){
+    setBreadcrumb($(this));
+    var url = createSearchUrl();
+    searchResults(url);
+    return true;
+  });
+
+  $('.menunav-group .nav-link').on("click", function(){
+     var divid = $(this).attr("href");
+     $('img', $(divid)).attr("src",$('img', $(divid)).attr("data-src"));
+  });
+
+  $('.nav-item .dropdown-menu .filter-list .price-input .filter_price').on("click", function(){
+    var url = createSearchUrl();
+    searchResults(url);
+  });
+
+  /*$('#resultsLoadMore').on("click", function(){
+    var currentPage = $('#currentPage').val();
+    var url = createSearchUrl();
+    url = url + '&view=paginate';
+    searchResults(url);
+  });*/
+
+  /*$('.lazy').Lazy({
+      // your configuration goes here
+      scrollDirection: 'both',
+      effect: 'fadeIn',
+      visibleOnly: true,
+      onError: function(element) {
+          console.log('error loading ' + element.data('src'));
+      }
+  });*/
+});
+
+ 
+$(window).on('load', function() {
+  lazyLoadMe('results-media');
+  lazyLoadMe('location-photos');  
+});
+
+function lazyLoadMe(selector){
+  $('.' + selector).each(function(e){
+    $(this).attr("src", $(this).attr("data-src"));
+  });
+}
+
+function getContainerName(id){
+  try{
+    if(properties[id]['container']){
+      return properties[id]['container']['name'];
+    }else{
+      return properties[id]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
+    }
+  }catch(e){
+
+  }
+}
+function searchResults(url){
+
+  $.ajax({
+        url: url,
+        dataType:'html',
+        type: 'get',
+        async:false,
+        success: function(response){ 
+          $('#search-results-content').html(response);
+          appendSearchGridSlider();
+          setTimeout("$('.result-grid').slick('setPosition');", 1000);
+
+          setTimeout(function () {
+            $('body').css('overflow', 'auto');
+            $('.pageload').hide();
+            lazyLoadMe('results-media');
+          }, 500)
+        }
+    });
+}
+
+function getUrlParam(p){
+  
+  $.urlParam = function (name) {
+        var results = new RegExp('[\?&]' + name + '=([^&#]*)')
+                          .exec(window.location.search);
+        return (results !== null) ? results[1] || 0 : false;
+    }
+  return $.urlParam(p);
+}
+
+var currentSearch = '';
+function filterDestination(dest){
+  currentSearch = dest;
+  $('.close-collapse').trigger("click");
+  var url = createSearchUrl();
+  searchResults(url);
+}
+
+function createSearchUrl(experience = ''){
+  $('.pageload').show();
+
+  if(experience !== null && !experience){
+    experience = getUrlParam('experience');
+    if(!experience){
+      experience = '';
+    }
+  }
+
+  if(experience === null){
+    experience = '';    
+  }
+
+  var atmospheres = [];
+  var facilities = [];  
+  var styles = [];
+
+  $("input[name='atmosphere[]']").each(function(){
+    if($(this).prop('checked') === true){
+      atmospheres.push($(this).val());
+    }
+  });
+  $("input[name='facilities[]']").each(function(){
+    if($(this).prop('checked') === true){
+      facilities.push($(this).val());
+    }
+  });
+  $("input[name='style[]']").each(function(){
+    if($(this).prop('checked') === true){
+      styles.push($(this).val());
+    }
+  });
+
+  var min = $("#min").val();
+  var max = $("#max").val();
+
+  var keyword = '';
+  if(currentSearch){
+    keyword = currentSearch;
+  }else{
+    keyword = getUrlParam('s');
+  }
+  var atmosphere_ids = atmospheres.join(',');
+  var facility_ids = facilities.join(',');
+  var style_ids = styles.join(',');
+  
+  var url = document.location.origin + document.location.pathname + `?s=`+keyword+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience+`&min=`+min+`&max=`+max;
+  window.history.pushState({}, '', url);
+  return url + '&view=ajax';
+}
+
+function resetSearch(){
+  $('.nav-tags').html('');
+  var keyword = '';
+  keyword = getUrlParam('s');
+  var url = document.location.origin + document.location.pathname + `?s=` + keyword;
+  window.history.pushState({}, '', url);
+  searchResults(url + '&view=ajax');
+  $('.city-f').trigger('click');
+}
+
+function removeMe(e, id){
+  var url = '';
+  if(id){
+    $('#'+id).prop("checked", false);
+    url = createSearchUrl();   
+  }else{
+    url = createSearchUrl(null);   
+  }
+  $(e).parents("li").remove();
+  searchResults(url);
+}
+
+function setBreadcrumb(elem){
+  var lb = elem.parents('.custom-control').find("label").html();
+  var lbId = elem.attr("id");
+  appendBreadCrumb(lb, lbId);
+    
+}
+
+function setBreadcrumbSingle(elem){
+  var lb = elem.html();
+  appendBreadCrumb(lb, '');
+}
+
+function appendBreadCrumb(lb, lbId){
+  $("#Exp").append(`<li class="nav-item">
+      <span class="nav-link">
+        <a class="" href="#">
+          <span class="taxonomyTags-roundedArrow">
+            <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg" style="vertical-align: auto;">
+              <path d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z" fill="currentColor" fill-rule="evenodd"></path>
+            </svg>
+          </span>
+           
+          <span class="taxonomyTags-tagTitle">
+            ` + lb + `
+          </span>
+        </a>
+        <a href="javascript:void();" class="delete delete_atm" onclick="removeMe(this,'` + lbId + `')">
+          <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+            </path>
+          </svg>
+        </a>
+      </span>
+    </li>`);
+}

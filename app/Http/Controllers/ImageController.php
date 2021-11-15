@@ -27,6 +27,8 @@ class ImageController extends Controller {
             $this->restrurantImageResize($scale, $path, $file);
         }elseif($type == 'spa-image'){
             $this->spaImageResize($scale, $path, $file);
+        }elseif($type == 'category-image'){
+            $this->categoryImageResize($scale, $path, $file);
         }else{
             $this->propertyImageResize($scale, $path, $file);
         }
@@ -84,13 +86,31 @@ class ImageController extends Controller {
         $this->initializeValues($scale, $file);
 
         $this->file_path = $this->image_path .
-        '/container_user_files/locations/' .
+        '/container_user_files/spas/' .
         $path .
-        '/spa-gallery-images/' .
+        '/gallery/' .
         $this->file;
 
         $this->destination_dir = public_path() .
         '/cached-images/container_user_files/locations/' .
+        $path .
+        '/resized';
+
+        $this->resizeImage();
+    }
+
+    public function categoryImageResize($scale, $path, $file)
+    {
+        $this->initializeValues($scale, $file);
+
+        $this->file_path = $this->image_path .
+        '/' .
+        $path .
+        '/' .
+        $this->file;
+
+        $this->destination_dir = public_path() .
+        '/cached-images/container_user_files/categories/' .
         $path .
         '/resized';
 
@@ -102,9 +122,9 @@ class ImageController extends Controller {
         $this->initializeValues($scale, $file);
 
         $this->file_path = $this->image_path .
-        '/container_user_files/locations/' .
+        '/container_user_files/bars/' .
         $path .
-        '/bar-gallery-images/' .
+        '/gallery/' .
         $this->file;
 
         $this->destination_dir = public_path() .
@@ -120,9 +140,9 @@ class ImageController extends Controller {
         $this->initializeValues($scale, $file);
 
         $this->file_path = $this->image_path .
-        '/container_user_files/locations/' .
+        '/container_user_files/restaurants/' .
         $path .
-        '/restrurants-gallery-images/' .
+        '/gallery/' .
         $this->file;
 
         $this->destination_dir = public_path() .
@@ -141,20 +161,35 @@ class ImageController extends Controller {
         $this->destination_path = $this->destination_dir . '/' . $this->scale . $this->file;
 
         if(!file_exists($this->destination_path)){
-                /*
-                $thumbnail = Image::open($file_path)
-                        ->thumbnail(new Imagine\Image\Box($width, $height));
 
-                $thumbnail->effects()->grayscale();
+            /*$size = getimagesize($this->file_path);
+            $ratio = $size[0]/$size[1]; // width/height
+            if( $ratio > 1) {
+                $width = $this->width;
+                $height = $this->width/$ratio;
+            }
+            else {
+                $width = $this->width*$ratio;
+                $height = $this->width;
+            }*/
+            if (!file_exists($this->file_path)) {
+                $this->file_path = public_path() .
+                '/images/default-hotel.png';
+            }
 
-                $thumbnail->save($destination_path);
-                 */
-            Image::make($this->file_path,array(
-            'width' => $this->width,
-            'height' => $this->height,
-            'grayscale' => true
-            ))->save($this->destination_path);
-
+            /*try{
+                $thumbnail = Image::open($this->file_path)
+                        ->thumbnail(new Imagine\Image\Box($this->width, $this->height), 'outbound');
+                //$thumbnail->effects()->grayscale();
+                $thumbnail->save($this->destination_path);
+            }catch(Exception $e){*/
+                Image::make($this->file_path,array(
+                    'width' => $this->width,
+                    'height' => $this->height,
+                    'crop' => true,
+                //'grayscale' => true
+                ))->save($this->destination_path);
+            //}
         }
 
         $file_extension = strtolower(substr(strrchr($this->file,"."),1));
@@ -165,6 +200,10 @@ class ImageController extends Controller {
             case "jpg": $ctype="image/jpeg"; break;
             case "svg": $ctype="image/svg+xml"; break;
             default:
+        }
+
+        if(!isset($ctype)){
+            $ctype = "image/jpeg";
         }
 
         header('Pragma: public');

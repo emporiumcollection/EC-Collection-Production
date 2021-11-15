@@ -8,8 +8,6 @@
             </path>
         </svg>
     </a>
-
-
     <div class="sidebar-scroller">
         <div class="d-flex align-items-center mb-5">
             <a href="#" class="sidebar-back">
@@ -21,7 +19,7 @@
         </div>
         <div class="row">
             <div class="col-8">
-                <div class="text-right mb-4">
+                <div class="text-right mb-4" data-place="property-book-button">
                     <a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>
                 </div>
             </div>
@@ -68,8 +66,11 @@
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
-                            <h4>Rooms</h4>
+                            <h4>Suites</h4>
                             <p class="mb-0"><span data-place="property" data-replace="numberofrooms"></span> rooms and suites</p>
+                            <div data-place="property" data-replace="suiteNameList">
+                                
+                            </div>
                             <p class="mb-0"><b>In-room amenities :</b> <span data-place="property" data-replace="roomamenities"></span></p>
                         </div>
                     </div>
@@ -77,9 +78,6 @@
                         <div class="qv-list">
                             <h4>Available services</h4>
                             <p data-place="property" data-replace="availableservices"></p>
-                            <p class="mb-0">Air conditioned hotel</p>
-                            <p class="mb-0">Laundry service</p>
-                            <p class="mb-0">Concirge service</p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
@@ -154,7 +152,7 @@
                 <div id="map2"></div>
             </div>
         </div>
-        <div class="text-center mb-4">
+        <div class="text-center mb-4" data-place="property-book-button">
             <a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>
         </div>
     </div>

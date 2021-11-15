@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="">
-
 <head>
     <script src="{{ asset('js/validation.js')}}"></script>
     {{-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.6.0/jquery.min.js"></script> --}}
@@ -16,19 +15,19 @@
 
   <!-- Web Application Manifest -->
   <link rel="manifest" href="manifest.json">
-  <link rel="stylesheet" href="{{ asset('assets/css/css/styles.css')}}">
+  <link rel="stylesheet" href="{{ asset('assets/css/styles.css')}}">
 </head>
 
-<body class="auth-container">
+<body class="auth-container" style="background: url({{asset('themes/EC/images/auth_bg.png')}});">
     <div class="container-wrapper h-100">
         <div class="row h-100">
-            <div class="col-md-8 bg-white">
+            <div class="col-md-8 bg-white" style="overflow: auto">
                 <div class="mb-4">
                     <a href="main-page.html" class="back-abs">
                         <i class="ico ico-back"></i>
                     </a>
                 </div>
-                <div class="auth-container-inner wizard" style="margin-top: 70px;">
+                <div class="auth-container-inner wizard" style="margin-top:70px;top:0;transform: translate(-50%, 0);padding-bottom:70px">
 
                     <div class="mb-5">
                         <img src="images/logo.svg" alt="">
@@ -499,7 +498,7 @@
             $("#laxury_traveller").change(function(){
                 $("select option:selected").each(function(){
                     if($(this).attr("value")=="38"){
-                        $("#dedicated").hide();
+                        $("#dedicated").hide(); 
                         $("#bespoke").hide();
                         $("#lifestyle").show();                        
                     }
@@ -541,6 +540,18 @@
             $(".answer").focusin(function(){
                 $("#ans_error").hide();
             });
+            $(".A").focusin(function(){
+                $("#term").hide();
+            });
+            $(".B").focusin(function(){
+                $("#B").hide();
+            });
+            $(".C").focusin(function(){
+                $("#C").hide();
+            });
+            $(".D").focusin(function(){
+                $("#D").hide();
+            });
 
         $(document).ready(function() {
         $(".next-step").click(function (e) { 
@@ -567,7 +578,6 @@
             $(".nav-item").click(function (e) {
                 var $active = $('.wizard .nav li a.active');
                 $active.closest('.nav-item').next().find('.nav-link').removeClass('disabled');
-                nextTab($active);
             });
 
             $(".next-step").click(function (e) {
@@ -646,10 +656,10 @@
         });
 
         function nextTab(elem) {
-            
             $(elem).closest('.nav-item').next().find('a[data-toggle="tab"]').tab('show');
         }
         function prevTab(elem) {
+
             $(elem).closest('.nav-item').prev().find('a[data-toggle="tab"]').tab('show');
         }
 

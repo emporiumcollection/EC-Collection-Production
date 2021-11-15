@@ -9,16 +9,45 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Http\Request;
 use Validator, Input, Redirect ;
-
+use App\Models\categories;
+use App\Http\Traits\Category;
+use Cache;
 
 abstract class Controller extends BaseController {
 
 	use DispatchesJobs, ValidatesRequests;
+	use Category;
     
     var $is_public = true;
 	public function __construct()
 	{
-		
+	    $footer_menus = \SiteHelpers::menus('footer');
+	    $this->data['footer_menus'] = $footer_menus;
+
+        $landing_menus = \SiteHelpers::menus('landing');
+	    $this->data['landing_menus'] = $landing_menus;
+
+		$this->data['menu_experiences'] = \DB::table('tb_categories')
+		->select(['id', 'category_name', 'category_alias'])
+		->where('category_approved', 1)
+		->where('category_published', 1)
+		->where('parent_category_id', 8)
+		->get();
+
+        $routePath = request()->route()->getActionName();
+        if(!strpos($routePath, 'HomeController')){
+	        $cacheKey = 'destinationsmenu';
+	        if (Cache::has($cacheKey)) {
+	            $this->data['destinationMenu'] = Cache::get($cacheKey);
+	        }else{
+				$this->data['destinationMenu'] = $this->destinationTree();
+	            Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 100000);
+	        }
+		}
+
+        $this->data['currentdomain'] = config('app.currentdomain');
+
+
 		$this->middleware('ipblocked');
 		
         $driver             = config('database.default');
@@ -736,4 +765,3 @@ abstract class Controller extends BaseController {
     }
     
 }
-

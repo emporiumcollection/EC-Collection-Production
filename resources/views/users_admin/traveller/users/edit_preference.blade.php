@@ -14,6 +14,7 @@
     </ul>
 <br>
 <p>
+    
     In this section you manage personal preferences.
 </p>
 
@@ -142,7 +143,7 @@
                                     Destinations
                                 </h3>
                                 <div class="experience-slider">                         
-                                    @foreach($destination as $dest)                        
+                                    @foreach($destination as $dest)
                                         <div>
                                             <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                 <label class="checkbox">                         

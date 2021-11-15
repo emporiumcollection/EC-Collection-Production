@@ -5,7 +5,7 @@
         <div class="col-md-5 col-4">
         </div>
         <div class="col-md-2 col-4 text-center">
-          <a href="#">
+          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
             <i class="t-logo logo-2"></i>
           </a>
         </div>
@@ -28,11 +28,11 @@
                 <a class="nav-link " href="get-inspired.html">Get Inspired</a>
               </li>
             </ul> -->
-            <div class="humburger-menu">
+            <!--<div class="humburger-menu">
               <div class="line"></div>
               <div class="line"></div>
               <div class="line"></div>
-            </div>
+            </div>-->
             <div class="menu">
               <a href="#" class="close-menu">
                 <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">

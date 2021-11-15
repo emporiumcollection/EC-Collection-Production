@@ -25,19 +25,26 @@
                 <div class="gallery-wrapper">
                     <div class="row justify-content-center">
                         <div class="col-8">
-                            <div class="grid-layout" id="gallery_hotel">
+                            <div class="grid-layout" id="location_gallery_hotel">
                                 <?php 
+                                /*
                                 $spanid = 1;
                                 $grid = 1;
-                                foreach($photos->results as $photo):?>
-                                <a href="<?php echo $photo->urls->regular; ?>"
-                                    data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-<?php echo $grid;?> span-<?php echo $spanid;?>">
-                                    <img src="<?php echo $photo->urls->regular; ?>" alt="">
+                                if(!empty($photos->results)):
+                                foreach($photos->results as $photo):
+                                */
+                                ?>
+                                <a href="<?php //echo $photo->urls->regular; ?>"
+                                    data-sub-html="<?php //echo $photo->alt_description; ?>" class="grid-item grid-row-<?php //echo $grid;?> span-<?php //echo $spanid;?>">
+                                    <img src="<?php //echo $photo->urls->regular; ?>" alt="">
                                 </a>
-                                <?php 
+                                <?php
+                                /* 
                                 $spanid=2;
                                 $grid++;
-                                endforeach;?>
+                                endforeach;
+                                endif;
+                                */?>
                             </div>
                         </div>
                     </div>

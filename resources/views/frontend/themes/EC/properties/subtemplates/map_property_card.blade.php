@@ -4,10 +4,29 @@
   properties[<?php echo $property->id;?>]['images'] = <?php echo json_encode($property->propertyImages);?>;
 </script>
 <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
+    <div class="hotel-tag-label" style="background: #89a49f;">
+      <?php echo $block_title;?>
+    </div>
     <div class="pr-lst result-grid">
-      <?php foreach($property->propertyImages as $image):?>
+      <?php if($block_title):?>
+      <?php endif;?>
+      <?php foreach($property->propertyImages as $image):
+          if(isset($property['container']['name'])){
+            $container_name = $property['container']['name'];
+          }else{
+            $container_name = strtolower(str_replace("-", " ", trim($property->property_name)));
+          }
+
+          if(is_array($image)){
+            $file_name = $image['file_name'];
+          }elseif(is_object($image) && isset($image->file->file_name)){
+            $file_name = $image->file->file_name;
+          }else{
+            $file_name = 'default-image.png';
+          }
+      ?>
       <div>
-        <img src="<?php echo 'uploads/container_user_files/locations/'.$property['container']['name'].'/property-images/'.$image['file_name'];?>" class="w-100" alt="">
+        <img src="<?php echo 'property-image/resize/383x261/'.$container_name.'/'.$file_name.'/property-image';?>" class="w-100" alt="">
       </div>
       <?php endforeach;?>
     </div>
@@ -26,9 +45,9 @@
 
     </div>
     <div class="hotel-meta full-width is-small">
-      <!--<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $property->id;?>)">
         Reviews
-      </a>-->
+      </a>
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Quick info
       </a>
@@ -67,7 +86,7 @@
       <h3 class="title-second is-small title-line mb-0"><?php echo $property->property_name;?></h3>
     </div>
   </a>
-  <?php if(isset($property->suites[0]->rooms[0])):?>
+  <?php if(isset($property->suites[0]->rooms[0]->room_name) && $property->suites[0]->rooms[0]->room_name):?>
     <div class="hotel-info-content px-3 font-2">
       <div class="row align-items-center mb-3">
         <div class="col-md-7">

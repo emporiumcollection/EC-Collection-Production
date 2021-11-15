@@ -7588,6 +7588,14 @@
 
 @endsection
 
-@section('custom_js')
-  @parent
-@endsection
+@yield('suites_script')
+
+@yield('restaurant_script')
+
+@yield('detail_suite')
+
+@yield('detail_restaurant')
+
+@yield('experience_script')
+
+@yield('faq_script')

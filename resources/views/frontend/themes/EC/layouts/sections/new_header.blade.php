@@ -4,13 +4,13 @@
       <div class="row align-items-md-end align-items-center">
         <div class="col-md-5 col-4">
         </div>
-        <div class="col-md-2 col-4 text-center">
-          <a href="{{ route('homepage') }}">
+        <div class="col-md-5 col-4 text-center">
+          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
             <i class="t-logo logo-2"></i>
           </a>
         </div>
-        <div class="col-md-5 col-4 text-right">
-          <a href="register.html" class="mobile-off">
+        <div class="col-md-2 col-4 text-right">
+          <a href="/register" class="mobile-off" style="width: 150px;">
             <i class="ico ico-club"></i>
           </a>
           <div class="d-flex justify-content-end align-items-center">

@@ -26,6 +26,21 @@ class seasons extends Sximo  {
 	public static function queryGroup(){
 		return "  ";
 	}
+
+	public function property()
+    {
+        return $this->belongsTo(properties::class);
+    }
+
+    public function dates()
+    {
+        return $this->hasMany(SeasonDates::class, 'season_id');
+    }
+
+    public function rates()
+    {
+        return $this->hasMany(PropertyRoomPrices::class, 'season_id');
+    }
 	
 
 }

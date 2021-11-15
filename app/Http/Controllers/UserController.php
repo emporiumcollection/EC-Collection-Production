@@ -22,6 +22,7 @@ class UserController extends Controller {
         parent::__construct();
     }
 
+
     public function getRegister($pid) {
 
         if (CNF_REGIST == 'false') :
@@ -41,7 +42,7 @@ class UserController extends Controller {
 
     public function EmailInvitation(Request $request)
     {
-        // echo "<pre>";print_r($m);exit;
+        // echo "<pre>";print_r($request->all());exit;
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -61,7 +62,7 @@ class UserController extends Controller {
             }
             return Redirect::to('dashboard');
         }
-        return Redirect::to('/sendinvitation');
+        return Redirect::to('/invitecompanion');
     }
 
     public function postCreate(Request $request) {
@@ -726,7 +727,7 @@ class UserController extends Controller {
     }
     
     public function postSavetravellerprofile(Request $request) {
-       // echo"<pre>";print_r($request->all());exit;   
+        
         if (!\Auth::check())
             return Redirect::to('user/login');
         $rules = array(
@@ -744,6 +745,9 @@ class UserController extends Controller {
         if ($validator->passes()) { 
             
             if (!is_null($request->profile_avatar)) {
+
+                $newfilename = "";
+
                 $file = $request->profile_avatar;
                 
                 $image_name = time() . '.' . $file->getClientOriginalExtension();
@@ -752,27 +756,28 @@ class UserController extends Controller {
                 $newfilename = \Session::get('uid') . '.' . $extension;
                 // echo "<pre>";print_r($newfilename);exit(); 
                 $file->move($destinationPath,$newfilename);
-            }
-                
-            $user = User::find(\Session::get('uid'));
-            $user->first_name = $request->input('firstname');
-            $user->last_name = $request->input('lastname');
-            $user->email = $request->input('email');
-            $user->landline_number = $request->input('landline_number');
-            $user->mobile_number = $request->input('mobile_number');
-            $user->gender = $request->input('gender');              
-            $user->prefer_communication_with = $request->input('prefer_communication_with');
-            $user->preferred_currency = $request->preferred_currency;
-            $user->avatar = $newfilename;            
-            $user->save();        
-            //insert contracts
-            //\CommonHelper::submit_contracts($contracts,'sign-up');
-            //End
-            return redirect::to('/users/profile')->with('massage', 'Profile has been saved!');
 
-            // return redirect::to('/users/profile')->with('massage','Profile has been saved!');
+                $user = User::find(\Session::get('uid'));
+                $user->first_name = $request->input('firstname');
+                $user->last_name = $request->input('lastname');
+                $user->email = $request->input('email');
+                $user->landline_number = $request->input('landline_number');
+                $user->mobile_number = $request->input('mobile_number');
+                $user->gender = $request->input('gender');              
+                $user->prefer_communication_with = $request->input('prefer_communication_with');
+                $user->preferred_currency = $request->preferred_currency;
+                $user->avatar = $newfilename;            
+                $user->save();        
+                //insert contracts
+                //\CommonHelper::submit_contracts($contracts,'sign-up');
+                //End
+                return redirect::to('/users/profile')->with('massage', 'Profile has been saved!');
+                }else{
+                    return redirect::to('/users/profile')->with('Errmassage', 'Please upload your Avator!');   
+                }
+
         } else {
-            return Redirect::to('/users/profile')->with('Errmessage', 'Error Ocured!');
+            return Redirect::to('/users/profile')->with('Errmassage', 'Error Ocured!');
         }
     }
     
@@ -2752,13 +2757,20 @@ class UserController extends Controller {
         exit;
     }
 
-    public function deletePreferences($id){
-        $deleted = \DB::table('tb_personalized_services')
-                    ->where('ps_id','=',$id)
-                    ->delete();
-        return Redirect::to('/dashboard');
+    public function deletePreferences($id)
+    {
+        if (!\Auth::check())
+            return redirect('user/login');
+
+        \DB::table('tb_personalized_services')
+            ->where('ps_id','=',$id)
+            ->delete();
+        
+        return redirect::to('/users/my-preferences')->with('massage','Preference Deleted succesfully!');
     }
     public function editPreferences($id){   
+        if (!\Auth::check())
+            return redirect('user/login');
 
         $data = \DB::table('tb_personalized_services')
         ->select( 
@@ -2819,7 +2831,7 @@ class UserController extends Controller {
         }
          // echo "<pre>";print_r($inspire);exit;
         $file_name = 'users_admin.traveller.users.edit_preference';
-        return view($file_name, $this->data,compact('category','data','inspire','select_dest','exe_spa','exe_voyage','exe_island','exe_safari','$fetch_destination','destination','atmosphere','facilities','style','islandconn','safariconn','spaconn'));
+        return view($file_name, $this->data,compact('category','data','inspire','select_dest','exe_spa','exe_voyage','exe_island','exe_safari','select_dest','destination','atmosphere','facilities','style','islandconn','safariconn','spaconn'));
     }
 
     public function getPreferences(){
@@ -2941,14 +2953,14 @@ class UserController extends Controller {
                 $data['created'] = date('y-m-d');
                 $data['updated'] = date('Y-m-d');
                 $updates = \DB::table('tb_personalized_services')->where('ps_id',$id)->update($data);
-                return redirect::to('/users/my-preferences')->with('massage','Preference edited succesfully');
+                return redirect::to('/users/my-preferences')->with('massage','Preference edited succesfully!');
             }else{
-                return redirect::to('/users/my-preferences')->with('Errmassage','Fil all the fields!');
+                return redirect::to('/users/my-preferences')->with('Errmassage','Plz fill all the fields!');
             }
 
         }else{
             if ($validator->passes()) {
-                echo "here";exit();
+
                 $spa = implode(",",$request->spacheckbox);
                 $voyage = implode(",",$request->voyagechk);
                 $island = implode(",",$request->islandchk);

@@ -77,10 +77,21 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
+    'currentdomain' => 'voyage',
+    'spadomain' => 'emporium-spa.com',
+    'safaridomain' => 'emporium-safari.com',
+    'islandsdomain' => 'emporium-islands.com',
+    'voyagedomain' => 'emporium-voyage.com',
+    'magazinedomain' => 'emporium-magazine.com',
 
     'key' => env('APP_KEY', 'ASDFASDF12341234ASDFASDF12341234'),
     
     'cipher' => 'AES-256-CBC',
+
+    'EmporiumSpa' => 'ES',
+    'EmporiumVoyage' => 'EV',
+    'EmporiumIslands' =>'EI',
+    'EmporiumSafari' => 'ESF',
 
     /*
     |--------------------------------------------------------------------------
@@ -210,7 +221,7 @@ return [
         'Markdown'  => GrahamCampbell\Markdown\Facades\Markdown::class,
 		'Zipper' 	=> Chumper\Zipper\Zipper::class,
 		'PDF' 		=> Barryvdh\DomPDF\Facade::class,
-		'Image' => Intervention\Image\Facades\Image::class,
+		//'Image' => Intervention\Image\Facades\Image::class,
 		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 		'TagsFinder' => App\Helpers\TagsFinder::class,
 		'CategoryMenu' => App\Helpers\CategoryMenu::class,
@@ -225,6 +236,7 @@ return [
         'UnsplashUsers' => shweshi\LaravelUnsplashWrapper\UnsplashUsers::class,
         'UnsplashPhotos' => shweshi\LaravelUnsplashWrapper\UnsplashPhotos::class,
         'UnsplashCollections' => shweshi\LaravelUnsplashWrapper\UnsplashCollections::class,
+        //'Image' => Imagine\Imagick\Imagine::class,
         'Image' => Folklore\Image\Facades\Image::class,
     ],
 

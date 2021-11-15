@@ -90,7 +90,6 @@ class AuthController extends Controller
 
     protected function verify(Request $request)
     {
-        // echo "<pre>";print_r($request->all());exit;
         $replace = "+";
         $Countrycode = substr_replace($request->country_code, $replace, 0, 0);
         $space = ltrim($request->txtmobileNumber," ");
@@ -135,8 +134,7 @@ class AuthController extends Controller
                     'created' =>date('Y-m-d H:i:s') ,
                     'updated' =>date('Y-m-d H:i:s'),
                 ]);
-            if($user){
-                // echo "here";exit;   
+            if($user){                
                 /* Authenticate user */
                 Auth::login($user);
                 return view('users_admin/traveller/users/register_invitation');

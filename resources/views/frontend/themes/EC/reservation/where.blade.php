@@ -21,10 +21,6 @@
       <div id="step-2" class="tab-pane" role="tabpanel">
 	   <div class="row">
 	      <div class="col-lg-9 col-md-8 mb-4">
-	        <div>
-	          <label>Destination</label>
-	          <input type="text" name="Destination" class="form-control" value="">
-	        </div>
 	        <br>
 	        <h2 class="mb-5 d-flex align-items-center">
 	          <a href="#" class="backwizard btn-backwizard">
@@ -43,7 +39,7 @@
 	                  <div class="row field-count-reservation align-items-center">
 	                    <button type="button" class="min-room disable">-</button>
 	                    <div class="col text-center">
-	                      <span class="mr-1 room-val">1 </span>
+	                      <span class="mr-1 room-val">1</span>
 	                    </div>
 	                    <button type="button" class="plus-room mr-3">+</button>
 	                  </div>
@@ -62,7 +58,7 @@
 	                      <div class="row field-count-reservation align-items-center">
 	                        <button type="button" class="min">-</button>
 	                        <div class="col text-center">
-	                          <span class="mr-1 adult-val">2 </span>
+	                          <span class="mr-1 adult-val adult_val">{{ \Session::get('selected_adult') ? \Session::get('selected_adult') : \Session::get('adult') }}</span>
 	                        </div>
 	                        <button type="button" class="plus mr-3">+</button>
 	                      </div>
@@ -76,7 +72,7 @@
 	                      <div class="row field-count-reservation align-items-center">
 	                        <button type="button" class="min">-</button>
 	                        <div class="col text-center">
-	                          <span class="mr-1 child-val">1 </span>
+	                          <span class="mr-1 child-val child_val">{{ \Session::get('selected_child') ? \Session::get('selected_child') : \Session::get('children') }}</span>
 	                        </div>
 	                        <button type="button" class="plus mr-3">+</button>
 	                      </div>
@@ -136,28 +132,9 @@
 	        </div>
 	      </div>
 	      <div class="col-lg-3 col-md-4 mb-4">
-	        <div class="reservation-summary">
-	          <h4>YOUR RESERVATION</h4>
-	          <p><b>Belmond Jimbaran Puri</b></p>
-	          <table class="table table-borderless mb-0">
-	            <tr>
-	              <td class="px-0 py-1">Guests</td>
-	              <td class="px-0 py-1 text-right">2 Guests</td>
-	            </tr>
-	            <tr>
-	              <td class="px-0 py-1">Check-in</td>
-	              <td class="px-0 py-1 text-right">15 Aug 2020</td>
-	            </tr>
-	            <tr>
-	              <td class="px-0 py-1">Check-out</td>
-	              <td class="px-0 py-1 text-right">16 Aug 2020</td>
-	            </tr>
-	            <tr>
-	              <td class="px-0 py-1">Suites</td>
-	              <td class="px-0 py-1 text-right">Pavilion suite</td>
-	            </tr>
-	          </table>
-	        </div>
+
+	       @include('frontend.themes.EC.reservation.reservation-summary')
+	       
 	        <div class="reservation-total">
 	          <table class="table table-borderless mb-0">
 	            <tr>
@@ -169,11 +146,12 @@
 	      </div>
 	      <div class="col-lg-9 col-md-8 mb-4">
 	        <div class="text-right">
-	          <a href="/reservation/suite" class="btn btn-dark px-5 availability-check">
+	          <a href="javascript:void(0);" class="btn btn-dark px-5 availability-check select_guest_">
 	            Next
 	          </a>
 	        </div>
 	      </div>
+	      
 	   </div>
 	</div>
   </div>

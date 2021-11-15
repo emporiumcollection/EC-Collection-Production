@@ -496,6 +496,7 @@
       $('.room-limit').hide();
     }
   });
+  
   $('.quick-prev').slick({
     slidesToShow: 1,
     prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',

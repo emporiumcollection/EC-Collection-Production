@@ -1,52 +1,57 @@
 <header>
   <div class="top-header">
-      <div class="top-header-inner">
-        <div class="row align-items-md-end align-items-center">
-          <div class="col-md-5 col-4">
-            <div id="menunav">
-              <a href="#dashF" class="mr-2 menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
-                aria-controls="dashF">
-                <i class="ico ico-dash" data-toggle="tooltip" title="Navigate to our collection"></i>
+    <div class="top-header-inner">
+      <div class="row align-items-md-end align-items-center">
+        <div class="col-md-5 col-4">
+          <div id="menunav">
+            <a href="#dashF" class="mr-2 menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
+              aria-controls="dashF">
+              <i class="ico ico-dash" data-toggle="tooltip" title="Navigate to our collection"></i>
+            </a>
+            <a href="#searchF" class="menu-nav search-f" data-toggle="collapse" role="button" aria-expanded="false"
+              aria-controls="searchF">
+              <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
+            </a>
+            @if(!empty(\Session::get('keyword')))
+              <a href="#cityList" class="menu-nav text-menu city-f">
+                <span data-toggle="tooltip" title="Change destination">
+                {{ \Session::get('keyword') }}</span>
               </a>
-              <a href="#searchF" class="menu-nav search-f" data-toggle="collapse" role="button" aria-expanded="false"
-                aria-controls="searchF">
-                <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
-              </a>
-              <a href="#cityList" class="menu-nav text-menu city-f" data-toggle="collapse" role="button"
-                aria-expanded="false" aria-controls="cityList">
-                <!-- <span class="label-city" style="background: green;"></span>  -->
-                <span data-toggle="tooltip" title="Change destination">{{$keyword}}</span>
-              </a>
-              <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false"
-                aria-controls="calcF">
-                <span class="cal-date" data-toggle="tooltip" title="Change availability">{{ date("M d",strtotime($arrive)) }} - {{ date("M d",strtotime($departure)) }}</span>
-              </a>
-              <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
-                aria-controls="whoF">
-                <div class="filter-lst expand filter-guest filter-white">
-                  <div class="input-group">
-                    <div class="gust-dropdown">
-                      <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ $total_guests }}</span> Guests</div>
-                    </div>
+            @endif  
+            <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
+              <span class="cal-date" data-toggle="tooltip" title="Change availability">
+                @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
+                  {{ \Session::get('arrival') }} - {{ \Session::get('departure') }}
+                @else
+                Selecte Date
+                @endif  
+            </span>
+            </a>
+            <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
+              aria-controls="whoF">
+              <div class="filter-lst expand filter-guest filter-white">
+                <div class="input-group">
+                  <div class="gust-dropdown">
+                    <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
                   </div>
                 </div>
-              </a>
-            </div>
-          </div>
-          <div class="col-md-2 col-4 text-center">
-            <a href="#">
-              <i class="t-logo logo-2"></i>
+              </div>
             </a>
           </div>
-          <div class="col-md-5 col-4 text-right mobile-flex">
-          <a href="register.html" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
+        </div>
+        <div class="col-md-5 col-4 text-center">
+          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
+            <i class="t-logo logo-2"></i>
+          </a>
+        </div>
+        <div class="col-md-2 col-4 text-right mobile-flex">
+          <a href="/register" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
             <div class="user-profile-img">
               <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
               <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
             </div>
           </a>
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
-
             <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
               <div class="line"></div>
               <div class="line"></div>
@@ -64,336 +69,183 @@
                 <div class="row w-100">
                   <div class="col-sm-4">
                     <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
-                      <li class="nav-item">
-                        <a class="nav-link active" href="#">Boutique</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Design</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Lifestyle</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Beach</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Cullinary</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Urban</a>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="#">Infinity</a>
-                      </li>
+                    <?php 
+                    if(!empty($menu_experiences)):
+                    $lmenus = [];
+                    foreach($menu_experiences as $experience):?>
+                        <li class="nav-item">
+                          <a class="nav-link active" href="<?php //echo createSearchUrl('experience', $experience->category_alias);?>"><?php echo $experience->category_name;?></a>
+                        </li>
+                    <?php endforeach;
+                    endif;
+                    ?>
                     </ul>
-
                     <div class="menu-media">
                       <a href="#" class="nav-sos"><i class="fa fa-facebook" aria-hidden="true"></i></a>
                       <a href="#" class="nav-sos"><i class="fa fa-instagram" aria-hidden="true"></i></a>
                       <a href="#" class="nav-sos"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                     </div>
                   </div>
-                  <div class="col-sm-4">
-                    <div class="row">
-                      <div class="col-6">
-                        <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Active <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-6">
-                        <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Active <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                        </ul>
+                    <?php 
+                    $lmenus = [];
+                    foreach($landing_menus as $menu):
+                        $mmenu = '<li class="nav-item">
+                            <a class="nav-link" href="#">'.$menu['menu_name'].' <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                          </li>';
+                        $cmenu = '';
+                        foreach($menu['childs'] as $child):
+                          $cmenu .= '<li class="nav-item">
+                            <a class="nav-link" href="'.$child['url'].'">'.$child['menu_name'].' <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+                          </li>';
+                        endforeach;
+                        $lmenus[] = ['main' => $mmenu, 'childs' => $cmenu];
+                        ?>
+                    <?php endforeach;?>
+                    <div class="col-sm-8">
+                      <div class="row">
+                        <div class="col-12">
+                        <?php foreach($lmenus as $lmenu):?>
+                          <ul class="nav flex-column">
+                            <?php echo $lmenu['main'];?>
+                            <?php echo $lmenu['childs'];?>
+                          </ul>
+                        <?php endforeach;?>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="col-sm-4">
-                    <div class="row">
-                      <div class="col-6">
-                        <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Active <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="col-6">
-                        <ul class="nav flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Active <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="#">Link <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        </div>
       </div>
-      <hr class="mb-0">
-
-      <div class="menu-s">
-        <div class="d-flex align-items-center">
-          <ul class="nav nav-left mobile-off">
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#filterbar">
-                <i class="ico ico-mixer"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="location-page.html">
-                <i class="ico ico-place"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="ico ico-video"></i>
-              </a>
-            </li>
-            <!-- <li class="nav-item">
-              <a class="nav-link" href="#">
-                <i class="ico ico-instagram"></i>
-              </a>
-            </li> -->
-          </ul>
-          <ul class="nav nav-text mobile-off">
+    </div>    
+    <hr class="mb-0">
+    <div class="menu-s">
+      <div class="d-flex align-items-center">
+        <?php if(strpos(request()->route()->getAction()['controller'], 'PropertyController')): ?>
+        <ul class="nav nav-left mobile-off">
+          {{-- <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#filterbar">
+              <i class="ico ico-mixer"></i>
+            </a>
+          </li> --}}
+          <li class="nav-item">
+            <?php if(Request::get('view') == 'map'):?>
+            <a class="nav-link" href="<?php echo str_replace('&view=map','',Request::fullUrl());?>">
+              <i class="ico ico-menu-grid mr-2"></i>
+            </a>
+            <?php endif;?>
+            <?php if(Request::get('view')!='map'):?>
+            <a class="nav-link" href="<?php echo str_replace('&view=channel','',Request::fullUrl()).'&view=map';?>">
+              <i class="ico ico-place"></i>
+            </a>
+            <?php endif;?>              
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#videos">
+              <i class="ico ico-video"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar">
+              <i class="ico ico-info-rounded"></i>
+            </a>
+          </li>
+          <!-- <li class="nav-item">
+            <a class="nav-link" href="#">
+              <i class="ico ico-instagram"></i>
+            </a>
+          </li> -->
+        </ul>
+        <ul class="nav nav-text mobile-off">
             <li class="nav-item">
               <a class="nav-link" href="#destination-menu" data-toggle="collapse">
                 Destinations
               </a>
             </li>
             @if(!empty($experiences))
-            <li class="nav-item dropdown">
+            <li class="nav-item dropdown" id="experience_dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 Experiences
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
                 @foreach($experiences as $exp)
-                  <a href="#" class="dropdown-item">{{ $exp->category_name }}</a>
+                  <a href="javascript:void(0);" data-value="<?php echo $exp->category_alias;?>" class="dropdown-item">{{ $exp->category_name }}</a>
                 @endforeach                
               </div>
             </li>
             @endif
-            <li class="nav-item dropdown">
+            @if(!empty($atmosphere))
+            <li class="nav-item dropdown" id="atmosphere_dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Atmosphere
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-inner filter-checkbox">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting1">
-                    <label class="custom-control-label" for="setting1">Charm (229)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting2">
-                    <label class="custom-control-label" for="setting2">Nature (111)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting3">
-                    <label class="custom-control-label" for="setting3">Trendy (111)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting5">
-                    <label class="custom-control-label" for="setting5">Intimate (86)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting6">
-                    <label class="custom-control-label" for="setting6">Evasion (85)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting7">
-                    <label class="custom-control-label" for="setting7">Tropical (56)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting8">
-                    <label class="custom-control-label" for="setting8">Myth (49)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting9">
-                    <label class="custom-control-label" for="setting9">Castle life (38)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting10">
-                    <label class="custom-control-label" for="setting10">Country house (25)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="setting11">
-                    <label class="custom-control-label" for="setting11">Colonial (24)</label>
-                  </div>
+                  @foreach($atmosphere as $atm)
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="atmosphere[]" class="custom-control-input" id="setting1{{ $atm->id}}" 
+                      value="{{ $atm->id }}" 
+                      @if(!empty($atmosphere_data)) 
+                        @foreach($atmosphere_data as $selected_atm)
+                        {{ $selected_atm[0]->id == $atm->id ? 'checked' : '' }} 
+                        @endforeach 
+                      @endif>
+                      <label class="custom-control-label" for="setting1{{ $atm->id}}">{{ $atm->category_name }}</label>
+                    </div>
+                  @endforeach
                 </div>
               </div>
             </li>
-            <li class="nav-item dropdown">
+            @endif
+            @if(!empty($facilities))
+            <li class="nav-item dropdown" id="facilities_dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Facilities
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-inner filter-checkbox">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities6">
-                    <label class="custom-control-label" for="fasilities6">Fitness (383)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities7">
-                    <label class="custom-control-label" for="fasilities7">Spa (361)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities8">
-                    <label class="custom-control-label" for="fasilities8">Outdoor pool (246)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities9">
-                    <label class="custom-control-label" for="fasilities9">Outdoor pool (246)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities10">
-                    <label class="custom-control-label" for="fasilities10">Indoor pool (150)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities11">
-                    <label class="custom-control-label" for="fasilities11">Indoor pool (150)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities12">
-                    <label class="custom-control-label" for="fasilities12">Kids club (117)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities13">
-                    <label class="custom-control-label" for="fasilities13">Beach (105)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities14">
-                    <label class="custom-control-label" for="fasilities14">Pets (86)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities15">
-                    <label class="custom-control-label" for="fasilities15">Water sports (54)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities16">
-                    <label class="custom-control-label" for="fasilities16">Diving (47)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities17">
-                    <label class="custom-control-label" for="fasilities17">Golf (33)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="fasilities18">
-                    <label class="custom-control-label" for="fasilities18">Ski (11)</label>
-                  </div>
+                  @foreach($facilities as $fac)
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="facilities[]" class="custom-control-input" id="fasilities{{ $fac->id }}" value="{{ $fac->id }}" 
+                      @if(!empty($facility_data)) 
+                        @foreach($facility_data as $selected_fac)
+                          {{ $selected_fac[0]->id == $fac->id ? 'checked' : '' }}
+                        @endforeach 
+                      @endif>
+                      <label class="custom-control-label" for="fasilities{{ $fac->id }}">{{ $fac->category_name }} </label>
+                    </div>
+                  @endforeach  
                 </div>
               </div>
             </li>
-            <li class="nav-item dropdown">
+            @endif
+            @if(!empty($style))
+            <li class="nav-item dropdown" id="style_dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
                 Style
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-inner filter-checkbox">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style6">
-                    <label class="custom-control-label" for="style6">Classic (114)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style7">
-                    <label class="custom-control-label" for="style7">Contemporary (112)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style8">
-                    <label class="custom-control-label" for="style8">Historical (85)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style9">
-                    <label class="custom-control-label" for="style9">Unusual (18)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="style10">
-                    <label class="custom-control-label" for="style10">Unusual (18)</label>
-                  </div>
+                  @foreach($style as $sty)
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" name="style[]" class="custom-control-input" id="style{{ $sty->id }}" value="{{ $sty->id }}" 
+                      @if(!empty($selected_style))
+                        @foreach($selected_style as $sty_sel) 
+                          {{ $sty_sel[0]->id == $sty->id ? 'checked' : '' }}
+                        @endforeach 
+                      @endif>
+                      <label class="custom-control-label" for="style{{ $sty->id }}">{{ $sty->category_name }}</label>
+                    </div>
+                  @endforeach
                 </div>
               </div>
             </li>
+            @endif
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                 aria-haspopup="true" aria-expanded="false">
@@ -402,62 +254,85 @@
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                 <div class="dropdown-inner filter-checkbox">
                   <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="price7">
-                    <label class="custom-control-label" for="price7">Price (ascending)</label>
-                  </div>
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="price8">
-                    <label class="custom-control-label" for="price8">Price (descending)</label>
-                  </div>
+                    <div class="filter-list">
+                        <h5 class="filter-title mb-4">By price</h5>
+                        <div class="px-2">
+                            <div id="price_range" class="price-range"></div>
+                        </div>
+                        <div class="row align-items-center price-input">
+                            <div class="col">
+                                <label>Min:</label>
+                                <div class="input-filter">
+                                    <span>€</span>
+                                    <input type="text" class="priceValue form-control" data-index="0" id="min" value="80" />
+                                </div>
+                            </div>
+                            <div class="col">
+                                <label>Max:</label>
+                                <div class="input-filter">
+                                    <span>€</span>
+                                    <input type="text" class="priceValue form-control" data-index="1" id="max" value="10000" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row align-items-left price-input">
+                          <div class="col">
+                            <div class="input-filter">
+                              <a href="javascript:void(0);" class="btn btn-primary  filter_price">Filter Price</a>
+                            </div> 
+                          </div>
+                        </div>  
+                    </div>
+                  </div>  
                 </div>
               </div>
             </li>
           </ul>
-
-          <div class="menu-mobile">
-            <div class="humburger-second-menu" id="secondMenu">
-              <div class="line"></div>
-              <div class="line"></div>
-              <div class="line"></div>
-            </div>
+        <div class="menu-mobile">
+          <div class="humburger-second-menu" id="secondMenu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
           </div>
-          <ul class="nav nav-right ml-auto">
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#searchHistory">
-                <i class="ico ico-layer"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
-                <i class="ico ico-convertation"></i>
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#share">
-                <i class="ico ico-share-2"></i>
-              </a>
-            </li>
-            <li class="nav-item dropdown">
-              <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-                <i class="ico ico-diamon"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#">Add to collection</a>
-                <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Create new collection</a>
-              </div>
-            </li>
-          </ul>
         </div>
-
+        <ul class="nav nav-right ml-auto">
+          {{-- <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#searchHistory">
+              <i class="ico ico-layer"></i>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
+              <i class="ico ico-convertation"></i>
+            </a>
+          </li> --}}
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" data-sidebar="#share">
+              <i class="ico ico-share-2"></i>
+            </a>
+          </li>
+          
+          {{-- <li class="nav-item dropdown">
+            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true"
+              aria-expanded="false">
+              <i class="ico ico-diamon"></i>
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Add to collection</a>
+              <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Create new collection</a>
+            </div>
+          </li> --}}
+        </ul>
+        <?php endif; ?>
+        <ul class="nav nav-right ml-auto"></ul>
       </div>
-
+    </div>
   </div>
   <div class="second-header">
     <div class="px-4 pt-2">
       <div class="row">
         <div class="col-4 mobile-off">
-          <a href="#">
+          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
             <i class="t-logo logo-2"></i>
           </a>
         </div>
@@ -470,14 +345,16 @@
               </a>
               <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="calcF">
-                <span class="cal-date">{{ date("M d",strtotime($arrive)) }} - {{ date("M d",strtotime($departure)) }}</span>
+                <span class="cal-date">{{ \Session::get('arrival') }} - {{ \Session::get('departure') }}</span>
               </a>
               <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="whoF">
                 <div class="filter-lst expand filter-guest filter-white">
                   <div class="input-group">
                     <div class="gust-dropdown">
-                      <div class="guest-option rto"><span class="guest-count">{{ $total_guests }}</span> Guest</div>
+                      <div class="guest-option rto"><span class="guest-count">
+                        {{ \Session::get('Guests') }}
+                      </span> Guest</div>
                     </div>
                   </div>
                 </div>
@@ -499,11 +376,7 @@
                 </div>
               </div>
               <ul class="nav nav-right ml-auto">
-                <li class="nav-item">
-                  <a class="nav-link " href="#searchHistory" data-toggle="collapse">
-                    <i class="ico ico-layer"></i>
-                  </a>
-                </li>
+                
                 <li class="nav-item">
                   <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
                     <i class="ico ico-convertation"></i>
@@ -527,7 +400,6 @@
               </ul>
             </div>
           </div>
-
         </div>
       </div>
     </div>
@@ -535,31 +407,41 @@
   <div class="menunav-group">
     <div class="collapse clp dash-clp" id="dashF" data-parent="#menunav">
       <div class="drop-grid">
-        <a href="#">
+        <?php if($currentdomain != 'voyage'):?>
+        <a href="https://emporium-voyage.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-building mr-2"></i> <span>Voyage</span>
           </div>
         </a>
-        <a href="#">
+        <?php endif;?>
+        <?php if($currentdomain != 'safari'):?>
+        <a href="https://emporium-safari.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-safari mr-2"></i> <span>Safari</span>
           </div>
         </a>
-        <a href="#">
+        <?php endif;?>
+        <?php if($currentdomain != 'spa'):?>
+        <a href="https://emporium-spa.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-spa-i mr-2"></i> <span>Spa</span>
           </div>
         </a>
-        <a href="#">
+        <?php endif;?>
+        <?php if($currentdomain != 'islands'):?>
+        <a href="https://emporium-islands.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-islands mr-2"></i> <span>Islands</span>
           </div>
         </a>
-        <a href="#">
+        <?php endif;?>
+        <?php if($currentdomain != 'golf'):?>
+        <a href="https://emporium-golf.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-golf mr-2"></i> <span>Golf</span>
           </div>
         </a>
+        <?php endif;?>
       </div>
     </div>
     <div class="collapse clp" id="cityList" data-parent="#menunav">
@@ -590,82 +472,9 @@
     </div>
 
     <div class="collapse clp" id="searchF" data-parent="#menunav">
-      <div class="search-field">
-        <div class="row">
-          <div class="col">
-            <div class="input-group align-items-center">
-              <div class="input-group-prepend">
-                <i class="ico ico-search"></i>
-              </div>
-              <input type="text" class="form-control form-control-em border-0 where" id="inlineFormInputGroup"
-                placeholder="Where" autocomplete="off">
-              <div class="clear-btn" id="clear_search">
-                <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
-                  xmlns="http://www.w3.org/2000/svg">
-                  <title>Close</title>
-                  <path
-                    d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
-                  </path>
-                </svg>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="search-suggest">
-          <div>
-            <h5>Popular Now</h5>
-            <a href="#" class="suggest-item">New York</a>
-            <a href="#" class="suggest-item">London</a>
-            <a href="#" class="suggest-item">Paris</a>
-            <a href="#" class="suggest-item">Hongkong</a>
-            <a href="#" class="suggest-item">Marrakech</a>
-            <a href="#" class="suggest-item">Los Angeles</a>
-          </div>
-          <div>
-            <h5>Inspiration</h5>
-            <a href="#" class="suggest-item">Spa</a>
-            <a href="#" class="suggest-item">Golf</a>
-            <a href="#" class="suggest-item">Beach</a>
-            <a href="#" class="suggest-item">Diving</a>
-            <a href="#" class="suggest-item">Ski</a>
-          </div>
-        </div>
-        <div class="wherepopup">
-          <div class="whereinner">
-            <ul class="nav flex-column">
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Hotels</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Map</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Private Jet</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Cuisine</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Channel</span>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">
-                  <span class="city-l">New York</span> <span class="cat-l">Experiences</span>
-                </a>
-              </li>
-            </ul>
-          </div>
-        </div>
+      <div class="search-field">        
+        @include('frontend.themes.EC.minitemplates.filter_bar')
+        @include('frontend.themes.EC.minitemplates.where_popup')
       </div>
     </div>
 
@@ -790,90 +599,7 @@
           </div>
         </div>
         <div class="col-xl-6">
-          <div class="row">
-            <div class="col-7 col-lk--0991 ">
-              <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                <div class="img-offset-slide ">
-                  <div>
-                    <a href="suite.html">
-                      <img src="images/97678356576-24898814906.jpg" class="img-fluid" alt="">
-                    </a>
-                  </div>
-                  <div>
-                    <a href="suite.html">
-                      <img src="images/97678356576-24898814906.jpg" class="img-fluid" alt="">
-                    </a>
-                  </div>
-                  <div>
-                    <a href="suite.html">
-                      <img src="images/97678356576-24898814906.jpg" class="img-fluid" alt="">
-                    </a>
-                  </div>
-                  <div>
-                    <a href="suite.html">
-                      <img src="images/97678356576-24898814906.jpg" class="img-fluid" alt="">
-                    </a>
-                  </div>
-                </div>
-                <div class="my-dropdown">
-                  <div class="btn-group dropleft">
-                    <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      <i class="ico ico-diamon diamon-label"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                      <a href="#" class="dropdown-item">Add to collection</a>
-                      <a href="#" class="dropdown-item btn-sidebar create-collection"
-                        data-sidebar="#myCollection">Create new collection</a>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="hotel-meta full-width">
-                  <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                    Reviews
-                  </a>
-                  <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                    Quick info
-                  </a>
-                  <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                    Gallery
-                  </a>
-                  <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                    Suite(s)
-                  </a>
-                  <div class="hotel-prices hotel-price-detail d-flex">
-                    <div class="row align-items-center justify-content-center">
-                      <div class="mr-2">
-                        <i class="ico ico-info-green"></i>
-                      </div>
-                      <h3 class="mb-0">
-                        <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                      </h3>
-
-                      <div class="ml-2">
-                        <span class="pernight"></span>
-                      </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="col ">
-              <div class="fetaruer py-5 pl-2 pr-2">
-                <h3 class="title-3 title-i ">— featured hotel —</h3>
-                <p class="font-2 ">
-                  <i>
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes.
-                    Then
-                    translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The
-                    Ludlow
-                    Resort.
-                  </i>
-                </p>
-              </div>
-            </div>
-          </div>
+          @include('frontend.themes.EC.layouts.subsections.featured_hotel')
         </div>
       </div>
     </div>
@@ -965,7 +691,13 @@
                           <div class="row field-count-guest align-items-center">
                             <button type="button" class="min">-</button>
                             <div class="col text-center">
-                              <span class="mr-1 adult-val">1 </span>
+                              <span class="mr-1 adult-val">
+                                @if(!empty($adults))
+                                  {{ $adults[0] ? $adults[0] : '' }}
+                                @else
+                                    1  
+                                @endif  
+                            </span>
                             </div>
                             <button type="button" class="plus mr-3">+</button>
                           </div>
@@ -979,7 +711,13 @@
                           <div class="row field-count-guest align-items-center">
                             <button type="button" class="min">-</button>
                             <div class="col text-center">
-                              <span class="mr-1 child-val">1 </span>
+                              <span class="mr-1 child-val">
+                                @if(!empty($adults))
+                                  {{ $adults[0] ? $adults[0] : '' }}
+                                @else
+                                    1  
+                                @endif
+                              </span>
                             </div>
                             <button type="button" class="plus mr-3">+</button>
                           </div>
@@ -997,90 +735,7 @@
             </div>
           </div>
           <div class="col-xl-6 col--xxl-0asd">
-            <div class="row">
-              <div class="col-7 col-lk--0991">
-                <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-                  <div class="img-offset-slide ">
-                    <div>
-                      <a href="suite.html">
-                        <img src="images/97678356576-24898814906.jpg" class="img-fluid" alt="">
-                      </a>
-                    </div>
-                    <div>
-                      <a href="suite.html">
-                        <img src="images/97678356576-24898814906.jpg" class="img-fluid" alt="">
-                      </a>
-                    </div>
-                    <div>
-                      <a href="suite.html">
-                        <img src="images/97678356576-24898814906.jpg" class="img-fluid" alt="">
-                      </a>
-                    </div>
-                    <div>
-                      <a href="suite.html">
-                        <img src="images/97678356576-24898814906.jpg" class="img-fluid" alt="">
-                      </a>
-                    </div>
-                  </div>
-                  <div class="my-dropdown">
-                    <div class="btn-group dropleft">
-                      <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <i class="ico ico-diamon diamon-label"></i>
-                      </a>
-                      <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Add to collection</a>
-                        <a href="#" class="dropdown-item btn-sidebar create-collection"
-                          data-sidebar="#myCollection">Create new collection</a>
-                      </div>
-                    </div>
-
-                  </div>
-                  <div class="hotel-meta full-width">
-                    <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
-                      Reviews
-                    </a>
-                    <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo">
-                      Quick info
-                    </a>
-                    <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#gallery">
-                      Gallery
-                    </a>
-                    <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside">
-                      Suite(s)
-                    </a>
-                    <div class="hotel-prices hotel-price-detail d-flex">
-                      <div class="row align-items-center justify-content-center">
-                        <div class="mr-2">
-                          <i class="ico ico-info-green"></i>
-                        </div>
-                        <h3 class="mb-0">
-                          <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
-                        </h3>
-
-                        <div class="ml-2">
-                          <span class="pernight"></span>
-                        </div>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="fetaruer py-5 pl-2 pr-2">
-                  <h3 class="title-3 title-i ">— featured hotel —</h3>
-                  <p class="font-2 ">
-                    <i>
-                      Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes.
-                      Then
-                      translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The
-                      Ludlow
-                      Resort.
-                    </i>
-                  </p>
-                </div>
-              </div>
-            </div>
+            @include('frontend.themes.EC.layouts.subsections.featured_hotel')            
           </div>
         </div>
       </div>
@@ -1101,4 +756,3 @@
     </div>
   </div>
 </header>
-

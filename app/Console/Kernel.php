@@ -16,6 +16,8 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\HotelSearch::class,
         \App\Console\Commands\Inspire::class,
         \App\Console\Commands\HotelDataUpdate::class,
+        \App\Console\Commands\UpdateAvailableHotelLocations::class,
+        \App\Console\Commands\CacheClear::class,
     ];
 
     /**
