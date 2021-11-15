@@ -598,7 +598,7 @@ var ajaxReq = 'ToCancelPrevReq';
 
                 $('.img-left-when').html(`<img src="/property-image/resize/645x600/` + 
                   data[0]['container']['name'] + `/` + 
-                  data[0]['property_images'][0]['file']['file_name'] + 
+                  data[0]['property_images'][1]['file']['file_name'] + 
                   `/property-image" class="img-fluid" alt="" />`);                
 
                 $('.to-right .title-2').html(data[0]['property_name']);

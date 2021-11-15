@@ -6,9 +6,6 @@
   <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
 
     <div class="pr-lst result-grid">
-      <div>
-        <img <?php echo 'src="/images/default-hotel.png"';?> <?php echo 'data-src="/images/default-hotel.png"';?> class="w-100 results-media" alt="">
-      </div>
       <?php 
       foreach($property->propertyImages as $image):
         
