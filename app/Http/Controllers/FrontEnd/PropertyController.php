@@ -3309,6 +3309,8 @@ class PropertyController extends Controller {
 
     public function getProperty($id){
         $this->data['hotel_data'] = $this->getPropertyById($id);
+        // echo "<pre>";
+        // print_r($this->data['hotel_data']->toArray());exit;
         $this->data['reviews'] = $this->getReviews($id);
         $this->formatPropertyRecords($this->data['hotel_data']);
         $this->data['layout_type'] = 'old';
