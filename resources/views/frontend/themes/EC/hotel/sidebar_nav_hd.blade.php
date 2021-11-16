@@ -56,13 +56,13 @@ if(!isset($property)){
           <div class="collapse " id="suite">
             <ul class="nav flex-column nav-sidebar is-small">
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $hotel_data[0]->id }}">All Suites</a>
+                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}">All Suites</a>
               </li>
             
-              @foreach($hotel_data[0]->suites as $suite)
+              @foreach($property->suites as $suite)
 
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $hotel_data[0]->id }}/#{{$suite->id}}">{{$suite->category_name}}</a>
+                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}">{{$suite->category_name}}</a>
               </li>
               @endforeach
               
