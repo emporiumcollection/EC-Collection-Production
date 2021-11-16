@@ -170,7 +170,7 @@
       geojsonFeatures.features.forEach(function (marker) {
         var el = document.createElement('div');
         el.className = 'marker';
-        el.style.backgroundImage = 'url(images/basic_geolocalize-02.png)';
+        el.style.backgroundImage = 'url(images/map2.png)';
         el.style.width = 40 + 'px';
         el.style.height = 40 + 'px';
         el.style.backgroundRepeat = 'no-repeat',
