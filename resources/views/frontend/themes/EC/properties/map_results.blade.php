@@ -33,7 +33,7 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript">
   var channelurl = '{{URL::to("getyoutubechannel/")}}';
-  $(document).load(function(){
+  $(window).on('load', function() {
     setTimeout("getDefaultChannel('<?php echo isset($location[0]['category_alias']) ? $location[0]['category_alias'] : ''; ?>')", 1000);
   });
 </script>
