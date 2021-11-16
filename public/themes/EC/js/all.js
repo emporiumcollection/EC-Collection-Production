@@ -593,11 +593,23 @@ var ajaxReq = 'ToCancelPrevReq';
             //if(data.status == "success"){
                 $('.title-2').html(data[0]['property_name']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
+
+                var containername;
+                try{
+                  if(data[0]['container']){
+                    containername = data[0]['container']['name'];
+                  }else{
+                    containername = data[0]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
+                  }
+                }catch(e){
+
+                }
+
                 $('.herl').html(`<img src="uploads/container_user_files/locations/` 
-                  + data[0]['container']['name'] + `/property-images/` + data[0]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);                
+                  + containername + `/property-images/` + data[0]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
 
                 $('.img-left-when').html(`<img src="/property-image/resize/645x600/` + 
-                  data[0]['container']['name'] + `/` + 
+                  containername + `/` + 
                   data[0]['property_images'][1]['file']['file_name'] + 
                   `/property-image" class="img-fluid" alt="" />`);                
 
@@ -1968,14 +1980,14 @@ var ajaxReq = 'ToCancelPrevReq';
 
     });
   });
-  
+
   $(".close-sidebar, .sidebar-back").click(function (e) {
     e.preventDefault();
     $(this).closest('.sidebar-main').removeClass('show');
     $(this).closest('body').css('overflow', 'auto');
     $('.sidebar-overlay').remove();
   });
-  
+
   $('body').on('click', '.sidebar-overlay', function () {
     $('.sidebar-main').removeClass('show');
     $('.sidebar-overlay').remove();
@@ -1997,6 +2009,7 @@ var ajaxReq = 'ToCancelPrevReq';
     $('.suite-list').css('opacity', '.3');
     $(this).closest('.suite-list').css('opacity', '1');
   });
+
   $('.suite-list').on('click', '.board-close', function (e) {
     e.preventDefault();
     $('.suite-board').removeClass('active');
