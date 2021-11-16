@@ -401,7 +401,7 @@ trait Property {
         ->with([
             'boards',
             'container',
-            'images',
+            //'images',
             'PropertyCategoryPackages' => function($query){
                 $query->with(['package']);
             },
