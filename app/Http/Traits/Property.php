@@ -855,7 +855,6 @@ trait Property {
     }
 
     public function storeSession($request){
-        print_r($request);exit;
         $rooms = $request->input('rooms');
         $adult = $request->input('adult');
         $child = $request->input('child');
@@ -864,15 +863,17 @@ trait Property {
         $total_adults = 0;
         $total_childs = 0;
         $total_suite = 0;
-        foreach($rooms as $key => $room_num){            
-            $total_suite = $total_suite +1;
+        foreach($rooms as $key => $room_num){
+            if($adult[$key] && $child[$key]){
+                $total_suite = $total_suite +1;
 
-            $selected_suite[$key] = [ 
-                'adult' => $adult[$key],
-                'child' => $child[$key],
-             ];
-             $total_adults = $total_adults + $adult[$key];
-             $total_childs = $total_childs + $child[$key];
+                $selected_suite[$key] = [ 
+                    'adult' => $adult[$key],
+                    'child' => $child[$key],
+                ];
+                $total_adults = $total_adults + $adult[$key];
+                $total_childs = $total_childs + $child[$key];
+            }
         }
         
         \session()->put('suites', $selected_suite);
@@ -884,7 +885,8 @@ trait Property {
         \session()->put('arrival_date',strtotime($request->arrive));
         \session()->put('arrival',$request->arrive);
         \session()->put('departure_date',strtotime($request->departure));
-        \session()->put('departure',$request->departure);                
+        \session()->put('departure',$request->departure);
+
     }
 
      public function setFitlerOptions(){

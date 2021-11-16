@@ -1,3 +1,4 @@
+
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -12,6 +13,9 @@
     }
 </style>
 @section('content')
+<?php 
+	$suites = \Session::get('suites');
+?>
 <div class="content-em">
   <div class="top-wrapper">
     <div class="container ">
@@ -37,7 +41,7 @@
 	                </div>
 	                <div class="col-lg-3 col-md-5 col-5">
 	                  <div class="row field-count-reservation align-items-center">
-	                    <button type="button" class="min-room disable">-</button>
+	                    <button type="button" class="min-room {{ count($suites) <= 1 ? 'disable' : '' }}">-</button>
 	                    <div class="col text-center">
 	                      <span class="mr-1 room-val">{{ \Session::get('total_suite') }}</span>
 	                      <input type="hidden" name="suite[]" id="suites" class="suite" value="{{ \Session::get('total_suite') }}"/>
@@ -48,12 +52,13 @@
 	                </div>
 	              </div>
 	            </div>
-	            <?php  $suites = \Session::get('suites'); ?>
 	            <div class="guest-pick-body px-0">
-	            	@foreach($suites as $key => $val)
+	            	
 	              <div class="row list-eoom">
-	                <div class="col-12 col-ews mb-5" id="room-1">
+	              	@foreach($suites as $key => $val)
+	                <div class="col-12 col-ews mb-5" id="room-{{ ($key+1) }}">
 	                  <p><b>Suite {{ ($key+1) }}</b></p>
+	                  <input type="hidden" name="rooms[]" id="rooms_{{ $key }}"/>
 	                  <div class="row align-items-center py-2">
 	                    <div class="col-7">
 	                      <p class="mb-0"><b>Adults</b></p>
@@ -64,7 +69,6 @@
 	                        <div class="col text-center">
 	                          <span class="mr-1 adult-val">{{ $val['adult'] }}</span>
                             <input type="hidden" name="adult[]" class="inp-adult" id="adult" value="{{ $val['adult'] }}" />
-                            <input type="hidden" name="rooms[]" id="rooms"/>
 	                        </div>
 	                        <button type="button" class="plus mr-3">+</button>
 	                      </div>
@@ -86,8 +90,9 @@
 	                    </div>
 	                  </div>
 	                </div>
+	                @endforeach
 	              </div>
-	              @endforeach
+	              
 	              <div class="room-limit">
 	                <p><b>Does your booking involve more than 4 suites?</b></p>
 	                <p>Contact our Groups and Events team on 08989819281. and they'll take care of everything.

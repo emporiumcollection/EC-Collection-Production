@@ -23,17 +23,14 @@ class ReservationController extends Controller {
     use Property;
 
     public function when(Request $request, $id)
-    {
-        //$request->session()
-        //       ->put('property_id', $id); 
-        \Session::put('property_id', $id);
-        
+    {  
         if (!\Auth::check()){
             return redirect('user/login');
         }
-        \Session::put('property_id', $id);
+        // \Session::put('property_id', $id);
         $properties = PropertyCategoryTypes::first();
-
+        $request->session()
+                ->put('property_id',$id); 
         $request->session()
                 ->put('suite_name',$properties->category_name); 
 
@@ -71,7 +68,7 @@ class ReservationController extends Controller {
             return redirect('user/login');
 
         $this->data['property'] = properties::with(['suites', 'container'])->where('id', \Session::get('property_id'))->get();
-            
+        
         $selected_suite = \Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
@@ -89,7 +86,7 @@ class ReservationController extends Controller {
 
     public function guest(Request $request)
     {
-        $this->storeSession($request);
+        $data = $this->storeSession($request);
     }
 
     public function reserveSuite()

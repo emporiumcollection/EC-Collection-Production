@@ -1000,7 +1000,7 @@ var ajaxReq = 'ToCancelPrevReq';
     }
   });
 
-  $('.field-count-guest ').on('click', '.min-room', function(){
+  /*$('.field-count-guest ').on('click', '.min-room', function(){
     $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
 
     if($(this).next().find('.mr-1').html() > 1){
@@ -1014,7 +1014,7 @@ var ajaxReq = 'ToCancelPrevReq';
     if($(this).prev().find('.mr-1').html() != 4 ){
       $(this).closest('.field-count-guest').find('.plus-room').removeClass('disable');
     }
-  });
+  });*/
 
   // $(document).on('click', '.confirm-room', function(){
   //   console.log('confirm');
