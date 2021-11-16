@@ -1,6 +1,3 @@
-<script type="text/javascript">
-  properties[<?php echo $property->id;?>] = <?php echo json_encode($property);?>
-</script>
 <div class="col-lg-8 content-lg">
   <ul class="nav nav-pills nav-clr nav-breadcrumb nav-breadcrumb-ip mb-3 mt-3">
     <li class="nav-item">

@@ -1,7 +1,3 @@
-<script type="text/javascript">
-  properties[<?php echo $hotel_data[0]->id;?>] = <?php echo json_encode($hotel_data[0]);?>;
-  properties[<?php echo $hotel_data[0]->id;?>]['images'] = <?php echo json_encode($hotel_data[0]->propertyImages);?>;
-</script>
 <div class="col-lg-8 col-hotel-slider">
   <div class="text-right">
     <div class="dropdown dropdown-suite ipad-view mb-3">

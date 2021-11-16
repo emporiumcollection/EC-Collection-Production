@@ -6,6 +6,7 @@ if(!isset($property)){
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript">
     properties[<?php echo $property->id;?>] = <?php echo json_encode($property);?>;
+    properties[<?php echo $property->id;?>]['images'] = <?php echo json_encode($property->propertyImages);?>;
 </script>
 <script type="text/javascript">
     $(document).ready(function(){
