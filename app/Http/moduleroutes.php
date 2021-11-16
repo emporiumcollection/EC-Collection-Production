@@ -32,6 +32,7 @@
                     Route::controller('customfields', 'CustomfieldsController');
                     Route::controller('categories', 'CategoriesController');
                     Route::controller('amenities', 'AmenitiesController');
+                    Route::controller('reviews', 'ReviewController');
                     Route::controller('seasons', 'SeasonsController');
                     Route::controller('reservations', 'ReservationsController');
                     Route::controller('bookings', 'BookingsController');
@@ -67,4 +68,5 @@
                     Route::controller('venue', 'VenueController');
                     Route::controller('propertyusp', 'PropertyuspController');
                     Route::controller('availableservices', 'AvailableservicesController');
+                    Route::controller('review', 'ReviewController');
                     ?>

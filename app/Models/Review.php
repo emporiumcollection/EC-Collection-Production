@@ -1,19 +1,18 @@
-<?php
-namespace App\Models;
+<?php namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
 
-class Reviews extends Sximo
-{
-   protected $table = 'tb_reviews';
+class review extends Sximo  {
+	
+	protected $table = 'tb_reviews';
+	protected $primaryKey = 'id';
 
-   protected $fillable = ['id', 'hotel_id', 'rating','fname', 'lname', 'country','comment'];
-
-   public function __construct() {
+	public function __construct() {
 		parent::__construct();
 		
 	}
+
 	public static function querySelect(  ){
 		
 		return "  SELECT tb_reviews.* FROM tb_reviews  ";
@@ -27,4 +26,6 @@ class Reviews extends Sximo
 	public static function queryGroup(){
 		return "  ";
 	}
+	
+
 }
