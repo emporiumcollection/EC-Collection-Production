@@ -407,14 +407,10 @@ class UserController extends Controller {
                             \Session::put('lang', 'en');
                         }
                         if (CNF_FRONT == 'false') :
-                            echo 'Here 4';
-                            exit;
                             return Redirect::to($redirect_to);
                         else :
                             $getusercompany = \DB::table('tb_user_company_details')->where('user_id', $row->id)->first();
                             if (!empty($getusercompany) or $row->group_id == 1) {
-                                echo 'Here 5';
-                                exit;
                                 return Redirect::to($redirect_to);
                             } else {
                                 if ($row->group_id == 4) {
@@ -464,14 +460,10 @@ class UserController extends Controller {
                                     \Session::put('lang', 'en');
                                 }
                                 if (CNF_FRONT == 'false') :
-                                    echo 'Here 1';
-                                    exit;
                                     return Redirect::to($redirect_to);
                                 else :
                                     $getusercompany = \DB::table('tb_user_company_details')->where('user_id', $row->id)->first();
                                     if (!empty($getusercompany) or $row->group_id == 1) {
-                                        echo 'Here 2';
-                                        exit;
                                         return Redirect::to($redirect_to);
                                     } else {
                                         if ($row->group_id == 4) {
@@ -479,8 +471,6 @@ class UserController extends Controller {
                                         }
                                         session()->forget('login.attempts');
 
-                                        echo 'Here 3';
-                                        exit;
                                         return Redirect::to($redirect_to)->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
                                     }
 
