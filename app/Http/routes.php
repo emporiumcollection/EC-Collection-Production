@@ -73,6 +73,8 @@ Route::get('reservation/whoistravelling','FrontEnd\ReservationController@whoistr
 Route::get('reservation/paymentmethod', 'FrontEnd\ReservationController@paymentmethod');
 Route::get('reservation/hotelpolicies', 'FrontEnd\ReservationController@hotelpolicies');
 Route::get('reservation/bookingsummary', 'FrontEnd\ReservationController@bookingsummary');
+Route::post('/store_dates/session', 'FrontEnd\ReservationController@storewhere');
+
 Route::post('/suite', 'FrontEnd\ReservationController@selected_suite');
 Route::post('/select/guest', 'FrontEnd\ReservationController@guest');
 

@@ -246,18 +246,21 @@ $(document).on('click', ".step_where", function(){
     var arrival_date = $("#arrival_date").val();
     var departure_date = $("#departure_date").val();
 
-    if ((arrival_date == '') && (departure_date == '')) {
-        $.ajax({
-            type: 'get',            
-            url:'/reservation/when',                
-            success: function(response){
-                $('#error').html(response);
-                window.location.href ="/reservation/when";
-            }
-        });            
-    }else{ 
-        window.location.href = "/reservation/where";
-    }        
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'post',            
+        url: '/store_dates/session',
+        // dataType:'json',                    
+        data: {
+            arrival_date:arrival_date,
+            departure_date:departure_date
+        },
+        success:function(response){
+            window.location.href ="/reservation/where";
+        }
+    });
 });   
 
 $(document).on('click', ".confirm_address", function(){
