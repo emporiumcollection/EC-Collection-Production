@@ -1,4 +1,5 @@
 $(document).ready(function(){    
+
     /*$('#smartwizard').smartWizard({
         theme: 'arrows',
         selected: 0,
@@ -37,6 +38,7 @@ $(document).ready(function(){
 
     $('.fromdate').daterangepicker({
         singleDatePicker: true,
+        minDate:new Date(), 
         locale: {
             format: 'DD MMM YYYY'
         }
@@ -48,6 +50,7 @@ $(document).ready(function(){
 
     $('.todate').daterangepicker({
         singleDatePicker: true,
+        minDate:new Date(), 
         locale: {
             format: 'DD MMM YYYY'
         }
