@@ -74,7 +74,7 @@
                 <tr>
 					<td width="30"> {{ ++$i }} </td>
 					<td width="50"><input type="checkbox" class="ids" name="ids[]" value="{{ $row->id }}" />  </td>									
-					<td>{{ $row->hotel_id }}</td>
+					<td>{{ ReviewHelper::getHotelName($row->hotel_id) }}</td>
 					<td>{{ $row->rating }}</td>
 					<td>{{ $row->fname }}</td>
 					<td>{{ $row->lname }}</td>
@@ -113,5 +113,5 @@ $(document).ready(function(){
 	});
 	
 });	
-</script>		
+</script>	
 @stop

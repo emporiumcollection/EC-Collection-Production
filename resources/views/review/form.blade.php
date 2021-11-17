@@ -88,7 +88,7 @@
 								  <div class="form-group  " >
 									<label for="Comment" class=" control-label col-md-4 text-left"> Comment </label>
 									<div class="col-md-6">
-									  {!! Form::text('comment', $row['comment'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+									  {!! Form::textarea('comment', $row['comment'],array('class'=>'form-control', 'placeholder'=>'',  )) !!} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
@@ -97,7 +97,7 @@
 								  <div class="form-group  " >
 									<label for="Is Approved" class=" control-label col-md-4 text-left"> Is Approved </label>
 									<div class="col-md-6">
-									  {!! Form::text('is_approved', $row['is_approved'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+									  {!! Form::checkbox('is_approved', 1, $row['is_approved'], ['class' => 'form-control', 'placeholder' => '']) !!}
 									 </div> 
 									 <div class="col-md-2">
 									 	
@@ -121,6 +121,7 @@
 			
 				  </div> 
 		 
+				  
 		 {!! Form::close() !!}
 	</div>
 </div>		 

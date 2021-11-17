@@ -4,8 +4,8 @@ use App\Http\Controllers\controller;
 use App\Models\Review;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
-use Validator, Input, Redirect ; 
-
+use Validator, Input, Redirect; 
+use App\Helpers\ReviewHelper;
 
 class ReviewController extends Controller {
 
@@ -54,7 +54,8 @@ class ReviewController extends Controller {
 			'sort'		=> $sort ,
 			'order'		=> $order,
 			'params'	=> $filter,
-			'global'	=> (isset($this->access['is_global']) ? $this->access['is_global'] : 0 )
+			'global'	=> (isset($this->access['is_global']) ? $this->access['is_global'] : 0 ),
+			'with'		=> ['hotel'],
 		);
 		// Get Query 
 		$results = $this->model->getRows( $params );		
@@ -65,6 +66,8 @@ class ReviewController extends Controller {
 		$pagination->setPath('review');
 		
 		$this->data['rowData']		= $results['rows'];
+		// echo "<pre>";
+		// print_r($this->data['rowData']);die();
 		// Build Pagination 
 		$this->data['pagination']	= $pagination;
 		// Build pager number and append current param GET
@@ -143,8 +146,12 @@ class ReviewController extends Controller {
 		$validator = Validator::make($request->all(), $rules);	
 		if ($validator->passes()) {
 			$data = $this->validatePost('tb_review');
-				
-			$id = $this->model->insertRow($data , $request->input('id'));
+			if(isset($data['is_approved'])){
+				$id = $this->model->insertRow($data , $request->input('id'));
+			}else{
+				$data['is_approved'] = "0";
+				$id = $this->model->insertRow($data , $request->input('id'));
+			}
 			
 			if(!is_null($request->input('apply')))
 			{
