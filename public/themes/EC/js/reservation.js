@@ -1,4 +1,10 @@
-$(document).ready(function(){    
+$(document).ready(function(){
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
     $('#smartwizard').smartWizard({
         theme: 'arrows',
         selected: 0,
@@ -114,17 +120,28 @@ $(document).ready(function(){
     });
 });
 
+function initilize(){
+    $('select').select2({
+        theme: 'bootstrap',
+        minimumResultsForSearch: -1
+    });
+}
 
 $( document ).ready(function() {
 
-    var suit_id = new Array();
-    var guest = new Array();
 
     $(document).on('click', ".select_suite", function(){
-        $(this).text("Selected");
-        var suite_id = $(this).data('suite-id');
-        var selected_guest = $('#select_suite_guest_'+suite_id).val();
-        suit_id.push($(this).data('suite-id'));
+        var suit_id = new Array();
+        var guest = new Array();
+        // $(this).text("Selected");
+        var curr_btn = $(this);
+        var suite_id = curr_btn.data('suite-id');
+        var selected_guest = curr_btn.parents('section').find('#select_suite_guest_'+suite_id).val();
+        if(!selected_guest){
+            curr_btn.parents('section').find('#select_suite_guest_'+suite_id).focus();
+            return false;
+        }
+        suit_id.push(curr_btn.data('suite-id'));
         guest.push(selected_guest);
 
         $.ajax({
@@ -132,13 +149,30 @@ $( document ).ready(function() {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
             type: 'POST',            
-            url:'/suite',
+            url: '/suite',
             data: { suit_id:suit_id,
                     guest: guest },
-            dataType:'json',                    
+            dataType: 'json',                    
             success: function(response){
-
+                // console.log(response);
+                curr_btn.parents('section').html(response.suite_selection_html);
+                initilize();
             }
+        });
+    });
+
+    $(document).on('click', '.remove_suit', function(){
+        var curr_btn = $(this);
+        var suite_id = curr_btn.data('suite-id');
+        var guest = $('#select_suite_guest_'+suite_id).val();
+        $.ajax({
+            url: '/remove-suite-selection/'+suite_id+'/'+guest,
+            type: 'get',
+            dataType: 'json',
+            success: function(response){
+                curr_btn.parents('section').html(response.suite_selection_html);
+                initilize();
+            },
         });
     });
 
@@ -153,6 +187,44 @@ $( document ).ready(function() {
             success: function(response){
                 window.location.href ="/reservation/receipt";
             }
+        });
+    });
+
+    $(document).on('click', '.continue_step', function(e){
+        e.preventDefault();
+        var totalGuest = 0;
+        $.each($('select[name="total_guest"]'), function(key, val){
+            console.log($(this).val());
+            if($(this).val() !== null){
+                totalGuest = (totalGuest + parseInt($(this).val()));
+            }
+        });
+        console.log(totalGuest);
+        $.ajax({
+            url: '/validate-suite-selection',
+            type: 'POST',
+            data: {
+                totalGuest: totalGuest
+            },
+            dataType: 'json',
+            beforeSend: function(){
+                $('#guestValidationMsg').hide();
+            },
+            success: function(response){
+                if(response.status === false){
+                    $('#guestValidationMsg').find('#massage').html(response.message);
+                    $('#guestValidationMsg').show();
+                }
+                console.log(response);
+            },
+            error: function(xhr, textStatus, error){
+                console.log('Something went wrong!');
+                console.log(xhr.responseText);
+                console.log(xhr.statusText);
+                console.log(textStatus);
+                console.log(error);
+            },
+            complete: function(){}
         });
     });
         

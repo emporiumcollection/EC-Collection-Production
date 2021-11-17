@@ -25,21 +25,20 @@ class ReservationController extends Controller {
 
     public function when(Request $request, $id)
     {
-        //$request->session()
-        //       ->put('property_id', $id); 
-        Session::put('property_id', $id);
-        
         if (!\Auth::check()){
             Session::put('reservation', [
                 'redirect_url' => $request->fullUrl()
             ]);
             return redirect('user/login');
         }
-        Session::put('property_id', $id);
+
         $properties = PropertyCategoryTypes::first();
 
-        $request->session()
-                ->put('suite_name',$properties->category_name); 
+        $request->session()->put('suite_name', $properties->category_name); 
+        // $request->session()->put('property_id', $id);
+
+        Session::put('property_id', $id);
+
 
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -69,10 +68,15 @@ class ReservationController extends Controller {
         return view($file_name, $this->data);   
     }
 
-    public function suite(Request $request)
+    public function suite()
     {
         if (!\Auth::check())
             return redirect('user/login');
+
+        \Session::put('property_id', 77);
+
+        // Session::forget('suite_array');
+        // Session::forget('suit_id');
 
         $this->data['property'] = properties::with(['suites', 'container'])->where('id', \Session::get('property_id'))->get();
             
@@ -189,20 +193,38 @@ class ReservationController extends Controller {
         $suites = $request->suit_id;
         $guest = $request->guest;
         $sum = 0;
-        foreach($guest as $value) {
-            $sum+= $value;
+        $number_of_suites = 0;
+        $suite_array = $suitIds = [];
+        if(\Session::has('suite_array')){
+            $suite_array = \Session::get('suite_array');
         }
-        $count = 0;
-        foreach($suites as $key => $suite)
-        {    
-            $count = $count+1;
+
+        if(\Session::has('suit_id')){
+            $suitIds = \Session::get('suit_id');
+        }
+
+        $suitIds[] = $suites[0];
+
+        foreach($suites as $key => $suite){
             $suite_array[$suite] = $guest[$key];
         }
-        \Session::put('suite_array',$suite_array);
-        \Session::put('suit_id',$suites);
-        \Session::put('selected_suite_guest',$sum);
-        \Session::put('selected_suite_number',$count);
-        
+
+        foreach($suite_array as $suite){
+            $sum += $suite;
+            $number_of_suites++;
+        }
+
+        \Session::put('suite_array', $suite_array);
+        \Session::put('suit_id', $suitIds);
+        \Session::put('selected_suite_guest', $sum);
+        \Session::put('selected_suite_number', $number_of_suites);
+
+        $suite = PropertyCategoryTypes::find($suites[0]);
+
+        $suite_selection_html = view('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])->render();
+        return json_encode([
+            'suite_selection_html' => $suite_selection_html
+        ]);
     }
 
     public function whoistravelling()
@@ -473,4 +495,49 @@ class ReservationController extends Controller {
         return $db; 
     }
 
+    public function removeSuiteSelection($id, $guest)
+    {
+        Session::forget("suite_array.$id");
+        Session::put('selected_suite_number', (Session::get('selected_suite_number') - 1));
+        Session::put('selected_suite_guest', (Session::get('selected_suite_guest') - $guest));
+        if(Session::has('suit_id')){
+            foreach(Session::get('suit_id') as $key => $suite){
+                if($suite == $id){
+                    Session::forget("suit_id.$key");
+                }
+            }
+        }
+        $suite = PropertyCategoryTypes::find($id);
+
+        $suite_selection_html = view('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])->render();
+        return json_encode([
+            'suite_selection_html' => $suite_selection_html
+        ]);
+    }
+
+    public function validateSuiteSelection(Request $request)
+    {
+        $prv_selected_total_guest = 0;
+        if(Session::has('suites')){
+            $prv_selected_total_guest = Session::get('selected_suite_guest');
+        }
+        $totalGuest = $request->totalGuest;
+        if($totalGuest == 0 || $totalGuest < $prv_selected_total_guest){
+            return json_encode([
+                'status' => false,
+                'message' => 'Please select suite(s) for remaining '.($prv_selected_total_guest - $totalGuest).' guest(s)',
+                'class' => 'danger'
+            ]);
+        }elseif($totalGuest > $prv_selected_total_guest){
+            return json_encode([
+                'status' => false,
+                'message' => 'You have selected more guests than your previous selection',
+                'class' => 'danger'
+            ]);
+        }
+        return json_encode([
+            'status' => true
+        ]);
+        exit;
+    }
 }
