@@ -36,7 +36,7 @@
         </div>            
         <ul class="nav mt-4 mb-4 nav-wizard-primary">
           <li>
-            <a class="nav-link {{ Request::is('reservation/when') ? 'active' : ''}} " href="/reservation/when/{id}">
+            <a class="nav-link {{ Request::is('reservation/when') ? 'active' : ''}} " href="/reservation/when/{{ Session::get('property_id') }}">
               When
             </a>
           </li>
@@ -50,11 +50,13 @@
               Suite
             </a>
           </li>
-          <li>
-            <a class="nav-link {{ Request::is('reservation/suiteboard') ? 'active' : ''}}" href="/reservation/suiteboard">
-              Suite Board
-            </a>
-          </li>
+          @if(!empty($boards))
+            <li>
+              <a class="nav-link {{ Request::is('reservation/suiteboard') ? 'active' : ''}}" href="/reservation/suiteboard">
+                Suite Board
+              </a>
+            </li>
+          @endif
           <li>
             <a class="nav-link {{ Request::is('reservation/policies') ? 'active' : ''}}" href="/reservation/policies">
               Policies

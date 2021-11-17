@@ -387,7 +387,7 @@
             </div>
             <div class="col-md-9">
             <div class="text-right">
-              <a href="/reservation/paymentmethod" class="btn btn-dark px-5 btn-nextwizard">Next</a>
+              <a href="/reservation/paymentmethod" class="btn btn-dark px-5">Next</a>
             </div>
           </div>
           </div>

@@ -91,11 +91,14 @@
             
             <div class="row">
               <div class="col-6">
-                <a href="/reservation/suiteboard" class="btn btn-dark  px-5 btn-backwizard">Go back</a>
+                @if(!empty($boards))
+                  <a href="/reservation/suiteboard" class="btn btn-dark px-5">Go back</a>
+                @else
+                  <a href="/reservation/suite" class="btn btn-dark px-5">Go back</a>
+                @endif
               </div>
               <div class="col-6 text-right">
-                <a href="/reservation/whoistravelling" class="btn btn-dark  px-5 btn-nextwizard">Confirm
-                  booking</a>
+                <a href="/reservation/whoistravelling" class="btn btn-dark px-5">Confirm booking</a>
               </div>
             </div>
           

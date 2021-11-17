@@ -176,6 +176,17 @@ $(document).ready(function(){
         var last_name = $('#last_name').val("");
         var first_name = $('#first_name').val("");
     });
+
+    $(document).on('click', '.board-selection', function(){
+        if($(this).prop('checked') === true){
+            $('.remove_board_selection').css('display', 'none');
+            $(this).nextAll().eq(1).css('display', 'block');
+        }
+    });
+    $(document).on('click', '.remove_board_selection', function(){
+        $('.board-selection').prop('checked', false);
+        $(this).css('display', 'none');
+    });
 });
 
 function initilize(){
@@ -212,9 +223,11 @@ $( document ).ready(function() {
                     guest: guest },
             dataType: 'json',                    
             success: function(response){
-                // console.log(response);
                 curr_btn.parents('section').html(response.suite_selection_html);
-                initilize();
+                $('#select_suite_guest_'+suite_id).select2({
+                    theme: 'bootstrap',
+                    minimumResultsForSearch: -1
+                });
             }
         });
     });
@@ -272,13 +285,17 @@ $( document ).ready(function() {
             dataType: 'json',
             success: function(response){
                 curr_btn.parents('section').html(response.suite_selection_html);
-                initilize();
+                $('#select_suite_guest_'+suite_id).select2({
+                    theme: 'bootstrap',
+                    minimumResultsForSearch: -1
+                });
             },
         });
     });
 
     $(document).on('click', '.continue_step', function(e){
         e.preventDefault();
+        var href = $(this).attr('href');
         var totalGuest = 0;
         $.each($('select[name="total_guest"]'), function(key, val){
             console.log($(this).val());
@@ -286,7 +303,6 @@ $( document ).ready(function() {
                 totalGuest = (totalGuest + parseInt($(this).val()));
             }
         });
-        console.log(totalGuest);
         $.ajax({
             url: '/validate-suite-selection',
             type: 'POST',
@@ -301,6 +317,8 @@ $( document ).ready(function() {
                 if(response.status === false){
                     $('#guestValidationMsg').find('#massage').html(response.message);
                     $('#guestValidationMsg').show();
+                }else if(response.status === true){
+                    window.location.href = href;
                 }
                 console.log(response);
             },
@@ -320,6 +338,7 @@ $( document ).ready(function() {
 $(document).on('click', ".step_where", function(){
     var arrival_date = $("#arrival_date").val();
     var departure_date = $("#departure_date").val();
+    var propertyid = $("#property_id").val();
 
     $.ajax({
         headers: {
@@ -329,6 +348,7 @@ $(document).on('click', ".step_where", function(){
         url: '/store_dates/session',
         // dataType:'json',                    
         data: {
+            property_id:propertyid,
             arrival_date:arrival_date,
             departure_date:departure_date
         },

@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Http\Controllers\Controller;
@@ -23,7 +22,7 @@ class ReservationController extends Controller {
 
     use Property;
 
-    public function when(Request $request, $id)
+    public function when(Request $request, $id = null)
     {
         if (!\Auth::check()){
             Session::put('reservation', [
@@ -32,12 +31,10 @@ class ReservationController extends Controller {
             return redirect('user/login');
         }
 
-        $properties = PropertyCategoryTypes::first();
+        $properties = properties::find($id);
+        $request->session()->put('suite_name', $properties->category_name);
 
-        $request->session()->put('suite_name', $properties->category_name); 
-        // $request->session()->put('property_id', $id);
-
-        Session::put('property_id', $id);
+        $this->_checkBoards($id);
 
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -45,6 +42,7 @@ class ReservationController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';        
+        $this->data['property_id'] = $id;       
 
         $file_name = 'frontend.themes.EC.reservation.when';
         return view($file_name, $this->data);   
@@ -56,6 +54,8 @@ class ReservationController extends Controller {
             return redirect('user/login');
         }
 
+        $this->_checkBoards(Session::get('board'));
+
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -66,10 +66,11 @@ class ReservationController extends Controller {
         $file_name = 'frontend.themes.EC.reservation.where';
         return view($file_name, $this->data);   
     }
-    public function storewhere(Request $request){
 
-        \Session::put('selecte_arrive_date',$request->arrival_date);
-        \Session::put('selecte_departure_date',$request->departure_date);
+    public function storewhere(Request $request){
+        Session::put('property_id', $request->property_id);
+        Session::put('selecte_arrive_date',$request->arrival_date);
+        Session::put('selecte_departure_date',$request->departure_date);
     }
 
     public function suite()
@@ -77,9 +78,11 @@ class ReservationController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
 
-        $this->data['property'] = properties::with(['suites', 'container'])->where('id', \Session::get('property_id'))->get();
+        $this->data['property'] = properties::with(['suites', 'container'])->where('id', Session::get('property_id'))->get();
         
-        $selected_suite = \Session::get('suite_array');
+        $selected_suite = Session::get('suite_array');
+
+        $this->_checkBoards(Session::get('board'));
         
         $this->data['selected_suite'] = $selected_suite;
         $this->formatPropertyRecords($this->data['property']);
@@ -101,7 +104,7 @@ class ReservationController extends Controller {
 
     public function reserveSuite()
     {
-        $suite_id = \Session::get('suit_id');
+        $suite_id = Session::get('suit_id');
         $arr = [];
         $count = 0;
         foreach($suite_id as $suite_id)
@@ -121,10 +124,12 @@ class ReservationController extends Controller {
             return redirect('user/login');
 
         $arr = $this->reserveSuite();
+
+        $this->_checkBoards(Session::get('board'));
         
         if(!empty($arr)){            
 
-            $selected_suite = \Session::get('suite_array');
+            $selected_suite = Session::get('suite_array');
             
             $this->data['selected_suite'] = $selected_suite;
             $this->data['suites'] = $arr;
@@ -135,7 +140,7 @@ class ReservationController extends Controller {
                 $this->data['suites_board'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suit_id)->first();
             } */
             
-            $this->data['suitesboards'] = properties::with('boards')->where('id',\Session::get('property_id'))->get();
+            $this->data['suitesboards'] = properties::with('boards')->where('id',Session::get('property_id'))->first();
 
             
             $this->data['layout_type'] = 'old';
@@ -144,12 +149,21 @@ class ReservationController extends Controller {
             $this->data['departure'] = '';
             $this->data['total_guests'] = '';        
             $this->data['location'] = '';        
+            $this->data['board'] = Session::get('board');
 
             $file_name = 'frontend.themes.EC.reservation.suiteboard';
             return view($file_name, $this->data);
         }else{
             return redirect::to('/reservation/suite')->with('massage', 'Please select Guest!');
         }               
+    }
+
+    public function storeSuiteBoard(Request $request)
+    {
+        if(isset($request->board)){
+            Session::put('board', $request->board);
+        }
+        return redirect()->to('/reservation/policies');
     }
 
     public function Policies()
@@ -159,7 +173,9 @@ class ReservationController extends Controller {
 
         $arr = $this->reserveSuite();
 
-        $selected_suite = \Session::get('suite_array');
+        $this->_checkBoards(Session::get('board'));
+
+        $selected_suite = Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
         $this->data['suites'] = $arr;
@@ -171,9 +187,9 @@ class ReservationController extends Controller {
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
         
-        $this->data['policies'] = PropertyCategoryTypes::select('id','property_id','category_name','booking_policy')->where('id',\Session::get('suit_id'))->get();
+        $this->data['policies'] = PropertyCategoryTypes::select('id','property_id','category_name','booking_policy')->where('id',Session::get('suit_id'))->get();
 
-        $this->data['termDetail'] = \DB::table('tb_properties_custom_plan')->where('property_id',\Session::get('property_id'))->get();
+        $this->data['termDetail'] = \DB::table('tb_properties_custom_plan')->where('property_id',Session::get('property_id'))->get();
 
         $this->data['global_terms'] = \DB::table('tb_policies')->get();
 
@@ -188,12 +204,12 @@ class ReservationController extends Controller {
         $sum = 0;
         $number_of_suites = 0;
         $suite_array = $suitIds = [];
-        if(\Session::has('suite_array')){
-            $suite_array = \Session::get('suite_array');
+        if(Session::has('suite_array')){
+            $suite_array = Session::get('suite_array');
         }
 
-        if(\Session::has('suit_id')){
-            $suitIds = \Session::get('suit_id');
+        if(Session::has('suit_id')){
+            $suitIds = Session::get('suit_id');
         }
 
         $suitIds[] = $suites[0];
@@ -207,10 +223,10 @@ class ReservationController extends Controller {
             $number_of_suites++;
         }
 
-        \Session::put('suite_array', $suite_array);
-        \Session::put('suit_id', $suitIds);
-        \Session::put('selected_suite_guest', $sum);
-        \Session::put('selected_suite_number', $number_of_suites);
+        Session::put('suite_array', $suite_array);
+        Session::put('suit_id', array_unique($suitIds));
+        Session::put('selected_suite_guest', $sum);
+        Session::put('selected_suite_number', $number_of_suites);
 
         $suite = PropertyCategoryTypes::find($suites[0]);
 
@@ -224,15 +240,17 @@ class ReservationController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
-        $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->get();
+        $this->data['companion'] = \DB::table('tb_companion')->where('user_id', Session::get('uid'))->get();
 
         $arr = $this->reserveSuite();
 
-        $selected_suite = \Session::get('suite_array');
+        $this->_checkBoards(Session::get('board'));
+
+        $selected_suite = Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
         $this->data['suites'] = $arr;
-        $this->data['address'] = User::find(\Session::get('uid'));
+        $this->data['address'] = User::find(Session::get('uid'));
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -256,7 +274,7 @@ class ReservationController extends Controller {
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {                 
-            $user = User::find(\Session::get('uid'));
+            $user = User::find(Session::get('uid'));
             $user->first_name = $request->input('first_name');
             $user->last_name = $request->input('last_name');
             $user->email = $request->input('email');
@@ -282,7 +300,7 @@ class ReservationController extends Controller {
         );
         $validator = Validator::make($request->all(), $rules);
             if ($validator->passes()) {                 
-                $user = User::find(\Session::get('uid'));
+                $user = User::find(Session::get('uid'));
                 $id = $user->id;            
                 $companion_data['user_id'] = $user->id;
                 $companion_data['first_name'] = $request->input('first_name');
@@ -299,8 +317,10 @@ class ReservationController extends Controller {
             return redirect('user/login');
 
         $arr = $this->reserveSuite();
+
+        $this->_checkBoards(Session::get('board'));
         
-        $selected_suite = \Session::get('suite_array');
+        $selected_suite = Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
         $this->data['suites'] = $arr;
@@ -319,6 +339,9 @@ class ReservationController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
+
+        $this->_checkBoards(Session::get('board'));
+
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -341,8 +364,10 @@ class ReservationController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
+
+        $this->_checkBoards(Session::get('board'));
   
-        $this->data['properties'] = properties::where('id',\Session::get('property_id'))->get();
+        $this->data['properties'] = properties::where('id',Session::get('property_id'))->get();
         $hotel_name = $this->data['properties'][0]->property_short_name;
 
         $words = explode(' ', $hotel_name);
@@ -350,19 +375,29 @@ class ReservationController extends Controller {
 
         $this->data['db'] = $this->databaseName();
         
-        $this->data['randomnum'] = mt_rand(0370,9999);        
-        $arrival_date = explode("-",\Session::get('arrival'));
-        $departure_date = explode("-",\Session::get('departure'));
-        // echo "<pre>";print_r($departure_date);exit; 
+        $this->data['randomnum'] = mt_rand(0370,9999);
+        $arriveDt = date("Y-m-d", strtotime(Session::get('selecte_arrive_date')));
+        $departDt = date("Y-m-d", strtotime(Session::get('selecte_departure_date')));
+        $arrival_date = explode("-", $arriveDt);
+        $departure_date = explode("-", $departDt);
+
         $this->data['arrive'] = $arrival_date[2];
         $this->data['departure'] = $departure_date[2];
         $this->data['year'] = $departure_date[0];
-        $this->data['month'] = date('M', $departure_date[1]);
+        $this->data['month'] = date('M', strtotime($departDt));
         $this->data['month_int'] = $departure_date[1];
-        
-        $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',\Session::get('suit_id'))->first();
 
-        $selected_suite = \Session::get('suit_id');
+        $dateRange = $this->_getDatesFromRange(Session::get('selecte_arrive_date'), Session::get('selecte_departure_date'));
+
+        /*$this->data['arrive'] = $arrival_date[2];
+        $this->data['departure'] = $departure_date[2];
+        $this->data['year'] = $departure_date[0];
+        $this->data['month'] = date('M', $departure_date[1]);
+        $this->data['month_int'] = $departure_date[1];*/
+        
+        $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',Session::get('suit_id'))->first();
+
+        $selected_suite = Session::get('suit_id');
         $arr = [];
         foreach($selected_suite as $suite_id)
         {
@@ -375,7 +410,7 @@ class ReservationController extends Controller {
             $arr[] = $this->data['suites'];
         }
 
-        $selected_suite = \Session::get('suite_array');
+        $selected_suite = Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
         $this->data['suites'] = $arr;
@@ -395,7 +430,7 @@ class ReservationController extends Controller {
             $companion_array[] = [ $key => $data ];
         }
 
-        \Session::put('companion_data',$companion_array);
+        Session::put('companion_data',$companion_array);
         $request->session()->put('companion_data', $companion_array); 
     }   
 
@@ -405,7 +440,7 @@ class ReservationController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
 
-        $this->data['properties'] = properties::where('id',\Session::get('property_id'))->get();
+        $this->data['properties'] = properties::where('id',Session::get('property_id'))->get();
         // echo "<pre>";print_r($this->data['properties']);exit;
         $hotel_name = $this->data['properties'][0]->property_short_name;
 
@@ -413,8 +448,8 @@ class ReservationController extends Controller {
         $this->data['hotel_name'] = $words[0][0].$words[1][0];
 
         $this->data['randomnum'] = mt_rand(0370,9999);        
-         $arrival_date = explode("-",\Session::get('arrival'));
-        $departure_date = explode("-",\Session::get('departure'));
+         $arrival_date = explode("-",Session::get('arrival'));
+        $departure_date = explode("-",Session::get('departure'));
         
         $this->data['arrive'] = $arrival_date[2];
         $this->data['departure'] = $departure_date[2];
@@ -422,7 +457,7 @@ class ReservationController extends Controller {
         $this->data['month'] = date('M', $departure_date[1]);
         $this->data['month_int'] = $departure_date[1];
         
-        $suite_id = \Session::get('suit_id');
+        $suite_id = Session::get('suit_id');
 
         $this->data['db'] = $this->databaseName();
 
@@ -432,16 +467,16 @@ class ReservationController extends Controller {
             $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suite_id)->get();
             $arr[] = $this->data['suites'];
         }
-        $selected_suite = \Session::get('suite_array');
+        $selected_suite = Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
 
-        $suite_id = \Session::get('suit_id');
-        $companion = \Session::get('companion_data');
+        $suite_id = Session::get('suit_id');
+        $companion = Session::get('companion_data');
         
-        $this->data['companion'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->get();
+        $this->data['companion'] = \DB::table('tb_companion')->where('user_id', Session::get('uid'))->get();
         
-        $this->data['count'] = \DB::table('tb_companion')->where('user_id', \Session::get('uid'))->count();
+        $this->data['count'] = \DB::table('tb_companion')->where('user_id', Session::get('uid'))->count();
 
         $this->data['policies'] = PropertyCategoryTypes::where('id',$suite_id)->first();        
         $file_name = 'frontend.themes.EC.reservation.receipt';
@@ -451,14 +486,13 @@ class ReservationController extends Controller {
 
     public function addReservationData()
     {
-        $data['property_id'] = \Session::get('uid');
-        $data['checkin_date'] = \Session::get('selecte_arrive_date') ? \Session::get(' 
-            arrival_date') : '';
+        $data['property_id'] = Session::get('uid');
+        $data['checkin_date'] = Session::get('selecte_arrive_date') ? Session::get('arrival_date') : '';
         
-        $data['checkout_date'] = \Session::get('selecte_departure_date') ? \Session::get('departure_date') : '';
+        $data['checkout_date'] = Session::get('selecte_departure_date') ? Session::get('departure_date') : '';
 
-        $data['adult'] = \Session::get('adult');           
-        $data['junior'] = \Session::get('children');
+        $data['adult'] = Session::get('adult');           
+        $data['junior'] = Session::get('children');
 
         \DB::table('tb_reservations')->insert($data);
     }
@@ -515,7 +549,7 @@ class ReservationController extends Controller {
     {
         $prv_selected_total_guest = 0;
         if(Session::has('suites')){
-            $prv_selected_total_guest = Session::get('selected_suite_guest');
+            $prv_selected_total_guest = Session::get('Guests');
         }
         $totalGuest = $request->totalGuest;
         if($totalGuest == 0 || $totalGuest < $prv_selected_total_guest){
@@ -535,5 +569,31 @@ class ReservationController extends Controller {
             'status' => true
         ]);
         exit;
+    }
+
+    private function _checkBoards($id)
+    {
+        $this->data['boards'] = [];
+        $property = properties::with('boards')->where('id', $id)->first();
+        if(!empty($property->boards)){
+            $this->data['boards'] = $property->boards->toArray();
+        }
+    }
+
+    private function _getDatesFromRange($start, $end, $format = 'Y-m-d')
+    {
+        $array = array();
+        $interval = new \DateInterval('P1D');
+
+        $realEnd = new \DateTime($end);
+        $realEnd->add($interval);
+
+        $period = new \DatePeriod(new \DateTime($start), $interval, $realEnd);
+
+        foreach($period as $date) { 
+            $array[] = $date->format($format); 
+        }
+
+        return $array;
     }
 }

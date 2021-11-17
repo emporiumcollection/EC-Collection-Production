@@ -30,14 +30,15 @@
             <div class="col">
               <p><b>Arrival date</b></p>
               <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line fromdate" name="arrival_date" id="arrival_date"  value="{!! date('d-M-Y', Session::get('arrival_date'));  !!}">
+                <input type="hidden" name="property_id" id="property_id" value="<?php echo $property_id?>">
+                <input type="text" class="form-control form-line fromdate" name="arrival_date" id="arrival_date"  value="{!! date('d-M-Y', strtotime(Session::get('selecte_arrive_date')));  !!}">
                 <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
             </div>
             <div class="col">
               <p><b>Departure date</b></p>
               <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line todate" name="departure_date" id="departure_date" value="{!! date('d-M-Y', Session::get('departure_date'));  !!}">
+                <input type="text" class="form-control form-line todate" name="departure_date" id="departure_date" value="{!! date('d-M-Y', strtotime(Session::get('selecte_departure_date')));  !!}">
                 <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
             </div>

@@ -179,7 +179,13 @@
             @if(!empty($hotel_data))
               @foreach($hotel_data as $amenitie)              
               <div class="col-md-4 mb-4">
-                <p class="mb-0">{{ $amenitie->suites[0]->amenities[0]->amenities_eng }}</p>
+                <p class="mb-0">
+                  @if(!empty($amenitie->suites->toArray()))
+                    @if(!empty($amenitie->suites[0]->amenities->toArray()))
+                      {{ $amenitie->suites[0]->amenities[0]->amenities_eng }}
+                    @endif
+                  @endif
+                </p>
               </div>
               @endforeach
             @else

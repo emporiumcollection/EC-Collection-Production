@@ -70,6 +70,7 @@ Route::get('reservation/when/{id}', 'FrontEnd\ReservationController@when');
 Route::get('reservation/where', 'FrontEnd\ReservationController@where');
 Route::get('reservation/suite', 'FrontEnd\ReservationController@suite');
 Route::get('reservation/suiteboard', 'FrontEnd\ReservationController@suiteBoard');
+Route::post('reservation/suiteboard', 'FrontEnd\ReservationController@storeSuiteBoard')->name('store.suiteboard');
 Route::get('reservation/policies', 'FrontEnd\ReservationController@Policies');
 Route::get('reservation/services', 'FrontEnd\ReservationController@aditionalServices');
 Route::get('reservation/whoistravelling','FrontEnd\ReservationController@whoistravelling');
