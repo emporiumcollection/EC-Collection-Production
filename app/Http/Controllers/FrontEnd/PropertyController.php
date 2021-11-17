@@ -2719,6 +2719,7 @@ class PropertyController extends Controller {
     }
 
     function propertyglobalavailability(Request $request) {
+        
         $coll_type = $request->input("coll_type");
         $coll_where = $request->input("destination");
         $target = $request->input("target_page");
@@ -2735,12 +2736,12 @@ class PropertyController extends Controller {
         }else{
             $departure = date('d-m-Y',strtotime("+1 day"));
         }
-
+        
+        $this->storeSession($request);
 
         $rooms = $request->input('rooms');
         $adults = $request->input('adult');
         $childs = $request->input('child');
-
         $rac = '';
         if(count($rooms)>0){
             for($j=0; $j<count($rooms); $j++){
@@ -2767,7 +2768,6 @@ class PropertyController extends Controller {
 
         return Redirect::to($querry_string);
     }
-
 
     function propertyglobalavailability_latest(Request $request) {
         $destination = $request->input("destination");
@@ -2927,9 +2927,6 @@ class PropertyController extends Controller {
                 }
             }
         }
-
-        $this->storeSession($adults, $childs, $arrive,
-            $departure,$keyword);
 
         //Get Number of night
         $number_of_nights = '';
@@ -3312,9 +3309,8 @@ class PropertyController extends Controller {
         // echo "<pre>";
         // print_r($this->data['hotel_data']->toArray());exit;
         $this->data['reviews'] = $this->getReviews($id);
-        $this->formatPropertyRecords($this->data['hotel_data']);
+        $this->setGalleryAndFormat($this->data['hotel_data']);
         $this->data['layout_type'] = 'old';
-        
         return view('frontend.themes.EC.hotel.hotel_detail', $this->data);
     }
 

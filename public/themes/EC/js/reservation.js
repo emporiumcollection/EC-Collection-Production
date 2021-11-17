@@ -1,11 +1,12 @@
 $(document).ready(function(){
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
 
-    $('#smartwizard').smartWizard({
+    /*$('#smartwizard').smartWizard({
         theme: 'arrows',
         selected: 0,
         enableURLhash: false,
@@ -14,7 +15,7 @@ $(document).ready(function(){
             showPreviousButton: false,
         },
 
-    });
+    });*/
 
     $(".availability-check").on("click", function () {
         $('#smartwizard').smartWizard("next");
@@ -43,6 +44,7 @@ $(document).ready(function(){
 
     $('.fromdate').daterangepicker({
         singleDatePicker: true,
+        minDate:new Date(), 
         locale: {
             format: 'DD MMM YYYY'
         }
@@ -54,6 +56,7 @@ $(document).ready(function(){
 
     $('.todate').daterangepicker({
         singleDatePicker: true,
+        minDate:new Date(), 
         locale: {
             format: 'DD MMM YYYY'
         }
@@ -66,17 +69,24 @@ $(document).ready(function(){
     });
 
     $('.field-count-reservation ').on('click', '.min-room', function () {
-        $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
+        console.log($(this).closest('.guest-pick-container').find('.col-ews').last());
+        if($(this).closest('.guest-pick-container').find('.col-ews').length > 1){
+            $(this).closest('.guest-pick-container').find('.col-ews').last().remove();
+        }
 
-        if ($(this).next().find('.mr-1').html() > 1) {
+        if($(this).closest('.guest-pick-container').find('.col-ews').length == 1){
+            $(this).attr('disabled', true);   
+        }
+
+        if (parseInt($(this).next().find('.mr-1').html()) > 1) {
             $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
         }
-        if ($(this).next().find('.mr-1').html() < 2) {
+        if (parseInt($(this).next().find('.mr-1').html()) < 2) {
             $(this).closest('.field-count-reservation').find('.min-room').addClass('disable');
             $('.guest-pick-body').find('.col-ews').addClass('col-12').removeClass('col-6');
 
         }
-        if ($(this).prev().find('.mr-1').html() != 4) {
+        if (parseInt($(this).prev().find('.mr-1').html()) != 4) {
             $(this).closest('.field-count-reservation').find('.plus-room').removeClass('disable');
             $('.list-eoom').show();
             $('.room-limit').hide();
@@ -92,15 +102,63 @@ $(document).ready(function(){
         }
     });
 
+
     $(document).on('click', '.field-count-reservation .plus', function () {
-        $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
+
+        var obj_adult = $(this).prev().find('.inp-adult');
+        if(obj_adult.length > 0){
+            var _adval = $(this).prev().find('.inp-adult').val();
+            $(this).prev().find('.inp-adult').val(parseInt(_adval)+1);
+            $(this).prev().find('span.adult-val').html($(this).prev().find('.inp-adult').val());
+        }
+
+
+        var obj_child = $(this).prev().find('.inp-child');
+
+        if(obj_child.length > 0){
+            var _chval = obj_child.val();
+            obj_child.val(parseInt(_chval)+1);
+            $(this).prev().find('span.child-val').html(obj_child.val());
+            //console.log(_chval);
+            //console.log('_chval');
+        }
         $(this).closest('.field-count-reservation').find('.min').removeClass('disable');
     });
-    $(document).on('click', '.field-count-reservation .min', function () {
-        if ($(this).next().find('.mr-1').html() > 0) {
-            $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
+
+    $('.field-count-reservation .plus-room').unbind('click')
+    $(document).on('click', '.field-count-reservation .plus-room', function () {
+        var obj_rooms = $(this).prev().find('.room-val');
+        if(obj_rooms.length > 0){
+            var _adval = $(this).prev().find('.mr-1').html();
+            $(this).prev().find('.mr-1').html(parseInt(_adval));
+            $(this).prev().find('.suite').val($(this).prev().find('.mr-1').html());
         }
-        if ($(this).next().find('.mr-1').html() < 1) {
+
+        if($(this).prev().find('.suite').val() > 1){
+            $('.min-room').removeAttr('disabled').removeClass('disable');
+        }
+    });
+
+    $('.field-count-reservation .min-room').unbind('click')
+    $(document).on('click', '.field-count-reservation .min-room', function () {
+        if ($(this).next().find('.suite').val() > 0) {
+            $(this).next().find('.suite').val(function (i, val) { return val * 1 - 1 });
+            $(this).next().find('span.room-val').html($(this).next().find('.suite').val());
+        }
+    });
+
+    $(document).on('click', '.field-count-reservation .min', function () {
+        if ($(this).next().find('.inp-adult').val() > 0) {
+            $(this).next().find('.inp-adult').val(function (i, val) { return val * 1 - 1 });
+            $(this).next().find('span.adult-val').html($(this).next().find('.inp-adult').val());
+        }
+
+        if ($(this).next().find('.inp-child').val() > 0) {
+            $(this).next().find('.inp-child').val(function (i, val) { return val * 1 - 1 });
+            $(this).next().find('span.child-val').html($(this).next().find('.inp-child').val());
+        }
+
+        if ($(this).next().find('.adult-val, .child-val').html() < 1) {
             $(this).closest('.field-count-reservation').find('.min').addClass('disable');
         }
     });
@@ -160,18 +218,32 @@ $( document ).ready(function() {
             }
         });
     });
+    
+    $(document).on('click', ".select_guest_", function(){
 
-    $(document).on('click', '.remove_suit', function(){
-        var curr_btn = $(this);
-        var suite_id = curr_btn.data('suite-id');
-        var guest = $('#select_suite_guest_'+suite_id).val();
+        var suite = $("input[name='suite[]']")
+              .map(function(){return $(this).val();}).get();
+        var rooms = $("input[name='rooms[]']")
+              .map(function(){return $(this).val();}).get();
+        var adult = $("input[name='adult[]']")
+              .map(function(){return $(this).val();}).get();
+        var child = $("input[name='child[]']")
+              .map(function(){return $(this).val();}).get();
         $.ajax({
-            url: '/remove-suite-selection/'+suite_id+'/'+guest,
-            type: 'get',
-            dataType: 'json',
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            type: 'POST',            
+            url: '/select/guest',
+            // dataType:'json',                    
+            data: {
+                rooms:rooms,
+                child:child,
+                adult:adult,
+                suite :suite
+            },
             success: function(response){
-                curr_btn.parents('section').html(response.suite_selection_html);
-                initilize();
+                window.location.href ="/reservation/suite";
             },
         });
     });
@@ -187,6 +259,21 @@ $( document ).ready(function() {
             success: function(response){
                 window.location.href ="/reservation/receipt";
             }
+        });
+    });
+
+    $(document).on('click', '.remove_suit', function(){
+        var curr_btn = $(this);
+        var suite_id = curr_btn.data('suite-id');
+        var guest = $('#select_suite_guest_'+suite_id).val();
+        $.ajax({
+            url: '/remove-suite-selection/'+suite_id+'/'+guest,
+            type: 'get',
+            dataType: 'json',
+            success: function(response){
+                curr_btn.parents('section').html(response.suite_selection_html);
+                initilize();
+            },
         });
     });
 
@@ -234,19 +321,22 @@ $(document).on('click', ".step_where", function(){
     var arrival_date = $("#arrival_date").val();
     var departure_date = $("#departure_date").val();
 
-    if ((arrival_date == '') && (departure_date == '')) {
-        $.ajax({
-            type: 'get',            
-            url:'/reservation/when',                
-            success: function(response){
-                $('#error').html(response);
-                window.location.href ="/reservation/when";
-            }
-        });            
-    }else{ 
-        window.location.href = "/reservation/where";
-    }        
-});   
+    $.ajax({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        type: 'post',            
+        url: '/store_dates/session',
+        // dataType:'json',                    
+        data: {
+            arrival_date:arrival_date,
+            departure_date:departure_date
+        },
+        success:function(response){
+            window.location.href ="/reservation/where";
+        }
+    });
+});
 
 $(document).on('click', ".confirm_address", function(){
 
@@ -325,7 +415,6 @@ $(document).ready(function(){
 
 
     $('.field-count-reservation').on('click', '.plus-room', function () {
-        
         if ($(this).prev().find('.mr-1').html() < 5) {
             $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
             $(this).closest('.field-count-reservation').find('.min-room').removeClass('disable');
@@ -333,35 +422,37 @@ $(document).ready(function(){
             var currLength = curr.length + 1;
             var temp = '<div class="col-6 col-ews mb-3" id="room-' + currLength + '">' +
                 '<p><b>Suite ' + currLength + '</b></p>' +
+                '<input type="hidden" name="rooms[]" id="rooms_' + currLength + '"/>'+
                 '<div class="row align-items-center py-2">' +
-                '<div class="col-7">' +
-                '<p class="mb-0"><b>Adults</b></p>' +
-                '</div>' +
-                '<div class="col-5">' +
-                '<div class="row field-count-reservation align-items-center">' +
-                '<button type="button" class="min">-</button>' +
-                '<div class="col text-center">' +
-                '<span class="mr-1 adult-val" >1 </span>' +
-                '</div>' +
-                '<button type="button" class="plus mr-3">+</button>' +
-                '</div>' +
-                '</div>' +
+                    '<div class="col-7">' +
+                        '<p class="mb-0"><b>Adults</b></p>' +
+                    '</div>' +
+                    '<div class="col-5">' +
+                        '<div class="row field-count-reservation align-items-center">' +
+                            '<button type="button" class="min">-</button>' +
+                            '<div class="col text-center">' +
+                                '<span class="mr-1 adult-val" >0 </span>' +
+                                '<input type="hidden" name="adult[]" class="inp-adult" id="adult" value="0" />'+
+                            '</div>' +
+                            '<button type="button" class="plus mr-3">+</button>' +
+                        '</div>' +
+                    '</div>' +
                 '</div>' +
                 '<div class="row align-items-center py-2">' +
-                '<div class="col-7">' +
-                '<p class="mb-0"><b>Children</b></p>' +
+                    '<div class="col-7">' +
+                        '<p class="mb-0"><b>Children</b></p>' +
+                    '</div>' +
+                    '<div class="col-5">' +
+                        '<div class="row field-count-reservation align-items-center">' +
+                            '<button type="button" class="min">-</button>' +
+                            '<div class="col text-center">' +
+                                '<span class="mr-1 child-val">0 </span>' +
+                                '<input type="hidden" name="child[]" id="" class="inp-child" value="0" />'+
+                            '</div>' +
+                        '<button type="button" class="plus mr-3">+</button>' +
+                    '</div>' +
                 '</div>' +
-                '<div class="col-5">' +
-                '<div class="row field-count-reservation align-items-center">' +
-                '<button type="button" class="min">-</button>' +
-                '<div class="col text-center">' +
-                '<span class="mr-1 child-val">1 </span>' +
-                '</div>' +
-                '<button type="button" class="plus mr-3">+</button>' +
-                '</div>' +
-                '</div>' +
-                '</div>' +
-                '</div>';
+            '</div>';
             $('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
             $('.guest-pick-body .list-eoom').append(temp);
         }
@@ -372,25 +463,6 @@ $(document).ready(function(){
         }
     });
 
-    $(document).on('click', ".select_guest_", function(){
-        var child = $(".child_val").text();
-        var adult = $(".adult_val").text();
-        $.ajax({
-            /*headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },*/
-            type: 'POST',            
-            url: '/select/guest',
-            // dataType:'json',                    
-            data: {
-                child:child,
-                adult:adult
-            },
-            success: function(response){
-                window.location.href ="/reservation/suite";
-            },
-        });
-    });
 
     $(document).on('click', ".add_address", function(){
         var title = $( "#title option:selected" ).text();

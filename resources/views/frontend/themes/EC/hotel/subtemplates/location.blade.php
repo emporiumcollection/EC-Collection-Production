@@ -1,6 +1,3 @@
-<script type="text/javascript">
-  properties[<?php echo $property->id;?>] = <?php echo json_encode($property);?>
-</script>
 <div class="col-lg-8 content-lg">
   <ul class="nav nav-pills nav-clr nav-breadcrumb nav-breadcrumb-ip mb-3 mt-3">
     <li class="nav-item">
@@ -16,7 +13,7 @@
     </a>
     <div class="title-main mb-4 w-100">
       <h2>The Ludlow Hotel</h2>
-      <a href="suite.html" class="main-close">
+      <a href="/hotel/hoteldetail/{{ $property->id }}" class="main-close">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
           xmlns="http://www.w3.org/2000/svg">
           <title>Close</title>

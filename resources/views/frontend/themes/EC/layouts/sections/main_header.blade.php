@@ -324,7 +324,7 @@
           </li> --}}
         </ul>
         <?php endif; ?>
-        <ul class="nav nav-right ml-auto"></ul>
+        
       </div>
     </div>
   </div>
@@ -627,7 +627,7 @@
                       <div class="row field-count-guest align-items-center">
                         <button type="button" class="min-room disable">-</button>
                         <div class="col text-center">
-                          <span class="mr-1 room-val">1 </span>
+                          <span class="mr-1 room-val">{{ \Session::get('total_suite') }}  </span>
                         </div>
                         <button type="button" class="plus-room mr-3">+</button>
                       </div>
@@ -681,6 +681,8 @@
 
                   </div>
                   <div class="row list-eoom">
+                    <?php $suites = \Session::get('suites'); ?>
+                    @foreach($suites as $data)
                     <div class="col-12 col-ews mb-3" id="room-1">
                       <p><b>Suite 1</b></p>
                       <div class="row align-items-center py-2">
@@ -692,11 +694,7 @@
                             <button type="button" class="min">-</button>
                             <div class="col text-center">
                               <span class="mr-1 adult-val">
-                                @if(!empty($adults))
-                                  {{ $adults[0] ? $adults[0] : '' }}
-                                @else
-                                    1  
-                                @endif  
+                                {{ $data['adult'] }}
                             </span>
                             </div>
                             <button type="button" class="plus mr-3">+</button>
@@ -712,11 +710,7 @@
                             <button type="button" class="min">-</button>
                             <div class="col text-center">
                               <span class="mr-1 child-val">
-                                @if(!empty($adults))
-                                  {{ $adults[0] ? $adults[0] : '' }}
-                                @else
-                                    1  
-                                @endif
+                              {{ $data['child'] }}
                               </span>
                             </div>
                             <button type="button" class="plus mr-3">+</button>
@@ -724,6 +718,7 @@
                         </div>
                       </div>
                     </div>
+                    @endforeach
                   </div>
                 </div>
                 <div class="guest-pick-footer">

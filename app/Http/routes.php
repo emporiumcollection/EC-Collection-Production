@@ -76,9 +76,11 @@ Route::get('reservation/whoistravelling','FrontEnd\ReservationController@whoistr
 Route::get('reservation/paymentmethod', 'FrontEnd\ReservationController@paymentmethod');
 Route::get('reservation/hotelpolicies', 'FrontEnd\ReservationController@hotelpolicies');
 Route::get('reservation/bookingsummary', 'FrontEnd\ReservationController@bookingsummary');
-Route::post('/validate-suite-selection', 'FrontEnd\ReservationController@validateSuiteSelection');
-Route::get('/remove-suite-selection/{id}/{guest}', 'FrontEnd\ReservationController@removeSuiteSelection');
+Route::post('/store_dates/session', 'FrontEnd\ReservationController@storewhere');
+
 Route::post('/suite', 'FrontEnd\ReservationController@selected_suite');
+Route::get('/remove-suite-selection/{id}/{guest}', 'FrontEnd\ReservationController@removeSuiteSelection');
+Route::post('/validate-suite-selection', 'FrontEnd\ReservationController@validateSuiteSelection');
 Route::post('/select/guest', 'FrontEnd\ReservationController@guest');
 
 Route::post('/addresses', 'FrontEnd\ReservationController@addresses');
