@@ -32,5 +32,12 @@
   </div>
 </div>
 </div>
+<?php if(isset($property_id)):?>
+<script>
+  $(document).ready(function(){
+    $('#suitelist1-tab-' + parseInt(window.location.hash.substring(1))).trigger("click");
+  });
+</script>
+<?php endif; ?>
 @endsection
 

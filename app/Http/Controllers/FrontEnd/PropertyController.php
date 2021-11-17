@@ -9,7 +9,9 @@ use App\User;
 use App\Models\properties;
 use App\Http\Traits\Property;
 use App\Http\Traits\Category;
+use App\Http\Traits\ReviewTrait;
 use App\Models\amenities;
+use App\Models\Reviews;
 use DB,Validator, Input, Redirect, CustomQuery, Image;
 use UnsplashSearch;
 use DateTime;
@@ -20,6 +22,7 @@ class PropertyController extends Controller {
     // Uses Property trait
     use Property;
     use Category;
+    use ReviewTrait;
 
     var $pckages_id = array();
     var $pckages_ids = array();
@@ -3303,7 +3306,10 @@ class PropertyController extends Controller {
 
     public function getProperty($id){
         $this->data['hotel_data'] = $this->getPropertyById($id);
-        $this->formatPropertyRecords($this->data['hotel_data']);
+        // echo "<pre>";
+        // print_r($this->data['hotel_data']->toArray());exit;
+        $this->data['reviews'] = $this->getReviews($id);
+        $this->setGalleryAndFormat($this->data['hotel_data']);
         $this->data['layout_type'] = 'old';
         return view('frontend.themes.EC.hotel.hotel_detail', $this->data);
     }

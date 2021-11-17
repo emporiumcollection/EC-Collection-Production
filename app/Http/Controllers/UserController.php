@@ -9,6 +9,7 @@ use App\Category;
 use Socialize;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmailJob;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator,
     Input,
@@ -42,9 +43,11 @@ class UserController extends Controller {
 
     public function EmailInvitation(Request $request)
     {
-        // echo "<pre>";print_r($request->all());exit;
         if (!\Auth::check())
             return Redirect::to('user/login');
+
+        $redirect_to = \CommonHelper::checkReservation();
+
         $rules = array(
                 'email' => 'required'
         );
@@ -60,9 +63,9 @@ class UserController extends Controller {
                 ];
                 dispatch(new SendEmailJob($details));
             }
-            return Redirect::to('dashboard');
+            return Redirect::to($redirect_to);
         }
-        return Redirect::to('/invitecompanion');
+        return redirect()->back();
     }
 
     public function postCreate(Request $request) {
@@ -368,6 +371,7 @@ class UserController extends Controller {
             'email' => 'required|email',
             'password' => 'required',
         );
+        $redirect_to = \CommonHelper::checkReservation();
         if (CNF_RECAPTCHA == 'true')
             $rules['captcha'] = 'required|captcha';
             $validator = Validator::make(Input::all(), $rules);
@@ -403,17 +407,17 @@ class UserController extends Controller {
                             \Session::put('lang', 'en');
                         }
                         if (CNF_FRONT == 'false') :
-                            return Redirect::to('dashboard');
+                            return Redirect::to($redirect_to);
                         else :
                             $getusercompany = \DB::table('tb_user_company_details')->where('user_id', $row->id)->first();
                             if (!empty($getusercompany) or $row->group_id == 1) {
-                                return Redirect::to('dashboard');
+                                return Redirect::to($redirect_to);
                             } else {
                                 if ($row->group_id == 4) {
                                     return Redirect::to('customer/profile')->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
                                 }
                                 session()->forget('login.attempts');
-                                return Redirect::to('/dashboard')->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
+                                return Redirect::to($redirect_to)->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
                             }
 
                         endif;
@@ -456,17 +460,18 @@ class UserController extends Controller {
                                     \Session::put('lang', 'en');
                                 }
                                 if (CNF_FRONT == 'false') :
-                                    return Redirect::to('dashboard');
+                                    return Redirect::to($redirect_to);
                                 else :
                                     $getusercompany = \DB::table('tb_user_company_details')->where('user_id', $row->id)->first();
                                     if (!empty($getusercompany) or $row->group_id == 1) {
-                                        return Redirect::to('dashboard');
+                                        return Redirect::to($redirect_to);
                                     } else {
                                         if ($row->group_id == 4) {
                                             return Redirect::to('customer/profile')->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
                                         }
                                         session()->forget('login.attempts');
-                                        return Redirect::to('/dashboard')->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
+
+                                        return Redirect::to($redirect_to)->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
                                     }
 
                                 endif;

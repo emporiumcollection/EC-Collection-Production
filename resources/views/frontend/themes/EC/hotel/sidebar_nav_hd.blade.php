@@ -54,25 +54,18 @@ if(!isset($property)){
             Suites <i class="fa fa-angle-down" aria-hidden="true"></i>
           </a>
           <div class="collapse " id="suite">
-            <ul class="nav flex-column nav-sidebar is-small" data-place="property-suites">
+            <ul class="nav flex-column nav-sidebar is-small">
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/suite/">All Suites</a>
+                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}">All Suites</a>
               </li>
+            
+              @foreach($property->suites as $suite)
+
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">The Mark Fire Bedroom Terrace Suite</a>
+                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}">{{$suite->category_name}}</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
-              </li>
+              @endforeach
+              
             </ul>
           </div>
         </li>

@@ -264,7 +264,7 @@ $(document).on('click', ".step_where", function(){
             window.location.href ="/reservation/where";
         }
     });
-});   
+});
 
 $(document).on('click', ".confirm_address", function(){
 

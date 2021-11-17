@@ -324,7 +324,7 @@
           </li> --}}
         </ul>
         <?php endif; ?>
-        <ul class="nav nav-right ml-auto"></ul>
+        
       </div>
     </div>
   </div>

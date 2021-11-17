@@ -14,7 +14,7 @@
           if(isset($property['container']['name'])){
             $container_name = $property['container']['name'];
           }else{
-            $container_name = strtolower(str_replace("-", " ", trim($property->property_name)));
+            $container_name = strtolower(str_replace(" ", "-", trim($property->property_name)));
           }
 
           if(is_array($image)){
@@ -45,11 +45,11 @@
 
     </div>
     <div class="hotel-meta full-width is-small">
-      <!--<a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews">
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $property->id;?>)">
         Reviews
-      </a>-->
+      </a>
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
-        Quick info
+        Info
       </a>
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery

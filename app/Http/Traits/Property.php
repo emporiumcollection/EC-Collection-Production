@@ -75,6 +75,16 @@ trait Property {
     }
 
     public function getEditorChoiceProperties($cities, $keyword){
+        $destinationId = 0;
+        $destination = categories::select(['id'])
+        ->where('category_name', '=', $keyword)
+        ->get()
+        ->toArray();
+        
+        if(!empty($destination)){
+            $destinationId = $destination[0]['id'];
+        }
+
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
@@ -133,7 +143,7 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        ->whereRaw(" (city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId%' or property_category_id like '%$destinationId,%' ) ")
         //->where('country', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
@@ -143,6 +153,15 @@ trait Property {
     }
 
     public function getFeaturedProperties($cities,$keyword){
+        $destinationId = 0;
+        $destination = categories::select(['id'])
+        ->where('category_name', '=', $keyword)
+        ->get()
+        ->toArray();
+        if(!empty($destination)){
+            $destinationId = $destination[0]['id'];
+        }
+
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
@@ -202,7 +221,7 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        ->whereRaw(" (city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId%' or property_category_id like '%$destinationId,%' ) ")
         //->where('country', '=', $keyword)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
@@ -382,7 +401,7 @@ trait Property {
         ->with([
             'boards',
             'container',
-            'images',
+            //'images',
             'PropertyCategoryPackages' => function($query){
                 $query->with(['package']);
             },
