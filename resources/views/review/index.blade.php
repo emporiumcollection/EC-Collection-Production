@@ -44,6 +44,19 @@
 			<i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
 			@endif			
 		 
+			<select name='property' id='property' style="height: 28px; margin-left: 5px;" onchange="fetchproperty(this.value);" > 
+				<option value="">-Select Property-</option>
+				@if(!empty($fetch_prop))
+					@foreach($fetch_prop as $proplist)
+						<option value="{{$proplist->id}}" <?php echo ($curntprop == $proplist->id) ? " selected='selected' " : '' ; ?>>{{$proplist->property_name}}</option>
+					@endforeach
+				@endif
+			</select>
+			<select name='property_category' id='property_category' style="height: 28px; margin-left: 5px;" onchange="filterstatus(this.value);" > 
+				<option value="">-Select-</option>
+				<option value="is_approved" <?php echo ($curstatus == 'is_approved') ? " selected='selected' " : '' ; ?>>Is Approved</option>
+				<option value="is_not_approved" <?php echo ($curstatus == 'is_not_approved') ? " selected='selected' " : '' ; ?>>Is Not Approved</option>
+			</select>
 		</div> 		
 
 	
@@ -112,6 +125,25 @@ $(document).ready(function(){
 		$('#SximoTable').submit();
 	});
 	
+	
 });	
+
+function fetchproperty(prop)
+	{
+		window.location.href = "{{URL::to('review')}}?selprop="+prop+"&selstatus="+status;
+	}
+
+	function filterstatus(status)
+	{
+		var prop = $('#property').val();
+		if(prop!='')
+		{
+			window.location.href = "{{URL::to('review')}}?selprop="+prop+"&selstatus="+status;
+		}
+		else
+		{
+			window.location.href = "{{URL::to('review')}}?selstatus="+status;
+		}
+	}
 </script>	
 @stop

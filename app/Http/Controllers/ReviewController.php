@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect; 
 use App\Helpers\ReviewHelper;
+use App\Models\Properties;
 
 class ReviewController extends Controller {
 
@@ -41,12 +42,28 @@ class ReviewController extends Controller {
 				->with('messagetext', \Lang::get('core.note_restric'))->with('msgstatus','error');
 
 		$sort = (!is_null($request->input('sort')) ? $request->input('sort') : 'id'); 
-		$order = (!is_null($request->input('order')) ? $request->input('order') : 'asc');
+		$order = (!is_null($request->input('order')) ? $request->input('order') : 'desc');
 		// End Filter sort and order for query 
 		// Filter Search for query		
 		$filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
+		$this->data['curntprop'] =  '';
+		$this->data['curstatus'] =  '';
+		if(!is_null($request->input('selprop')) && $request->input('selprop')!='')
+		{
+			$filter .= ' AND FIND_IN_SET('.$request->input('selprop').', hotel_id)';
+			$this->data['curntprop'] = $request->input('selprop');
+		}
+		if(!is_null($request->input('selstatus')) && $request->input('selstatus')!='')
+		{
+			if($request->input('selstatus')=='is_approved'){
+                $filter .= ' AND is_approved = 1';
+            }
+            if($request->input('selstatus')=='is_not_approved'){
+                $filter .= ' AND is_approved = 0';
+            }
 
-		
+			$this->data['curstatus'] = $request->input('selstatus');
+		}
 		$page = $request->input('page', 1);
 		$params = array(
 			'page'		=> $page ,
@@ -84,6 +101,8 @@ class ReviewController extends Controller {
 		
 		// Master detail link if any 
 		$this->data['subgrid']	= (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array()); 
+		
+		$this->data['fetch_prop'] = Properties::orderBy('id','desc')->get();
 		// Render into template
 		return view('review.index',$this->data);
 	}	
