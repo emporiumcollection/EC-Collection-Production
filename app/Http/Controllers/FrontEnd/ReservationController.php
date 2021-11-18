@@ -22,7 +22,7 @@ class ReservationController extends Controller {
 
     use Property;
 
-    public function when(Request $request, $id = null)
+    public function when(Request $request, $id = NULL)
     {
         if (!\Auth::check()){
             Session::put('reservation', [
@@ -31,10 +31,14 @@ class ReservationController extends Controller {
             return redirect('user/login');
         }
 
-        $properties = properties::find($id);
-        $request->session()->put('suite_name', $properties->category_name);
+        $property = properties::find($id);
+        $request->session()->put('hotel_name', $property->property_name);
 
         $this->_checkBoards($id);
+
+        $arr = $this->reserveSuite();
+        $this->data['suites'] = $arr;
+        $this->data['selected_suite'] = Session::get('suite_array');
 
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -48,13 +52,23 @@ class ReservationController extends Controller {
         return view($file_name, $this->data);   
     }
 
-    public function where(Request $request)
+    public function where(Request $request, $id = NULL)
     {
         if (!\Auth::check()){
             return redirect('user/login');
         }
 
-        $this->_checkBoards(Session::get('board'));
+        if(Session::get('property_id') != ''){
+            $property_id = Session::get('property_id');
+        }else{
+            $property_id = $id;
+        }
+
+        $this->_checkBoards($property_id);
+
+        $arr = $this->reserveSuite();
+        $this->data['suites'] = $arr;
+        $this->data['selected_suite'] = Session::get('suite_array');
 
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -69,20 +83,30 @@ class ReservationController extends Controller {
 
     public function storewhere(Request $request){
         Session::put('property_id', $request->property_id);
-        Session::put('selecte_arrive_date',$request->arrival_date);
-        Session::put('selecte_departure_date',$request->departure_date);
+        Session::put('arrival', date('Y-m-d', strtotime($request->arrival_date)));
+        Session::put('departure', date('Y-m-d', strtotime($request->departure_date)));
     }
 
-    public function suite()
+    public function suite($id = NULL)
     {
         if (!\Auth::check())
             return redirect('user/login');
 
-        $this->data['property'] = properties::with(['suites', 'container'])->where('id', Session::get('property_id'))->get();
+        if(Session::get('property_id') != ''){
+            $property_id = Session::get('property_id');
+        }else{
+            $property_id = $id;
+        }
+
+        $this->data['property'] = properties::with(['suites', 'container'])->where('id', $property_id)->get();
+        Session::put('hotel_name', $this->data['property'][0]->property_name);
         
         $selected_suite = Session::get('suite_array');
 
-        $this->_checkBoards(Session::get('board'));
+        $this->_checkBoards($property_id);
+
+        $arr = $this->reserveSuite();
+        $this->data['suites'] = $arr;
         
         $this->data['selected_suite'] = $selected_suite;
         $this->formatPropertyRecords($this->data['property']);
@@ -215,11 +239,14 @@ class ReservationController extends Controller {
         $suitIds[] = $suites[0];
 
         foreach($suites as $key => $suite){
-            $suite_array[$suite] = $guest[$key];
+            $suite_array[$suite] = [
+                'guest' => $guest[$key],
+                'price' => $this->getSuitePrice($suite)
+            ];
         }
 
         foreach($suite_array as $suite){
-            $sum += $suite;
+            $sum += $suite['guest'];
             $number_of_suites++;
         }
 
@@ -376,8 +403,8 @@ class ReservationController extends Controller {
         $this->data['db'] = $this->databaseName();
         
         $this->data['randomnum'] = mt_rand(0370,9999);
-        $arriveDt = date("Y-m-d", strtotime(Session::get('selecte_arrive_date')));
-        $departDt = date("Y-m-d", strtotime(Session::get('selecte_departure_date')));
+        $arriveDt = date("Y-m-d", strtotime(Session::get('arrival')));
+        $departDt = date("Y-m-d", strtotime(Session::get('departure')));
         $arrival_date = explode("-", $arriveDt);
         $departure_date = explode("-", $departDt);
 
@@ -387,13 +414,8 @@ class ReservationController extends Controller {
         $this->data['month'] = date('M', strtotime($departDt));
         $this->data['month_int'] = $departure_date[1];
 
-        $dateRange = $this->_getDatesFromRange(Session::get('selecte_arrive_date'), Session::get('selecte_departure_date'));
-
-        /*$this->data['arrive'] = $arrival_date[2];
-        $this->data['departure'] = $departure_date[2];
-        $this->data['year'] = $departure_date[0];
-        $this->data['month'] = date('M', $departure_date[1]);
-        $this->data['month_int'] = $departure_date[1];*/
+        $trip_dates = $this->_getDateRange(Session::get('arrival'), Session::get('departure'));
+        $this->data['trip_dates'] = $trip_dates;
         
         $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',Session::get('suit_id'))->first();
 
@@ -441,7 +463,6 @@ class ReservationController extends Controller {
             return redirect('user/login');
 
         $this->data['properties'] = properties::where('id',Session::get('property_id'))->get();
-        // echo "<pre>";print_r($this->data['properties']);exit;
         $hotel_name = $this->data['properties'][0]->property_short_name;
 
         $words = explode(' ', $hotel_name);
@@ -580,7 +601,7 @@ class ReservationController extends Controller {
         }
     }
 
-    private function _getDatesFromRange($start, $end, $format = 'Y-m-d')
+    private function _getDateRange($start, $end, $format = 'Y-m-d')
     {
         $array = array();
         $interval = new \DateInterval('P1D');

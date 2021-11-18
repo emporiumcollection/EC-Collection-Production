@@ -79,9 +79,11 @@
                     <div class="col-lg-6">
                       <div class="suite-desc">
                         <h3>{{ $suite->category_name }}</h3>
-                        <p>
-                          {{ $suite->room_desc }}
-                        </p>
+                        @if($suite->room_desc)
+                          <p>
+                            {{ $suite->room_desc }}
+                          </p>
+                        @endif
                         <div class="row align-items-center mt-5">
                           <div class="col-7 guestvalue">
                             <p class="mb-0">From: <b>€{{ $suite->guests_in_base_price }}</b></p>
@@ -105,20 +107,14 @@
             @endif              
         </div>
           <div class="col-lg-3 col-md-4">
-          @include('frontend.themes.EC.reservation.reservation-summary')
-            <div class="reservation-total">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Total</td>
-                  <td class="px-0 py-1 text-right"></td>
-                </tr>
-              </table>
-            </div>
-            <div>
+            @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+
+            <div class="d-flex justify-content-between">
+              <a href="/reservation/where" class="btn btn-dark px-4">Go back</a>
               @if(!empty($boards))
-                <a href="/reservation/suiteboard" class="btn btn-dark  px-4 btn-nextwizard rounded-0 continue_step">Continue</a>
+                <a href="/reservation/suiteboard" class="btn btn-dark continue_step px-4">Next</a>
               @else
-                <a href="/reservation/policies" class="btn btn-dark  px-4 btn-nextwizard rounded-0 continue_step">Continue</a>
+                <a href="/reservation/policies" class="btn btn-dark continue_step px-4">Next</a>
               @endif
             </div>
 

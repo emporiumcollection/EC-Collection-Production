@@ -36,31 +36,21 @@
         </div>            
         <ul class="nav mt-4 mb-4 nav-wizard-primary">
           <li>
-            <a class="nav-link {{ Request::is('reservation/when') ? 'active' : ''}} " href="/reservation/when/{{ Session::get('property_id') }}">
-              When
-            </a>
+            <a class="nav-link {{ Request::is('reservation/when') ? 'active' : ''}} " href="/reservation/when/{{ Session::get('property_id') }}">When</a>
           </li>
           <li>
-            <a class="nav-link {{ Request::is('reservation/where') ? 'active' : ''}}" href="/reservation/where">
-              Where
-            </a>
+            <a class="nav-link {{ Request::is('reservation/where') ? 'active' : ''}}" href="/reservation/where">Where</a>
           </li>
           <li>
-            <a class="nav-link {{ Request::is('reservation/suite') ? 'active' : ''}}" href="/reservation/suite">
-              Suite
-            </a>
+            <a class="nav-link {{ Request::is('reservation/suite') ? 'active' : ''}}" href="/reservation/suite">Suite</a>
           </li>
           @if(!empty($boards))
             <li>
-              <a class="nav-link {{ Request::is('reservation/suiteboard') ? 'active' : ''}}" href="/reservation/suiteboard">
-                Suite Board
-              </a>
+              <a class="nav-link {{ Request::is('reservation/suiteboard') ? 'active' : ''}}" href="/reservation/suiteboard">Suite Board</a>
             </li>
           @endif
           <li>
-            <a class="nav-link {{ Request::is('reservation/policies') ? 'active' : ''}}" href="/reservation/policies">
-              Policies
-            </a>
+            <a class="nav-link {{ Request::is('reservation/policies') ? 'active' : ''}}" href="/reservation/policies">Policies</a>
           </li>
          {{--  <li>
             <a class="nav-link {{ Request::is('reservation/services') ? 'active' : ''}}" href="/reservation/services">
@@ -68,14 +58,10 @@
             </a>
           </li> --}}
           <li>
-            <a class="nav-link {{ Request::is('reservation/whoistravelling') ? 'active' : ''}}" href="/reservation/whoistravelling">
-              Who’s travelling
-            </a>
+            <a class="nav-link {{ Request::is('reservation/whoistravelling') ? 'active' : ''}}" href="/reservation/whoistravelling">Who’s travelling</a>
           </li>
           <li>
-            <a class="nav-link {{ Request::is('reservation/paymentmethod') ? 'active' : ''}}" href="/reservation/paymentmethod">
-              Payment Method
-            </a>
+            <a class="nav-link {{ Request::is('reservation/paymentmethod') ? 'active' : ''}}" href="/reservation/paymentmethod">Payment Method</a>
           </li>
           {{-- <li>
             <a class="nav-link {{ Request::is('reservation/hotelpolicies') ? 'active' : ''}}" href="/reservation/hotelpolicies">
@@ -83,9 +69,7 @@
             </a>
           </li> --}}
           <li>
-            <a class="nav-link {{ Request::is('reservation/bookingsummary') ? 'active' : ''}}" href="/reservation/bookingsummary">
-              Booking Summary
-            </a>
+            <a class="nav-link {{ Request::is('reservation/bookingsummary') ? 'active' : ''}}" href="/reservation/bookingsummary">Booking Summary</a>
           </li>
         </ul>
       </div>

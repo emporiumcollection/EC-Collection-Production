@@ -67,8 +67,8 @@ Route::post('/users/invite', 'UserController@postInvite');
 // Route::get('/users/reservation', 'ReservationsController@getReservation');
 
 Route::get('reservation/when/{id}', 'FrontEnd\ReservationController@when');
-Route::get('reservation/where', 'FrontEnd\ReservationController@where');
-Route::get('reservation/suite', 'FrontEnd\ReservationController@suite');
+Route::get('reservation/where/{id?}', 'FrontEnd\ReservationController@where');
+Route::get('reservation/suite/{id?}', 'FrontEnd\ReservationController@suite');
 Route::get('reservation/suiteboard', 'FrontEnd\ReservationController@suiteBoard');
 Route::post('reservation/suiteboard', 'FrontEnd\ReservationController@storeSuiteBoard')->name('store.suiteboard');
 Route::get('reservation/policies', 'FrontEnd\ReservationController@Policies');

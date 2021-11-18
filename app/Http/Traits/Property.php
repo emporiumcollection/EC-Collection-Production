@@ -900,11 +900,20 @@ trait Property {
         \session()->put('adult', $total_adults);
         \session()->put('children', $total_childs);
         \session()->put('Guests', $total_adults + $total_childs);
-        \session()->put('keyword',$request->destination);
-        \session()->put('arrival_date',strtotime($request->arrive));
-        \session()->put('arrival',$request->arrive);
-        \session()->put('departure_date',strtotime($request->departure));
-        \session()->put('departure',$request->departure);
+
+        if(isset($request->destination)){
+            \session()->put('keyword', $request->destination);
+        }
+
+        if(isset($request->arrive)){
+            \session()->put('arrival', $request->arrive);
+            \session()->put('arrival_date', strtotime($request->arrive));
+        }
+
+        if(isset($request->departure)){
+            \session()->put('departure', $request->departure);
+            \session()->put('departure_date', strtotime($request->departure));
+        }
 
     }
 

@@ -21,7 +21,7 @@
             <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
               <span class="cal-date" data-toggle="tooltip" title="Change availability">
                 @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
-                  {{ \Session::get('arrival') }} - {{ \Session::get('departure') }}
+                  {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
                 @else
                 Selecte Date
                 @endif  
@@ -345,7 +345,13 @@
               </a>
               <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="calcF">
-                <span class="cal-date">{{ \Session::get('arrival') }} - {{ \Session::get('departure') }}</span>
+                <span class="cal-date">
+                  @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
+                    {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
+                  @else
+                    Selecte Date
+                  @endif
+                </span>
               </a>
               <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="whoF">
@@ -360,7 +366,7 @@
                 </div>
               </a>
               <!-- <a href="#" class="menu-nav text-menu">Destinations</a> -->
-              <a href="#" class="menu-nav text-menu">Reservation</a>
+              <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
               <div class="humburger-menu ml-auto align-self-center mobile-on">
                 <div class="line"></div>
                 <div class="line"></div>
@@ -682,43 +688,45 @@
                   </div>
                   <div class="row list-eoom">
                     <?php $suites = \Session::get('suites'); ?>
-                    @foreach($suites as $data)
-                    <div class="col-12 col-ews mb-3" id="room-1">
-                      <p><b>Suite 1</b></p>
-                      <div class="row align-items-center py-2">
-                        <div class="col-7">
-                          <p class="mb-0"><b>Adults</b></p>
-                        </div>
-                        <div class="col-5">
-                          <div class="row field-count-guest align-items-center">
-                            <button type="button" class="min">-</button>
-                            <div class="col text-center">
-                              <span class="mr-1 adult-val">
-                                {{ $data['adult'] }}
-                            </span>
-                            </div>
-                            <button type="button" class="plus mr-3">+</button>
+                    @if(\Session::has('suites') && !empty(\Session::get('suites')))
+                      @foreach($suites as $data)
+                      <div class="col-12 col-ews mb-3" id="room-1">
+                        <p><b>Suite 1</b></p>
+                        <div class="row align-items-center py-2">
+                          <div class="col-7">
+                            <p class="mb-0"><b>Adults</b></p>
                           </div>
-                        </div>
-                      </div>
-                      <div class="row align-items-center py-2">
-                        <div class="col-7">
-                          <p class="mb-0"><b>Children</b></p>
-                        </div>
-                        <div class="col-5">
-                          <div class="row field-count-guest align-items-center">
-                            <button type="button" class="min">-</button>
-                            <div class="col text-center">
-                              <span class="mr-1 child-val">
-                              {{ $data['child'] }}
+                          <div class="col-5">
+                            <div class="row field-count-guest align-items-center">
+                              <button type="button" class="min">-</button>
+                              <div class="col text-center">
+                                <span class="mr-1 adult-val">
+                                  {{ $data['adult'] }}
                               </span>
+                              </div>
+                              <button type="button" class="plus mr-3">+</button>
                             </div>
-                            <button type="button" class="plus mr-3">+</button>
+                          </div>
+                        </div>
+                        <div class="row align-items-center py-2">
+                          <div class="col-7">
+                            <p class="mb-0"><b>Children</b></p>
+                          </div>
+                          <div class="col-5">
+                            <div class="row field-count-guest align-items-center">
+                              <button type="button" class="min">-</button>
+                              <div class="col text-center">
+                                <span class="mr-1 child-val">
+                                {{ $data['child'] }}
+                                </span>
+                              </div>
+                              <button type="button" class="plus mr-3">+</button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    @endforeach
+                      @endforeach
+                    @endif
                   </div>
                 </div>
                 <div class="guest-pick-footer">

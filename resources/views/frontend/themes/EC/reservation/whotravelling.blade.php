@@ -385,67 +385,16 @@
               {{-- <div class="display_add"></div> --}}
               
             </div>
-            <div class="col-md-9">
-            <div class="text-right">
-              <a href="/reservation/paymentmethod" class="btn btn-dark px-5">Next</a>
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-between">
+                <a href="/reservation/policies" class="btn btn-dark px-4">Go back</a>
+                <a href="/reservation/paymentmethod" class="btn btn-dark px-5">Next</a>
+              </div>
             </div>
           </div>
-          </div>
           <div class="col-lg-3 col-md-4">
-            
-          @include('frontend.themes.EC.reservation.reservation-summary')
-          <?php $pos=1 ?>
-        @if(!empty($suites))          
-          @foreach($suites as $suite)
-            @foreach($suite as $value)
-              <div class="reservation-summary section-shadow">
-                <h4>SUITE &nbsp; {{ $pos++ }}</h4>
-                <p><b>{{ $value->category_name }}</b></p>
-                <table class="table table-borderless mb-0"> 
-                    <tr>
-                      <td class="px-0 py-1">Guests</td>
-                      @foreach($selected_suite as $key => $select_suite)
-                      <td class="px-0 py-1 text-right">{{ $key == $value->id ?  $select_suite : ''}}</td>
-                      @endforeach
-                    </tr>
-                  <tr>
-                    <td class="px-0 py-1">Suite</td>
-                    <td class="px-0 py-1 text-right">€{{ $value->guests_in_base_price }}</td>
-                  </tr>
-                  <tr>
-                    <td class="px-0 py-1">Tax</td>
-                    <td class="px-0 py-1 text-right">€299.00</td>
-                  </tr>
-                </table>
-                <hr class="mb-2">
-                <table class="table table-borderless mb-0">
-                  <tr>
-                    <td class="px-0 py-1">Gourmet Experience</td>
-                    <td class="px-0 py-1 text-right">2</td>
-                  </tr>
-                </table>
-                <hr class="mt-2">
-                <table class="table table-borderless mb-0">
-                  <tr>
-                    <td class="px-0 py-1">Subtotal</td>
-                    <td class="px-0 py-1 text-right"><b>€{{ $value->guests_in_base_price }}</b></td>
-                  </tr>
-                </table>
-              </div>
-            @endforeach
-          @endforeach
-          @else
-            <h2>Suite Not Found</h2>
-        @endif    
-          <div class="reservation-total">
-            <table class="table table-borderless mb-0">
-              <tr>
-                <td class="px-0 py-1">Total</td>
-                <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-              </tr>
-            </table>
-          </div>  
-        </div>
+            @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+          </div>
       </div>
   </div>
 </div>
