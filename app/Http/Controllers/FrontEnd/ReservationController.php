@@ -131,12 +131,13 @@ class ReservationController extends Controller {
         $suite_id = Session::get('suit_id');
         $arr = [];
         $count = 0;
-        foreach($suite_id as $suite_id)
-        {
-            $count = $count + 1;
-            $this->data['suites'] = PropertyCategoryTypes::where('id',$suite_id)->get();
-            
-            $arr[] = $this->data['suites'];
+        if(!empty($suite_id)){
+            foreach($suite_id as $suite_id){
+                $count = $count + 1;
+                $this->data['suites'] = PropertyCategoryTypes::where('id',$suite_id)->get();
+                
+                $arr[] = $this->data['suites'];
+            }
         }
         
         return $arr;           
