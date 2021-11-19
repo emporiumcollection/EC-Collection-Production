@@ -2,7 +2,7 @@
 
 namespace App\Http\Traits;
 
-use App\Models\Reviews;
+use App\Models\Review;
 use App\Models\properties;
 // use DB;
 
@@ -11,7 +11,7 @@ trait ReviewTrait {
     public function getReviews($id){
         
        
-        $reviews = reviews::where('hotel_id', '=', $id)->orderBy('id', 'DESC')->get();
+        $reviews = review::where('hotel_id', '=', $id)->where('is_approved', '=', '1')->orderBy('id', 'DESC')->get();
         
         return $reviews;
     }

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\properties;
 use App\Models\PropertyImages;
 use App\Models\amenities;
-use App\Models\Reviews;
+use App\Models\Review;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests;

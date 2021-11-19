@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use Illuminate\Http\Request;
-use App\Models\Reviews;
+use App\Models\Review;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests;
@@ -24,7 +24,7 @@ class ReviewController extends Controller
                     'comment' => $request->comment
                     );
 
-        $reviews = reviews::insert( ['hotel_id' => $request->hotelid, 'rating' => $request->rate, 'fname' => $request->fname, 'lname' => $request->lname, 'country' => $request->country, 'comment' => $request->comment]);
+        $reviews = review::insert( ['hotel_id' => $request->hotelid, 'rating' => $request->rate, 'fname' => $request->fname, 'lname' => $request->lname, 'country' => $request->country, 'comment' => $request->comment]);
         return response()->json( $reviews_data);
     }
 

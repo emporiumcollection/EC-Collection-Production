@@ -238,6 +238,7 @@ return [
         'UnsplashCollections' => shweshi\LaravelUnsplashWrapper\UnsplashCollections::class,
         //'Image' => Imagine\Imagick\Imagine::class,
         'Image' => Folklore\Image\Facades\Image::class,
+        'ReviewHelper'=> App\Helpers\ReviewHelper::class,
     ],
 
 ];
