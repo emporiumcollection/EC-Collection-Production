@@ -200,7 +200,7 @@
                   <div>
                     <a href="/dashboard">
                       <div class="dashboard-slider-item">
-                        <img src="{{ asset('uploads/slider_images/1568213046-24002805.jpg')}}" class="w-100" alt="">
+                        <img src="{{ asset('images/slider_images/1568213046-24002805.jpg')}}" class="w-100" alt="">
                         <div class="slider-title">
                           Welcome to the Emporium-Collection
                         </div>
@@ -210,7 +210,7 @@
                   <div>
                     <a href="{{ URL::to('/users/profile')}}">
                       <div class="dashboard-slider-item">
-                        <img src="{{ asset('uploads/slider_images/1568268146-96506761.jpg')}}" class="w-100" alt="">
+                        <img src="{{ asset('images/slider_images/1568268146-96506761.jpg')}}" class="w-100" alt="">
                         <div class="slider-title">
                           My Profile
                         </div>
@@ -220,7 +220,7 @@
                   <div>
                     <a href="reservations.html">
                       <div class="dashboard-slider-item">
-                        <img src="{{ asset('uploads/slider_images/1568268487-93942589.jpg')}}" class="w-100" alt="">
+                        <img src="{{ asset('images/slider_images/1568268487-93942589.jpg')}}" class="w-100" alt="">
                         <div class="slider-title">
                           My Reservations
                         </div>
@@ -240,7 +240,7 @@
                   <div>
                     <a href="{{ URL::to('/users/guestinvite')}}">
                       <div class="dashboard-slider-item">
-                        <img src="{{ asset('uploads/slider_images/1568269053-45751192.jpg')}}" class="w-100" alt="">
+                        <img src="{{ asset('images/slider_images/1568269053-45751192.jpg')}}" class="w-100" alt="">
                         <div class="slider-title">
                           Invite Friends
                         </div>
@@ -250,7 +250,7 @@
                   <div>
                     <a href="{{ URL::to('/users/setting')}}">
                       <div class="dashboard-slider-item">
-                        <img src="{{ asset('uploads/slider_images/1568270092-66288025.jpg')}}" class="w-100" alt="">
+                        <img src="{{ asset('images/slider_images/1568270092-66288025.jpg')}}" class="w-100" alt="">
                         <div class="slider-title">
                           My Settings
                         </div>
@@ -261,7 +261,7 @@
                   <div>
                     <a href="security-privacy.html">
                       <div class="dashboard-slider-item">
-                        <img src="{{ asset('uploads/slider_images/1568270328-17372868.jpg')}}" class="w-100" alt="">
+                        <img src="{{ asset('images/slider_images/1568270328-17372868.jpg')}}" class="w-100" alt="">
                         <div class="slider-title">
                           My Security & Privacy
                         </div>
@@ -271,7 +271,7 @@
                   <div>
                     <a href="{{ URL::to('/users/my-preferences')}}">
                       <div class="dashboard-slider-item">
-                        <img src="{{ asset('uploads/slider_images/1568270655-22658407.jpg')}}" class="w-100" alt="">
+                        <img src="{{ asset('images/slider_images/1568270655-22658407.jpg')}}" class="w-100" alt="">
                         <div class="slider-title">
                           My Preferences
                         </div>
