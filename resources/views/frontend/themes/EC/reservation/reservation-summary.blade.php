@@ -61,7 +61,7 @@
             <td class="px-0 py-1">Subtotal</td>
             <td class="px-0 py-1 text-right">
               <b>€{{ $selected_suite[$value->id]['price'] }}</b>
-              <?php $grand_total += $selected_suite[$value->id]['price']; ?>
+              <?php $grand_total += (float)$selected_suite[$value->id]['price']; ?>
             </td>
           </tr>
         </table>
