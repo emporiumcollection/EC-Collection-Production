@@ -66,10 +66,10 @@
                     </div>
                     <div class="row mb-4">
                       <div class="col-6">
-                        <a href="/reservation/paymentmethod" class="btn btn-dark  px-5 btn-backwizard">Go back</a>
+                        <a href="/reservation/paymentmethod" class="btn btn-dark  px-5">Go back</a>
                       </div>
                       <div class="col-6">
-                        <a href="" class="btn btn-dark  px-5 btn-backwizard">Confirm booking</a>
+                        <a href="javascript:void(0)" class="btn btn-dark  px-5 reserve_data">Confirm booking</a>
                       </div>
                     </div>
                   </div>
@@ -129,11 +129,11 @@
                   </div>
                 </div>              
                 <div class="col-md-7">
-                  <div class="mb-4">
+                  <!--<div class="mb-4">
                     <a href="javascript:void();" class="btn btn-primary rounded-0 btn-lg btn-block reserve_data">
                     Get receipt
                   </a>
-                  </div>                     
+                  </div>                     -->
                   <div class="additional-list h-auto p-0 mb-4">
                     <div class="p-4">                        
                         <img src="{{ asset('/uploads/users/EC.jpg')}}" height="100%" width="100%">            

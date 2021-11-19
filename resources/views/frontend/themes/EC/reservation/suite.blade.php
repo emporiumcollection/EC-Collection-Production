@@ -86,7 +86,7 @@
                         @endif
                         <div class="row align-items-center mt-5">
                           <div class="col-7 guestvalue">
-                            <p class="mb-0">From: <b>€{{ $suite->guests_in_base_price }}</b></p>
+                            <p class="mb-0">From: <b>€{{ $suite->price }}</b></p>
                             <p>inclusive of all taxes and fees</p>
                             <input type="hidden" name="select_guest" class="select_guest" id="select_guest" value="">
                           </div>

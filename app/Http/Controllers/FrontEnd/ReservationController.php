@@ -10,11 +10,12 @@ use App\Models\ReservationCompanion;
 use App\Models\Reservations;
 use App\Models\ReservedSuite;
 use App\Models\properties;
+use App\Models\CardDetail;
+use Illuminate\Support\Facades\Session;
 use App\User;
 use Config;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
-use Illuminate\Support\Facades\Session;
 use Response;
 use Validator,
     Input,
@@ -30,6 +31,7 @@ class ReservationController extends Controller {
             Session::put('reservation', [
                 'redirect_url' => $request->fullUrl()
             ]);
+            Session::save();
             return redirect('user/login');
         }
 
@@ -57,6 +59,10 @@ class ReservationController extends Controller {
     public function where(Request $request, $id = NULL)
     {
         if (!\Auth::check()){
+            Session::put('reservation', [
+                'redirect_url' => $request->fullUrl()
+            ]);
+            Session::save();
             return redirect('user/login');
         }
 
@@ -65,6 +71,7 @@ class ReservationController extends Controller {
         }else{
             $property_id = $id;
             Session::put('property_id', $id);
+            Session::save();
         }
 
         $this->_checkBoards($property_id);
@@ -92,8 +99,13 @@ class ReservationController extends Controller {
 
     public function suite($id = NULL)
     {
-        if (!\Auth::check())
+        if (!\Auth::check()){
+            Session::put('reservation', [
+                'redirect_url' => $request->fullUrl()
+            ]);
+            Session::save();
             return redirect('user/login');
+        }
 
         if(Session::get('property_id') != ''){
             $property_id = Session::get('property_id');
@@ -103,6 +115,8 @@ class ReservationController extends Controller {
         }
 
         $this->data['property'] = properties::with(['suites', 'container'])->where('id', $property_id)->get();
+        $this->setSuitePrice($this->data['property']);
+
         Session::put('hotel_name', $this->data['property'][0]->property_name);
         
         $selected_suite = Session::get('suite_array');
@@ -377,10 +391,11 @@ class ReservationController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
-
+        $id = Session::get('uid');
         $arr = $this->reserveSuite();
 
         $this->_checkBoards(Session::get('board'));
+        
         
         $selected_suite = Session::get('suite_array');
         
@@ -392,9 +407,55 @@ class ReservationController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';        
-
+        $this->data['cards'] = CardDetail::where('user_id', '=', $id)->orderBy('id','desc')->get();
         $file_name = 'frontend.themes.EC.reservation.payment_method';
         return view($file_name, $this->data);   
+    }
+    public function savepaymentmethod(Request $request)
+    {
+        if (!\Auth::check())
+            return redirect('user/login');
+            
+            if(isset($request->card_id)){
+                Session::put('payment_card_id',$request->card_id);
+                return response()->json(['status' => true, 'card_id' => $request->card_id]);
+            }else{
+                $rules = array(
+                    'card_type' => 'required',
+                    'card_number' => 'required|min:16',
+                    'exp_month' => 'required',
+                    'exp_year' => 'required',
+                    'card_name' => 'required',
+                    'srequirements' => 'required'
+                );
+        
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->passes()) {
+                    $id = Session::get('uid');
+                    $full_name = $request->card_name;
+                    $name = explode(" ", $full_name); 
+                    
+                    $payment_data = array(
+                        'user_id' => $id, 
+                        'card_type' => $request->card_type, 
+                        'card_number' => $request->card_number, 
+                        'exp_month' => $request->exp_month, 
+                        'exp_year' => $request->exp_year,
+                        'first_name' => $name[0],
+                        'last_name' => $name[1],
+                        'created_at' => date("Y-m-d"),
+                        'srequirements' => $request->srequirements
+                        );
+                    $payment_id = \DB::table('tb_cards')->insertGetId($payment_data);
+                    Session::put('payment_card_id', $payment_id);
+                    return response()->json(['status' => true, 'card_id' => $payment_id]);
+                }
+                else {
+                    return json_encode(['ststus' => false, 'errors' => $validator->errors()]);
+                } 
+            }
+            
+            
     }
 
     public function hotelpolicies()
@@ -671,5 +732,13 @@ class ReservationController extends Controller {
         }
 
         return $array;
+    }
+
+    private function setSuitePrice(&$properties){
+        foreach($properties as $property){
+            foreach($property->suites as $sk => $suite){
+                $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
+            }   
+        }
     }
 }

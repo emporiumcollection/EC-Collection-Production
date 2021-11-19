@@ -164,17 +164,17 @@ $(document).ready(function(){
     });
 
     $(document).on('click', ".add_new_addres", function(){
-        var title = $( "#title option:selected" ).val("");
-        var country = $( "#country option:selected" ).val("");
-        var state = $( "#state option:selected" ).val("");
-        var city = $( "#city").val("");
-        var address2 = $('#address2').val("");
-        var address1 = $('#address1').val("");
-        var phone = $('#phone').val("");
-        var email = $('#email_').val("");       
-        var zip_code = $('#zip_code').val("");                
-        var last_name = $('#last_name').val("");
-        var first_name = $('#first_name').val("");
+        var title = $( "#address_title option:selected" ).val("");
+        var country = $( "#address_country option:selected" ).val("");
+        var state = $( "#address_state option:selected" ).val("");
+        var city = $( "#address_city").val("");
+        var address2 = $('#address_address2').val("");
+        var address1 = $('#address_address1').val("");
+        var phone = $('#address_phone').val("");
+        var email = $('#address_email_').val("");       
+        var zip_code = $('#address_zip_code').val("");                
+        var last_name = $('#address_last_name').val("");
+        var first_name = $('#address_first_name').val("");
     });
 
     $(document).on('click', '.board-selection', function(){
@@ -564,4 +564,34 @@ $(document).ready(function(){
         }
         window.location.href = next_url;
     });
+
+    //save paymnet 
+    $("#payment_form").validate();
+    $(document).on('click', '#btn-payment-save', function(){
+          $.ajax({
+              url: "/reservation/savepaymentmethod",
+              type: "POST",
+              data: $('#payment_form').serialize(),
+              dataType: 'json',
+            success: function(response) {
+                $('.form-control').removeClass('is-invalid');
+                $('.invalid-feedback').empty();
+                if(response.status == true){
+                    window.location.href = '/reservation/bookingsummary';
+                }else{
+                    $.each(response.errors, function(key, val){
+                        $('.'+key).addClass('is-invalid');
+                        $('.'+key).next('.invalid-feedback').html(val);
+                    });
+                }
+                console.log(response);
+              }, 
+              error: function(response) {
+                  console.log('Error:', response);
+                  $('#btn-save').html('Save Changes');
+              }
+          });
+          return false;
+      });
+    //save paymet end
 });
