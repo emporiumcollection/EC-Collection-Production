@@ -452,6 +452,10 @@ pre {
   margin-right: auto;
   margin-left: auto; }
 
+.menu-s {
+  min-height: 45px;
+}
+
 @media (min-width: 576px) {
   .container, .container-sm {
     max-width: 540px; } }
