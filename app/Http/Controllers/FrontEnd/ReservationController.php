@@ -97,7 +97,7 @@ class ReservationController extends Controller {
         Session::put('departure', date('Y-m-d', strtotime($request->departure_date)));
     }
 
-    public function suite($id = NULL)
+    public function suite(Request $request, $id = NULL)
     {
         if (!\Auth::check()){
             Session::put('reservation', [
