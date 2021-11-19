@@ -42,7 +42,7 @@
             <a class="nav-link {{ Request::is('reservation/where') ? 'active' : ''}}" href="/reservation/where">Where</a>
           </li>
           <li>
-            <a class="nav-link {{ Request::is('reservation/suite') ? 'active' : ''}}" href="/reservation/suite">Suite</a>
+            <a class="nav-link {{ Request::is('reservation/suite*') ? 'active' : ''}}" href="/reservation/suite">Suite</a>
           </li>
           @if(!empty($boards))
             <li>
