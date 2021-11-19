@@ -129,16 +129,22 @@
                   </div>
                 </div>              
                 <div class="col-md-7">
+                  <div class="mb-4">
+                    <a href="/dashboard" class="btn btn-primary rounded-0 btn-lg btn-block">
+                      Go to my dashboard
+                    </a>
+                  </div>
                   <!--<div class="mb-4">
                     <a href="javascript:void();" class="btn btn-primary rounded-0 btn-lg btn-block reserve_data">
                     Get receipt
                   </a>
                   </div>                     -->
-                  <div class="additional-list h-auto p-0 mb-4">
+                  <!--<div class="additional-list h-auto p-0 mb-4">
                     <div class="p-4">                        
                         <img src="{{ asset('/uploads/users/EC.jpg')}}" height="100%" width="100%">            
                     </div>
                   </div>
+                -->
                 </div>
               </div>
             </div>
