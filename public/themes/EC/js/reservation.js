@@ -551,4 +551,33 @@ $(document).ready(function(){
             }
         });
     });
+    //save paymnet 
+    $("#payment_form").validate();
+    $(document).on('click', '#btn-payment-save', function(){
+          $.ajax({
+              url: "/reservation/savepaymentmethod",
+              type: "POST",
+              data: $('#payment_form').serialize(),
+              dataType: 'json',
+            success: function(response) {
+                $('.form-control').removeClass('is-invalid');
+                $('.invalid-feedback').empty();
+                if(response.status == true){
+                    window.location.href = '/reservation/bookingsummary';
+                }else{
+                    $.each(response.errors, function(key, val){
+                        $('.'+key).addClass('is-invalid');
+                        $('.'+key).next('.invalid-feedback').html(val);
+                    });
+                }
+                console.log(response);
+              }, 
+              error: function(response) {
+                  console.log('Error:', response);
+                  $('#btn-save').html('Save Changes');
+              }
+          });
+          return false;
+      });
+    //save paymet end
 });

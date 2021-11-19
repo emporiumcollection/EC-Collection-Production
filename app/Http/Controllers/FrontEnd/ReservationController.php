@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\PropertyCategoryTypes;
 use App\Models\Addresses;
 use App\Models\properties;
+use App\Models\CardDetail;
 use App\Http\Traits\Property;
 use Illuminate\Support\Facades\Session;
 use App\User;
@@ -343,10 +344,11 @@ class ReservationController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
-
+        $id = Session::get('uid');
         $arr = $this->reserveSuite();
 
         $this->_checkBoards(Session::get('board'));
+        
         
         $selected_suite = Session::get('suite_array');
         
@@ -358,9 +360,55 @@ class ReservationController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';        
-
+        $this->data['cards'] = CardDetail::where('user_id', '=', $id)->orderBy('id','desc')->get();
         $file_name = 'frontend.themes.EC.reservation.payment_method';
         return view($file_name, $this->data);   
+    }
+    public function savepaymentmethod(Request $request)
+    {
+        if (!\Auth::check())
+            return redirect('user/login');
+            
+            if(isset($request->card_id)){
+                Session::put('payment_card_id',$request->card_id);
+                return response()->json(['status' => true, 'card_id' => $request->card_id]);
+            }else{
+                $rules = array(
+                    'card_type' => 'required',
+                    'card_number' => 'required|min:16',
+                    'exp_month' => 'required',
+                    'exp_year' => 'required',
+                    'card_name' => 'required',
+                    'srequirements' => 'required'
+                );
+        
+                $validator = Validator::make($request->all(), $rules);
+                if ($validator->passes()) {
+                    $id = Session::get('uid');
+                    $full_name = $request->card_name;
+                    $name = explode(" ", $full_name); 
+                    
+                    $payment_data = array(
+                        'user_id' => $id, 
+                        'card_type' => $request->card_type, 
+                        'card_number' => $request->card_number, 
+                        'exp_month' => $request->exp_month, 
+                        'exp_year' => $request->exp_year,
+                        'first_name' => $name[0],
+                        'last_name' => $name[1],
+                        'created_at' => date("Y-m-d"),
+                        'srequirements' => $request->srequirements
+                        );
+                    $payment_id = \DB::table('tb_cards')->insertGetId($payment_data);
+                    Session::put('payment_card_id', $payment_id);
+                    return response()->json(['status' => true, 'card_id' => $payment_id]);
+                }
+                else {
+                    return json_encode(['ststus' => false, 'errors' => $validator->errors()]);
+                } 
+            }
+            
+            
     }
 
     public function hotelpolicies()
