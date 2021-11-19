@@ -1,19 +1,21 @@
 <?php
 namespace App\Http\Controllers\FrontEnd;
 
+use App\Companion;
 use App\Http\Controllers\Controller;
-use App\Models\Reservations;
-use Illuminate\Http\Request;
-use App\Models\PropertyCategoryTypes;
-use App\Models\Addresses;
-use App\Models\properties;
 use App\Http\Traits\Property;
-use Illuminate\Support\Facades\Session;
+use App\Models\Addresses;
+use App\Models\PropertyCategoryTypes;
+use App\Models\ReservationCompanion;
+use App\Models\Reservations;
+use App\Models\ReservedSuite;
+use App\Models\properties;
 use App\User;
 use Config;
-use Response;
-
+use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use Illuminate\Support\Facades\Session;
+use Response;
 use Validator,
     Input,
     Redirect;
@@ -62,6 +64,7 @@ class ReservationController extends Controller {
             $property_id = Session::get('property_id');
         }else{
             $property_id = $id;
+            Session::put('property_id', $id);
         }
 
         $this->_checkBoards($property_id);
@@ -96,6 +99,7 @@ class ReservationController extends Controller {
             $property_id = Session::get('property_id');
         }else{
             $property_id = $id;
+            Session::put('property_id', $id);
         }
 
         $this->data['property'] = properties::with(['suites', 'container'])->where('id', $property_id)->get();
@@ -292,28 +296,38 @@ class ReservationController extends Controller {
 
     public function addresses(Request $request){
         
-         if (!\Auth::check())
+        if (!\Auth::check())
             return Redirect::to('user/login');
+
         $rules = array(
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required',
+            'address_first_name' => 'required',
+            'address_last_name' => 'required',
+            'address_email' => 'required',
         );
 
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {                 
             $user = User::find(Session::get('uid'));
-            $user->first_name = $request->input('first_name');
-            $user->last_name = $request->input('last_name');
-            $user->email = $request->input('email');
-            $user->mobile_number = $request->input('phone');
-            $user->address = $request->input('address1');
-            $user->city = $request->input('city');
+            $user->first_name = $request->input('address_first_name');
+            $user->last_name = $request->input('address_last_name');
+            $user->email = $request->input('address_email');
+            $user->mobile_number = $request->input('address_phone');
+            $user->address = $request->input('address_address1');
+            $user->city = $request->input('address_city');
             // $user->email = $request->input('state');
-            $user->country = $request->input('country');
-            $user->title = $request->input('title');
-            $user->zip_code = $request->input('zip_code');
-            $user->save();  
+            $user->country = $request->input('address_country');
+            $user->title = $request->input('address_title');
+            $user->zip_code = $request->input('address_zip_code');
+            $user->save();
+            Session::put('reservation.user_address', [
+                'address' => $user->address,
+                'city' => $user->city,
+                'zip_code' => $user->zip_code,
+                'country' => $user->country,
+            ]);
+            return json_encode(['status' => true]);
+        }else{
+            return json_encode(['status' => false, 'errors' => $validator->errors()]);
         }
     }
 
@@ -321,22 +335,42 @@ class ReservationController extends Controller {
     {
         if (!\Auth::check())
             return Redirect::to('user/login');
+
+        $companion_html = '';
         $rules = array(
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required'
+            'email' => 'required|email'
         );
+
         $validator = Validator::make($request->all(), $rules);
-            if ($validator->passes()) {                 
-                $user = User::find(Session::get('uid'));
-                $id = $user->id;            
-                $companion_data['user_id'] = $user->id;
-                $companion_data['first_name'] = $request->input('first_name');
-                $companion_data['last_name'] = $request->input('last_name');           
-                $companion_data['email'] = $request->input('email');
-                $companion_data['phone_number'] = $request->input('phone');
-                $companionId = \DB::table('tb_companion')->insert($companion_data);
-            }
+
+        if ($validator->passes()) {                 
+            $user = User::find(Session::get('uid'));
+            $companion_data = [
+                'user_id' => $user->id,
+                'first_name' => $request->input('first_name'),
+                'last_name' => $request->input('last_name'),
+                'email' => $request->input('email'),
+                'phone_number' => $request->input('phone')
+            ];
+            $companion = new Companion();
+            $companion->user_id = $user->id;
+            $companion->first_name = $request->first_name;
+            $companion->last_name = $request->last_name;
+            $companion->email = $request->email;
+            $companion->phone_number = $request->phone;
+            $companion->gender = $request->gender;
+            $companion->preferred_language = $request->language;
+            $companion->save();
+            $companion_html = view('frontend.themes.EC.reservation.partials.whotravelling.companion-detail', ['companion' => $companion])->render();
+            return json_encode([
+                'status' => $companion->id,
+                'companion_html' => $companion_html
+            ]);
+        }else{
+            return json_encode(['status' => false, 'errors' => $validator->errors()]);
+        }
     }
 
     public function paymentmethod()
@@ -445,16 +479,8 @@ class ReservationController extends Controller {
 
     public function storecompanionTosession(Request $request)
     {   
-        $companion_data = $request->companion;
-
-        $companion_array = [];
-        foreach($companion_data as $key => $data)
-        {    
-            $companion_array[] = [ $key => $data ];
-        }
-
-        Session::put('companion_data',$companion_array);
-        $request->session()->put('companion_data', $companion_array); 
+        $companions = $request->companion;
+        Session::put('companions', $companions);        
     }   
 
     public function reservationList()
@@ -508,15 +534,43 @@ class ReservationController extends Controller {
 
     public function addReservationData()
     {
-        $data['property_id'] = Session::get('uid');
-        $data['checkin_date'] = Session::get('selecte_arrive_date') ? Session::get('arrival_date') : '';
+        $data['property_id'] = Session::get('property_id');
+        $data['checkin_date'] = Session::get('arrival') ? date('Y-m-d', strtotime(Session::get('arrival'))) : '';
         
-        $data['checkout_date'] = Session::get('selecte_departure_date') ? Session::get('departure_date') : '';
+        $data['checkout_date'] = Session::get('departure') ? date('Y-m-d', strtotime(Session::get('departure'))) : '';
 
         $data['adult'] = Session::get('adult');           
         $data['junior'] = Session::get('children');
+        $data['board'] = Session::get('board') ? Session::get('board') : 0;
 
-        \DB::table('tb_reservations')->insert($data);
+        $reserved_suites = Session::get('suite_array');
+        $companions = Session::get('companions');
+
+        $reservation_id = \DB::table('tb_reservations')->insertGetId($data);
+        foreach($reserved_suites as $suite_id => $suite){
+            $reserveSuite = new ReservedSuite();
+            $reserveSuite->reservation_id = $reservation_id;
+            $reserveSuite->suite_id = $suite_id;
+            $reserveSuite->guest = $suite['guest'];
+            $reserveSuite->price = $suite['price'];
+            $reserveSuite->save();
+        }
+        foreach($companions as $key => $companion){
+            $reserveComapanion = new ReservationCompanion();
+            $reserveComapanion->reservation_id = $reservation_id;
+            $reserveComapanion->companion_id = $companion;
+            $reserveComapanion->save();
+        }
+
+        Session::forget('arrival');
+        Session::forget('departure');
+        Session::forget('adult');
+        Session::forget('children');
+        Session::forget('board');
+        Session::forget('suite_array');
+        Session::forget('companions');
+        Session::forget('reservation');
+        Session::forget('suite_id');
     }
 
     public function databaseName(){

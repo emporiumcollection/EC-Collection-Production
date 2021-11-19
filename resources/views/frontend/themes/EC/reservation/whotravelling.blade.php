@@ -28,20 +28,20 @@
             <hr class="mb-4 mt-4">            
               <div class="row">
                 <div class="col-md-2">      
-                  <h5 class="mb-4 mt-5"><a href="/reservation/whoistravelling" class="">My Address</a></h5>
+                  <h5 class="mb-4 mt-5"><a href="javascript:void(0);" class="">My Address</a></h5>
                 </div>
                 <div class="col-md-1">      
                   <h5 class="mb-4 mt-5">or</h5>
                 </div>
                 <div class="col-md-3">
-                  <h5 class="mb-4 mt-5"><a href="#" class="add_new_addres">Add new address</a></h5>      
+                  <h5 class="mb-4 mt-5"><a href="javascript:void(0);" class="add_new_addres">Add new address</a></h5>      
                 </div>
               </div>
 
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Title<sup>*</sup></label>
-                <select name="title" id="title" class="form-control title">
+                <select name="address_title" id="address_title" class="form-control address_title">
                   <option value="Mr">Mr</option>
                   <option value="Mrs">Mrs</option>
                   <option value="Miss">Miss</option>
@@ -49,31 +49,36 @@
                   <option value="Dr">Dr</option>
                   <option value="Prof">Prof</option>
                 </select>
+                <div class="invalid-feedback errMsg"></div>
               </div>
               <div class="col-md-4 form-group">
                 <label>First name<sup>*</sup></label>
-                <input type="text" name="first_name" id="first_name" class="form-control"  value="{{ $address->first_name ? $address->first_name : ''}}">
+                <input type="text" name="address_first_name" id="address_first_name" class="form-control address_first_name"  value="{{ $address->first_name ? $address->first_name : ''}}">
+                <div class="invalid-feedback errMsg"></div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Last name<sup>*</sup></label>
-                <input type="text" name="last_name" id="last_name" class="form-control" value="{{ $address->last_name ? $address->last_name : ''}}">
+                <input type="text" name="address_last_name" id="address_last_name" class="form-control address_last_name" value="{{ $address->last_name ? $address->last_name : ''}}">
+                <div class="invalid-feedback errMsg"></div>
               </div>
               <div class="col-md-4 form-group">
                 <label>Email<sup>*</sup></label>
-                <input type="text" name="email" id="email_" class="form-control" value="{{ $address->email ? $address->email : ''}}">
+                <input type="text" name="address_email" id="email_" class="form-control address_email" value="{{ $address->email ? $address->email : ''}}">
+                <div class="invalid-feedback errMsg"></div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Telephone<sup>*</sup></label>
-                <input type="text" name="phone" id="phone" class="form-control" value="{{ $address->mobile_number ? $address->mobile_number : ''}}">
+                <input type="text" name="address_phone" id="address_phone" class="form-control address_phone" value="{{ $address->mobile_number ? $address->mobile_number : ''}}">
+                <div class="invalid-feedback errMsg"></div>
               </div>
               <div class="col-md-4 form-group">
                 <label>Country/Region<sup>*</sup></label>
-                <select class="form-control" name="country" id="country">
-                  <option value="">Please select...</option>
+                <select class="form-control address_country" name="address_country" id="address_country">
+                  <option value="" selected disabled></option>
                   <option value="AF">Afghanistan</option>
                   <option value="AX">Aland Islands</option>
                   <option value="AL">Albania</option>
@@ -322,37 +327,44 @@
                   <option value="ZM">Zambia</option>
                   <option value="ZW">Zimbabwe</option>
                 </select>
+                <div class="invalid-feedback errMsg"></div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Address 1<sup>*</sup></label>
-                <input type="text" name="address1" id="address1" class="form-control" value="{{ $address->address ? $address->address : ''}}">
+                <input type="text" name="address_address1" id="address_address1" class="form-control address_address1" value="{{ $address->address ? $address->address : ''}}">
+                <div class="invalid-feedback errMsg"></div>
               </div>
               <div class="col-md-4 form-group">
                 <label>Address 2</label>
-                <input type="text" name="address2" id="address2" class="form-control">
+                <input type="text" name="address_address2" id="address_address2" class="form-control address_address2">
+                <div class="invalid-feedback errMsg"></div>
               </div>
             </div>
 
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>City/Town<sup>*</sup></label>
-                <input type="text" name="city" id="city" class="form-control" value="{{ $address->city ? $address->city : ''}}">
+                <input type="text" name="address_city" id="address_city" class="form-control address_city" value="{{ $address->city ? $address->city : ''}}">
+                <div class="invalid-feedback errMsg"></div>
               </div>
               <div class="col-md-4 form-group">
                 <label>County/State</label>
-                <select class="form-control" name="state" id="state">
+                <select class="form-control address_state" name="address_state" id="address_state">
                   <option value="NA">NA</option>
                 </select>
+                <div class="invalid-feedback errMsg"></div>
               </div>
             </div>
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Zip/Post code<sup>*</sup></label>
-                <input type="text" name="zip_code" id="zip_code" class="form-control" value="{{ $address->zip_code ? $address->zip_code : ''}}">
+                <input type="text" name="address_zip_code" id="address_zip_code" class="form-control address_zip_code" value="{{ $address->zip_code ? $address->zip_code : ''}}">
+                <div class="invalid-feedback errMsg"></div>
               </div>                            
-            </div>  
+            </div> 
+            <input type="hidden" id="address_added" name="address_added" value=""> 
             <div class="row">              
                 <div class="col-md-2 form-group" style="margin-right: 10px;">
                   <input type="button" name="confirm" class=" 
@@ -366,29 +378,21 @@
             <hr class="mb-4">
             <br>
             <h3>My Companions</h3>
-            <h3> <a href="#addPayment" data-toggle="modal">Add
+            <h3> <a href="#addCompanionModal" data-toggle="modal">Add
               new Companion</a></h3>
             <hr class="mb-4">
-            <div class="row">
+
+            <div id="companion_list" class="row">
               @foreach($companion as $data)
-              <div class="col-md-4 mb-4 tagvalue">
-                <input type="hidden" class="companion_id" value="{{$data->id}}">
-                <label class="companion_name" id="companion_name">{{ $data->first_name }}</label><br>
-                <label class="companion_email">{{ $data->email }}</label><br>
-                <label class="companion_phone">{{ $data->phone_number }}</label><br>
-                <br>
-                <label class="color-primary btn-use-addr">Select your Companion</label>
-                <input type="checkbox" name="chkcompanion" class="color-primary btn-use-addr chkcompanion">
-                <br>
-              </div>
+                @include('frontend.themes.EC.reservation.partials.whotravelling.companion-detail', ['companion' => $data])
               @endforeach
               {{-- <div class="display_add"></div> --}}
-              
             </div>
+
             <div class="row">
               <div class="col-md-12 d-flex justify-content-between">
                 <a href="/reservation/policies" class="btn btn-dark px-4">Go back</a>
-                <a href="/reservation/paymentmethod" class="btn btn-dark px-5">Next</a>
+                <a href="/reservation/paymentmethod" class="btn btn-dark px-5 validate-step">Next</a>
               </div>
             </div>
           </div>
@@ -400,7 +404,7 @@
 </div>
 </div>
 <!-- Modal Add Payment-->
-<div class="modal fade" id="addPayment" data-backdrop="static" tabindex="-1" role="dialog"
+<div class="modal fade" id="addCompanionModal" data-backdrop="static" tabindex="-1" role="dialog"
     aria-labelledby="staticBackdrop" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -414,32 +418,39 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>First name <span class="text-danger">*</span></label>
-                            <input type="text" name="first_name" class="form-control" id="comapnion_f_name" placeholder="Enter your firsname">
+                            <input type="text" name="first_name" class="form-control first_name" id="comapnion_f_name" placeholder="Enter your firsname">
+                            <div class="invalid-feedback errMsg"></div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Last Name <span class="text-danger">*</span></label>
-                            <input type="text" name="last_name" id="comapnion_l_name" class="form-control" placeholder="Enter your lastname">
+                            <input type="text" name="last_name" id="comapnion_l_name" class="form-control last_name" placeholder="Enter your lastname">
+                            <div class="invalid-feedback errMsg"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Email<span class="text-danger">*</span></label>
-                            <input type="text" name="email" id="comapnion_email" class="form-control" placeholder="Enter your email">
+                            <input type="text" name="email" id="comapnion_email" class="form-control email" placeholder="Enter your email">
+                            <div class="invalid-feedback errMsg"></div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Phone<span class="text-danger">*</span></label>
-                            <input type="text" name="phone" id="comapnion_phone" class="form-control" placeholder="Enter your phone">
+                            <input type="text" name="phone" id="comapnion_phone" class="form-control phone" placeholder="Enter your phone">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Gender<span class="text-danger">*</span></label>
-                            <select name="gender" class="form-control" id="gender">
-                              <option value="Man">Male</option>
+                            <select name="gender" class="form-control gender" id="gender">
+                              <option value="Man">Man</option>
                               <option value="Woman">Woman</option>
+                              <option value="Non-Binary">Non-Binary</option>
+                              <option value="Cigender">Cigender</option>
+                              <option value="Intersex">Intersex</option>
+                              <option value="Other">Other</option>
                             </select>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Prefered Language<span class="text-danger">*</span></label>
-                            <select class="form-control" name="preferred_language" id="language">
+                            <select class="form-control preferred_language" name="preferred_language" id="language">
                               <option value="en" >English</option>
                               <option value="de">Deutsch</option>
                               <option value="es">Espanol</option>
@@ -451,8 +462,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    
-                    <button type="submit" class="btn btn-primary font-weight-bold add_companion" data-dismiss="modal">Add Card</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Card</button>
                 </div>
         </div>
     </div>

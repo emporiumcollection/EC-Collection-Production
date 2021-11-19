@@ -270,7 +270,7 @@ $( document ).ready(function() {
             type: 'get',            
             url:'/reserve_data',
             success: function(response){
-                window.location.href ="/reservation/receipt";
+                // window.location.href ="/reservation/receipt";
             }
         });
     });
@@ -358,7 +358,7 @@ $(document).on('click', ".step_where", function(){
     });
 });
 
-$(document).on('click', ".confirm_address", function(){
+/*$(document).on('click', ".confirm_address", function(){
 
     var title = $( "#title option:selected" ).text();
     var country = $( "#country option:selected" ).text();
@@ -396,37 +396,23 @@ $(document).on('click', ".confirm_address", function(){
            
         }
     });
-});
+});*/
 
 $(document).ready(function(){
-    var companion = new Array();
-
-    $('input[type="checkbox"]').click(function(){
-        if($(this).prop("checked") == true){
-            var companion_id = $(this).closest('div.tagvalue').find('.companion_id').val();
-            var companion_name = $(this).closest('div.tagvalue').find('.companion_name').text();
-            var companion_email = $(this).closest('div.tagvalue').find('.companion_email').text();
-            var companion_phone = $(this).closest('div.tagvalue').find('.companion_phone').text();
-            // guest.push(selected_guest);
-
-            companion.push( {
-                id: (companion_id ),
-                name: (companion_name ),
-                email:( companion_email),
-                phone:( companion_phone)
-            });
-        }
-
+    $('.chkcompanion').click(function(){
+        var companions = [];
+        $.each($('.chkcompanion'), function(key, val){
+            if($(this).prop('checked') == true){
+                companions.push($(this).val());
+            }
+        });
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             type: 'POST',            
-            url:'/storeinTosession',
-            data:{  
-                    companion: companion,
-                },
-            dataType:'json',                    
+            url: '/storeinTosession',
+            data: {  
+                companion: companions,
+            },
+            dataType: 'json',                    
             success: function(response){
                
             }
@@ -484,41 +470,49 @@ $(document).ready(function(){
     });
 
 
-    $(document).on('click', ".add_address", function(){
-        var title = $( "#title option:selected" ).text();
-        var country = $( "#country option:selected" ).text();
-        var state = $( "#state option:selected" ).text();
-        var city = $( "#city").val();
-        var address2 = $('#address2').val();
-        var address1 = $('#address1').val();
-        var phone = $('#phone').val();
+    $(document).on('click', ".confirm_address, .add_address", function(){
+        var title = $( "#address_title option:selected" ).val();
+        var country = $( "#address_country option:selected" ).val();
+        var state = $( "#address_state option:selected" ).val();
+        var city = $( "#address_city").val();
+        var address2 = $('#address_address2').val();
+        var address1 = $('#address_address1').val();
+        var phone = $('#address_phone').val();
         var email = $('#email_').val();       
-        var zip_code = $('#zip_code').val();                
-        var last_name = $('#last_name').val();
-        var first_name = $('#first_name').val();
+        var zip_code = $('#address_zip_code').val();                
+        var last_name = $('#address_last_name').val();
+        var first_name = $('#address_first_name').val();
         
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             type: 'POST',            
-            url:'/addresses',
-            data:{  
-                    first_name: first_name,
-                    last_name: last_name,
-                    zip_code: zip_code,
-                    email: email,
-                    phone: phone,
-                    address1: address1,
-                    address2: address2,
-                    city: city,
-                    state: state,
-                    country: country,
-                    title: title
-                },
+            url: '/addresses',
+            data: {  
+                address_first_name: first_name,
+                address_last_name: last_name,
+                address_zip_code: zip_code,
+                address_email: email,
+                address_phone: phone,
+                address_address1: address1,
+                address_address2: address2,
+                address_city: city,
+                address_state: state,
+                address_country: country,
+                address_title: title
+            },
             dataType:'json',                    
             success: function(response){
-               
+                $('.errMsg').empty();
+                $('.form-control').removeClass('is-invalid');
+                console.log(response);
+                if(response.status != false){
+                    $('#address_added').val('1');
+                }else{
+                    console.log('Here');
+                    $.each(response.errors, function(key, val){
+                        $('.'+key).addClass('is-invalid');
+                        $('.'+key).next('.errMsg').html(val);
+                    }); 
+                }
             }
         });
     });      
@@ -529,26 +523,45 @@ $(document).ready(function(){
         var phone = $('#comapnion_phone').val();
         var email = $('#comapnion_email').val();       
         var zip_code = $('#zip_code').val();
-        var language = $( "#language option:selected" ).text();
-        var gender = $( "#gender option:selected" ).text();                        
+        var language = $("#language option:selected").val();
+        var gender = $("#gender option:selected").val();
 
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             type: 'POST',            
-            url:'/addcompanion',
-            data: { first_name:first_name,
-                    last_name:last_name,
-                    phone:phone,
-                    email:email,
-                    language:language,
-                    gender:gender,
-                    zip_code:zip_code },
-            dataType:'json',                    
+            url: '/addcompanion',
+            data: { 
+                first_name: first_name,
+                last_name: last_name,
+                phone: phone,
+                email: email,
+                language: language,
+                gender: gender,
+                zip_code: zip_code
+            },
+            dataType: 'json',                    
             success: function(response){
-                
+                $('.errMsg').empty();
+                $('.form-control').removeClass('is-invalid');
+                if(response.status){
+                    $('#companion_list').append(response.companion_html);
+                    $('#addCompanionModal').modal('hide');
+                }else{
+                    $.each(response.errors, function(key, val){
+                        $('.'+key).addClass('is-invalid');
+                        $('.'+key).next('.errMsg').html(val);
+                    });
+                }
             }
         });
+    });
+
+    $(document).on('click', '.validate-step', function(e){
+        e.preventDefault();
+        var next_url = $(this).attr('href');
+        console.log($('#address_added').val());
+        if($('#address_added').val() == ''){
+            return false;
+        }
+        window.location.href = next_url;
     });
 });
