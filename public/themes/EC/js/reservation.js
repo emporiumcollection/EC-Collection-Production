@@ -174,7 +174,7 @@ $(document).on('click', ".step_where", function(){
     }else{ 
         window.location.href = "/reservation/where";
     }        
-});   
+});
 
 $(document).on('click', ".confirm_address", function(){
 
