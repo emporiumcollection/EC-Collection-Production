@@ -60,6 +60,7 @@
           </tr>
         </table>
         <hr class="mt-2">
+        @if(isset($selected_suite[$value->id]['price']))
         <table class="table table-borderless mb-0">
           <tr>
             <td class="px-0 py-1">Subtotal</td>
@@ -69,6 +70,7 @@
             </td>
           </tr>
         </table>
+        @endif
       </div>
     @endforeach
   @endforeach
