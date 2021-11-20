@@ -915,6 +915,7 @@ trait Property {
             \session()->put('departure_date', strtotime($request->departure));
         }
 
+        \session()->save();
     }
 
      public function setFitlerOptions(){
