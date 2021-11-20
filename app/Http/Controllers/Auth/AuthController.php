@@ -150,7 +150,16 @@ class AuthController extends Controller
     // }
 
     public function logout(Request $request) {
-      Auth::logout();
-      return redirect('/');
+        Session::forget('arrival');
+        Session::forget('departure');
+        Session::forget('adult');
+        Session::forget('children');
+        Session::forget('board');
+        Session::forget('suite_array');
+        Session::forget('companions');
+        Session::forget('reservation');
+        Session::forget('suite_id');
+        Auth::logout();
+        return redirect('/');
     }
 }
