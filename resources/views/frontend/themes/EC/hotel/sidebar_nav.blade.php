@@ -45,7 +45,7 @@ if(!isset($property)){
       </a>
       <ul class="nav flex-column nav-sidebar is-small onstickmainpage2">
         <li class="nav-item">
-          <a href="main-page.html">
+          <a href="/hotel/hoteldetail/<?php echo $property->id;?>">
             <i class="ico ico-back mb-4"></i>
           </a>
         </li>

@@ -45,7 +45,7 @@ if(!isset($property)){
       </a>
       <ul class="nav flex-column nav-sidebar is-small onstickmainpage2">
         <li class="nav-item">
-          <a href="main-page.html">
+          <a href="/hotel/hoteldetail/<?php echo $property->id;?>">
             <i class="ico ico-back mb-4"></i>
           </a>
         </li>
@@ -109,12 +109,12 @@ if(!isset($property)){
        {{--<li class="nav-item">
           <a class="nav-link @@sosActive" href="/hotel/social">Social</a>
         </li>--}}
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <a class="nav-link @@comActive" href="#" data-sidebar="#videos" {{--onclick="getDefaultChannel()"--}}>Video Channel</a>
         </li>
         <li class="nav-item">
           <a class="nav-link @@faq" href="/hotel/faq">FAQ</a>
-        </li>
+        </li>-->
       </ul>
     </div>
   </div>
