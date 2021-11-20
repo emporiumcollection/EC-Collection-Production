@@ -31,20 +31,20 @@
         <h4>SUITE &nbsp; {{ $pos++ }}</h4>
         <p><b>{{ $value->category_name }}</b></p>
         <table class="table table-borderless mb-0"> 
+          @if(!empty($selected_suite))
             <tr>
               <td class="px-0 py-1">Guests</td>
-              @if(!empty($selected_suite))
               @foreach($selected_suite as $key => $select_suite)
                 @if($key == $value->id)
                   <td class="px-0 py-1 text-right">{{ $key == $value->id ? $select_suite['guest'] : ''}}</td>
                 @endif
               @endforeach
-              @endif
             </tr>
           <tr>
             <td class="px-0 py-1">Suite</td>
             <td class="px-0 py-1 text-right">€{{ $selected_suite[$value->id]['price'] }}</td>
           </tr>
+          @endif
           {{-- <tr>
             <td class="px-0 py-1">Tax</td>
             <td class="px-0 py-1 text-right">€299.00</td>
