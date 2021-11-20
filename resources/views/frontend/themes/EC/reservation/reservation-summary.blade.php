@@ -33,11 +33,13 @@
         <table class="table table-borderless mb-0"> 
             <tr>
               <td class="px-0 py-1">Guests</td>
+              @if(!empty($selected_suite))
               @foreach($selected_suite as $key => $select_suite)
                 @if($key == $value->id)
                   <td class="px-0 py-1 text-right">{{ $key == $value->id ? $select_suite['guest'] : ''}}</td>
                 @endif
               @endforeach
+              @endif
             </tr>
           <tr>
             <td class="px-0 py-1">Suite</td>
