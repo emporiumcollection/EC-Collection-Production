@@ -107,9 +107,9 @@ if(!isset($property)){
         <li class="nav-item">
           <a class="nav-link @@locActive" href="/hotel/location/{{ $property->id }}">Location</a>
         </li>
-        <li class="nav-item">
+        <!--<li class="nav-item">
           <a class="nav-link active" href="/hotel/experiences">Experiences</a>
-        </li>
+        </li>-->
         <li class="nav-item">
           <a class="nav-link btn-sidebar" href="#" onclick="replacePropertyData(<?php echo $property->id;?>)" data-sidebar="#property-gallery">Gallery</a>
         </li>
