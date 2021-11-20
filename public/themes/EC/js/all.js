@@ -2193,6 +2193,7 @@ $(document).ready(function(){
     $(function() {
 
   $('input[name="datefilter"]').daterangepicker({
+      minDate:new Date(), 
       autoUpdateInput: false,
       locale: {
           cancelLabel: 'Clear'
@@ -2257,6 +2258,7 @@ $(document).ready(function () {
 
   var picker = $('#daterangepicker-inline').daterangepicker({
     parentEl: "#daterangepicker-inline-container",
+    minDate:new Date(), 
     autoApply: true,
     autoUpdateInput: false,
     locale: {

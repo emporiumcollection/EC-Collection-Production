@@ -197,10 +197,10 @@
       </div>
       <div class="col-md-4">
         <div class="side-detail mb-3">
-          <p>Free cancelation before <br> <b><a href="#">18 Feb 2020</a></b></p>
+          <!--<p>Free cancelation before <br> <b><a href="#">18 Feb 2020</a></b></p>
           <div class="mb-3">
             <a href="#">View Policy</a>
-          </div>
+          </div>-->
           <p>Reserve now, pay at the Hotel</p>
           <a href="/reservation/when/{{ $hotel_data[0]->id }}" class="btn btn-dark btn-block">Reservation</a>
         </div>

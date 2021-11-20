@@ -324,6 +324,8 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite-price"]').html(suite.price);
   $('[data-place="suite-beds"]').html(suite.bads);
   $('[data-place="suite-size"]').html(suite.suite_size);
+  $('[data-place="reserve-link"]').html(`<p>Reserve now, pay at the Hotel</p>                    
+                    <a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-block">Reservation</a>`);  
 
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);
