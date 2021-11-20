@@ -40,10 +40,12 @@
                 @endif
               @endforeach
             </tr>
+          @if(isset($selected_suite[$value->id]['price']))
           <tr>
             <td class="px-0 py-1">Suite</td>
             <td class="px-0 py-1 text-right">€{{ $selected_suite[$value->id]['price'] }}</td>
           </tr>
+          @endif
           @endif
           {{-- <tr>
             <td class="px-0 py-1">Tax</td>
