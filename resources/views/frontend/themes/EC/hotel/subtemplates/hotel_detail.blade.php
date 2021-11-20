@@ -202,16 +202,7 @@
             <a href="#">View Policy</a>
           </div>
           <p>Reserve now, pay at the Hotel</p>
-
-          @if(\Session::get('arrival') != '' && \Session::get('departure') != '')
-            @if(!empty(\Session::get('suites')))
-              <a href="/reservation/suite/{{ $hotel_data[0]->id }}" class="btn btn-dark btn-block">Reservation</a>
-            @else
-              <a href="/reservation/where/{{ $hotel_data[0]->id }}" class="btn btn-dark btn-block">Reservation</a>
-            @endif
-          @else
-            <a href="/reservation/when/{{ $hotel_data[0]->id }}" class="btn btn-dark btn-block">Reservation</a>
-          @endif
+          <a href="/reservation/when/{{ $hotel_data[0]->id }}" class="btn btn-dark btn-block">Reservation</a>
         </div>
 
         <div class="side-detail text-left mb-3 px-2 i-none">

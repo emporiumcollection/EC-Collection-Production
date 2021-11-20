@@ -27,9 +27,12 @@ class ReservationController extends Controller {
 
     public function when(Request $request, $id = NULL)
     {
+        $this->data['property_id'] = $id;
+        $url = $this->_checkWhenWhere();
+
         if (!\Auth::check()){
             Session::put('reservation', [
-                'redirect_url' => $request->fullUrl()
+                'redirect_url' => $url != '' ? $url : $request->fullUrl()
             ]);
             Session::save();
             return redirect('user/login');
@@ -49,8 +52,7 @@ class ReservationController extends Controller {
         $this->data['arrive'] = '';
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
-        $this->data['location'] = '';        
-        $this->data['property_id'] = $id;       
+        $this->data['location'] = '';       
 
         $file_name = 'frontend.themes.EC.reservation.when';
         return view($file_name, $this->data);   
@@ -58,9 +60,12 @@ class ReservationController extends Controller {
 
     public function where(Request $request, $id = NULL)
     {
+        $this->data['property_id'] = $id;
+        $url = $this->_checkWhenWhere();
+
         if (!\Auth::check()){
             Session::put('reservation', [
-                'redirect_url' => $request->fullUrl()
+                'redirect_url' => $url != '' ? $url : $request->fullUrl()
             ]);
             Session::save();
             return redirect('user/login');
@@ -99,9 +104,12 @@ class ReservationController extends Controller {
 
     public function suite(Request $request, $id = NULL)
     {
+        $this->data['property_id'] = $id;
+        $url = $this->_checkWhenWhere();
+
         if (!\Auth::check()){
             Session::put('reservation', [
-                'redirect_url' => $request->fullUrl()
+                'redirect_url' => $url != '' ? $url : $request->fullUrl()
             ]);
             Session::save();
             return redirect('user/login');
@@ -740,5 +748,18 @@ class ReservationController extends Controller {
                 $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
             }   
         }
+    }
+
+    private function _checkWhenWhere()
+    {
+        $url = '';
+        if(Session::get('arrival') != '' && Session::get('departure') != ''){
+            if(!empty(Session::get('suites'))){
+                $url = '/reservation/suite/'.$this->data['property_id'];
+            }else{
+                $url = '/reservation/where/'.$this->data['property_id'];
+            }
+        }
+        return $url;
     }
 }
