@@ -2257,6 +2257,7 @@ $(document).ready(function () {
 
   var picker = $('#daterangepicker-inline').daterangepicker({
     parentEl: "#daterangepicker-inline-container",
+    minDate:new Date(), 
     autoApply: true,
     autoUpdateInput: false,
     locale: {
