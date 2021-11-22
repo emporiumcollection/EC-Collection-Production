@@ -31,51 +31,47 @@
 <div class="col-md-12">
 						<fieldset><legend> Reviews</legend>
 									
+									  {!! Form::hidden('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'',   'readonly'=>'true')) !!} 
+									
+								  <div class="form-group  ">
+										<label for="Property property_neme" class=" control-label col-md-4 text-left"> Hotel Name <span class="asterix"> * </span></label>
+										<div class="col-md-6">
+										<select name='hotel_id' rows='5' id='hotel_id' class='select2 ' required  ></select> 
+										{{-- {!! Form::select('hotel_id', [], $row['hotel_id'], array('class'=>'select2', 'required'=>'true', 'id'=>'hotel_id'))!!} --}}
+										</div> 
+										<div class="col-md-2">
+											
+										</div>
+									</div>
+								  
 								  <div class="form-group  " >
-									<label for="Id" class=" control-label col-md-4 text-left"> Id </label>
+									<label for="Rating" class=" control-label col-md-4 text-left"> Rating <span class="asterix"> * </span></label>
 									<div class="col-md-6">
-									  {!! Form::text('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+									  {!! Form::text('rating', $row['rating'],array('class'=>'form-control', 'placeholder'=>'',  'required'=>'true')) !!} 
+									  <label class=" control-label "> Enter 1 to 10 Rating</label>
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div> 					
+								  </div>
 								  <div class="form-group  " >
-									<label for="Hotel Id" class=" control-label col-md-4 text-left"> Hotel Id </label>
-									<div class="col-md-6">
-									  {!! Form::text('hotel_id', $row['hotel_id'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
-									<label for="Rating" class=" control-label col-md-4 text-left"> Rating </label>
-									<div class="col-md-6">
-									  {!! Form::text('rating', $row['rating'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
-									<label for="Fname" class=" control-label col-md-4 text-left"> Fname </label>
+									<label for="Fname" class=" control-label col-md-4 text-left"> First Name </label>
 									<div class="col-md-6">
 									  {!! Form::text('fname', $row['fname'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div> 					
+								  </div>	
 								  <div class="form-group  " >
-									<label for="Lname" class=" control-label col-md-4 text-left"> Lname </label>
+									<label for="Lname" class=" control-label col-md-4 text-left"> Last Name </label>
 									<div class="col-md-6">
 									  {!! Form::text('lname', $row['lname'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div> 					
+								  </div>
 								  <div class="form-group  " >
 									<label for="Country" class=" control-label col-md-4 text-left"> Country </label>
 									<div class="col-md-6">
@@ -137,7 +133,11 @@
 			$.get(removeUrl,function(response){});
 			$(this).parent('div').empty();	
 			return false;
-		});		
+		});	
+		
+		//get propety name
+		$("#hotel_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_properties:id:property_name') }}",
+            { selected_value : '{{ $row['hotel_id'] }}', condition_param: 'find_in_set' });
 		
 	});
 	</script>		 
