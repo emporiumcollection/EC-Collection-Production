@@ -45,6 +45,7 @@ class ReservationController extends Controller {
 
         $arr = $this->reserveSuite();
         $this->data['suites'] = $arr;
+
         $this->data['selected_suite'] = Session::get('suite_array');
 
         $this->data['layout_type'] = 'old';
@@ -133,7 +134,7 @@ class ReservationController extends Controller {
 
         $arr = $this->reserveSuite();
         $this->data['suites'] = $arr;
-        
+        // print_r($this->data['suites']);exit;        
         $this->data['selected_suite'] = $selected_suite;
         $this->formatPropertyRecords($this->data['property']);
         $this->data['layout_type'] = 'old';
@@ -250,7 +251,7 @@ class ReservationController extends Controller {
 
     public function selected_suite(Request $request)
     {           
-        $suites = $request->suit_id;
+        $suites_id = $request->suit_id;
         $guest = $request->guest;
         $sum = 0;
         $number_of_suites = 0;
@@ -263,9 +264,9 @@ class ReservationController extends Controller {
             $suitIds = Session::get('suit_id');
         }
 
-        $suitIds[] = $suites[0];
+        $suitIds[] = $suites_id[0];
 
-        foreach($suites as $key => $suite){
+        foreach($suites_id as $key => $suite){
             $suite_array[$suite] = [
                 'guest' => $guest[$key],
                 'price' => $this->getSuitePrice($suite)
@@ -278,15 +279,24 @@ class ReservationController extends Controller {
         }
 
         Session::put('suite_array', $suite_array);
+        $selected_suite = Session::get('suite_array');
+
         Session::put('suit_id', array_unique($suitIds));
         Session::put('selected_suite_guest', $sum);
         Session::put('selected_suite_number', $number_of_suites);
 
-        $suite = PropertyCategoryTypes::find($suites[0]);
+        $suite = PropertyCategoryTypes::find($suites_id[0]);
 
+        $suites = $this->reserveSuite();
+        // echo "<pre>";print_r($suites);exit; 
+        
         $suite_selection_html = view('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])->render();
+        
+        $reserve_suite_html = view('frontend.themes.EC.reservation.partials.suite.suite-selection', ['suites' => $suites ,'selected_suite' => $selected_suite])->render();        
+
         return json_encode([
-            'suite_selection_html' => $suite_selection_html
+            'suite_selection_html' => $suite_selection_html,
+            'reserve_suite_html' => $reserve_suite_html
         ]);
     }
 
@@ -684,9 +694,16 @@ class ReservationController extends Controller {
         }
         $suite = PropertyCategoryTypes::find($id);
 
+        $suites = $this->reserveSuite();
+        $selected_suite = Session::get('suite_array');
+        
         $suite_selection_html = view('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])->render();
+
+        $reserve_suite_html = view('frontend.themes.EC.reservation.partials.suite.suite-selection', ['suites' => $suites ,'selected_suite' => $selected_suite])->render();        
+
         return json_encode([
-            'suite_selection_html' => $suite_selection_html
+            'suite_selection_html' => $suite_selection_html,
+            'reserve_suite_html' => $reserve_suite_html
         ]);
     }
 

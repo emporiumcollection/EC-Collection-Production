@@ -332,8 +332,23 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="price-icon"]').html(`<i class="ico ico-info-green pointer btn-sidebar" type="button"
                                 data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
   $('[data-place="suite-price"]').html(suite.price);
-  $('[data-place="suite-beds"]').html(suite.bads);
-  $('[data-place="suite-size"]').html(suite.suite_size);
+
+  var bads = $('[data-place="suite-beds"]').html(suite.bads);
+
+  if (bads > 0){
+    $('[data-place="suite-beds"]').parents('span').show();
+  }else{
+    $('[data-place="suite-beds"]').parents('span').hide();
+  }
+  
+  var suite = $('[data-place="suite-size"]').html(suite.suite_size);
+
+  if(suite > 0){
+    $('[data-place="suite-size"]').parents('span').show();
+  }else{
+    $('[data-place="suite-size"]').parents('span').hide();
+  }
+
   $('[data-place="reserve-link"]').html(`<p>Reserve now, pay at the Hotel</p>                    
                     <a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-block">Reservation</a>`);  
 

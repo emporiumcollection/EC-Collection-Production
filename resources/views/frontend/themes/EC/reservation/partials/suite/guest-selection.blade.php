@@ -8,7 +8,7 @@
       </select>
     </div>
     <div class="col-md-4 d-flex justify-content-end align-self-center">
-        <?php if(!empty(\Session::get('suite_array')) && array_key_exists($suite->id, \Session::get('suite_array'))){ ?>
+        <?php if(!empty(\Session::get('suite_array')) && array_key_exists(  $suite->id, \Session::get('suite_array'))){ ?>
             <a href="javascript:void(0);" class="btn btn-dark select_suite" title="Update" data-suite-id="{{ $suite->id }}"><i class="fa fa-edit"></i></a>
             <a href="javascript:void(0);" class="btn btn-dark ml-2 remove_suit" title="Remove" data-suite-id="{{ $suite->id }}"><i class="fa fa-times-circle-o"></i></a>
         <?php }else{ ?>

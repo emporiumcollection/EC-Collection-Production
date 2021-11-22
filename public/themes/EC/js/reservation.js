@@ -224,10 +224,12 @@ $( document ).ready(function() {
             dataType: 'json',                    
             success: function(response){
                 curr_btn.parents('section').html(response.suite_selection_html);
+
                 $('#select_suite_guest_'+suite_id).select2({
                     theme: 'bootstrap',
                     minimumResultsForSearch: -1
                 });
+                $("#selected-suite-list").html(response.reserve_suite_html);
             }
         });
     });
@@ -289,6 +291,7 @@ $( document ).ready(function() {
                     theme: 'bootstrap',
                     minimumResultsForSearch: -1
                 });
+                $("#selected-suite-list").html(response.reserve_suite_html);
             },
         });
     });

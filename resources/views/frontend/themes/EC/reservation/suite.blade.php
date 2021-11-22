@@ -107,7 +107,10 @@
             @endif              
         </div>
           <div class="col-lg-3 col-md-4">
-            @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+            <div id="selected-suite-list">
+            @include('frontend.themes.EC.reservation.reservation-summary', 
+            ['suites' => $suites])
+            </div>
 
             <div class="d-flex justify-content-between">
               <a href="/reservation/where" class="btn btn-dark px-4">Go back</a>
