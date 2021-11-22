@@ -52,7 +52,11 @@ Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
 Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
 Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
 Route::post('/add_collection','FrontEnd\HotelDetailController@add_collection');
+//HotelDetail Reviews
+Route::get('/hotel/get-reviews/{id}','FrontEnd\ReviewController@getPropertyReviews');
+Route::post('/hotel/add-reviews','FrontEnd\ReviewController@addreviews');
 
+//
 
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
@@ -64,16 +68,22 @@ Route::post('/users/invite', 'UserController@postInvite');
 // Route::get('/users/reservation', 'ReservationsController@getReservation');
 
 Route::get('reservation/when/{id}', 'FrontEnd\ReservationController@when');
-Route::get('reservation/where', 'FrontEnd\ReservationController@where');
-Route::get('reservation/suite', 'FrontEnd\ReservationController@suite');
+Route::get('reservation/where/{id?}', 'FrontEnd\ReservationController@where');
+Route::get('reservation/suite/{id?}', 'FrontEnd\ReservationController@suite');
 Route::get('reservation/suiteboard', 'FrontEnd\ReservationController@suiteBoard');
+Route::post('reservation/suiteboard', 'FrontEnd\ReservationController@storeSuiteBoard')->name('store.suiteboard');
 Route::get('reservation/policies', 'FrontEnd\ReservationController@Policies');
 Route::get('reservation/services', 'FrontEnd\ReservationController@aditionalServices');
 Route::get('reservation/whoistravelling','FrontEnd\ReservationController@whoistravelling');
 Route::get('reservation/paymentmethod', 'FrontEnd\ReservationController@paymentmethod');
+Route::post('reservation/savepaymentmethod', 'FrontEnd\ReservationController@savepaymentmethod');
 Route::get('reservation/hotelpolicies', 'FrontEnd\ReservationController@hotelpolicies');
 Route::get('reservation/bookingsummary', 'FrontEnd\ReservationController@bookingsummary');
+Route::post('/store_dates/session', 'FrontEnd\ReservationController@storewhere');
+
 Route::post('/suite', 'FrontEnd\ReservationController@selected_suite');
+Route::get('/remove-suite-selection/{id}/{guest}', 'FrontEnd\ReservationController@removeSuiteSelection');
+Route::post('/validate-suite-selection', 'FrontEnd\ReservationController@validateSuiteSelection');
 Route::post('/select/guest', 'FrontEnd\ReservationController@guest');
 
 Route::post('/addresses', 'FrontEnd\ReservationController@addresses');

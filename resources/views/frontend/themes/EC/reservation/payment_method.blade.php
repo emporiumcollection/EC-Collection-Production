@@ -26,98 +26,100 @@
           Payment Method
         </h2>
         <h5 class="mb-4">Your Card </h5>
-
+        
         <div class="row">
           <div class="col-lg-9 col-md-8">
+            <form action="#" method="POST" action="" id="payment_form">
+              @if(isset($cards))
+                    @foreach($cards as $card)
             <div class="row">
               <div class="col-lg-7 col-md-8">
                 <div class="d-flex align-items-center list-divider">
                   <div class="ico-inline mr-5">
                     <i class="ico-payment mastercard"></i>
                   </div>
-                  <div class="d-flex flex-column flex-grow-1">
-                    <div class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                      MasterCard ••••8928 <span class="default-set">default</span>
-                    </div>
-                    <span class="text-muted font-weight-bold">Expiration: 09/2025</span>
-                  </div>
-                  <div class="mb-2 text-12"><a href="#" class="color-primary btn-use-addr">Use this card</a></div>
+                  
+                      <div class="d-flex flex-column flex-grow-1">
+                        <div class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
+                          {{ $card->card_type }} ••••{{ substr($card->card_number,12)}} <span class="default-set">default</span>
+                        </div>
+                        <span class="text-muted font-weight-bold">Expiration: {{ $card->exp_month }} / {{ $card->exp_year }} </span>
+                      </div>
+                      <div class="mb-2 text-12"><input type="radio" name="card_id" value="{{ $card->id }}" > Use this card</div>
+                    
                   <!--end::Dropdown-->
                 </div>
               </div>
             </div>
+            @endforeach
+                  @endif
             <hr class="my-4">
             <h5 class="mb-4">Or Add New Payment Card</h5>
             <p>Credit card details are required to guarantee your reservation.</p>
-
+            <div id="error-msg"></div>
+            
             <div class="row align-items-center">
               <div class="col-md-4 form-group mb-0">
                 <label>Credit/Debit card: </label>
               </div>
               <div class="col-md-8 form-group">
-                <select class="form-control" name="card_type" id="card_type">
-                  <option value="">Visa</option>
-                  <option value="">Master Card</option>
-                  <option value="">American Express</option>
+                <select class="form-control card_type" name="card_type" id="card_type">
+                  <option value="Visa">Visa</option>
+                  <option value="Master Card">Master Card</option>
+                  <option value="American Express">American Express</option>
                 </select>
+                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row align-items-center">
               <div class="col-md-4 form-group mb-0">
-                <label>Card number: </label>
+                <label for="card_number">Card number: </label>
               </div>
               <div class="col-md-8 form-group">
-                <input type="text" class="form-control" name="card_number" id="card_number" placeholder="****_****_****_****">
+                <input type="text" class="form-control card_number" name="card_number" id="card_number" placeholder="****_****_****_****">
+                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row align-items-center">
               <div class="col-md-4 form-group mb-0">
-                <label>Expiration: </label>
+                <label for="expire_month">Expiration: </label>
               </div>
               <div class="col-md-4 form-group">
-                <select class="form-control" name="expire_month" id="expire_month">
-                  <option value="">Month</option>
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                  <option value="8">8</option>
-                  <option value="9">9</option>
+                <select class="form-control exp_month" name="exp_month" id="expire_month">
+                  <option value="" selected disabled>Month</option>
+                  <option value="01">01</option>
+                  <option value="02">02</option>
+                  <option value="03">03</option>
+                  <option value="04">04</option>
+                  <option value="05">05</option>
+                  <option value="06">06</option>
+                  <option value="07">07</option>
+                  <option value="08">08</option>
+                  <option value="09">09</option>
                   <option value="10">10</option>
                   <option value="11">11</option>
                   <option value="12">12</option>
                 </select>
+                <div class="invalid-feedback"></div>
               </div>
               <div class="col-md-4 form-group">
-                <select class="form-control" name="expire_year" id="expire_year">
-                  <option value=""> Year</option>
-                  <option value="2020">2020</option>
-                  <option value="2021">2021</option>
-                  <option value="2022">2022</option>
-                  <option value="2023">2023</option>
-                  <option value="2024">2024</option>
-                  <option value="2025">2025</option>
-                  <option value="2026">2026</option>
-                  <option value="2027">2027</option>
-                  <option value="2028">2028</option>
-                  <option value="2029">2029</option>
-                  <option value="2030">2030</option>
-                  <option value="2031">2031</option>
-                  <option value="2032">2032</option>
-                  <option value="2033">2033</option>
-                  <option value="2034">2034</option>
+                <select class="form-control exp_year" name="exp_year" id="expire_year">
+                  <option value="" selected disabled>Year</option>
+                  <?php $years = range(date('Y'), (date('Y') + 20)); ?>
+                  @foreach($years as $year)
+                    <option value="{{ $year }}">{{ $year }}</option>
+                  @endforeach
                 </select>
+                <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="row align-items-center">
               <div class="col-md-4">
-                <label>Name on card: </label>
+                <label for="card_name">Name on card: </label>
               </div>
               <div class="col-md-8">
-                <input type="text" class="form-control" placeholder="Name on card">
+                <input type="text" class="form-control card_name" name="card_name" id="card_name" placeholder="Name on card">
+                <div class="invalid-feedback"></div>
               </div>
             </div>
 
@@ -126,70 +128,22 @@
               <div class="col-lg-9">
                 <h5 class="mb-4">Special requirements <span class="small color-grey">(*Required)</span></h5>
                 <div class="form-group">
-                  <textarea class="form-control" name="" id="" cols="30" rows="10"
+                  <textarea class="form-control" name="srequirements" id="" cols="30" rows="10"
                     placeholder="Type your requirement here"></textarea>
                 </div>
               </div>
             </div>
-            <div class="col-md-9">
-            <div class="text-right">
-              <a href="/reservation/bookingsummary" class="btn btn-dark px-5 btn-nextwizard">Next</a>
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-between mt-4">
+                <a href="/reservation/whoistravelling" class="btn btn-dark px-5">Go back</a>
+                <button type="submit" class="btn btn-dark px-5 save-payment" id="btn-payment-save">Next</button>
+              </div>
             </div>
-          </div>
+          </form>
           </div>
           <div class="col-lg-3 col-md-4">
-          @include('frontend.themes.EC.reservation.reservation-summary')
-          <?php $pos=1 ?>
-          @if(!empty($suites))          
-            @foreach($suites as $suite)
-              @foreach($suite as $value)
-                <div class="reservation-summary section-shadow">
-                  <h4>SUITE &nbsp; {{ $pos++ }}</h4>
-                  <p><b>{{ $value->category_name }}</b></p>
-                  <table class="table table-borderless mb-0"> 
-                      <tr>
-                        <td class="px-0 py-1">Guests</td>
-                        @foreach($selected_suite as $key => $select_suite)
-                        <td class="px-0 py-1 text-right">{{ $key == $value->id ?  $select_suite : ''}}</td>
-                        @endforeach
-                      </tr>
-                    <tr>
-                      <td class="px-0 py-1">Suite</td>
-                      <td class="px-0 py-1 text-right">€4.299.00</td>
-                    </tr>
-                    <tr>
-                      <td class="px-0 py-1">Tax</td>
-                      <td class="px-0 py-1 text-right">€299.00</td>
-                    </tr>
-                  </table>
-                  <hr class="mb-2">
-                  <table class="table table-borderless mb-0">
-                    <tr>
-                      <td class="px-0 py-1">Gourmet Experience</td>
-                      <td class="px-0 py-1 text-right">2</td>
-                    </tr>
-                  </table>
-                  <hr class="mt-2">
-                  <table class="table table-borderless mb-0">
-                    <tr>
-                      <td class="px-0 py-1">Subtotal</td>
-                      <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                    </tr>
-                  </table>
-                </div>              
-              @endforeach
-            @endforeach
-          @else
-            <h2>Suite Not Selected</h2>
-          @endif            
-            <div class="reservation-total">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Total</td>
-                  <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                </tr>
-              </table>
-            </div> 
+            @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+          </div>
           </div>
         </div>
 

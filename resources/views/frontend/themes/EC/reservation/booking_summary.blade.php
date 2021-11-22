@@ -29,76 +29,7 @@
                     <p class="mb-0">Confirm number: EC-{{ $db }}-{{ $hotel_name }}-{{ $randomnum }}</p>
                   </div>
                   
-          @include('frontend.themes.EC.reservation.reservation-summary')
-              <?php $pos=1 ?>
-              @if(!empty($suites))
-                @foreach($suites as $suite)
-                  @foreach($suite as $value)
-                    <div class="reservation-summary section-shadow">
-                      <div class="row align-items-center mb-3">
-                        <div class="col-3 pr-0">
-                          <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}"
-                            class="img-full" alt="">
-                        </div>
-                        <div class="col-9">
-                          <h4>SUITE &nbsp; {{ $pos++ }}</h4>
-                          <p class="mb-0"><b>{{ $value->category_name }}</b></p>
-                        </div>
-                      </div>
-                      <table class="table table-borderless mb-0">
-                        <tr>
-                          <td class="px-0 py-1">Guests</td>
-
-                          @foreach($selected_suite as $key => $select_suite)
-                            <td class="px-0 py-1 text-right">{{ $key == $value->id ?  $select_suite : ''}}</td>
-                          @endforeach
-                        </tr>
-                        <tr>
-                          <td class="px-0 py-1">Suite</td>
-                          <td class="px-0 py-1 text-right">€4.299.00</td>
-                        </tr>
-                        <tr>
-                          <td class="px-0 py-1">Tax</td>
-                          <td class="px-0 py-1 text-right">€299.00</td>
-                        </tr>
-                        <tr>
-                          <td class="px-0 py-1" colspan="2">
-                            <a href="#" class="underline color-grey" type="button" data-toggle="modal"
-                              data-target="#priceModal"><i>Details and
-                                conditions</i></a>
-                          </td>
-                        </tr>
-                      </table>
-                      <hr class="mb-2">
-                      <table class="table table-borderless mb-0">
-                        <tr>
-                          <td class="px-0 py-1">Gourmet Experience</td>
-                          <td class="px-0 py-1 text-right">2</td>
-                        </tr>
-                      </table>
-                      <hr class="mt-2">
-                      <table class="table table-borderless mb-0">
-                        <tr>
-                          <td class="px-0 py-1">Subtotal</td>
-                          <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                        </tr>
-                      </table>
-                    </div>                    
-                  @endforeach
-                @endforeach
-                @else
-                  <div class="reservation-summary section-shadow">
-                    <p>Suite Not Selected</p>
-                  </div>
-              @endif
-                <div class="reservation-total">
-                      <table class="table table-borderless mb-0">
-                        <tr>
-                          <td class="px-0 py-1">Total</td>
-                          <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
-                        </tr>
-                      </table>
-                    </div>  
+              @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites]) 
                   <div class="policies" id="policies">
                     <h3>Policies</h3>
                     <div class="card card-body rounded-0">
@@ -135,7 +66,10 @@
                     </div>
                     <div class="row mb-4">
                       <div class="col-6">
-                        <a href="#" class="btn btn-dark  px-5 btn-backwizard">Go back</a>
+                        <a href="/reservation/paymentmethod" class="btn btn-dark  px-5">Go back</a>
+                      </div>
+                      <div class="col-6">
+                        <a href="javascript:void(0)" class="btn btn-dark  px-5 reserve_data">Confirm booking</a>
                       </div>
                     </div>
                   </div>
@@ -172,43 +106,45 @@
                 <div class="col-md-5 mmb-4 h-100">
                   <div class="bg-grey p-3 h-100">
                     <ul class="nav nav-step5 flex-column">
-                      <li class="nav-item">
-                        @if(!empty($arrive))
-                          @for($i = $arrive; $i <= $departure;$i++)
-                            <a class="nav-link" href="#">
+                      @if(!empty($trip_dates))
+                        @foreach($trip_dates as $date)
+                          <li class="nav-item">
+                            <a class="nav-link" href="javascript:void(0);">
                               <div class="d-flex align-items-center">
                                 <div class="w-100">
-                                  <p class="mb-0 month-nav">{{ $i }}.
-                                  {{ $month }}. {{ $year }}</p>
-                                  
-                                  <?php  $store = $i.-$month_int.-$year;?>
-                                  <p>{{ date('l',strtotime($store)) }}</p>
-                                  @if($i == $arrive)
-                                   <p class="mb-0"><b>Arrival date</b></p>
+                                  <p class="mb-0 month-nav">{{ date('d. M. Y', strtotime($date)) }}</p>
+                                  <p class="mb-0">{{ date('l', strtotime($date)) }}</p>
+                                  @if(strtotime($date) == strtotime(\Session::get('arrival')))
+                                    <p class="mb-0 mt-2"><b>Arrival date</b></p>
+                                  @elseif(strtotime($date) == strtotime(\Session::get('departure')))
+                                    <p class="mb-0 mt-2"><b>Departure date</b></p>
                                   @endif
-                                  @if($i == $departure)
-                                   <p class="mb-0"><b>Departure date</b></p>
-                                  @endif
-                                </div class="w-100">      
+                                </div>
                               </div>
                             </a>
-                          @endfor
-                        @endif    
-                      </li>
+                          </li>    
+                        @endforeach
+                      @endif
                     </ul>
                   </div>
                 </div>              
                 <div class="col-md-7">
                   <div class="mb-4">
+                    <a href="/dashboard" class="btn btn-primary rounded-0 btn-lg btn-block">
+                      Go to my dashboard
+                    </a>
+                  </div>
+                  <!--<div class="mb-4">
                     <a href="javascript:void();" class="btn btn-primary rounded-0 btn-lg btn-block reserve_data">
                     Get receipt
                   </a>
-                  </div>                     
-                  <div class="additional-list h-auto p-0 mb-4">
+                  </div>                     -->
+                  <!--<div class="additional-list h-auto p-0 mb-4">
                     <div class="p-4">                        
                         <img src="{{ asset('/uploads/users/EC.jpg')}}" height="100%" width="100%">            
                     </div>
                   </div>
+                -->
                 </div>
               </div>
             </div>

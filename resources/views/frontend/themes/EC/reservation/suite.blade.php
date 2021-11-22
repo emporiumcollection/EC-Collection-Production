@@ -60,7 +60,7 @@
                           if(isset($property[0]['container']['name'])){
                             $container_name = $property[0]['container']['name'];
                           }else{
-                            $container_name = strtolower(str_replace("-", " ", trim($property[0]->property_name)));
+                            $container_name = strtolower(str_replace(" ", "-", trim($property[0]->property_name)));
                           }
 
                           if(isset($image['file'])) $name = $image['file']['name'];
@@ -79,31 +79,23 @@
                     <div class="col-lg-6">
                       <div class="suite-desc">
                         <h3>{{ $suite->category_name }}</h3>
-                        <p>
-                          {{ $suite->room_desc }}
-                        </p>
+                        @if($suite->room_desc)
+                          <p>
+                            {{ $suite->room_desc }}
+                          </p>
+                        @endif
                         <div class="row align-items-center mt-5">
-                          <div class="col-8 guestvalue">
-                            <p class="mb-0">From: <b>€{{ $suite->guests_in_base_price }}</b></p>
+                          <div class="col-7 guestvalue">
+                            <p class="mb-0">From: <b>€{{ $suite->price }}</b></p>
                             <p>inclusive of all taxes and fees</p>
-                            <?php $i = $suite->total_guests; ?>
                             <input type="hidden" name="select_guest" class="select_guest" id="select_guest" value="">
-
-                            <select name="total_guest" id="select_suite_guest_{{ $suite->id }}" class="form-control select_suite_guest">
-                              <option value="">Select guest(S)</option>
-                              
-                                @for($j = 1;$j <= $i;$j++)      
-                                  <option value="{{ $j }}" {{ array_key_exists($suite->id, \Session::get('suite_array') ? \Session::get('suite_array') : [1] ) && \Session::get('suite_array')[$suite->id] == $j ? 'selected' : '' }}>{{ $j }}</option>
-                                @endfor
-                                                              
-                            </select>
-                          </div>              
-                          <div class="col-4">
-                            <div class="text-right">      
-                              <a href="javascript:void()" class="btn btn-dark  px-4 btn-nextwizard rounded-0 select_suite" data-suite-id="{{ $suite->id }}">Select</a>
-                            </div>
                           </div>
                         </div>
+
+                        <section id="guest_selection">
+                          @include('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])
+                        </section>
+
                       </div>
                     </div>
                   </div>
@@ -115,18 +107,21 @@
             @endif              
         </div>
           <div class="col-lg-3 col-md-4">
-          @include('frontend.themes.EC.reservation.reservation-summary')
-            <div class="reservation-total">
-              <table class="table table-borderless mb-0">
-                <tr>
-                  <td class="px-0 py-1">Total</td>
-                  <td class="px-0 py-1 text-right"></td>
-                </tr>
-              </table>
+            @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+
+            <div class="d-flex justify-content-between">
+              <a href="/reservation/where" class="btn btn-dark px-4">Go back</a>
+              @if(!empty($boards))
+                <a href="/reservation/suiteboard" class="btn btn-dark continue_step px-4">Next</a>
+              @else
+                <a href="/reservation/policies" class="btn btn-dark continue_step px-4">Next</a>
+              @endif
             </div>
-            <div>
-              <a href="/reservation/suiteboard" class="btn btn-dark  px-4 btn-nextwizard rounded-0 continue_step">Continue</a>
+
+            <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
+              <p id="massage" class="mb-0"></p>
             </div>
+
           </div>
         </div>
     </div>  

@@ -244,12 +244,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 <script type="text/javascript">var BaseURL = '{{ url() }}'; </script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/jquery-3.5.1.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/reviews.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/leaflet.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/popper.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/bootstrap.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/jquery.sticky.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/jqueryui/jquery-ui.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/moment.min.js') }}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/plugin/jquery.validate.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/jquery.mousewheel.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/simpleLightbox.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/mediaelement-and-player.min.js') }}"></script>

@@ -1373,5 +1373,20 @@ $allowedCurrenciesinProject=array("OMR","BHD","KWD","USD","CHF","EUR","KYD","GIP
         }
         return $return;                
             
-    }    
+    }
+
+    /*
+     *  Return reservation url after login/register if available alse retun 
+     *  dashboard url. 
+     */
+    public static function checkReservation()
+    {
+        $redirect_to = 'dashboard';
+        $reservation = Session::get('reservation');
+        if(!empty($reservation) && isset($reservation['redirect_url'])){
+            $redirect_to = $reservation['redirect_url'];
+            Session::forget('reservation.redirect_url');
+        }
+        return $redirect_to;
+    }
 }

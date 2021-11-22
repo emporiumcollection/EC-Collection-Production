@@ -33,7 +33,9 @@
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript">
   var channelurl = '{{URL::to("getyoutubechannel/")}}';
-  setTimeout("getDefaultChannel('<?php echo $location[0]['category_alias'];?>')", 5000);
+  $(window).on('load', function() {
+    setTimeout("getDefaultChannel('<?php echo isset($location[0]['category_alias']) ? $location[0]['category_alias'] : ''; ?>')", 1000);
+  });
 </script>
 <div class="content-em pb-0">
     <div class="px-3 pt-5">
@@ -170,7 +172,7 @@
       geojsonFeatures.features.forEach(function (marker) {
         var el = document.createElement('div');
         el.className = 'marker';
-        el.style.backgroundImage = 'url(images/basic_geolocalize-02.png)';
+        el.style.backgroundImage = 'url(images/map2.png)';
         el.style.width = 40 + 'px';
         el.style.height = 40 + 'px';
         el.style.backgroundRepeat = 'no-repeat',

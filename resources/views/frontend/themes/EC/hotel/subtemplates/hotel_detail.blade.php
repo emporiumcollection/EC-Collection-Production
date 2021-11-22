@@ -1,6 +1,3 @@
-<script type="text/javascript">
-  properties[<?php echo $hotel_data[0]->id;?>] = <?php echo json_encode($hotel_data[0]);?>
-</script>
 <div class="col-lg-8 col-hotel-slider">
   <div class="text-right">
     <div class="dropdown dropdown-suite ipad-view mb-3">
@@ -53,17 +50,17 @@
     <div class="slider-detail" id="sliderDetail">
      <?php
      foreach($hotel_data[0]->propertyImages as $image): 
-
-      if(isset($hotel_data[0]['container']['name'])){
+    
+        if(isset($hotel_data[0]['container']['name'])){
           $container_name = $hotel_data[0]['container']['name'];
         }else{
-          $container_name = strtolower(str_replace("-", " ", trim($hotel_data[0]->property_name)));
+          $container_name = strtolower(str_replace(" ", "-", trim($hotel_data[0]->property_name)));
         }
 
         if(is_array($image)){
           $file_name = $image['file_name'];
-        }elseif(is_object($image)){
-          $file_name = $image->file_name;
+        }elseif(is_object($image) && isset($image->file->file_name)){
+          $file_name = $image->file->file_name;
         }else{
           $file_name = 'default-image.png';
         }
@@ -71,7 +68,7 @@
       ?>
         <div>
           <a href="" class="slider-item-inner">
-            <img <?php echo 'src="property-image/resize/830x566/'.$container_name.'/'.$file_name.'/property-image"';?> id="heading-img" class="img-fluid" alt="">
+            <img <?php echo 'src="/property-image/resize/830x566/'.$container_name.'/'.$file_name.'/property-image"';?> id="heading-img" class="img-fluid" alt="">
             <div class="view-images-btn">
               <i class="ico icon-camera"></i> View Images
             </div>
@@ -182,7 +179,13 @@
             @if(!empty($hotel_data))
               @foreach($hotel_data as $amenitie)              
               <div class="col-md-4 mb-4">
-                <p class="mb-0">{{ $amenitie->suites[0]->amenities[0]->amenities_eng }}</p>
+                <p class="mb-0">
+                  @if(!empty($amenitie->suites->toArray()))
+                    @if(!empty($amenitie->suites[0]->amenities->toArray()))
+                      {{ $amenitie->suites[0]->amenities[0]->amenities_eng }}
+                    @endif
+                  @endif
+                </p>
               </div>
               @endforeach
             @else
@@ -194,12 +197,11 @@
       </div>
       <div class="col-md-4">
         <div class="side-detail mb-3">
-          <p>Free cancelation before <br> <b><a href="#">18 Feb 2020</a></b></p>
+          <!--<p>Free cancelation before <br> <b><a href="#">18 Feb 2020</a></b></p>
           <div class="mb-3">
             <a href="#">View Policy</a>
-          </div>
+          </div>-->
           <p>Reserve now, pay at the Hotel</p>
-
           <a href="/reservation/when/{{ $hotel_data[0]->id }}" class="btn btn-dark btn-block">Reservation</a>
         </div>
 
@@ -1962,4 +1964,5 @@
 </div>
 
 @include('frontend.themes.EC.layouts.subsections.quick_info')
+@include('frontend.themes.EC.layouts.subsections.reviews')
 @include('frontend.themes.EC.layouts.subsections.priceinfo')

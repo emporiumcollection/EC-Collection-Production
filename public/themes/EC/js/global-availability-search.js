@@ -34,7 +34,7 @@ function replacePropertyData(id){
   });
 
   $('[data-place="property-book-button"]').each(function() {
-    $(this).html('<a href="/hotel/hoteldetail/' + id + '" class="btn btn-primary btn-block rounded-0">BOOK</a>');
+    $(this).html('<a href="/reservation/when/' + id + '" class="btn btn-primary btn-block rounded-0">BOOK</a>');
   });
   
   if($('#map2').length){
@@ -247,7 +247,7 @@ function replacePropertySuites(id){
           firstsuite = e.id;
         }
         suiteview += `<li class="nav-item" onclick="replaceSuiteDetail(` + id + `, ` + e.id + `)">
-            <a class="nav-link nav-link-sub" id="suitelist1-tab" data-toggle="pill"
+            <a class="nav-link nav-link-sub" id="suitelist1-tab-` + e.id + `" data-toggle="pill"
                 href="#suitelist1" role="tab" aria-controls="suitelist1" aria-selected="false"> ` + e.category_name + `</a>
         </li>`;
       })
@@ -306,7 +306,7 @@ function replaceSuiteList(id){
   setTimeout('appendResultGridSlider()', 2000);    
   setTimeout("$('#suites-loader').hide();", 3000);
   setTimeout("$('#suites-popup').show();", 3000);
-  setTimeout("$('.result-grid').slick('setPosition');", 3000);  
+  setTimeout("$('#suiteslist .result-grid').slick('setPosition');", 3000);  
 }
 
 function replaceSuiteDetail(property_id, category_id){
@@ -334,6 +334,8 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite-price"]').html(suite.price);
   $('[data-place="suite-beds"]').html(suite.bads);
   $('[data-place="suite-size"]').html(suite.suite_size);
+  $('[data-place="reserve-link"]').html(`<p>Reserve now, pay at the Hotel</p>                    
+                    <a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-block">Reservation</a>`);  
 
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout('appendSlider()', 2000);

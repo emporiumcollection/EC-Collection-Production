@@ -30,38 +30,31 @@
             <div class="col">
               <p><b>Arrival date</b></p>
               <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line fromdate" name="arrival_date" id="arrival_date"  value="{!! date('d-M-Y', Session::get('arrival_date'));  !!}">
+                <input type="hidden" name="property_id" id="property_id" value="<?php echo $property_id?>">
+                <input type="text" class="form-control form-line fromdate" name="arrival_date" id="arrival_date"  value="{!! date('d-M-Y', strtotime(Session::get('arrival')));  !!}">
                 <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
             </div>
             <div class="col">
               <p><b>Departure date</b></p>
               <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line todate" name="departure_date" id="departure_date" value="{!! date('d-M-Y', Session::get('departure_date'));  !!}">
+                <input type="text" class="form-control form-line todate" name="departure_date" id="departure_date" value="{!! date('d-M-Y', strtotime(Session::get('departure')));  !!}">
                 <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-lg-12 col-md-12 mt-4">
+              <div class="text-right">
+                <a href="javascript:void(0);" class="btn btn-dark px-5 goto-guest step_where">
+                  Next
+                </a>
               </div>
             </div>
           </div>
         </div>
         <div class="col-lg-3 col-md-4 mb-4">
-
-          @include('frontend.themes.EC.reservation.reservation-summary')
-
-          <div class="reservation-total">
-            <table class="table table-borderless mb-0">
-              <tr>
-                <td class="px-0 py-1">Total</td>
-                <td class="px-0 py-1 text-right"></td>
-              </tr>
-            </table>
-          </div>
-        </div>
-        <div class="col-lg-9 col-md-8 mb-4">
-          <div class="text-right">
-            <a href="#" class="btn btn-dark px-5 goto-guest step_where">
-              Next
-            </a>
-          </div>
+          @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
         </div>
       </div>
     </div>

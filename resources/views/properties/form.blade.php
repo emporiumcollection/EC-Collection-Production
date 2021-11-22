@@ -377,7 +377,7 @@
 
                                     </div>
                                 </div>
-                                <div class="form-group  " >
+                                {{-- <div class="form-group  " >
                                     <label for="Experiences" class=" control-label col-md-4 text-left"> Experiences</label>
                                     <div class="col-md-6">
 
@@ -392,7 +392,7 @@
                                     <div class="col-md-2">
 
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="form-group  " >
                                     <label for="Facilities" class=" control-label col-md-4 text-left"> Facilities</label>
                                     <div class="col-md-6">

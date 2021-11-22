@@ -11,6 +11,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Twilio\Rest\Client;
+use Illuminate\Support\Facades\Session;
 use ValidateRequests;
 use Validator;
 
@@ -137,7 +138,10 @@ class AuthController extends Controller
             if($user){                
                 /* Authenticate user */
                 Auth::login($user);
-                return view('users_admin/traveller/users/register_invitation');
+
+                $redirect_to = \CommonHelper::checkReservation();
+
+                return view('users_admin/traveller/users/register_invitation', compact('redirect_to'));
             }else{
                 return redirect()->back()->with(['message' => 'Please try again']);
             }
@@ -146,7 +150,16 @@ class AuthController extends Controller
     // }
 
     public function logout(Request $request) {
-      Auth::logout();
-      return redirect('/');
+        Session::forget('arrival');
+        Session::forget('departure');
+        Session::forget('adult');
+        Session::forget('children');
+        Session::forget('board');
+        Session::forget('suite_array');
+        Session::forget('companions');
+        Session::forget('reservation');
+        Session::forget('suite_id');
+        Auth::logout();
+        return redirect('/');
     }
 }

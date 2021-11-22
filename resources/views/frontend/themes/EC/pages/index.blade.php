@@ -142,7 +142,7 @@
             <div class="title-with-icon">
               <i class="ico ico-profile-pp"></i>
               <h2>WHO</h2>
-              <a href="index.html" class="main-close mr-3">
+              <a href="/" class="main-close mr-3">
                 <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                   <title>Close</title>
                   <path d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">

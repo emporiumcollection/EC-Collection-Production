@@ -146,43 +146,12 @@ $(document).ready(function(){
       });
     });
 
-    $('.field-count-reservation ').on('click', '.min-room', function () {
-      $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
-
-      if ($(this).next().find('.mr-1').html() > 1) {
-        $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      }
-      if ($(this).next().find('.mr-1').html() < 2) {
-        $(this).closest('.field-count-reservation').find('.min-room').addClass('disable');
-        $('.guest-pick-body').find('.col-ews').addClass('col-12').removeClass('col-6');
-
-      }
-      if ($(this).prev().find('.mr-1').html() != 4) {
-        $(this).closest('.field-count-reservation').find('.plus-room').removeClass('disable');
-        $('.list-eoom').show();
-        $('.room-limit').hide();
-      }
-    });
-
     $('.field-count .plus').click(function () {
       $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
     });
     $('.field-count .min').click(function () {
       if ($(this).next().find('.mr-1').html() > 1) {
         $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      }
-    });
-
-    $(document).on('click', '.field-count-reservation .plus', function () {
-      $(this).prev().find('.mr-1').html(function (i, val) { return val * 1 + 1 });
-      $(this).closest('.field-count-reservation').find('.min').removeClass('disable');
-    });
-    $(document).on('click', '.field-count-reservation .min', function () {
-      if ($(this).next().find('.mr-1').html() > 0) {
-        $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
-      }
-      if ($(this).next().find('.mr-1').html() < 1) {
-        $(this).closest('.field-count-reservation').find('.min').addClass('disable');
       }
     });
 });

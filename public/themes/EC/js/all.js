@@ -593,11 +593,23 @@ var ajaxReq = 'ToCancelPrevReq';
             //if(data.status == "success"){
                 $('.title-2').html(data[0]['property_name']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
+
+                var containername;
+                try{
+                  if(data[0]['container']){
+                    containername = data[0]['container']['name'];
+                  }else{
+                    containername = data[0]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
+                  }
+                }catch(e){
+
+                }
+
                 $('.herl').html(`<img src="uploads/container_user_files/locations/` 
-                  + data[0]['container']['name'] + `/property-images/` + data[0]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);                
+                  + containername + `/property-images/` + data[0]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
 
                 $('.img-left-when').html(`<img src="/property-image/resize/645x600/` + 
-                  data[0]['container']['name'] + `/` + 
+                  containername + `/` + 
                   data[0]['property_images'][1]['file']['file_name'] + 
                   `/property-image" class="img-fluid" alt="" />`);                
 
@@ -642,14 +654,14 @@ var ajaxReq = 'ToCancelPrevReq';
       }
   });
 
+
   $(document).on('click', '.field-count-guest .plus', function () {
     $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
     var obj_adult = $(this).prev().find('.inp-adult');
     if(obj_adult.length > 0){
         var _adval = $(this).prev().find('.inp-adult').val();
         $(this).prev().find('.inp-adult').val(parseInt(_adval)+1)
-//        console.log(_adval);
-//        console.log('_adval');
+
     }
     var obj_child = $(this).prev().find('.inp-child');
     if(obj_child.length > 0){
@@ -1000,7 +1012,7 @@ var ajaxReq = 'ToCancelPrevReq';
     }
   });
 
-  $('.field-count-guest ').on('click', '.min-room', function(){
+  /*$('.field-count-guest ').on('click', '.min-room', function(){
     $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
 
     if($(this).next().find('.mr-1').html() > 1){
@@ -1014,7 +1026,7 @@ var ajaxReq = 'ToCancelPrevReq';
     if($(this).prev().find('.mr-1').html() != 4 ){
       $(this).closest('.field-count-guest').find('.plus-room').removeClass('disable');
     }
-  });
+  });*/
 
   // $(document).on('click', '.confirm-room', function(){
   //   console.log('confirm');
@@ -1038,8 +1050,10 @@ var ajaxReq = 'ToCancelPrevReq';
   $(document).on('click', '.confirm-room-when', function(){
     var adultCount = 0;
     var childCount = 0;
+    // confirm-room-when
     $('.adult-val').each(function(){
       adultCount += parseFloat($(this).html());
+      alert(adultCount);
     });
     $('.child-val').each(function(){
       childCount += parseFloat($(this).html());
@@ -1968,14 +1982,14 @@ var ajaxReq = 'ToCancelPrevReq';
 
     });
   });
-  
+
   $(".close-sidebar, .sidebar-back").click(function (e) {
     e.preventDefault();
     $(this).closest('.sidebar-main').removeClass('show');
     $(this).closest('body').css('overflow', 'auto');
     $('.sidebar-overlay').remove();
   });
-  
+
   $('body').on('click', '.sidebar-overlay', function () {
     $('.sidebar-main').removeClass('show');
     $('.sidebar-overlay').remove();
@@ -1997,6 +2011,7 @@ var ajaxReq = 'ToCancelPrevReq';
     $('.suite-list').css('opacity', '.3');
     $(this).closest('.suite-list').css('opacity', '1');
   });
+
   $('.suite-list').on('click', '.board-close', function (e) {
     e.preventDefault();
     $('.suite-board').removeClass('active');
@@ -2178,6 +2193,7 @@ $(document).ready(function(){
     $(function() {
 
   $('input[name="datefilter"]').daterangepicker({
+      minDate:new Date(), 
       autoUpdateInput: false,
       locale: {
           cancelLabel: 'Clear'
@@ -2242,6 +2258,7 @@ $(document).ready(function () {
 
   var picker = $('#daterangepicker-inline').daterangepicker({
     parentEl: "#daterangepicker-inline-container",
+    minDate:new Date(), 
     autoApply: true,
     autoUpdateInput: false,
     locale: {
@@ -2259,3 +2276,19 @@ $(document).ready(function () {
   picker.data('daterangepicker').show();
 
 });
+
+(function( func ) {
+  $.fn.addClass = function() { // replace the existing function on $.fn
+      func.apply( this, arguments ); // invoke the original function
+      this.trigger('classChanged'); // trigger the custom event
+      return this; // retain jQuery chainability
+  }
+})($.fn.addClass); // pass the original function as an argument
+
+(function( func ) {
+  $.fn.removeClass = function() {
+      func.apply( this, arguments );
+      //this.trigger('classChanged');
+      return this;
+  }
+})($.fn.removeClass);

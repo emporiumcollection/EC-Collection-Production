@@ -75,6 +75,16 @@ trait Property {
     }
 
     public function getEditorChoiceProperties($cities, $keyword){
+        $destinationId = 0;
+        $destination = categories::select(['id'])
+        ->where('category_name', '=', $keyword)
+        ->get()
+        ->toArray();
+        
+        if(!empty($destination)){
+            $destinationId = $destination[0]['id'];
+        }
+
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
@@ -133,7 +143,7 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        ->whereRaw(" (city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId%' or property_category_id like '%$destinationId,%' ) ")
         //->where('country', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
@@ -143,6 +153,15 @@ trait Property {
     }
 
     public function getFeaturedProperties($cities,$keyword){
+        $destinationId = 0;
+        $destination = categories::select(['id'])
+        ->where('category_name', '=', $keyword)
+        ->get()
+        ->toArray();
+        if(!empty($destination)){
+            $destinationId = $destination[0]['id'];
+        }
+
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
@@ -202,7 +221,7 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->whereRaw(" (city = '$keyword' or country = '$keyword') ")
+        ->whereRaw(" (city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId%' or property_category_id like '%$destinationId,%' ) ")
         //->where('country', '=', $keyword)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
@@ -382,7 +401,7 @@ trait Property {
         ->with([
             'boards',
             'container',
-            'images',
+            //'images',
             'PropertyCategoryPackages' => function($query){
                 $query->with(['package']);
             },
@@ -854,29 +873,50 @@ trait Property {
         }   
     }
 
-    public function storeSession($adults, $childs,
-        $arrive_date,$departure_date,$keyword){
+    public function storeSession($request){
+        $rooms = $request->input('rooms');
+        $adult = $request->input('adult');
+        $child = $request->input('child');
 
-        $adult = 0;
-        $child = 0;
-        if(isset($adults[0])){
-            $adult = $adults[0];
+        $selected_suite = [];
+        $total_adults = 0;
+        $total_childs = 0;
+        $total_suite = 0;
+        foreach($rooms as $key => $room_num){
+            if($adult[$key] && $child[$key]){
+                $total_suite = $total_suite +1;
+
+                $selected_suite[$key] = [ 
+                    'adult' => $adult[$key],
+                    'child' => $child[$key],
+                ];
+                $total_adults = $total_adults + $adult[$key];
+                $total_childs = $total_childs + $child[$key];
+            }
         }
-        if(isset($childs[0])){
-            $child = $childs[0];
+        
+        \session()->put('suites', $selected_suite);
+        \session()->put('total_suite', $total_suite);
+        \session()->put('adult', $total_adults);
+        \session()->put('children', $total_childs);
+        \session()->put('Guests', $total_adults + $total_childs);
+
+        if(isset($request->destination)){
+            \session()->put('keyword', $request->destination);
         }
 
-        $Guests = $adult + $child; 
-        \session()->put('adult',$adult);
-        \session()->put('suites',4);          
-        \session()->put('children',$child);
-        \session()->put('Guests',$Guests);
-        \session()->put('keyword',$keyword);
-        \session()->put('arrival_date',strtotime($arrive_date));
-        \session()->put('arrival',$arrive_date);
-        \session()->put('departure_date',strtotime($departure_date));
-        \session()->put('departure',$departure_date);                
+        if(isset($request->arrive)){
+            \session()->put('arrival', $request->arrive);
+            \session()->put('arrival_date', strtotime($request->arrive));
+        }
+
+        if(isset($request->departure)){
+            \session()->put('departure', $request->departure);
+            \session()->put('departure_date', strtotime($request->departure));
+        }
+
     }
+
      public function setFitlerOptions(){
         $this->data['experiences_data'] = \DB::table('tb_categories')
         ->where('category_approved', 1)

@@ -14,9 +14,12 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
 {{-- For Page's Content Part --}}
 @section('content')
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/reviews.js') }}"></script>
 <script type="text/javascript">
   var channelurl = '{{URL::to("getyoutubechannel/")}}';
-  setTimeout("getDefaultChannel('<?php echo isset($location[0]['category_alias']) ? $location[0]['category_alias'] : ''; ?>')", 5000);
+  $(window).on('load', function() {
+    setTimeout("getDefaultChannel('<?php echo isset($location[0]['category_alias']) ? $location[0]['category_alias'] : ''; ?>')", 1000);
+  });
 </script>
 <div class="content-em">
 
