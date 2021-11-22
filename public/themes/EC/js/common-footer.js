@@ -255,8 +255,17 @@ function setMapLocation(lat, long){
       ['<b>Loaction Name</b>', lat, long],
     ];
 
+    //mapboxgl.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+
     if(!map){
       map = L.map('map2');
+      /*L.accessToken = 'YOUR_MAPBOX_ACCESS_TOKEN';
+      map = L.map({
+        container: 'map2', // container ID
+        style: 'mapbox://styles/mapbox/satellite-v9', // style URL
+        center: [lat,long], // starting position [lng, lat]
+        zoom: 18 // starting zoom
+      });*/
       map.setView([lat, long], 18);
     }else{
       map.setView([lat, long], 18);

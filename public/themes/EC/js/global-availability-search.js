@@ -9,7 +9,12 @@ function replacePropertyData(id){
   var field = '';
   $('[data-place="property"]').each(function() {
       field = $(this).attr('data-replace');
-      $(this).html(properties[id][field]);
+      if(properties[id][field]){
+        $(this).html(properties[id][field]);
+        $(this).parents(".col-lg-4").show();
+      }else{
+        $(this).parents(".col-lg-4").hide();
+      }
   });
 
   $('[data-place="property-multi-value"]').each(function() {
@@ -20,11 +25,16 @@ function replacePropertyData(id){
       values.forEach(function(e){
         listview += '<p class="mb-0">' + e + '</p>';
       })
-      $(this).html(listview);
+      if(listview){
+        $(this).html(listview);
+        $(this).parents(".row").show();
+      }else{
+        $(this).parents(".row").hide();
+      }
   });
 
   $('[data-place="property-book-button"]').each(function() {
-    $(this).html('<a href="/hotel/hoteldetail/' + id + '" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>');
+    $(this).html('<a href="/hotel/hoteldetail/' + id + '" class="btn btn-primary btn-block rounded-0">BOOK</a>');
   });
   
   if($('#map2').length){
