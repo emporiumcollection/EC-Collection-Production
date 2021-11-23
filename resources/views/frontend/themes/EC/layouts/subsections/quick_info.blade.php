@@ -27,6 +27,8 @@
             </div>
             <div class="col-lg-8">
                 <div class="row mb-5">
+                    <p style="font-size: 19px;margin-bottom: 55px;" data-place="property" data-replace="detail_section1_description_box1">
+                </p>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Address</h4>

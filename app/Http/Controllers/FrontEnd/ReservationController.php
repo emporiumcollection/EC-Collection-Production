@@ -426,11 +426,13 @@ class ReservationController extends Controller {
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';        
         $this->data['cards'] = CardDetail::where('user_id', '=', $id)->orderBy('id','desc')->get();
+        // echo "<pre>";print_r($this->data['cards']);exit;
         $file_name = 'frontend.themes.EC.reservation.payment_method';
         return view($file_name, $this->data);   
     }
     public function savepaymentmethod(Request $request)
     {
+        
         if (!\Auth::check())
             return redirect('user/login');
             
@@ -518,6 +520,7 @@ class ReservationController extends Controller {
         
         $this->data['randomnum'] = mt_rand(0370,9999);
         $arriveDt = date("Y-m-d", strtotime(Session::get('arrival')));
+        // print_r(Session::get('arrival'));exit;
         $departDt = date("Y-m-d", strtotime(Session::get('departure')));
         $arrival_date = explode("-", $arriveDt);
         $departure_date = explode("-", $departDt);
@@ -562,65 +565,18 @@ class ReservationController extends Controller {
         Session::put('companions', $companions);        
     }   
 
-    public function reservationList()
-    {
-        
-        if (!\Auth::check())
-            return redirect('user/login');
-
-        $this->data['properties'] = properties::where('id',Session::get('property_id'))->get();
-        $hotel_name = $this->data['properties'][0]->property_short_name;
-
-        $words = explode(' ', $hotel_name);
-        $this->data['hotel_name'] = $words[0][0].$words[1][0];
-
-        $this->data['randomnum'] = mt_rand(0370,9999);        
-         $arrival_date = explode("-",Session::get('arrival'));
-        $departure_date = explode("-",Session::get('departure'));
-        
-        $this->data['arrive'] = $arrival_date[2];
-        $this->data['departure'] = $departure_date[2];
-        $this->data['year'] = $departure_date[0];
-        $this->data['month'] = date('M', $departure_date[1]);
-        $this->data['month_int'] = $departure_date[1];
-        
-        $suite_id = Session::get('suit_id');
-
-        $this->data['db'] = $this->databaseName();
-
-        $arr = [];
-        foreach($suite_id as $suite_id)
-        {
-            $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suite_id)->get();
-            $arr[] = $this->data['suites'];
-        }
-        $selected_suite = Session::get('suite_array');
-        
-        $this->data['selected_suite'] = $selected_suite;
-
-        $suite_id = Session::get('suit_id');
-        $companion = Session::get('companion_data');
-        
-        $this->data['companion'] = \DB::table('tb_companion')->where('user_id', Session::get('uid'))->get();
-        
-        $this->data['count'] = \DB::table('tb_companion')->where('user_id', Session::get('uid'))->count();
-
-        $this->data['policies'] = PropertyCategoryTypes::where('id',$suite_id)->first();        
-        $file_name = 'frontend.themes.EC.reservation.receipt';
-        return view($file_name, $this->data);   
-    }
-
 
     public function addReservationData()
     {
+        $data['user_id'] = Session::get('uid');
         $data['property_id'] = Session::get('property_id');
         $data['checkin_date'] = Session::get('arrival') ? date('Y-m-d', strtotime(Session::get('arrival'))) : '';
         
-        $data['checkout_date'] = Session::get('departure') ? date('Y-m-d', strtotime(Session::get('departure'))) : '';
-
+        $data['checkout_date'] = Session::get('departure') ? date('Y-m-d', strtotime(Session::get('departure'))) : '';        
         $data['adult'] = Session::get('adult');           
         $data['junior'] = Session::get('children');
         $data['board'] = Session::get('board') ? Session::get('board') : 0;
+        $data['card_id'] = Session::get('payment_card_id');
 
         $reserved_suites = Session::get('suite_array');
         $companions = Session::get('companions');
