@@ -622,6 +622,9 @@ var ajaxReq = 'ToCancelPrevReq';
     });
   }
   $(document).on('click', '.step-3', function () {
+    if(!homePageFeaturedProperties[1]){
+      return true;
+    }
     var containername;
     try{
       if(homePageFeaturedProperties[1]['container']){
@@ -632,7 +635,7 @@ var ajaxReq = 'ToCancelPrevReq';
     }catch(e){
 
     }
-    console.log(homePageFeaturedProperties[1]['property_images'][0]['file']['file_name']);
+    
     $('.who-container .herl').html(`<img src="uploads/container_user_files/locations/` 
                   + containername + `/property-images/` + homePageFeaturedProperties[1]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
     $('.who-container .img-left-when').html(`<img src="/property-image/resize/645x600/` + 
