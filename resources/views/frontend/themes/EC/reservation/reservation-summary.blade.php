@@ -31,6 +31,7 @@
         <h4>SUITE &nbsp; {{ $pos++ }}</h4>
         <p><b>{{ $value->category_name }}</b></p>
         <table class="table table-borderless mb-0"> 
+          @if(!empty($selected_suite))
             <tr>
               <td class="px-0 py-1">Guests</td>
               @foreach($selected_suite as $key => $select_suite)
@@ -39,10 +40,13 @@
                 @endif
               @endforeach
             </tr>
+          @if(isset($selected_suite[$value->id]['price']))
           <tr>
             <td class="px-0 py-1">Suite</td>
             <td class="px-0 py-1 text-right">€{{ $selected_suite[$value->id]['price'] }}</td>
           </tr>
+          @endif
+          @endif
           {{-- <tr>
             <td class="px-0 py-1">Tax</td>
             <td class="px-0 py-1 text-right">€299.00</td>
@@ -56,6 +60,7 @@
           </tr>
         </table>
         <hr class="mt-2">
+        @if(isset($selected_suite[$value->id]['price']))
         <table class="table table-borderless mb-0">
           <tr>
             <td class="px-0 py-1">Subtotal</td>
@@ -65,6 +70,7 @@
             </td>
           </tr>
         </table>
+        @endif
       </div>
     @endforeach
   @endforeach
