@@ -67,11 +67,11 @@
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Suites</h4>
-                            <p class="mb-0"><span data-place="property" data-replace="numberofrooms"></span> rooms and suites</p>
+                            <p class="mb-0"><span data-place="property" data-replace="numberofrooms"></span></p>
                             <div data-place="property" data-replace="suiteNameList">
                                 
-                            </div>
-                            <p class="mb-0"><b>In-room amenities :</b> <span data-place="property" data-replace="roomamenities"></span></p>
+                            </div><br>
+                            <p class="mb-0"><b>In-room amenities :</b><br> <span data-place="property" data-replace="roomamenities"></span></p>
                         </div>
                     </div>
                     <div class="col-lg-4 col-md-6 mb-5">
@@ -89,7 +89,7 @@
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Parking</h4>
-                            <p class="mb-0"><b>Car park / valet service :</b> <span class="mb-0" data-place="property" data-replace="carpark"> 65 US$ per day</span></p>
+                            <p class="mb-0"><b>Car park / valet service :</b> <br><span class="mb-0" data-place="property" data-replace="carpark"> 65 US$ per day</span></p>
                         </div>
                     </div>
                 </div>

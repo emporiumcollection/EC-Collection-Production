@@ -1,5 +1,12 @@
 @extends('layouts.app')
-
+<style>
+	#s2id_property {
+		width: 30% !important;
+	}
+	#s2id_property_category{
+		width: 15% !important;
+	}
+</style>
 @section('content')
 {{--*/ usort($tableGrid, "SiteHelpers::_sort") /*--}}
   <div class="page-content row">
@@ -44,7 +51,7 @@
 			<i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
 			@endif			
 		 
-			<select name='property' id='property' style="height: 28px; margin-left: 5px;" onchange="fetchproperty(this.value);" > 
+			<select name='property' id='property' style="height: 28px; margin-left: 5px;" class='select2 '  onchange="fetchproperty(this.value);" > 
 				<option value="">-Select Property-</option>
 				@if(!empty($fetch_prop))
 					@foreach($fetch_prop as $proplist)
@@ -52,7 +59,7 @@
 					@endforeach
 				@endif
 			</select>
-			<select name='property_category' id='property_category' style="height: 28px; margin-left: 5px;" onchange="filterstatus(this.value);" > 
+			<select name='property_category' id='property_category' style="height: 28px; margin-left: 5px;" class='select2 ' onchange="filterstatus(this.value);" > 
 				<option value="">-Select-</option>
 				<option value="is_approved" <?php echo ($curstatus == 'is_approved') ? " selected='selected' " : '' ; ?>>Is Approved</option>
 				<option value="is_not_approved" <?php echo ($curstatus == 'is_not_approved') ? " selected='selected' " : '' ; ?>>Is Not Approved</option>

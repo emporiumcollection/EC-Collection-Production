@@ -209,7 +209,8 @@
           <h3 class="text-center mt-2 mb-0">
             <span class="why-we"></span>
           </h3>
-          <ul class="pl-4">
+          <p class="pl-2">{{  $hotel_data[0]->property_usp }}</p>
+          {{-- <ul class="pl-4">
             <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
               restaurant or in the drawing room.</li>
             <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
@@ -218,7 +219,7 @@
               restaurant or in the drawing room.</li>
             <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
               restaurant or in the drawing room.</li>
-          </ul>
+          </ul> --}}
         </div>
       </div>
     </div>
@@ -241,7 +242,8 @@
             <h3 class="text-center mt-2 mb-3">
               <span class="why-we"></span>
             </h3>
-            <ul class="pl-4">
+            <p>{{  $hotel_data[0]->property_usp }}</p>
+            {{-- <ul class="pl-4">
               <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
                 restaurant or in the drawing room.</li>
               <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
@@ -250,7 +252,7 @@
                 restaurant or in the drawing room.</li>
               <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
                 restaurant or in the drawing room.</li>
-            </ul>
+            </ul> --}}
           </div>
         </div>
       </div>

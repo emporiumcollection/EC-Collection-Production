@@ -12,7 +12,7 @@ if(!isset($property)){
     $(document).ready(function(){
         replacePropertySuites(<?php echo $property->id;?>);
 
-        $('#suite .nav-item').click(function(){
+        $('#suite .nav-item .nav-link-sub').click(function(){
             $('#suiteslist').hide();
             $('#suiteinfo').show();
             setTimeout('appendSuiteSlider()', 500);
