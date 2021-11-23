@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
+<?php print_r(Request::all());?>
   <div class="page-content row">
     <!-- Page header -->
     <div class="page-header">
@@ -36,8 +36,8 @@
 								  <div class="form-group  ">
 										<label for="Property property_neme" class=" control-label col-md-4 text-left"> Hotel Name <span class="asterix"> * </span></label>
 										<div class="col-md-6">
-										<select name='hotel_id' rows='5' id='hotel_id' class='select2 ' required  ></select> 
-										{{-- {!! Form::select('hotel_id', [], $row['hotel_id'], array('class'=>'select2', 'required'=>'true', 'id'=>'hotel_id'))!!} --}}
+										{{-- <select name='hotel_id' rows='5' id='hotel_id' class='select2 ' required  ></select>  --}}
+										{!! Form::select('hotel_id', [], $row['hotel_id'], array('class'=>'select2', 'required'=>'true', 'id'=>'hotel_id'))!!}
 										</div> 
 										<div class="col-md-2">
 											
@@ -137,7 +137,7 @@
 		
 		//get propety name
 		$("#hotel_id").jCombo("{{ URL::to('properties/comboselect?filter=tb_properties:id:property_name') }}",
-            { selected_value : '{{ $row['hotel_id'] }}', condition_param: 'find_in_set' });
+            { selected_value : '{{ request()->get('hotel_id') }}', condition_param: 'find_in_set' });
 		
 	});
 	</script>		 
