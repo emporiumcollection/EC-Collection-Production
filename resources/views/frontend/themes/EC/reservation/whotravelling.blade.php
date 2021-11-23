@@ -462,7 +462,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Card</button>
+                    <button type="button" class="btn btn-primary font-weight-bold add_companion" data-dismiss="modal" aria-label="Close">Close</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Companion</button>
                 </div>
         </div>
     </div>
