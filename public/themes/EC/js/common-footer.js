@@ -154,6 +154,12 @@ $(document).ready(function(){
         $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
       }
     });
+
+    $(document).on('click', '.confirm-dates', function(){
+      var dates = $('#date_range').val();
+      console.log($('.cal-date').html());
+      console.log(dates);
+    });
 });
     
 
@@ -260,7 +266,11 @@ $(function() {
     });
 
     pickerDate.on('apply.daterangepicker', function (ev, pickerDate) {
-        $('.cal-date').html(pickerDate.startDate.format('DD MMM') + ' - ' + pickerDate.endDate.format('DD MMM'));
+      var display_date = pickerDate.startDate.format('DD MMM ') + ' - ' + pickerDate.endDate.format('DD MMM');
+      var arrival = pickerDate.startDate.format('Y-M-D');
+      var depatrure = pickerDate.endDate.format('Y-M-D');
+      updateJourneyDates(arrival, depatrure, display_date, display_date);
+      
     });
     pickerDate.data('daterangepicker').hide = function () { };
     pickerDate.data('daterangepicker').show();
@@ -271,3 +281,21 @@ $(window).load(function() {
   $("#overlayer").delay(2000).fadeOut("slow");
 });
 */
+
+function updateJourneyDates(arrival, depatrure, display_date){
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: '/store_dates/session',
+    type: 'POST',
+    data: {
+      arrival_date: arrival,
+      departure_date: depatrure,
+    },
+    success: function(response){
+      $('.cal-date').html(display_date);
+      window.location.href = '';
+    },
+  });
+}

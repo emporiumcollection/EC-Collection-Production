@@ -631,9 +631,10 @@
                     </div>
                     <div class="col-lg-3 col-5">
                       <div class="row field-count-guest align-items-center">
-                        <button type="button" class="min-room disable">-</button>
+                        <button type="button" class="min-room {{ \Session::get('total_suite') <= 1 ? 'disable' : '' }}">-</button>
                         <div class="col text-center">
-                          <span class="mr-1 room-val">{{ \Session::get('total_suite') }}  </span>
+                          <span class="mr-1 room-val">{{ \Session::get('total_suite') }}</span>
+                          <input type="hidden" name="suite[]" id="suites" class="suite" value="{{ \Session::get('total_suite') }}"/>
                         </div>
                         <button type="button" class="plus-room mr-3">+</button>
                       </div>
@@ -689,9 +690,15 @@
                   <div class="row list-eoom">
                     <?php $suites = \Session::get('suites'); ?>
                     @if(\Session::has('suites') && !empty(\Session::get('suites')))
-                      @foreach($suites as $data)
-                      <div class="col-12 col-ews mb-3" id="room-1">
-                        <p><b>Suite 1</b></p>
+                      <?php
+                      // echo '<pre>';
+                      // print_r(\Session::get('suites'));
+                      // echo '</pre>';
+                      ?>
+                      @foreach($suites as $key => $data)
+                      <div class="col-{{ count($suites) > 1 ? 6 : 12 }} col-ews mb-3" id="room-{{ $key }}">
+                        <p><b>Suite {{ $key + 1 }}</b></p>
+                        <input type="hidden" name="rooms[]" id="rooms_{{ $key }}"/>
                         <div class="row align-items-center py-2">
                           <div class="col-7">
                             <p class="mb-0"><b>Adults</b></p>
@@ -700,9 +707,8 @@
                             <div class="row field-count-guest align-items-center">
                               <button type="button" class="min">-</button>
                               <div class="col text-center">
-                                <span class="mr-1 adult-val">
-                                  {{ $data['adult'] }}
-                              </span>
+                                <span class="mr-1 adult-val">{{ $data['adult'] }}</span>
+                                <input type="hidden" name="adult[]" class="inp-adult" id="adult" value="{{ $data['adult'] }}" />
                               </div>
                               <button type="button" class="plus mr-3">+</button>
                             </div>
@@ -716,9 +722,8 @@
                             <div class="row field-count-guest align-items-center">
                               <button type="button" class="min">-</button>
                               <div class="col text-center">
-                                <span class="mr-1 child-val">
-                                {{ $data['child'] }}
-                                </span>
+                                <span class="mr-1 child-val">{{ $data['child'] }}</span>
+                                <input type="hidden" name="child[]" id="" class="inp-child" value="{{ $data['child'] }}" />
                               </div>
                               <button type="button" class="plus mr-3">+</button>
                             </div>
@@ -731,7 +736,7 @@
                 </div>
                 <div class="guest-pick-footer">
                   <div class="text-right">
-                    <a href="#" class="confirm-room">Confirm my Suite(s)</a>
+                    <a href="javascript:void(0);" class="confirm-room">Confirm my Suite(s)</a>
                   </div>
                 </div>
               </div>
