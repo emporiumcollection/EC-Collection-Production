@@ -71,13 +71,13 @@ class DatatableController extends Controller
         return $preferences;
     }
 
-    public function getreservation()
+    public function getreservations()
     {
         $user = User::find(\Session::get('uid'));
         
         $reserveData = DB::table('tb_reservations')
                 ->select('id','checkin_date','checkout_date','adult','junior','baby','booking_number')
-                ->where('property_id',\Session::get('uid'))       
+                ->where('user_id',\Session::get('uid'))       
                 ->get();
         // echo "<pre>";print_r($reserveData);exit;   
         

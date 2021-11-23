@@ -19,12 +19,16 @@
         </div>
         <div class="row">
             <div class="col-8">
+            </div>
+            <div class="col-4">
                 <div class="text-right mb-4" data-place="property-book-button">
-                    <a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>
+                    <a href="#" class="btn btn-primary btn-block rounded-0">BOOK</a>
                 </div>
             </div>
             <div class="col-lg-8">
                 <div class="row mb-5">
+                    <p style="font-size: 19px;margin-bottom: 55px;" data-place="property" data-replace="detail_section1_description_box1">
+                </p>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Address</h4>
@@ -152,8 +156,13 @@
                 <div id="map2"></div>
             </div>
         </div>
-        <div class="text-center mb-4" data-place="property-book-button">
-            <a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>
+        <div class="row">
+            <div class="col-lg-8"></div>
+            <div class="col-lg-4">
+                <div class="text-right mb-4" data-place="property-book-button">
+                    <a href="#" class="btn btn-primary btn-block rounded-0">BOOK</a>
+                </div>
+            </div>
         </div>
     </div>
 </div>

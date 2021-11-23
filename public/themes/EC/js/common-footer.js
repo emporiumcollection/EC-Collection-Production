@@ -225,29 +225,39 @@ $(function() {
 });
 
 var map = null;
-function setMapLocation(lat, long){
+function setMapLocation(lat, long,loc){
+
     var locations = [
-      ['<b>Loaction Name</b>', lat, long],
+      [loc, lat, long],
     ];
 
     if(!map){
-      map = L.map('map2');
+      
+      mapboxgl.accessToken = 'pk.eyJ1IjoibnVtYmVyN2V2ZW4iLCJhIjoiY2tpNjVrNDB5MnJmZzJzbHRwc3A1emN5ZSJ9.8hbjMM5UBnta7I26RaQX6g';
+        const map = new mapboxgl.Map({
+        container: 'map2', // container ID
+        style: 'mapbox://styles/mapbox/satellite-v9', // style URL
+        // center: [lat,long], // starting position [lng, lat]
+        center: [lat, long],
+        zoom: 9 // starting zoom
+        });
+      
       map.setView([lat, long], 18);
     }else{
       map.setView([lat, long], 18);
     }
 
-    var myIcon = L.icon({
+    var myIcon = mapboxgl.icon({
       iconUrl: '/images/basic_geolocalize-01.svg',
       iconSize: [40, 45],
     });
-    L.tileLayer(
+    mapboxgl.tileLayer(
       'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       maxZoom: 22,
     }).addTo(map);
 
     for (var i = 0; i < locations.length; i++) {
-      marker = new L.marker([locations[i][1], locations[i][2]], { icon: myIcon })
+      marker = new mapboxgl.marker([locations[i][0],locations[i][1], locations[i][2]], { icon: myIcon })
         .bindPopup(locations[i][0])
         .addTo(map);
     }

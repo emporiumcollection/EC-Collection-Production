@@ -9,7 +9,12 @@ function replacePropertyData(id){
   var field = '';
   $('[data-place="property"]').each(function() {
       field = $(this).attr('data-replace');
-      $(this).html(properties[id][field]);
+      if(properties[id][field]){
+        $(this).html(properties[id][field]);
+        $(this).parents(".col-lg-4").show();
+      }else{
+        $(this).parents(".col-lg-4").hide();
+      }
   });
 
   $('[data-place="property-multi-value"]').each(function() {
@@ -20,15 +25,20 @@ function replacePropertyData(id){
       values.forEach(function(e){
         listview += '<p class="mb-0">' + e + '</p>';
       })
-      $(this).html(listview);
+      if(listview){
+        $(this).html(listview);
+        $(this).parents(".row").show();
+      }else{
+        $(this).parents(".row").hide();
+      }
   });
 
   $('[data-place="property-book-button"]').each(function() {
-    $(this).html('<a href="/reservation/when/' + id + '" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a>');
+    $(this).html('<a href="/reservation/when/' + id + '" class="btn btn-primary btn-block rounded-0">BOOK</a>');
   });
   
   if($('#map2').length){
-    setMapLocation(properties[id]['latitude'], properties[id]['longitude']);
+    setMapLocation(properties[id]['latitude'], properties[id]['longitude'],properties[id]['address']);
   }
 
   $('[data-place="property-images"]').each(function() {
@@ -329,8 +339,23 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="price-icon"]').html(`<i class="ico ico-info-green pointer btn-sidebar" type="button"
                                 data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
   $('[data-place="suite-price"]').html(suite.price);
-  $('[data-place="suite-beds"]').html(suite.bads);
-  $('[data-place="suite-size"]').html(suite.suite_size);
+
+  var bads = $('[data-place="suite-beds"]').html(suite.bads);
+
+  if (bads > 0){
+    $('[data-place="suite-beds"]').parents('span').show();
+  }else{
+    $('[data-place="suite-beds"]').parents('span').hide();
+  }
+  
+  var suite = $('[data-place="suite-size"]').html(suite.suite_size);
+
+  if(suite > 0){
+    $('[data-place="suite-size"]').parents('span').show();
+  }else{
+    $('[data-place="suite-size"]').parents('span').hide();
+  }
+
   $('[data-place="reserve-link"]').html(`<p>Reserve now, pay at the Hotel</p>                    
                     <a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-block">Reservation</a>`);  
 
