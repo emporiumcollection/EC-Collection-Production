@@ -175,7 +175,7 @@ function replaceGalleryImages(id, place, list, image_path){
 
 function replaceGalleryNames(id){
   var suitenamelist = `<li class="nav-item">
-        <a class="nav-link" href="#" onclick="showSuiteImages('')">Suites</a>
+        <a class="nav-link" href="#" onclick="showSuiteImages('')">All Suites</a>
       </li>`;
   
   properties[id]['suites'].forEach(function(s) {
