@@ -57,7 +57,7 @@ return [
             'host'      => env('DB_HOST', 'localhost'),
             'database'  => env('DB_DATABASE', 'empo_voyage'),
             'username'  => env('DB_USERNAME', 'root'),
-            'password'  => '',
+            'password'  => env('DB_PASSWORD', ''),
             /*'host'      => '172.105.71.247',
             'database'  => 'EmporiumVoyage',
             'username'  => 'voyage',
