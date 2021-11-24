@@ -3772,27 +3772,30 @@
                                                 <div class="card-body h-100">
                                                     <div class="row">
                                                         <div class="col-lg-12 col-md-12 mb-4">    
-                                                            @include('frontend.themes.EC.reservation.reservation-summary')
+                                                            
                                                             <div class="p-4 inner-warppa">
                                                             </div>
                                                         </div>
                                                         <div class="col-lg-12 col-md-12 mb-4">
-                                                            <?php $pos=1 ?>
-                                                        @if(!empty($suites))
-                                                            @foreach($suites[0] as $value)
+                                                            <?php $pos=1;
+                                                            $grand_total = 0;
+                                                        ?>
+                                                        @if(!empty($reservations[0]))
+
+                                                            @foreach($reservations[0]->reservedSuites as $suite)
                                                             <div class="reservation-summary section-shadow">
                                                           <h4>SUITE &nbsp; {{ $pos++ }}</h4>
-                                                          <p><b>{{ $value['category_name']}}</b></p>
+                                                          <p><b>{{ $suite->suite->category_name }}</b></p>
                                                           <table class="table table-borderless mb-0">
                                                             <tr>
                                                               <td class="px-0 py-1">Guests</td>
-                                                              @foreach($selected_suite as $key => $select_suite)
-                                                              <td class="px-0 py-1 text-right">{{ $key == $value['id'] ?  $select_suite : ''}}</td>
-                                                            @endforeach
+                                                              
+                                                              <td class="px-0 py-1 text-right">{{ $suite->guest }}</td>
+                                                            
                                                             </tr>
                                                             <tr>
                                                               <td class="px-0 py-1">Suite</td>
-                                                              <td class="px-0 py-1 text-right">€4.299.00</td>
+                                                              <td class="px-0 py-1 text-right"></td>
                                                             </tr>
                                                             <tr>
                                                               <td class="px-0 py-1">Tax</td>
@@ -3810,19 +3813,21 @@
                                                           <table class="table table-borderless mb-0">
                                                             <tr>
                                                               <td class="px-0 py-1">Subtotal</td>
-                                                              <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                                                              <td class="px-0 py-1 text-right"><b>€{{ $suite->price }}</b></td>
                                                             </tr>
+                                                            <?php $grand_total += (float)$suite->price; ?>
                                                           </table>
                                                         </div>
+                                                        @endforeach
                                                         <div class="reservation-total">
                                                           <table class="table table-borderless mb-0">
                                                             <tr>
                                                               <td class="px-0 py-1">Total</td>
-                                                              <td class="px-0 py-1 text-right"><b>€4.598.00</b></td>
+                                                              <td class="px-0 py-1 text-right"><b>€{{ $grand_total }}</b></td>
                                                             </tr>
                                                           </table>
                                                         </div>
-                                                        @endforeach
+                                                        
                                                     @else
                                                         <h2>Suite Not Selected</h2>
                                                     @endif
@@ -4879,30 +4884,31 @@
                                             <div class="d-flex itinirary-list py-5 align-items-center">
                                                 <div class="w-100">
                                                     <p class="mb-0"><b>Who's Coming</b></p>
-                                                    <p class="mb-0">{{ $count }}</p>
+                                                    <p class="mb-0"></p>
                                                 </div>
                                                 <div class="w-100">
                                                     <div class="symbol-group symbol-hover justify-content-end">
-                                                    @if(isset($companion))
-                                                        @foreach($companion as $data)
+                                                    {{-- @if(isset($companion)) --}}
+                                                    <? php $count = 1;  ?>
+                                                        @foreach($reservations[0]->reservedCompanions as $data)
+                                                        <? $count++ ; ?> 
                                                             <div class="symbol symbol-35 symbol-circle"
                                                                 data-toggle="tooltip" title=""
-                                                                data-original-title="{!! Session::get('companion_name') !!}{{ $data->email }}
-                                                                {{ $data->email }}
-                                                                {{ $data->phone_number }}">
-                                                                <img alt="Pic" src="{{ asset('/uploads/users/companion/'.$data->avatar)}}">
+                                                                data-original-title="{{ $data->companion->first_name  }}{{ $data->companion->email }}
+                                                                {{ $data->companion->phone_number }}">
+                                                                <img alt="Pic" src="{{ asset('/uploads/users/companion/'.$data->companion->avatar)}}">
                                                             </div>
-                                                            @if($count == 5)
+                                                            {{-- @if($count == 5)
                                                                 @break
-                                                            @endif  
+                                                            @endif --}}  
                                                             @endforeach
-                                                        @else
+                                                        {{-- @else
                                                             <p>Companion not found<
-                                                        @endif    
+                                                        @endif  --}}   
                                                             <div class="symbol symbol-35 symbol-circle symbol-light-success"
                                                                 data-toggle="tooltip" title=""
                                                                 data-original-title="Invite someone">
-                                                                <span class="symbol-label font-weight-bold">{{ $count }}+</span>
+                                                                <span class="symbol-label font-weight-bold"></span>
                                                             </div>
                                                     </div>
                                                 </div>

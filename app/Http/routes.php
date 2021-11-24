@@ -90,7 +90,7 @@ Route::post('/addresses', 'FrontEnd\ReservationController@addresses');
 Route::post('/addcompanion', 'FrontEnd\ReservationController@addcompanion');
 Route::post('/storeinTosession', 'FrontEnd\ReservationController@storecompanionTosession');
 
-Route::get('/reservation/receipt', 'FrontEnd\ReservationController@reservationList');
+Route::get('/reservation/receipt', 'Traveller\ReservationController@reservationList');
 
 Route::get('/reserve_data', 'FrontEnd\ReservationController@addReservationData');
 

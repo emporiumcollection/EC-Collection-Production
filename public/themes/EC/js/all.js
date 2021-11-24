@@ -622,6 +622,9 @@ var ajaxReq = 'ToCancelPrevReq';
     });
   }
   $(document).on('click', '.step-3', function () {
+    if(!homePageFeaturedProperties[1]){
+      return true;
+    }
     var containername;
     try{
       if(homePageFeaturedProperties[1]['container']){
@@ -632,7 +635,7 @@ var ajaxReq = 'ToCancelPrevReq';
     }catch(e){
 
     }
-    console.log(homePageFeaturedProperties[1]['property_images'][0]['file']['file_name']);
+    
     $('.who-container .herl').html(`<img src="uploads/container_user_files/locations/` 
                   + containername + `/property-images/` + homePageFeaturedProperties[1]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
     $('.who-container .img-left-when').html(`<img src="/property-image/resize/645x600/` + 
@@ -992,11 +995,12 @@ var ajaxReq = 'ToCancelPrevReq';
     if($(this).prev().find('.mr-1').html() != 4 ){
       $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
       $(this).closest('.field-count-guest').find('.min-room').removeClass('disable');
-      var curr = $(".col-ews");
+      var curr = $("#whoF .col-ews");
       //console.log(curr);
       var currLength = curr.length + 1;
       var temp = '<div class="col-6 col-ews mb-3" id="room-'+ currLength +'">'+
           '<p><b>Suite '+ currLength +'</b></p>'+
+          '<input type="hidden" name="rooms[]"  />'+
           '<div class="row align-items-center py-2">'+
               '<div class="col-7">'+
                   '<p class="mb-0"><b>Adults</b></p>'+
@@ -1006,7 +1010,6 @@ var ajaxReq = 'ToCancelPrevReq';
                       '<button type="button" class="min">-</button>'+
                       '<div class="col text-center">'+
                           '<span class="mr-1 adult-val" >1 </span>'+
-                          '<input type="hidden" name="rooms[]"  />'+
                           '<input type="hidden" name="adult[]" class="inp-adult" value="1" />'+
                      '</div>'+
                       '<button type="button" class="plus mr-3">+</button>'+
@@ -1031,17 +1034,19 @@ var ajaxReq = 'ToCancelPrevReq';
       '</div>';
       $('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
       $('.guest-pick-body .list-eoom').append(temp);
+      $(this).prev().find('.suite').val($(this).prev().find('.mr-1').html());
     }
     if($(this).prev().find('.mr-1').html() > 3 ){
       $(this).closest('.field-count-guest').find('.plus-room').addClass('disable');
     }
   });
 
-  /*$('.field-count-guest ').on('click', '.min-room', function(){
+  $('#whoF .field-count-guest ').on('click', '.min-room', function(){
     $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
 
     if($(this).next().find('.mr-1').html() > 1){
       $(this).next().find('.mr-1').html(function(i, val) { return val*1-1 });
+      $(this).next().find('.suite').val($(this).next().find('span.room-val').html());
     }
     if($(this).next().find('.mr-1').html() < 2){
       $(this).closest('.field-count-guest').find('.min-room').addClass('disable');
@@ -1051,26 +1056,57 @@ var ajaxReq = 'ToCancelPrevReq';
     if($(this).prev().find('.mr-1').html() != 4 ){
       $(this).closest('.field-count-guest').find('.plus-room').removeClass('disable');
     }
-  });*/
+  });
 
-  // $(document).on('click', '.confirm-room', function(){
-  //   console.log('confirm');
-  //   var roomVal = $('.room-val').html();
-  //   var adultTotal = 0;
-  //   $('.adult-val').each(function(){
-  //     adultTotal += parseFloat($(this).html());
-  //   });
-  //   var chiltTotal = 0;
-  //   $('.child-val').each(function(){
-  //     chiltTotal += parseFloat($(this).html());
-  //   });
-  //   $('.opt-select').show();
-  //   $('.rto').hide();
-  //   $('.opt-select').find('.room-count').html(roomVal);
-  //   $('.opt-select').find('.adult-count').html(adultTotal);
-  //   $('.opt-select').find('.child-count').html(chiltTotal);
-  //   $('.filter-guest').addClass('show');
-  // });
+  $(document).on('click', '#whoF .confirm-room', function(){
+    console.log('confirm');
+    /*var roomVal = $('.room-val').html();
+    var adultTotal = 0;
+    $('.adult-val').each(function(){
+      adultTotal += parseFloat($(this).html());
+    });
+    var chiltTotal = 0;
+    $('.child-val').each(function(){
+      chiltTotal += parseFloat($(this).html());
+    });
+    $('.opt-select').show();
+    $('.rto').hide();
+    $('.opt-select').find('.room-count').html(roomVal);
+    $('.opt-select').find('.adult-count').html(adultTotal);
+    $('.opt-select').find('.child-count').html(chiltTotal);
+    $('.filter-guest').addClass('show');*/
+
+    var suite = $("#whoF input[name='suite[]']")
+          .map(function(){return $(this).val();}).get();
+    var rooms = $("#whoF input[name='rooms[]']")
+          .map(function(){return $(this).val();}).get();
+    var adult = $("#whoF input[name='adult[]']")
+          .map(function(){return $(this).val();}).get();
+    var child = $("#whoF input[name='child[]']")
+          .map(function(){return $(this).val();}).get();
+    /*console.log(suite);          
+    console.log(rooms);          
+    console.log(adult);          
+    console.log(child);
+    return false;*/
+    $.ajax({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      type: 'POST',            
+      url: '/select/guest',
+      data: {
+        rooms: rooms,
+        child: child,
+        adult: adult,
+        suite: suite
+      },
+      success: function(response){
+        window.location.href = '';
+      },
+    });
+
+  });
 
   $(document).on('click', '.confirm-room-when', function(){
     var adultCount = 0;

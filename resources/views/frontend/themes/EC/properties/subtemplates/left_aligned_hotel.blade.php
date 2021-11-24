@@ -18,7 +18,7 @@
         <h4 class="hover-primary mb-0">
           From € <?php echo $editorChoice->price;?>
         </h4>
-        <div class="dropdown ml-3">
+        {{-- <div class="dropdown ml-3">
           <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Add to Collection
@@ -27,12 +27,12 @@
             <a class="dropdown-item" href="#">Add to Collection</a>
             <a class="dropdown-item" href="#">Share</a>
           </div>
-        </div>
-        <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-primary ml-2">Book This Suite</a>
+        </div> --}}
+        {{-- <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-primary ml-2">Book This Suite</a> --}}
       </div>
     </div>
   </div>
-  <div class="hero-container">
+  <div class="hero-container">  
     <div class="hotel-tag-label" style="background: #89a49f;">
       <?php echo $block_title;?>
     </div>

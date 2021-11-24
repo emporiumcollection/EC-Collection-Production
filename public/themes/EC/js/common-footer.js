@@ -154,6 +154,12 @@ $(document).ready(function(){
         $(this).next().find('.mr-1').html(function (i, val) { return val * 1 - 1 });
       }
     });
+
+    $(document).on('click', '.confirm-dates', function(){
+      var dates = $('#date_range').val();
+      console.log($('.cal-date').html());
+      console.log(dates);
+    });
 });
     
 
@@ -219,13 +225,22 @@ $(function() {
 });
 
 var map = null;
-function setMapLocation(lat, long){
+function setMapLocation(lat, long, loc){
+
     var locations = [
-      ['<b>Loaction Name</b>', lat, long],
+      [loc, lat, long],
     ];
 
-    if(!map){
-      map = L.map('map2');
+    if(!map){      
+      /*mapboxgl.accessToken = 'pk.eyJ1IjoibnVtYmVyN2V2ZW4iLCJhIjoiY2tpNjVrNDB5MnJmZzJzbHRwc3A1emN5ZSJ9.8hbjMM5UBnta7I26RaQX6g';
+        map = new mapboxgl.Map({
+        container: 'map2', // container ID
+        style: 'mapbox://styles/mapbox/satellite-v9', // style URL
+        // center: [lat,long], // starting position [lng, lat]
+        center: [lat, long],
+        zoom: 9 // starting zoom
+        });*/
+      var map = L.map('map2');
       map.setView([lat, long], 18);
     }else{
       map.setView([lat, long], 18);
@@ -241,7 +256,7 @@ function setMapLocation(lat, long){
     }).addTo(map);
 
     for (var i = 0; i < locations.length; i++) {
-      marker = new L.marker([locations[i][1], locations[i][2]], { icon: myIcon })
+      marker = new L.marker([locations[i][1],locations[i][2]], { icon: myIcon })
         .bindPopup(locations[i][0])
         .addTo(map);
     }
@@ -260,7 +275,11 @@ $(function() {
     });
 
     pickerDate.on('apply.daterangepicker', function (ev, pickerDate) {
-        $('.cal-date').html(pickerDate.startDate.format('DD MMM') + ' - ' + pickerDate.endDate.format('DD MMM'));
+      var display_date = pickerDate.startDate.format('DD MMM ') + ' - ' + pickerDate.endDate.format('DD MMM');
+      var arrival = pickerDate.startDate.format('Y-M-D');
+      var depatrure = pickerDate.endDate.format('Y-M-D');
+      updateJourneyDates(arrival, depatrure, display_date, display_date);
+      
     });
     pickerDate.data('daterangepicker').hide = function () { };
     pickerDate.data('daterangepicker').show();
@@ -271,3 +290,21 @@ $(window).load(function() {
   $("#overlayer").delay(2000).fadeOut("slow");
 });
 */
+
+function updateJourneyDates(arrival, depatrure, display_date){
+  $.ajax({
+    headers: {
+      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    },
+    url: '/store_dates/session',
+    type: 'POST',
+    data: {
+      arrival_date: arrival,
+      departure_date: depatrure,
+    },
+    success: function(response){
+      $('.cal-date').html(display_date);
+      window.location.href = '';
+    },
+  });
+}
