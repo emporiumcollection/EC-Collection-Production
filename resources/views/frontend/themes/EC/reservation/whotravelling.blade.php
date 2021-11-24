@@ -37,7 +37,7 @@
                   <h5 class="mb-4 mt-5"><a href="javascript:void(0);" class="add_new_addres">Add new address</a></h5>      
                 </div>
               </div>
-
+              
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Title<sup>*</sup></label>
@@ -382,6 +382,10 @@
               new Companion</a></h3>
             <hr class="mb-4">
 
+            <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
+              <p id="massage" class="mb-0"></p>
+            </div>
+            
             <div id="companion_list" class="row">
               @foreach($companion as $data)
                 @include('frontend.themes.EC.reservation.partials.whotravelling.companion-detail', ['companion' => $data])
@@ -392,7 +396,7 @@
             <div class="row">
               <div class="col-md-12 d-flex justify-content-between">
                 <a href="/reservation/policies" class="btn btn-dark px-4">Go back</a>
-                <a href="/reservation/paymentmethod" class="btn btn-dark px-5 validate-step">Next</a>
+                <a href="javascript:void(0);" class="btn btn-dark px-5 validate-step">Next</a>
               </div>
             </div>
           </div>
