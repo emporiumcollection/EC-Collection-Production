@@ -129,11 +129,13 @@ class ReviewController extends Controller {
 		{
 			$this->data['row'] =  $row;
 		} else {
+			// $this->data['row'] = $request->hotel_id;
 			$this->data['row'] = $this->model->getColumnTable('tb_reviews'); 
 		}
 		$this->data['fields'] 		=  \SiteHelpers::fieldLang($this->info['config']['forms']);
 		
 		$this->data['id'] = $id;
+		$this->data['fetch_prop'] = Properties::orderBy('id','desc')->get();
 		return view('review.form',$this->data);
 	}	
 
@@ -161,7 +163,11 @@ class ReviewController extends Controller {
 	function postSave( Request $request)
 	{
 		
-		$rules = $this->validateForm();
+		$rules = array(
+            'rating' => 'required|numeric|max:10|min:1',
+            'fname' => 'required|max:50|min:1',
+			'lname' => 'required|max:50|min:1'
+        );
 		$validator = Validator::make($request->all(), $rules);	
 		if ($validator->passes()) {
 			$data = $this->validatePost('tb_review');
@@ -190,8 +196,7 @@ class ReviewController extends Controller {
 			return Redirect::to($return)->with('messagetext',\Lang::get('core.note_success'))->with('msgstatus','success');
 			
 		} else {
-
-			return Redirect::to('review/update/'.$id)->with('messagetext',\Lang::get('core.note_error'))->with('msgstatus','error')
+			return Redirect::to('review/update/?hotel_id='.$request->input('hotel_id'))->with('messagetext',\Lang::get('core.note_error'))->with('msgstatus','error')
 			->withErrors($validator)->withInput();
 		}	
 	

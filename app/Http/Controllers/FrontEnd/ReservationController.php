@@ -98,7 +98,9 @@ class ReservationController extends Controller {
     }
 
     public function storewhere(Request $request){
-        Session::put('property_id', $request->property_id);
+        if(isset($request->property_id)){
+            Session::put('property_id', $request->property_id);
+        }
         Session::put('arrival', date('Y-m-d', strtotime($request->arrival_date)));
         Session::put('departure', date('Y-m-d', strtotime($request->departure_date)));
     }
