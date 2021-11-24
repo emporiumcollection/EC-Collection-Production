@@ -113,7 +113,8 @@ trait Property {
             'bar_ids',
             'spa_ids',
             'restaurant_ids',
-            'city'
+            'city',
+            'property_usp'
             ])
         ->with([
             'boards',
@@ -190,7 +191,8 @@ trait Property {
             'bar_ids',
             'spa_ids',
             'restaurant_ids',
-            'city'
+            'city',
+            'property_usp'
         ])
         ->with([
             'boards',
@@ -287,7 +289,8 @@ trait Property {
                 'bar_ids',
                 'spa_ids',
                 'restaurant_ids',
-                'city'
+                'city',
+                'property_usp'
             ])
             ->with([
                 'boards',
@@ -396,7 +399,8 @@ trait Property {
             'bar_ids',
             'spa_ids',
             'restaurant_ids',
-            'city'
+            'city',
+            'property_usp'
         ])
         ->with([
             'boards',
@@ -461,7 +465,7 @@ trait Property {
                 $suiteNameList = [];
                 foreach($property->suites as $sk => $suite){
                     $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
-                    $suiteNameList[] = $suite->cat_short_name;
+                    $suiteNameList[] = ucwords($suite->cat_short_name);
                     if(!empty($suite->rooms->toArray())){
                         foreach($suite->rooms as $rk => $room){
                             //$properties[$k]->suites[$sk]->rooms[$rk]->price = $this->getRoomPrice($room->id);
@@ -915,6 +919,7 @@ trait Property {
             \session()->put('departure_date', strtotime($request->departure));
         }
 
+        \session()->save();
     }
 
      public function setFitlerOptions(){

@@ -34535,6 +34535,8 @@ button:focus {
 .grid-row-1 {
   grid-row-end: span 3; }
 
+.grid-row-2 {
+    grid-row-end: span 2; }
 .grid-row-3 {
   grid-row-end: span 3; }
 
