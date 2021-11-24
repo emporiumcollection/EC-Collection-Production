@@ -304,10 +304,28 @@ function replaceSuiteList(id){
       suiteItem = suiteItem.replace('<!--PROPERTY-ID-->', id);   
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
       suiteItem = suiteItem.replace('<!--SUITE-NO-BEDS-->', suite.bads);
-      suiteItem = suiteItem.replace('<!--SUITE-SIZE-->', suite.suite_size);      
-      
+      suiteItem = suiteItem.replace('<!--SUITE-SIZE-->', suite.suite_size);   
+      suiteItem = suiteItem.replace('<!--COVID-INFO-->', properties[id].covid_info);
+      if(properties[id].covid_link.includes('http://') == true || properties[id].covid_link.includes('https://') == true){
+        suiteItem = suiteItem.replace('<!--COVID-LINK-->', properties[id].covid_link);
+      }
+      else{
+        suiteItem = suiteItem.replace('<!--COVID-LINK-->', 'http://'+properties[id].covid_link);
+      }
       $('#suiteslist').append(suiteItem);
     }
+
+    $('.no-beds').each(function(e){
+      if($(this).html() == '0 beds'){
+        $(this).parents('.meta-title').hide();
+      }
+    });
+
+    $('.suite-size').each(function(e){
+      if($(this).html() == 'Suite size: 0 ft'){
+        $(this).parents('.meta-title').hide();
+      }
+    });
 
   });
   setTimeout('appendResultGridSlider()', 2000);    
@@ -340,12 +358,12 @@ function replaceSuiteDetail(property_id, category_id){
                                 data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
   $('[data-place="suite-price"]').html(suite.price);
 
-  var bads = $('[data-place="suite-beds"]').html(suite.bads);
+  var beds = $('[data-place="suite-beds"]').html(suite.bads);
 
-  if (bads > 0){
+  if (beds > 0){
     $('[data-place="suite-beds"]').parents('span').show();
   }else{
-    $('[data-place="suite-beds"]').parents('span').hide();
+    $('[data-place="suite-beds"]').closest('div').hide();
   }
   
   var suite = $('[data-place="suite-size"]').html(suite.suite_size);
@@ -353,7 +371,15 @@ function replaceSuiteDetail(property_id, category_id){
   if(suite > 0){
     $('[data-place="suite-size"]').parents('span').show();
   }else{
-    $('[data-place="suite-size"]').parents('span').hide();
+    $('[data-place="suite-size"]').closest('div').hide();
+  }
+  $('[data-place="property_usp"]').html(properties[property_id].property_usp);
+  $('[data-place="covid_info"]').html(properties[property_id].covid_info);
+
+  if (properties[property_id].covid_link.includes('http://') == true){
+    $('[data-place="covid_link"]').attr("href", properties[property_id].covid_link);
+  }else{
+    $('[data-place="covid_link"]').attr("href", "http://"+properties[property_id].covid_link);
   }
 
   $('[data-place="reserve-link"]').html(`<p>Reserve now, pay at the Hotel</p>                    

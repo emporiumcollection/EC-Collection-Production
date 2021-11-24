@@ -483,7 +483,8 @@ class PropertiesController extends Controller {
             $data['commission'] = $request->input('commission');
             $data['about_property'] = $request->input('about_property');
             $data['property_usp'] = $request->input('property_usp');
-
+            $data['covid_info'] = $request->input('covid_info');
+            $data['covid_link'] = $request->input('covid_link');
             /** Back link **/
             $data['back_link'] = $request->input('back_link');
             /** End back link**/
