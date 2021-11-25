@@ -234,6 +234,7 @@ $( document ).ready(function() {
         });
     });
     
+
     $(document).on('click', ".select_guest_", function(){
 
         var suite = $("input[name='suite[]']")
@@ -416,8 +417,9 @@ $(document).ready(function(){
                 companion: companions,
             },
             dataType: 'json',                    
+                        
             success: function(response){
-               
+                
             }
         });
     });
@@ -563,9 +565,28 @@ $(document).ready(function(){
         var next_url = $(this).attr('href');
         console.log($('#address_added').val());
         if($('#address_added').val() == ''){
+            $('#guestValidationMsg').find('#massage').html("Please add Address");
+            $('#guestValidationMsg').show();
             return false;
         }
-        window.location.href = next_url;
+        $.ajax({
+            url:"/validate-companion",
+            type:"get",
+            dataType:"json",
+        
+            beforeSend: function(){
+                $('#guestValidationMsg').hide();
+            },
+            success: function(response) {
+                if(response.status === false){
+                    $('#guestValidationMsg').find('#massage').html(response.message);
+                    $('#guestValidationMsg').show();
+                }else if(response.status === true){
+                    window.location.href = '/reservation/paymentmethod';
+                }
+            }
+        });
+
     });
 
     //save paymnet 

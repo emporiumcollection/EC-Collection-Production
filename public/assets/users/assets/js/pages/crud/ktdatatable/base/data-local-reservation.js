@@ -76,9 +76,9 @@ var KTDatatableDataLocalDemo = function () {
           sortable: false,
           overflow: 'visible',
           width: 30,
-          template: function () {
-            return ' <a href="#reservation_popup" class="btn btn-sm btn-clean btn-icon mr-2" title="View Reservations" data-canvas="popup">\
-						<i class="flaticon-calendar-1"></i>\
+          template: function (row) {
+            return ' <a href="javascript:void(0);" class="btn btn-sm btn-clean btn-icon mr-2 summary-data" title="View Reservations">\
+						<i class="flaticon-calendar-1 reserve_id" data-id='+row.id+'></i>\
 					</a>\ ';
           }
         }],

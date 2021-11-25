@@ -24,6 +24,11 @@ class Reservations extends Sximo  {
 		
 		return "  WHERE tb_reservations.id IS NOT NULL ";
 	}
+
+	public function property()
+    {
+        return $this->belongsTo(properties::class, 'property_id');
+    }
 	
 	public static function queryGroup(){
 		return "  ";

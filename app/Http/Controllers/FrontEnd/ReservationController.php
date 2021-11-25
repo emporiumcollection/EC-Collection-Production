@@ -2,24 +2,24 @@
 namespace App\Http\Controllers\FrontEnd;
 
 use App\Companion;
+use App\Helpers\CommonHelper;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Property;
 use App\Models\Addresses;
+use App\Models\CardDetail;
 use App\Models\PropertyCategoryTypes;
 use App\Models\ReservationCompanion;
 use App\Models\Reservations;
 use App\Models\ReservedSuite;
 use App\Models\properties;
-use App\Models\CardDetail;
-use Illuminate\Support\Facades\Session;
 use App\User;
+use Auth;
 use Config;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
+use Illuminate\Support\Facades\Session;
 use Response;
-use Validator,
-    Input,
-    Redirect;
+use Validator;
 
 class ReservationController extends Controller {
 
@@ -428,7 +428,7 @@ class ReservationController extends Controller {
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';        
         $this->data['cards'] = CardDetail::where('user_id', '=', $id)->orderBy('id','desc')->get();
-        // echo "<pre>";print_r($this->data['cards']);exit;
+        
         $file_name = 'frontend.themes.EC.reservation.payment_method';
         return view($file_name, $this->data);   
     }
@@ -521,6 +521,11 @@ class ReservationController extends Controller {
         $this->data['db'] = $this->databaseName();
         
         $this->data['randomnum'] = mt_rand(0370,9999);
+
+        $booking_number = 'EC'.'-'.$this->data['db'].'-'.$this->data['hotel_name'].'-'.$this->data['randomnum'] ;
+
+        Session::put('booking_number',$booking_number);
+
         $arriveDt = date("Y-m-d", strtotime(Session::get('arrival')));
         // print_r(Session::get('arrival'));exit;
         $departDt = date("Y-m-d", strtotime(Session::get('departure')));
@@ -533,7 +538,7 @@ class ReservationController extends Controller {
         $this->data['month'] = date('M', strtotime($departDt));
         $this->data['month_int'] = $departure_date[1];
 
-        $trip_dates = $this->_getDateRange(Session::get('arrival'), Session::get('departure'));
+        $trip_dates = CommonHelper::getDateRange(Session::get('arrival'), Session::get('departure'));
         $this->data['trip_dates'] = $trip_dates;
         
         $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',Session::get('suit_id'))->first();
@@ -563,14 +568,16 @@ class ReservationController extends Controller {
 
     public function storecompanionTosession(Request $request)
     {   
-        $companions = $request->companion;
-        Session::put('companions', $companions);        
+        
+            $companions = $request->companion;
+            Session::put('companions', $companions);
+        
     }   
 
 
     public function addReservationData()
     {
-        $data['user_id'] = Session::get('uid');
+        $data['user_id'] = Auth::user()->id;
         $data['property_id'] = Session::get('property_id');
         $data['checkin_date'] = Session::get('arrival') ? date('Y-m-d', strtotime(Session::get('arrival'))) : '';
         
@@ -579,7 +586,7 @@ class ReservationController extends Controller {
         $data['junior'] = Session::get('children');
         $data['board'] = Session::get('board') ? Session::get('board') : 0;
         $data['card_id'] = Session::get('payment_card_id');
-
+        $data['booking_number'] = Session::get('booking_number');
         $reserved_suites = Session::get('suite_array');
         $companions = Session::get('companions');
 
@@ -691,6 +698,22 @@ class ReservationController extends Controller {
         exit;
     }
 
+    public function validateCompanion()
+    {
+     if(Session::has('companions')){
+         return json_encode([
+            'status' => true
+        ]);
+        exit;
+    }else{
+        return json_encode([
+            'status' => false,
+            'message' => 'Please Add Companion and Select Your Companion',
+            'class' => 'danger'
+        ]);
+    }   
+    }
+
     private function _checkBoards($id)
     {
         $this->data['boards'] = [];
@@ -698,23 +721,6 @@ class ReservationController extends Controller {
         if(!empty($property->boards)){
             $this->data['boards'] = $property->boards->toArray();
         }
-    }
-
-    private function _getDateRange($start, $end, $format = 'Y-m-d')
-    {
-        $array = array();
-        $interval = new \DateInterval('P1D');
-
-        $realEnd = new \DateTime($end);
-        $realEnd->add($interval);
-
-        $period = new \DatePeriod(new \DateTime($start), $interval, $realEnd);
-
-        foreach($period as $date) { 
-            $array[] = $date->format($format); 
-        }
-
-        return $array;
     }
 
     private function setSuitePrice(&$properties){
