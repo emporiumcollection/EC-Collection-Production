@@ -15,14 +15,6 @@
 	        </div>
 	    @endif
 		<div class="mt-15">
-			<div class="row align-items-center">
-				<div class="col-md-12">
-					<h2 class="text-dark font-weight-bold font-saol">Companion </h2>
-					<p>
-						Intro text
-					</p>
-				</div>
-			</div>
 			<div class="mt-13">
 				<ul class="nav nav-tabs nav-profiletabs">
 					<li class="nav-item">
@@ -45,7 +37,7 @@
 				        		<br>
 				        		<br>
 								<h5 class="text-dark font-weight-bold mb-10">
-									Personal Informations
+									Companions
 								</h5>
 
 							<form method="post" action="/users/addcompanion" enctype="multipart/form-data">
