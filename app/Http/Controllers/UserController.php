@@ -1473,57 +1473,7 @@ class UserController extends Controller {
         $file_name = 'users_admin.traveller.users.companion';      
         return view($file_name, $this->data);
     }
-    public function postCompanion(Request $request){
-        $user = User::find(\Session::get('uid'));
-        
-        $return_array = array();
-        if (!\Auth::check())
-            return Redirect::to('user/login');
-        $rules = array(
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required'
-        );
-
-        $validator = Validator::make($request->all(), $rules);
-        
-        if ($validator->passes()) {
-            
-            $user = User::find(\Session::get('uid'));
-            $companion_data['user_id'] = $user->id;
-            $companion_data['first_name'] = $request->input('first_name');
-            $companion_data['last_name'] = $request->input('last_name');            
-            $companion_data['email'] = $request->input('email');
-            $companion_data['phone_code'] = $request->input('phone_code');
-            $companion_data['phone_number'] = $request->input('phone_number');
-            $companion_data['gender'] = $request->input('gender');
-            $companion_data['preferred_language'] = $request->input('preferred_language');
-            $companion_data['preferred_currency'] = $request->input('preferred_currency');
-            	
-            $companionId = \DB::table('tb_companion')->insertGetId($companion_data);             
-            if($companionId > 0){
-                
-                if (!is_null(Input::file('avatar'))) {
-                    $file = $request->file('avatar');
-                    $destinationPath = './uploads/users/companion';
-                    $filename = $file->getClientOriginalName();
-                    $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-                    $newfilename = $companionId . '.' . $extension;
-                    $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
-                    if ($uploadSuccess) {
-                        $data['avatar'] = $newfilename;
-                        \DB::table('tb_companion')->where('id', $companionId)->update(['avatar' => $newfilename]);   
-                    }
-                }
-                return redirect::to('user/companion')->with('massage','You have successfully added a travel companion!');                
-            }else{
-                return redirect::to('user/companion')->with('massage','You have successfully added a travel companion!');
-            }
-        } else {
-            return redirect::to('user/companion')->with('Errmassage','Error while adding companion!');
-        }        
-        
-    }
+    
     public function viewCompanion(Request $request){
         $id = $request->input('id'); 
         $companion = \DB::table('tb_companion')->where('id', $id)->get();
@@ -1542,32 +1492,35 @@ class UserController extends Controller {
         );
         $validator = Validator::make($request->all(), $rules);
         $id = $request->input('id'); 
+
+        $user = User::find(\Session::get('uid'));
+        $id = $request->id;            
+        $companion_data['user_id'] = $user->id;
+        $companion_data['first_name'] = $request->input('first_name');
+        $companion_data['last_name'] = $request->input('last_name');           
+        $companion_data['email'] = $request->input('email');
+        $companion_data['phone_number'] = $request->input('phone_number');
+        $companion_data['gender'] = $request->input('gender');
+        $companion_data['preferred_language'] = $request->input('preferred_language');
+        $companion_data['preferred_currency'] = $request->input('preferred_currency');
         if (!empty($request->input('id'))) {
             
             if ($validator->passes()) { 
                 
-                $user = User::find(\Session::get('uid'));
-                $id = $request->id;            
-                $companion_data['user_id'] = $user->id;
-                $companion_data['first_name'] = $request->input('first_name');
-                $companion_data['last_name'] = $request->input('last_name');           
-                $companion_data['email'] = $request->input('email');
-                $companion_data['phone_number'] = $request->input('phone_number');
-                $companion_data['gender'] = $request->input('gender');
-                $companion_data['preferred_language'] = $request->input('preferred_language');
-                $companion_data['preferred_currency'] = $request->input('preferred_currency');
-                    \DB::table('tb_companion')->where('id',$id)->update($companion_data);
-                $companionId = \DB::table('tb_companion')->where('id', $id)->update($companion_data);                             
-                    if (!is_null(Input::file('avatar'))) {
-                        $file = $request->file('avatar');
-                        $destinationPath = './uploads/users/companion';
+                
+                    \DB::table('tb_companion')->where('id',$id)->update($companion_data);                           
+                    
+                    if (!is_null(Input::file('profile_avatar'))) {
+                        $file = $request->file('profile_avatar');
+                        
+                        $destinationPath = public_path().'/uploads/users/companion';
                         $filename = $file->getClientOriginalName();
                         $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-                        $newfilename = $companionId . '.' . $extension;
-                        $uploadSuccess = $request->file('avatar')->move($destinationPath, $newfilename);
+                        $newfilename = $id . '.' . $extension;
+                        $uploadSuccess = $request->file('profile_avatar')->move($destinationPath, $newfilename);
                         if ($uploadSuccess) {
                             $data['avatar'] = $newfilename;
-                            \DB::table('tb_companion')->where('id', $companionId)->update(['avatar' => $newfilename]);   
+                            \DB::table('tb_companion')->where('id', $id)->update(['avatar' => $newfilename]);   
                         }
                     }  
                     
@@ -1590,26 +1543,17 @@ class UserController extends Controller {
                         $message->subject($emlData['subject']);
                     });
                                                
-                return redirect::to('user/companion')->with('massage','You have successfully added a travel companion!');          
+                return redirect::to('/user/companion')->with('massage','You have successfully added a travel companion!');          
                 
             } else {
-                 return redirect::to('user/companion')->with('Errmassage','Error while adding companion!');          
+                 return redirect::to('/editcompanion/'.$id)->with('Errmassage','Error while Edit companion!');          
             }        
         }
         else{
         
             if ($validator->passes()) { 
                 
-                $user = User::find(\Session::get('uid'));            
-                $companion_data['user_id'] = $user->id;
-                $companion_data['first_name'] = $request->input('first_name');
-                $companion_data['last_name'] = $request->input('last_name');            
-                $companion_data['email'] = $request->input('email');
-                // $companion_data['phone_code'] = $request->input('phone_code');
-                $companion_data['phone_number'] = $request->input('phone_number');
-                $companion_data['gender'] = $request->input('gender');
-                $companion_data['preferred_language'] = $request->input('preferred_language');
-                $companion_data['preferred_currency'] = $request->input('preferred_currency');
+                
                 
                 $companionId = \DB::table('tb_companion')->insertGetId($companion_data);             
                 if($companionId > 0){
@@ -1648,9 +1592,7 @@ class UserController extends Controller {
             
                         $message->subject($emlData['subject']);
                     });
-                    
-                    
-                // }            
+                                
                            
                 return redirect::to('user/companion')->with('massage','You have successfully added a travel companion!');           
                 

@@ -27,7 +27,8 @@
 				<ul class="nav nav-tabs nav-profiletabs">
 					<li class="nav-item ">
 						<a href="#addNew" class="nav-link active" data-toggle="tab">
-							Add new Companion</a>
+							{{ isset($data->id) ? 'Edit Companion': 'Add New Companion'}}
+						</a>
 					</li>
 					<li class="nav-item">
 						<a href="#myCompanion" class="nav-link" data-toggle="tab">
@@ -56,16 +57,16 @@
 								<div class="col-lg-9 col-xl-9">
 									<div class="image-input image-input-outline"
 										id="kt_user_add_avatar">
-										@if(isset($data))
-										<img class="image-input-wrapper" src="{{ asset('/uploads/users/companion/'.$data->avatar)}}">	
+										@if(isset($data->avatar))
+										<img class="image-input-wrapper" id="avatar" src="{{ asset( ($data->avatar == '') ? '/images/profile-pic.png' : '/uploads/users/companion/'.$data->avatar)}}">	
 										@else	
-										<img class="image-input-wrapper" src="{{ asset('/uploads/users/companion/')}}" onerror="this.onerror=null;this.src='{{ asset('/images/profile-pic.png')}}';">		
+										<img class="image-input-wrapper" id="avatar" src="{{ asset('/uploads/users/companion/')}}" onerror="this.onerror=null;this.src='{{ asset('/images/profile-pic.png')}}';">		
 										@endif
 										<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
 											data-action="change" data-toggle="tooltip"
 											title="" data-original-title="Change avatar">
 											<i class="fa fa-pen icon-sm text-muted"></i>
-											<input type="file" name="profile_avatar"
+											<input type="file" name="profile_avatar" id="profile_avatar"
 											accept=".png, .jpg, .jpeg">
 											<input type="hidden"
 												name="profile_avatar_remove">

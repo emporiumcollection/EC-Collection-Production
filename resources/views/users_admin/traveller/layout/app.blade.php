@@ -524,7 +524,16 @@
   <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/custom.js')}}"></script>
-
+  
+  <script type="text/javascript">
+    //Companion image show on file input 
+    profile_avatar.onchange = evt => {
+    const [file] = profile_avatar.files
+      if (file) {
+        avatar.src = URL.createObjectURL(file)
+      }
+    }
+</script>
   <script>
     // $("a[data-toggle='dropdown']").click(function(e){
     //   $(".dropdown-menu").removeClass("show");
