@@ -533,6 +533,24 @@
         avatar.src = URL.createObjectURL(file)
       }
     }
+    $(document).ready(function() {
+      var url = '/editcompanion/';
+      const arr_url = url.split("/");
+
+      var current_url =  window.location.pathname;
+      const curr_url = current_url.split("/");
+
+      if(arr_url[1] == curr_url[1]){
+        
+        $(".addNew").addClass("active");
+        $(".myCompanion").removeClass("active");
+        $("#addNew").addClass("active");
+        $("#addNew").addClass("show");
+        $("#myCompanion").removeClass("active");
+        $("#myCompanion").removeClass("show");
+      }
+    
+    });
 </script>
   <script>
     // $("a[data-toggle='dropdown']").click(function(e){
