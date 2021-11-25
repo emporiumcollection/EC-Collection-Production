@@ -20,6 +20,9 @@
         @endif
     </div>
     <div class="col-md-3">
+        <?php if(!$suite->guests_babies){
+            $suite->guests_babies = 3;
+        }?>
         @if($suite->guests_babies)
             <label for="infant_guest_{{ $suite->id }}">Infant(s)</label>
             <select name="infant" id="infant_guest_{{ $suite->id }}" class="form-control select_suite_guest w-100">
