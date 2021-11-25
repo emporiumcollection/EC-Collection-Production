@@ -114,7 +114,9 @@ trait Property {
             'spa_ids',
             'restaurant_ids',
             'city',
-            'property_usp'
+            'property_usp',
+            'covid_info',
+            'covid_link'
             ])
         ->with([
             'boards',
@@ -192,7 +194,9 @@ trait Property {
             'spa_ids',
             'restaurant_ids',
             'city',
-            'property_usp'
+            'property_usp',
+            'covid_info',
+            'covid_link'
         ])
         ->with([
             'boards',
@@ -290,7 +294,9 @@ trait Property {
                 'spa_ids',
                 'restaurant_ids',
                 'city',
-                'property_usp'
+                'property_usp',
+                'covid_info',
+                'covid_link'
             ])
             ->with([
                 'boards',
@@ -400,7 +406,9 @@ trait Property {
             'spa_ids',
             'restaurant_ids',
             'city',
-            'property_usp'
+            'property_usp',
+            'covid_info',
+            'covid_link'
         ])
         ->with([
             'boards',

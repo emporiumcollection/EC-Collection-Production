@@ -2,7 +2,7 @@
         <div class="header-suite-list justify-content-between align-items-center mb-2">
             <div class="title-outer-container">
                 <div class="title-main offset-930 pr-3 title-subs">
-                    <h2>Premiere Suite</h2>
+                    <h2 data-place="suite_category_name">Premiere Suite</h2>
                 </div>
                 
             </div>
@@ -41,7 +41,7 @@
                     </div>
                 </div>
             </div>
-            <a href="#">
+            <a href="#" data-place="covid_link" target="_blank">
                 <div class="covid-info align-items-center">
                     <div class="ico-security">
                         <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@
                             <span><i>Trotz
                                     Covid 19</i></span>
                         </p>
-                        <p class="mb-0">
+                        <p class="mb-0" data-place="covid_info">
                             Lorem ipsum, dolor sit amet consectetur adipisicing elit
                         </p>
                     </div>
@@ -166,7 +166,8 @@
                     <h3 class="text-center mt-2 mb-0">
                         <span class="why-we"></span>
                     </h3>
-                    <ul class="pl-4">
+                    <p data-place="property_usp"></p>
+                    <!--<ul class="pl-4">
                         <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
                             restaurant or in the drawing room.</li>
                         <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
@@ -175,7 +176,7 @@
                             restaurant or in the drawing room.</li>
                         <li class="mb-2">Stylish and Glamourous afternoon tea in Oscar
                             restaurant or in the drawing room.</li>
-                    </ul>
+                    </ul> -->
                 </div>
                 <!-- display only on dektop end -->
             </div>

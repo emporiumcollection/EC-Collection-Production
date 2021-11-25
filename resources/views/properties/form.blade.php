@@ -225,6 +225,26 @@
                                 </div> 
 
                                 <div class="form-group  " >
+                                    <label for="covid info" class=" control-label col-md-4 text-left"> Covid Info </label>
+                                    <div class="col-md-6">
+                                        <textarea name="covid_info" class="form-control">{{$row['covid_info']}}</textarea> 
+                                    </div> 
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group  " >
+                                    <label for="Covid Link " class=" control-label col-md-4 text-left"> Covid Link </label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('covid_link', $row['covid_link'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+                                    </div> 
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
+
+                                <div class="form-group  " >
                                     <label for="Assign User" class=" control-label col-md-4 text-left"> Assign User <span class="asterix"> * </span></label>
                                     <div class="col-md-6">
                                         <select name='assigned_user_id[]' rows='5' id='assigned_user_id' class='select2 ' required  multiple="multiple" ></select> 
