@@ -19,6 +19,7 @@ use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Support\Facades\Session;
 use Response;
+use Validator;
 
 class ReservationController extends Controller {
 
