@@ -30,23 +30,27 @@
       <div class="reservation-summary section-shadow">
         <h4>SUITE &nbsp; {{ $pos++ }}</h4>
         <p><b>{{ $value->category_name }}</b></p>
-        <table class="table table-borderless mb-0"> 
-          @if(!empty($selected_suite))
+        <table class="table table-borderless mb-0">
+          <tr>
+            <td class="px-0 py-1">Adult</td>
+            <td class="px-0 py-1 text-right">{{ $selected_suite[$value->id]['adult'] }}</td>
+          </tr>
+          @if($selected_suite[$value->id]['junior'])
             <tr>
-              <td class="px-0 py-1">Guests</td>
-              @foreach($selected_suite as $key => $select_suite)
-                @if($key == $value->id)
-                  <td class="px-0 py-1 text-right">{{ $key == $value->id ? $select_suite['guest'] : ''}}</td>
-                @endif
-              @endforeach
+              <td class="px-0 py-1">Junior</td>
+              <td class="px-0 py-1 text-right">{{ $selected_suite[$value->id]['junior'] }}</td>
             </tr>
-          @if(isset($selected_suite[$value->id]['price']))
+          @endif
+          @if($selected_suite[$value->id]['infant'])
+            <tr>
+              <td class="px-0 py-1">Infant</td>
+              <td class="px-0 py-1 text-right">{{ $selected_suite[$value->id]['infant'] }}</td>
+            </tr>
+          @endif
           <tr>
             <td class="px-0 py-1">Suite</td>
             <td class="px-0 py-1 text-right">€{{ $selected_suite[$value->id]['price'] }}</td>
           </tr>
-          @endif
-          @endif
           {{-- <tr>
             <td class="px-0 py-1">Tax</td>
             <td class="px-0 py-1 text-right">€299.00</td>

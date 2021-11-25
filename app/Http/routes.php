@@ -82,7 +82,7 @@ Route::get('reservation/bookingsummary', 'FrontEnd\ReservationController@booking
 Route::post('/store_dates/session', 'FrontEnd\ReservationController@storewhere');
 
 Route::post('/suite', 'FrontEnd\ReservationController@selected_suite');
-Route::get('/remove-suite-selection/{id}/{guest}', 'FrontEnd\ReservationController@removeSuiteSelection');
+Route::get('/remove-suite-selection/{id}', 'FrontEnd\ReservationController@removeSuiteSelection');
 Route::post('/validate-suite-selection', 'FrontEnd\ReservationController@validateSuiteSelection');
 
 Route::get('/validate-companion', 'FrontEnd\ReservationController@validateCompanion');

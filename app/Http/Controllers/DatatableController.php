@@ -78,7 +78,7 @@ class DatatableController extends Controller
         $user = User::find(Auth::user()->id);
         
         $reserveData = DB::table('tb_reservations')
-                ->select('id','checkin_date','checkout_date','adult','junior','baby','booking_number')
+                ->select('id', 'checkin_date', 'checkout_date', 'adult', 'junior', 'baby','booking_number', 'price')
                 ->where('user_id', Auth::user()->id)       
                 ->get();
         // echo "<pre>";print_r($reserveData);exit;   
