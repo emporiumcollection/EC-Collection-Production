@@ -20,7 +20,7 @@ class DatatableController extends Controller
         $Order = $_GET['sort']['sort'];
         if (isset($field) && isset($Order)) {
             $companions = DB::table('tb_companion')
-                ->select('id','first_name','last_name','email','gender','preferred_language','preferred_currency')
+                ->select('id','first_name','last_name','email','gender','preferred_language','preferred_currency','phone_number')
                 ->where('user_id',$user->id)
                 ->orderBy('id',$Order)        
                 ->get();   
