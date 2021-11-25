@@ -58,25 +58,17 @@ class ReservationController extends Controller {
 
     public function summaryData($id)
     {
-        $reserve_data = \DB::table('tb_reservations')->where('user_id',Session::get('uid'))->get();
-        
-        $this->data['properties'] = properties::where('id',$reserve_data[0]->property_id)
-            ->get();
-
-        $reservations = Reservations::with(['reservedSuites.suite', 'reservedCompanions.companion'])
+        $reservations = Reservations::with(['reservedSuites.suite', 'reservedCompanions.companion', 'property'])
             ->where('id', '=', $id)
             ->get();
 
-        $property_id =$this->data['properties'][0]->id;
-        $hotel_name = $this->data['properties'][0]->property_short_name;        
+        $property_id = $reservations[0]->property_id;
+        $hotel_name = $reservations[0]->property->property_name;        
         $booking_number = $reservations[0]->booking_number;
-        // $words = explode(' ', $hotel_name);
-        // $short_form = $words[0][0].$words[1][0];
 
         // $randomnum = mt_rand(0370,9999);        
-        $arrival_date = explode("-",$reserve_data[0]->checkin_date);
-        
-        $departure_date = explode("-",$reserve_data[0]->checkout_date);
+        $arrival_date = explode("-", $reservations[0]->checkin_date);        
+        $departure_date = explode("-", $reservations[0]->checkout_date);
         
         $arrive = $arrival_date[2];
         $departure = $departure_date[2];
