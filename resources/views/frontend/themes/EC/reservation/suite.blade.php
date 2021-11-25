@@ -18,6 +18,12 @@
       
       @include('frontend.themes.EC.reservation.nav_wizard')
 
+      <?php
+        echo '<pre>';
+        print_r(Session::all());
+        echo '</pre>';
+      ?>
+
       <div id="step-3" class="tab-pane" role="tabpanel">
         <h2 class="mb-5 d-flex align-items-center">
           <a href="#" class="backwizard btn-backwizard">
