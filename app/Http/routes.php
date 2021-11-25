@@ -34,8 +34,8 @@ Route::get('/users/delete-preferences/{id}', 'UserController@deletePreferences')
 Route::get('/users/profile', 'UserController@getProfile');
 Route::get('/users/setting', 'UserController@getSettings');
 Route::get('/users/guestinvite', 'UserController@getInvite');
-Route::get('/users/companion', 'UserController@getCompanion');
-// Route::get('/users/companion', 'UserController@getCompanion');
+Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
+// Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
 
 
 //HotelDetail Routes
@@ -222,10 +222,10 @@ Route::post('/viewInvite', 'UserController@viewInvite');
 Route::get('/editinvite/{id}', 'UserController@editInvite');
 Route::get('deleteinvite/{id}', 'UserController@deleteInvite');
 
-Route::post('/users/addcompanion', 'UserController@addCompanion');
-Route::post('/viewcompanion', 'UserController@viewCompanion');
-Route::get('/editcompanion/{id}', 'UserController@editCompanion');
-Route::get('/deletecompanion/{id}', 'UserController@deleteCompanion');
+Route::post('/users/addcompanion', 'Traveller\CompanionController@addCompanion');
+Route::post('/viewcompanion', 'Traveller\CompanionController@viewCompanion');
+Route::get('/editcompanion/{id}', 'Traveller\CompanionController@editCompanion');
+Route::get('/deletecompanion/{id}', 'Traveller\CompanionController@deleteCompanion');
 
 Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate');
 
