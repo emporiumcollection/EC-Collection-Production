@@ -2885,6 +2885,18 @@ class PropertyController extends Controller {
         $this->data['photos'] = json_decode($photos);
 
         $type = $request->input('type');
+
+        if($type == 'hotel'){
+            $hotel = properties::select(['id'])
+            ->where('property_name', '=', $keyword)
+            ->get()
+            ->toArray();
+
+            if(!empty($hotel)){
+                return redirect('/hotel/hoteldetail/'. $hotel[0]['id']);
+            }
+        }
+
         $arrive = $request->input('arrive');
         $departure = $request->input('departure');
 
