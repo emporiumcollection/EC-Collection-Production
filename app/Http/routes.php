@@ -84,6 +84,8 @@ Route::post('/store_dates/session', 'FrontEnd\ReservationController@storewhere')
 Route::post('/suite', 'FrontEnd\ReservationController@selected_suite');
 Route::get('/remove-suite-selection/{id}/{guest}', 'FrontEnd\ReservationController@removeSuiteSelection');
 Route::post('/validate-suite-selection', 'FrontEnd\ReservationController@validateSuiteSelection');
+
+Route::get('/validate-companion', 'FrontEnd\ReservationController@validateCompanion');
 Route::post('/select/guest', 'FrontEnd\ReservationController@guest');
 
 Route::post('/addresses', 'FrontEnd\ReservationController@addresses');
@@ -91,6 +93,7 @@ Route::post('/addcompanion', 'FrontEnd\ReservationController@addcompanion');
 Route::post('/storeinTosession', 'FrontEnd\ReservationController@storecompanionTosession');
 
 Route::get('/reservation/receipt', 'Traveller\ReservationController@reservationList');
+Route::get('/reserve/summary/{id}', 'Traveller\ReservationController@summaryData');
 
 Route::get('/reserve_data', 'FrontEnd\ReservationController@addReservationData');
 
