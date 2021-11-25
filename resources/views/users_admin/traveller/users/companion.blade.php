@@ -15,35 +15,29 @@
 	        </div>
 	    @endif
 		<div class="mt-15">
-			<div class="row align-items-center">
-				<div class="col-md-12">
-					<h2 class="text-dark font-weight-bold font-saol">Companion </h2>
-					<p>
-						Intro text
-					</p>
-				</div>
-			</div>
 			<div class="mt-13">
 				<ul class="nav nav-tabs nav-profiletabs">
-					<li class="nav-item ">
-						<a href="#addNew" class="nav-link active" data-toggle="tab">
-							Add new Companion</a>
-					</li>
 					<li class="nav-item">
-						<a href="#myCompanion" class="nav-link" data-toggle="tab">
+						<a href="#myCompanion" class="nav-link myCompanion active" data-toggle="tab">
 							My Companions
 						</a>
 					</li>
+					<li class="nav-item ">
+						<a href="#addNew" class="nav-link addNew" data-toggle="tab">
+							{{ isset($data->id) ? 'Edit Companion': 'Add New Companion'}}
+						</a>
+					</li>
+					
 				</ul>
 				
 				<div class="tab-content pt-7 profile-tabs">
-					<div class="tab-pane fade show active" id="addNew">
+					<div class="tab-pane fade " id="addNew">
 						<div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
 							<div class="col-xl-9">				                
 				        		<br>
 				        		<br>
 								<h5 class="text-dark font-weight-bold mb-10">
-									Personal Informations
+									Companions
 								</h5>
 
 							<form method="post" action="/users/addcompanion" enctype="multipart/form-data">
@@ -56,16 +50,16 @@
 								<div class="col-lg-9 col-xl-9">
 									<div class="image-input image-input-outline"
 										id="kt_user_add_avatar">
-										@if(isset($data))
-										<img class="image-input-wrapper" src="{{ asset('/uploads/users/companion/'.$data->avatar)}}">	
+										@if(isset($data->avatar))
+										<img class="image-input-wrapper" id="avatar" src="{{ asset( ($data->avatar == '') ? '/images/profile-pic.png' : '/uploads/users/'.$data->avatar)}}">	
 										@else	
-										<img class="image-input-wrapper" src="{{ asset('/uploads/users/companion/')}}" onerror="this.onerror=null;this.src='{{ asset('/images/profile-pic.png')}}';">		
+										<img class="image-input-wrapper" id="avatar" src="{{ asset('/uploads/users/')}}" onerror="this.onerror=null;this.src='{{ asset('/images/profile-pic.png')}}';">		
 										@endif
 										<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
 											data-action="change" data-toggle="tooltip"
 											title="" data-original-title="Change avatar">
 											<i class="fa fa-pen icon-sm text-muted"></i>
-											<input type="file" name="profile_avatar"
+											<input type="file" name="profile_avatar" id="profile_avatar"
 											accept=".png, .jpg, .jpeg">
 											<input type="hidden"
 												name="profile_avatar_remove">
@@ -116,7 +110,7 @@
 												<i class="la la-at"></i>
 											</span>
 										</div>
-										<input type="text"
+										<input type="email"
 											class="form-control form-control-solid form-control-lg"
 											name="email" value="@if(isset($data)){{  $data->email ? $data->email : ''}} @endif">
 									</div>
@@ -291,7 +285,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="tab-pane fade" id="myCompanion">
+					<div class="tab-pane fade show active" id="myCompanion">
 						<div class="mb-7">
 							<!--begin::Subheader-->
 							<div class="row align-items-center">
@@ -406,7 +400,7 @@
               </a>
               <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
                 <ul class="navi flex-column navi-hover py-2">
-                  <li class="navi-item">
+                  <li class="navi-item" id="editcompanion">
                     <a href="http://development.emporium-voyage.com/editcompanion/`+row.id+`" class="navi-link">
                       <span class="navi-text">Edit</span>
                     </a>

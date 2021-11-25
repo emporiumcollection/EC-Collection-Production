@@ -69,7 +69,6 @@ $(document).ready(function(){
     });
 
     $('.field-count-reservation ').on('click', '.min-room', function () {
-        console.log($(this).closest('.guest-pick-container').find('.col-ews').last());
         if($(this).closest('.guest-pick-container').find('.col-ews').length > 1){
             $(this).closest('.guest-pick-container').find('.col-ews').last().remove();
         }
@@ -119,8 +118,6 @@ $(document).ready(function(){
             var _chval = obj_child.val();
             obj_child.val(parseInt(_chval)+1);
             $(this).prev().find('span.child-val').html(obj_child.val());
-            //console.log(_chval);
-            //console.log('_chval');
         }
         $(this).closest('.field-count-reservation').find('.min').removeClass('disable');
     });
@@ -198,40 +195,59 @@ function initilize(){
 
 $( document ).ready(function() {
 
-
     $(document).on('click', ".select_suite", function(){
         var suit_id = new Array();
-        var guest = new Array();
-        // $(this).text("Selected");
+        var guests = new Array();
+        var adult,
+            infant,
+            junior = 0;
         var curr_btn = $(this);
+        var curr_section = curr_btn.parents('section');
         var suite_id = curr_btn.data('suite-id');
-        var selected_guest = curr_btn.parents('section').find('#select_suite_guest_'+suite_id).val();
-        if(!selected_guest){
-            curr_btn.parents('section').find('#select_suite_guest_'+suite_id).focus();
+        if(curr_section.find('select[name="adult"]').val() != ''){
+            adult = curr_section.find('select[name="adult"]').val();
+        }
+        if(curr_section.find('select[name="junior"]').length && (curr_section.find('select[name="junior"]').val() !== null || typeof 'undefined' !== curr_section.find('select[name="junior"]').val())){
+            junior = curr_section.find('select[name="junior"]').val();
+        }
+        if(curr_section.find('select[name="infant"]').length && (curr_section.find('select[name="infant"]').val() !== null || typeof 'undefined' !== curr_section.find('select[name="infant"]').val())){
+            infant = curr_section.find('select[name="infant"]').val();
+        }
+        if(!adult && !junior && !infant){
+            curr_btn.parents('section').find('select[name="adult"]').focus();
             return false;
         }
         suit_id.push(curr_btn.data('suite-id'));
-        guest.push(selected_guest);
+        guests.push({
+            adult: adult,
+            junior: junior,
+            infant: infant
+        });
 
         $.ajax({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            },
             type: 'POST',            
             url: '/suite',
-            data: { suit_id:suit_id,
-                    guest: guest },
+            data: {
+                suit_id: suit_id,
+                guests: guests,
+                adult: adult,
+                junior: junior,
+                infant: infant
+            },
             dataType: 'json',                    
             success: function(response){
-                curr_btn.parents('section').html(response.suite_selection_html);
-                $('#select_suite_guest_'+suite_id).select2({
+                curr_section.html(response.suite_selection_html);
+
+                curr_section.find('select[name="adult"], select[name="junior"], select[name="infant"]').select2({
                     theme: 'bootstrap',
                     minimumResultsForSearch: -1
                 });
+                $("#selected-suite-list").html(response.reserve_suite_html);
             }
         });
     });
     
+
     $(document).on('click', ".select_guest_", function(){
 
         var suite = $("input[name='suite[]']")
@@ -270,25 +286,38 @@ $( document ).ready(function() {
             type: 'get',            
             url:'/reserve_data',
             success: function(response){
-                // window.location.href ="/reservation/receipt";
+                window.location.href ="/reservation/receipt";
             }
         });
     });
 
     $(document).on('click', '.remove_suit', function(){
         var curr_btn = $(this);
+        var curr_section = curr_btn.parents('section');
         var suite_id = curr_btn.data('suite-id');
-        var guest = $('#select_suite_guest_'+suite_id).val();
+        var adult,
+            infant,
+            junior = 0;
+        if(curr_section.find('select[name="adult"]').val() != ''){
+            adult = curr_section.find('select[name="adult"]').val();
+        }
+        if(curr_section.find('select[name="junior"]').length && (curr_section.find('select[name="junior"]').val() !== null || typeof 'undefined' !== curr_section.find('select[name="junior"]').val())){
+            junior = curr_section.find('select[name="junior"]').val();
+        }
+        if(curr_section.find('select[name="infant"]').length && (curr_section.find('select[name="infant"]').val() !== null || typeof 'undefined' !== curr_section.find('select[name="infant"]').val())){
+            infant = curr_section.find('select[name="infant"]').val();
+        }
         $.ajax({
-            url: '/remove-suite-selection/'+suite_id+'/'+guest,
+            url: '/remove-suite-selection/'+suite_id,
             type: 'get',
             dataType: 'json',
             success: function(response){
-                curr_btn.parents('section').html(response.suite_selection_html);
-                $('#select_suite_guest_'+suite_id).select2({
+                curr_section.html(response.suite_selection_html);
+                curr_section.find('select[name="adult"], select[name="junior"], select[name="infant"]').select2({
                     theme: 'bootstrap',
                     minimumResultsForSearch: -1
                 });
+                $("#selected-suite-list").html(response.reserve_suite_html);
             },
         });
     });
@@ -297,12 +326,25 @@ $( document ).ready(function() {
         e.preventDefault();
         var href = $(this).attr('href');
         var totalGuest = 0;
-        $.each($('select[name="total_guest"]'), function(key, val){
-            console.log($(this).val());
+        var total_adult = 0;
+        var total_junoir = 0;
+        var total_infant = 0;
+        $.each($('select[name="adult"]'), function(key, val){
             if($(this).val() !== null){
-                totalGuest = (totalGuest + parseInt($(this).val()));
+                total_adult = (total_adult + parseInt($(this).val()));
             }
         });
+        $.each($('select[name="junior"]'), function(key, val){
+            if($(this).val() !== null){
+                total_junoir = (total_junoir + parseInt($(this).val()));
+            }
+        });
+        $.each($('select[name="infant"]'), function(key, val){
+            if($(this).val() !== null){
+                total_infant = (total_infant + parseInt($(this).val()));
+            }
+        });
+        totalGuest = parseInt(total_adult + total_junoir + total_infant);
         $.ajax({
             url: '/validate-suite-selection',
             type: 'POST',
@@ -320,7 +362,6 @@ $( document ).ready(function() {
                 }else if(response.status === true){
                     window.location.href = href;
                 }
-                console.log(response);
             },
             error: function(xhr, textStatus, error){
                 console.log('Something went wrong!');
@@ -358,65 +399,25 @@ $(document).on('click', ".step_where", function(){
     });
 });
 
-/*$(document).on('click', ".confirm_address", function(){
-
-    var title = $( "#title option:selected" ).text();
-    var country = $( "#country option:selected" ).text();
-    var state = $( "#state option:selected" ).text();
-    var city = $( "#city").val();
-    var address2 = $('#address2').val();
-    var address1 = $('#address1').val();
-    var phone = $('#phone').val();
-    var email = $('#email_').val();       
-    var zip_code = $('#zip_code').val();                
-    var last_name = $('#last_name').val();
-    var first_name = $('#first_name').val();
-    
-    $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        type: 'POST',            
-        url:'/addresses',
-        data:{  
-                first_name: first_name,
-                last_name: last_name,
-                zip_code: zip_code,
-                email: email,
-                phone: phone,
-                address1: address1,
-                address2: address2,
-                city: city,
-                state: state,
-                country: country,
-                title: title
-            },
-        dataType:'json',                    
-        success: function(response){
-           
-        }
-    });
-});*/
-
 $(document).ready(function(){
     $('.chkcompanion').click(function(){
-        var companions = [];
-        $.each($('.chkcompanion'), function(key, val){
-            if($(this).prop('checked') == true){
-                companions.push($(this).val());
+        var curr_checkbox = $(this);
+        if(curr_checkbox.prop('checked') == true){
+            curr_checkbox.parents('.companion').next('.companion_suite').show();
+        }else{
+            var suite_id = curr_checkbox.parents('.companion').next('.companion_suite').find('select[name="suite"]').val();
+            var companion_id = curr_checkbox.val();
+            if(suite_id){
+                addRemoveCompanionAjaxCall(companion_id, suite_id, 'remove');
             }
-        });
-        $.ajax({
-            type: 'POST',            
-            url: '/storeinTosession',
-            data: {  
-                companion: companions,
-            },
-            dataType: 'json',                    
-            success: function(response){
-               
-            }
-        });
+            curr_checkbox.parents('.companion').next('.companion_suite').hide();
+        }
+    });
+
+    $(document).on('change', '.add_compnaion', function(){
+        var suite_id = $(this).val();
+        var companion_id = $(this).data('companion-id');
+        addRemoveCompanionAjaxCall(companion_id, suite_id, 'save');
     });
 
 
@@ -503,11 +504,9 @@ $(document).ready(function(){
             success: function(response){
                 $('.errMsg').empty();
                 $('.form-control').removeClass('is-invalid');
-                console.log(response);
                 if(response.status != false){
                     $('#address_added').val('1');
                 }else{
-                    console.log('Here');
                     $.each(response.errors, function(key, val){
                         $('.'+key).addClass('is-invalid');
                         $('.'+key).next('.errMsg').html(val);
@@ -521,10 +520,10 @@ $(document).ready(function(){
         var first_name = $('#comapnion_f_name').val();
         var last_name = $('#comapnion_l_name').val();
         var phone = $('#comapnion_phone').val();
-        var email = $('#comapnion_email').val();       
-        var zip_code = $('#zip_code').val();
-        var language = $("#language option:selected").val();
-        var gender = $("#gender option:selected").val();
+        var email = $('#comapnion_email').val();
+        var preferred_language = $("#preferred_language").val();
+        var gender = $("#gender").val();
+        var suite = $('#suite').val();
 
         $.ajax({
             type: 'POST',            
@@ -532,11 +531,11 @@ $(document).ready(function(){
             data: { 
                 first_name: first_name,
                 last_name: last_name,
-                phone: phone,
                 email: email,
-                language: language,
+                phone: phone,
                 gender: gender,
-                zip_code: zip_code
+                preferred_language: preferred_language,
+                suite: suite
             },
             dataType: 'json',                    
             success: function(response){
@@ -547,8 +546,9 @@ $(document).ready(function(){
                     $('#addCompanionModal').modal('hide');
                 }else{
                     $.each(response.errors, function(key, val){
+                        $('.ac_'+key).empty();
                         $('.'+key).addClass('is-invalid');
-                        $('.'+key).next('.errMsg').html(val);
+                        $('.ac_'+key).html(val);
                     });
                 }
             }
@@ -558,11 +558,29 @@ $(document).ready(function(){
     $(document).on('click', '.validate-step', function(e){
         e.preventDefault();
         var next_url = $(this).attr('href');
-        console.log($('#address_added').val());
         if($('#address_added').val() == ''){
+            $('#guestValidationMsg').find('#massage').html("Please add Address");
+            $('#guestValidationMsg').show();
             return false;
         }
-        window.location.href = next_url;
+        $.ajax({
+            url:"/validate-companion",
+            type:"get",
+            dataType:"json",
+        
+            beforeSend: function(){
+                $('#guestValidationMsg').hide();
+            },
+            success: function(response) {
+                if(response.status === false){
+                    $('#guestValidationMsg').find('#massage').html(response.message);
+                    $('#guestValidationMsg').show();
+                }else if(response.status === true){
+                    window.location.href = '/reservation/paymentmethod';
+                }
+            }
+        });
+
     });
 
     //save paymnet 
@@ -584,10 +602,8 @@ $(document).ready(function(){
                         $('.'+key).next('.invalid-feedback').html(val);
                     });
                 }
-                console.log(response);
               }, 
               error: function(response) {
-                  console.log('Error:', response);
                   $('#btn-save').html('Save Changes');
               }
           });
@@ -595,3 +611,19 @@ $(document).ready(function(){
       });
     //save paymet end
 });
+
+function addRemoveCompanionAjaxCall(companion_id, suite_id, operation){
+    $.ajax({
+        url: '/storeinTosession',
+        type: 'POST',
+        async: false,
+        data: {
+            companion_id: companion_id,
+            suite_id: suite_id,
+            operation: operation
+        },
+        dataType: 'json',                
+        success: function(response){},
+        error: function(response){},
+    });
+}

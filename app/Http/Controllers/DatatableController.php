@@ -8,6 +8,8 @@ use Yajra\Datatables\Datatables;
 use Illuminate\Support\Collection;
 use DB;
 use App\User;
+use Auth;
+
 class DatatableController extends Controller
 {
     public function getDatatable()
@@ -71,13 +73,13 @@ class DatatableController extends Controller
         return $preferences;
     }
 
-    public function getreservation()
+    public function getreservations()
     {
-        $user = User::find(\Session::get('uid'));
+        $user = User::find(Auth::user()->id);
         
         $reserveData = DB::table('tb_reservations')
-                ->select('id','checkin_date','checkout_date','adult','junior','baby','booking_number')
-                ->where('property_id',\Session::get('uid'))       
+                ->select('id', 'checkin_date', 'checkout_date', 'adult', 'junior', 'baby','booking_number', 'price')
+                ->where('user_id', Auth::user()->id)       
                 ->get();
         // echo "<pre>";print_r($reserveData);exit;   
         

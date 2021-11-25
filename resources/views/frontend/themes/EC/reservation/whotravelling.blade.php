@@ -37,7 +37,7 @@
                   <h5 class="mb-4 mt-5"><a href="javascript:void(0);" class="add_new_addres">Add new address</a></h5>      
                 </div>
               </div>
-
+              
             <div class="row">
               <div class="col-md-4 form-group">
                 <label>Title<sup>*</sup></label>
@@ -382,6 +382,10 @@
               new Companion</a></h3>
             <hr class="mb-4">
 
+            <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
+              <p id="massage" class="mb-0"></p>
+            </div>
+            
             <div id="companion_list" class="row">
               @foreach($companion as $data)
                 @include('frontend.themes.EC.reservation.partials.whotravelling.companion-detail', ['companion' => $data])
@@ -392,7 +396,7 @@
             <div class="row">
               <div class="col-md-12 d-flex justify-content-between">
                 <a href="/reservation/policies" class="btn btn-dark px-4">Go back</a>
-                <a href="/reservation/paymentmethod" class="btn btn-dark px-5 validate-step">Next</a>
+                <a href="javascript:void(0);" class="btn btn-dark px-5 validate-step">Next</a>
               </div>
             </div>
           </div>
@@ -419,27 +423,29 @@
                         <div class="form-group col-md-6">
                             <label>First name <span class="text-danger">*</span></label>
                             <input type="text" name="first_name" class="form-control first_name" id="comapnion_f_name" placeholder="Enter your firsname">
-                            <div class="invalid-feedback errMsg"></div>
+                            <div class="invalid-feedback ac_first_name errMsg"></div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Last Name <span class="text-danger">*</span></label>
                             <input type="text" name="last_name" id="comapnion_l_name" class="form-control last_name" placeholder="Enter your lastname">
-                            <div class="invalid-feedback errMsg"></div>
+                            <div class="invalid-feedback ac_last_name errMsg"></div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Email<span class="text-danger">*</span></label>
                             <input type="text" name="email" id="comapnion_email" class="form-control email" placeholder="Enter your email">
-                            <div class="invalid-feedback errMsg"></div>
+                            <div class="invalid-feedback ac_email errMsg"></div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Phone<span class="text-danger">*</span></label>
                             <input type="text" name="phone" id="comapnion_phone" class="form-control phone" placeholder="Enter your phone">
+                            <div class="invalid-feedback ac_phone errMsg"></div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Gender<span class="text-danger">*</span></label>
                             <select name="gender" class="form-control gender" id="gender">
+                              <option value="" selected disabled>Select</option>
                               <option value="Man">Man</option>
                               <option value="Woman">Woman</option>
                               <option value="Non-Binary">Non-Binary</option>
@@ -447,22 +453,36 @@
                               <option value="Intersex">Intersex</option>
                               <option value="Other">Other</option>
                             </select>
+                            <div class="invalid-feedback ac_gender d-block errMsg"></div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Prefered Language<span class="text-danger">*</span></label>
-                            <select class="form-control preferred_language" name="preferred_language" id="language">
-                              <option value="en" >English</option>
+                            <select class="form-control" name="preferred_language" id="preferred_language">
+                              <option value="" selected disabled>Select</option>
+                              <option value="en">English</option>
                               <option value="de">Deutsch</option>
                               <option value="es">Espanol</option>
                               <option value="fr">Francais</option>
                               <option value="it">Italiano</option>
                               <option value="nl">Nederlands</option>
                             </select>
+                            <div class="invalid-feedback ac_preferred_language d-block errMsg"></div>
+                        </div> 
+                        <div class="form-group col-md-6">
+                            <label>Suite<span class="text-danger">*</span></label>
+                            <select class="form-control" name="suite" id="suite">
+                              <option value="" selected disabled>Select</option>
+                              @foreach($suites as $suite)
+                                <option value="{{ $suite[0]->id }}">{{ $suite[0]->category_name }}</option>
+                              @endforeach
+                            </select>
+                            <div class="invalid-feedback ac_suite errMsg d-block"></div>
                         </div>                         
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Card</button>
+                    <button type="button" class="btn btn-primary font-weight-bold add_companion" data-dismiss="modal" aria-label="Close">Close</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Companion</button>
                 </div>
         </div>
     </div>

@@ -24,7 +24,7 @@
         <div class="col-lg-8 col-hotel-slider" id="suiteslist">
             @include('frontend.themes.EC.properties.subtemplates.suite_list_template')
         </div>
-        <div class="col-lg-8 col-hotel-slider" id="suiteinfo">
+        <div class="col-lg-8 col-hotel-slider" id="suiteinfo" style="display: none;">
             @include('frontend.themes.EC.properties.subtemplates.suite_detail_template')
         </div>
       </div>
@@ -36,6 +36,12 @@
 <script>
   $(document).ready(function(){
     $('#suitelist1-tab-' + parseInt(window.location.hash.substring(1))).trigger("click");
+    
+    $("#suiteslist-tab").click(function(){
+      $("#suiteslist").show();
+      $("#suiteinfo").hide();
+    });
+
   });
 </script>
 <?php endif; ?>

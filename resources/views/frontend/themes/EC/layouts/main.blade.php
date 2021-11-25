@@ -41,6 +41,7 @@
     <meta property="twitter:card" content="@yield('twitter_card')" />
     <meta property="twitter:creator" content="@yield('twitter_creator')" />
     <meta property="twitter:site" content="@yield('twitter_site')" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no">
 
     <script type="application/ld+json">
         @yield('jsonld')
@@ -123,6 +124,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 .form-container .btn:hover, .open-button:hover {
   opacity: 1;
 }
+
 </style>
 
 
@@ -140,12 +142,14 @@ body {font-family: Arial, Helvetica, sans-serif;}
     <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('assets/images/favicon/favicon-32x32.png') }}" />
     <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('assets/images/favicon/favicon-96x96.png') }}" />
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('assets/images/favicon/favicon-16x16.png') }}" />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.6.0/mapbox-gl.css" rel="stylesheet">
+
     <link rel="manifest" href="{{ asset('assets/images/favicon/manifest.json') }}">
     <meta name="msapplication-TileColor" content="#ffffff" />
     <meta name="msapplication-TileImage" content="{{ asset('assets/images/favicon/ms-icon-144x144.png') }}" />
     <meta name="theme-color" content="#ffffff" />
     <!-- Favicon END -->
-
+    
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="{{ asset('themes/EC/css/styles.css') }}">
     <!-- tilt css include -->
@@ -277,6 +281,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 @section('custom_js')
     @parent
 @show
+
 <script type="text/javascript" src="{{ asset('themes/EC/js/common-footer.js') }}"></script>
 
 </body>

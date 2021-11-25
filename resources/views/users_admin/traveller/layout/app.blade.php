@@ -524,7 +524,34 @@
   <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/custom.js')}}"></script>
+  
+  <script type="text/javascript">
+    //Companion image show on file input 
+    profile_avatar.onchange = evt => {
+    const [file] = profile_avatar.files
+      if (file) {
+        avatar.src = URL.createObjectURL(file)
+      }
+    }
+    $(document).ready(function() {
+      var url = '/editcompanion/';
+      const arr_url = url.split("/");
 
+      var current_url =  window.location.pathname;
+      const curr_url = current_url.split("/");
+
+      if(arr_url[1] == curr_url[1]){
+        
+        $(".addNew").addClass("active");
+        $(".myCompanion").removeClass("active");
+        $("#addNew").addClass("active");
+        $("#addNew").addClass("show");
+        $("#myCompanion").removeClass("active");
+        $("#myCompanion").removeClass("show");
+      }
+    
+    });
+</script>
   <script>
     // $("a[data-toggle='dropdown']").click(function(e){
     //   $(".dropdown-menu").removeClass("show");

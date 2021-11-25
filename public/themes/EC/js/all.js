@@ -580,7 +580,8 @@ var ajaxReq = 'ToCancelPrevReq';
                     nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
                 });
   });
-
+  
+  var homePageFeaturedProperties = '';
   function get_featured_prop(_type, _collection, _location){
     var _token = $('meta[name="csrf-token"]').attr('content');
     //console.log(BaseURL);
@@ -590,6 +591,7 @@ var ajaxReq = 'ToCancelPrevReq';
         dataType: "json",
         data: {'type':_type, 'collection':_collection, '_token':_token, 'keyword':_location},
         success: function (data){
+                homePageFeaturedProperties = data;
             //if(data.status == "success"){
                 $('.title-2').html(data[0]['property_name']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
@@ -619,6 +621,32 @@ var ajaxReq = 'ToCancelPrevReq';
         }
     });
   }
+  $(document).on('click', '.step-3', function () {
+    if(!homePageFeaturedProperties[1]){
+      return true;
+    }
+    var containername;
+    try{
+      if(homePageFeaturedProperties[1]['container']){
+        containername = homePageFeaturedProperties[1]['container']['name'];
+      }else{
+        containername = homePageFeaturedProperties[1]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
+      }
+    }catch(e){
+
+    }
+    
+    $('.who-container .herl').html(`<img src="uploads/container_user_files/locations/` 
+                  + containername + `/property-images/` + homePageFeaturedProperties[1]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
+    $('.who-container .img-left-when').html(`<img src="/property-image/resize/645x600/` + 
+      containername + `/` + 
+      homePageFeaturedProperties[1]['property_images'][1]['file']['file_name'] + 
+      `/property-image" class="img-fluid" alt="" />`);  
+
+      $('.to-right .title-2').html(homePageFeaturedProperties[1]['property_name']);
+      $('.fetaruer .font-2').html(homePageFeaturedProperties[1]['detail_section1_description_box1']);  
+  });
+
 
   $(document).mouseup(function(event){
     var $trigger = $(".wherepopup");

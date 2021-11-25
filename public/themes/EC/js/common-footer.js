@@ -225,13 +225,22 @@ $(function() {
 });
 
 var map = null;
-function setMapLocation(lat, long){
+function setMapLocation(lat, long, loc){
+
     var locations = [
-      ['<b>Loaction Name</b>', lat, long],
+      [loc, lat, long],
     ];
 
-    if(!map){
-      map = L.map('map2');
+    if(!map){      
+      /*mapboxgl.accessToken = 'pk.eyJ1IjoibnVtYmVyN2V2ZW4iLCJhIjoiY2tpNjVrNDB5MnJmZzJzbHRwc3A1emN5ZSJ9.8hbjMM5UBnta7I26RaQX6g';
+        map = new mapboxgl.Map({
+        container: 'map2', // container ID
+        style: 'mapbox://styles/mapbox/satellite-v9', // style URL
+        // center: [lat,long], // starting position [lng, lat]
+        center: [lat, long],
+        zoom: 9 // starting zoom
+        });*/
+      var map = L.map('map2');
       map.setView([lat, long], 18);
     }else{
       map.setView([lat, long], 18);
@@ -247,7 +256,7 @@ function setMapLocation(lat, long){
     }).addTo(map);
 
     for (var i = 0; i < locations.length; i++) {
-      marker = new L.marker([locations[i][1], locations[i][2]], { icon: myIcon })
+      marker = new L.marker([locations[i][1],locations[i][2]], { icon: myIcon })
         .bindPopup(locations[i][0])
         .addTo(map);
     }

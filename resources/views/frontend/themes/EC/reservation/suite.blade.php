@@ -18,6 +18,12 @@
       
       @include('frontend.themes.EC.reservation.nav_wizard')
 
+      <?php
+        echo '<pre>';
+        print_r(Session::all());
+        echo '</pre>';
+      ?>
+
       <div id="step-3" class="tab-pane" role="tabpanel">
         <h2 class="mb-5 d-flex align-items-center">
           <a href="#" class="backwizard btn-backwizard">
@@ -107,7 +113,10 @@
             @endif              
         </div>
           <div class="col-lg-3 col-md-4">
-            @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+            <div id="selected-suite-list">
+            @include('frontend.themes.EC.reservation.reservation-summary', 
+            ['suites' => $suites])
+            </div>
 
             <div class="d-flex justify-content-between">
               <a href="/reservation/where" class="btn btn-dark px-4">Go back</a>

@@ -2,12 +2,12 @@
     <div class="header-suite-list justify-content-between align-items-center mb-2">
         <div class="title-outer-container">
             <div class="title-main offset-930 pr-3 title-subs">
-                <h2>Premiere Suite</h2>
+                <h2><!--SUITE-TITLE--></h2>
             </div>
             <div class="meta-title">
                 <span>Sleeps</span>
-                <span><!--SUITE-NO-BEDS--> beds </span>
-                <span>Suite size: <!--SUITE-SIZE--> ft</span>
+                <span class="no-beds"><!--SUITE-NO-BEDS--> beds</span>
+                <span class="suite-size">Suite size: <!--SUITE-SIZE--> ft</span>
             </div>
         </div>
         <div class="dropdown ipad-view">
@@ -49,7 +49,7 @@
                 </div>
             </div>
         </div>
-        <a href="#">
+        <a href="<!--COVID-LINK-->" target="_blank">
             <div class="covid-info align-items-center">
                 <div class="ico-security">
                     <i class="ico icon-security"></i>
@@ -60,7 +60,7 @@
                                 Covid 19</i></span>
                     </p>
                     <p class="mb-0">
-                        Lorem ipsum, dolor sit amet consectetur adipisicing elit
+                        <!--COVID-INFO-->
                     </p>
                 </div>
                 <div class="covid-act">
@@ -71,12 +71,12 @@
         <div class="hotel-meta full-width hotel-meta-details">
             <!--<a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews">
                 Reviews
-            </a>
-            <a href="#" class="view btn-sidebar i-none" data-sidebar="#availability">
-                Availability
             </a>-->
             <a href="#" class="view btn-sidebar i-none" data-sidebar="#suiteinfo" onclick="replaceSuiteBoard();">
                 Suite Info
+            </a>
+            <a href="/reservation/when/<!--PROPERTY-ID-->" class="view i-none">
+                Book this Suite
             </a>
             <!--<div class="hotel-title i-none">
                 <p class="mb-0 inc">Includes</p>
@@ -104,7 +104,7 @@
                     Book this Suite
                 </a>
             </div>
-            <div class="action-hotel i-none">
+            {{-- <div class="action-hotel i-none">
                 <nav class="nav nav-pills nav-justified">
                     <a class="nav-link btn-sidebar" href="#"
                         data-sidebar="#suite-deal">Suite
@@ -116,7 +116,7 @@
                     <a class="nav-link" href="#">Share</a>
                     <a class="nav-link" href="#">Book this Suite</a>
                 </nav>
-            </div>
+            </div> --}}
         </div>
     </div>
 </div>

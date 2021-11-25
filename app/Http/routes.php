@@ -34,8 +34,8 @@ Route::get('/users/delete-preferences/{id}', 'UserController@deletePreferences')
 Route::get('/users/profile', 'UserController@getProfile');
 Route::get('/users/setting', 'UserController@getSettings');
 Route::get('/users/guestinvite', 'UserController@getInvite');
-Route::get('/users/companion', 'UserController@getCompanion');
-// Route::get('/users/companion', 'UserController@getCompanion');
+Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
+// Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
 
 
 //HotelDetail Routes
@@ -82,15 +82,18 @@ Route::get('reservation/bookingsummary', 'FrontEnd\ReservationController@booking
 Route::post('/store_dates/session', 'FrontEnd\ReservationController@storewhere');
 
 Route::post('/suite', 'FrontEnd\ReservationController@selected_suite');
-Route::get('/remove-suite-selection/{id}/{guest}', 'FrontEnd\ReservationController@removeSuiteSelection');
+Route::get('/remove-suite-selection/{id}', 'FrontEnd\ReservationController@removeSuiteSelection');
 Route::post('/validate-suite-selection', 'FrontEnd\ReservationController@validateSuiteSelection');
+
+Route::get('/validate-companion', 'FrontEnd\ReservationController@validateCompanion');
 Route::post('/select/guest', 'FrontEnd\ReservationController@guest');
 
 Route::post('/addresses', 'FrontEnd\ReservationController@addresses');
 Route::post('/addcompanion', 'FrontEnd\ReservationController@addcompanion');
 Route::post('/storeinTosession', 'FrontEnd\ReservationController@storecompanionTosession');
 
-Route::get('/reservation/receipt', 'FrontEnd\ReservationController@reservationList');
+Route::get('/reservation/receipt', 'Traveller\ReservationController@reservationList');
+Route::get('/reserve/summary/{id}', 'Traveller\ReservationController@summaryData');
 
 Route::get('/reserve_data', 'FrontEnd\ReservationController@addReservationData');
 
@@ -219,10 +222,10 @@ Route::post('/viewInvite', 'UserController@viewInvite');
 Route::get('/editinvite/{id}', 'UserController@editInvite');
 Route::get('deleteinvite/{id}', 'UserController@deleteInvite');
 
-Route::post('/users/addcompanion', 'UserController@addCompanion');
-Route::post('/viewcompanion', 'UserController@viewCompanion');
-Route::get('/editcompanion/{id}', 'UserController@editCompanion');
-Route::get('/deletecompanion/{id}', 'UserController@deleteCompanion');
+Route::post('/users/addcompanion', 'Traveller\CompanionController@addCompanion');
+Route::post('/viewcompanion', 'Traveller\CompanionController@viewCompanion');
+Route::get('/editcompanion/{id}', 'Traveller\CompanionController@editCompanion');
+Route::get('/deletecompanion/{id}', 'Traveller\CompanionController@deleteCompanion');
 
 Route::post('customer_ajaxPostCreate', 'CustomerController@ajaxPostCreate');
 
