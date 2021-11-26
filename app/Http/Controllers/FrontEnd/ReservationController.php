@@ -621,7 +621,7 @@ class ReservationController extends Controller {
         $data['booking_number'] = Session::get('booking_number');
         $reserved_suites = Session::get('suite_array');
         foreach($reserved_suites as $reserved_suite){
-            $data['price'] += $reserved_suite['price'];
+            $data['price'] += floatval(str_replace(',', '', $reserved_suite['price']));
             $data['adult'] += $reserved_suite['adult'];
             $data['junior'] += $reserved_suite['junior'];
             $data['baby'] += $reserved_suite['infant'];
@@ -637,7 +637,7 @@ class ReservationController extends Controller {
             $reserveSuite->junior = $suite['junior'];
             $reserveSuite->infant = $suite['infant'];
             $reserveSuite->guest = $suite['total_guests'];
-            $reserveSuite->price = $suite['price'];
+            $reserveSuite->price = floatval(str_replace(',', '', $suite['price']));
             $reserveSuite->save();
         }
         foreach($companions as $companion_id => $companion){
