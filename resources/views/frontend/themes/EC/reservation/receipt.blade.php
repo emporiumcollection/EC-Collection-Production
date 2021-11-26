@@ -3845,13 +3845,12 @@
     <script src="{{ asset('assets/users/assets/plugins/custom/prismjs/prismjs.bundle.js')}}"></script>
     <script src="{{ asset('assets/users/assets/js/scripts.bundle.js')}}"></script>
     <!--end::Global Theme Bundle-->
-    <!--begin::Page Scripts(used by this page)-->
-    <!-- <script src="../users/assets/js/jquery.rangecalendar.js"></script> -->
     <script src="{{ asset('assets/users/assets/js/pages/crud/ktdatatable/base/data-local-reservation.js')}}"></script>
     <script src="{{ asset('assets/users/assets/plugins/custom/slick/slick.min.js')}}"></script>
     <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
     <script src="{{ asset('assets/users/assets/js/custom.js')}}"></script>
-    <script>
+    <script type="text/javascript">
+      
         var picker = $('#daterangepicker-inline').daterangepicker({
             parentEl: "#daterangepicker-inline-container",
             autoApply: true,
@@ -3869,27 +3868,7 @@
         picker.data('daterangepicker').hide = function () { };
         picker.data('daterangepicker').show();
 
-        $('.swipe-collection').owlCarousel({
-            items: 4,
-            margin: 20,
-            autoWidth: true,
-            afterInit: setWidth()
-        });
-        function setWidth() {
-            var carWidth = $('.owl-stage').width() + 100;
-            $('.owl-stage').width(carWidth);
-        }
-        $('.swipe-action-btn').click(function () {
-            $(this).closest('.swipe-action').find('.swipe-action-content').toggleClass('clicked');
-        });
-        $('.swipe-item').mouseleave(function () {
-            $('.swipe-action-content').removeClass('clicked')
-        });
-        $('.result-grid').slick({
-            slidesToShow: 1,
-            prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-            nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-        });
+        
 
         $(document).on("click",'.summary-data',function(){
             var id = $(this).find('.reserve_id').data('id');
