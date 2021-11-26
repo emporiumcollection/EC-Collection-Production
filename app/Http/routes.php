@@ -131,7 +131,7 @@ Route::post('properties/addmeals', 'MealsController@addMeals');
  * Encript payment Route.
  */
 
-Route::post('encrypt', 'FrontEnd\ReservationController@encrypt');
+// Route::post('encrypt', 'FrontEnd\ReservationController@encrypt');
 
 /*
  * AIC: CRM Layout Module
