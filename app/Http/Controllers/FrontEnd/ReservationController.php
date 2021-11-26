@@ -20,6 +20,7 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Support\Facades\Session;
 use Response;
 use Validator;
+use Illuminate\Support\Facades\Crypt;
 
 class ReservationController extends Controller {
 
@@ -475,7 +476,7 @@ class ReservationController extends Controller {
                     'exp_month' => 'required',
                     'exp_year' => 'required',
                     'card_name' => 'required',
-                    'srequirements' => 'required'
+                    'requirements' => 'required'
                 );
         
                 $validator = Validator::make($request->all(), $rules);
@@ -484,16 +485,23 @@ class ReservationController extends Controller {
                     $full_name = $request->card_name;
                     $name = explode(" ", $full_name); 
                     
+                    $card_type = Crypt::encrypt($request->card_type);
+                    $card_number = Crypt::encrypt($request->card_number);
+                    $exp_month = Crypt::encrypt($request->exp_month);
+                    $exp_year = Crypt::encrypt($request->exp_year);
+                    $first_name = Crypt::encrypt($name[0]);
+                    $last_name = Crypt::encrypt($name[1]);
+                    $requirements = Crypt::encrypt($request->requirements);
                     $payment_data = array(
                         'user_id' => $id, 
-                        'card_type' => $request->card_type, 
-                        'card_number' => $request->card_number, 
-                        'exp_month' => $request->exp_month, 
-                        'exp_year' => $request->exp_year,
-                        'first_name' => $name[0],
-                        'last_name' => $name[1],
+                        'card_type' => $card_type, 
+                        'card_number' => $card_number, 
+                        'exp_month' => $exp_month, 
+                        'exp_year' => $exp_year,
+                        'first_name' => $first_name,
+                        'last_name' => $last_name,
                         'created_at' => date("Y-m-d"),
-                        'srequirements' => $request->srequirements
+                        'srequirements' => $requirements
                         );
                     $payment_id = \DB::table('tb_cards')->insertGetId($payment_data);
                     Session::put('payment_card_id', $payment_id);

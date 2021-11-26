@@ -102,6 +102,8 @@ Route::get('/reserve_data', 'FrontEnd\ReservationController@addReservationData')
 /**
  * New frontend routes.
  */
+
+
 Route::get('landing_view', 'PhaseOne\HotelController@landing_view');
 Route::get('hotel_details', 'PhaseOne\HotelController@hotel_details');
 Route::get('get_inspired', 'PhaseOne\HotelController@get_inspired');
@@ -124,6 +126,12 @@ Route::get('/users/preferenceDatatable', 'DatatableController@getPreferencesData
 Route::post('properties/configmeals', 'MealsController@configMeals');
 Route::post('properties/resetmeals', 'MealsController@resetConfigMeals');
 Route::post('properties/addmeals', 'MealsController@addMeals');
+
+/**
+ * Encript payment Route.
+ */
+
+Route::post('encrypt', 'FrontEnd\ReservationController@encrypt');
 
 /*
  * AIC: CRM Layout Module

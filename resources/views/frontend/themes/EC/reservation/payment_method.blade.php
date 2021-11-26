@@ -128,7 +128,7 @@
               <div class="col-lg-9">
                 <h5 class="mb-4">Special requirements <span class="small color-grey">(*Required)</span></h5>
                 <div class="form-group">
-                  <textarea class="form-control" name="srequirements" id="" cols="30" rows="10"
+                  <textarea class="form-control" name="requirements" id="" cols="30" rows="10"
                     placeholder="Type your requirement here"></textarea>
                 </div>
               </div>
