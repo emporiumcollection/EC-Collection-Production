@@ -49,15 +49,27 @@
                                 <div class="col-lg-6">
                                     <div class="reservation-img mb-8">
                                         <div class="result-grid">
+                                        <?php 
+                                            foreach($property[0]->propertyImages as $images):
+                                                
+                                                if(isset($property[0]->container->name)){
+                                                    $container_name = $property[0]->container->name;
+                                                }else{
+                                                    $container_name = strtolower(str_replace(" ", "-", trim($property[0]->property_name)));
+                                                }
+
+                                                if(is_array($images)){
+                                                    $file_name = $images['file_name'];
+                                                }elseif(is_object($images) && isset($image->file->file_name)){
+                                                    $file_name = $images->file->file_name;
+                                                }else{
+                                                    $file_name = 'default-image.png';
+                                                }
+                                        ?>                  
                                             <div>
-                                                <img src="../images/64133123060-77799344932.jpg" class="w-100" alt="">
+                                                <img <?php echo 'src="/property-image/resize/398x271/'.$container_name.'/default-image.png/property-image"';?> <?php echo 'data-src="property-image/resize/398x271/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100" alt="">
                                             </div>
-                                            <div>
-                                                <img src="../images/53511811337-49267444221.jpg" class="w-100" alt="">
-                                            </div>
-                                            <div>
-                                                <img src="../images/53511811337-49267444221.jpg" class="w-100" alt="">
-                                            </div>
+                                        <?php endforeach; ?>    
                                         </div>
                                         <div class="reservation-result">
                                             <!-- <h3 class="font-weight-bolder font-size-h3 text-dark-75 mb-1">
@@ -1245,26 +1257,22 @@
                                                 <div class="w-100">
                                                     <div class="symbol-group symbol-hover justify-content-end">
                                                     {{-- @if(isset($companion)) --}}
-                                                    <? php $count = 1;  ?>
+                                                    <?php $count = 0;  ?>
                                                         @foreach($reservations[0]->reservedCompanions as $data)
-                                                        <? $count++ ; ?> 
+                                                         <?php $count++; ?>
                                                             <div class="symbol symbol-35 symbol-circle"
                                                                 data-toggle="tooltip" title=""
                                                                 data-original-title="{{ $data->companion->first_name  }}{{ $data->companion->email }}
-                                                                {{ $data->companion->phone_number }}">
+                                                                {{ $data->companion->phone_number }}" >
                                                                 <img alt="Pic" src="{{ asset('/uploads/users/companion/'.$data->companion->avatar)}}">
                                                             </div>
-                                                            {{-- @if($count == 5)
-                                                                @break
-                                                            @endif --}}  
                                                             @endforeach
-                                                        {{-- @else
-                                                            <p>Companion not found<
-                                                        @endif  --}}   
+                                                        
                                                             <div class="symbol symbol-35 symbol-circle symbol-light-success"
                                                                 data-toggle="tooltip" title=""
                                                                 data-original-title="Invite someone">
-                                                                <span class="symbol-label font-weight-bold"></span>
+                                                                <span class="symbol-label font-weight-bold">
+                                                                {{ $count }}+</span>
                                                             </div>
                                                     </div>
                                                 </div>
@@ -1528,3 +1536,30 @@
     <!--end::Content-->
 
 <!--end::Demo Panel-->
+<script type="text/javascript">
+jQuery(function($) {
+      $(document).ready(function() {
+            $('.swipe-collection').owlCarousel({
+            items: 4,
+            margin: 20,
+            autoWidth: true,
+            afterInit: setWidth()
+            });
+            function setWidth() {
+                var carWidth = $('.owl-stage').width() + 100;
+                $('.owl-stage').width(carWidth);
+            }
+            $('.swipe-action-btn').click(function () {
+                $(this).closest('.swipe-action').find('.swipe-action-content').toggleClass('clicked');
+            });
+            $('.swipe-item').mouseleave(function () {
+                $('.swipe-action-content').removeClass('clicked')
+            });
+            $('.result-grid').slick({
+                slidesToShow: 1,
+                prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+                nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+            });
+        });    
+    });
+</script>

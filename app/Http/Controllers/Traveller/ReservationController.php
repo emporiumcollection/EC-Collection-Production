@@ -32,9 +32,12 @@ class ReservationController extends Controller {
 
     public function summaryData($id)
     {
-        $reservations = Reservations::with(['reservedSuites.suite', 'reservedCompanions.companion', 'property'])
+        $reservations = Reservations::with(['reservedSuites.suite', 'reservedCompanions.companion', 'property',])
             ->where('id', '=', $id)
             ->get();
+            
+        $property = $this->getPropertyById($reservations[0]->property_id);
+        $this->setGalleryAndFormat($property);
 
         $property_id = $reservations[0]->property_id;
         $hotel_name = $reservations[0]->property->property_name;        
@@ -44,6 +47,7 @@ class ReservationController extends Controller {
         $reserve_summary = view('frontend.themes.EC.reservation.partials.summary.reservation_summary',
             [   
                 'reservations' => $reservations,
+                'property' => $property,
                 'hotel_name' => $hotel_name,
                 'booking_number' => $booking_number,
                 'trip_dates' => $trip_dates
