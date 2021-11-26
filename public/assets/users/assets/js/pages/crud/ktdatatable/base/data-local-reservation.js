@@ -31,8 +31,18 @@ var KTDatatableDataLocalDemo = function () {
      
 
       // columns definition
-      columns: [
-        {
+      columns: [{
+          field: 'BookingAction',
+          title: '',
+          sortable: false,
+          overflow: 'visible',
+          width: 30,
+          template: function (row) {
+            return ' <a href="javascript:void(0);" class="btn btn-sm btn-clean btn-icon mr-2 summary-data" title="View Reservations">\
+            <i class="flaticon-calendar-1 reserve_id" data-id='+row.id+'></i>\
+          </a>\ ';
+          }
+        },{
           field: 'booking_number',
           title: 'Booking#',
         }, {
@@ -41,46 +51,38 @@ var KTDatatableDataLocalDemo = function () {
           width: 60
         }, {
           field: 'checkin_date',
-          title: 'Check In - Check Out',
-          width: 200
+          title: 'Check In',
+          width: 80
         }, {
-          field: 'TotalPayment',
+          field: 'checkout_date',
+          title: 'Check Out',
+          width: 80
+        }, {
+          field: 'price',
           title: 'Total',
           Platform: 'number',
+          width: 50,
+          template: function (row) {
+            return '€'+row.price;
+          }
         }, {
           field: 'adult',
           title: 'Adult',
-          width: 60
+          width: 50
         }, {
           field: 'junior',
           title: 'Kids',
-          width: 60
-        },
-        {
-          field: 'baby',
-          title: 'Baby',
-          width: 60
+          width: 50
         }, {
-          field: 'InfantGuest',
+          field: 'baby',
           title: 'Infant',
-          width: 60
+          width: 50
         }, {
           field: 'ContactGuest',
           title: 'Contact',
         }, {
           field: 'PlatformGuest',
           title: 'Platform',
-        }, {
-          field: 'BookingAction',
-          title: '',
-          sortable: false,
-          overflow: 'visible',
-          width: 30,
-          template: function (row) {
-            return ' <a href="javascript:void(0);" class="btn btn-sm btn-clean btn-icon mr-2 summary-data" title="View Reservations">\
-						<i class="flaticon-calendar-1 reserve_id" data-id='+row.id+'></i>\
-					</a>\ ';
-          }
         }],
     });
 
