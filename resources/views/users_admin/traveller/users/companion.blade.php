@@ -293,8 +293,7 @@
 									<div class="row align-items-center">
 										<div class="col-md-3 my-2 my-md-0">
 											<div class="input-icon">
-												<input type="text" class="form-control" placeholder="Search..."
-													id="kt_datatable_search_query" />
+												<input type="text" class="form-control" placeholder="Search..." id="kt_datatable_search_query" />
 												<span>
 													<i class="flaticon2-search-1 text-muted"></i>
 												</span>
@@ -310,7 +309,8 @@
 						</div>
 						<!--begin: Datatable-->
 						<div class="table-scroller">
-							<div class="datatable datatable-bordered datatable-head-custom"
+							<div class="datatable datatable-bordered datatable-head-custom "
+							datatable datatable-bordered datatable-head-custom datatable-default datatable-primary datatable-loaded
 								id="kt_datatable">
 							</div>
 						</div>
@@ -322,101 +322,127 @@
 	</div>
 	<!--begin::Global Theme Bundle(used by all pages)-->
 	@section('companion_datatable')
+	var KTDatatableColumnRenderingDemo = function() {
+	var demo = function() {
 		var datatable = $('#kt_datatable').KTDatatable({
-      data: {
-        type: 'remote',
-        source: { 
-          read: {
-            url: '{{ URL::to('/users/companiondata') }}',
-            method: 'GET',
-            map: function(raw) {
-              // sample data mapping
-              var dataSet = raw;
-              if (typeof raw.data !== 'undefined') {
-                dataSet = raw.data;
-              }
-              return dataSet;
-            },
-          },
+			data: {
+				type: 'remote',
+				source: { 
+					read: {
+						url: '{{ URL::to('/users/companiondata') }}',
+						method: 'GET',
+						map: function(raw) {
+						// sample data mapping
+						var dataSet = raw;
+						if (typeof raw.data !== 'undefined') {
+							dataSet = raw.data;
+						}
+						return dataSet;
+						},
+					},
+				},
+				pageSize: 10, // display 20 records per page
+				serverPaging: true,
+				serverFiltering: true,
+				serverSorting: true,
+			},
+			layout: {
+				scroll: false,
+				footer: false,
+			},
+			sortable: true,
+			pagination: true,
+			search: {
+				input: $('#kt_datatable_search_query'),
+				delay: 400,
+				key: 'generalSearch'
+			},
+
+			columns: [
+				
+				{
+					field: 'first_name',
+					title: 'Name',
+					sortable: 'asc',
+					selector: false,
+				}, {
+					field: 'email',
+					title: 'Email',
+					sortable: 'asc',
+					selector: false,
+				}, {
+					field: 'phone_number',
+					title: 'Phone Number',
+					sortable: 'asc',
+					selector: false,
+				}, {
+					field: 'gender',
+					title: 'Gender',
+					sortable: 'asc',
+					selector: false,
+				}, {
+					field: 'preferred_language',
+					title: 'Preferred Language',
+					sortable: 'asc',
+					selector: false,
+				},{
+					field: 'preferred_currency',
+					title: 'Preferred Currency',
+					sortable: 'asc',
+					selector: false,
+				},{
+				field: 'Action',
+				title: '',
+				sortable: false,
+				overflow: 'visible',
+				width: 30,
+
+				template: function (row) {
+					return `<div class="dropdown dropdown-inline">
+					<a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
+						<i class="flaticon-cogwheel-2"></i>
+					</a>
+					<div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+						<ul class="navi flex-column navi-hover py-2">
+						<li class="navi-item" id="editcompanion">
+							<a href="http://development.emporium-voyage.com/editcompanion/`+row.id+`" class="navi-link">
+							<span class="navi-text">Edit</span>
+							</a>
+						</li>
+						<li class="navi-item">
+							<a href="http://development.emporium-voyage.com/deletecompanion/`+row.id+`"" class="navi-link">
+							<span class="navi-text">Delete</span>
+							</a>
+						</li>
+						</ul>
+					</div>
+					</div>`;
+				}
+				}
+			],  
+    	});
+		$('#kt_datatable_search_status').on('change', function() {
+            datatable.search($(this).val().toLowerCase(), 'Status');
+        });
+
+        $('#kt_datatable_search_type').on('change', function() {
+            datatable.search($(this).val().toLowerCase(), 'Type');
+        });
+
+        $('#kt_datatable_search_status, #kt_datatable_search_type').selectpicker();
+
+    };
+	return {
+        // public functions
+        init: function() {
+            demo();
         },
-        pageSize: 10, // display 20 records per page
-        serverPaging: true,
-        serverFiltering: true,
-        serverSorting: true,
-      },
-      layout: {
-        scroll: false,
-        footer: false,
-      },
-      sortable: true,
-      pagination: true,
-      search: {
-          input: $('#kt_datatable_search_query'),
-          key: 'generalSearch'
-      },
-  
-      columns: [
-        {
-          field: 'first_name',
-          title: 'Name',
-          sortable: 'asc',
-          selector: false,
-        }, {
-          field: 'email',
-          title: 'Email',
-          sortable: 'asc',
-          selector: false,
-        }, {
-          field: 'phone_number',
-          title: 'Phone Number',
-          sortable: 'asc',
-          selector: false,
-        }, {
-          field: 'gender',
-          title: 'Gender',
-          sortable: 'asc',
-          selector: false,
-        }, {
-          field: 'preferred_language',
-          title: 'Preferred Language',
-          sortable: 'asc',
-          selector: false,
-        },{
-          field: 'preferred_currency',
-          title: 'Preferred Currency',
-          sortable: 'asc',
-          selector: false,
-        },{
-          field: 'Action',
-          title: '',
-          sortable: false,
-          overflow: 'visible',
-          width: 30,
-          
-          template: function (row) {
-            return `<div class="dropdown dropdown-inline">
-              <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" data-toggle="dropdown">
-                <i class="flaticon-cogwheel-2"></i>
-              </a>
-              <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
-                <ul class="navi flex-column navi-hover py-2">
-                  <li class="navi-item" id="editcompanion">
-                    <a href="http://development.emporium-voyage.com/editcompanion/`+row.id+`" class="navi-link">
-                      <span class="navi-text">Edit</span>
-                    </a>
-                  </li>
-                  <li class="navi-item">
-                    <a href="http://development.emporium-voyage.com/deletecompanion/`+row.id+`"" class="navi-link">
-                      <span class="navi-text">Delete</span>
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>`;
-          }
-        }
-      ],  
-    });
+    };
+}();
+
+jQuery(document).ready(function() {
+    KTDatatableColumnRenderingDemo.init();
+});
 	@endsection
 @endsection
 
