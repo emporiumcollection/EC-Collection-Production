@@ -15,20 +15,26 @@ class DatatableController extends Controller
     public function getDatatable()
     {
     $user = User::find(\Session::get('uid'));
-
-        $field = $_GET['sort']['field'];
-        $Order = $_GET['sort']['sort'];
+        $params = request()->all();
+        $field = $params['sort']['field'];
+        $Order = $params['sort']['sort'];
         if (isset($field) && isset($Order)) {
             $companions = DB::table('tb_companion')
                 ->select('id','first_name','last_name','email','gender','preferred_language','preferred_currency','phone_number')
                 ->where('user_id',$user->id)
-                ->orderBy('id',$Order)        
-                ->get();   
+                ->orderBy('id',$Order);
+                
+            if(isset($params['query']['generalSearch'])){
+                $companions = $companions->where('first_name', 'like', '%' . $params['query']['generalSearch'] . '%');
+                $companions = $companions->orWhere('last_name', 'like', '%' . $params['query']['generalSearch'] . '%');
+                $companions = $companions->orWhere('email', 'like', '%' . $params['query']['generalSearch'] . '%');
+            }
+            $companions = $companions->get();
         }
         else{
             $companions = Companion::all();    
         }
-        return $companions;
+        return json_encode(['data'=>$companions]);
     }
     public function getInviteGuest()
     {
