@@ -47,9 +47,15 @@
                 <li>Access to 24 hour business centre</li>
               </ul>
             </div>
+            <div class="custom-control custom-checkbox mb-5">
+               <input type="checkbox" name="accesibility" class="custom-control-input chkpolicies" id="customCheck2">
+              <label class="custom-control-label" for="customCheck2">
+                <b>Accesibility</b>
+              </label>
+            </div>
         @if(!empty($property[0]))
           @foreach($property[0]->suites as $suite)  
-            <div class="suite-list section-shadow mb-5">
+            <div class="suite-list section-shadow mb-5 <?php if($suite->is_accessible == '1') echo 'accessible'; else echo 'not-accessible'; ?> ">
               <div class="suite-tumb">
                 <div class="row align-items">
                     <div class="col-lg-6">

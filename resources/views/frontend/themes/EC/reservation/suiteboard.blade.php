@@ -108,7 +108,7 @@
               </div>
             </form>
           </div>
-          <div class="col-lg-3 col-md-4">
+          <div class="col-lg-3 col-md-4" id="suiteboard">
             @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
           </div>
         </div>

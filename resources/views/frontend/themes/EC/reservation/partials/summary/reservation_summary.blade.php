@@ -1257,6 +1257,7 @@
                                                 <div class="w-100">
                                                     <div class="symbol-group symbol-hover justify-content-end">
                                                     {{-- @if(isset($companion)) --}}
+                                                    @if(!empty($reservations[0]->reservedCompanions))
                                                     <?php $count = 0;  ?>
                                                         @foreach($reservations[0]->reservedCompanions as $data)
                                                          <?php $count++; ?>
@@ -1267,7 +1268,7 @@
                                                                 <img alt="Pic" src="{{ asset('/uploads/users/companion/'.$data->companion->avatar)}}">
                                                             </div>
                                                             @endforeach
-                                                        
+                                                        @endif
                                                             <div class="symbol symbol-35 symbol-circle symbol-light-success"
                                                                 data-toggle="tooltip" title=""
                                                                 data-original-title="Invite someone">

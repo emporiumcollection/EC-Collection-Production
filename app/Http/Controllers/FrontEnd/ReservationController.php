@@ -63,6 +63,7 @@ class ReservationController extends Controller {
     public function where(Request $request, $id = NULL)
     {
         $this->data['property_id'] = $id;
+
         $url = $this->_checkWhenWhere();
 
         if (!\Auth::check()){
@@ -108,7 +109,8 @@ class ReservationController extends Controller {
 
     public function suite(Request $request, $id = NULL)
     {
-        $this->data['property_id'] = $id;
+
+        $this->data['property_id'] = Session::get('property_id');
         $url = $this->_checkWhenWhere();
 
         if (!\Auth::check()){
@@ -126,7 +128,9 @@ class ReservationController extends Controller {
             Session::put('property_id', $id);
         }
 
-        $this->data['property'] = properties::with(['suites', 'container'])->where('id', $property_id)->get();
+        $this->data['property'] = properties::with(['suites', 'container'])->where('id', Session::get('property_id'))->get();
+
+
         $this->setSuitePrice($this->data['property']);
 
         Session::put('hotel_name', $this->data['property'][0]->property_name);
@@ -205,6 +209,37 @@ class ReservationController extends Controller {
         }else{
             return redirect::to('/reservation/suite')->with('massage', 'Please select Guest!');
         }               
+    }
+
+    public function select_board($id){
+
+        $board =  $this->fetchBoards($id);
+
+        $select_boards = view('frontend.themes.EC.reservation.partials.suiteboard.select-board',
+            ['board' => $board])->render();
+
+        return json_encode([
+            'select_boards' => $select_boards
+        ]);
+
+    }
+
+    public function fetchBoards($id){
+
+        $board =  \DB::table('tb_boards')->where('id',$id)->first();
+
+        $board_price = 0;
+
+        if($board->board_vat == 1){
+            $board_price =$board->board_rackrate + 20; 
+        }elseif ($board->board_vat == 2) {
+            $board_price =$board->board_rackrate + 2; 
+        }elseif ($board->board_vat == 3) {
+            $board_price =$board->board_rackrate + 2;
+        }
+        Session::put('board_price',$board_price);
+
+        return $board;
     }
 
     public function storeSuiteBoard(Request $request)
@@ -543,8 +578,8 @@ class ReservationController extends Controller {
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
 
-        $this->_checkBoards(Session::get('board'));
-  
+        // $this->_checkBoards(Session::get('board'));
+
         $this->data['properties'] = properties::where('id',Session::get('property_id'))->get();
         $hotel_name = $this->data['properties'][0]->property_short_name;
 
@@ -634,6 +669,18 @@ class ReservationController extends Controller {
         }
         $companions = Session::get('companions');
 
+        $board_price = 0;
+        if(!empty(Session::get('board'))){
+            $boards =  \DB::table('tb_boards')->where('id',Session::get('board'))->first();
+            if($boards->board_vat == 1){
+                $board_price =+ 20; 
+            }elseif ($boards->board_vat == 1) {
+                $board_price =+ 2; 
+            }elseif ($boards->board_vat == 1) {
+                $board_price =+ 2;
+            }
+        }
+
         $reservation_id = \DB::table('tb_reservations')->insertGetId($data);
         foreach($reserved_suites as $suite_id => $suite){
             $reserveSuite = new ReservedSuite();
@@ -643,17 +690,19 @@ class ReservationController extends Controller {
             $reserveSuite->junior = $suite['junior'];
             $reserveSuite->infant = $suite['infant'];
             $reserveSuite->guest = $suite['total_guests'];
-            $reserveSuite->price = floatval(str_replace(',', '', $suite['price']));
+            $reserveSuite->price = floatval(str_replace(',', '', $suite['price'] + $board_price));
             $reserveSuite->save();
         }
-        foreach($companions as $companion_id => $companion){
-            $reserveComapanion = new ReservationCompanion();
-            $reserveComapanion->reservation_id = $reservation_id;
-            $reserveComapanion->companion_id = $companion_id;
-            $reserveComapanion->suite_id = $companion['suite_id'];
-            $reserveComapanion->save();
-        }
 
+        if(!empty($companions)){
+            foreach($companions as $companion_id => $companion){
+                $reserveComapanion = new ReservationCompanion();
+                $reserveComapanion->reservation_id = $reservation_id;
+                $reserveComapanion->companion_id = $companion_id;
+                $reserveComapanion->suite_id = $companion['suite_id'];
+                $reserveComapanion->save();
+            }
+        }            
         Session::forget('arrival');
         Session::forget('departure');
         Session::forget('adult');
@@ -750,29 +799,30 @@ class ReservationController extends Controller {
         exit;
     }
 
-    public function validateCompanion()
-    {
-     if(Session::has('companions')){
-         return json_encode([
-            'status' => true
-        ]);
-        exit;
-    }else{
-        return json_encode([
-            'status' => false,
-            'message' => 'Please Add Companion and Select Your Companion',
-            'class' => 'danger'
-        ]);
-    }   
-    }
+    // public function validateCompanion()
+    // {
+    //  if(Session::has('companions')){
+    //      return json_encode([
+    //         'status' => true
+    //     ]);
+    //     exit;
+    // }else{
+    //     return json_encode([
+    //         'status' => false,
+    //         'message' => 'Please Add Companion and Select Your Companion',
+    //         'class' => 'danger'
+    //     ]);
+    // }   
+    // }
 
-    private function _checkBoards($id)
+    public function _checkBoards($id)
     {
         $this->data['boards'] = [];
         $property = properties::with('boards')->where('id', $id)->first();
         if(!empty($property->boards)){
             $this->data['boards'] = $property->boards->toArray();
         }
+        return  $this->data;
     }
 
     private function setSuitePrice(&$properties){

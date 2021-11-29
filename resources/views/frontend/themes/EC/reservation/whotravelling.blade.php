@@ -396,7 +396,7 @@
             <div class="row">
               <div class="col-md-12 d-flex justify-content-between">
                 <a href="/reservation/policies" class="btn btn-dark px-4">Go back</a>
-                <a href="javascript:void(0);" class="btn btn-dark px-5 validate-step">Next</a>
+                <a href="/reservation/paymentmethod" class="btn btn-dark px-5">Next</a>
               </div>
             </div>
           </div>
