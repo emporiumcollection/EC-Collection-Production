@@ -145,6 +145,9 @@
           <div class="col-lg-3 col-md-4">
             @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
           </div>
+          @if(!empty($boards))
+            @include('frontend.themes.EC.reservation.partials.suiteboard.select-board', ['board' => $boards])
+          @endif
           </div>
         </div>
 

@@ -23,7 +23,9 @@
 <?php
   $pos = 1;
   $grand_total = 0;
+  $board_price = \Session::get('board_price'); 
 ?>
+
 @if(!empty($suites))
   @foreach($suites as $suite)
     @foreach($suite as $value)
@@ -70,7 +72,7 @@
             <td class="px-0 py-1">Subtotal</td>
             <td class="px-0 py-1 text-right">
               <b>€{{ $selected_suite[$value->id]['price'] }}</b>
-              <?php $grand_total += (float)$selected_suite[$value->id]['price']; ?>
+              <?php $grand_total += (float)$selected_suite[$value->id]['price'] + $board_price; ?>
             </td>
           </tr>
         </table>
@@ -89,3 +91,7 @@
     </tr>
   </table>
 </div>
+
+@if(!empty($board))
+  @include('frontend.themes.EC.reservation.partials.suiteboard.select-board', ['board' => $boards])
+@endif

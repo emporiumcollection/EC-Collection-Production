@@ -33,6 +33,8 @@ $(document).ready(function(){
         return true;
     });
 
+
+
     $(".btn-newreserve").on("click", function () {
         $('#smartwizard').smartWizard("prev");
         return true;
@@ -174,6 +176,8 @@ $(document).ready(function(){
         var first_name = $('#address_first_name').val("");
     });
 
+    $(".selected-suite-bord").insertBefore('.reservation-total');
+
     $(document).on('click', '.board-selection', function(){
         if($(this).prop('checked') === true){
             var board_id = $(this).val();
@@ -258,6 +262,7 @@ $( document ).ready(function() {
                     minimumResultsForSearch: -1
                 });
                 $("#selected-suite-list").html(response.reserve_suite_html);
+                $(response.select_board).insertBefore(".reservation-total");
             }
         });
     });
@@ -333,6 +338,7 @@ $( document ).ready(function() {
                     minimumResultsForSearch: -1
                 });
                 $("#selected-suite-list").html(response.reserve_suite_html);
+                $(response.select_board).insertBefore(".reservation-total");
             },
         });
     });
@@ -433,7 +439,7 @@ $(document).ready(function(){
         if($('input[name = "policies_ckh"]').prop('checked') == true){
             window.location.href = '/reservation/whoistravelling';
         }else{
-            $('#guestValidationMsg').find('#massage').html("Please selecte Terms and Conditions");
+            $('#guestValidationMsg').find('#massage').html("Terms and Conditions required");
             $('#guestValidationMsg').show();
         }
     });

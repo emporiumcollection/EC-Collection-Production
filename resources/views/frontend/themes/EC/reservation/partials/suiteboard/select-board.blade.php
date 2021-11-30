@@ -6,14 +6,16 @@
     </table>
     <hr class="mb-2">
     <table class="table table-borderless mb-0">
-      <tr>
-        <td class="px-0 py-1">Tax</td>
+      <tr>        
         @if($board->board_vat == 1)
-        <td class="px-0 py-1 text-right">20%</td>
+          <td class="px-0 py-1">Tax 20%</td>
+          <td class="px-0 py-1 text-right">€{{ $board->board_rackrate }}</td>
         @elseif($board->board_vat == 2)
-          <td class="px-0 py-1 text-right">2%</td>
+          <td class="px-0 py-1">Tax 2%</td>
+          <td class="px-0 py-1 text-right">€{{ $board->board_rackrate }}</td>
         @else
-          <td class="px-0 py-1 text-right">2%</td>
+          <td class="px-0 py-1">Tax 2%</td>
+          <td class="px-0 py-1 text-right">€{{ $board->board_rackrate }}</td>
         @endif
       </tr>
     </table>
@@ -22,7 +24,7 @@
       <tr>
         <td class="px-0 py-1">Subtotal</td>
         <td class="px-0 py-1 text-right">
-          <b>{{ \Session::get('board_price') }}</b>
+          <b>€{{ \Session::get('board_price') }}</b>
         </td>
       </tr>
     </table>

@@ -25,6 +25,7 @@
             <i class="ico ico-back mr-3"></i>
           </a>
           Policies
+
         </h2>
         <div class="row">
           <div class="col-lg-9 col-md-8 mb-4">
@@ -109,6 +110,9 @@
           <div class="col-lg-3 col-md-4">
             @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
           </div>
+          @if(!empty($boards))
+            @include('frontend.themes.EC.reservation.partials.suiteboard.select-board', ['board' => $boards])
+          @endif
     </div>
   </div>
   </div>
