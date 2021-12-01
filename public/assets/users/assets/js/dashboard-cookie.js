@@ -1,11 +1,11 @@
 
 function setMenuCookie(){
     var val = getCookie('dashboardSidebar');
-    if(val){
-      setCookie('dashboardSidebar', '');
+    if($("body").hasClass("kt-primary--minimize")){
+      setCookie('dashboardSidebar', 'open');
     }
     else{
-      setCookie('dashboardSidebar', 'open');
+      setCookie('dashboardSidebar', 'close');
     }
 }
 
@@ -38,8 +38,8 @@ $(document).ready(function(){
           setMenuCookie()
       });
 
-      if(getCookie('dashboardSidebar')){
-        alert('adsasdf');
-          $('#kt_aside_toggle').trigger( "click" );
+      if(getCookie('dashboardSidebar') == 'close'){
+        $("body").addClass("kt-primary--minimize");
+        $("body").addClass("aside-minimize");
       }
 });
