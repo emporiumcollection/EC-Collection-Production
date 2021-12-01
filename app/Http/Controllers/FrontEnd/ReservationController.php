@@ -39,10 +39,14 @@ class ReservationController extends Controller {
             return redirect('user/login');
         }
 
+        
+        // print_r($this->data['boards']);exit;
+        // print_r(Session::has('board_id'));
+
         $property = properties::find($id);
         $request->session()->put('hotel_name', $property->property_name);
 
-        $this->_checkBoards($id);
+        // $this->_checkBoards($id);
 
         $arr = $this->reserveSuite();
         $this->data['suites'] = $arr;
@@ -63,6 +67,7 @@ class ReservationController extends Controller {
     public function where(Request $request, $id = NULL)
     {
         $this->data['property_id'] = $id;
+
         $url = $this->_checkWhenWhere();
 
         if (!\Auth::check()){
@@ -108,7 +113,8 @@ class ReservationController extends Controller {
 
     public function suite(Request $request, $id = NULL)
     {
-        $this->data['property_id'] = $id;
+
+        $this->data['property_id'] = Session::get('property_id');
         $url = $this->_checkWhenWhere();
 
         if (!\Auth::check()){
@@ -126,7 +132,9 @@ class ReservationController extends Controller {
             Session::put('property_id', $id);
         }
 
-        $this->data['property'] = properties::with(['suites', 'container'])->where('id', $property_id)->get();
+        $this->data['property'] = properties::with(['suites', 'container'])->where('id', Session::get('property_id'))->get();
+
+
         $this->setSuitePrice($this->data['property']);
 
         Session::put('hotel_name', $this->data['property'][0]->property_name);
@@ -134,6 +142,10 @@ class ReservationController extends Controller {
         $selected_suite = Session::get('suite_array');
 
         $this->_checkBoards($property_id);
+
+        if(Session::has('board_id')) {
+            $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
+        }
 
         $arr = $this->reserveSuite();
         $this->data['suites'] = $arr;      
@@ -169,13 +181,19 @@ class ReservationController extends Controller {
 
     public function suiteBoard()
     {
+        
         if (!\Auth::check())
             return redirect('user/login');
 
         $arr = $this->reserveSuite();
 
         $this->_checkBoards(Session::get('board'));
-        
+
+
+        if(Session::has('board_id')) {
+            $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
+        }
+
         if(!empty($arr)){            
 
             $selected_suite = Session::get('suite_array');
@@ -207,6 +225,51 @@ class ReservationController extends Controller {
         }               
     }
 
+    public function select_board($id){
+
+        Session::put('board_id',$id);
+        $boards =  $this->fetchBoards($id);
+        $suites = $this->reserveSuite();
+        $selected_suite = Session::get('suite_array');
+        $select_boards = view('frontend.themes.EC.reservation.reservation-summary',
+            [
+                'suites' => $suites,
+                'boards' => $boards ,
+                'selected_suite' => $selected_suite])->render();
+
+        return json_encode([
+            'select_boards' => $select_boards
+        ]);
+
+    }
+
+    public function fetchBoards($id){
+
+        $board =  \DB::table('tb_boards')->where('id',$id)->first();
+
+        $board_price = 0;
+
+        if($board->board_vat == 1)
+        {
+            $board_percentage = (20/100) * $board->board_rackrate;
+            $board_price =   $board_percentage + $board->board_rackrate;           
+        }
+        elseif ($board->board_vat == 2) 
+        {
+            $board_percentage = (2/100) * $board->board_rackrate;
+            $board_price =   $board_percentage + $board->board_rackrate;
+        }
+        elseif ($board->board_vat == 3) 
+        {
+            $board_percentage = (2/100) * $board->board_rackrate;
+            $board_price =   $board_percentage + $board->board_rackrate;
+        }
+
+        Session::put('board_price',$board_price);
+
+        return $board;
+    }
+
     public function storeSuiteBoard(Request $request)
     {
         if(isset($request->board)){
@@ -217,12 +280,17 @@ class ReservationController extends Controller {
 
     public function Policies()
     {
+
         if (!\Auth::check())
             return redirect('user/login');
 
         $arr = $this->reserveSuite();
 
         $this->_checkBoards(Session::get('board'));
+
+        if(Session::has('board_id')) {
+            $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
+        }
 
         $selected_suite = Session::get('suite_array');
         
@@ -295,8 +363,8 @@ class ReservationController extends Controller {
         
         $suite_selection_html = view('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])->render();
         
-        $reserve_suite_html = view('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites ,'selected_suite' => $selected_suite])->render();        
-
+        $reserve_suite_html = view('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites ,'selected_suite' => $selected_suite])->render(); 
+            
         return json_encode([
             'suite_selection_html' => $suite_selection_html,
             'reserve_suite_html' => $reserve_suite_html
@@ -314,6 +382,10 @@ class ReservationController extends Controller {
         // Session::forget('companions');
 
         $this->_checkBoards(Session::get('board'));
+
+        if(Session::has('board_id')) {  
+            $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
+        }
 
         $selected_suite = Session::get('suite_array');
         
@@ -444,7 +516,10 @@ class ReservationController extends Controller {
 
         $this->_checkBoards(Session::get('board'));
         
-        
+        if(Session::has('board_id')) {
+            $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
+        }
+
         $selected_suite = Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
@@ -543,8 +618,8 @@ class ReservationController extends Controller {
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
 
-        $this->_checkBoards(Session::get('board'));
-  
+        // $this->_checkBoards(Session::get('board'));
+
         $this->data['properties'] = properties::where('id',Session::get('property_id'))->get();
         $hotel_name = $this->data['properties'][0]->property_short_name;
 
@@ -566,6 +641,11 @@ class ReservationController extends Controller {
 
         $selected_suite = Session::get('suit_id');
         $arr = [];
+
+        if(Session::has('board_id')) {
+            $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
+        }
+
         foreach($selected_suite as $suite_id)
         {
             $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suite_id)->get();
@@ -580,6 +660,7 @@ class ReservationController extends Controller {
         $selected_suite = Session::get('suite_array');
         
         $this->data['selected_suite'] = $selected_suite;
+
         $this->data['suites'] = $arr;
                     
         $file_name = 'frontend.themes.EC.reservation.booking_summary';
@@ -625,16 +706,19 @@ class ReservationController extends Controller {
         $data['board'] = Session::get('board') ? Session::get('board') : 0;
         $data['card_id'] = Session::get('payment_card_id');
         $data['booking_number'] = Session::get('booking_number');
+        $data['booking_status'] = 1;    
         $reserved_suites = Session::get('suite_array');
         foreach($reserved_suites as $reserved_suite){
             $data['price'] += floatval(str_replace(',', '', $reserved_suite['price']));
+            $data['price'] += floatval(str_replace(',', '', Session::get('board_price')));
             $data['adult'] += $reserved_suite['adult'];
             $data['junior'] += $reserved_suite['junior'];
             $data['baby'] += $reserved_suite['infant'];
-        }
+        }   
         $companions = Session::get('companions');
 
         $reservation_id = \DB::table('tb_reservations')->insertGetId($data);
+
         foreach($reserved_suites as $suite_id => $suite){
             $reserveSuite = new ReservedSuite();
             $reserveSuite->reservation_id = $reservation_id;
@@ -646,14 +730,16 @@ class ReservationController extends Controller {
             $reserveSuite->price = floatval(str_replace(',', '', $suite['price']));
             $reserveSuite->save();
         }
-        foreach($companions as $companion_id => $companion){
-            $reserveComapanion = new ReservationCompanion();
-            $reserveComapanion->reservation_id = $reservation_id;
-            $reserveComapanion->companion_id = $companion_id;
-            $reserveComapanion->suite_id = $companion['suite_id'];
-            $reserveComapanion->save();
-        }
 
+        if(!empty($companions)){
+            foreach($companions as $companion_id => $companion){
+                $reserveComapanion = new ReservationCompanion();
+                $reserveComapanion->reservation_id = $reservation_id;
+                $reserveComapanion->companion_id = $companion_id;
+                $reserveComapanion->suite_id = $companion['suite_id'];
+                $reserveComapanion->save();
+            }
+        }            
         Session::forget('arrival');
         Session::forget('departure');
         Session::forget('adult');
@@ -663,6 +749,7 @@ class ReservationController extends Controller {
         Session::forget('companions');
         Session::forget('reservation');
         Session::forget('suite_id');
+        Session::forget('board_id');
     }
 
     public function databaseName(){
@@ -707,7 +794,7 @@ class ReservationController extends Controller {
         }
         Session::put('suit_id', $suite_ids);
         Session::put('selected_suite_number', $suites_count);
-        Session::put('selected_suite_guest', $total_guests);*/
+        Session::put('selected_suite_guest', $total_guests);*/   
 
         $suite = PropertyCategoryTypes::find($id);
 
@@ -716,7 +803,8 @@ class ReservationController extends Controller {
         
         $suite_selection_html = view('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])->render();
 
-        $reserve_suite_html = view('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites ,'selected_suite' => $selected_suite])->render();        
+
+        $reserve_suite_html = view('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites ,'selected_suite' => $selected_suite ])->render();        
 
         return json_encode([
             'suite_selection_html' => $suite_selection_html,
@@ -750,29 +838,30 @@ class ReservationController extends Controller {
         exit;
     }
 
-    public function validateCompanion()
-    {
-     if(Session::has('companions')){
-         return json_encode([
-            'status' => true
-        ]);
-        exit;
-    }else{
-        return json_encode([
-            'status' => false,
-            'message' => 'Please Add Companion and Select Your Companion',
-            'class' => 'danger'
-        ]);
-    }   
-    }
+    // public function validateCompanion()
+    // {
+    //  if(Session::has('companions')){
+    //      return json_encode([
+    //         'status' => true
+    //     ]);
+    //     exit;
+    // }else{
+    //     return json_encode([
+    //         'status' => false,
+    //         'message' => 'Please Add Companion and Select Your Companion',
+    //         'class' => 'danger'
+    //     ]);
+    // }   
+    // }
 
-    private function _checkBoards($id)
+    public function _checkBoards($id)
     {
         $this->data['boards'] = [];
         $property = properties::with('boards')->where('id', $id)->first();
         if(!empty($property->boards)){
             $this->data['boards'] = $property->boards->toArray();
         }
+        return  $this->data;
     }
 
     private function setSuitePrice(&$properties){

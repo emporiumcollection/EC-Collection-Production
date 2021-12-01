@@ -6,7 +6,7 @@ $(document).ready(function(){
         }
     });
 
-    /*$('#smartwizard').smartWizard({
+    /*$('#smartwizard').smartWizard({   
         theme: 'arrows',
         selected: 0,
         enableURLhash: false,
@@ -32,6 +32,8 @@ $(document).ready(function(){
         }, 100);
         return true;
     });
+
+
 
     $(".btn-newreserve").on("click", function () {
         $('#smartwizard').smartWizard("prev");
@@ -174,15 +176,34 @@ $(document).ready(function(){
         var first_name = $('#address_first_name').val("");
     });
 
+    $(".selected-suite-bord").insertBefore('.reservation-total');
+
     $(document).on('click', '.board-selection', function(){
         if($(this).prop('checked') === true){
+            var board_id = $(this).val();
             $('.remove_board_selection').css('display', 'none');
             $(this).nextAll().eq(1).css('display', 'block');
+
+            $.ajax({
+                // headers: {
+                // 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                // },
+                type: 'get',            
+                url: '/select/board/'+board_id,
+                dataType:'json',                    
+                success: function(response){
+                    $(".selected-suite-bord").remove();
+                    $("#suiteboard").remove();
+                    $(".reservation-total").remove();
+                    $(response.select_boards).insertBefore('.reservation-total');
+                },
+            });
         }
     });
     $(document).on('click', '.remove_board_selection', function(){
         $('.board-selection').prop('checked', false);
         $(this).css('display', 'none');
+        $(".selected-suite-bord").remove();
     });
 });
 
@@ -243,6 +264,7 @@ $( document ).ready(function() {
                     minimumResultsForSearch: -1
                 });
                 $("#selected-suite-list").html(response.reserve_suite_html);
+                $(response.select_board).insertBefore(".reservation-total");
             }
         });
     });
@@ -318,6 +340,7 @@ $( document ).ready(function() {
                     minimumResultsForSearch: -1
                 });
                 $("#selected-suite-list").html(response.reserve_suite_html);
+                $(response.select_board).insertBefore(".reservation-total");
             },
         });
     });
@@ -414,12 +437,31 @@ $(document).ready(function(){
         }
     });
 
+    $('.chkpolicies_btn').click(function(){
+        if($('input[name = "policies_ckh"]').prop('checked') == true){
+            window.location.href = '/reservation/whoistravelling';
+        }else{
+            $('#guestValidationMsg').find('#massage').html("Terms and Conditions required");
+            $('#guestValidationMsg').show();
+        }
+    });
+
+    $('.chkpolicies').click(function(){
+        if($(this).prop('checked') == true)
+        {
+            $(".accessible").show();
+            $(".not-accessible").hide();
+        }else{
+            $(".accessible").show();
+            $(".not-accessible").show();
+        }
+    });
+
     $(document).on('change', '.add_compnaion', function(){
         var suite_id = $(this).val();
         var companion_id = $(this).data('companion-id');
         addRemoveCompanionAjaxCall(companion_id, suite_id, 'save');
     });
-
 
     $('.field-count-reservation').on('click', '.plus-room', function () {
         if ($(this).prev().find('.mr-1').html() < 5) {
@@ -558,19 +600,19 @@ $(document).ready(function(){
     $(document).on('click', '.validate-step', function(e){
         e.preventDefault();
         var next_url = $(this).attr('href');
-        if($('#address_added').val() == ''){
-            $('#guestValidationMsg').find('#massage').html("Please add Address");
-            $('#guestValidationMsg').show();
-            return false;
-        }
+        // if($('#address_added').val() == ''){
+        //     $('#guestValidationMsg').find('#massage').html("Please add Address");
+        //     $('#guestValidationMsg').show();
+        //     return false;
+        // }
         $.ajax({
             url:"/validate-companion",
             type:"get",
             dataType:"json",
         
-            beforeSend: function(){
-                $('#guestValidationMsg').hide();
-            },
+            // beforeSend: function(){
+            //     $('#guestValidationMsg').hide();
+            // },
             success: function(response) {
                 if(response.status === false){
                     $('#guestValidationMsg').find('#massage').html(response.message);

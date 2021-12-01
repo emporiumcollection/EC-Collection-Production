@@ -1,4 +1,3 @@
-
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -88,7 +87,7 @@
                             <div class="radio-toolbar">
                               <input type="radio" id="board_{{ $data->id }}" name="board" class="board-selection" value="{{ $data->id }}" {{ $board == $data->id ? 'checked' : '' }}>
                               <label for="board_{{ $data->id }}">Select</label> 
-                              <a href="javascript:void(0);" class="remove_board_selection" style="display: {{ $board == $data->id ? 'block' : 'none' }};">Remove</a>
+                              <a href="javascript:void(0);" class="remove_board_selection" style="display: {{ \Session::get('board_id') == $data->id ? 'block' : 'none' }};">Remove</a>
                             </div>
                           </div>
                         </div>
@@ -108,8 +107,11 @@
               </div>
             </form>
           </div>
-          <div class="col-lg-3 col-md-4">
+          <div class="col-lg-3 col-md-4" id="suiteboard">
             @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+            @if(!empty($boards))
+              @include('frontend.themes.EC.reservation.partials.suiteboard.select-board', ['board' => $boards])
+            @endif
           </div>
         </div>
       </div>

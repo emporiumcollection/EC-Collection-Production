@@ -32,6 +32,7 @@
   </div>
 </div>
 </div>
+@include('frontend.themes.EC.layouts.subsections.priceinfo')
 <?php if(isset($property_id)):?>
 <script>
   $(document).ready(function(){
