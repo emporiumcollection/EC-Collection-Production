@@ -192,10 +192,11 @@ $(document).ready(function(){
                 url: '/select/board/'+board_id,
                 dataType:'json',                    
                 success: function(response){
-                    $(".selected-suite-bord").remove();
-                    $("#suiteboard").remove();
-                    $(".reservation-total").remove();
-                    $(response.select_boards).insertBefore('.reservation-total');
+                    // $(".selected-suite-bord").remove();
+                    // $("#suiteboard").remove();
+                    $("#suiteboard").html(response.select_boards);
+                    // $(".reservation-total").remove();
+                    $(".selected-suite-bord").insertBefore('.reservation-total');
                 },
             });
         }
