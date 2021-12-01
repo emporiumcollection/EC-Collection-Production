@@ -103,7 +103,7 @@
                     </a>
                 </li>
                 <li class="navi-item">
-                    <a href="{{ URL::to('/logout')}}" class="navi-link" data-canvas="popup">
+                    <a href="{{ URL::to('/logout')}}" class="navi-link">
                         <span class="navi-text">Log Out</span>
                     </a>
                 </li>
