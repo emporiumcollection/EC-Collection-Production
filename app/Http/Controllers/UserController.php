@@ -361,6 +361,7 @@ class UserController extends Controller {
             return Redirect::to('')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         } else {
             $this->data['socialize'] = config('services');
+            $this->data['questions'] = SecurityQuestions::all();
             return View('user.login', $this->data);
         }
     }
@@ -372,25 +373,40 @@ class UserController extends Controller {
             'password' => 'required',
         );
         $redirect_to = \CommonHelper::checkReservation();
-        if (CNF_RECAPTCHA == 'true')
+        if (CNF_RECAPTCHA == 'true'){
             $rules['captcha'] = 'required|captcha';
-            $validator = Validator::make(Input::all(), $rules);
+        }
+            
+        $validator = Validator::make(Input::all(), $rules);
         if ($validator->passes()) {
 
             $remember = (!is_null($request->get('remember')) ? 'true' : 'false' );
             // if (is_null($request->question && $request->answer)) {
                 // echo "herenudfjg";exit;
-                if (\Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')), $remember)) {
-
+             
+                
+            if (\Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')), $remember)) {
+                
                 if (\Auth::check()) {
+                    if($request->input('question') && $request->input('answer')){
+                        $question = User::select(['id'])
+                        ->where('questions_id', '=', $request->input('question'))
+                        ->where('answer', '=', $request->input('answer'))
+                        ->where('id', '=', \Auth::user()->id)
+                        ->get();
 
+                        if(empty($question->toArray())){
+                            \Auth::logout();
+                            return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Question answere is Incurrect'));
+                        }
+                    }
                     $row = User::find(\Auth::user()->id);
 
                     if ($row->active == '0') {
                         // inactive 
                         \Auth::logout();
                         return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Account is not active'));
-                    } else if ($row->active == '2') {
+                    } else if ($row->active == '3') {
                         // BLocked users
                         \Auth::logout();
                         return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Account is BLocked'));
@@ -423,68 +439,15 @@ class UserController extends Controller {
                         endif;
                     }
                 }
-            } else {
+            }
+            else {
                 $attempts = session()->get('login.attempts', 0); // get attempts, default: 0
                 session()->put('login.attempts', $attempts + 1);
                 $email = session()->get('email', $request->email);
-                $massage = 'Your username/password combination was incorrect';
                 $questions = SecurityQuestions::all();
-                // echo "<pre>";print_r($getQuestion);exit;
-                return view('user.login', compact('questions','massage'));
-                    // ->with('message', \SiteHelpers::alert('error', 'Your username/password combination was incorrect'));                    
-            }
-            // }
-
-                if (\Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password'),'questions_id' => $request->input('question'),'answer' => $request->input('answer')), $remember)) {
-                        if (\Auth::check()) {
-                            $row = User::find(\Auth::user()->id);
-
-                            if ($row->active == '0') {
-                                // inactive 
-                                \Auth::logout();
-                                return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Account is not active'));
-                            } else if ($row->active == '2') {
-                                // BLocked users
-                                \Auth::logout();
-                                return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Account is BLocked'));
-                            } else {
-                                \DB::table('tb_users')->where('id', '=', $row->id)->update(array('last_login' => date("Y-m-d H:i:s")));
-                                \Session::put('uid', $row->id);
-                                \Session::put('gid', $row->group_id);
-                                \Session::put('eid', $row->email);
-                                \Session::put('ll', $row->last_login);
-                                \Session::put('fid', $row->first_name . ' ' . $row->last_name);
-                                if (!is_null($request->input('language'))) {
-                                    \Session::put('lang', $request->input('language'));
-                                } else {
-                                    \Session::put('lang', 'en');
-                                }
-                                if (CNF_FRONT == 'false') :
-                                    return Redirect::to($redirect_to);
-                                else :
-                                    $getusercompany = \DB::table('tb_user_company_details')->where('user_id', $row->id)->first();
-                                    if (!empty($getusercompany) or $row->group_id == 1) {
-                                        return Redirect::to($redirect_to);
-                                    } else {
-                                        if ($row->group_id == 4) {
-                                            return Redirect::to('customer/profile')->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
-                                        }
-                                        session()->forget('login.attempts');
-
-                                        return Redirect::to($redirect_to)->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
-                                    }
-
-                                endif;
-                            }
-                        }
-                    }else {
-                        $attempts = session()->get('login.attempts', 0); // get attempts, default: 0
-                        session()->put('login.attempts', $attempts + 1);
-                        $email = session()->get('email', $request->email);
-                        $questions = SecurityQuestions::all();
-                        return view('user.login', compact('questions'))
-                            ->with('message', \SiteHelpers::alert('error', 'Your username/password combination was incorrect'));
-                    }    
+                return view('user.login', compact('questions'))
+                    ->with('message', \SiteHelpers::alert('error', 'Your username/password combination was incorrect'));
+            }    
         } else {
             return Redirect::to('user/login')
                 ->with('message', \SiteHelpers::alert('error', 'The following  errors occurred'))

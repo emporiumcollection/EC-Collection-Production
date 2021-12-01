@@ -7698,7 +7698,7 @@ die;        */
                     // inactive
                     \Auth::logout();
                     return "user_not_active";
-                } else if ($row->active == '2') {
+                } else if ($row->active == '3') {
                     // BLocked users
                     \Auth::logout();
                     return "account_is_blocked";

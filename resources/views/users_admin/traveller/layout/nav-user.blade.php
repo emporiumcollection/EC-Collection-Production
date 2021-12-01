@@ -37,31 +37,39 @@
                         <span class="navi-text">My Dashboard</span>
                     </a>
                 </li>
+                @if (\Session::get('gid') == 3)
                  <li class="navi-item">
                     <a href="#" class="navi-link">
                         <span class="navi-text">My Collections</span>
                     </a>
                 </li>
+                @endif
                 <li class="navi-item">
                     <a href="{{ URL::to('/users/profile')}}" class="navi-link">
                         <span class="navi-text">My Profile</span>
                     </a>
                 </li>
+                @if (\Session::get('gid') == 3)
                  <li class="navi-item">
                     <a href="{{ URL::to('/users/companion')}}" class="navi-link">
                         <span class="navi-text">My Companions</span>
                     </a>
                 </li>
+                @endif
+                @if (\Session::get('gid') == 3)
                 <li class="navi-item">
                     <a href="{{ URL::to('/users/my-preferences')}}" class="navi-link">
                         <span class="navi-text">My Preferences</span>
                     </a>
                 </li>
+                @endif
+                @if (\Session::get('gid') == 3)
                 <li class="navi-item">
                     <a href="{{ URL::to('/users/guestinvite')}}" class="navi-link">
                         <span class="navi-text">My Guest Invitation</span>
                     </a>
                 </li>
+                @endif
                  <li class="navi-item">
                     <a href="#createCompany" class="navi-link" data-canvas="popup">
                         <span class="navi-text">My Company Setting</span>
@@ -92,6 +100,11 @@
                 <li class="navi-item">
                     <a href="{{ URL::to('/users/contracts')}}" class="navi-link" data-canvas="popup">
                         <span class="navi-text">Billings & Contracts</span>
+                    </a>
+                </li>
+                <li class="navi-item">
+                    <a href="{{ URL::to('/logout')}}" class="navi-link" data-canvas="popup">
+                        <span class="navi-text">Log Out</span>
                     </a>
                 </li>
             </ul>

@@ -3,7 +3,6 @@
 @section('page_name')
     
 @stop
-    
 @section('subheader_search')
     <div class="m-subheader-search">
         <h2 class="m-subheader-search__title">
@@ -83,7 +82,7 @@
 @section('content')    
     <!--Begin::Section_portlet-->
     <div class="parent_hotel_name">
-        <div class="m-subheader" style="padding: 0px; margin-bottom: 20px;">
+        {{-- <div class="m-subheader" style="padding: 0px; margin-bottom: 20px;">
 			<div class="d-flex align-items-center">
 				<div class="mr-auto">
 					<h3 class="m-subheader__title m-subheader__title--separator">
@@ -91,7 +90,7 @@
 					</h3>
 				</div>
 			</div>
-		</div>
+		</div> --}}
         
         <div class="row">
 			<div class="col-sm-12 col-md-4 col-xl-4">
@@ -107,7 +106,7 @@
                      
                     <!-- Carousel items -->
                     <div class="rad-carousel-inner">
-                    @foreach($blogs as $key => $blog_row)    
+                    @foreach($bzlogs as $key => $blog_row)    
                     <?php 
                         $final_url = '#';
                         $ext_url = trim($blog_row->external_link);
@@ -843,7 +842,7 @@ Note: You may revoke your consent at any time by e-mail to info@emporium-voyage.
                     leftArrow: '<i class="la la-angle-left"></i>', rightArrow: '<i class="la la-angle-right"></i>'
                 }
             });
-            
+            <?php //print_r($logged_user->i_agree); die(); ?>
             <?php if($logged_user->i_agree == 0 || $logged_user->privacy_policy == 0 || $logged_user->cookie_policy == 0){ ?>
                     $("#agree_model").modal({backdrop: 'static', keyboard: false}, 'show');
             <?php }else if($logged_user->new_user == 1){ ?>

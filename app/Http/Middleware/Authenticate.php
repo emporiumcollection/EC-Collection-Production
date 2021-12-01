@@ -13,7 +13,7 @@ class Authenticate
      * @var Guard
      */
     protected $auth;
-
+    private $traveller_urls=array("users/companion","users/my-preferences","users/guestinvite");
     /**
      * Create a new filter instance.
      *
@@ -40,13 +40,18 @@ class Authenticate
             return redirect('customer/profile');
          }
         */
-
+         
+        // echo "hello";exit;
         if ($this->auth->guest()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
                 return redirect()->guest('user/login');
             }
+        }
+        
+        if(in_array(request()->path(), $this->traveller_urls) && \Session::get('gid') != 3){
+            return redirect('dashboard');
         }
         
         return $next($request);

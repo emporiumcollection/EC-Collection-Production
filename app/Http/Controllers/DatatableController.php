@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 use App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Companion;
+use App\Models\Reservations;
 use Yajra\Datatables\Datatables;
 use Illuminate\Support\Collection;
 use DB;
 use App\User;
 use Auth;
+use App\Models\properties;
 
 class DatatableController extends Controller
 {
@@ -83,11 +85,26 @@ class DatatableController extends Controller
     {
         $user = User::find(Auth::user()->id);
         
-        $reserveData = DB::table('tb_reservations')
+        $properties = properties::where('user_id',Auth::user()->id)->get();
+        
+        foreach($properties as $property)
+        {
+            $property_ids[] = [ 'property_id' => $property->id ];
+        }
+       
+        $g_id = (int) \Session::get('gid');
+        if($g_id == 3){
+            $reserveData = DB::table('tb_reservations')
                 ->select('id', 'checkin_date', 'checkout_date', 'adult', 'junior', 'baby','booking_number', 'price')
-                ->where('user_id', Auth::user()->id)       
+                ->where('user_id', Auth::user()->id)
                 ->get();
-        // echo "<pre>";print_r($reserveData);exit;   
+        }
+        else{
+            $reserveData = DB::table('tb_reservations')
+                ->select('id', 'checkin_date', 'checkout_date', 'adult', 'junior', 'baby','booking_number', 'price')
+                ->whereIn('property_id', $property_ids)
+                ->get();
+        }
         
         return $reserveData;
     }

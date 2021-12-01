@@ -33,8 +33,8 @@
 							    <strong>{{ $massage }}</strong>
 						  	</div>
 						  	@endif
-                            @if(Session::has('message'))
-								{!! Session::get('message') !!}
+                            @if(session()->has('message'))
+								<?php echo  htmlspecialchars_decode(session()->get('message')); ?>
 							@endif
 							<ul class="parsley-error-list">
 								@foreach($errors->all() as $error)
@@ -52,7 +52,7 @@
                             <input type="password" name="password" class="form-control" placeholder="Password">
                         </div>
 
-				        @if( (int) \Session::get('login.attempts') >= 2)
+				        @if( (int) \Session::get('login.attempts') >= 3)
 							<div class="form-group has-feedback  animated fadeInRight delayp1">
 								<label>Security Question</label>
 								<select name="question" class="form-control">
@@ -109,3 +109,8 @@
         </div>
 	</div>
 @endsection
+<style>
+.in{
+	opacity: 1 !important;
+}
+</style>

@@ -19,7 +19,7 @@ Route::post('reset-password','Auth\PasswordController@submitResetPasswordForm')-
 
 Route::get('/logout', 'Auth\AuthController@logout');
 Route::post('/sendSMS', 'Auth\AuthController@create');
-Route::post('/invitecompanion', 'Auth\AuthController@verify');
+Route::post('/userregister', 'Auth\AuthController@verify');
 
 Route::post('/sendinvitation','UserController@EmailInvitation');
 
@@ -27,14 +27,13 @@ Route::post('/sendinvitation','UserController@EmailInvitation');
 Route::get('/', 'HomeController@index')->name('homepage');
 Route::get('wetransfer', 'PropertiesController@show_wetransfer');
 //Routes for new UI changes in Emporium 
-Route::get('/users/my-preferences', 'UserController@getPreferences');
 Route::post('/postPreference', 'UserController@postPreference');
 Route::get('/users/my-preferences/{id}', 'UserController@editPreferences');
 Route::get('/users/delete-preferences/{id}', 'UserController@deletePreferences');
 Route::get('/users/profile', 'UserController@getProfile');
 Route::get('/users/setting', 'UserController@getSettings');
-Route::get('/users/guestinvite', 'UserController@getInvite');
-Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
+
+
 // Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
 
 
@@ -197,6 +196,10 @@ Route::group(['middleware' => 'auth'], function()
 	Route::post('evcustomfields/updateCustomField/{id}', 'EvcustomfieldsController@updateCustomFieldAjax');
 	Route::post('evcustomfields/updateCustomFieldOrders', 'EvcustomfieldsController@updateCustomFieldOrderAjax');
 	Route::post('evcustomfields/updateGroupOrders', 'EvcustomfieldsController@updateGroupOrderAjax');
+
+	Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
+	Route::get('/users/my-preferences', 'UserController@getPreferences');
+	Route::get('/users/guestinvite', 'UserController@getInvite');
 
 });
 

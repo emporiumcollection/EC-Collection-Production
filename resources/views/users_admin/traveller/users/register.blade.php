@@ -59,7 +59,7 @@
                         </li>
                     </ul>
                     <div class="tab-pane fade show active" id="step4" role="tabpane4" aria-labelledby="step4-tab" data-step="4">
-                        <form method="post" action="/invitecompanion"  name="form" id="form">
+                        <form method="post" action="/userregister"  name="form" id="form">
                             <div class="tab-content" id="myTabContent">
                                 <div class="tab-pane fade show active" id="step1" role="tabpanel"
                                     aria-labelledby="step1-tab">
@@ -70,7 +70,7 @@
                                         <select name="user_type" id="sel-user-type" class="form-control user_type">
                                             <option value="-1">I am:</option>
                                             <option value="5">Luxury Hotel</option>
-                                            <option value="2">Luxury Traveler</option>
+                                            <option value="2">Luxury Traveller</option>
                                             <option value="7">Bespoke Advertiser</option>
                                             <option value="14">Supplier</option>
                                         </select>
@@ -103,16 +103,19 @@
                                          <input type="text" name="first_name" id="first_name" class="form-control first" placeholder="First name">
                                         <p style="color: red; display: none;" id="first-name-error"><strong>Please enter First name</strong></p>  
                                         <p id="name_field"></p>  
+                                        <p style="color: red;" id="email-error"><strong> {{$errors->first('first_name')}} </strong></p>
                                     </div>
                                     <div class="form-group" style="padding-top: 10px;">
                                         <label class="font-2 label-2">Last name</label>
                                         <input type="text" name="last_name" id="last_name" class="form-control last_name" placeholder="Last name">
                                         <p style="color: red; display: none;" id="last-name-error"><strong>Please enter last name</strong></p>
+                                        <p style="color: red;" id="email-error"><strong> {{$errors->first('last_name')}} </strong></p>
                                     </div>
                                      <div>
                                         <label class="font-2 label-2">Username</label>
                                          <input type="text" name="username" id="username" class="form-control username" placeholder="Username">
-                                        <p style="color: red; display: none;" id="username-error"><strong>Please Enter Username</strong></p>    
+                                        <p style="color: red; display: none;" id="username-error"><strong>Please Enter Username</strong></p>
+                                        <p style="color: red;" id="email-error"><strong> {{$errors->first('username')}} </strong></p>
                                     </div>
                                     <div class="form-group">
                                         <label class="font-2 label-2">Mobile</label>
@@ -131,6 +134,7 @@
                                         <label class="font-2 label-2">Email</label>
                                         <input type="text" name="email" id="email" class="form-control email" placeholder="Email Address">
                                         <p style="color: red; display: none;" id="email-error"><strong>Please provide your email</strong></p>
+                                       <p style="color: red;" id="email-error"><strong> {{$errors->first('email')}} </strong></p>
                                     </div>
                                     <div class="form-group">
                                         <label class="font-2 label-2">Password</label>

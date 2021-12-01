@@ -26,7 +26,7 @@ class ReservationController extends Controller {
 
     public function reservationList()
     {    
-        $file_name = 'frontend.themes.EC.reservation.receipt';
+        $file_name = 'users_admin.traveller.users.reservation_list';
         return view($file_name, $this->data);   
     }
 
@@ -35,7 +35,6 @@ class ReservationController extends Controller {
         $reservations = Reservations::with(['reservedSuites.suite', 'reservedCompanions.companion', 'property',])
             ->where('id', '=', $id)
             ->get();
-            
         $property = $this->getPropertyById($reservations[0]->property_id);
         $this->setGalleryAndFormat($property);
 

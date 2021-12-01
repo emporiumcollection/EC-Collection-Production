@@ -97,10 +97,13 @@ class AuthController extends Controller
         $mobile_number = ltrim($space,0);
         $request->mobile_number =  $Countrycode.$mobile_number;
         $request->verification_code = implode('', $request->code);
-        // $data = $this->validate($request, [
-        //     'mobile_number' => 'required',
-        //     'verification_code' => 'required',
-        // ]);
+        $rules = array(
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'username' => 'required',
+            'email' => 'required|email|unique:tb_users'
+        );
+        $validator = Validator::make($request->all(), $rules);
         /* Get credentials from .env */
         // $token = Config::get('app.TWILIO_AUTH_TOKEN');
         // $twilio_sid = Config::get("app.TWILIO_SID");
@@ -110,10 +113,10 @@ class AuthController extends Controller
         //     ->verificationChecks
         //     ->create($request->verification_code, array('to' => $request->mobile_number));
 
-        // if ($verification->valid) {
+        if ($validator->passes()) {
 
            $user = User::create([
-                'group_id' => 3,
+                'group_id' => $request->user_type,
                 'first_name' => $request->first_name,
                 'last_name' => $request->last_name,
                 'username' => $request->username,
@@ -146,8 +149,10 @@ class AuthController extends Controller
                 return redirect()->back()->with(['message' => 'Please try again']);
             }
         }
-        // return back()->route('register')->with(['phone_number' => $request->mobile_number, 'error' => 'Invalid verification code entered!']);
-    // }
+        else {
+            return redirect()->back()->withErrors($validator)->withInput();          
+        }  
+    }
 
     public function logout(Request $request) {
         Session::forget('arrival');
