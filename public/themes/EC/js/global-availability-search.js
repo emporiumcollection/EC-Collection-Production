@@ -620,9 +620,16 @@ function getDefaultChannel(catt){
     });
 }     
 
-function replacePrices(cat_id){
+function replacePrices(cat_id, property_id = null){
+    if(!property_id){
+      property_id = currentPropertyId;
+    }
+    if(!priceTemplate){              
+      priceTemplate = $('#priceinfo .sub-price-content').html();
+    }
+    $('#priceinfo .sub-price-content').html('Loading...');
     $.ajax({
-        url: 'property/prices?category_id=' +  cat_id + '&property_id=' +  currentPropertyId + '&arrival=2021-10-05&departure=2021-10-10',
+        url: '/property/prices?category_id=' +  cat_id + '&property_id=' +  property_id + '&arrival='+arrival+'&departure='+departure,
         //dataType:'html',
         dataType:'json',
         type: 'get',
@@ -634,9 +641,6 @@ function replacePrices(cat_id){
             $('#priceinfo #suite-total-night').html(data.numberOfNights);
             $('#priceinfo #suite-total-price').html(data.totalPrice);
             $('#priceinfo #suite-total-usd-price').html(data.totalUSDPrice);
-            if(!priceTemplate){              
-              priceTemplate = $('#priceinfo .sub-price-content').html();
-            }
             var priceList = '';
             
             data.propertyPrices.forEach(function(p){

@@ -193,6 +193,8 @@ $(document).ready(function(){
                 dataType:'json',                    
                 success: function(response){
                     $(".selected-suite-bord").remove();
+                    $("#suiteboard").remove();
+                    $(".reservation-total").remove();
                     $(response.select_boards).insertBefore('.reservation-total');
                 },
             });

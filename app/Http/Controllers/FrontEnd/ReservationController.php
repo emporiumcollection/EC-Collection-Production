@@ -228,10 +228,14 @@ class ReservationController extends Controller {
     public function select_board($id){
 
         Session::put('board_id',$id);
-        $board =  $this->fetchBoards($id);
-
-        $select_boards = view('frontend.themes.EC.reservation.partials.suiteboard.select-board',
-            ['board' => $board])->render();
+        $boards =  $this->fetchBoards($id);
+        $suites = $this->reserveSuite();
+        $selected_suite = Session::get('suite_array');
+        $select_boards = view('frontend.themes.EC.reservation.reservation-summary',
+            [
+                'suites' => $suites,
+                'boards' => $boards ,
+                'selected_suite' => $selected_suite])->render();
 
         return json_encode([
             'select_boards' => $select_boards

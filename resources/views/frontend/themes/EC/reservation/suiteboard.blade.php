@@ -87,7 +87,7 @@
                             <div class="radio-toolbar">
                               <input type="radio" id="board_{{ $data->id }}" name="board" class="board-selection" value="{{ $data->id }}" {{ $board == $data->id ? 'checked' : '' }}>
                               <label for="board_{{ $data->id }}">Select</label> 
-                              <a href="javascript:void(0);" class="remove_board_selection" style="display: {{ $board == $data->id ? 'block' : 'none' }};">Remove</a>
+                              <a href="javascript:void(0);" class="remove_board_selection" style="display: {{ \Session::get('board_id') == $data->id ? 'block' : 'none' }};">Remove</a>
                             </div>
                           </div>
                         </div>
