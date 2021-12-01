@@ -151,7 +151,8 @@
 	      </div>
 	      <div class="col-lg-3 col-md-4">
           @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
-        </div>	      
+        </div>
+
 	   </div>
 	</div>
   </div>

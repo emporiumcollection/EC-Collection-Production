@@ -30,6 +30,9 @@
                   </div>
                   
               @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites]) 
+              @if(!empty($boards))
+                @include('frontend.themes.EC.reservation.partials.suiteboard.select-board', ['board' => $boards])
+              @endif
                   <div class="policies" id="policies">
                     <h3>Policies</h3>
                     <div class="card card-body rounded-0">

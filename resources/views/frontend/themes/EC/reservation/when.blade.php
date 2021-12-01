@@ -1,3 +1,4 @@
+
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -11,12 +12,10 @@
         cursor: pointer;
     }
 </style>
-
 @section('content')
 <div class="content-em">
   <div class="top-wrapper">
     <div class="container ">
-      
       @include('frontend.themes.EC.reservation.nav_wizard')
 
     <div id="step-1" class="tab-pane" role="tabpanel">

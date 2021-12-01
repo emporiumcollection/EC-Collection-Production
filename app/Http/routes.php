@@ -79,6 +79,7 @@ Route::post('reservation/savepaymentmethod', 'FrontEnd\ReservationController@sav
 Route::get('reservation/hotelpolicies', 'FrontEnd\ReservationController@hotelpolicies');
 Route::get('reservation/bookingsummary', 'FrontEnd\ReservationController@bookingsummary');
 Route::post('/store_dates/session', 'FrontEnd\ReservationController@storewhere');
+Route::get('/select/board/{id}', 'FrontEnd\ReservationController@select_board');
 
 Route::post('/suite', 'FrontEnd\ReservationController@selected_suite');
 Route::get('/remove-suite-selection/{id}', 'FrontEnd\ReservationController@removeSuiteSelection');

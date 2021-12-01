@@ -221,3 +221,7 @@
     </li>
   </ul>
 </div>
+<script type="text/javascript">
+    var arrival =  '<?php echo \Session::get('arrival');?>';
+    var departure =  '<?php echo \Session::get('departure');?>';
+</script>

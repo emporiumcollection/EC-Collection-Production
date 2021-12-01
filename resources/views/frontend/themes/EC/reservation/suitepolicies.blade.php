@@ -25,6 +25,7 @@
             <i class="ico ico-back mr-3"></i>
           </a>
           Policies
+
         </h2>
         <div class="row">
           <div class="col-lg-9 col-md-8 mb-4">
@@ -46,7 +47,7 @@
                 @endif
               @endif          
             <hr>              
-                @if(empty($termDetail))
+                @if(!empty($termDetail))
                   @foreach($global_terms as $links)
                     <div class="form-group">
                         <a href="https://superdevresources.com/open-links-popup" class="iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe " title="Privacy and cookie policy" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Privacy and cookie policy</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
@@ -67,9 +68,9 @@
                 @endif  
             <hr>
               <div class="booking-tearms">
-                <h3>Booking teams and conditions</h3>
+                <h3>Booking terms and conditions</h3>
                 <div class="custom-control custom-checkbox mb-5">
-                  <input type="checkbox" class="custom-control-input" id="customCheck2">
+                  <input type="checkbox" name="policies_ckh" class="custom-control-input chkpolicies" id="customCheck2">
                   <label class="custom-control-label" for="customCheck2">
                     Your reservation is made subject to our
                     <a href="#" class="underline"><b>Terms & Conditions</b> </a>(available
@@ -87,6 +88,9 @@
                   For further information about how we use your data, please see our
                   <a href="#" class="underline"><b>privacy policy</b></a>
                 </p>
+                <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
+                  <p id="massage" class="mb-0"></p>
+                </div>
               </div>
             
             <div class="row">
@@ -98,7 +102,7 @@
                 @endif
               </div>
               <div class="col-6 text-right">
-                <a href="/reservation/whoistravelling" class="btn btn-dark px-5">Next</a>
+                <a href="javascript:void(0);" class="btn btn-dark px-5 chkpolicies_btn">Next</a>
               </div>
             </div>
           
@@ -106,6 +110,9 @@
           <div class="col-lg-3 col-md-4">
             @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
           </div>
+          @if(!empty($boards))
+            @include('frontend.themes.EC.reservation.partials.suiteboard.select-board', ['board' => $boards])
+          @endif
     </div>
   </div>
   </div>

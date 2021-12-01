@@ -23,7 +23,9 @@
 <?php
   $pos = 1;
   $grand_total = 0;
+  $board_price = \Session::get('board_price'); 
 ?>
+
 @if(!empty($suites))
   @foreach($suites as $suite)
     @foreach($suite as $value)
@@ -34,6 +36,7 @@
           <tr>
             <td class="px-0 py-1">Adult</td>
             <td class="px-0 py-1 text-right">{{ $selected_suite[$value->id]['adult'] }}</td>
+            <td class="px-0 py-1 text-right">{{ \Session::get('board_price') }}</td>
           </tr>
           @if($selected_suite[$value->id]['junior'])
             <tr>
@@ -85,7 +88,11 @@
   <table class="table table-borderless mb-0">
     <tr>
       <td class="px-0 py-1">Total</td>
-      <td class="px-0 py-1 text-right"><b>€{{ $grand_total }}</b></td>
+      <td class="px-0 py-1 text-right"><b>€{{ $grand_total + $board_price }}</b></td>
     </tr>
   </table>
 </div>
+
+@if(!empty($board))
+  @include('frontend.themes.EC.reservation.partials.suiteboard.select-board', ['board' => $boards])
+@endif

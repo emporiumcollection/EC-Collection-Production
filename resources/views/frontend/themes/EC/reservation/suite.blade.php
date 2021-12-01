@@ -15,7 +15,6 @@
 <div class="content-em">
   <div class="top-wrapper">
     <div class="container ">
-      
       @include('frontend.themes.EC.reservation.nav_wizard')
 
       <div id="step-3" class="tab-pane" role="tabpanel">
@@ -33,7 +32,6 @@
                   <strong>Success!</strong> {!! Session::get('massage') !!}.
               </div>
             @endif
-
             <div class="suite-fasility section-shadow mb-5">
               <h3>ALL STAYS INCLUDE</h3>
               <ul>
@@ -47,9 +45,15 @@
                 <li>Access to 24 hour business centre</li>
               </ul>
             </div>
+            <div class="custom-control custom-checkbox mb-5">
+               <input type="checkbox" name="accesibility" class="custom-control-input chkpolicies" id="customCheck2">
+              <label class="custom-control-label" for="customCheck2">
+                <b>Accesibility</b>
+              </label>
+            </div>
         @if(!empty($property[0]))
           @foreach($property[0]->suites as $suite)  
-            <div class="suite-list section-shadow mb-5">
+            <div class="suite-list section-shadow mb-5 <?php if($suite->is_accessible == '1') echo 'accessible'; else echo 'not-accessible'; ?> ">
               <div class="suite-tumb">
                 <div class="row align-items">
                     <div class="col-lg-6">
@@ -95,7 +99,6 @@
                         <section id="guest_selection">
                           @include('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])
                         </section>
-
                       </div>
                     </div>
                   </div>
