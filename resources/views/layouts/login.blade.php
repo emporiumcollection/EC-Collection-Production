@@ -17,7 +17,7 @@
 
 </head>
 
-<body class="auth-container">
+<body class="auth-container" style="background: url({{asset('themes/EC/images/auth_bg.png')}});">
 
     @yield('content');        
 

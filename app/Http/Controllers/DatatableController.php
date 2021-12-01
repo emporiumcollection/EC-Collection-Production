@@ -86,7 +86,7 @@ class DatatableController extends Controller
         $user = User::find(Auth::user()->id);
         
         $properties = properties::where('user_id',Auth::user()->id)->get();
-        
+        $property_ids = [];
         foreach($properties as $property)
         {
             $property_ids[] = [ 'property_id' => $property->id ];

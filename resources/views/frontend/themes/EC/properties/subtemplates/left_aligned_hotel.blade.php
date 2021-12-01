@@ -18,13 +18,13 @@
         <h4 class="hover-primary mb-0">
           From € <?php echo $editorChoice->price;?>
         </h4>
-        {{-- <div class="dropdown ml-3">
+        {{--<div class="dropdown ml-3">
           <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Add to Collection
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">Add to Collection</a>
+            <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Add to Collection</a>
             <a class="dropdown-item" href="#">Share</a>
           </div>
         </div> --}}
