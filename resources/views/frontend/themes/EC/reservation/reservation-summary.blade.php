@@ -93,6 +93,6 @@
   </table>
 </div>
 
-@if(!empty($boards))
+@if(!empty($boards->toArray()))
   @include('frontend.themes.EC.reservation.partials.suiteboard.select-board', ['board' => $boards])
 @endif
