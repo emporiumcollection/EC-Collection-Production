@@ -528,6 +528,7 @@
   <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/custom.js')}}"></script>
+  <script src="{{ asset('assets/users/assets/js/dashboard-cookie.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/pages/crud/ktdatatable/base/data-local-reservation.js')}}"></script>
   
   <script type="text/javascript">

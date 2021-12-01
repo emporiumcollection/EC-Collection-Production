@@ -1540,6 +1540,8 @@
                         </div>
                     </div>
                     <!--end::Card-->
+<div id="reservation_popup" class="offcanvas offcanvas-right p-10 offcanvas-off" style="width: 90%;">
+</div>
 @endsection                
 <script type="text/javascript">
       
