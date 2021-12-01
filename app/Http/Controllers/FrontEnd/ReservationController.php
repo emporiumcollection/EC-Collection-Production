@@ -58,7 +58,8 @@ class ReservationController extends Controller {
         $this->data['arrive'] = '';
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
-        $this->data['location'] = '';       
+        $this->data['location'] = '';
+        $this->data['boards'] = '';       
 
         $file_name = 'frontend.themes.EC.reservation.when';
         return view($file_name, $this->data);   
@@ -97,7 +98,8 @@ class ReservationController extends Controller {
         $this->data['arrive'] = '';
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
-        $this->data['location'] = '';        
+        $this->data['location'] = '';
+        $this->data['boards'] = '';        
             
         $file_name = 'frontend.themes.EC.reservation.where';
         return view($file_name, $this->data);   
