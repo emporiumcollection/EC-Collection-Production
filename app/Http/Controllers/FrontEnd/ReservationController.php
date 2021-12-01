@@ -457,12 +457,12 @@ class ReservationController extends Controller {
         $this->data['location'] = '';        
         $this->data['cards'] = CardDetail::where('user_id', '=', $id)->orderBy('id','desc')->get();
         
+        
         $file_name = 'frontend.themes.EC.reservation.payment_method';
         return view($file_name, $this->data);   
     }
     public function savepaymentmethod(Request $request)
     {
-        
         if (!\Auth::check())
             return redirect('user/login');
             
@@ -487,8 +487,6 @@ class ReservationController extends Controller {
                     
                     $card_type = Crypt::encrypt($request->card_type);
                     $card_number = Crypt::encrypt($request->card_number);
-                    $exp_month = Crypt::encrypt($request->exp_month);
-                    $exp_year = Crypt::encrypt($request->exp_year);
                     $first_name = Crypt::encrypt($name[0]);
                     $last_name = Crypt::encrypt($name[1]);
                     $requirements = Crypt::encrypt($request->requirements);
@@ -496,8 +494,8 @@ class ReservationController extends Controller {
                         'user_id' => $id, 
                         'card_type' => $card_type, 
                         'card_number' => $card_number, 
-                        'exp_month' => $exp_month, 
-                        'exp_year' => $exp_year,
+                        'exp_month' => $request->exp_month, 
+                        'exp_year' => $request->exp_year,
                         'first_name' => $first_name,
                         'last_name' => $last_name,
                         'created_at' => date("Y-m-d"),
