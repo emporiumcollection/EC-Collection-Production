@@ -24,7 +24,7 @@
             <!--begin::Item-->
             <li class="nav-item mb-3" data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="Property Management System">
-                <a href="hotels.html" class="nav-link btn btn-icon btn-clean btn-lg">
+                <a href="#" class="nav-link btn btn-icon btn-clean btn-lg">
                     <i class="flaticon-analytics"></i>
                 </a>
             </li>
@@ -32,7 +32,7 @@
             <!--begin::Item-->
             <li class="nav-item mb-3" data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="User">
-                <a href="crm.html" class="nav-link btn btn-icon btn-clean btn-lg @@crm" >
+                <a href="#" class="nav-link btn btn-icon btn-clean btn-lg @@crm" >
                     <i class="flaticon-users"></i>
                 </a>
             </li>
@@ -48,7 +48,7 @@
             <!--begin::Item-->
             <li class="nav-item mb-3 " data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="Dynamic Rate Management">
-                <a href="dynamic-rate.html" class="nav-link btn btn-icon btn-clean btn-lg">
+                <a href="#" class="nav-link btn btn-icon btn-clean btn-lg">
                     <i class="flaticon-line-graph"></i>
                 </a>
             </li>

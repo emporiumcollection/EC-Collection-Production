@@ -195,6 +195,7 @@
           </div>
         </div>
       </div> --}}
+      @if (\Session::get('gid') == 3)
       <div class="col-md-4">
         <div class="card card-custom card-stretch gutter-b">
           <div class="card-img-header">
@@ -294,6 +295,7 @@
           </div>
         </div>
       </div>
+      @endif
     </div>
   </div>
 
@@ -309,36 +311,42 @@
             <div>My Profile</div>
           </a>
         </div>
+        @if (\Session::get('gid') == 3)
         <div class="col-lg-3 col-md-6">
           <a href="{{ URL::to('/users/my-preferences')}}" class="my-setting-container">
             <i class="icon-2x text-dark-50 flaticon-interface-11"></i>
             <div>My Preferences</div>
           </a>
         </div>
+        @endif
         <div class="col-lg-3 col-md-6">
           <a href="account-setting.html" class="my-setting-container">
             <i class="icon-2x text-dark-50 flaticon-settings"></i>
             <div>Account Settings</div>
           </a>
         </div>
+        @if (\Session::get('gid') == 3)
         <div class="col-lg-3 col-md-6">
           <a href="invite-guest.html" class="my-setting-container">
             <i class="icon-2x text-dark-50 flaticon-mail"></i>
             <div>Guest Invitations</div>
           </a>
         </div>
+        @endif
         <div class="col-lg-3 col-md-6">
           <a href="#" class="my-setting-container">
             <i class="icon-2x text-dark-50 flaticon-computer"></i>
             <div>Communication</div>
           </a>
         </div>
+        @if (\Session::get('gid') == 3)
         <div class="col-lg-3 col-md-6">
           <a href="companion.html" class="my-setting-container">
             <i class="icon-2x text-dark-50 flaticon-users"></i>
             <div>Companions</div>
           </a>
         </div>
+        @endif
         <div class="col-lg-3 col-md-6">
           <a href="security-privacy.html" class="my-setting-container">
             <i class="icon-2x text-dark-50 flaticon-lock"></i>

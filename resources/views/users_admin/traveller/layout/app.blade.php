@@ -168,7 +168,11 @@
           </form>
           <!--end::Form-->
           <div class="p-2 p-lg-3">
-            @include('users_admin/traveller/layout/dashboard-menu')
+            @if(Request::is('reservation/receipt'))
+              @include('users_admin/traveller/layout/reservation_left_sidebar')
+            @else
+              @include('users_admin/traveller/layout/dashboard-menu')
+            @endif
           </div>
         </div>
         <!--end::Tab Pane-->
@@ -524,6 +528,7 @@
   <script src="{{ asset('assets/users/assets/js/pages/custom/wizard/wizard-3.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/custom.js')}}"></script>
+  <script src="{{ asset('assets/users/assets/js/pages/crud/ktdatatable/base/data-local-reservation.js')}}"></script>
   
   <script type="text/javascript">
     //Companion image show on file input 
@@ -558,6 +563,22 @@
     //   $(this).closest(".dropdown").find(".dropdown-menu").toggleClass("show");
 
     // })
+    $(document).ready(function(){
+        $(document).on("click",'.summary-data',function(){
+            var id = $(this).find('.reserve_id').data('id');
+            
+            $.ajax({
+                url: '/reserve/summary/'+id,
+                type: 'get',
+                dataType:'json',
+                success:function(response){
+                    $("#reservation_popup").html(response.reserve_summary);
+                    $("#reservation_popup").removeClass('offcanvas-off').addClass('offcanvas-on');
+                }
+            });
+        });
+    });
+
     $('.experience-slider').slick({
       infinite: false,
       speed: 300,
