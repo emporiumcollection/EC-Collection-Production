@@ -79,7 +79,7 @@
     <div class="prev"><i class="ico ico-back"></i></div>
     <div class="next"><i class="ico ico-next"></i></div>
     <div class="hotel-meta full-width hotel-meta-details">
-      <a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews">
+      <a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews" onclick="replaceReviewData()">
         Reviews
       </a>
       <a href="#" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $hotel_data[0]->id ;?>)" class="view btn-sidebar i-none">
