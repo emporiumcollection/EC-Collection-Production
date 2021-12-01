@@ -33,8 +33,11 @@
 </div>
 </div>
 @include('frontend.themes.EC.layouts.subsections.priceinfo')
+@include('frontend.themes.EC.layouts.subsections.quick_info')
+@include('frontend.themes.EC.layouts.subsections.reviews')
 <?php if(isset($property_id)):?>
 <script>
+  currentPropertyId = <?php echo $property_id;?>;
   $(document).ready(function(){
     $('#suitelist1-tab-' + parseInt(window.location.hash.substring(1))).trigger("click");
     
