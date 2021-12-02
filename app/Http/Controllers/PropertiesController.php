@@ -1943,6 +1943,7 @@ class PropertiesController extends Controller {
         $rules['guests_babies'] = 'required|numeric';
         $rules['suite_size'] = 'required|numeric';
         $rules['bads'] = 'required|numeric';
+        
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
             $data['property_id'] = $request->input('property_id');
@@ -1957,6 +1958,9 @@ class PropertiesController extends Controller {
             $data['guests_babies'] = $request->input('guests_babies');
             $data['bads'] = $request->input('bads');
             $data['suite_size'] = $request->input('suite_size');
+            $data['is_accessible'] = $request->input('is_accessible');
+            $data['cancelation_period'] = $request->input('cancelation_period');
+            $data['cancelation_duration'] = $request->input('cancelation_duration');
             //$data['booking_policy'] =  $request->input('bookingPolicy');
 
             if (!is_null($request->input('count_baby'))) {
