@@ -45,12 +45,21 @@
           </a>
         </div>
         <div class="col-md-2 col-4 text-right mobile-flex">
-          <a href="/register" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
-            <div class="user-profile-img">
-              <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
-              <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
-            </div>
-          </a>
+          @if(Auth::check())
+            <a href="/dashboard" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
+              <div class="user-profile-img">
+                <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
+              </div>
+            </a>
+          @else  
+            <a href="/register" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
+              <div class="user-profile-img">
+                <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
+              </div>
+            </a>
+          @endif  
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
             <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
               <div class="line"></div>
