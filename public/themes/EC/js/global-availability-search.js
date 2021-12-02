@@ -361,11 +361,16 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_amenities"]').html(suite.suiteamenities);
   var containerName = getContainerName(property_id);
   var roomimages = ``;
-  suite.rooms[0].images.forEach(function(rm){
-    roomimages += `<div>
-      <img src="/room-image/resize/750x350/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
-    </div>`;
-  });
+
+  try{
+    suite.rooms[0].images.forEach(function(rm){
+      roomimages += `<div>
+        <img src="/room-image/resize/750x350/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      </div>`;
+    });
+  }catch(e){
+    
+  }
 
   $('[data-place="price-icon"]').html(`<i class="ico ico-info-green pointer btn-sidebar" type="button"
                                 data-sidebar="#priceinfo" onclick="replacePrices(`+category_id+`)"></i>`);
