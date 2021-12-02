@@ -383,17 +383,17 @@
               </div>
               <ul class="nav nav-right ml-auto">
                 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                   <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
                     <i class="ico ico-convertation"></i>
                   </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                   <a class="nav-link btn-sidebar" href="#" data-sidebar="#share">
                     <i class="ico ico-share-2"></i>
                   </a>
                 </li>
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item dropdown">
                   <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <i class="ico ico-diamon"></i>
@@ -402,7 +402,7 @@
                     <a class="dropdown-item" href="#">Add to collection</a>
                     <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Create new collection</a>
                   </div>
-                </li>
+                </li> --}}
               </ul>
             </div>
           </div>
