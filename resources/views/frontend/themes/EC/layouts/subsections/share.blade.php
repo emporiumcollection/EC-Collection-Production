@@ -23,10 +23,6 @@
 
             <a class="nav-link media-s" href="mailto:{{ Request::fullUrl() }}?subject=Share email link&amp;body={{  Request::fullUrl() }}"
             title="Share by Email" target="_blank"><i class="fa fa-envelope" aria-hidden="true"></i>Email</a>
-            <a class="nav-link media-s copy_text" href="{{ Request::fullUrl() }}"><i class="fa fa-link" aria-hidden="true"></i> Copy Link</a>
-
-            <a class="nav-link media-s" href="mailto:?subject=Emporium Collection&amp;body={{ Request::fullUrl() }}"
-            title="Share by Email"><i class="fa fa-envelope" aria-hidden="true"></i>Email</a>
 
             <a class="nav-link media-s" href="https://api.whatsapp.com/send?text=www.google.com" data-action="share/whatsapp/share"><i class="fa fa-whatsapp" aria-hidden="true" target="_blank"></i> Whatsapp</a>
             {{-- <a class="nav-link media-s" href="#"><i class="fa fa-commenting" aria-hidden="true"></i> SMS</a> --}}
