@@ -711,9 +711,9 @@ trait Property {
                         'friday_price',
                         'saturday_price',
                         'sunday_price',
-                    ])  
-                    //->whereIn('category_id', $roomIds)
-                    ->where('category_id', $category_id)
+                    ])
+                    //->whereIn('category_id', $roomIds) for amadeus
+                    ->where('category_id', '=', $category_id)
                     ->where('season_id', '=', $sdate['season_id'])
                     ->get()
                     ->toArray();                    
