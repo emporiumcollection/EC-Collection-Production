@@ -2760,7 +2760,7 @@ class PropertyController extends Controller {
             $site_url = 'http://staging.emporium-safari.com';
         }elseif($sitename == 'spa'){
             $site_url = 'http://staging.emporium-spa.com';
-        }elseif($sitename == 'islands'){
+        }elseif($sitename == 'island'){
             $site_url = 'http://staging.emporium-islands.com';
         }
 
