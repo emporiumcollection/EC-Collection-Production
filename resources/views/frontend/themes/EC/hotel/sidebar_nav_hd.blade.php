@@ -50,10 +50,10 @@ if(!isset($property)){
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button" aria-expanded="false" aria-controls="suite">
+          <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button" aria-expanded="true" aria-controls="suite">
             Suites <i class="fa fa-angle-down" aria-hidden="true"></i>
           </a>
-          <div class="collapse " id="suite">
+          <div class="collapse show" id="suite">
             <ul class="nav flex-column nav-sidebar is-small">
               <li class="nav-item">
                 <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}">All Suites</a>
@@ -109,12 +109,7 @@ if(!isset($property)){
        {{--<li class="nav-item">
           <a class="nav-link @@sosActive" href="/hotel/social">Social</a>
         </li>--}}
-        <!--<li class="nav-item">
-          <a class="nav-link @@comActive" href="#" data-sidebar="#videos" {{--onclick="getDefaultChannel()"--}}>Video Channel</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link @@faq" href="/hotel/faq">FAQ</a>
-        </li>-->
+        
       </ul>
     </div>
   </div>

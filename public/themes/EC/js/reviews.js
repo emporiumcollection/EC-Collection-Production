@@ -77,7 +77,10 @@ $(document).ready(function(){
     });
 });
 
-function replaceReviewData(id){
+function replaceReviewData(id = null){
+    if(!id){
+        id = currentPropertyId;
+    }
     if(reviews[id] !== undefined){
         appendReviewData(reviews[id]);
         return true;

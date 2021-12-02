@@ -76,10 +76,14 @@ function replacePropertyData(id){
           rimages = r.images;
           if(rimages.length){          
             rimages.forEach(function(e){
-              imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
-              imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '" ><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
-              spanid=2;
-              grid = 2;
+              try{
+                imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
+                imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '" ><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+                spanid=2;
+                grid = 2;
+              }catch(e){
+
+              }
             });
           }
         });
@@ -150,27 +154,31 @@ function initializeAllGalleries(){
 }
 
 function replaceGalleryImages(id, place, list, image_path){
-  $('[data-place="' + place + '"]').each(function() {
-      // field = $(this).attr('data-replace');
-      //console.log(properties[id][field]);
-      var values = properties[id][list];
+  try{
+    $('[data-place="' + place + '"]').each(function() {
+        // field = $(this).attr('data-replace');
+        //console.log(properties[id][field]);
+        var values = properties[id][list];
 
-      var imageview = '';
-      var spanid = 1;
-      var grid = 1;
-      var imgUrl = '';
-      for (const [key, e] of Object.entries(values)) {
-        if(e.gallery.files){          
-          e.gallery.files.forEach(function(rgallery){          
-            imgUrl = '/property-image/resize/1200x700/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
-            imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
-            spanid=2;
-            grid=2;
-          });  
+        var imageview = '';
+        var spanid = 1;
+        var grid = 1;
+        var imgUrl = '';
+        for (const [key, e] of Object.entries(values)) {
+          if(e.gallery.files){          
+            e.gallery.files.forEach(function(rgallery){          
+              imgUrl = '/property-image/resize/1200x700/' + e.gallery.container + '/' + rgallery.file_name + '/' + image_path;
+              imageview += '<a href="' + imgUrl + '" data-sub-html="' + rgallery.file_title + '" class="'+place+'-id-'+key+' grid-item grid-row-' + grid + ' span-' + spanid + '"><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+              spanid=2;
+              grid=2;
+            });  
+          }
         }
-      }
-      $(this).html(imageview);
-  });
+        $(this).html(imageview);
+    });
+  }catch(e){
+    
+  }  
 }
 
 function replaceGalleryNames(id){
