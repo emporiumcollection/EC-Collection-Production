@@ -670,24 +670,32 @@ trait Property {
 
     public function getPropertyRoomPrices($id, $category_id, $arrival, $departure){
         $seasonDays = [];
-
+        
         $roomIds = [];
         $rooms = PropertyRooms::where('category_id', '=', $category_id)
         ->get()
         ->toArray();
+
         foreach($rooms as $room){
             $roomIds[] = $room['id'];
         }
-
         $journyStart = $arrival;
         $journyEnd = $departure;
 
         while($journyStart <= $journyEnd){
             // Get season dates
+
+            $seasons = Seasons::where('property_id',$id)->get();
+
+            $season_ids = [];
+            foreach($seasons as $season){
+                $season_ids[] = $season->id;
+            }
+            
             $seasonDates = SeasonDates::select(['season_id', 'season_from_date', 'season_to_date'])
             ->where('season_from_date', '<=', $journyStart)
             ->where('season_to_date', '>=', $journyStart)
-            ->where('property_id', '=', $id)
+            ->whereIn('season_id',$season_ids)
             ->get()
             ->toArray();
 
@@ -703,12 +711,12 @@ trait Property {
                         'friday_price',
                         'saturday_price',
                         'sunday_price',
-                    ])
-                    ->whereIn('category_id', $roomIds)
+                    ])  
+                    //->whereIn('category_id', $roomIds)
+                    ->where('category_id', $category_id)
                     ->where('season_id', '=', $sdate['season_id'])
                     ->get()
-                    ->toArray();
-                    
+                    ->toArray();                    
                     if(empty($roomPrices)){
                         continue;    
                     }
@@ -726,7 +734,6 @@ trait Property {
                     }
                 }
             }
-
 
             $nextDay = new DateTime($journyStart . ' + 1 day');
             $journyStart = $nextDay->format('Y-m-d');
