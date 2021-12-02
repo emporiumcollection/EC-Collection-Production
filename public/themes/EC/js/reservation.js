@@ -162,6 +162,8 @@ $(document).ready(function(){
         }
     });
 
+    //add New Address in reservation who's traveling step
+
     $(document).on('click', ".add_new_addres", function(){
         var title = $( "#address_title option:selected" ).val("");
         var country = $( "#address_country option:selected" ).val("");
@@ -176,8 +178,11 @@ $(document).ready(function(){
         var first_name = $('#address_first_name').val("");
     });
 
+    //insert board befor total off all suits
     $(".selected-suite-bord").insertBefore('.reservation-total');
 
+
+    //onclick or select board in reservation
     $(document).on('click', '.board-selection', function(){
         if($(this).prop('checked') === true){
             var board_id = $(this).val();
@@ -192,15 +197,13 @@ $(document).ready(function(){
                 url: '/select/board/'+board_id,
                 dataType:'json',                    
                 success: function(response){
-                    // $(".selected-suite-bord").remove();
-                    // $("#suiteboard").remove();
                     $("#suiteboard").html(response.select_boards);
-                    // $(".reservation-total").remove();
                     $(".selected-suite-bord").insertBefore('.reservation-total');
                 },
             });
         }
     });
+    // TO remove selected suite board
     $(document).on('click', '.remove_board_selection', function(){
         $('.board-selection').prop('checked', false);
         $(this).css('display', 'none');
