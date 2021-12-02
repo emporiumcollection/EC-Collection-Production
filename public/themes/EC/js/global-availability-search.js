@@ -402,6 +402,7 @@ function replaceSuiteDetail(property_id, category_id){
   setTimeout('appendSlider()', 2000);
   replacePropertyData(property_id);
   setTimeout("$('.suite-popup').slick('setPosition');", 4000);  
+  $('#suite').addClass('show');
 }
 
 function replaceSuiteBoard(){
