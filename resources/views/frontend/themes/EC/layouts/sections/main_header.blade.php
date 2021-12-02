@@ -45,12 +45,21 @@
           </a>
         </div>
         <div class="col-md-2 col-4 text-right mobile-flex">
-          <a href="/register" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
-            <div class="user-profile-img">
-              <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
-              <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
-            </div>
-          </a>
+          @if(Auth::check())
+            <a href="/dashboard" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
+              <div class="user-profile-img">
+                <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
+              </div>
+            </a>
+          @else  
+            <a href="/register" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
+              <div class="user-profile-img">
+                <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
+              </div>
+            </a>
+          @endif  
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
             <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
               <div class="line"></div>
@@ -383,17 +392,17 @@
               </div>
               <ul class="nav nav-right ml-auto">
                 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                   <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
                     <i class="ico ico-convertation"></i>
                   </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                   <a class="nav-link btn-sidebar" href="#" data-sidebar="#share">
                     <i class="ico ico-share-2"></i>
                   </a>
                 </li>
-                <li class="nav-item dropdown">
+                {{-- <li class="nav-item dropdown">
                   <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
                     aria-haspopup="true" aria-expanded="false">
                     <i class="ico ico-diamon"></i>
@@ -402,7 +411,7 @@
                     <a class="dropdown-item" href="#">Add to collection</a>
                     <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Create new collection</a>
                   </div>
-                </li>
+                </li> --}}
               </ul>
             </div>
           </div>

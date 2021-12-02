@@ -147,6 +147,8 @@ class ReservationController extends Controller {
 
         if(Session::has('board_id')) {
             $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
+        }else{
+            $this->data['boards'] = '';
         }
 
         $arr = $this->reserveSuite();
