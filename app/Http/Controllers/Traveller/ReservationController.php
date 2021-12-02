@@ -34,22 +34,36 @@ class ReservationController extends Controller {
     {
         $reservations = Reservations::with(['reservedSuites.suite', 'reservedCompanions.companion', 'property',])
             ->where('id', '=', $id)
-            ->get();
-        $property = $this->getPropertyById($reservations[0]->property_id);
+            ->first();
+        $property = $this->getPropertyById($reservations->property_id);
         $this->setGalleryAndFormat($property);
+        
+        
+        $checkin_date = new \DateTime($reservations->checkin_date);
+        $current_date = new \DateTime();
+        
+        $diff = date_diff($current_date, $checkin_date);
+        $diffdate = $diff->format("%a");
+        $cancelation_status = false;
+        foreach($reservations->reservedSuites as $key => $reservedSuite){
+            $period = $reservedSuite->suite->cancelation_period;
+            if($period && $diffdate >= $period){
+                $cancelation_status = true;
+            }
+        }
+        $property_id = $reservations->property_id;
+        $hotel_name = $reservations->property->property_name;        
+        $booking_number = $reservations->booking_number;
 
-        $property_id = $reservations[0]->property_id;
-        $hotel_name = $reservations[0]->property->property_name;        
-        $booking_number = $reservations[0]->booking_number;
-
-        $trip_dates = CommonHelper::getDateRange($reservations[0]->checkin_date, $reservations[0]->checkout_date);
+        $trip_dates = CommonHelper::getDateRange($reservations->checkin_date, $reservations->checkout_date);
         $reserve_summary = view('frontend.themes.EC.reservation.partials.summary.reservation_summary',
             [   
                 'reservations' => $reservations,
                 'property' => $property,
                 'hotel_name' => $hotel_name,
                 'booking_number' => $booking_number,
-                'trip_dates' => $trip_dates
+                'trip_dates' => $trip_dates,
+                'cancelation_status' => $cancelation_status
             ])->render();
 
         return json_encode([

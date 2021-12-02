@@ -34,9 +34,9 @@
                                                         <div class="itn-text">
                                                             <p class="mb-0 month-nav">{{ date('d. M. Y', strtotime($date)) }}</p>
                                                             <p class="mb-0">{{ date('l', strtotime($date)) }}</p>
-                                                            @if(strtotime($date) == strtotime($reservations[0]->checkin_date))
+                                                            @if(strtotime($date) == strtotime($reservations->checkin_date))
                                                                 <p class="mb-0 mt-2"><b>Arrival date</b></p>
-                                                            @elseif(strtotime($date) == strtotime($reservations[0]->checkout_date))
+                                                            @elseif(strtotime($date) == strtotime($reservations->checkout_date))
                                                                 <p class="mb-0 mt-2"><b>Departure date</b></p>
                                                             @endif
                                                         </div>
@@ -106,11 +106,11 @@
                                             </div>
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Check-in</span>
-                                                <span class="text-dark flex-root font-weight-bold text-right">{{ date('d-m-Y', strtotime($reservations[0]->checkin_date)) }}</span>
+                                                <span class="text-dark flex-root font-weight-bold text-right">{{ date('d-m-Y', strtotime($reservations->checkin_date)) }}</span>
                                             </div>
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Check-out</span>
-                                                <span class="text-dark flex-root font-weight-bold text-right">{{ date('d-m-Y', strtotime($reservations[0]->checkout_date)) }}</span>
+                                                <span class="text-dark flex-root font-weight-bold text-right">{{ date('d-m-Y', strtotime($reservations->checkout_date)) }}</span>
                                             </div>
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Nights</span>
@@ -118,7 +118,7 @@
                                             </div>
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Guests</span>
-                                                <span class="text-dark flex-root font-weight-bold text-right">{{ $reservations[0]->adult + $reservations[0]->junior + $reservations[0]->baby }}</span>
+                                                <span class="text-dark flex-root font-weight-bold text-right">{{ $reservations->adult + $reservations->junior + $reservations->baby }}</span>
                                             </div>
                                         </div>
                                     </div>
@@ -148,9 +148,9 @@
                                                             <?php $pos=1;
                                                             $grand_total = 0;
                                                         ?>
-                                                        @if(!empty($reservations[0]))
+                                                        @if(!empty($reservations))
 
-                                                            @foreach($reservations[0]->reservedSuites as $suite)
+                                                            @foreach($reservations->reservedSuites as $suite)
                                                             <div class="reservation-summary section-shadow">
                                                           <h4>SUITE &nbsp; {{ $pos++ }}</h4>
                                                           <p><b>{{ $suite->suite->category_name }}</b></p>
@@ -1257,9 +1257,9 @@
                                                 <div class="w-100">
                                                     <div class="symbol-group symbol-hover justify-content-end">
                                                     {{-- @if(isset($companion)) --}}
-                                                    @if(!empty($reservations[0]->reservedCompanions))
+                                                    @if(!empty($reservations->reservedCompanions))
                                                     <?php $count = 0;  ?>
-                                                        @foreach($reservations[0]->reservedCompanions as $data)
+                                                        @foreach($reservations->reservedCompanions as $data)
                                                          <?php $count++; ?>
                                                             <div class="symbol symbol-35 symbol-circle"
                                                                 data-toggle="tooltip" title=""
@@ -1284,6 +1284,7 @@
                                                     <p class="mb-0">EC-{{ $booking_number }}</p>
                                                 </div>
                                             </div>
+                                            @if($cancelation_status)
                                             <div class="d-flex itinirary-list py-5 align-items-center">
                                                 <div class="w-100">
                                                     <p class="mb-0"><b>Cancellation policy</b></p>
@@ -1292,6 +1293,7 @@
                                                     <a href="#">Read more</a>
                                                 </div>
                                             </div>
+                                            @endif
                                             <a href="/reservation/whoistravelling">
                                                 <div class="d-flex itinirary-list py-5 align-items-center">
                                                     <div style="width: 40px;">
@@ -1317,19 +1319,23 @@
                                                     </div>
                                                 </div>
                                             </a>
-                                            <a href="#">
-                                                <div class="d-flex itinirary-list py-5 align-items-center">
-                                                    <div style="width: 40px;">
-                                                        <i class="fas fa-circle-notch"
-                                                            style="color: #000; font-size: 13px;"></i>
+                                            {{-- {{$reservation_diff}} --}}
+                                            @if($cancelation_status)
+                                                <a href="#">
+                                                    <div class="d-flex itinirary-list py-5 align-items-center">
+                                                        <div style="width: 40px;">
+                                                            <i class="fas fa-circle-notch"
+                                                                style="color: #000; font-size: 13px;"></i>
+                                                        </div>
+                                                        <div class="w-100" style="color: #000;">Cancel Reservation</div>
+                                                        <div class="text-right">
+                                                            <i class="fas fa-chevron-right"
+                                                                style="color: #000;font-size: 12px;"></i>
+                                                        </div>
                                                     </div>
-                                                    <div class="w-100" style="color: #000;">Cancel Reservation</div>
-                                                    <div class="text-right">
-                                                        <i class="fas fa-chevron-right"
-                                                            style="color: #000;font-size: 12px;"></i>
-                                                    </div>
-                                                </div>
-                                            </a>
+                                                </a>
+                                            @endif
+                                            
                                             <a href="#">
                                                 <div class="d-flex itinirary-list py-5 align-items-center">
                                                     <div style="width: 40px;">

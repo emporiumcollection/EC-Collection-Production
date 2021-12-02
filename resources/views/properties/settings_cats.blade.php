@@ -105,6 +105,27 @@
 												<label for="suite_size">Suite Size</label>
 												<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="{{$cat->suite_size}}" data-rule-number="true" required="required" /> 
 											</div>
+											<div class="form-group col-lg-3">
+												<div class="margin-top-10">
+													<label class="optionbox">
+														<input type="checkbox" name="is_accessible" value="1" {{($cat->is_accessible==1) ? 'checked="checked"' : ''}} > Is Accessible
+													</label>
+												</div>
+											</div>
+										</div>
+										<div class="row">
+											<div class="form-group col-lg-3">
+												<label for="cancelation_period">Cancelation Period</label>
+												<input name="cancelation_period" id="cancelation_period" type="text" class="form-control input-sm" value="{{$cat->cancelation_period}}" data-rule-number="true" /> 
+											</div>
+											<div class="form-group col-lg-3">
+												<label for="cancelation_duration">Cancelation Duration</label>
+												<select name="cancelation_duration" class="form-control input-sm">
+													<option>Select Duration</option>
+													<option value="hrs" {{ ($cat->cancelation_duration=='hrs') ? 'selected="selected"' : ''}}>Hours</option>
+													<option value="days" {{ ($cat->cancelation_duration=='days') ? 'selected="selected"' : ''}}>Days</option>
+												</select>
+											</div>
 										</div>
                                         <div class="row">
                                             <div class="form-group col-lg-12">
@@ -190,6 +211,27 @@
 											<label for="suite_size">Suite Size</label>
 											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
+										<div class="form-group col-lg-3">
+											<div class="margin-top-10">
+												<label class="optionbox">
+													<input type="checkbox" name="is_accessible" value="1" {{($cat->is_accessible==1) ? 'checked="checked"' : ''}} > Is Accessible
+												</label>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="form-group col-lg-3">
+											<label for="cancelation_period">Cancelation Period</label>
+											<input name="cancelation_period" id="cancelation_period" type="text" class="form-control input-sm" value="" data-rule-number="true" /> 
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="cancelation_duration">Cancelation Duration</label>
+											<select name="cancelation_duration" class="form-control input-sm" >
+												<option>Select Duration</option>
+												<option value="hrs">Hours</option>
+												<option value="days">Days</option>
+											</select>
+										</div>
 									</div>
                                     <div class="row">
                                         <div class="form-group col-lg-12">
@@ -274,6 +316,20 @@
 											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
 									</div>
+									<div class="row">
+											<div class="form-group col-lg-3">
+												<label for="cancelation_period">Cancelation Period</label>
+												<input name="cancelation_period" id="cancelation_period" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
+											</div>
+											<div class="form-group col-lg-3">
+												<label for="cancelation_duration">Cancelation Duration</label>
+												<select name="cancelation_duration" class="form-control input-sm" required="required">
+													<option>Select Duration</option>
+													<option value="hrs" {{ ($cat->is_accessible=='hrs') ? 'selected="selected"' : ''}}>Hours</option>
+													<option value="days" {{ ($cat->is_accessible=='days') ? 'selected="selected"' : ''}}>Days</option>
+												</select>
+											</div>
+										</div>
                                     <div class="row">
                                         <div class="form-group col-lg-12">
                                             <label for="booingPolicy">Booking Policy</label>

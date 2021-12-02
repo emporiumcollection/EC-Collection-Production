@@ -28,18 +28,20 @@ class DashboardController extends Controller {
         
      //    $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
      //    (strlen($is_demo6) > 0)?$is_demo6.
-        $file_name = 'users_admin.traveller.dashboard'; 
-             
+
+        $is_demo6 = trim(\CommonHelper::isHotelDashBoard());        
+        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.dashboard':'dashboard.index'; 
+
         $u_id = \Session::get('uid');
-        // echo $u_id;exit;
         $this->data['logged_user'] = \DB::table('tb_users')->where('id', $u_id)->first();
         $this->data['online_users'] = \DB::table('tb_users')->orderBy('last_activity','desc')->limit(10)->get(); 
-        //    print_r($u_id);die();
         
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
         
         $g_id = (int) \Session::get('gid');  
-     //    echo $g_id;die();
+        if($g_id!=1){
+          $file_name = 'users_admin.traveller.dashboard'; 
+        }
         $gp_id = trim(\CommonHelper::getusertype($g_id));        
         if(!empty($gp_id)){ 
                if($gp_id=="users-b2c"){ 
