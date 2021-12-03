@@ -472,10 +472,11 @@ trait Property {
             if(!empty($property->suites)){
                 $suiteNameList = [];
                 foreach($property->suites as $sk => $suite){
-                    if(!$suite->status){
+/*                    if(!$suite->status){
                         unset($property->suites[$sk]);
                         continue;
                     }
+*/                    
                     $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
                     $suiteNameList[] = ucwords($suite->cat_short_name);
                     if(!empty($suite->rooms->toArray())){
