@@ -114,10 +114,10 @@
                     </p>
                     <div class="row mt-4">
                         <div class="col-6">
-                            <a href="#" class="btn btn-dark btn-small-sm  px-5 btn-backwizard">Go back</a>
+                            {{-- <a href="#" class="btn btn-dark btn-small-sm  px-5 btn-backwizard">Go back</a> --}}
                         </div>
-                        <div class="col-6 text-right">
-                            <a href="#@@book" class="btn btn-dark btn-small-sm px-5 btn-confirm" @@classes>Confirm
+                        <div class="col-6 text-right" data-place="price-book-button">
+                            <a href="#" class="btn btn-dark btn-small-sm px-5 btn-confirm" @@classes>Confirm
                                 booking</a>
                         </div>
                     </div>

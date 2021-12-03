@@ -300,7 +300,7 @@ function replaceSuiteList(id){
         suite.rooms[0].images.forEach(function(rm){
           if(onlyThree < 3){        
             roomimages += `<div>
-                <img src="/room-image/resize/750x350/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+                <img src="/room-image/resize/780x540/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
               </div>`;  
           }
           onlyThree++; 
@@ -363,7 +363,7 @@ function replaceSuiteDetail(property_id, category_id){
   var roomimages = ``;
   suite.rooms[0].images.forEach(function(rm){
     roomimages += `<div>
-      <img src="/room-image/resize/750x350/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+      <img src="/room-image/resize/780x540/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
     </div>`;
   });
 
@@ -635,6 +635,8 @@ function replacePrices(cat_id, property_id = null){
     if(!priceTemplate){              
       priceTemplate = $('#priceinfo .sub-price-content').html();
     }
+    $('[data-place="price-book-button"]').html(`<a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-small-sm px-5 btn-confirm">Confirm Booking</a>`);
+
     $('#priceinfo .sub-price-content').html('Loading...');
     $.ajax({
         url: '/property/prices?category_id=' +  cat_id + '&property_id=' +  property_id + '&arrival='+arrival+'&departure='+departure,

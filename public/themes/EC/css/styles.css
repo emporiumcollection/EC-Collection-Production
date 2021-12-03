@@ -32541,7 +32541,7 @@ span.calElement.prev:hover {
   position: relative; }
 
 #suitesside-tabContent {
-  /*max-width: 780px;*/
+  max-width: 780px;
   padding-bottom: 130px; 
 }
 
@@ -33163,7 +33163,7 @@ span.calElement.prev:hover {
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding-bottom: 350px;
+  padding-bottom: 540px;
   height: 0; }
   .slider-detail .slick-slide img,
   .slider-detail .slick-slide .videoWrapper {
@@ -36531,7 +36531,7 @@ button#clear span {
   .hotel-book-container {
     max-width: 94%; }
   #suitesside-tabContent {
-    max-width: 100%;
+    /* max-width: 100%; */
     padding-bottom: 130px; }
   .form-fl-jet {
     width: 89%;
