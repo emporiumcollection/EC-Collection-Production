@@ -70,7 +70,7 @@
             <h4 class="title-font-2 title-third">experience</h4>
           </div>
           <p>
-            <?php echo substr($editorChoice->detail_section1_description_box1, 0, 500);?>
+            <?php echo substr($editorChoice->detail_section1_description_box1, 0, 500) ."...";?>
           </p>
         </div>
         <div class="row">
