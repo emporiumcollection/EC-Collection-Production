@@ -25,7 +25,7 @@
       border-radius: 0 0 0.5em 0.5em;
       max-height: 800px;
       overflow-y: scroll;
-      padding-bottom: 200px;
+      padding-bottom: 300px;
     }
 </style>
 @section('content')
