@@ -39,28 +39,13 @@
                   <div class="card card-body rounded-0">
                       <p>{{ $hotel_policy->smookingpolicy }}</p>
                       <p>{{ $hotel_policy->children_policy }}</p>
-              @endif       
-            <hr>     
-            @if(!empty($global_terms))           
-              @foreach($global_terms as $links)
+              @else       
+              <hr>     
                 <div class="form-group">
-                    <a href="https://emporium-collection.com/terms-and-conditions/" class="iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe " title="Privacy and cookie policy" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Terms And Conditions</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-                    <script src="https://cdn.iubenda.com/iubenda.js"></script><script src="https://cdn.iubenda.com/iubenda.js"></script><script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
-
-                   {{--  <a href="https://www.iubenda.com/privacy-policy/70156957/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Cookie solution" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;"> Cookie solution</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-                    <script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
-
-                     <a href="https://www.iubenda.com/privacy-policy/70156957/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Term and Condition" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Term and Condition</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-                    <script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
-
-
-                    <a href="https://emporium-collection.com/terms-and-conditions/"  class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Term and Condition" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Consent Solution</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-                    <script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script> --}}
-
+                  <p>You do not have a statutory right of withdrawal from booking as per Sec. 312 g para 2 no. 9 of the German Civil Code (BGB).
+                  However, a hotel may voluntarily offer a right to cancel or change a booking for selected offers in the emporium-collection™ reservation system. Any such right will be displayed in the order form before you make your order. Where a hotel voluntarily grants such right to cancel or to change a booking in the emporium-collection™ reservation system, any such changes and cancellations have to be carried out via the emporium-collection™ online system or via the emporium-collection™ reservation number (see www.emporium-collection.com) to be fully effective. In case of a change or cancellation carried out directly at the hotel, emporium-collection™ cannot provide any information concerning possible discrepancies concerning the date of the cancellation or the fact of cancellation as such</p>
                 </div>
-              @endforeach
-            @endif  
-            <hr>
+              @endif  
             <div class="booking-tearms">
               <h3>Booking terms and conditions</h3>
               <div class="custom-control custom-checkbox mb-5">
