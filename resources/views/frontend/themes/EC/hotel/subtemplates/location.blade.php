@@ -43,3 +43,4 @@
   });
 </script>
 @include('frontend.themes.EC.hotel.gallery')
+@include('frontend.themes.EC.layouts.subsections.share')
