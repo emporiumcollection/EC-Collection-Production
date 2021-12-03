@@ -827,7 +827,8 @@ trait Property {
 
         $price = PropertyRoomPrices::first()
         ->select(['rack_rate'])
-        ->whereIn('category_id', $roomIds)
+        //->whereIn('category_id', $roomIds) for amadeus
+        ->where('category_id', '=', $suite_id)        
         ->orderBy('rack_rate', 'asc')
         ->get()
         ->toArray();
