@@ -995,7 +995,7 @@ var ajaxReq = 'ToCancelPrevReq';
     if($(this).prev().find('.mr-1').html() != 4 ){
       $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
       $(this).closest('.field-count-guest').find('.min-room').removeClass('disable');
-      var curr = $("#whoF .col-ews");
+      var curr = $(this).closest('.guest-pick-container').find('.col-ews');
       //console.log(curr);
       var currLength = curr.length + 1;
       var temp = '<div class="col-6 col-ews mb-3" id="room-'+ currLength +'">'+
@@ -1032,8 +1032,8 @@ var ajaxReq = 'ToCancelPrevReq';
               '</div>'+
           '</div>'+
       '</div>';
-      $('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
-      $('.guest-pick-body .list-eoom').append(temp);
+      $(this).closest('.guest-pick-container').find('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
+      $(this).closest('.guest-pick-container').find('.guest-pick-body .list-eoom').append(temp);
       $(this).prev().find('.suite').val($(this).prev().find('.mr-1').html());
     }
     if($(this).prev().find('.mr-1').html() > 3 ){
@@ -1041,7 +1041,7 @@ var ajaxReq = 'ToCancelPrevReq';
     }
   });
 
-  $('#whoF .field-count-guest ').on('click', '.min-room', function(){
+  $('.field-count-guest ').on('click', '.min-room', function(){
     $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
 
     if($(this).next().find('.mr-1').html() > 1){
@@ -1059,7 +1059,6 @@ var ajaxReq = 'ToCancelPrevReq';
   });
 
   $(document).on('click', '#whoF .confirm-room', function(){
-    console.log('confirm');
     /*var roomVal = $('.room-val').html();
     var adultTotal = 0;
     $('.adult-val').each(function(){

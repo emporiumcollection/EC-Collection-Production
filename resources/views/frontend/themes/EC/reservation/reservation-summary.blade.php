@@ -30,13 +30,14 @@
     
     @foreach($suites as $suite)
       @foreach($suite as $value)
+        @if(isset($selected_suite[$value->id]))
         <div class="reservation-summary section-shadow">
           <h4>SUITE &nbsp; {{ $pos++ }}</h4>
           <p><b>{{ $value->category_name }}</b></p>
           <table class="table table-borderless mb-0">
             <tr>
               <td class="px-0 py-1">Adult</td>
-              <td class="px-0 py-1 text-right">{{ $selected_suite[$value->id]['adult'] }}</td> 
+              <td class="px-0 py-1 text-right">{{ $selected_suite[$value->id]['adult'] }}</td>
             </tr>
             @if($selected_suite[$value->id]['junior'])
               <tr>
@@ -75,6 +76,7 @@
           </table>
           @endif
         </div>
+        @endif
       @endforeach
     @endforeach
     <?php $grand_total = $total + $board_price ?>

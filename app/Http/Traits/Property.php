@@ -472,6 +472,11 @@ trait Property {
             if(!empty($property->suites)){
                 $suiteNameList = [];
                 foreach($property->suites as $sk => $suite){
+/*                    if(!$suite->status){
+                        unset($property->suites[$sk]);
+                        continue;
+                    }
+*/                    
                     $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
                     $suiteNameList[] = ucwords($suite->cat_short_name);
                     if(!empty($suite->rooms->toArray())){
@@ -827,7 +832,8 @@ trait Property {
 
         $price = PropertyRoomPrices::first()
         ->select(['rack_rate'])
-        ->whereIn('category_id', $roomIds)
+        //->whereIn('category_id', $roomIds) for amadeus
+        ->where('category_id', '=', $suite_id)        
         ->orderBy('rack_rate', 'asc')
         ->get()
         ->toArray();
@@ -902,8 +908,8 @@ trait Property {
         $total_childs = 0;
         $total_suite = 0;
         foreach($rooms as $key => $room_num){
-            if($adult[$key] && $child[$key]){
-                $total_suite = $total_suite +1;
+            if($adult[$key] || $child[$key]){
+                $total_suite++;
 
                 $selected_suite[$key] = [ 
                     'adult' => $adult[$key],

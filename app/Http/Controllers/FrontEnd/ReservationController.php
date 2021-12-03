@@ -570,7 +570,6 @@ class ReservationController extends Controller {
         
                 $validator = Validator::make($request->all(), $rules);
                 if ($validator->passes()) {
-                    $id = Session::get('uid');
                     $full_name = $request->card_name;
                     $name = explode(" ", $full_name); 
                     
@@ -580,7 +579,7 @@ class ReservationController extends Controller {
                     $last_name = Crypt::encrypt($name[1]);
                     $requirements = Crypt::encrypt($request->requirements);
                     $payment_data = array(
-                        'user_id' => $id, 
+                        'user_id' => Auth::user()->id, 
                         'card_type' => $card_type, 
                         'card_number' => $card_number, 
                         'exp_month' => $request->exp_month, 
