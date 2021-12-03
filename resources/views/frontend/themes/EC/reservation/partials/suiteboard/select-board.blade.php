@@ -9,7 +9,7 @@
     <table class="table table-borderless mb-0">
       <tr>
           <td class="px-0 py-1">Price</td>
-          <td class="px-0 py-1 text-right">€{{ $board->board_rackrate }}</td>
+          <td class="px-0 py-1 text-right">{{ $numberOfNights }} * €{{ $board->board_rackrate }}</td>
       </tr>
       <tr>            
         @if($board->board_vat == 1)
@@ -18,7 +18,7 @@
             $tax =  $per/100 * $board->board_rackrate ; 
           ?>
           <td class="px-0 py-1">Tax 20%</td>
-          <td class="px-0 py-1 text-right">€{{ $tax }}</td>
+          <td class="px-0 py-1 text-right"> €{{ $tax }}</td>
         @elseif($board->board_vat == 2)
           <?php 
             $per = 2; 
@@ -41,7 +41,7 @@
       <tr>
         <td class="px-0 py-1">Subtotal</td>
         <td class="px-0 py-1 text-right">
-          <b>€{{ \Session::get('board_price') }}</b>
+          <b>€{{ \Session::get('board_price') * $numberOfNights }}</b>
         </td>
       </tr>
     </table>

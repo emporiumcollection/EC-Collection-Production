@@ -317,7 +317,7 @@ $( document ).ready(function() {
         });
     });
 
-    $(document).on('click', '.remove_suit', function(){
+    $(document).on('click', '.remove_suite', function(){
         var curr_btn = $(this);
         var curr_section = curr_btn.parents('section');
         var suite_id = curr_btn.data('suite-id');

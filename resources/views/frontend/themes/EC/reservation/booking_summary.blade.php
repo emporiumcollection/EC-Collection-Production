@@ -17,28 +17,23 @@
       <div class="container ">
         
         @include('frontend.themes.EC.reservation.nav_wizard')
-
         <div id="step-10" class="tab-pane" role="tabpanel">
           <div class="row">
             <div class="col-xl-7 col-lg-12">
               <div class="row">
                 <div class="col-md-7">
                   <div class="bg-grey px-3 py-2 mb-3">
-                    <h4>Your booking at <b>{!! Session::get('suite_name') !!}</b> in
-                      Limone sul Garda, Italy</h4>
+                    <h4>{{ $hotel_name }}</h4>
                     <p class="mb-0">Confirm number: EC-{{ $db }}-{{ $hotel_name }}-{{ $randomnum }}</p>
                   </div>
                   
-              @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites]) 
-              @if(!empty($boards))
-                @include('frontend.themes.EC.reservation.partials.suiteboard.select-board', ['board' => $boards])
-              @endif
+              @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])               
                   <div class="policies" id="policies">
                     <h3>Policies</h3>
                     <div class="card card-body rounded-0">
                       <p><b>Suite 1</b></p>
-                      @if(!empty($properties))
-                        {{ html_entity_decode($policies->booking_policy) }}
+                      @if(!empty($policies))
+                        {{ $policies->booking_policy }}
                       @else
                         <h3>Hotel has no policies</h3>
                       @endif  

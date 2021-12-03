@@ -30,42 +30,36 @@
         <div class="row">
           <div class="col-lg-9 col-md-8 mb-4">
             <h3>Policies</h3> 
-              @if(isset($policies))           
+              @if(!empty($policies->booking_policy))           
                   <div class="card card-body rounded-0">
-                    @foreach($policies as $policy)
-                      <p>{{ $policy->booking_policy }}</p>
-                    @endforeach
+                      <p>{{ $policies->booking_policy }}</p>
                   </div>                
-              @endif  
-
-              @if(empty($policies))
-                @if(!empty($termDetail->terms_and_condition))
+              @endif                
+              @if(!empty($hotel_policy->smookingpolicy || $hotel_policy->children_policy))
                   <div class="card card-body rounded-0">
-                    @foreach($termDetail as $policy)
-                      <p>{{ $policy[0]->terms_and_condition }}</p>
-                    @endforeach
-                @endif
-              @endif          
-            <hr>              
-                @if(!empty($termDetail))
-                  @foreach($global_terms as $links)
-                    <div class="form-group">
-                        <a href="https://superdevresources.com/open-links-popup" class="iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe " title="Privacy and cookie policy" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Privacy and cookie policy</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-                        <script src="https://cdn.iubenda.com/iubenda.js"></script><script src="https://cdn.iubenda.com/iubenda.js"></script><script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+                      <p>{{ $hotel_policy->smookingpolicy }}</p>
+                      <p>{{ $hotel_policy->children_policy }}</p>
+              @endif       
+            <hr>     
+          @if(!empty($global_terms))           
+            @foreach($global_terms as $links)
+              <div class="form-group">
+                  <a href="https://emporium-collection.com/terms-and-conditions/" class="iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe " title="Privacy and cookie policy" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Terms And Conditions</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
+                  <script src="https://cdn.iubenda.com/iubenda.js"></script><script src="https://cdn.iubenda.com/iubenda.js"></script><script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
 
-                        <a href="https://www.iubenda.com/privacy-policy/70156957/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Cookie solution" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;"> Cookie solution</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-                        <script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+                 {{--  <a href="https://www.iubenda.com/privacy-policy/70156957/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Cookie solution" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;"> Cookie solution</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
+                  <script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
 
-                         <a href="https://www.iubenda.com/privacy-policy/70156957/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Term and Condition" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Term and Condition</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-                        <script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+                   <a href="https://www.iubenda.com/privacy-policy/70156957/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Term and Condition" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Term and Condition</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
+                  <script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
 
 
-                        <a href="https://www.iubenda.com/privacy-policy/70156957/cookie-policy" class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Term and Condition" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Consent Solution</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-                        <script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+                  <a href="https://emporium-collection.com/terms-and-conditions/"  class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe " title="Term and Condition" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Consent Solution</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
+                  <script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script> --}}
 
-                    </div>
-                  @endforeach
-                @endif  
+              </div>
+            @endforeach
+          @endif  
             <hr>
               <div class="booking-tearms">
                 <h3>Booking terms and conditions</h3>
@@ -107,6 +101,7 @@
             </div>
           
           </div>
+        </div>
           <div class="col-lg-3 col-md-4">
             @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
           </div>
