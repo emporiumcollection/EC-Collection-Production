@@ -16,15 +16,8 @@
                 <i class="ico ico-back"></i>
             </a>
             <h3 class="title-second title-line mb-0">
-                The Ludlow Hotel
+                Channel
             </h3>
-        </div>
-
-        <div class="title-main mb-4">
-            <h2>Channel</h2>
-            <a href="#" class="print-btn">
-                <i class="ico ico-print"></i>
-            </a>
         </div>
         <div class="yt-rvideos">
         </div>
