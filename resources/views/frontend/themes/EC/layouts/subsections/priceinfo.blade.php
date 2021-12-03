@@ -15,7 +15,7 @@
             <a href="#" class="sidebar-back">
                 <i class="ico ico-back"></i>
             </a>
-            <h3 class="title-second title-line mb-0">
+            <h3 class="title-second title-line mb-0" data-place="property-name">
                 The Ludlow Hotel
             </h3>
         </div>
