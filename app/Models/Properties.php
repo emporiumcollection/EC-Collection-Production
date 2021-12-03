@@ -72,7 +72,8 @@ class properties extends Sximo  {
 
 	public function suites()
     {
-        return $this->hasMany(PropertyCategoryTypes::class, 'property_id');
+        return $this->hasMany(PropertyCategoryTypes::class, 'property_id')
+        ->where('status', '=', 1);
     }
 
     public function container(){
