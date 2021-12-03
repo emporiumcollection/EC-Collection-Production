@@ -702,6 +702,7 @@ class ReservationController extends Controller {
         $data['checkout_date'] = Session::get('departure') ? date('Y-m-d', strtotime(Session::get('departure'))) : '';        
         $data['board'] = Session::get('board') ? Session::get('board') : 0;
         $data['card_id'] = Session::get('payment_card_id');
+        $data['number_of_nights'] = $this->getNumberOfNights();
         $data['booking_number'] = Session::get('booking_number');
         $data['booking_status'] = 1;    
         $reserved_suites = Session::get('suite_array');

@@ -46,7 +46,7 @@ var KTDatatableDataLocalDemo = function () {
           field: 'booking_number',
           title: 'Booking#',
         }, {
-          field: 'NightsHead',
+          field: 'number_of_nights',
           title: 'Nights',
           width: 60
         }, {
@@ -77,13 +77,13 @@ var KTDatatableDataLocalDemo = function () {
           field: 'baby',
           title: 'Infant',
           width: 50
-        }, {
+        }, /*{
           field: 'ContactGuest',
           title: 'Contact',
         }, {
           field: 'PlatformGuest',
           title: 'Platform',
-        }],
+        }*/],
     });
 
     $('#kt_datatable_search_status').on('change', function () {
