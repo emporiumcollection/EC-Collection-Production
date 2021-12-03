@@ -2751,18 +2751,29 @@ class PropertyController extends Controller {
 
         $sitename = $request->input("sitename");
 
-        $site_url = url('/');
-        // if($sitename=='voyage'){
-        //     $site_url = 'https://emporium-voyage.com';
-        // }elseif($sitename=='safari'){
-        //     $site_url = 'https://emporium-safari.com';
-        // }elseif($sitename=='spa'){
-        //     $site_url = 'https://emporium-spa.com';
-        // }elseif($sitename=='islands'){
-        //     $site_url = 'https://emporium-islands.com';
-        // }
-
         // dump($request->all()); exit;
+
+        $site_url = url('/');
+        if($sitename == 'voyage'){
+            $site_url = 'http://development.emporium-voyage.com';
+        }elseif($sitename == 'safari'){
+            $site_url = 'http://staging.emporium-safari.com';
+        }elseif($sitename == 'spa'){
+            $site_url = 'http://staging.emporium-spa.com';
+        }elseif($sitename == 'island'){
+            $site_url = 'http://staging.emporium-islands.com';
+        }
+
+        if($coll_type == 'hotel'){
+            $hotel = properties::on($sitename.'conn')->select(['id'])
+                ->where('property_name', '=', $coll_where)
+                ->get()
+                ->toArray();
+
+            if(!empty($hotel)){
+                return redirect($site_url.'/hotel/hoteldetail/'.$hotel[0]['id']);
+            }
+        }
 
         $querry_string = $site_url."/globalsearchavailability?s=".$coll_where."&arrive=".$arrive."&departure=".$departure."&type=".$coll_type."&rac=".$rac . "&view=" . $target;
 
@@ -2885,17 +2896,6 @@ class PropertyController extends Controller {
         $this->data['photos'] = json_decode($photos);
 
         $type = $request->input('type');
-
-        if($type == 'hotel'){
-            $hotel = properties::select(['id'])
-            ->where('property_name', '=', $keyword)
-            ->get()
-            ->toArray();
-
-            if(!empty($hotel)){
-                return redirect('/hotel/hoteldetail/'. $hotel[0]['id']);
-            }
-        }
 
         $arrive = $request->input('arrive');
         $departure = $request->input('departure');

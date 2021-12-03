@@ -2199,8 +2199,12 @@ function getHotelHtml(result, collection_name){
   var result_html_hotel = '';
   $('.wherepopup .'+collection_name+'-hotels').html(result_html_hotel);
   if(result.collection != undefined){
+      var domainName = collection_name;
+      if(collection_name == 'islands'){
+        domainName = 'island';
+      }
       $(result.collection).each(function(key, val){
-        result_html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="'+collection_name+'" data-page="results"><span class="city-l">' + val.property_name + '</span> </a></li>';
+        result_html_hotel += '<li class="nav-item"><a class="nav-link" href="#" data-type="hotel" data-collection="'+domainName+'" data-page="results"><span class="city-l">' + val.property_name + '</span> </a></li>';
       });
   }
 
@@ -2226,9 +2230,13 @@ function getDestinationHtml(result, collection_name){
   if(result.dest != undefined){
     $(result.dest).each(function(key, val){
       searchedLocation = val.category_name;
+      var domainName = collection_name;
+      if(collection_name == 'islands'){
+        domainName = 'island';
+      }
       result_html_destination += `
       <li class="nav-item">
-        <a class="nav-link" href="#" data-type="destination" data-collection="` + collection_name + `" 
+        <a class="nav-link" href="#" data-type="destination" data-collection="` + domainName + `" 
         data-page="results">
           <span class="city-l">` + val.category_name + `</span>
         </a>

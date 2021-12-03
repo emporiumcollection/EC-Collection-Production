@@ -108,6 +108,13 @@
     <!-- End of HubSpot Embed Code -->
     @endif
 @endif
+    <script>
+        var spadomain = '{{ \Config::get('app.spadomain') }}';
+        var safaridomain = '{{ \Config::get('app.safaridomain') }}';
+        var islandsdomain = '{{ \Config::get('app.islandsdomain') }}';
+        var voyagedomain = '{{ \Config::get('app.voyagedomain') }}';
+        var magazinedomain = '{{ \Config::get('app.magazinedomain') }}';
+    </script>
 </head>
 <body>
     @section('header')
