@@ -162,5 +162,27 @@
 <script src="{{ asset('themes/EC/js/plugin/datepick/jquery.datepick.js') }}"></script>
 <script src="{{ asset('themes/EC/js/plugin/mapbox-gl.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js') }}"></script>
+<script>
+    $('.menu-index').click(function (e) {
+      e.preventDefault();
+      $(".wizard-nav").toggleClass('show');
+    })
+    var picker = $('#daterangepicker-inline').daterangepicker({
+      parentEl: "#daterangepicker-inline-container",
+      autoApply: true,
+      minDate: new Date(),
+      autoUpdateInput: false,
+      locale: {
+        cancelLabel: 'Clear',
+      }
+    });
+  
+    picker.on('apply.daterangepicker', function (ev, picker) {
+      $('.onrange').html(picker.startDate.format('DD-MM-YYYY') + ' -> ' + picker.endDate.format('DD-MM-YYYY'));
+      $('.include-form').fadeIn("fast");
+    });
+    picker.data('daterangepicker').hide = function () { };
+    picker.data('daterangepicker').show();
+  </script>
 </body>
 </html>

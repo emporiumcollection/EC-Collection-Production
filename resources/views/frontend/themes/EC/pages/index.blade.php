@@ -16,7 +16,7 @@
   }
 </style>
 <form name="collection-search" method="post" action="{{URL::to('globalavailability')}}" id="collection_search">
-
+  @include('frontend.themes.EC.pages.home_left_navigation')
   <div class="where-container show">
     <div class="form-fl-search">
       <div class="row">

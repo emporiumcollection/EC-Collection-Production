@@ -198,8 +198,11 @@
           <div class="mb-3">
             <a href="#">View Policy</a>
           </div>-->
+          @if (!empty($hotel_data[0]->checkin) && !empty($hotel_data[0]->checkout))
+              
           <p><strong>Check-in:</strong> {{ $hotel_data[0]->checkin }}</p>
           <p><strong>Check-out:</strong> {{ $hotel_data[0]->checkout }}</p>
+          @endif
           <p>Reserve now, pay at the Hotel</p>
           <a href="/reservation/when/{{ $hotel_data[0]->id }}" class="btn btn-dark btn-block">Reservation</a>
         </div>

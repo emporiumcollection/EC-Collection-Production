@@ -31,9 +31,9 @@
     </div>
     <div class="my-dropdown">
       <div class="btn-group dropleft">
-        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        {{--<a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="ico ico-diamon diamon-label"></i>
-        </a>
+        </a>--}}
         <div class="dropdown-menu">
           <a href="#" class="dropdown-item add_collection">Add to collection</a>
           <a href="#" class="dropdown-item btn-sidebar create-collection"
@@ -58,7 +58,7 @@
       <div class="hotel-prices hotel-price-detail d-flex">
         <div class="row align-items-center justify-content-center">
           <div class="mr-2">
-            <i class="ico ico-info-green"></i>
+            {{--<i class="ico ico-info-green"></i>--}}
           </div>
           <h3 class="mb-0">
             <span class="title-font-2 mr-1">From €</span> <span class="color-primary">€ <?php echo $property->price;?> </span>

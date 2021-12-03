@@ -3,6 +3,9 @@
     <div class="px-4 pt-2">
       <div class="row align-items-md-end align-items-center">
         <div class="col-md-5 col-4">
+          <div class="d-flex">
+            <a href="#" class="nav-link menu-index">Menu</a>
+          </div>
         </div>
         <div class="col-md-2 col-4 text-center">
           <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
@@ -190,7 +193,7 @@
       </div>
       <hr class="mb-0">
 
-      <div class="menu-s">
+        {{-- <div class="menu-s">
           <div class="menu-mobile">
             <div class="humburger-landing-menu">
               <div class="line"></div>
@@ -198,7 +201,7 @@
               <div class="line"></div>
             </div>
           </div>
-        </div>
+        </div> --}}
 
       </div>
 
