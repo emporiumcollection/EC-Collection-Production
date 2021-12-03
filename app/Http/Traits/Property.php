@@ -902,8 +902,8 @@ trait Property {
         $total_childs = 0;
         $total_suite = 0;
         foreach($rooms as $key => $room_num){
-            if($adult[$key] && $child[$key]){
-                $total_suite = $total_suite +1;
+            if($adult[$key] || $child[$key]){
+                $total_suite++;
 
                 $selected_suite[$key] = [ 
                     'adult' => $adult[$key],

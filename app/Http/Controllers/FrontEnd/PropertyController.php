@@ -2737,7 +2737,9 @@ class PropertyController extends Controller {
             $departure = date('d-m-Y',strtotime("+1 day"));
         }
         
-        $this->storeSession($request);
+        if ($request->isMethod('POST')) {
+            $this->storeSession($request);
+        }
 
         $rooms = $request->input('rooms');
         $adults = $request->input('adult');

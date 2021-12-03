@@ -10,6 +10,23 @@
     .experiences{
         cursor: pointer;
     }
+    .accesibility-checkbox{
+      width: auto;
+      display: flex;
+      align-items: center;
+    }
+    .accesibility-checkbox::before, .accesibility-checkbox::after{margin-top: 6px;}
+
+    .reservation-summary-sidebar.stick {
+      position: fixed;
+      top: 100px;
+      left: 76%;
+      z-index: 999;
+      border-radius: 0 0 0.5em 0.5em;
+      max-height: 800px;
+      overflow-y: scroll;
+      padding-bottom: 200px;
+    }
 </style>
 @section('content')
 <div class="content-em">
@@ -47,8 +64,8 @@
             </div>
             <div class="custom-control custom-checkbox mb-5">
                <input type="checkbox" name="accesibility" class="custom-control-input chkpolicies" id="customCheck2">
-              <label class="custom-control-label" for="customCheck2">
-                <b>Accesibility</b>
+              <label class="custom-control-label accesibility-checkbox" for="customCheck2">
+                <b>Accesibility</b> <i class="ico ico-wheelchair ml-1" data-toggle="tooltip" title="" data-original-title="Accesibility"></i>
               </label>
             </div>
         @if(!empty($property[0]))
@@ -110,24 +127,25 @@
             @endif              
         </div>
           <div class="col-lg-3 col-md-4">
-            <div id="selected-suite-list">
-            @include('frontend.themes.EC.reservation.reservation-summary', 
-            ['suites' => $suites])
-            </div>
+            <div id="sticky-anchor"></div>
+            <div class="reservation-summary-sidebar">
+              <div id="selected-suite-list">
+                @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+              </div>
 
-            <div class="d-flex justify-content-between">
-              <a href="/reservation/where" class="btn btn-dark px-4">Go back</a>
-              @if(!empty($boards))
-                <a href="/reservation/suiteboard" class="btn btn-dark continue_step px-4">Next</a>
-              @else
-                <a href="/reservation/policies" class="btn btn-dark continue_step px-4">Next</a>
-              @endif
-            </div>
+              <div class="d-flex justify-content-between">
+                <a href="/reservation/where" class="btn btn-dark px-4">Go back</a>
+                @if(!empty($boards))
+                  <a href="/reservation/suiteboard" class="btn btn-dark continue_step px-4">Next</a>
+                @else
+                  <a href="/reservation/policies" class="btn btn-dark continue_step px-4">Next</a>
+                @endif
+              </div>
 
-            <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
-              <p id="massage" class="mb-0"></p>
+              <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
+                <p id="massage" class="mb-0"></p>
+              </div>
             </div>
-
           </div>
         </div>
     </div>  

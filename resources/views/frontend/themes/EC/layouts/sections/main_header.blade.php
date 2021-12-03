@@ -636,7 +636,7 @@
                 <div class="guest-pick-header">
                   <div class="row align-items-center">
                     <div class="col-lg-9 col-7">
-                      <p class="mb-0"><b>Suites</b></p>
+                      <p class="mb-0"><b>Guests</b></p>
                     </div>
                     <div class="col-lg-3 col-5">
                       <div class="row field-count-guest align-items-center">
@@ -699,11 +699,6 @@
                   <div class="row list-eoom">
                     <?php $suites = \Session::get('suites'); ?>
                     @if(\Session::has('suites') && !empty(\Session::get('suites')))
-                      <?php
-                      // echo '<pre>';
-                      // print_r(\Session::get('suites'));
-                      // echo '</pre>';
-                      ?>
                       @foreach($suites as $key => $data)
                       <div class="col-{{ count($suites) > 1 ? 6 : 12 }} col-ews mb-3" id="room-{{ $key }}">
                         <p><b>Suite {{ $key + 1 }}</b></p>
@@ -745,7 +740,7 @@
                 </div>
                 <div class="guest-pick-footer">
                   <div class="text-right">
-                    <a href="javascript:void(0);" class="confirm-room">Confirm my Suite(s)</a>
+                    <a href="javascript:void(0);" class="btn btn-dark px-4 confirm-room">Update Guests</a>
                   </div>
                 </div>
               </div>
