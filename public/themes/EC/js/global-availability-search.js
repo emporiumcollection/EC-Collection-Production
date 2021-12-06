@@ -394,7 +394,7 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="property_usp"]').html(properties[property_id].property_usp);
   $('[data-place="covid_info"]').html(properties[property_id].covid_info);
 
-  if (properties[property_id].covid_link.includes('http://') == true){
+  if (properties[property_id].covid_link != null && properties[property_id].covid_link.includes('http://') == true){
     $('[data-place="covid_link"]').attr("href", properties[property_id].covid_link);
   }else{
     $('[data-place="covid_link"]').attr("href", "http://"+properties[property_id].covid_link);
@@ -404,10 +404,10 @@ function replaceSuiteDetail(property_id, category_id){
                     <a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-block">Reservation</a>`);  
 
   $('[data-place="suite_room_images"]').html(roomimages);
+  setTimeout("$('.nav-item #suite').addClass('show');", 1000);
   setTimeout('appendSlider()', 2000);
   replacePropertyData(property_id);
   setTimeout("$('.suite-popup').slick('setPosition');", 4000);  
-  $('#suite').addClass('show');
 }
 
 function replaceSuiteBoard(){

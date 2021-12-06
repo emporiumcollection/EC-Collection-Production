@@ -1,4 +1,3 @@
-
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -21,31 +20,32 @@
     <div id="step-1" class="tab-pane" role="tabpanel">
       <div class="row">
         <div class="col-lg-9 col-md-8 mb-4">
-          <h2 class="mb-5">Your date and suite</h2>
+          <h2 class="mb-5">Stay Dates:</h2>
           <hr>
-          <h5 class="mb-4 mt-5">Your selected dates include: </h5>
-            
-          <div class="row mb-5">            
+          <h5 class="mb-2 mt-3">Your selected stay dates:</h5>
+          <div class="row mb-2">            
             <div class="col">
-              <p><b>Arrival date</b></p>
-              <div class="form-group form-inline-group form-date-lg">
+            <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
+                <p id="massage" class="mb-0"></p>
+              </div> 
+              <div class="range-calendar range-date-9127013" id="calendar-pick">
+                <div id="daterangepicker-inline-container" class="daterangepicker-inline"></div>
+                <input type="hidden" id="daterangepicker-inline">
+                <input type="hidden" name="arrive" id="arrive" />
+                <input type="hidden" name="departure" id="departure" />
                 <input type="hidden" name="property_id" id="property_id" value="<?php echo $property_id?>">
-                <input type="text" class="form-control form-line fromdate" name="arrival_date" id="arrival_date"  value="{!! date('d-M-Y', strtotime(Session::get('arrival')));  !!}">
-                <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+                <div class="clearfix"></div>
               </div>
-            </div>
-            <div class="col">
-              <p><b>Departure date</b></p>
-              <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line todate" name="departure_date" id="departure_date" value="{!! date('d-M-Y', strtotime(Session::get('departure')));  !!}">
-                <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
-            </div>
           </div>
           <div class="row">
-            <div class="col-lg-12 col-md-12 mt-4">
+            
+            <div class="col-lg-12 col-md-12 mt-2">
               <div class="text-right">
-                <a href="javascript:void(0);" class="btn btn-dark px-5 goto-guest step_where">
+                <a href="javascript:void(0);" class="btn btn-dark px-5 goto-guest stay_dates">
+                  Edit | Update
+                </a>
+                <a href="javascript:void();" class="btn btn-dark px-5 goto-guest step_where">
                   Next
                 </a>
               </div>

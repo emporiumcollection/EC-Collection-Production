@@ -80,10 +80,8 @@
                                                 <span class="text-dark flex-root font-weight-bold text-right">{{ $hotel_name   }}</span>
                                             </div>
                                             <div class="d-flex mb-3">
-                                                <span class="text-dark-50 flex-root font-weight-bold">Total Stay
-                                                    Cost</span>
-                                                <span class="text-dark flex-root font-weight-bold text-right">€
-                                                    1.299</span>
+                                                <span class="text-dark-50 flex-root font-weight-bold">Total Stay Cost</span>
+                                                <span class="text-dark flex-root font-weight-bold text-right">€ {{ $reservations->price }}</span>
                                             </div>
                                             
                                             <div class="d-flex mb-3">
@@ -1395,8 +1393,8 @@
 
                                             <div class="d-flex itinirary-list py-5 align-items-center">
                                                 <div class="w-100">
-                                                    <p class="mb-0"><b>Payment details</b></p>
-                                                    <p class="mb-0">Total cost: €1.299</p>
+                                                    <p class="mb-0"><b>Payment details</b></p><p class="mb-0">
+                                                    Total cost:€{{ $reservations->price }}</p>
                                                 </div>
                                             </div>
                                             <div class="d-flex itinirary-list py-5">

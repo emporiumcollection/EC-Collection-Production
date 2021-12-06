@@ -17,26 +17,29 @@
                 <span data-toggle="tooltip" title="Change destination">
                 {{ \Session::get('keyword') }}</span>
               </a>
-            @endif  
+            @endif
+            @if(Request::is(Request::is('reservation/when*')) || Request::is(Request::is('reservation/where')) )
+            @else
             <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
-              <span class="cal-date" data-toggle="tooltip" title="Change availability">
-                @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
-                  {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
-                @else
-                Selecte Date
-                @endif  
-            </span>
-            </a>
-            <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
-              aria-controls="whoF">
-              <div class="filter-lst expand filter-guest filter-white">
-                <div class="input-group">
-                  <div class="gust-dropdown">
-                    <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
+                <span class="cal-date" data-toggle="tooltip" title="Change availability">
+                  @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
+                    {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
+                  @else
+                    Selected Date
+                  @endif
+              </span>
+              </a>
+              <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
+                aria-controls="whoF">
+                <div class="filter-lst expand filter-guest filter-white">
+                  <div class="input-group">
+                    <div class="gust-dropdown">
+                      <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            @endif  
           </div>
         </div>
         <div class="col-md-5 col-4 text-center">
@@ -45,10 +48,10 @@
           </a>
         </div>
         <div class="col-md-2 col-4 text-right mobile-flex">
-          @if(Auth::check())
+          @if(Auth::check() && Auth::user()->avatar)
             <a href="/dashboard" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
               <div class="user-profile-img">
-                <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                <img src="{{ asset('uploads/user_avatar/'.Auth::user()->avatar) }}" alt="">
                 <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
               </div>
             </a>
@@ -59,13 +62,16 @@
                 <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
               </div>
             </a>
-          @endif  
+          @endif
+          @if(Request::segment(1) == 'reservation')
+          @else  
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
-            <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
-              <div class="line"></div>
-              <div class="line"></div>
-              <div class="line"></div>
-            </div>
+          <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+
             <div class="menu">
               <a href="#" class="close-menu">
                 <svg fill="currentColor" focusable="false" height="30px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -126,6 +132,7 @@
               </div>
             </div>
           </div>
+          @endif
         </div>
       </div>
     </div>    

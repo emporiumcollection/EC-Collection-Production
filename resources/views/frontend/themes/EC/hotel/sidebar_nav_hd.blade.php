@@ -62,7 +62,7 @@ if(!isset($property)){
               @foreach($property->suites as $suite)
 
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}">{{$suite->category_name}}</a>
+                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}">{{ ucfirst(strtolower($suite->category_name))}}</a>
               </li>
               @endforeach
               

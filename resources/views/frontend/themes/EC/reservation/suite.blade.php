@@ -102,9 +102,7 @@
                       <div class="suite-desc">
                         <h3>{{ $suite->category_name }}</h3>
                         @if($suite->room_desc)
-                          <p>
-                            {{ $suite->room_desc }}
-                          </p>
+                          <p>{!! $suite->room_desc !!}</p>
                         @endif
                         <div class="row align-items-center mt-5">
                           <div class="col-7 guestvalue">

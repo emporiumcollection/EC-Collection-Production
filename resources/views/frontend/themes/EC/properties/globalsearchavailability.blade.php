@@ -13,6 +13,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
 @section('meta_description', '')
 {{-- For Page's Content Part --}}
 @section('content')
+
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reviews.js') }}"></script>
 <script type="text/javascript">
@@ -22,7 +23,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
   });
 </script>
 <div class="content-em">
-
+  
     <div class="col-lg-3 col-sm-3 position-relative mobile-on">
       <div class="sidebar-nav-section" id="sidebar">
         <div class="humburger-menu-sidebar">
@@ -214,6 +215,6 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
 @include('frontend.themes.EC.layouts.subsections.property_gallery')
 @include('frontend.themes.EC.layouts.subsections.search_history')
 @include('frontend.themes.EC.layouts.subsections.ask_question')
-@include('frontend.themes.EC.layouts.subsections.videos')
+
 
 @endsection

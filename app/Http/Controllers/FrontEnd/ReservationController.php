@@ -820,7 +820,7 @@ class ReservationController extends Controller {
         if($totalGuest == 0 || $totalGuest < $prv_selected_total_guest){
             return json_encode([
                 'status' => false,
-                'message' => 'Please select suite(s) for remaining '.($prv_selected_total_guest - $totalGuest).' guest(s)',
+                'message' => 'Please select suite(s) for remainder '.($prv_selected_total_guest - $totalGuest).' guest(s)',
                 'class' => 'danger'
             ]);
         }elseif($totalGuest > $prv_selected_total_guest){

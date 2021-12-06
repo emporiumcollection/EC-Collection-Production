@@ -143,13 +143,6 @@
                     <div class="row mb-4">
                         <ul data-place="suite_amenities">
                         </ul>
-                        <div class="col-md-4 mb-4">
-                            <p class="mb-0">Pool</p>
-                            <p class="mb-0">Wlan</p>
-                            <p class="mb-0">Smart-TV</p>
-                            <p class="mb-0">Koffeemaschine</p>
-                            <p class="mb-0">Laundry service</p>
-                        </div>
                     </div>
                 </div>
                 <!-- display only on dektop end -->

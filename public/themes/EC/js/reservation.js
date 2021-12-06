@@ -426,10 +426,15 @@ $( document ).ready(function() {
         
 });
 
-$(document).on('click', ".step_where", function(){
-    var arrival_date = $("#arrival_date").val();
-    var departure_date = $("#departure_date").val();
+$(document).on('click', ".stay_dates", function(){
+    var arrival_date = $("#arrive").val();
+    var departure_date = $("#departure").val();
     var propertyid = $("#property_id").val();
+    if(propertyid == ''){
+        $('#guestValidationMsg').find('#massage').html("Please select your stay dates");
+        $('#guestValidationMsg').show();
+        return false;
+    }
 
     $.ajax({
         headers: {
@@ -444,10 +449,23 @@ $(document).on('click', ".step_where", function(){
             departure_date:departure_date
         },
         success:function(response){
-            window.location.href ="/reservation/where";
+            
         }
     });
 });
+
+
+$(document).on('click', ".step_where", function(){
+    var arrival_date = $("#arrive").val();
+    if(arrival_date == ''){
+        $('#guestValidationMsg').find('#massage').html("Please select your stay dates");
+        $('#guestValidationMsg').show();
+        return false;
+    }else{
+        window.location.href = '/reservation/where';
+    }
+});
+
 
 $(document).ready(function(){
     $('.chkcompanion').click(function(){

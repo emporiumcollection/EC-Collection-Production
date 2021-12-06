@@ -40,8 +40,8 @@
             </div>
             <div class="col-md-12">
                 <?php if(!empty(\Session::get('suite_array')) && array_key_exists(  $suite->id, \Session::get('suite_array'))){ ?>
-                    <a href="javascript:void(0);" class="btn btn-dark select_suite" title="Update" data-suite-id="{{ $suite->id }}" style="padding: 9px;"><i class="fa fa-edit"></i></a>
-                    <a href="javascript:void(0);" class="btn btn-dark ml-2 remove_suite" title="Remove" data-suite-id="{{ $suite->id }}" style="padding: 9px;"><i class="fa fa-times-circle-o"></i></a>
+                    <a href="javascript:void(0);" class="btn btn-dark select_suite" title="Update" data-suite-id="{{ $suite->id }}" style="padding: 10px 9px;"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0);" class="btn btn-dark ml-2 remove_suite" title="Remove" data-suite-id="{{ $suite->id }}" style="padding: 10px 9px;"><i class="fa fa-times-circle-o"></i></a>
                 <?php }else{ ?>
                     <a href="javascript:void(0);" class="btn btn-dark select_suite" data-suite-id="{{ $suite->id }}">Select</a>
                 <?php } ?>
