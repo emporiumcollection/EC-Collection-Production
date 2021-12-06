@@ -28,7 +28,7 @@ class UserController extends Controller {
 
         if (CNF_REGIST == 'false') :
             if (\Auth::check()):
-                return Redirect::to('')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
+                return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
             else:
                 return Redirect::to('user/login');
             endif;
@@ -358,7 +358,7 @@ class UserController extends Controller {
     public function getLogin() {
 
         if (\Auth::check()) {
-            return Redirect::to('')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
+            return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         } else {
             $this->data['socialize'] = config('services');
             $this->data['questions'] = SecurityQuestions::all();
@@ -720,6 +720,9 @@ class UserController extends Controller {
                 
                 $image_name = time() . '.' . $file->getClientOriginalExtension();
                 $destinationPath = public_path('uploads\user_avatar');
+                if( !is_dir( $destinationPath ) ){
+                    mkdir( $destinationPath, 0755, true );
+                }
                 $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                 $newfilename = \Session::get('uid') . '.' . $extension;
                 // echo "<pre>";print_r($newfilename);exit(); 
@@ -1638,8 +1641,9 @@ class UserController extends Controller {
 
     public function getSettings(){
         $user = User::find(\Session::get('uid'));
+       
         // $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
-        $card_detail = \DB::table('tb_cards')->get();
+        $card_detail = \DB::table('tb_cards')->where('user_id',\Auth::user()->id)->get();
         $file_name = 'users_admin.traveller.users.account-setting';      
         return view($file_name,compact('card_detail'));
     }

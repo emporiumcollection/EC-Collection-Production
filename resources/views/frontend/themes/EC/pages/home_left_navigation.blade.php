@@ -18,7 +18,7 @@
           <div class="wiza-title">Safaris</div>
         </a>
       </li>
-      <li class="nav-item">
+      {{-- <li class="nav-item">
         <a href="#" class="nav-link">
           <div><i class="ico ico-fi-flight"></i></div>
           <div class="wiza-title">Jet</div>
@@ -35,7 +35,7 @@
           <div><i class="ico ico-fi-villa"></i></div>
           <div class="wiza-title">Villas</div>
         </a>
-      </li>
+      </li> --}}
       <li class="nav-item">
         <a href="http://staging.emporium-islands.com" class="nav-link">
           <div><i class="ico ico-islands"></i></div>

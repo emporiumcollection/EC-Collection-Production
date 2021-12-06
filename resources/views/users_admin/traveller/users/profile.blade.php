@@ -55,16 +55,14 @@
 							<div class="col-lg-9 col-xl-9">
 								<div class="image-input image-input-outline"
 									id="kt_user_add_avatar">
-									<div class="image-input-wrapper"
-										style="background-image: url({{ asset('/uploads/user_avatar/'.$info->avatar)}})">
-									</div>
+									<img class="image-input-wrapper" id="avatar" src="{{ asset('/uploads/user_avatar/'.$info->avatar)}}">
 									
 									<label
 										class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
 										data-action="change" data-toggle="tooltip"
 										title="" data-original-title="Change avatar">
 										<i class="fa fa-pen icon-sm text-muted"></i>
-										<input type="file" name="profile_avatar"
+										<input type="file" name="profile_avatar" id="profile_avatar"
 											accept=".png, .jpg, .jpeg">
 										<input type="hidden"
 											name="profile_avatar_remove">

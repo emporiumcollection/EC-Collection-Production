@@ -1542,7 +1542,10 @@
                     <!--end::Card-->
 <div id="reservation_popup" class="offcanvas offcanvas-right p-10 offcanvas-off" style="width: 90%;">
 </div>
-@endsection                
+@endsection
+@section('reservation')
+<script src="{{ asset('assets/users/assets/js/pages/crud/ktdatatable/base/data-local-reservation.js')}}"></script>    
+@endsection
 <script type="text/javascript">
       
         var picker = $('#daterangepicker-inline').daterangepicker({

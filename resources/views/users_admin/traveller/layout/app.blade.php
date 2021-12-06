@@ -529,7 +529,8 @@
   <script src="{{ asset('assets/users/assets/js/owl.carousel.min.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/custom.js')}}"></script>
   <script src="{{ asset('assets/users/assets/js/dashboard-cookie.js')}}"></script>
-  <script src="{{ asset('assets/users/assets/js/pages/crud/ktdatatable/base/data-local-reservation.js')}}"></script>
+  @yield('reservation')
+  
   
   <script type="text/javascript">
     //Companion image show on file input 

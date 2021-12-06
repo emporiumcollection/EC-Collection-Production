@@ -49,9 +49,9 @@
                                 <div class="col-lg-6">
                                     <div class="reservation-img mb-8">
                                         <div class="result-grid">
-                                        <?php 
+                                        <?php
                                             foreach($property[0]->propertyImages as $images):
-                                                
+
                                                 if(isset($property[0]->container->name)){
                                                     $container_name = $property[0]->container->name;
                                                 }else{
@@ -65,11 +65,11 @@
                                                 }else{
                                                     $file_name = 'default-image.png';
                                                 }
-                                        ?>                  
+                                        ?>
                                             <div>
-                                                <img <?php echo 'src="/property-image/resize/398x271/'.$container_name.'/default-image.png/property-image"';?> <?php echo 'data-src="property-image/resize/398x271/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100" alt="">
+                                                <img <?php echo 'src="/property-image/resize/398x271/'.$container_name.'/default-image.png/property-image"';?> <?php echo 'data-src="/property-image/resize/398x271/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100" alt="">
                                             </div>
-                                        <?php endforeach; ?>    
+                                        <?php endforeach; ?>
                                         </div>
                                         <div class="reservation-result">
                                             <!-- <h3 class="font-weight-bolder font-size-h3 text-dark-75 mb-1">

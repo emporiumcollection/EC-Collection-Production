@@ -27,10 +27,12 @@ class CustomerController extends Controller {
     }
 
     public function getRegister(Request $request, $pid = null) {
-
+        if (\Auth::check()):
+            return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
+        endif;
         if (CNF_REGIST == 'false') :
             if (\Auth::check()):
-                return Redirect::to('')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
+                return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
             else:
                 return Redirect::to('customer/login');
             endif;

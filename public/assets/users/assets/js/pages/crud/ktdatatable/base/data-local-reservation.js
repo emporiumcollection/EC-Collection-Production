@@ -28,8 +28,13 @@ var KTDatatableDataLocalDemo = function () {
         pageSize: 10,
       },
 
-     
-
+      sortable: true,
+			pagination: true,
+      search: {
+				input: $('#kt_datatable_search_query'),
+				delay: 400,
+				key: 'generalSearch'
+			},
       // columns definition
       columns: [{
           field: 'BookingAction',
