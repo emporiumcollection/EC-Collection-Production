@@ -1290,7 +1290,7 @@
                                             <div class="d-flex itinirary-list py-5 align-items-center">
                                                 <div class="w-100">
                                                     <p class="mb-0"><b>Confirmation Code</b></p>
-                                                    <p class="mb-0">EC-{{ $booking_number }}</p>
+                                                    <p class="mb-0">{{ $booking_number }}</p>
                                                 </div>
                                             </div>
                                             @if($cancelation_status)

@@ -18,8 +18,7 @@
                 {{ \Session::get('keyword') }}</span>
               </a>
             @endif
-            @if(Request::is(Request::is('reservation/when*')) || Request::is(Request::is('reservation/where')) )
-            @else
+            @if(Request::is(Request::is('reservation/where')))
             <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
                 <span class="cal-date" data-toggle="tooltip" title="Change availability">
                   @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
@@ -29,6 +28,8 @@
                   @endif
               </span>
               </a>
+              @endif
+              @if(Request::is(Request::is('reservation/when*')))
               <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
                 aria-controls="whoF">
                 <div class="filter-lst expand filter-guest filter-white">
@@ -359,6 +360,7 @@
                 aria-expanded="false" aria-controls="searchF">
                 <i class="ico ico-search"></i>
               </a>
+              @if(Request::is(Request::is('reservation/where')))
               <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="calcF">
                 <span class="cal-date">
@@ -369,6 +371,8 @@
                   @endif
                 </span>
               </a>
+              @endif
+              @if(Request::is(Request::is('reservation/when*')))
               <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="whoF">
                 <div class="filter-lst expand filter-guest filter-white">
@@ -381,6 +385,7 @@
                   </div>
                 </div>
               </a>
+              @endif
               <!-- <a href="#" class="menu-nav text-menu">Destinations</a> -->
               <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
               <div class="humburger-menu ml-auto align-self-center mobile-on">
