@@ -77,10 +77,14 @@ $level4TabTemplate = '<div class="tab-pane fade <!--LEVEL4-SHOWCLASS-->" id="<!-
 ?>
 <div class="desktop-view ">
                     <?php
+                    // echo '<pre>';
+                    // print_r($path);
+                    // print_r($destinationMenu);
+                    // echo '</pre>';
                     $destinationLevel1 = '';
                     foreach($destinationMenu as $destination):
                         $destinationLevel1 .= '<li class="nav-item">
-                            <a class="nav-link" href="#'.$destination['category_alias'].'" data-toggle="tab" role="tab">'.$destination['category_name'].'</a>
+                            <a class="nav-link '.(in_array($destination['category_name'], $path) ? 'active' : '').'" href="#'.$destination['category_alias'].'" data-toggle="tab" role="tab">'.$destination['category_name'].'</a>
                         </li>';
 
                         $level2TabContent = '';
@@ -161,7 +165,7 @@ $level4TabTemplate = '<div class="tab-pane fade <!--LEVEL4-SHOWCLASS-->" id="<!-
     <ul class="nav nav-pills nav-clr mb-5">
         <?php echo $destinationLevel1;?>
     </ul>
-    <p><b>Current Destination : {{ \Session::get('keyword') }}</b></p>
+    <p><b>Current Destination : <u>{{ \Session::get('keyword') }}</u></b></p>
     <div class="tab-content">
         <!-- Europe tab content -->
         <?php echo $destinationTabContent;?>

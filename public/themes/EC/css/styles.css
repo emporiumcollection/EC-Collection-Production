@@ -35930,6 +35930,9 @@ footer {
   border-color: #afafaf !important; }
   .dedicated-breadcrumb .nav-link.active {
     color: #afafaf !important; }
+.dedicated-breadcrumb .nav-item:last-child .nav-link{
+  color: #000 !important;
+}
 
 .is-hover .hotel-srt-desc {
   position: absolute;

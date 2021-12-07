@@ -2,7 +2,7 @@
         <div class="row align-items-center">
           <div class="col-md-6">
             <div class="d-flex align-items-center nav-desc main-title-heading">
-              <a href="#" class="sidebar-back" title="Go back to previous page" data-toggle="tooltip">
+              <a href="/" class="sidebar-back" title="Go back to previous page" data-toggle="tooltip">
                 <i class="ico ico-back"></i>
               </a>
               <div class="title-main pl-0">
@@ -16,7 +16,7 @@
           <div class="col-md-6">
             <ul class="nav nav-pills nav-clr nav-breadcrumb dedicated-breadcrumb justify-content-end">
               <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
+                <a class="nav-link" href="javascript:void(0);">Home</a>
               </li>
               <?php 
               foreach ($path as $cid => $cat) : 
