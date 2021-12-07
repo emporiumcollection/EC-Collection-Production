@@ -643,6 +643,13 @@ function replacePrices(cat_id, property_id = null){
     }
     $('[data-place="price-book-button"]').html(`<a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-small-sm px-5 btn-confirm">Confirm Booking</a>`);
     $('[data-place="property-name"]').html(properties[property_id]['property_name']);
+    properties[property_id]['suites'].forEach(function(e){
+      if(cat_id === e.id){
+        suite = e;
+      }
+    });
+  
+    $('[data-place="suite_category_name"]').html(suite.category_name);
     $('#priceinfo .sub-price-content').html('Loading...');
     $.ajax({
         url: '/property/prices?category_id=' +  cat_id + '&property_id=' +  property_id + '&arrival='+arrival+'&departure='+departure,

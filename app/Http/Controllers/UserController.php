@@ -1627,8 +1627,18 @@ class UserController extends Controller {
             \DB::table('tb_cards')->insert($card_data);
                 return Redirect::to('users/setting')->with('message', 'Invites send successfully')->with('msgstatus', 'success');
             } else {
-                return Redirect::to('')->withErrors($validator)->withInput();
+                return Redirect::to('users/setting')->withErrors($validator)->withInput();
             }        
+    }
+    public function default_Card($id){
+        $default_card = 1;
+        $remove_default = \DB::table('tb_cards')
+            ->where('user_id', \Auth::user()->id)
+            ->update(array('default_card' => 0));
+        $default = \DB::table('tb_cards')
+            ->where('id', '=', $id)
+            ->update(array('default_card' => $default_card));
+        return Redirect::to('/users/setting');
     }
 
     public function deleteCard($id){

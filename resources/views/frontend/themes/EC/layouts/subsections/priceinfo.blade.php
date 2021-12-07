@@ -27,7 +27,7 @@
                             alt="">
                     </div>
                     <div class="col">
-                        <h3>Superior Double Room Garden or Village View </h3>
+                        <h3 data-place="suite_category_name"> </h3>
                     </div>
                 </div>
             </div>
@@ -92,18 +92,18 @@
                 </div>
                 <hr>
                 <div class="booking-tearms">
-                    <h3><b>Booking teams and conditions</b></h3>
+                    <h3><b>Teams and Conditions</b></h3>
                     <div class="custom-control custom-checkbox mb-5">
                         <input type="checkbox" class="custom-control-input" id="policies43">
                         <label class="custom-control-label" for="policies43">
                             Your reservation is made subject to our
                             <a href="#" class="underline"><b>Terms & Conditions</b> </a>(available
                             in other
-                            languages <a href="#" class="underline"><b>here</b></a>), and the
+                            languages <a href="#" class="underline"><b>here</b></a>) and the
                             specific
-                            payment tearms (deposit, tax and cancellation) set out above, Please
+                            payment terms (deposit, tax and cancellation) set out above, Please
                             check
-                            this box to agrree to these tearms and proceed with your booking. By
+                            this box to agree to these terms and proceed with your booking. By
                             confirming your booking, you agree with all provisions of the
                             <a href="#" class="underline"><b>privacy policy</b></a>
                         </label>

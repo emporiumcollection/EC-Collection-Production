@@ -41,7 +41,10 @@
                     <div class="d-flex flex-column flex-grow-1">
                         <div
                             class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                            MasterCard {{ str_pad(substr($detail->card_number, -4), strlen($detail->card_number), '*', STR_PAD_LEFT) }} <span class="default-set">default</span>
+                            MasterCard {{ str_pad(substr($detail->card_number, -4), strlen($detail->card_number), '*', STR_PAD_LEFT) }} 
+                            @if ($detail->default_card == 1)
+                                <span class="default-set">default</span>
+                            @endif
                         </div>
                         <span class="text-muted font-weight-bold">Expiration:
                             {{ $detail->expires_on }}</span>
@@ -58,7 +61,7 @@
                             class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
                             <ul class="navi navi-hover">
                                 <li class="navi-item">
-                                    <a href="#" class="navi-link">
+                                    <a href="/users/default-card/{{$detail->id}}" class="navi-link">
                                         <span class="navi-text">
                                             Set Default
                                         </span>

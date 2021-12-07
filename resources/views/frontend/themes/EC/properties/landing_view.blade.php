@@ -3341,7 +3341,7 @@
 
   <div class="sidebar-scroller">
       <div class="d-flex align-items-center mb-5">
-          <a href="#" class="sidebar-back">
+          <a href="/" class="sidebar-back">
               <i class="ico ico-back"></i>
           </a>
           <h3 class="title-second title-line mb-0">
