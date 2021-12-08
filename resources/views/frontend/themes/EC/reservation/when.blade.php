@@ -23,20 +23,22 @@
           <h2 class="mb-5">Stay Dates:</h2>
           <hr>
           <h5 class="mb-2 mt-3">Your selected stay dates:</h5>
-          <div class="row mb-2">            
+          <div class="row mb-5">            
             <div class="col">
-            <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
-                <p id="massage" class="mb-0"></p>
-              </div> 
-              <div class="range-calendar range-date-9127013" id="calendar-pick">
-                <div id="daterangepicker-inline-container" class="daterangepicker-inline"></div>
-                <input type="hidden" id="daterangepicker-inline">
-                <input type="hidden" name="arrive" id="arrive" />
-                <input type="hidden" name="departure" id="departure" />
+              <p><b>Arrival date</b></p>
+              <div class="form-group form-inline-group form-date-lg">
                 <input type="hidden" name="property_id" id="property_id" value="<?php echo $property_id?>">
-                <div class="clearfix"></div>
+                <input type="text" class="form-control form-line fromdate" name="arrival_date" id="arrival_date"  value="{!! date('d-M-Y', strtotime(Session::get('arrival')));  !!}">
+                <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
+            </div>
+            <div class="col">
+              <p><b>Departure date</b></p>
+              <div class="form-group form-inline-group form-date-lg">
+                <input type="text" class="form-control form-line todate" name="departure_date" id="departure_date" value="{!! date('d-M-Y', strtotime(Session::get('departure')));  !!}">
+                <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
               </div>
+            </div>
           </div>
           <div class="row">
             

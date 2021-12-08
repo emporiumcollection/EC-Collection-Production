@@ -18,7 +18,8 @@
                 {{ \Session::get('keyword') }}</span>
               </a>
             @endif
-            @if(Request::is(Request::is('reservation/where')))
+            @if(Request::is('reservation/when*'))
+            @else
             <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
                 <span class="cal-date" data-toggle="tooltip" title="Change availability">
                   @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
@@ -29,18 +30,20 @@
               </span>
               </a>
               @endif
-              @if(Request::is(Request::is('reservation/when*')))
-              <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
-                aria-controls="whoF">
-                <div class="filter-lst expand filter-guest filter-white">
-                  <div class="input-group">
-                    <div class="gust-dropdown">
-                      <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
+
+              @if(Request::is('reservation/where'))
+              @else
+                <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
+                  aria-controls="whoF">
+                  <div class="filter-lst expand filter-guest filter-white">
+                    <div class="input-group">
+                      <div class="gust-dropdown">
+                        <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
-            @endif  
+                </a>
+              @endif  
           </div>
         </div>
         <div class="col-md-5 col-4 text-center">
@@ -360,31 +363,34 @@
                 aria-expanded="false" aria-controls="searchF">
                 <i class="ico ico-search"></i>
               </a>
-              @if(Request::is(Request::is('reservation/where')))
-              <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
-                aria-expanded="false" aria-controls="calcF">
-                <span class="cal-date">
-                  @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
-                    {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
-                  @else
-                    Selecte Date
-                  @endif
-                </span>
-              </a>
+              @if(Request::is('reservation/when*'))
+              @else
+                <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
+                  aria-expanded="false" aria-controls="calcF">
+                  <span class="cal-date">
+                    @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
+                      {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
+                    @else
+                      Selecte Date
+                    @endif
+                  </span>
+                </a>
               @endif
-              @if(Request::is(Request::is('reservation/when*')))
-              <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
-                aria-expanded="false" aria-controls="whoF">
-                <div class="filter-lst expand filter-guest filter-white">
-                  <div class="input-group">
-                    <div class="gust-dropdown">
-                      <div class="guest-option rto"><span class="guest-count">
-                        {{ \Session::get('Guests') }}
-                      </span> Guest</div>
+              
+              @if(Request::is('reservation/where'))
+              @else  
+                <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
+                  aria-expanded="false" aria-controls="whoF">
+                  <div class="filter-lst expand filter-guest filter-white">
+                    <div class="input-group">
+                      <div class="gust-dropdown">
+                        <div class="guest-option rto"><span class="guest-count">
+                          {{ \Session::get('Guests') }}
+                        </span> Guest</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
+                </a>
               @endif
               <!-- <a href="#" class="menu-nav text-menu">Destinations</a> -->
               <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
@@ -717,7 +723,7 @@
                         <input type="hidden" name="rooms[]" id="rooms_{{ $key }}"/>
                         <div class="row align-items-center py-2">
                           <div class="col-7">
-                            <p class="mb-0"><b>Adults</b></p>
+                            <p class="mb-0"><b>Adult(s)</b></p>
                           </div>
                           <div class="col-5">
                             <div class="row field-count-guest align-items-center">
@@ -732,7 +738,7 @@
                         </div>
                         <div class="row align-items-center py-2">
                           <div class="col-7">
-                            <p class="mb-0"><b>Children</b></p>
+                            <p class="mb-0"><b>Children(s)</b></p>
                           </div>
                           <div class="col-5">
                             <div class="row field-count-guest align-items-center">
@@ -752,7 +758,7 @@
                 </div>
                 <div class="guest-pick-footer">
                   <div class="text-right">
-                    <a href="javascript:void(0);" class="btn btn-dark px-4 confirm-room">Update Guests</a>
+                    <a href="javascript:void(0);" class="btn btn-dark px-4 select-guest">Update Guests</a>
                   </div>
                 </div>
               </div>

@@ -478,7 +478,7 @@ trait Property {
                     }
 */                    
                     $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
-                    $suiteNameList[] = ucwords($suite->cat_short_name);
+                    $suiteNameList[] = '<a href="/hotel/suite/'.$suite->property_id.'/#'.$suite->id.'">'.ucwords($suite->cat_short_name).'</a>';
                     if(!empty($suite->rooms->toArray())){
                         foreach($suite->rooms as $rk => $room){
                             //$properties[$k]->suites[$sk]->rooms[$rk]->price = $this->getRoomPrice($room->id);

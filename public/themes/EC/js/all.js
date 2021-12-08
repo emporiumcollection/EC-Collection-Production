@@ -1058,7 +1058,8 @@ var ajaxReq = 'ToCancelPrevReq';
     }
   });
 
-  $(document).on('click', '#whoF .confirm-room', function(){
+  $(document).on('click', '#whoF .select-guest', function(){
+    
     /*var roomVal = $('.room-val').html();
     var adultTotal = 0;
     $('.adult-val').each(function(){
@@ -2340,6 +2341,7 @@ $(document).ready(function () {
     $('input[name="departure"]').val(picker.endDate.format('YYYY-MM-DD'));
     $('.include-form').fadeIn("fast");
   });
+  
   picker.data('daterangepicker').hide = function () { };
   picker.data('daterangepicker').show();
 

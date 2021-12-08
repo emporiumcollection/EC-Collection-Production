@@ -11,6 +11,7 @@ use App\Models\PropertyCategoryTypes;
 use App\Models\ReservationCompanion;
 use App\Models\Reservations;
 use App\Models\ReservedSuite;
+use App\Models\availableservices;
 use App\Models\properties;
 use App\User;
 use Auth;
@@ -39,7 +40,7 @@ class ReservationController extends Controller {
             return redirect('user/login');
         }
 
-        
+        $this->_checkBoards($id);
         // print_r($this->data['boards']);exit;
         // print_r(Session::has('board_id'));
 
@@ -80,13 +81,13 @@ class ReservationController extends Controller {
 
         if(Session::get('property_id') != ''){
             $property_id = Session::get('property_id');
+            $this->_checkBoards($property_id);
         }else{
             $property_id = $id;
+            $this->_checkBoards($property_id);
             Session::put('property_id', $id);
             Session::save();
         }
-
-        $this->_checkBoards($property_id);
 
         $arr = $this->reserveSuite();
         $this->data['suites'] = $arr;
@@ -133,7 +134,18 @@ class ReservationController extends Controller {
             Session::put('property_id', $id);
         }
 
-        $this->data['property'] = properties::with(['suites', 'container'])->where('id', Session::get('property_id'))->get();
+        $this->data['property'] = properties::with(['container', 'suites' => function($q){
+                $q->where('status', '=', 1);
+            }])
+            ->where('id',$property_id)
+            ->get();
+
+        $service_ids = explode(',',$this->data['property'][0]->availableservices);
+        $services = [];
+        foreach ($service_ids as $value) {
+            $services[] = availableservices::where('id',$value)->first();
+        } 
+        $this->data['services'] = $services;    
 
         $this->data['numberOfNights'] = $this->getNumberOfNights();
 
@@ -191,8 +203,7 @@ class ReservationController extends Controller {
 
         $arr = $this->reserveSuite();
 
-        $this->_checkBoards(Session::get('board'));
-
+        $this->_checkBoards(Session::get('property_id'));
 
         if(Session::has('board_id')) {
             $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
@@ -212,7 +223,9 @@ class ReservationController extends Controller {
                 $this->data['suites_board'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suit_id)->first();
             } */
             
-            $this->data['suitesboards'] = properties::with('boards')->where('id',Session::get('property_id'))->first();
+            $this->data['suitesboards'] = properties::with('boards')
+                ->where('id',Session::get('property_id'))
+                ->first();
 
             
             $this->data['layout_type'] = 'old';
@@ -254,7 +267,9 @@ class ReservationController extends Controller {
 
     public function fetchBoards($id){
 
-        $board =  \DB::table('tb_boards')->where('id',$id)->first();
+        $board = \DB::table('tb_boards')
+            ->where('id',$id)
+            ->first();
 
         $board_price = 0;
 
@@ -295,7 +310,7 @@ class ReservationController extends Controller {
 
         $arr = $this->reserveSuite();
 
-        $this->_checkBoards(Session::get('board'));
+        $this->_checkBoards(Session::get('property_id'));
         $this->data['numberOfNights'] = $this->getNumberOfNights();
         if(Session::has('board_id')) {
             $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
@@ -312,12 +327,20 @@ class ReservationController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
-        
-        $this->data['policies'] = PropertyCategoryTypes::where('property_id',Session::get('property_id'))->first();
 
-        $this->data['hotel_policy'] = properties::where('id',Session::get('property_id'))->first();
+
+        if(Session::get('suite_array')){
+            foreach (Session::get('suite_array') as $key => $value) {
+                $this->data['policies'] = PropertyCategoryTypes::where('id',$key)
+                    ->get();
+            }       
+        }
+    
+        $this->data['hotel_policy'] = properties::where('id',Session::get('property_id'))
+            ->first();
         
-        $this->data['global_terms'] = \DB::table('tb_policies')->get();
+        $this->data['global_terms'] = \DB::table('tb_policies')
+            ->get();
 
         $file_name = 'frontend.themes.EC.reservation.suitepolicies';
         return view($file_name, $this->data);   
@@ -387,13 +410,15 @@ class ReservationController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
-        $this->data['companion'] = \DB::table('tb_companion')->where('user_id', Auth::user()->id)->get();
+        $this->data['companion'] = \DB::table('tb_companion')
+        ->where('user_id', Auth::user()->id)
+        ->get();
 
         $arr = $this->reserveSuite();
         $this->data['numberOfNights'] = $this->getNumberOfNights();
         // Session::forget('companions');
 
-        $this->_checkBoards(Session::get('board'));
+        $this->_checkBoards(Session::get('property_id'));
 
         if(Session::has('board_id')) {  
             $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
@@ -526,7 +551,7 @@ class ReservationController extends Controller {
         $id = Session::get('uid');
         $arr = $this->reserveSuite();
 
-        $this->_checkBoards(Session::get('board'));
+        $this->_checkBoards(Session::get('property_id'));
 
         $this->data['numberOfNights'] = $this->getNumberOfNights();
 
@@ -544,7 +569,9 @@ class ReservationController extends Controller {
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';        
-        $this->data['cards'] = CardDetail::where('user_id', '=', $id)->orderBy('id','desc')->get();
+        $this->data['cards'] = CardDetail::where('user_id', '=', $id)
+            ->orderBy('id','desc')
+            ->get();
         
         
         $file_name = 'frontend.themes.EC.reservation.payment_method';
@@ -615,7 +642,11 @@ class ReservationController extends Controller {
 
         $this->data['numberOfNights'] = $this->getNumberOfNights();
 
-        $this->data['properties'] = properties::where('id',Session::get('property_id'))->get();
+        $this->_checkBoards(Session::get('property_id'));
+
+        $this->data['properties'] = properties::where('id',Session::get('property_id'))
+            ->get();
+
         $hotel_name = $this->data['properties'][0]->property_short_name;
 
         $words = explode(' ', $hotel_name);
@@ -627,12 +658,14 @@ class ReservationController extends Controller {
 
         $booking_number = 'EC'.'-'.$this->data['db'].'-'.$this->data['hotel_name'].'-'.$this->data['randomnum'] ;
 
-        Session::put('booking_number', $booking_number);
+        Session::put('booking_number'   , $booking_number);
 
         $trip_dates = CommonHelper::getDateRange(Session::get('arrival'), Session::get('departure'));
         $this->data['trip_dates'] = $trip_dates;
         
-        $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',Session::get('suit_id'))->first();
+        $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')
+            ->where('id',Session::get('suit_id'))
+            ->first();
 
         $selected_suite = Session::get('suit_id');
         $arr = [];
@@ -641,11 +674,14 @@ class ReservationController extends Controller {
             $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
         }
 
-        $this->data['policies'] = PropertyCategoryTypes::where('property_id',Session::get('property_id'))->first();
+        $this->data['policies'] = PropertyCategoryTypes::where('property_id',Session::get('property_id'))
+            ->first();
 
         foreach($selected_suite as $suite_id)
         {
-            $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suite_id)->get();
+            $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')
+            ->where('id',$suite_id)
+            ->get();
 
             $arr[] = $this->data['suites'];
         }
@@ -659,7 +695,6 @@ class ReservationController extends Controller {
         $file_name = 'frontend.themes.EC.reservation.booking_summary';
         return view($file_name, $this->data);   
     }
-
 
     public function storecompanionTosession(Request $request)
     {

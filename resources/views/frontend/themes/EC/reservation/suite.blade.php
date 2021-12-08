@@ -1,4 +1,3 @@
-
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -17,17 +16,6 @@
       align-items: center;
     }
     .accesibility-checkbox::before, .accesibility-checkbox::after{margin-top: 6px;}
-
-    .reservation-summary-sidebar.stick {
-      position: fixed;
-      top: 100px;
-      left: 76%;
-      z-index: 999;
-      border-radius: 0 0 0.5em 0.5em;
-      max-height: 800px;
-      overflow-y: scroll;
-      padding-bottom: 300px;
-    }
 </style>
 @section('content')
 <div class="content-em">
@@ -40,7 +28,7 @@
           <a href="#" class="backwizard btn-backwizard">
             <i class="ico ico-back mr-3"></i>
           </a>
-          Your (Pavilion Suite) overview:
+          {{ $property[0]->property_short_name }} services overview:
         </h2>
         <div class="row">
           <div class="col-lg-9 col-md-8">
@@ -53,18 +41,17 @@
             <div class="suite-fasility section-shadow mb-5">
               <h3>ALL STAYS INCLUDE</h3>
               <ul>
-                
-                <li>WiFi</li>
-                <li>Daily bottled water</li>
-                <li>Daily à la carte breakfast</li>
-                <li>Scheduled shuttle to Amalfi and Positano</li>
-                <li>Two-hour boat rides along the coast in the morning</li>
-                <li>Access to the fitness centre</li>
-                <li>Access to 24 hour business centre</li>
+                @if(isset($services->title))
+                  @foreach($services as $value)
+                    <li>{{ $value->title }}</li>
+                  @endforeach
+                @else
+                  <p>Services not found</p>
+                @endif    
               </ul>
             </div>
             <div class="custom-control custom-checkbox mb-5">
-               <input type="checkbox" name="accesibility" class="custom-control-input chkpolicies" id="customCheck2">
+               <input type="checkbox" name="accesibility" class="custom-control-input chkaccesibility" id="customCheck2">
               <label class="custom-control-label accesibility-checkbox" for="customCheck2">
                 <b>Accesibility</b> <i class="ico ico-wheelchair ml-1" data-toggle="tooltip" title="" data-original-title="Accesibility"></i>
               </label>
@@ -79,6 +66,7 @@
                         <?php if(!empty($suite->rooms[0]['images'])):?>
                         @foreach($suite->rooms[0]['images'] as $image)
                         <?php
+                        if(isset($image['file']) && !empty($image['file'])){
                           if(isset($property[0]['container']['name'])){
                             $container_name = $property[0]['container']['name'];
                           }else{
@@ -94,6 +82,7 @@
                                 class="img-full" alt="">
                             </a>
                           </div>
+                         <?php } ?>
                         @endforeach
                         <?php endif;?>   
                       </div>
@@ -126,8 +115,6 @@
             @endif              
         </div>
           <div class="col-lg-3 col-md-4">
-            <div id="sticky-anchor"></div>
-            <div class="reservation-summary-sidebar">
               <div id="selected-suite-list">
                 @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
               </div>
@@ -144,7 +131,6 @@
               <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
                 <p id="massage" class="mb-0"></p>
               </div>
-            </div>
           </div>
         </div>
     </div>  

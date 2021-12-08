@@ -223,7 +223,7 @@ function sticky_relocate() {
     $('.reservation-summary-sidebar').removeClass('stick');
   }
   var last_suite = $('.suite-list').last().offset().top;
-  console.log(perc);
+  
   if (perc  >= 60) {
     $('.reservation-summary-sidebar').removeClass('stick');
   }
@@ -427,29 +427,20 @@ $( document ).ready(function() {
 });
 
 $(document).on('click', ".stay_dates", function(){
-    var arrival_date = $("#arrive").val();
-    var departure_date = $("#departure").val();
+    var arrival_date = $("#arrival_date").val();
+    var departure_date = $("#departure_date").val();
     var propertyid = $("#property_id").val();
-    if(propertyid == ''){
-        $('#guestValidationMsg').find('#massage').html("Please select your stay dates");
-        $('#guestValidationMsg').show();
-        return false;
-    }
 
     $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
         type: 'post',            
-        url: '/store_dates/session',
-        // dataType:'json',                    
+        url: '/store_dates/session',             
         data: {
             property_id:propertyid,
             arrival_date:arrival_date,
             departure_date:departure_date
         },
         success:function(response){
-            
+            // window.location.href ="/reservation/where";
         }
     });
 });
@@ -491,7 +482,7 @@ $(document).ready(function(){
         }
     });
 
-    $('.chkpolicies').click(function(){
+    $('.chkaccesibility').click(function(){
         if($(this).prop('checked') == true)
         {
             $(".accessible").show();

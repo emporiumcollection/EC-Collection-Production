@@ -23,7 +23,7 @@
               <div class="row">
                 <div class="col-md-7">
                   <div class="bg-grey px-3 py-2 mb-3">
-                    <h4>{{ $hotel_name }}</h4>
+                    <h4>{{ $properties[0]->property_short_name }}</h4>
                     <p class="mb-0">Confirm number: EC-{{ $db }}-{{ $hotel_name }}-{{ $randomnum }}</p>
                   </div>
                   

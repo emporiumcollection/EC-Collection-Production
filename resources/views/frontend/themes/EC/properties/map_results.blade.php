@@ -112,7 +112,7 @@
       container: 'properties_map',
       style: 'mapbox://styles/mapbox/light-v10',
       center: [<?php echo $center_coordinate;?>],
-      zoom: 11.15
+      zoom: 13
     });
     mapOfResults.addControl(new mapboxgl.NavigationControl());
 
