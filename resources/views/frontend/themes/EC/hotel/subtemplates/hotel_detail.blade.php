@@ -111,7 +111,7 @@
           <a href="faq.html" class="dropdown-item">FAQ</a>
         </div> -->
       </div>
-      <a href="#" class="price-info---12 btn-sidebar" data-sidebar="#priceinfo">
+      <a href="javascript:void(0);" class="price-info---12">
         <div class="hotel-prices hotel-price-detail d-flex h-100">
           <div class="row align-items-center justify-content-center">
             <h3 class="mb-0">
@@ -1970,3 +1970,4 @@
 @include('frontend.themes.EC.layouts.subsections.quick_info')
 @include('frontend.themes.EC.layouts.subsections.reviews')
 @include('frontend.themes.EC.layouts.subsections.priceinfo')
+@include('frontend.themes.EC.layouts.subsections.share')

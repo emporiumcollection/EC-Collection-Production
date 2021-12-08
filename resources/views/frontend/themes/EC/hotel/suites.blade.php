@@ -35,6 +35,7 @@
 @include('frontend.themes.EC.layouts.subsections.priceinfo')
 @include('frontend.themes.EC.layouts.subsections.quick_info')
 @include('frontend.themes.EC.layouts.subsections.reviews')
+@include('frontend.themes.EC.layouts.subsections.share')
 <?php if(isset($property_id)):?>
 <script>
   currentPropertyId = <?php echo $property_id;?>;

@@ -70,7 +70,7 @@
                                         <select name="user_type" id="sel-user-type" class="form-control user_type">
                                             <option value="-1">I am:</option>
                                             <option value="5">Luxury Hotel</option>
-                                            <option value="2">Luxury Traveller</option>
+                                            <option value="3">Luxury Traveller</option>
                                             <option value="7">Bespoke Advertiser</option>
                                             <option value="14">Supplier</option>
                                         </select>

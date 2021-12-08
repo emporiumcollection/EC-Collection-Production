@@ -2,7 +2,7 @@
         <div class="row align-items-center">
           <div class="col-md-6">
             <div class="d-flex align-items-center nav-desc main-title-heading">
-              <a href="#" class="sidebar-back" title="Go back to previous page" data-toggle="tooltip">
+              <a href="/" class="sidebar-back" title="Go back to previous page" data-toggle="tooltip">
                 <i class="ico ico-back"></i>
               </a>
               <div class="title-main pl-0">

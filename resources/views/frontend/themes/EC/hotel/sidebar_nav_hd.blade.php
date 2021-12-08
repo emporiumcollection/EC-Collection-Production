@@ -45,7 +45,7 @@ if(!isset($property)){
       </a>
       <ul class="nav flex-column nav-sidebar is-small onstickmainpage2">
         <li class="nav-item">
-          <a href="/globalsearchavailability?s={{ \Session::get('keyword') ? \Session::get('keyword') : $property->city }}">
+          <a href="/hotel/hoteldetail/{{ $property->id }}">
             <i class="ico ico-back mb-4"></i>
           </a>
         </li>

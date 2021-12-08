@@ -62,6 +62,7 @@ Route::get('/users/contracts', 'UserController@getInvoices');
 Route::post('/users/savetravelprofile', 'UserController@postSavetravellerprofile');
 Route::post('/users/questions', 'UserController@postSecurityQuestion');
 Route::post('/users/CardDetail', 'UserController@userCardDetail');
+Route::get('/users/default-card/{id}', 'UserController@default_Card');
 Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');
 Route::post('/users/invite', 'UserController@postInvite');
 // Route::get('/users/reservation', 'ReservationsController@getReservation');

@@ -7253,7 +7253,16 @@ class PropertyController extends Controller {
             $arrival,
             $departure
         );
-
+        
+        if(empty($propertyPrices)){
+            $default = [];
+            $trip = \CommonHelper::getDateRange($arrival, $departure);
+            foreach($trip as $key => $date){
+                $default[$date] = 100;
+            }
+            $propertyPrices = $default;
+        }
+        
         $this->data['totalPrice'] = 0;
         $this->data['totalUSDPrice'] = 0;
         $this->data['propertyPrices'] = [];
