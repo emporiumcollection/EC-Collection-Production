@@ -24,7 +24,7 @@
                 <div class="row align-items-center">
                     <div class="col-2 col---s">
                         <img src="images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg" class="img-full"
-                            alt="">
+                            alt="" data-place="suite_image">
                     </div>
                     <div class="col">
                         <h3 data-place="suite_category_name"> </h3>

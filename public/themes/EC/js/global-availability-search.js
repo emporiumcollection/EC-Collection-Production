@@ -36,9 +36,9 @@ function replacePropertyData(id){
   $('[data-place="property-book-button"]').each(function() {
     $(this).html('<a href="/reservation/when/' + id + '" class="btn btn-primary btn-block rounded-0">BOOK</a>');
   });
-  
-  if($('#map2').length){
-    setMapLocation(properties[id]['latitude'], properties[id]['longitude'],properties[id]['address']);
+
+   if($('#map2').length){
+     setMapLocation(properties[id]['latitude'], properties[id]['longitude'],properties[id]['address']);
   }
 
   $('[data-place="property-images"]').each(function() {
@@ -362,6 +362,12 @@ function replaceSuiteDetail(property_id, category_id){
   var containerName = getContainerName(property_id);
   var roomimages = ``;
 
+  if(typeof suite.rooms !== 'undefined' && suite.rooms.length){
+    if(typeof suite.rooms[0].images !== 'undefined' && suite.rooms[0].images.length){
+      $('[data-place="suite_image"]').attr('src', '/room-image/resize/85x71/'+containerName+'/'+suite.rooms[0].images[0]['file']['name']+'/'+suite.rooms[0].images[0]['file']['file_name'])
+    }
+  }
+  
   try{
     suite.rooms[0].images.forEach(function(rm){
       roomimages += `<div>
@@ -687,27 +693,13 @@ $(document).ready(function(){
     searchResults(url);
   });
 
-  $(".close-sidebar, .sidebar-back").click(function (e) {
-    e.preventDefault();
-    $(this).closest('.sidebar-main').removeClass('show');
-    $(this).closest('body').css('overflow', 'auto');
-    $('.sidebar-overlay').remove();
-  });
-  
-  $('body').on('click', '.sidebar-overlay', function () {
-    $('.sidebar-main').removeClass('show');
-    $('.sidebar-overlay').remove();
-    $('body').css('overflow', 'auto');
-    $('.sidebar').removeClass('show');
-  });
-
-  $('body').click(function (e) {
-    if(!$(e.target).hasClass('sidebar-main') && !$(e.target).parents('div').hasClass('sidebar-main')){
-      $('.sidebar-main').removeClass('show');
-      $('body').css('overflow', 'auto');
-      $('.sidebar-overlay').remove();      
-    }
-  });
+  // $('body').click(function (e) {
+  //   if(!$(e.target).hasClass('sidebar-main') && !$(e.target).parents('div').hasClass('sidebar-main')){
+  //     $('.sidebar-main').removeClass('show');
+  //     $('body').css('overflow', 'auto');
+  //     $('.sidebar-overlay').remove();      
+  //   }
+  // });
 
   $('#menunav .search-f').click(function (e) {
     SHOW_PARENT_CITIES = 1;
@@ -755,6 +747,15 @@ $(document).ready(function(){
   $('.nav-item .dropdown-menu .filter-list .price-input .filter_price').on("click", function(){
     var url = createSearchUrl();
     searchResults(url);
+  });
+
+  lightGallery(document.getElementById('location_gallery_hotel'), {
+    thumbnail: false,
+    currentPagerPosition: 'middle',
+    download: false,
+    share: true,
+    escKey: false,
+    closable: false
   });
 
   /*$('#resultsLoadMore').on("click", function(){
