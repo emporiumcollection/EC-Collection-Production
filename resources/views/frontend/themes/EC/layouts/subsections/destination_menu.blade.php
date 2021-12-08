@@ -77,10 +77,6 @@ $level4TabTemplate = '<div class="tab-pane fade <!--LEVEL4-SHOWCLASS-->" id="<!-
 ?>
 <div class="desktop-view ">
                     <?php
-                    // echo '<pre>';
-                    // print_r($path);
-                    // print_r($destinationMenu);
-                    // echo '</pre>';
                     $destinationLevel1 = '';
                     foreach($destinationMenu as $destination):
                         $destinationLevel1 .= '<li class="nav-item">
@@ -91,7 +87,7 @@ $level4TabTemplate = '<div class="tab-pane fade <!--LEVEL4-SHOWCLASS-->" id="<!-
                         $destinationLevel2 = '';
                         foreach($destination['children'] as $level2){
                             $destinationLevel2 .= '
-                            <a class="nav-link" href="#'.$level2['category_alias'].'" data-toggle="tab" role="tab">
+                            <a class="nav-link '.(in_array($level2['category_name'], $path) ? 'active' : '').'" href="#'.$level2['category_alias'].'" data-toggle="tab" role="tab">
                                 '.$level2['category_name'].'
                             </a>'; 
 
