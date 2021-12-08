@@ -2044,8 +2044,9 @@ var ajaxReq = 'ToCancelPrevReq';
     });
   });
 
-  $(".close-sidebar, .sidebar-back").click(function (e) {
+  $(document).on('click', '.close-sidebar, .sidebar-back', function (e) {
     e.preventDefault();
+    console.log($(this).closest('.sidebar-main'));
     $(this).closest('.sidebar-main').removeClass('show');
     $(this).closest('body').css('overflow', 'auto');
     $('.sidebar-overlay').remove();

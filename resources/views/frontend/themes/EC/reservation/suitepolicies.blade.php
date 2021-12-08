@@ -51,7 +51,7 @@
             <div class="row mt-3">
               <div class="col-6">
                 @if(!empty($boards))
-                  <a href="/reservation/suiteboard" class="btn btn-dark px-5">Go back</a>
+                  <a href="/reservation/board" class="btn btn-dark px-5">Go back</a>
                 @else
                   <a href="/reservation/suite" class="btn btn-dark px-5">Go back</a>
                 @endif

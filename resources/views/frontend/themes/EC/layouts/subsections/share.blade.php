@@ -1,5 +1,5 @@
 <div class="sidebar-main share-sidebar" id="share">
-    <a href="#" class="close-sidebar">
+    <a href="javascript:void(0);" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
             xmlns="http://www.w3.org/2000/svg">
             <title>Close</title>

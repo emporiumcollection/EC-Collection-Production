@@ -112,7 +112,7 @@
                                             </div>
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Nights</span>
-                                                <span class="text-dark flex-root font-weight-bold text-right">1</span>
+                                                <span class="text-dark flex-root font-weight-bold text-right">{{ $reservations->number_of_nights }}</span>
                                             </div>
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Guests</span>

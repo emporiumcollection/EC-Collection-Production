@@ -46,7 +46,7 @@
           </li>
           @if(count($suite_board) > 0)
             <li>
-              <a class="nav-link {{ Request::is('reservation/suiteboard') ? 'active' : ''}}" href="/reservation/suiteboard">Suite Board</a>
+              <a class="nav-link {{ Request::is('reservation/board') ? 'active' : ''}}" href="/reservation/board">Suite Board</a>
             </li>
           @endif
           <li>

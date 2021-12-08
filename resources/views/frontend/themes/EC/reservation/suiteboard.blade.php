@@ -91,9 +91,14 @@
                 </div>            
               </div>
               <div class="row">
-                <div class="col-md-12 mt-4">
+                <div class="col-md-6 mt-4">
+                  <div class="text-left">
+                    <a href="/reservation/suite" class="btn btn-dark px-5">Go back</a>
+                  </div>
+                </div>
+                <div class="col-md-6 mt-4">
                   <div class="text-right">
-                    <button type="submit" class="btn btn-dark px-5 availability-check ">Next</a>
+                    <button type="submit" class="btn btn-dark px-5 availability-check ">Next</button>
                   </div>
                 </div>
               </div>

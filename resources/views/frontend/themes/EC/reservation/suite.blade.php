@@ -122,7 +122,7 @@
             <div class="d-flex justify-content-between">
               <a href="/reservation/where" class="btn btn-dark px-4">Go back</a>
               @if(!empty($suite_board))
-                <a href="/reservation/suiteboard" class="btn btn-dark continue_step px-4">Next</a>
+                <a href="/reservation/board" class="btn btn-dark continue_step px-4">Next</a>
               @else
                 <a href="/reservation/policies" class="btn btn-dark continue_step px-4">Next</a>
               @endif
