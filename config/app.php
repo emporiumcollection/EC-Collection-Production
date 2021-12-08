@@ -84,7 +84,7 @@ return [
     'voyagedomain' => 'emporium-voyage.com',
     'magazinedomain' => 'emporium-magazine.com',
 
-    'key' => env('APP_KEY', 'ASDFASDF12341234ASDFASDF12341234'),
+    'key' => env('APP_KEY', 'YrKh1BgM5ONj2ia81k77Z2nD7hDrDniF'),
     
     'cipher' => 'AES-256-CBC',
 

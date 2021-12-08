@@ -16,18 +16,25 @@
           <div class="col-md-6">
             <ul class="nav nav-pills nav-clr nav-breadcrumb dedicated-breadcrumb justify-content-end">
               <li class="nav-item">
-                <a class="nav-link" href="#">Home</a>
+                <p class="nav-link mb-0">Home</p>
               </li>
-              <?php 
-              foreach ($path as $cid => $cat) : 
-              ?>
+              @foreach($path as $cid => $cat)
                 <li class="nav-item">
-                  <a class="nav-link" href="/globalsearchavailability?s=<?php echo $cat ?>"><?php echo $cat ?></a>
+                  @if(count($path) > 3)
+                    @if(count($path) - 1 == $cid || count($path) - 2 == $cid)
+                      <a class="nav-link" href="/globalsearchavailability?s={{ $cat }}">{{ $cat }}</a>
+                    @else
+                      <p class="nav-link mb-0">{{ $cat }}</p>
+                    @endif
+                  @else
+                    @if(count($path) - 1 == $cid)
+                      <a class="nav-link" href="/globalsearchavailability?s={{ $cat }}">{{ $cat }}</a>
+                    @else
+                      <p class="nav-link mb-0">{{ $cat }}</p>
+                    @endif
+                  @endif
                 </li>
-              <?php 
-              //active pr-0
-              endforeach; 
-              ?>
+              @endforeach
             </ul>
           </div>
         </div>

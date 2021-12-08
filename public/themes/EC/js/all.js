@@ -1821,7 +1821,7 @@ var ajaxReq = 'ToCancelPrevReq';
       success: function (data) {
         var _html = '';
         var _sidebar = '';
-        if ((data.imgs).length > 0) {
+        if (typeof data.imgs !== 'undefined' && (data.imgs).length > 0) {
           $(data.imgs).each(function (key, value) {
             //console.log(key);
             //console.log(value);
@@ -1832,7 +1832,7 @@ var ajaxReq = 'ToCancelPrevReq';
         } else {
           console.log("no");
         }
-        if ((data.sidebar).length > 0) {
+        if (typeof data.sidebar !== 'undefined' && (data.sidebar).length > 0) {
           _sidebar += '<li class="nav-item"><a class="nav-link" id="suiteslist-tab" data-toggle="pill" href="#suiteslist" role="tab" aria-controls="suiteslist" aria-selected="true">Restaurants</a></li>';
           $(data.sidebar).each(function (key, value) {
             //console.log(key);

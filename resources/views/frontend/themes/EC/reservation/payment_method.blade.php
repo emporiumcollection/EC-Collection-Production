@@ -30,7 +30,7 @@
         <div class="row">
           <div class="col-lg-9 col-md-8">
             <form action="#" method="POST" action="" id="payment_form">
-              @csrf
+              {!! csrf_field() !!}
               @if(isset($cards))
                     @foreach($cards as $card)
             <div class="row">
@@ -42,7 +42,14 @@
                   
                       <div class="d-flex flex-column flex-grow-1">
                         <div class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                          {{ \Crypt::decrypt($card->card_type) }} ••••{{ substr($card->card_number,0,12)}} <span class="default-set">default</span>
+                          <?php
+                            $full_card_number = \Crypt::decrypt($card->card_number);
+                            $card_number = '•••• •••• •••• ' . substr($full_card_number, -4);
+                          ?>
+                          {{ \Crypt::decrypt($card->card_type) }} {{ $card_number }} 
+                          @if($card->default_card)
+                            <span class="default-set">default</span>
+                          @endif
                         </div>
                         <span class="text-muted font-weight-bold">Expiration: {{ $card->exp_month }} / {{ $card->exp_year }} </span>
                       </div>

@@ -239,7 +239,7 @@ class ReservationController extends Controller {
             $file_name = 'frontend.themes.EC.reservation.suiteboard';
             return view($file_name, $this->data);
         }else{
-            return redirect::to('/reservation/suite')->with('massage', 'Please select Guest!');
+            return redirect()->to('/reservation/suite')->with('massage', 'Please select Guest!');
         }               
     }
 
@@ -615,7 +615,7 @@ class ReservationController extends Controller {
                         'last_name' => $last_name,
                         'created_at' => date("Y-m-d"),
                         'srequirements' => $requirements
-                        );
+                    );
                     $payment_id = \DB::table('tb_cards')->insertGetId($payment_data);
                     Session::put('payment_card_id', $payment_id);
                     return response()->json(['status' => true, 'card_id' => $payment_id]);
