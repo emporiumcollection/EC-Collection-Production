@@ -77,12 +77,13 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
-    'currentdomain' => 'voyage',
-    'spadomain' => 'emporium-spa.com',
-    'safaridomain' => 'emporium-safari.com',
-    'islandsdomain' => 'emporium-islands.com',
-    'voyagedomain' => 'emporium-voyage.com',
+    'currentdomain' => env('EC_CURRENT_DOMAIN','voyage'),
+    'spadomain' => env('EC_SPA_URL', 'emporium-spa.com'),
+    'safaridomain' => env('EC_SAFARI_URL', 'emporium-safari.com'),
+    'islandsdomain' => env('EC_ISLANDS_URL', 'emporium-islands.com'),
+    'voyagedomain' => env('EC_VOYAGE_URL', 'emporium-voyage.com'),
     'magazinedomain' => 'emporium-magazine.com',
+    'root_destinations' => env('ROOT_DESTINATIONS', ''),
 
     'key' => env('APP_KEY', 'ASDFASDF12341234ASDFASDF12341234'),
     

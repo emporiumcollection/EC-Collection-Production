@@ -17,6 +17,7 @@ use UnsplashSearch;
 use DateTime;
 use Session;
 use Cache;
+use Config;
 
 class PropertyController extends Controller {
     // Uses Property trait
@@ -2755,13 +2756,13 @@ class PropertyController extends Controller {
 
         $site_url = url('/');
         if($sitename == 'voyage'){
-            $site_url = 'http://development.emporium-voyage.com';
+            $site_url = Config::get('app.voyagedomain');
         }elseif($sitename == 'safari'){
-            $site_url = 'http://staging.emporium-safari.com';
+            $site_url = Config::get('app.safaridomain');
         }elseif($sitename == 'spa'){
-            $site_url = 'http://staging.emporium-spa.com';
+            $site_url = Config::get('app.spadomain');
         }elseif($sitename == 'island'){
-            $site_url = 'http://staging.emporium-islands.com';
+            $site_url = Config::get('app.islandsdomain');
         }
 
         if($coll_type == 'hotel'){
