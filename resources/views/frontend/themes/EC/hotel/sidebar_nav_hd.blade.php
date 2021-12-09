@@ -49,26 +49,28 @@ if(!isset($property)){
             <i class="ico ico-back mb-4"></i>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button" aria-expanded="true" aria-controls="suite">
-            Suites <i class="fa fa-angle-down" aria-hidden="true"></i>
-          </a>
-          <div class="collapse show" id="suite">
-            <ul class="nav flex-column nav-sidebar is-small">
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}">All Suites</a>
-              </li>
-            
-              @foreach($property->suites as $suite)
-
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}">{{ ucfirst(strtolower($suite->category_name))}}</a>
-              </li>
-              @endforeach
+        @if(!empty($property->suites->toArray()))
+          <li class="nav-item">
+            <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button" aria-expanded="true" aria-controls="suite">
+              Suites <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </a>
+            <div class="collapse show" id="suite">
+              <ul class="nav flex-column nav-sidebar is-small">
+                <li class="nav-item">
+                  <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}">All Suites</a>
+                </li>
               
-            </ul>
-          </div>
-        </li>
+                @foreach($property->suites as $suite)
+
+                <li class="nav-item">
+                  <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}">{{ ucfirst(strtolower($suite->category_name))}}</a>
+                </li>
+                @endforeach
+                
+              </ul>
+            </div>
+          </li>
+        @endif
         {{--<li class="nav-item">
           <a class="nav-link " href="/hotel/architecture">Architecture</a>
         </li>

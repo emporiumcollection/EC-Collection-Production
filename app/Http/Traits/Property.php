@@ -122,7 +122,7 @@ trait Property {
             'boards',
             'container',
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities']);
+                return $query->with(['rooms', 'amenities'])->where('status', '=','1');
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -203,7 +203,7 @@ trait Property {
             'container',
             //'images',
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities']);
+                return $query->with(['rooms', 'amenities'])->where('status', '=','1');
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -306,7 +306,7 @@ trait Property {
                     $query->with(['package']);
                 },
                 'suites' => function($query){
-                    return $query->with(['rooms', 'amenities']);
+                    return $query->with(['rooms', 'amenities'])->where('status', '=','1');
                 },
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
@@ -418,7 +418,7 @@ trait Property {
                 $query->with(['package']);
             },
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities']);
+                return $query->with(['rooms', 'amenities'])->where('status', '=','1');
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){

@@ -118,9 +118,11 @@
             <li class="nav-item">
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">Gallery</a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">Suites</a>
-            </li>
+            @if(!empty($editorChoice->suites->toArray()))
+              <li class="nav-item">
+                <a class="nav-link btn-sidebar" href="#" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">Suites</a>
+              </li>
+            @endif
           </ul>
         </div>
         <div class="right-meta align-self-center">
