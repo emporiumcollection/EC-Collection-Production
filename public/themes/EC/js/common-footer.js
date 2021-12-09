@@ -256,6 +256,7 @@ function setMapLocation(lat, long, loc){
     }).addTo(map);
 
     for (var i = 0; i < locations.length; i++) {
+      console.log(locations);
       marker = new L.marker([locations[i][1],locations[i][2]], { icon: myIcon })
         .bindPopup(locations[i][0])
         .addTo(map);

@@ -17,26 +17,33 @@
                 <span data-toggle="tooltip" title="Change destination">
                 {{ \Session::get('keyword') }}</span>
               </a>
-            @endif  
+            @endif
+            @if(Request::is('reservation/when*'))
+            @else
             <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
-              <span class="cal-date" data-toggle="tooltip" title="Change availability">
-                @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
-                  {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
-                @else
-                Selected Date
-                @endif  
-            </span>
-            </a>
-            <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
-              aria-controls="whoF">
-              <div class="filter-lst expand filter-guest filter-white">
-                <div class="input-group">
-                  <div class="gust-dropdown">
-                    <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
+                <span class="cal-date" data-toggle="tooltip" title="Change availability">
+                  @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
+                    {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
+                  @else
+                    Selected Date
+                  @endif
+              </span>
+              </a>
+              @endif
+
+              @if(Request::is('reservation/where'))
+              @else
+                <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
+                  aria-controls="whoF">
+                  <div class="filter-lst expand filter-guest filter-white">
+                    <div class="input-group">
+                      <div class="gust-dropdown">
+                        <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </a>
+                </a>
+              @endif  
           </div>
         </div>
         <div class="col-md-5 col-4 text-center">
@@ -45,10 +52,10 @@
           </a>
         </div>
         <div class="col-md-2 col-4 text-right mobile-flex">
-          @if(Auth::check())
+          @if(Auth::check() && Auth::user()->avatar)
             <a href="/dashboard" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
               <div class="user-profile-img">
-                <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                <img src="{{ asset('uploads/user_avatar/'.Auth::user()->avatar) }}" alt="">
                 <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
               </div>
             </a>
@@ -59,13 +66,16 @@
                 <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
               </div>
             </a>
-          @endif  
+          @endif
+          @if(Request::segment(1) == 'reservation')
+          @else  
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
-            <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
-              <div class="line"></div>
-              <div class="line"></div>
-              <div class="line"></div>
-            </div>
+          <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+          </div>
+
             <div class="menu">
               <a href="#" class="close-menu">
                 <svg fill="currentColor" focusable="false" height="30px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
@@ -126,6 +136,7 @@
               </div>
             </div>
           </div>
+          @endif
         </div>
       </div>
     </div>    
@@ -352,28 +363,35 @@
                 aria-expanded="false" aria-controls="searchF">
                 <i class="ico ico-search"></i>
               </a>
-              <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
-                aria-expanded="false" aria-controls="calcF">
-                <span class="cal-date">
-                  @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
-                    {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
-                  @else
-                    Selecte Date
-                  @endif
-                </span>
-              </a>
-              <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
-                aria-expanded="false" aria-controls="whoF">
-                <div class="filter-lst expand filter-guest filter-white">
-                  <div class="input-group">
-                    <div class="gust-dropdown">
-                      <div class="guest-option rto"><span class="guest-count">
-                        {{ \Session::get('Guests') }}
-                      </span> Guest</div>
+              @if(Request::is('reservation/when*'))
+              @else
+                <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
+                  aria-expanded="false" aria-controls="calcF">
+                  <span class="cal-date">
+                    @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
+                      {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
+                    @else
+                      Selecte Date
+                    @endif
+                  </span>
+                </a>
+              @endif
+              
+              @if(Request::is('reservation/where'))
+              @else  
+                <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
+                  aria-expanded="false" aria-controls="whoF">
+                  <div class="filter-lst expand filter-guest filter-white">
+                    <div class="input-group">
+                      <div class="gust-dropdown">
+                        <div class="guest-option rto"><span class="guest-count">
+                          {{ \Session::get('Guests') }}
+                        </span> Guest</div>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </a>
+                </a>
+              @endif
               <!-- <a href="#" class="menu-nav text-menu">Destinations</a> -->
               <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
               <div class="humburger-menu ml-auto align-self-center mobile-on">
@@ -636,7 +654,7 @@
                 <div class="guest-pick-header">
                   <div class="row align-items-center">
                     <div class="col-lg-9 col-7">
-                      <p class="mb-0"><b>Suites</b></p>
+                      <p class="mb-0"><b>Guests</b></p>
                     </div>
                     <div class="col-lg-3 col-5">
                       <div class="row field-count-guest align-items-center">
@@ -699,18 +717,13 @@
                   <div class="row list-eoom">
                     <?php $suites = \Session::get('suites'); ?>
                     @if(\Session::has('suites') && !empty(\Session::get('suites')))
-                      <?php
-                      // echo '<pre>';
-                      // print_r(\Session::get('suites'));
-                      // echo '</pre>';
-                      ?>
                       @foreach($suites as $key => $data)
                       <div class="col-{{ count($suites) > 1 ? 6 : 12 }} col-ews mb-3" id="room-{{ $key }}">
-                        <p><b>Suite {{ $key + 1 }}</b></p>
+                        <p><b>Suite Allocation{{ $key + 1 }}</b></p>
                         <input type="hidden" name="rooms[]" id="rooms_{{ $key }}"/>
                         <div class="row align-items-center py-2">
                           <div class="col-7">
-                            <p class="mb-0"><b>Adults</b></p>
+                            <p class="mb-0"><b>Adult(s)</b></p>
                           </div>
                           <div class="col-5">
                             <div class="row field-count-guest align-items-center">
@@ -725,7 +738,7 @@
                         </div>
                         <div class="row align-items-center py-2">
                           <div class="col-7">
-                            <p class="mb-0"><b>Children</b></p>
+                            <p class="mb-0"><b>Children(s)</b></p>
                           </div>
                           <div class="col-5">
                             <div class="row field-count-guest align-items-center">
@@ -745,7 +758,7 @@
                 </div>
                 <div class="guest-pick-footer">
                   <div class="text-right">
-                    <a href="javascript:void(0);" class="confirm-room">Confirm my Suite(s)</a>
+                    <a href="javascript:void(0);" class="btn btn-dark px-4 select-guest">Update Guests</a>
                   </div>
                 </div>
               </div>

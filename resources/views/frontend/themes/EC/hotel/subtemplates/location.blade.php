@@ -37,9 +37,10 @@
 </div>
 <script>
   $(document).ready(function(){
-    var lat  = {{ $property->latitude}}
-    var long = {{ $property->longitude}}
-    setMapLocation(lat, long);
+    var lat  = '{{ $property->latitude}}';
+    var long = '{{ $property->longitude}}';
+    var loc = '{{ $property->address }}';
+    setMapLocation(lat, long ,loc);
   });
 </script>
 @include('frontend.themes.EC.hotel.gallery')

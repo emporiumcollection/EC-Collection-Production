@@ -41,13 +41,17 @@
                     <div class="d-flex flex-column flex-grow-1">
                         <div
                             class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                            MasterCard {{ str_pad(substr($detail->card_number, -4), strlen($detail->card_number), '*', STR_PAD_LEFT) }} 
+                            <?php
+                                $full_card_number = \Crypt::decrypt($detail->card_number);
+                                $card_number = '•••• •••• •••• ' . substr($full_card_number,-4);
+                            ?>
+                            {{ $card_number }}
                             @if ($detail->default_card == 1)
                                 <span class="default-set">default</span>
                             @endif
                         </div>
                         <span class="text-muted font-weight-bold">Expiration:
-                            {{ $detail->expires_on }}</span>
+                            {{ \Crypt::decrypt($detail->expires_on) }}</span>
                     </div>
                    
                     <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"

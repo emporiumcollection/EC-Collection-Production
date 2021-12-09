@@ -35639,7 +35639,7 @@ footer {
     display: block !important; }
 
 .form-date-lg .form-control {
-  font-size: 23px; }
+  font-size: 17px; }
 
 .nav-reservation-mobile,
 .nav-wizard-active,
@@ -35930,6 +35930,9 @@ footer {
   border-color: #afafaf !important; }
   .dedicated-breadcrumb .nav-link.active {
     color: #afafaf !important; }
+.dedicated-breadcrumb .nav-item:last-child .nav-link{
+  color: #000 !important;
+}
 
 .is-hover .hotel-srt-desc {
   position: absolute;

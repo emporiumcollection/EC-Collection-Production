@@ -95,13 +95,13 @@ class DatatableController extends Controller
         $g_id = (int) \Session::get('gid');
         if($g_id == 3){
             $reserveData = DB::table('tb_reservations')
-                ->select('id', 'checkin_date', 'checkout_date', 'adult', 'junior', 'baby','booking_number', 'price')
+                ->select('id', 'checkin_date', 'checkout_date', 'number_of_nights', 'adult', 'junior', 'baby','booking_number', 'price')
                 ->where('user_id', Auth::user()->id)
                 ->get();
         }
         else{
             $reserveData = DB::table('tb_reservations')
-                ->select('id', 'checkin_date', 'checkout_date', 'adult', 'junior', 'baby','booking_number', 'price')
+                ->select('id', 'checkin_date', 'checkout_date', 'number_of_nights', 'adult', 'junior', 'baby','booking_number', 'price')
                 ->whereIn('property_id', $property_ids)
                 ->get();
         }

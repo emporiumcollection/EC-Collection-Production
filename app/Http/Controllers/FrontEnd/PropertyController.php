@@ -2738,7 +2738,9 @@ class PropertyController extends Controller {
             $departure = date('d-m-Y',strtotime("+1 day"));
         }
         
-        $this->storeSession($request);
+        if ($request->isMethod('POST')) {
+            $this->storeSession($request);
+        }
 
         $rooms = $request->input('rooms');
         $adults = $request->input('adult');
@@ -2882,6 +2884,8 @@ class PropertyController extends Controller {
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
 
+        \Session::put('keyword', $keyword);
+        \Session::save();
         
         $cacheKey = 'location_photos'.strtolower(str_replace(" ", "", $keyword));
         $photos = json_encode([]);
@@ -7345,6 +7349,7 @@ class PropertyController extends Controller {
                 }])->limit(20);
             }
         ])
+        ->where('property_status', '=', 1)
         ->having('distance', '<=', 5)
         ->get();
         if(!empty($properties->toArray())){

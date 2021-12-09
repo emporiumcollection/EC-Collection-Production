@@ -14,6 +14,7 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator,
     Input,
     Redirect;
+use Illuminate\Support\Facades\Crypt;
 
 class UserController extends Controller {
     
@@ -1610,17 +1611,26 @@ class UserController extends Controller {
         $validator = Validator::make($request->all(), $rules);
          if ($validator->passes()) {
 
+            $card_type = Crypt::encrypt($request->input('card_type'));
+            $card_number = Crypt::encrypt($request->card_number);
+            $expire = Crypt::encrypt($request->input('expire'));
+            $first_name = Crypt::encrypt($request->input('first_name'));
+            $last_name = Crypt::encrypt($request->input('last_name'));
+            $postal_code = Crypt::encrypt($request->input('postal_code'));
+            $country = Crypt::encrypt($request->input('country'));
+            $security_code = Crypt::encrypt($request->input('security_code'));
+
             $user = User::find(\Session::get('uid'));
             $card_data['user_id'] = $user->id;
             $card_data['select_card'] = $request->input('select_card');
-            $card_data['card_type'] = $request->input('card_type');
-            $card_data['card_number'] = $request->card_number;
-            $card_data['expires_on'] = $request->input('expire');
-            $card_data['security_code'] = $request->input('security_code');
-            $card_data['first_name'] =$request->input('first_name');
-            $card_data['last_name'] =$request->input('last_name');
-            $card_data['postal_code'] = $request->input('postal_code');
-            $card_data['country'] = $request->input('country');
+            $card_data['card_type'] = $card_type;
+            $card_data['card_number'] = $card_number;
+            $card_data['expires_on'] = $expire;
+            $card_data['security_code'] = $security_code;
+            $card_data['first_name'] = $first_name;
+            $card_data['last_name'] = $last_name;
+            $card_data['postal_code'] = $postal_code;
+            $card_data['country'] = $country;
             $card_data['created_at'] = date("Y-m-d");
             $card_data['updated_at'] = date("Y-m-d");
 
@@ -1651,8 +1661,7 @@ class UserController extends Controller {
 
     public function getSettings(){
         $user = User::find(\Session::get('uid'));
-       
-        // $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));        
+               
         $card_detail = \DB::table('tb_cards')->where('user_id',\Auth::user()->id)->get();
         $file_name = 'users_admin.traveller.users.account-setting';      
         return view($file_name,compact('card_detail'));

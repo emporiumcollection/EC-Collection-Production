@@ -1,4 +1,3 @@
-
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -21,10 +20,9 @@
     <div id="step-1" class="tab-pane" role="tabpanel">
       <div class="row">
         <div class="col-lg-9 col-md-8 mb-4">
-          <h2 class="mb-5">Your date and suite</h2>
+          <h2 class="mb-5">Stay Dates:</h2>
           <hr>
-          <h5 class="mb-4 mt-5">Your selected dates include: </h5>
-            
+          <h5 class="mb-2 mt-3">Your selected stay dates:</h5>
           <div class="row mb-5">            
             <div class="col">
               <p><b>Arrival date</b></p>
@@ -43,9 +41,13 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-lg-12 col-md-12 mt-4">
+            
+            <div class="col-lg-12 col-md-12 mt-2">
               <div class="text-right">
-                <a href="javascript:void(0);" class="btn btn-dark px-5 goto-guest step_where">
+                <a href="javascript:void(0);" class="btn btn-dark px-5 goto-guest stay_dates">
+                  Edit | Update
+                </a>
+                <a href="javascript:void();" class="btn btn-dark px-5 goto-guest step_where">
                   Next
                 </a>
               </div>

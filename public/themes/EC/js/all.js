@@ -995,7 +995,7 @@ var ajaxReq = 'ToCancelPrevReq';
     if($(this).prev().find('.mr-1').html() != 4 ){
       $(this).prev().find('.mr-1').html(function(i, val) { return val*1+1 });
       $(this).closest('.field-count-guest').find('.min-room').removeClass('disable');
-      var curr = $("#whoF .col-ews");
+      var curr = $(this).closest('.guest-pick-container').find('.col-ews');
       //console.log(curr);
       var currLength = curr.length + 1;
       var temp = '<div class="col-6 col-ews mb-3" id="room-'+ currLength +'">'+
@@ -1032,8 +1032,8 @@ var ajaxReq = 'ToCancelPrevReq';
               '</div>'+
           '</div>'+
       '</div>';
-      $('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
-      $('.guest-pick-body .list-eoom').append(temp);
+      $(this).closest('.guest-pick-container').find('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
+      $(this).closest('.guest-pick-container').find('.guest-pick-body .list-eoom').append(temp);
       $(this).prev().find('.suite').val($(this).prev().find('.mr-1').html());
     }
     if($(this).prev().find('.mr-1').html() > 3 ){
@@ -1041,7 +1041,7 @@ var ajaxReq = 'ToCancelPrevReq';
     }
   });
 
-  $('#whoF .field-count-guest ').on('click', '.min-room', function(){
+  $('.field-count-guest ').on('click', '.min-room', function(){
     $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
 
     if($(this).next().find('.mr-1').html() > 1){
@@ -1058,8 +1058,8 @@ var ajaxReq = 'ToCancelPrevReq';
     }
   });
 
-  $(document).on('click', '#whoF .confirm-room', function(){
-    console.log('confirm');
+  $(document).on('click', '#whoF .select-guest', function(){
+    
     /*var roomVal = $('.room-val').html();
     var adultTotal = 0;
     $('.adult-val').each(function(){
@@ -1821,7 +1821,7 @@ var ajaxReq = 'ToCancelPrevReq';
       success: function (data) {
         var _html = '';
         var _sidebar = '';
-        if ((data.imgs).length > 0) {
+        if (typeof data.imgs !== 'undefined' && (data.imgs).length > 0) {
           $(data.imgs).each(function (key, value) {
             //console.log(key);
             //console.log(value);
@@ -1832,7 +1832,7 @@ var ajaxReq = 'ToCancelPrevReq';
         } else {
           console.log("no");
         }
-        if ((data.sidebar).length > 0) {
+        if (typeof data.sidebar !== 'undefined' && (data.sidebar).length > 0) {
           _sidebar += '<li class="nav-item"><a class="nav-link" id="suiteslist-tab" data-toggle="pill" href="#suiteslist" role="tab" aria-controls="suiteslist" aria-selected="true">Restaurants</a></li>';
           $(data.sidebar).each(function (key, value) {
             //console.log(key);
@@ -2044,8 +2044,9 @@ var ajaxReq = 'ToCancelPrevReq';
     });
   });
 
-  $(".close-sidebar, .sidebar-back").click(function (e) {
+  $(document).on('click', '.close-sidebar, .sidebar-back', function (e) {
     e.preventDefault();
+    console.log($(this).closest('.sidebar-main'));
     $(this).closest('.sidebar-main').removeClass('show');
     $(this).closest('body').css('overflow', 'auto');
     $('.sidebar-overlay').remove();
@@ -2341,6 +2342,7 @@ $(document).ready(function () {
     $('input[name="departure"]').val(picker.endDate.format('YYYY-MM-DD'));
     $('.include-form').fadeIn("fast");
   });
+  
   picker.data('daterangepicker').hide = function () { };
   picker.data('daterangepicker').show();
 

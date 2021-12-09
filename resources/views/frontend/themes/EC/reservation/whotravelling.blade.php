@@ -378,8 +378,7 @@
             <hr class="mb-4">
             <br>
             <h3>My Companions</h3>
-            <h3> <a href="#addCompanionModal" data-toggle="modal">Add
-              new Companion</a></h3>
+            <h3> <a href="#addCompanionModal" data-toggle="modal"><input type="button"  class="btn btn-dark" value="Add new companion"></a></h3>
             <hr class="mb-4">
 
             <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">

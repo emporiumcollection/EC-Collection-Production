@@ -22,14 +22,15 @@
 </div>
 <?php
   $pos = 1;
-  $grand_total = 0;
-  $board_price = \Session::get('board_price'); 
+  $total = 0;
+  $board_price = \Session::get('board_price') * $numberOfNights; 
 ?>  
 @if(!empty($suites))
   @if(isset($suites))
     
     @foreach($suites as $suite)
       @foreach($suite as $value)
+        @if(isset($selected_suite[$value->id]))
         <div class="reservation-summary section-shadow">
           <h4>SUITE &nbsp; {{ $pos++ }}</h4>
           <p><b>{{ $value->category_name }}</b></p>
@@ -37,7 +38,6 @@
             <tr>
               <td class="px-0 py-1">Adult</td>
               <td class="px-0 py-1 text-right">{{ $selected_suite[$value->id]['adult'] }}</td>
-              <td class="px-0 py-1 text-right">{{ \Session::get('board_price') }}</td>
             </tr>
             @if($selected_suite[$value->id]['junior'])
               <tr>
@@ -50,43 +50,43 @@
                 <td class="px-0 py-1">Infant</td>
                 <td class="px-0 py-1 text-right">{{ $selected_suite[$value->id]['infant'] }}</td>
               </tr>
-            @endif
+            @endif            
             <tr>
               <td class="px-0 py-1">Suite</td>
-              <td class="px-0 py-1 text-right">€{{ $selected_suite[$value->id]['price'] }}</td>
+              <td class="px-0 py-1 text-right">{{ $numberOfNights }} * €{{ $selected_suite[$value->id]['price'] }}</td>
             </tr>
             {{-- <tr>
               <td class="px-0 py-1">Tax</td>
               <td class="px-0 py-1 text-right">€299.00</td>
             </tr> --}}
           </table>
-          <hr class="mb-2">
-          <table class="table table-borderless mb-0">
-            <tr>
-              <td class="px-0 py-1">Gourmet Experience</td>
-              <td class="px-0 py-1 text-right">2</td>
-            </tr>
-          </table>
           <hr class="mt-2">
           @if(isset($selected_suite[$value->id]['price']))
+
+          <?php $suite_subtotal =  $selected_suite[$value->id]['price'] * $numberOfNights ; ?>
+            
           <table class="table table-borderless mb-0">
             <tr>
               <td class="px-0 py-1">Subtotal</td>
               <td class="px-0 py-1 text-right">
-                <b>€{{ $selected_suite[$value->id]['price'] }}</b>
-                <?php $grand_total += (float)$selected_suite[$value->id]['price']; ?>
+                <b>€{{ $suite_subtotal }}</b>
+                <?php $total += (float)$suite_subtotal ; ?>
               </td>
             </tr>
           </table>
           @endif
         </div>
+        @endif
       @endforeach
     @endforeach
+    <?php $grand_total = $total + $board_price ?>
       <div class="reservation-total">
         <table class="table table-borderless mb-0">
           <tr>
             <td class="px-0 py-1">Total</td>
-            <td class="px-0 py-1 text-right"><b>€{{ $grand_total + $board_price }}</b></td>
+            <td class="px-0 py-1 text-right">
+              <b>€{{ $grand_total }}</b>
+            </td>
           </tr>
         </table>
       </div>

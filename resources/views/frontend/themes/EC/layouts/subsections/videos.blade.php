@@ -16,7 +16,7 @@
                 <i class="ico ico-back"></i>
             </a>
             <h3 class="title-second title-line mb-0">
-                Channel
+                {{ \Session::get('keyword') }}
             </h3>
         </div>
         <div class="yt-rvideos">

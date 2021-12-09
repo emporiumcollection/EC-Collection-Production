@@ -33,13 +33,20 @@
             </select>
         @endif
     </div>
-    <div class="col-md-3 d-flex justify-content-end align-self-center">
-        <?php if(!empty(\Session::get('suite_array')) && array_key_exists(  $suite->id, \Session::get('suite_array'))){ ?>
-            <a href="javascript:void(0);" class="btn btn-dark select_suite" title="Update" data-suite-id="{{ $suite->id }}"><i class="fa fa-edit"></i></a>
-            <a href="javascript:void(0);" class="btn btn-dark ml-2 remove_suit" title="Remove" data-suite-id="{{ $suite->id }}"><i class="fa fa-times-circle-o"></i></a>
-        <?php }else{ ?>
-            <a href="javascript:void(0);" class="btn btn-dark select_suite" data-suite-id="{{ $suite->id }}">Select</a>
-        <?php } ?>
+    <div class="col-md-3">
+        <div class="row">
+            <div class="col-md-12">
+                <label class="w-100">Edit/Update</label>
+            </div>
+            <div class="col-md-12">
+                <?php if(!empty(\Session::get('suite_array')) && array_key_exists(  $suite->id, \Session::get('suite_array'))){ ?>
+                    <a href="javascript:void(0);" class="btn btn-dark select_suite" title="Update" data-suite-id="{{ $suite->id }}" style="padding: 10px 9px;"><i class="fa fa-edit"></i></a>
+                    <a href="javascript:void(0);" class="btn btn-dark ml-2 remove_suite" title="Remove" data-suite-id="{{ $suite->id }}" style="padding: 10px 9px;"><i class="fa fa-times-circle-o"></i></a>
+                <?php }else{ ?>
+                    <a href="javascript:void(0);" class="btn btn-dark select_suite" data-suite-id="{{ $suite->id }}">Select</a>
+                <?php } ?>
+            </div>
+        </div>
     </div>
 </div>
 

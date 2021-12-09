@@ -72,7 +72,7 @@ $(document).ready(function(){
 
     $('.field-count-reservation ').on('click', '.min-room', function () {
         if($(this).closest('.guest-pick-container').find('.col-ews').length > 1){
-            $(this).closest('.guest-pick-container').find('.col-ews').last().remove();
+            $(this).closest('.guest-pick-container').find('.col-ews').not(':first').last().remove();
         }
 
         if($(this).closest('.guest-pick-container').find('.col-ews').length == 1){
@@ -211,6 +211,29 @@ $(document).ready(function(){
     });
 });
 
+function sticky_relocate() {
+  var window_top = $(window).scrollTop();
+  var div_top = $('#sticky-anchor').offset().top;
+  var first_suite = $('.btn-backwizard').offset().top;
+
+  var perc = ($(window).scrollTop() * 100) / $(document).height();
+  if (perc  >= 10) {
+    $('.reservation-summary-sidebar').addClass('stick');
+  } else {
+    $('.reservation-summary-sidebar').removeClass('stick');
+  }
+  var last_suite = $('.suite-list').last().offset().top;
+  
+  if (perc  >= 60) {
+    $('.reservation-summary-sidebar').removeClass('stick');
+  }
+}
+
+$(function() {
+  $(window).scroll(sticky_relocate);
+  sticky_relocate();
+});
+
 function initilize(){
     $('select').select2({
         theme: 'bootstrap',
@@ -276,13 +299,13 @@ $( document ).ready(function() {
 
     $(document).on('click', ".select_guest_", function(){
 
-        var suite = $("input[name='suite[]']")
+        var suite = $(".tab-pane input[name='suite[]']")
               .map(function(){return $(this).val();}).get();
-        var rooms = $("input[name='rooms[]']")
+        var rooms = $(".tab-pane input[name='rooms[]']")
               .map(function(){return $(this).val();}).get();
-        var adult = $("input[name='adult[]']")
+        var adult = $(".tab-pane input[name='adult[]']")
               .map(function(){return $(this).val();}).get();
-        var child = $("input[name='child[]']")
+        var child = $(".tab-pane input[name='child[]']")
               .map(function(){return $(this).val();}).get();
         $.ajax({
             headers: {
@@ -292,10 +315,10 @@ $( document ).ready(function() {
             url: '/select/guest',
             // dataType:'json',                    
             data: {
-                rooms:rooms,
-                child:child,
-                adult:adult,
-                suite :suite
+                rooms: rooms,
+                child: child,
+                adult: adult,
+                suite: suite
             },
             success: function(response){
                 window.location.href ="/reservation/suite";
@@ -317,7 +340,7 @@ $( document ).ready(function() {
         });
     });
 
-    $(document).on('click', '.remove_suit', function(){
+    $(document).on('click', '.remove_suite', function(){
         var curr_btn = $(this);
         var curr_section = curr_btn.parents('section');
         var suite_id = curr_btn.data('suite-id');
@@ -403,28 +426,37 @@ $( document ).ready(function() {
         
 });
 
-$(document).on('click', ".step_where", function(){
+$(document).on('click', ".stay_dates", function(){
     var arrival_date = $("#arrival_date").val();
     var departure_date = $("#departure_date").val();
     var propertyid = $("#property_id").val();
 
     $.ajax({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
         type: 'post',            
-        url: '/store_dates/session',
-        // dataType:'json',                    
+        url: '/store_dates/session',             
         data: {
             property_id:propertyid,
             arrival_date:arrival_date,
             departure_date:departure_date
         },
         success:function(response){
-            window.location.href ="/reservation/where";
+            // window.location.href ="/reservation/where";
         }
     });
 });
+
+
+$(document).on('click', ".step_where", function(){
+    var arrival_date = $("#arrive").val();
+    if(arrival_date == ''){
+        $('#guestValidationMsg').find('#massage').html("Please select your stay dates");
+        $('#guestValidationMsg').show();
+        return false;
+    }else{
+        window.location.href = '/reservation/where';
+    }
+});
+
 
 $(document).ready(function(){
     $('.chkcompanion').click(function(){
@@ -450,7 +482,7 @@ $(document).ready(function(){
         }
     });
 
-    $('.chkpolicies').click(function(){
+    $('.chkaccesibility').click(function(){
         if($(this).prop('checked') == true)
         {
             $(".accessible").show();
@@ -506,8 +538,8 @@ $(document).ready(function(){
                     '</div>' +
                 '</div>' +
             '</div>';
-            $('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
-            $('.guest-pick-body .list-eoom').append(temp);
+            $(this).closest('.guest-pick-container').find('.guest-pick-body').find('.col-ews').addClass('col-6').removeClass('col-12');
+            $(this).closest('.guest-pick-container').find('.guest-pick-body .list-eoom').append(temp);
         }
         if ($(this).prev().find('.mr-1').html() > 4) {
             $(this).closest('.field-count-reservation').find('.plus-room').addClass('disable');

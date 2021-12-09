@@ -237,6 +237,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
         @include('frontend.themes.EC.layouts.sections.footer')
     @show
 
+@include('frontend.themes.EC.layouts.subsections.videos')
 <script type="text/javascript" src="{{ asset('js/mediaelement-and-player.min.js')}}"></script>
 
 <script type="text/javascript" src="{{ asset('js/plugin/select2/select2.full.min.js')}}"></script>
@@ -283,6 +284,12 @@ body {font-family: Arial, Helvetica, sans-serif;}
 @show
 
 <script type="text/javascript" src="{{ asset('themes/EC/js/common-footer.js') }}"></script>
+<script type="text/javascript">
+  var channelurl = '{{URL::to("getyoutubechannel/")}}';
+  $(window).on('load', function() {
+    setTimeout("getDefaultChannel('<?php echo isset($location[0]['category_alias']) ? $location[0]['category_alias'] : ''; ?>')", 1000);
+  });
+</script>
 
 </body>
 </html>

@@ -67,7 +67,7 @@
                                                 }
                                         ?>
                                             <div>
-                                                <img <?php echo 'src="/property-image/resize/398x271/'.$container_name.'/default-image.png/property-image"';?> <?php echo 'data-src="/property-image/resize/398x271/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100" alt="">
+                                                <img <?php echo 'src="/property-image/resize/398x271/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100" alt="">
                                             </div>
                                         <?php endforeach; ?>
                                         </div>
@@ -80,10 +80,8 @@
                                                 <span class="text-dark flex-root font-weight-bold text-right">{{ $hotel_name   }}</span>
                                             </div>
                                             <div class="d-flex mb-3">
-                                                <span class="text-dark-50 flex-root font-weight-bold">Total Stay
-                                                    Cost</span>
-                                                <span class="text-dark flex-root font-weight-bold text-right">€
-                                                    1.299</span>
+                                                <span class="text-dark-50 flex-root font-weight-bold">Total Stay Cost</span>
+                                                <span class="text-dark flex-root font-weight-bold text-right">€ {{ $reservations->price }}</span>
                                             </div>
                                             
                                             <div class="d-flex mb-3">
@@ -114,7 +112,7 @@
                                             </div>
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Nights</span>
-                                                <span class="text-dark flex-root font-weight-bold text-right">1</span>
+                                                <span class="text-dark flex-root font-weight-bold text-right">{{ $reservations->number_of_nights }}</span>
                                             </div>
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Guests</span>
@@ -204,7 +202,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card">
+                                        {{-- <div class="card">
                                             <div class="card-header" id="headingOne">
                                                 <h2 class="mb-0">
                                                     <button class="btn btn-link btn-block text-left" type="button"
@@ -1237,7 +1235,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                     </div>
                                 </div>
@@ -1249,39 +1247,50 @@
                                             </h3>
                                         </div>
                                         <div class="card-body pt-2">
-                                            <div class="d-flex itinirary-list py-5 align-items-center">
-                                                <div class="w-100">
-                                                    <p class="mb-0"><b>Who's Coming</b></p>
-                                                    <p class="mb-0"></p>
-                                                </div>
-                                                <div class="w-100">
-                                                    <div class="symbol-group symbol-hover justify-content-end">
-                                                    {{-- @if(isset($companion)) --}}
-                                                    @if(!empty($reservations->reservedCompanions))
-                                                    <?php $count = 0;  ?>
-                                                        @foreach($reservations->reservedCompanions as $data)
-                                                         <?php $count++; ?>
-                                                            <div class="symbol symbol-35 symbol-circle"
-                                                                data-toggle="tooltip" title=""
-                                                                data-original-title="{{ $data->companion->first_name  }}{{ $data->companion->email }}
-                                                                {{ $data->companion->phone_number }}" >
-                                                                <img alt="Pic" src="{{ asset('/uploads/users/companion/'.$data->companion->avatar)}}">
-                                                            </div>
-                                                            @endforeach
-                                                        @endif
-                                                            <div class="symbol symbol-35 symbol-circle symbol-light-success"
-                                                                data-toggle="tooltip" title=""
-                                                                data-original-title="Invite someone">
-                                                                <span class="symbol-label font-weight-bold">
-                                                                {{ $count }}+</span>
-                                                            </div>
+                                            @if(count($reservations->reservedCompanions) > 0)
+                                                <?php
+                                                    $bgClass = [
+                                                        'success',
+                                                        'primary',
+                                                        'default',
+                                                        'info',
+                                                        'danger'
+                                                    ];
+                                                ?>
+                                                <div class="d-flex itinirary-list py-5 align-items-center">
+                                                    <div class="w-100">
+                                                        <p class="mb-0"><b>Who's Coming</b></p>
+                                                        <p class="mb-0"></p>
+                                                    </div>
+                                                    <div class="w-100">
+                                                        <div class="symbol-group symbol-hover justify-content-end">
+                                                            <?php $count = 0; ?>
+                                                            @foreach($reservations->reservedCompanions as $data)
+                                                             <?php $count++; ?>
+                                                                <div class="symbol symbol-35 symbol-circle symbol-light-{{ $bgClass[rand(0, 4)] }}"
+                                                                    data-toggle="tooltip" title=""
+                                                                    data-original-title="{{ $data->companion->first_name  }}{{ $data->companion->email }}
+                                                                    {{ $data->companion->phone_number }}" ><span class="symbol-label font-weight-bold">
+                                                                    {{ strtoupper($data->companion->first_name[0]) }}{{ strtoupper($data->companion->last_name[0]) }}</span>
+                                                                </div>
+                                                                <?php
+                                                                    if($count == 2){
+                                                                        break;
+                                                                    }
+                                                                ?>
+                                                                @endforeach
+                                                                @if(count($reservations->reservedCompanions) > 2)
+                                                                    <div class="symbol symbol-35 symbol-circle symbol-light-success" data-toggle="tooltip" title="" data-original-title="Invite someone"><span class="symbol-label font-weight-bold">{{ (count($reservations->reservedCompanions) - 2) }}+</span>
+                                                                    </div>
+                                                                @endif
+                                                        </div>
                                                     </div>
                                                 </div>
-                                            </div>
+                                            @endif
                                             <div class="d-flex itinirary-list py-5 align-items-center">
                                                 <div class="w-100">
                                                     <p class="mb-0"><b>Confirmation Code</b></p>
-                                                    <p class="mb-0">EC-{{ $booking_number }}</p>
+                                                    <p class="mb-0">{{ $booking_number }}</p>
                                                 </div>
                                             </div>
                                             @if($cancelation_status)
@@ -1384,8 +1393,8 @@
 
                                             <div class="d-flex itinirary-list py-5 align-items-center">
                                                 <div class="w-100">
-                                                    <p class="mb-0"><b>Payment details</b></p>
-                                                    <p class="mb-0">Total cost: €1.299</p>
+                                                    <p class="mb-0"><b>Payment details</b></p><p class="mb-0">
+                                                    Total cost:€{{ $reservations->price }}</p>
                                                 </div>
                                             </div>
                                             <div class="d-flex itinirary-list py-5">

@@ -60,14 +60,6 @@
             <form method="post" action="{{ route('store.suiteboard') }}">
               <div class="suite-board d-block section-shadow">
                 <div class="suite-board-header">
-                  <div class="row align-items-center">
-                    <div class="col-2 col---s">
-                      <img src="{{ asset('/images/car-acc-room-superior-double-inroom-breakfast01_320x266.jpg')}}" class="img-full"alt="">
-                    </div>
-                    <div class="col">
-                      <h3>{!! Session::get('suite_name') !!}</h3>
-                    </div>
-                  </div>
                 </div>
                 <div class="row suite-board-body">
                   @if(count($suitesboards->boards) > 0)
@@ -99,9 +91,14 @@
                 </div>            
               </div>
               <div class="row">
-                <div class="col-md-12 mt-4">
+                <div class="col-md-6 mt-4">
+                  <div class="text-left">
+                    <a href="/reservation/suite" class="btn btn-dark px-5">Go back</a>
+                  </div>
+                </div>
+                <div class="col-md-6 mt-4">
                   <div class="text-right">
-                    <button type="submit" class="btn btn-dark px-5 availability-check ">Next</a>
+                    <button type="submit" class="btn btn-dark px-5 availability-check ">Next</button>
                   </div>
                 </div>
               </div>

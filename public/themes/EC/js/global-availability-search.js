@@ -73,18 +73,20 @@ function replacePropertyData(id){
         spanid = 1;
         rooms = s.rooms;
         rooms.forEach(function(r){
-          rimages = r.images;
-          if(rimages.length){          
-            rimages.forEach(function(e){
-              try{
-                imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
-                imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '" ><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
-                spanid=2;
-                grid = 2;
-              }catch(e){
+          if(typeof r.images !== 'undefined' && r.images.length){
+            rimages = r.images;
+            if(rimages.length){          
+              rimages.forEach(function(e){
+                try{
+                  imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
+                  imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '" ><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+                  spanid=2;
+                  grid = 2;
+                }catch(e){
 
-              }
-            });
+                }
+              });
+            }
           }
         });
       });
@@ -400,7 +402,7 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="property_usp"]').html(properties[property_id].property_usp);
   $('[data-place="covid_info"]').html(properties[property_id].covid_info);
 
-  if (properties[property_id].covid_link.includes('http://') == true){
+  if (properties[property_id].covid_link != null && properties[property_id].covid_link.includes('http://') == true){
     $('[data-place="covid_link"]').attr("href", properties[property_id].covid_link);
   }else{
     $('[data-place="covid_link"]').attr("href", "http://"+properties[property_id].covid_link);
@@ -410,10 +412,10 @@ function replaceSuiteDetail(property_id, category_id){
                     <a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-block">Reservation</a>`);  
 
   $('[data-place="suite_room_images"]').html(roomimages);
+  setTimeout("$('.nav-item #suite').addClass('show');", 1000);
   setTimeout('appendSlider()', 2000);
   replacePropertyData(property_id);
   setTimeout("$('.suite-popup').slick('setPosition');", 4000);  
-  $('#suite').addClass('show');
 }
 
 function replaceSuiteBoard(){
@@ -693,13 +695,13 @@ $(document).ready(function(){
     searchResults(url);
   });
 
-  // $('body').click(function (e) {
-  //   if(!$(e.target).hasClass('sidebar-main') && !$(e.target).parents('div').hasClass('sidebar-main')){
-  //     $('.sidebar-main').removeClass('show');
-  //     $('body').css('overflow', 'auto');
-  //     $('.sidebar-overlay').remove();      
-  //   }
-  // });
+  $('body').click(function (e) {
+    if(!$(e.target).hasClass('sidebar-main') && !$(e.target).parents('div').hasClass('sidebar-main')){
+      // $('.sidebar-main').removeClass('show');
+      $('body').css('overflow', 'auto');
+      $('.sidebar-overlay').remove();      
+    }
+  });
 
   $('#menunav .search-f').click(function (e) {
     SHOW_PARENT_CITIES = 1;

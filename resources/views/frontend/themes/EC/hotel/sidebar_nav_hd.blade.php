@@ -45,7 +45,7 @@ if(!isset($property)){
       </a>
       <ul class="nav flex-column nav-sidebar is-small onstickmainpage2">
         <li class="nav-item">
-          <a href="/globalsearchavailability?s={{ \Session::get('keyword') }}">
+          <a href="/globalsearchavailability?s={{ \Session::get('keyword') ? \Session::get('keyword') : $property->city }}">
             <i class="ico ico-back mb-4"></i>
           </a>
         </li>
@@ -62,7 +62,7 @@ if(!isset($property)){
               @foreach($property->suites as $suite)
 
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}">{{$suite->category_name}}</a>
+                <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}">{{ ucfirst(strtolower($suite->category_name))}}</a>
               </li>
               @endforeach
               
