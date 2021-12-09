@@ -15,7 +15,7 @@
             @if(!empty(\Session::get('keyword')))
               <a href="#cityList" class="menu-nav text-menu city-f">
                 <span data-toggle="tooltip" title="Change destination">
-                {{ \Session::get('keyword') }}</span>
+                {{ substr(\Session::get('keyword'), 0, 26) }}</span>
               </a>
             @endif
             @if(Request::is('reservation/when*'))

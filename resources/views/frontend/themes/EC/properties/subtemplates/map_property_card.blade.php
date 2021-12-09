@@ -4,9 +4,11 @@
   properties[<?php echo $property->id;?>]['images'] = <?php echo json_encode($property->propertyImages);?>;
 </script>
 <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-    <div class="hotel-tag-label" style="background: #89a49f;">
-      <?php echo $block_title;?>
-    </div>
+    @if(!empty($block_title))
+      <div class="hotel-tag-label" style="background: #89a49f;">
+        <?php echo $block_title;?>
+      </div>
+    @endif
     <div class="pr-lst result-grid">
       <?php if($block_title):?>
       <?php endif;?>
