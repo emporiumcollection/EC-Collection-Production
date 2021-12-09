@@ -40,7 +40,7 @@
                                 </p>
                             </div>
                             <div class="col-lg-4 col-md-6 text-right">
-                                <a href="https://www.<?php echo config('app.voyagedomain');?>">View Collection</a>
+                                <a href="<?php echo config('app.voyagedomain');?>">View Collection</a>
                             </div>
                         </div>
                     </div>
@@ -66,7 +66,7 @@
                                 </p>
                             </div>
                             <div class="col-lg-4 col-md-6 text-right">
-                                <a href="https://www.<?php echo config('app.spadomain');?>">View Collection</a>
+                                <a href="<?php echo config('app.spadomain');?>">View Collection</a>
                             </div>
                         </div>
                     </div>
@@ -93,7 +93,7 @@
                                 </p>
                             </div>
                             <div class="col-lg-4 col-md-6 text-right">
-                                <a href="https://www.<?php echo config('app.safaridomain');?>">View Collection</a>
+                                <a href="<?php echo config('app.safaridomain');?>">View Collection</a>
                             </div>
                         </div>
                     </div>
@@ -120,7 +120,7 @@
                                 </p>
                             </div>
                             <div class="col-lg-4 col-md-6 text-right">
-                                <a href="https://www.<?php echo config('app.islandsdomain');?>">View Collection</a>
+                                <a href="<?php echo config('app.islandsdomain');?>">View Collection</a>
                             </div>
                         </div>
                     </div>
@@ -148,7 +148,7 @@
                                 </p>
                             </div>
                             <div class="col-lg-4 col-md-6 text-right">
-                                <a href="https://www.<?php echo config('app.magazinedomain');?>">View Collection</a>
+                                <a href="<?php echo config('app.magazinedomain');?>">View Collection</a>
                             </div>
                         </div>
                     </div>

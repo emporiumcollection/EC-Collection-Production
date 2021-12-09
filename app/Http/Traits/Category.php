@@ -3,18 +3,19 @@
 namespace App\Http\Traits;
 
 use App\Models\Categories;
-
+use Config;
 trait Category {
-    private $VOYAGE_ROOT_DESTINATIONS = [38, 39, 40, 41, 42, 43, 44, 64];
-    private $SPA_ROOT_DESTINATIONS = [38, 39, 40, 41, 42, 43, 44, 64];
-    private $ISLAND_ROOT_DESTINATIONS = [38, 41, 827, 854, 907, 968, 979, 1004];
-    private $SAFARI_ROOT_DESTINATIONS = [38, 720, 722, 725, 828, 838, 843, 858];
 
     private $parents = [];
 
     public function destinationTree(){
+        $categories=[];
+
+        
+        $categories = explode(",", Config::get('app.root_destinations'));
+        
         $rootCategories = Categories::select(['id', 'parent_category_id', 'category_name', 'category_image', 'category_instagram_tag', 'category_alias'])
-        ->whereIn('id', $this->VOYAGE_ROOT_DESTINATIONS)
+        ->whereIn('id', $categories)
         ->where('is_hotels_available', '=', 1)
         ->orderBy('category_name', 'asc')
         ->get()
