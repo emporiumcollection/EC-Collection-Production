@@ -23,14 +23,16 @@
           <div class="col-lg-9 col-md-8 mb-4">
             <h3>Policies</h3>
             <div class="card card-body rounded-0">
-              @if(!empty($policies))
-              @foreach($policies as $val)
-                <p>{{ $val->booking_policy }}</p>
-              @endforeach                 
+              @if(!empty($policies->booking_policy))
+                @foreach($policies as $val)
+                  @if($val->booking_policy)
+                    <p>{{ $val->booking_policy }}</p>
+                  @endif  
+                @endforeach                 
               @elseif(!empty($hotel_policy->smookingpolicy || $hotel_policy->children_policy))
                 <p>{{ $hotel_policy->smookingpolicy }}</p>
                 <p>{{ $hotel_policy->children_policy }}</p>
-              @else       
+              @else 
                 <hr>     
                 <div class="form-group">
                   <p>You do not have a statutory right of withdrawal from booking as per Sec. 312 g para 2 no. 9 of the German Civil Code (BGB). However, a hotel may voluntarily offer a right to cancel or change a booking for selected offers in the emporium-collection™ reservation system. Any such right will be displayed in the order form before you make your order. Where a hotel voluntarily grants such right to cancel or to change a booking in the emporium-collection™ reservation system, any such changes and cancellations have to be carried out via the emporium-collection™ online system or via the emporium-collection™ reservation number (see www.emporium-collection.com) to be fully effective. In case of a change or cancellation carried out directly at the hotel, emporium-collection™ cannot provide any information concerning possible discrepancies concerning the date of the cancellation or the fact of cancellation as such</p>
