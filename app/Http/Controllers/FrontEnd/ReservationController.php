@@ -41,8 +41,6 @@ class ReservationController extends Controller {
         }
 
         $this->_checkBoards($id);
-        // print_r($this->data['boards']);exit;
-        // print_r(Session::has('board_id'));
 
         $property = properties::find($id);
         $request->session()->put('hotel_name', $property->property_name);
