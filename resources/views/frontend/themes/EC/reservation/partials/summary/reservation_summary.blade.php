@@ -67,7 +67,7 @@
                                                 }
                                         ?>
                                             <div>
-                                                <img <?php echo 'src="/property-image/resize/398x271/'.$container_name.'/default-image.png/property-image"';?> <?php echo 'data-src="/property-image/resize/398x271/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100" alt="">
+                                                <img <?php echo 'src="/property-image/resize/398x271/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100" alt="">
                                             </div>
                                         <?php endforeach; ?>
                                         </div>

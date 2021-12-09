@@ -719,7 +719,7 @@
                     @if(\Session::has('suites') && !empty(\Session::get('suites')))
                       @foreach($suites as $key => $data)
                       <div class="col-{{ count($suites) > 1 ? 6 : 12 }} col-ews mb-3" id="room-{{ $key }}">
-                        <p><b>Suite {{ $key + 1 }}</b></p>
+                        <p><b>Suite Allocation{{ $key + 1 }}</b></p>
                         <input type="hidden" name="rooms[]" id="rooms_{{ $key }}"/>
                         <div class="row align-items-center py-2">
                           <div class="col-7">
