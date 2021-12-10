@@ -41,7 +41,7 @@
             </div>
           </div>
           <div class="row">
-            
+            <p class="alert alert-success" id="msg" style="display:none;"></p>
             <div class="col-lg-12 col-md-12 mt-2">
               <div class="text-right">
                 <a href="javascript:void(0);" class="btn btn-dark px-5 goto-guest stay_dates">
