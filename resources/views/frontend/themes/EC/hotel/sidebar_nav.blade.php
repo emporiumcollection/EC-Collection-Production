@@ -53,6 +53,7 @@ if(!isset($property)){
           <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button" aria-expanded="true" aria-controls="suite">
             Suites <i class="fa fa-angle-down" aria-hidden="true"></i>
           </a>
+          
           <div class="collapse show" id="suite">
             <ul class="nav flex-column nav-sidebar is-small" data-place="property-suites">
               <li class="nav-item">
