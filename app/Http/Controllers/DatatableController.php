@@ -96,12 +96,14 @@ class DatatableController extends Controller
         if($g_id == 3){
             $reserveData = DB::table('tb_reservations')
                 ->select('id', 'checkin_date', 'checkout_date', 'number_of_nights', 'adult', 'junior', 'baby','booking_number', 'price')
+                ->orderBy('id','DESC')
                 ->where('user_id', Auth::user()->id)
                 ->get();
         }
         else{
             $reserveData = DB::table('tb_reservations')
                 ->select('id', 'checkin_date', 'checkout_date', 'number_of_nights', 'adult', 'junior', 'baby','booking_number', 'price')
+                ->orderBy('id','DESC')
                 ->whereIn('property_id', $property_ids)
                 ->get();
         }

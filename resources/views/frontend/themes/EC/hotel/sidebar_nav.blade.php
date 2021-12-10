@@ -49,33 +49,36 @@ if(!isset($property)){
             <i class="ico ico-back mb-4"></i>
           </a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button" aria-expanded="true" aria-controls="suite">
-            Suites <i class="fa fa-angle-down" aria-hidden="true"></i>
-          </a>
-          <div class="collapse show" id="suite">
-            <ul class="nav flex-column nav-sidebar is-small" data-place="property-suites">
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/suite/">All Suites</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">The Mark Fire Bedroom Terrace Suite</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
-              </li>
-            </ul>
-          </div>
-        </li>
+        @if(!empty($property->suites->toArray()))
+          <li class="nav-item">
+            <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button" aria-expanded="true" aria-controls="suite">
+              Suites <i class="fa fa-angle-down" aria-hidden="true"></i>
+            </a>
+            
+            <div class="collapse show" id="suite">
+              <ul class="nav flex-column nav-sidebar is-small" data-place="property-suites">
+                <li class="nav-item">
+                  <a class="nav-link nav-link-sub" href="/hotel/suite/">All Suites</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link nav-link-sub" href="/hotel/detailsuite">The Mark Fire Bedroom Terrace Suite</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link nav-link-sub" href="/hotel/detailsuite">Suite Name</a>
+                </li>
+              </ul>
+            </div>
+          </li>
+        @endif
         {{--<li class="nav-item">
           <a class="nav-link " href="/hotel/architecture">Architecture</a>
         </li>
