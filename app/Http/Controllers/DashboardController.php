@@ -4,6 +4,7 @@ use App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Redirect;
+use App\Models\Reservations;
 
 class DashboardController extends Controller {
 
@@ -25,6 +26,8 @@ class DashboardController extends Controller {
         
         $this->data['container'] = new ContainerController();
         $preferences = \DB::table('tb_personalized_services')->select( 'ps_id', 'first_name', 'created')->orderby('ps_id','DESC')->limit(3)->get();
+        
+        $reservations = Reservations::with(['property'])->orderby('id','DESC')->limit(3)->get();
         
      //    $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
      //    (strlen($is_demo6) > 0)?$is_demo6.
@@ -112,7 +115,7 @@ class DashboardController extends Controller {
           }
 
           $data = $this->data;
-	     return view($file_name, compact('data','preferences'));
+	     return view($file_name, compact('data','preferences','reservations'));
 	}
 
 }

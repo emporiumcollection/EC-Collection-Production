@@ -43,73 +43,35 @@
               <p>Currently, there are no reservation.</p>
               <a href="#">Make a new reservation</a>
             </div> -->
+
              <div class="reservation-widget">
-              <div class="d-flex align-items-center mb-10">
-                <!--begin::Bullet-->
-                <span
-                  class="bullet bullet-bar bg-success align-self-stretch"></span>
-                <!--end::Bullet-->
-                <!--begin::Checkbox-->
-                <label
-                  class="checkbox checkbox-lg checkbox-light-success checkbox-inline flex-shrink-0 m-0 mx-4">
-                  <input type="checkbox" name="select" value="1">
-                  <span></span>
-                </label>
-                <!--end::Checkbox-->
-                <!--begin::Text-->
-                <div class="d-flex flex-column flex-grow-1">
-                  <a href="#"
-                    class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Hotel
-                    Name</a>
-                  <span class="text-muted font-weight-bold">Due in 3
-                    Days</span>
+              @foreach($reservations as  $val)
+              <?php 
+                $date1 = date_create(date('Y-m-d'));
+                $date2 = date_create(date('Y-m-d', strtotime($val->checkin_date)));
+                $diff=date_diff($date1,$date2);
+              ?>
+                <div class="d-flex align-items-center mb-10">
+                  <!--begin::Bullet-->
+                  <span
+                    class="bullet bullet-bar bg-success align-self-stretch"></span>
+                  <!--end::Bullet-->
+                  <!--begin::Checkbox-->
+                  <label
+                    class="checkbox checkbox-lg checkbox-light-success checkbox-inline flex-shrink-0 m-0 mx-4">
+                    <input type="checkbox" name="select" value="1">
+                    <span></span>
+                  </label>
+                  <!--end::Checkbox-->
+                  <!--begin::Text-->
+                  <div class="d-flex flex-column flex-grow-1">
+                    <a href="#"
+                      class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1"> {{ $val->property->property_short_name }}</a>
+                    <span class="text-muted font-weight-bold"> {{ $diff->format("%a Due") }}</span>
+                  </div>
+                  <!--end::Text-->
                 </div>
-                <!--end::Text-->
-              </div>
-              <div class="d-flex align-items-center mb-10">
-                <!--begin::Bullet-->
-                <span
-                  class="bullet bullet-bar bg-success align-self-stretch"></span>
-                <!--end::Bullet-->
-                <!--begin::Checkbox-->
-                <label
-                  class="checkbox checkbox-lg checkbox-light-success checkbox-inline flex-shrink-0 m-0 mx-4">
-                  <input type="checkbox" name="select" value="1">
-                  <span></span>
-                </label>
-                <!--end::Checkbox-->
-                <!--begin::Text-->
-                <div class="d-flex flex-column flex-grow-1">
-                  <a href="#"
-                    class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Hotel
-                    Name</a>
-                  <span class="text-muted font-weight-bold">Due in 3
-                    Days</span>
-                </div>
-                <!--end::Text-->
-              </div>
-              <div class="d-flex align-items-center mb-10">
-                <!--begin::Bullet-->
-                <span
-                  class="bullet bullet-bar bg-success align-self-stretch"></span>
-                <!--end::Bullet-->
-                <!--begin::Checkbox-->
-                <label
-                  class="checkbox checkbox-lg checkbox-light-success checkbox-inline flex-shrink-0 m-0 mx-4">
-                  <input type="checkbox" name="select" value="1">
-                  <span></span>
-                </label>
-                <!--end::Checkbox-->
-                <!--begin::Text-->
-                <div class="d-flex flex-column flex-grow-1">
-                  <a href="#"
-                    class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">Hotel
-                    Name</a>
-                  <span class="text-muted font-weight-bold">Due in 3
-                    Days</span>
-                </div>
-                <!--end::Text-->
-              </div>
+              @endforeach  
             </div>
           </div>
         </div>
