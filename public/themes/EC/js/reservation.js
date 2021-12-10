@@ -440,7 +440,9 @@ $(document).on('click', ".stay_dates", function(){
             departure_date:departure_date
         },
         success:function(response){
-            // window.location.href ="/reservation/where";
+            $("#msg").show();
+            $("#msg").html("Date selected");
+            $("#msg").fadeOut(5000);
         }
     });
 });
