@@ -38,11 +38,11 @@
                     </a>
                 </li>
                 @if (\Session::get('gid') == 3)
-                 <li class="navi-item">
+                 {{-- <li class="navi-item">
                     <a href="#" class="navi-link">
                         <span class="navi-text">My Collections</span>
                     </a>
-                </li>
+                </li> --}}
                 @endif
                 <li class="navi-item">
                     <a href="{{ URL::to('/users/profile')}}" class="navi-link">
@@ -97,11 +97,11 @@
                         <span class="navi-text">Communication</span>
                     </a>
                 </li>
-                <li class="navi-item">
+                {{-- <li class="navi-item">
                     <a href="{{ URL::to('/users/contracts')}}" class="navi-link" data-canvas="popup">
                         <span class="navi-text">Billings & Contracts</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="navi-item">
                     <a href="{{ URL::to('/logout')}}" class="navi-link">
                         <span class="navi-text">Log Out</span>
