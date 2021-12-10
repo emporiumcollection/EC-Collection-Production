@@ -264,7 +264,7 @@ function replacePropertySuites(id){
         }
         suiteview += `<li class="nav-item" onclick="replaceSuiteDetail(` + id + `, ` + e.id + `)">
             <a class="nav-link nav-link-sub text-capitalize" id="suitelist1-tab-` + e.id + `" data-toggle="pill"
-                href="#suitelist1" role="tab" aria-controls="suitelist1" aria-selected="false"> ` + e.category_name + `</a>
+                href="#suitelist1" role="tab" aria-controls="suitelist1" aria-selected="false"> ` + e.category_name.toLowerCase() + `</a>
         </li>`;
       })
       $(this).html(suiteview);
