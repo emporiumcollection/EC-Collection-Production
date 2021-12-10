@@ -570,8 +570,8 @@ class ReservationController extends Controller {
         $this->data['cards'] = CardDetail::where('user_id', '=', $id)
             ->orderBy('id','desc')
             ->get();
-        
-        
+        $this->data['last_id'] = CardDetail::find(\DB::table('tb_cards')->max('id'));
+
         $file_name = 'frontend.themes.EC.reservation.payment_method';
         return view($file_name, $this->data);   
     }

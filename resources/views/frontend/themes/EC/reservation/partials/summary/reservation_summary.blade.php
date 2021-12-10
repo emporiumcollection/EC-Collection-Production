@@ -47,7 +47,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="reservation-img mb-8">
+                                    <div class="reservation-img mb-8" style="height:300px;">
                                         <div class="result-grid">
                                         <?php
                                             foreach($property[0]->propertyImages as $images):

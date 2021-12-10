@@ -12,27 +12,22 @@
               aria-controls="searchF">
               <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
             </a>
-            @if(!empty(\Session::get('keyword')))
-              <a href="#cityList" class="menu-nav text-menu city-f">
-                <span data-toggle="tooltip" title="Change destination">
-                {{ substr(\Session::get('keyword'), 0, 26) }}</span>
-              </a>
-            @endif
-            @if(Request::is('reservation/when*'))
-            @else
-            <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
-                <span class="cal-date" data-toggle="tooltip" title="Change availability">
-                  @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
-                    {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
-                  @else
-                    Selected Date
-                  @endif
-              </span>
-              </a>
+            @if(Request::segment(1) != 'reservation')
+              @if(!empty(\Session::get('keyword')))
+                <a href="#cityList" class="menu-nav text-menu city-f">
+                  <span data-toggle="tooltip" title="Change destination">
+                  {{ substr(\Session::get('keyword'), 0, 26) }}</span>
+                </a>
               @endif
-
-              @if(Request::is('reservation/where'))
-              @else
+              <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
+                  <span class="cal-date" data-toggle="tooltip" title="Change availability">
+                    @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
+                      {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
+                    @else
+                      Selected Date
+                    @endif
+                </span>
+                </a>
                 <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
                   aria-controls="whoF">
                   <div class="filter-lst expand filter-guest filter-white">
@@ -363,7 +358,8 @@
                 aria-expanded="false" aria-controls="searchF">
                 <i class="ico ico-search"></i>
               </a>
-              @if(Request::is('reservation/when*'))
+              @if(Request::segment(1) == 'reservation')
+                <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
               @else
                 <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
                   aria-expanded="false" aria-controls="calcF">
@@ -375,10 +371,6 @@
                     @endif
                   </span>
                 </a>
-              @endif
-              
-              @if(Request::is('reservation/where'))
-              @else  
                 <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
                   aria-expanded="false" aria-controls="whoF">
                   <div class="filter-lst expand filter-guest filter-white">
@@ -391,9 +383,8 @@
                     </div>
                   </div>
                 </a>
-              @endif
+              @endif  
               <!-- <a href="#" class="menu-nav text-menu">Destinations</a> -->
-              <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
               <div class="humburger-menu ml-auto align-self-center mobile-on">
                 <div class="line"></div>
                 <div class="line"></div>
