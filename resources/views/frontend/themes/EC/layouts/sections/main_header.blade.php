@@ -50,8 +50,7 @@
           @if(Auth::check() && Auth::user()->avatar)
             <a href="/dashboard" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
               <div class="user-profile-img">
-                <img src="{{ asset('uploads/user_avatar/'.Auth::user()->avatar) }}" alt="">
-                <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
+                <img src="{{ asset('/images/user_avatar/'.Auth::user()->avatar) }}" alt="">
               </div>
             </a>
           @else  

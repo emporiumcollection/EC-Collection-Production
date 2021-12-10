@@ -570,7 +570,7 @@ class ReservationController extends Controller {
         $this->data['cards'] = CardDetail::where('user_id', '=', $id)
             ->orderBy('id','desc')
             ->get();
-            
+
         $this->data['last_id'] = CardDetail::find(\DB::table('tb_cards')
             ->where('user_id',Auth::user()->id)
             ->max('id'));
@@ -648,8 +648,7 @@ class ReservationController extends Controller {
         $this->data['properties'] = properties::where('id',Session::get('property_id'))
             ->get();
 
-        $hotel_name = $this->data['properties'][0]->property_short_name;
-
+        $hotel_name = $this->data['properties'][0]->property_name;
         $words = explode(' ', $hotel_name);
         $this->data['hotel_name'] = $words[0][0].$words[1][0];
 
@@ -658,8 +657,8 @@ class ReservationController extends Controller {
         $this->data['randomnum'] = mt_rand(0370,9999);
 
         $booking_number = 'EC'.'-'.$this->data['db'].'-'.$this->data['hotel_name'].'-'.$this->data['randomnum'] ;
-
-        Session::put('booking_number'   , $booking_number);
+        
+        Session::put('booking_number', $booking_number);
 
         $trip_dates = CommonHelper::getDateRange(Session::get('arrival'), Session::get('departure'));
         $this->data['trip_dates'] = $trip_dates;
