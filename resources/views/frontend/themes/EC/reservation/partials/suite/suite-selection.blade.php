@@ -8,11 +8,11 @@
     </tr>
     <tr>
       <td class="px-0 py-1">Check-in</td>
-      <td class="px-0 py-1 text-right">{{ \Session::get('arrival') ? date('d F Y', strtotime(\Session::get('arrival'))) : '' }}</td>
+      <td class="px-0 py-1 text-right">{{ \Session::get('arrival') ? \Session::get('arrival') : '' }}</td>
     </tr>
     <tr>
       <td class="px-0 py-1">Check-out</td>
-      <td class="px-0 py-1 text-right">{{ \Session::get('departure') ? date('d F Y', strtotime(\Session::get('departure'))) : '' }}</td>
+      <td class="px-0 py-1 text-right">{{ \Session::get('departure') ? \Session::get('departure') : '' }}</td>
     </tr>
     <tr>
       <td class="px-0 py-1">Suites</td>
