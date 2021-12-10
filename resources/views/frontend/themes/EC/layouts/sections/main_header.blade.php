@@ -12,12 +12,11 @@
               aria-controls="searchF">
               <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
             </a>
-            @if(Request::segment(1) == 'reservation')
-            @else
+            @if(Request::segment(1) != 'reservation')
               @if(!empty(\Session::get('keyword')))
                 <a href="#cityList" class="menu-nav text-menu city-f">
                   <span data-toggle="tooltip" title="Change destination">
-                  {{ \Session::get('keyword') }}</span>
+                  {{ substr(\Session::get('keyword'), 0, 26) }}</span>
                 </a>
               @endif
               <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
