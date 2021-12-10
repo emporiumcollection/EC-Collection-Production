@@ -30,10 +30,10 @@
                             </div>
                             <!--end::Item-->
                             <!--begin::Item-->
-                            <div class="col-lg-12">
+                            {{-- <div class="col-lg-12">
                                 <a href="#" class="btn btn-block btn-white text-left radius-5 py-2 px-5 pl-12">
                                     <span class="d-block font-weight-bold font-size-h4 font-saol">Messages</span>
                                 </a>
-                            </div>
+                            </div> --}}
                             <!--end::Item-->
                         </div>
