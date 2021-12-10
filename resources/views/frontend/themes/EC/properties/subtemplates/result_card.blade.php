@@ -52,9 +52,11 @@
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery
       </a>
+      @if(!empty($editorChoice->suites->toArray()))
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
         Suite(s)
       </a>
+      @endif
       <div class="hotel-prices hotel-price-detail d-flex">
         <div class="row align-items-center justify-content-center">
           <div class="mr-2">
