@@ -1462,11 +1462,11 @@
                                         <div class="w-100">
                                             <p class="mb-0"><b>Address</b></p>
                                             <p class="mb-0">
-                                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero
+                                                {{$reservations->property->address}}
                                             </p>
                                         </div>
                                     </div>
-                                    <a href="#">
+                                    <a href="#" class="copy_address" title="{{$reservations->property->address}}">
                                         <div class="d-flex itinirary-list py-5 align-items-center">
                                             <div style="width: 40px;">
                                                 <i class="far fa-copy" style="color: #000; font-size: 13px;"></i>
@@ -1478,7 +1478,7 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <a href="#">
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $reservations->property->latitude }},{{ $reservations->property->longitude }}" target="_blank">
                                         <div class="d-flex itinirary-list py-5 align-items-center">
                                             <div style="width: 40px;">
                                                 <i class="fas fa-map-marker-alt"
@@ -1491,20 +1491,19 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <div style="height: 4px; background: #ebedf3;"></div>
-                                    <h3 class="font-weight-bolder font-size-h3 text-dark-75 mb-2 mt-7">
-                                        Checking in & out
-                                    </h3>
+                                    @if(!empty($reservations->property->checkin) && !empty($reservations->property->checkout))
+                                        <div style="height: 4px; background: #ebedf3;"></div>
+                                        <h3 class="font-weight-bolder font-size-h3 text-dark-75 mb-2 mt-7">
+                                            Checking in & out
+                                        </h3>
 
-                                    <div class="d-flex itinirary-list py-5 align-items-center">
-                                        <div class="w-100">
-                                            <p class="mb-2"><b>Check-in</b></p>
-                                            <p class="mb-0">
-                                                Introductions will be visible during your stay
-                                            </p>
+                                        <div class="d-flex itinirary-list py-5 align-items-center">
+                                            <div class="w-100">
+                                                <p class="mb-2"><b>Check-in </b> {{$reservations->property->checkin}}</p>
+                                                <p class="mb-2"><b>Check-Out </b>{{$reservations->property->checkout}}</p>
+                                            </div>
                                         </div>
-                                    </div>
-
+                                    @endif    
                                     <div style="height: 4px; background: #ebedf3;"></div>
                                     <h3 class="font-weight-bolder font-size-h3 text-dark-75 mb-2 mt-7">
                                         Where you're staying
@@ -1578,4 +1577,16 @@ jQuery(function($) {
             });
         });    
     });
+$(document).on('click', '.copy_address', function(){
+    var element = $(this);
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val(element.attr('title')).select();
+    document.execCommand("copy");
+    $temp.remove();
+    element.html("<font color='green';>Copied!</font>");
+    setTimeout(function(){
+        element.html('Copy address');
+    }, 2000);
+});
 </script>
