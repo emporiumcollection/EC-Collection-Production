@@ -52,7 +52,7 @@
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery
       </a>
-      @if(!empty($editorChoice->suites->toArray()))
+      @if(!empty($property->suites->toArray()))
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
         Suite(s)
       </a>
