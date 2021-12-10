@@ -72,21 +72,22 @@
                 <div class="col-md-5">
                   <div class="bg-grey p-1 mb-5"></div>
                   <h4 class="mb-4">Getting there</h4>
-                  <p class="mb-1"><b>Address</b></p>
                   @if(!empty($properties))
+                    <p class="mb-1"><b>Address</b></p>
                     <p>{{ $properties[0]->address }}</p>
-                  @endif
-                  <ul class="nav nav-step5 flex-column mb-5">
-                    <li class="nav-item">
-                      <a class="nav-link" title="@if (!empty($properties)){{ $properties[0]->address }} @endif" href="#" id="myAnchor"><i class="fa fa-files-o" aria-hidden="true"></i> Copy address
-                        <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="#"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                        Get directions <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
-                    </li>
-                  </ul>
-                  {{-- <div id="map"></div> --}}
+
+                    <ul class="nav nav-step5 flex-column mb-5">
+                      <li class="nav-item">
+                        <a class="nav-link copy_address" title="{{ $properties[0]->address }}" href="#" id="myAnchor"><i class="fa fa-files-o" aria-hidden="true"></i> Copy address
+                          <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
+                      </li>
+
+                      <li class="nav-item">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                          Get directions <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
+                      </li>
+                    </ul>
+                  @endif  
                   @if(!empty($properties))
                     <iframe src="https://maps.google.com/maps?q={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}&t=&z=14&ie=UTF8&iwloc=&output=embed" width="99.9%" height="75%" frameborder="0" style="border: 1px solid #bfc1c3 !important; border-radius: 2px;" allowfullscreen="false" scrolling="no" aria-hidden="false" tabindex="0"></iframe>
                   @else

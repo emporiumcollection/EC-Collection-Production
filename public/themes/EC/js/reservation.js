@@ -703,6 +703,21 @@ $(document).ready(function(){
           return false;
       });
     //save paymet end
+
+    //copy to clipboard
+    $(document).on('click', '.copy_address', function(){
+        var element = $(this);
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val(element.attr('title')).select();
+        document.execCommand("copy");
+        $temp.remove();
+        element.html("<font color='green'>Copied!</font>");
+        setTimeout(function(){
+            element.html('<i class="fa fa-files-o" aria-hidden="true"></i>Copy address');
+        }, 2000);
+    });
+
 });
 
 function addRemoveCompanionAjaxCall(companion_id, suite_id, operation){
