@@ -83,7 +83,7 @@
                       </li>
 
                       <li class="nav-item">
-                        <a class="nav-link" href="https://www.google.com/maps/@/{{ $properties[0]->latitude }},{{ $properties[0]->longitude }},20z" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>
                           Get directions <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
                       </li>
                     </ul>
