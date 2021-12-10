@@ -51,9 +51,9 @@
 									<div class="image-input image-input-outline"
 										id="kt_user_add_avatar">
 										@if(isset($data->avatar))
-										<img class="image-input-wrapper" id="avatar" src="{{ asset( ($data->avatar == '') ? '/images/profile-pic.png' : '/uploads/users/'.$data->avatar)}}">	
+										<img class="image-input-wrapper" id="avatar" src="{{ asset( ($data->avatar == '') ? '/images/profile-pic.png' : '/images/companion/'.$data->avatar)}}">	
 										@else	
-										<img class="image-input-wrapper" id="avatar" src="{{ asset('/uploads/users/')}}" onerror="this.onerror=null;this.src='{{ asset('/images/profile-pic.png')}}';">		
+										<img class="image-input-wrapper" id="avatar" src="{{ asset('/images/companion/')}}" onerror="this.onerror=null;this.src='{{ asset('/images/profile-pic.png')}}';">		
 										@endif
 										<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
 											data-action="change" data-toggle="tooltip"

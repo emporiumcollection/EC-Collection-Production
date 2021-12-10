@@ -665,7 +665,7 @@ class UserController extends Controller {
 
             if (!is_null(Input::file('avatar'))) {
                 $file = $request->file('avatar');
-                $destinationPath = './uploads/users/';
+                $destinationPath = public_path('/images/user_avatar');
                 $filename = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                 $newfilename = \Session::get('uid') . '.' . $extension;
@@ -720,7 +720,7 @@ class UserController extends Controller {
                 $file = $request->profile_avatar;
                 
                 $image_name = time() . '.' . $file->getClientOriginalExtension();
-                $destinationPath = public_path('uploads\user_avatar');
+                $destinationPath = public_path('/images/user_avatar');
                 if( !is_dir( $destinationPath ) ){
                     mkdir( $destinationPath, 0755, true );
                 }

@@ -55,7 +55,7 @@
 							<div class="col-lg-9 col-xl-9">
 								<div class="image-input image-input-outline"
 									id="kt_user_add_avatar">
-									<img class="image-input-wrapper" id="avatar" src="{{ asset('/uploads/user_avatar/'.$info->avatar)}}">
+									<img class="image-input-wrapper" id="avatar" src="{{ asset('/images/user_avatar/'.$info->avatar)}}">
 									
 									<label
 										class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
