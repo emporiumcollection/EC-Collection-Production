@@ -159,7 +159,7 @@
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label>Expires On <span class="text-danger">*</span></label>
-                            <input type="text" name="expire" class="form-control" placeholder="Enter your address">
+                            <input type="text" name="expire" class="form-control" placeholder="Enter expiry date">
                         </div>
                         <div class="form-group col-md-6">
                             <label>Security Code <span class="text-danger">*</span></label>

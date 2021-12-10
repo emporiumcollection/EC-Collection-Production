@@ -38,18 +38,16 @@
                   <strong>Success!</strong> {!! Session::get('massage') !!}.
               </div>
             @endif
-            <div class="suite-fasility section-shadow mb-5">
-              <h3>ALL STAYS INCLUDE</h3>
-              <ul>
-                @if(isset($services->title))
-                  @foreach($services as $value)
-                    <li>{{ $value->title }}</li>
-                  @endforeach
-                @else
-                  <p>Services not found</p>
-                @endif    
-              </ul>
-            </div>
+            @if(!empty($services->title))
+              <div class="suite-fasility section-shadow mb-5">
+                <h3>ALL STAYS INCLUDE</h3>
+                <ul>
+                    @foreach($services as $value)
+                      <li>{{ $value->title }}</li>
+                    @endforeach
+                </ul>
+              </div>
+            @endif    
             <div class="custom-control custom-checkbox mb-5">
                <input type="checkbox" name="accesibility" class="custom-control-input chkaccesibility" id="customCheck2">
               <label class="custom-control-label accesibility-checkbox" for="customCheck2">
