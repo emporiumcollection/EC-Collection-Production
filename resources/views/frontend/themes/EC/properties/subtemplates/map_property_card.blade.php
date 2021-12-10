@@ -56,9 +56,11 @@
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery
       </a>
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
-        Suite(s)
-      </a>
+      @if(!empty($property->suites->toArray()))
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
+          Suite(s)
+        </a>
+      @endif
       <div class="hotel-prices hotel-price-detail d-flex">
         <div class="row align-items-center justify-content-center">
           <div class="mr-2">
@@ -83,7 +85,7 @@
       </a>
     </div>
   </div>
-  <a href="#">
+  <a href="/hotel/hoteldetail/{{ $property->id}}">
     <div class="mb-3 mt-2 ">
       <h3 class="title-second is-small title-line mb-0"><?php echo $property->property_name;?></h3>
     </div>

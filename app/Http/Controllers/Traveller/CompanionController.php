@@ -71,7 +71,7 @@ class CompanionController extends Controller {
                     if (!is_null(Input::file('profile_avatar'))) {
                         $file = $request->file('profile_avatar');
                         
-                        $destinationPath = public_path().'/uploads/users';
+                        $destinationPath = public_path().'/images/companion';
                         $filename = $file->getClientOriginalName();
                         $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                         $newfilename = $id . '.' . $extension;
@@ -119,7 +119,7 @@ class CompanionController extends Controller {
                     if (!is_null(Input::file('profile_avatar'))) {
 
                         $file = $request->file('profile_avatar');
-                        $destinationPath = public_path('uploads\users');
+                        $destinationPath = public_path('/images/companion');
                         $filename = $file->getClientOriginalName();
                         $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                         // $newfilename = \Session::get('uid') . '.' . $extension;

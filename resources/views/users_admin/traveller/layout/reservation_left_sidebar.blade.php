@@ -1,14 +1,14 @@
 <div class="row gutter-b">
                             <!--begin::Item-->
                             <div class="col-lg-12 mb-5">
-                                <a href="#" class="btn btn-block btn-white text-left radius-5 py-2 px-5 pl-12">
+                                <a href="{{ URL::to('/users/profile')}}" class="btn btn-block btn-white text-left radius-5 py-2 px-5 pl-12">
                                     <span class="d-block font-weight-bold font-size-h4 font-saol">Personal Info</span>
                                 </a>
                             </div>
                             <!--end::Item-->
                             <!--begin::Item-->
                             <div class="col-lg-12 mb-5">
-                                <a href="#" class="btn btn-block btn-white text-left radius-5 py-2 px-5 pl-12">
+                                <a href="{{ URL::to('/users/security')}}" class="btn btn-block btn-white text-left radius-5 py-2 px-5 pl-12">
                                     <span class="d-block font-weight-bold font-size-h4 font-saol">Login &
                                         Security</span>
                                 </a>
@@ -16,7 +16,7 @@
                             <!--end::Item-->
                             <!--begin::Item-->
                             <div class="col-lg-12 mb-5">
-                                <a href="#" class="btn btn-block btn-white text-left radius-5 py-2 px-5 pl-12">
+                                <a href="{{ URL::to('/users/my-preferences')}}" class="btn btn-block btn-white text-left radius-5 py-2 px-5 pl-12">
                                     <span class="d-block font-weight-bold font-size-h4 font-saol">Global
                                         Preferences</span>
                                 </a>
@@ -24,7 +24,7 @@
                             <!--end::Item-->
                             <!--begin::Item-->
                             <div class="col-lg-12 mb-5">
-                                <a href="#" class="btn btn-block btn-white text-left radius-5 py-2 px-5 pl-12 active">
+                                <a href="{{ URL::to('/reservation/receipt')}}" class="btn btn-block btn-white text-left radius-5 py-2 px-5 pl-12 active">
                                     <span class="d-block font-weight-bold font-size-h4 font-saol">Reservations</span>
                                 </a>
                             </div>
