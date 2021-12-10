@@ -360,7 +360,7 @@
                 <i class="ico ico-search"></i>
               </a>
               @if(Request::segment(1) == 'reservation')
-                <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
+              <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
               @else
                 <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
                   aria-expanded="false" aria-controls="calcF">

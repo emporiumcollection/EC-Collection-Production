@@ -448,12 +448,22 @@ $(document).on('click', ".stay_dates", function(){
 
 $(document).on('click', ".step_where", function(){
     var arrival_date = $("#arrive").val();
+    var propertyid = $("#property_id").val();
     if(arrival_date == ''){
         $('#guestValidationMsg').find('#massage').html("Please select your stay dates");
         $('#guestValidationMsg').show();
         return false;
     }else{
-        window.location.href = '/reservation/where';
+        $.ajax({
+            type: 'post',            
+            url: '/store_dates/session',             
+            data: {
+                property_id:propertyid
+            },
+            success:function(response){
+                window.location.href ="/reservation/where";
+            }
+        });
     }
 });
 
