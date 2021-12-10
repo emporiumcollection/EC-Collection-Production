@@ -1466,12 +1466,12 @@
                                             </p>
                                         </div>
                                     </div>
-                                    <a href="#" class="copy_address" title="{{$reservations->property->address}}">
+                                    <a href="#">
                                         <div class="d-flex itinirary-list py-5 align-items-center">
                                             <div style="width: 40px;">
                                                 <i class="far fa-copy" style="color: #000; font-size: 13px;"></i>
                                             </div>
-                                            <div class="w-100" style="color: #000;">Copy address</div>
+                                            <div class="w-100 copy_address" style="color: #000;" title="{{$reservations->property->address}}">Copy address</div>
                                             <div class="text-right">
                                                 <i class="fas fa-chevron-right"
                                                     style="color: #000;font-size: 12px;"></i>
