@@ -480,15 +480,15 @@ trait Property {
                     $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
                     $suiteNameList[] = '<a href="/hotel/suite/'.$suite->property_id.'/#'.$suite->id.'">'.ucwords($suite->cat_short_name).'</a>';
                     if(!empty($suite->rooms->toArray())){
-                        /*foreach($suite->rooms as $rk => $room){
+                        foreach($suite->rooms as $rk => $room){
                             //$properties[$k]->suites[$sk]->rooms[$rk]->price = $this->getRoomPrice($room->id);
 
                             if(!isset($properties[$k]->suites[$sk]->rooms[$rk]->images)){
                                 $properties[$k]->suites[$sk]->rooms[$rk]->images = $this->getRoomImages($room->property_id, $room->category_id);
                             }
-                        }*/
+                        }
 
-                        $properties[$k]->suites[$sk]->rooms[0]->images = $this->getRoomImages($property->id, $suite->id);
+                        //$properties[$k]->suites[$sk]->rooms[0]->images = $this->getRoomImages($property->id, $suite->id);
 
                         foreach($suite->amenities as $ak => $amenity){
                             $suiteamenities = amenities::whereIn('id', explode(',', $amenity->amenity_ids))
