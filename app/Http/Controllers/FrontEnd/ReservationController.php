@@ -133,7 +133,7 @@ class ReservationController extends Controller {
         }
 
         $this->data['property'] = properties::with(['container', 'suites' => function($q){
-                $q->where('status', '=', 1);
+                $q->where('show_on_booking', '=', 1);
             }])
             ->where('id',$property_id)
             ->get();
