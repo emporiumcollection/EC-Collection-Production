@@ -122,7 +122,7 @@ trait Property {
             'boards',
             'container',
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('status', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -203,7 +203,7 @@ trait Property {
             'container',
             //'images',
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('status', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -306,7 +306,7 @@ trait Property {
                     $query->with(['package']);
                 },
                 'suites' => function($query){
-                    return $query->with(['rooms', 'amenities'])->where('status', '=', 1);
+                    return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
                 },
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
@@ -418,7 +418,7 @@ trait Property {
                 $query->with(['package']);
             },
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('status', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -480,15 +480,15 @@ trait Property {
                     $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
                     $suiteNameList[] = '<a href="/hotel/suite/'.$suite->property_id.'/#'.$suite->id.'">'.ucwords($suite->cat_short_name).'</a>';
                     if(!empty($suite->rooms->toArray())){
-                        /*foreach($suite->rooms as $rk => $room){
+                        foreach($suite->rooms as $rk => $room){
                             //$properties[$k]->suites[$sk]->rooms[$rk]->price = $this->getRoomPrice($room->id);
 
                             if(!isset($properties[$k]->suites[$sk]->rooms[$rk]->images)){
                                 $properties[$k]->suites[$sk]->rooms[$rk]->images = $this->getRoomImages($room->property_id, $room->category_id);
                             }
-                        }*/
+                        }
 
-                        $properties[$k]->suites[$sk]->rooms[0]->images = $this->getRoomImages($property->id, $suite->id);
+                        //$properties[$k]->suites[$sk]->rooms[0]->images = $this->getRoomImages($property->id, $suite->id);
 
                         foreach($suite->amenities as $ak => $amenity){
                             $suiteamenities = amenities::whereIn('id', explode(',', $amenity->amenity_ids))

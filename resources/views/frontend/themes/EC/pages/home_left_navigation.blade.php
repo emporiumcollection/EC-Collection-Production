@@ -7,13 +7,13 @@
         </a>
       </li>
       <li class="nav-item">
-        <a href="http://staging.emporium-spa.com" class="nav-link">
+        <a href="{{ \Config::get('app.spadomain') }}" class="nav-link">
           <div><i class="ico ico-spa"></i></div>
           <div class="wiza-title">Spas</div>
         </a>
       </li>
       <li class="nav-item">
-        <a href="http://staging.emporium-safari.com" class="nav-link">
+        <a href="{{ \Config::get('app.safaridomain') }}" class="nav-link">
           <div><i class="ico ico-safari"></i></div>
           <div class="wiza-title">Safaris</div>
         </a>
@@ -37,7 +37,7 @@
         </a>
       </li> --}}
       <li class="nav-item">
-        <a href="http://staging.emporium-islands.com" class="nav-link">
+        <a href="{{ \Config::get('app.islandsdomain') }}" class="nav-link">
           <div><i class="ico ico-islands"></i></div>
           <div class="wiza-title">Islands</div>
         </a>
