@@ -47,9 +47,9 @@
              <div class="reservation-widget">
               @foreach($reservations as  $val)
               <?php 
-                $date1 = date_create(date('Y-m-d'));
-                $date2 = date_create(date('Y-m-d', strtotime($val->checkin_date)));
-                $diff=date_diff($date1,$date2);
+                  $date1 = date_create(date('Y-m-d'));
+                  $date2 = date_create(date('Y-m-d', strtotime($val->checkin_date)));
+                  $diff=date_diff($date1,$date2);
               ?>
                 <div class="d-flex align-items-center mb-10">
                   <!--begin::Bullet-->

@@ -497,7 +497,9 @@ class UserController extends Controller {
         $inspirations = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 627)->get();
         $experiences = \DB::table('tb_categories')->select('id', 'parent_category_id', 'category_name', 'category_image', 'category_custom_title')->where('category_published', 1)->where('parent_category_id', 8)->get();
         
-        $preferences = \DB::table('tb_personalized_services')->where('customer_id', \Auth::user()->id)->first();
+        $preferences = \DB::table('tb_personalized_services')
+            ->where('customer_id', \Auth::user()->id)
+            ->first();
         
         $maindest = (new CategoriesController)->fetchCategoryTree();
 

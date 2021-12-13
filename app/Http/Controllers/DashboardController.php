@@ -27,8 +27,7 @@ class DashboardController extends Controller {
         $this->data['container'] = new ContainerController();
         $preferences = \DB::table('tb_personalized_services')->select( 'ps_id', 'first_name', 'created')->orderby('ps_id','DESC')->limit(3)->get();
         
-        $reservations = Reservations::with(['property'])->orderby('id','DESC')->limit(3)->get();
-        
+        $reservations = Reservations::with(['property'])->where('user_id',Auth()->user()->id)->orderby('id','DESC')->limit(3)->get();
      //    $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
      //    (strlen($is_demo6) > 0)?$is_demo6.
 
