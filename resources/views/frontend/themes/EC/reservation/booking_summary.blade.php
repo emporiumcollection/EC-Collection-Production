@@ -36,7 +36,12 @@
                         {{ $policies->booking_policy }}
                       @else
                         <h3>Hotel has no policies</h3>
-                      @endif  
+                      @endif
+                      <div class="mt-3">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                          Terms and Conditions
+                        </button>
+                      </div>  
                     </div>
                     <hr>
                     <div class="booking-tearms">
@@ -124,7 +129,7 @@
                     </ul>
                   </div>
                 </div>              
-                <div class="col-md-7">
+                <div class="col-md-7">  
                   <div class="mb-4">
                         <a href="javascript:void(0)" class="btn btn-dark  px-5 btn-lg btn-block reserve_data">Confirm & go to dashboard</a>
                       </div>
@@ -147,4 +152,6 @@
     </div>
   </div>
   </div>
+
+  @include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
   @endsection

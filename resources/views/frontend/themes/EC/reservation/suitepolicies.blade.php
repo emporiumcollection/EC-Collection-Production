@@ -32,13 +32,14 @@
               @elseif(!empty($hotel_policy->smookingpolicy || $hotel_policy->children_policy))
                 <p>{{ $hotel_policy->smookingpolicy }}</p>
                 <p>{{ $hotel_policy->children_policy }}</p>
-              @else 
+              @endif 
                 <hr>     
-                <div class="form-group">
-                  <p>You do not have a statutory right of withdrawal from booking as per Sec. 312 g para 2 no. 9 of the German Civil Code (BGB). However, a hotel may voluntarily offer a right to cancel or change a booking for selected offers in the emporium-collection™ reservation system. Any such right will be displayed in the order form before you make your order. Where a hotel voluntarily grants such right to cancel or to change a booking in the emporium-collection™ reservation system, any such changes and cancellations have to be carried out via the emporium-collection™ online system or via the emporium-collection™ reservation number (see www.emporium-collection.com) to be fully effective. In case of a change or cancellation carried out directly at the hotel, emporium-collection™ cannot provide any information concerning possible discrepancies concerning the date of the cancellation or the fact of cancellation as such</p>
-                </div>
-              @endif  
-              <div class="booking-tearms">
+                  <div class="col-sm-3">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+                      Terms and Conditions
+                    </button>
+                  </div>
+              <div class="booking-tearms mt-4" >
                 <h3>Booking terms and conditions</h3>
                 <div class="custom-control custom-checkbox mb-5">
                   <input type="checkbox" name="policies_ckh" class="custom-control-input chkpolicies" id="customCheck2">
@@ -71,5 +72,6 @@
     </div>
   </div>
 </div>
+@include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
 @endsection
 
