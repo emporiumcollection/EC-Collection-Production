@@ -29,7 +29,7 @@
         
         <div class="row">
           <div class="col-lg-9 col-md-8">
-            <form id="payment_form" method="POST" action="#">
+            <form action="#" method="POST" id="payment_form">
             {!! csrf_field() !!}
             @if(isset($cards))
                 @foreach($cards as $card)

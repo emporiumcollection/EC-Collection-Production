@@ -42,8 +42,8 @@
                 <h3>Booking terms and conditions</h3>
                 <div class="custom-control custom-checkbox mb-5">
                   <input type="checkbox" name="policies_ckh" class="custom-control-input chkpolicies" id="customCheck2">
-                  <label class="custom-control-label" for="customCheck2">Your reservation is made subject to our <a href="#"  data-toggle="modal" 
-                    data-target="#terms-and-conditions"><b>Terms & Conditions</b></a>, and the specific payment terms (deposit, tax and cancellation) set out above, Please check this box to agree to these terms and proceed with your booking. By confirming your booking, you agree with all provisions of the <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a></label>
+                  <label class="custom-control-label" for="customCheck2">Your reservation is made subject to our <a href="#" data-toggle="modal"
+                     data-target="#terms-and-conditions"><b>Terms & Conditions</b></a>, and the specific payment terms (deposit, tax and cancellation) set out above, Please check this box to agree to these terms and proceed with your booking. By confirming your booking, you agree with all provisions of the <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a></label>
                 </div>
                 <p>For further information about how we use your data, please see our <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a></p>
                 <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">

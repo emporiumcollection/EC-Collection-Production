@@ -582,7 +582,6 @@ class ReservationController extends Controller {
     }
     public function savepaymentmethod(Request $request)
     {
-        echo"<pre>"; print_r($request->all());exit;
         if (!\Auth::check())
             return redirect('user/login');
             

@@ -31,16 +31,15 @@
                   <div class="policies" id="policies">
                     <h3>Policies</h3>
                     <div class="card card-body rounded-0">
-                      <p><b>Suite 1</b></p>
                       @if(!empty($policies))
                         {{ $policies->booking_policy }}
                       @else
                         <h3>Hotel has no policies</h3>
                       @endif
                       <div class="mt-3">
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                          Terms and Conditions
-                        </button>
+                        <a href="#" data-toggle="modal" data-target="#terms-and-conditions">
+                          <b>Terms and Conditions</b>
+                        </a>
                       </div>  
                     </div>
                     <hr>
@@ -50,7 +49,7 @@
                         <input type="checkbox" class="custom-control-input" id="check-ste">
                         <label class="custom-control-label" for="check-ste">
                           Your reservation is made subject to our
-                          <a href="#" class="underline"><b>Terms &amp; Conditions</b>
+                          <a href="#" data-toggle="modal" data-target="#terms-and-conditions"><b>Terms &amp; Conditions</b>
                           </a>(available  
                           in other
                           languages <a href="#" class="underline"><b>here</b></a>), and the
@@ -59,12 +58,12 @@
                           check
                           this box to agrree to these tearms and proceed with your booking. By
                           confirming your booking, you agree with all provisions of the
-                          <a href="#" class="underline"><b>privacy policy</b></a>
+                          <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a>
                         </label>
                       </div>
                       <p>
                         For further information about how we use your data, please see our
-                        <a href="#" class="underline"><b>privacy policy</b></a>
+                        <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a>
                       </p>
                     </div>
                     <div class="row mb-4">
@@ -154,4 +153,5 @@
   </div>
 
   @include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
+    @include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
   @endsection
