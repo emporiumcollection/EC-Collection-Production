@@ -74,4 +74,3 @@
 </div>
 @include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
 @endsection
-

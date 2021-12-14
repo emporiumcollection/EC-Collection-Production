@@ -29,38 +29,52 @@
         
         <div class="row">
           <div class="col-lg-9 col-md-8">
-            <form action="#" method="POST" action="" id="payment_form">
+            <form id="payment_form" method="POST" action="#">
             {!! csrf_field() !!}
             @if(isset($cards))
-              
                 @foreach($cards as $card)
-
-                    <div class="row">
-                      <div class="col-lg-7 col-md-8">
-                        <div class="d-flex align-items-center list-divider">
-                          <div class="ico-inline mr-5">
-                            <i class="ico-payment mastercard"></i>
-                          </div>
-                          
-                              <div class="d-flex flex-column flex-grow-1">
-                                <div class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                                  <?php
-                                    $full_card_number = \Crypt::decrypt($card->card_number);
-                                    $card_number = '•••• •••• •••• ' . substr($full_card_number, -4);
-                                  ?>
-                                  {{ \Crypt::decrypt($card->card_type) }} {{ $card_number }} 
-                                  @if($card->default_card)
-                                    <span class="default-set">default</span>
-                                  @endif
-                                </div>
-                                <span class="text-muted font-weight-bold">Expiration: {{ $card->exp_month }} / {{ $card->exp_year }} </span>
+                  <div class="row">
+                    <div class="col-lg-7 col-md-8">
+                      <div class="d-flex align-items-center list-divider">
+                          @if($card->select_card == 1)
+                            <div class="ico-inline mr-5">
+                                <i class="ico-payment mastercard"></i>
+                            </div>
+                          @endif
+                          @if($card->select_card == 2)
+                            <div class="ico-inline mr-5">
+                                <i class="ico-payment visa"></i>
+                            </div>
+                          @endif
+                          @if($card->select_card == 3)
+                            <div class="ico-inline mr-5">
+                                 <i class="ico-payment american-express"></i>
+                            </div>
+                          @endif
+                          @if($card->select_card == 4)
+                            <div class="ico-inline mr-5">
+                                <i class="ico-payment discover"></i>
+                            </div>
+                          @endif
+                            <div class="d-flex flex-column flex-grow-1">
+                              <div class="text-dark-75 text-hover-primary font-weight-bold 
+                                  font-size-lg mb-1">
+                                <?php
+                                  $full_card_number = \Crypt::decrypt($card->card_number);
+                                  $card_number = '•••• •••• •••• ' . substr($full_card_number, -4);
+                                ?>
+                                {{ \Crypt::decrypt($card->card_type) }} {{ $card_number }} 
+                                @if($card->default_card)
+                                  <span class="default-set">default</span>
+                                @endif
                               </div>
-                              <div class="mb-2 text-12"><input type="radio" name="card_id" value="{{ $card->id }}" {{ $last_id->id == $card->id ? 'checked' : '' }}> Use this card</div>
-                            
-                          <!--end::Dropdown-->
-                        </div>
+                              <span class="text-muted font-weight-bold">Expiration: {{ $card->exp_month }} / {{ $card->exp_year }} </span>
+                            </div>
+                            <div class="mb-2 text-12"><input type="radio" name="card_id" value="{{ $card->id }}" {{ $last_id->id == $card->id ? 'checked' : '' }}> Use this card</div>
+                        <!--end::Dropdown-->
                       </div>
                     </div>
+                  </div>
                 @endforeach
               @endif
             <hr class="my-4">
@@ -74,9 +88,10 @@
               </div>
               <div class="col-md-8 form-group">
                 <select class="form-control card_type" name="card_type" id="card_type">
-                  <option value="Visa">Visa</option>
-                  <option value="Master Card">Master Card</option>
-                  <option value="American Express">American Express</option>
+                  <option value="1">Visa</option>
+                  <option value="2">Master Card</option>
+                  <option value="3">American Express</option>
+                  <option value="4">discover</option>
                 </select>
                 <div class="invalid-feedback"></div>
               </div>
@@ -86,7 +101,7 @@
                 <label for="card_number">Card number: </label>
               </div>
               <div class="col-md-8 form-group">
-                <input type="text" class="form-control card_number" name="card_number" id="card_number" placeholder="****_****_****_****">
+                <input type="text" class="card_number credit" name="card_number" id="card_number" placeholder="****_****_****_****">
                 <div class="invalid-feedback"></div>
               </div>
             </div>

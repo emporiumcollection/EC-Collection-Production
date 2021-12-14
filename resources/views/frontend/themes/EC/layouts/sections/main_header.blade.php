@@ -33,7 +33,7 @@
                   <div class="filter-lst expand filter-guest filter-white">
                     <div class="input-group">
                       <div class="gust-dropdown">
-                        <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
+                        <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Suites</div>
                       </div>
                     </div>
                   </div>
@@ -377,7 +377,7 @@
                       <div class="gust-dropdown">
                         <div class="guest-option rto"><span class="guest-count">
                           {{ \Session::get('Guests') }}
-                        </span> Guest</div>
+                        </span>Suites</div>
                       </div>
                     </div>
                   </div>
@@ -644,7 +644,7 @@
                 <div class="guest-pick-header">
                   <div class="row align-items-center">
                     <div class="col-lg-9 col-7">
-                      <p class="mb-0"><b>Guests</b></p>
+                      <p class="mb-0"><b>Suites</b></p>
                     </div>
                     <div class="col-lg-3 col-5">
                       <div class="row field-count-guest align-items-center">
@@ -748,7 +748,7 @@
                 </div>
                 <div class="guest-pick-footer">
                   <div class="text-right">
-                    <a href="javascript:void(0);" class="btn btn-dark px-4 select-guest">Update Guests</a>
+                    <a href="javascript:void(0);" class="btn btn-primary px-4 select-guest">Confirm Guest(s)</a>
                   </div>
                 </div>
               </div>

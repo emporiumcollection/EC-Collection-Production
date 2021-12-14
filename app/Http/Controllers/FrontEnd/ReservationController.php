@@ -566,7 +566,9 @@ class ReservationController extends Controller {
         $this->data['arrive'] = '';
         $this->data['departure'] = '';
         $this->data['total_guests'] = '';        
-        $this->data['location'] = '';        
+        $this->data['location'] = '';
+        // $this->data['suite_board'] = '';
+
         $this->data['cards'] = CardDetail::where('user_id', '=', $id)
             ->orderBy('id','desc')
             ->get();
@@ -580,6 +582,7 @@ class ReservationController extends Controller {
     }
     public function savepaymentmethod(Request $request)
     {
+        echo"<pre>"; print_r($request->all());exit;
         if (!\Auth::check())
             return redirect('user/login');
             

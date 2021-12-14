@@ -152,6 +152,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" href="{{ asset('themes/EC/css/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('themes/EC/css/credit.css') }}">
     <!-- tilt css include -->
     <!-- end of tilt css include -->
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -279,6 +280,13 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/collection.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reservation.js') }}"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/credit.js') }}"></script>
+<script type="text/javascript">
+    jQuery(function ( $ ){
+    $(".credit").credit();
+    });
+    </script>
 @section('custom_js')
     @parent
 @show

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\User;
 use App\SecurityQuestions;
 use App\Category;
+use App\Models\CardDetail;
 use Socialize;
 use Illuminate\Http\Request;
 use App\Jobs\SendEmailJob;
@@ -15,6 +16,7 @@ use Validator,
     Input,
     Redirect;
 use Illuminate\Support\Facades\Crypt;
+use Auth;
 
 class UserController extends Controller {
     
@@ -1664,7 +1666,7 @@ class UserController extends Controller {
     public function getSettings(){
         $user = User::find(\Session::get('uid'));
                
-        $card_detail = \DB::table('tb_cards')->where('user_id',\Auth::user()->id)->get();
+        $card_detail = CardDetail::where('user_id',Auth::user()->id)->get();
         $file_name = 'users_admin.traveller.users.account-setting';      
         return view($file_name,compact('card_detail'));
     }
@@ -2601,134 +2603,137 @@ class UserController extends Controller {
         return view($file_name, $this->data,compact('category','destination','atmosphere','facilities','style','islandconn','safariconn','spaconn'));
     }
 
-    public function postPreference(Request $request){
-            if (!\Auth::check())
-            return Redirect::to('user/login');
-            $user = User::find(\Session::get('uid'));
+    public function postPreference(Request $request)
+    {
+        if (!\Auth::check())
+        return Redirect::to('user/login');
+        $user = User::find(\Session::get('uid'));
 
-            $rules = array(
-                'first_name' => 'required',
-                'destinations' => 'required',
-                'inspirstion' => 'required',
-                'spacheckbox' => 'required',
-                'voyagechk' => 'required',
-                'islandchk' => 'required',
-                'safarichk' => 'required',
-                'note' => 'required',
-                'adults' => 'required',
-                'children' => 'required',
-                'toddlers' => 'required',
-                'earliest_arrival' => 'required',
-                'stay_time' => 'required',
-            );
+        if (!empty($request->id)) {
 
-            $validator = Validator::make($request->all(), $rules);
-
-            if (!empty($request->id)) {
-
-            if ($validator->passes()) {
+            if(!empty($request->spacheckbox)){
                 $spa = implode(",",$request->spacheckbox);
+            }
+            if(!empty($request->voyagechk)){    
                 $voyage = implode(",",$request->voyagechk);
+            }    
+            if(!empty($request->islandchk)){
                 $island = implode(",",$request->islandchk);
+            }    
+            if(!empty($request->safarichk)){
                 $safari = implode(",",$request->safarichk);
-                $format2 = array(
-                    'spacollection' => $spa,
-                    'voyage' => $voyage,
-                    'island' => $island,
-                    'safari' => $safari,
-                 );
-                $experience = json_encode($format2);
-                $user = User::find(\Session::get('uid'));
-                $settime = explode("-",$request->earliest_arrival);
-                if (isset($settime)) {
-                    $arr =  strtotime($settime[0]);
-                }                
-                $arrival = date('Y-m-d', $arr);
-                if (isset($settime)) {
-                    $chk =  strtotime($settime[1]);
-                }                
-                $chekout = date('Y-m-d', $chk);
+            }
+            
+            $format2 = array(
+                'spacollection' => $spa,
+                'voyage' => $voyage,
+                'island' => $island,
+                'safari' => $safari,
+             );
 
-                $destinations = implode(",",$request->destinations);
-                $inspiration = implode(",",$request->inspirstion);
-                $return_array = array();
-                $id = $request->id;
-                $data['customer_id'] = $user->id;
-                $data['first_name'] = $request->first_name;
-                $data['adults'] = $request->adults;           
-                $data['youth'] = $request->youth;
-                $data['children'] = $request->children;
-                $data['toddlers'] = $request->toddlers;
-                $data['earliest_arrival'] = $arrival;
-                $data['late_check_out'] = $chekout;
-                $data['stay_time'] = $request->stay_time;
-                $data['destinations'] = $destinations;
-                $data['inspirations'] = $inspiration;
-                $data['experiences'] = $experience;
-                $data['note'] = $request->note;
-                $data['created'] = date('y-m-d');
-                $data['updated'] = date('Y-m-d');
-                $updates = \DB::table('tb_personalized_services')->where('ps_id',$id)->update($data);
-                return redirect::to('/users/my-preferences')->with('massage','Preference edited succesfully!');
-            }else{
-                return redirect::to('/users/my-preferences')->with('Errmassage','Plz fill all the fields!');
+            $experience = json_encode($format2);
+            $user = User::find(\Session::get('uid'));
+            $settime = explode("-",$request->earliest_arrival);
+
+            if (isset($settime)) {
+                    $arr =  strtotime(isset($settime[0]) ? $settime[0] : '');
+                }                
+            $arrival = date('Y-m-d', $arr);
+            if (isset($settime)) {
+                $chk =  strtotime(isset($settime[1]) ? $settime[1] : '');
             }
 
-        }else{
-            if ($validator->passes()) {
+            $chekout = date('Y-m-d', $chk);
+            if(!empty($request->destinations)){
+                $destinations = implode(",",$request->destinations);
+            } 
 
-                $spa = implode(",",$request->spacheckbox);
-                $voyage = implode(",",$request->voyagechk);
-                $island = implode(",",$request->islandchk);
-                $safari = implode(",",$request->safarichk);
+            if(!empty($request->inspirstion)){
+                $inspiration = implode(",",$request->inspirstion);
+            }                 
+            
+            $id = $request->id;
+            
+            $data['customer_id'] = $user->id;
+            $data['first_name'] = isset($request->first_name) ? $request->first_name : '';
+            $data['adults'] = isset($request->adults) ? $request->adults : '';           
+            $data['youth'] = isset($request->youth) ? $request->youth : '';
+            $data['children'] = isset($request->children) ? $request->children : '';
+            $data['toddlers'] = isset($request->toddlers) ? $request->toddlers : '';
+            $data['earliest_arrival'] = isset($arrival) ? $arrival : '';
+            $data['late_check_out'] = isset($chekout) ? $chekout : '';
+            $data['stay_time'] = isset($request->stay_time) ? $request->stay_time : '';
+            $data['destinations'] = isset($destinations) ? $destinations : '';
+            $data['inspirations'] = isset($inspiration) ? $inspiration : '';
+            $data['experiences'] = isset($experience) ? $experience : '';
+            $data['note'] = isset($request->note) ? $request->note : '';
+            $data['created'] = date('y-m-d');
+            $data['updated'] = date('Y-m-d');
+            $updates = \DB::table('tb_personalized_services')->where('ps_id',$id)->update($data);
+            return redirect::to('/users/my-preferences')->with('massage','Preference edited succesfully!');
+        }else{
+                if(!empty($request->spacheckbox)){
+                    $spa = implode(",",$request->spacheckbox);
+                }
+                if(!empty($request->voyagechk)){    
+                    $voyage = implode(",",$request->voyagechk);
+                }    
+                if(!empty($request->islandchk)){
+                    $island = implode(",",$request->islandchk);
+                }    
+                if(!empty($request->safarichk)){
+                    $safari = implode(",",$request->safarichk);
+                }
+                    
                 $format2 = array(
-                    'spacollection' => $spa,
-                    'voyage' => $voyage,
-                    'island' => $island,
-                    'safari' => $safari,
-                 );
+                    'spacollection' => isset($spa) ? $spa : '',
+                    'voyage' => isset($voyage) ? $voyage : '',
+                    'island' => isset($island) ? $island : '',
+                    'safari' => isset($safari) ? $safari : '',
+                );
                 $experience = json_encode($format2);
                 $user = User::find(\Session::get('uid'));
                 $settime = explode("-",$request->earliest_arrival);
                 if (isset($settime)) {
-                    $arr =  strtotime($settime[0]);
+                    $arr =  strtotime(isset($settime[0]) ? $settime[0] : '');
                 }                
                 $arrival = date('Y-m-d', $arr);
                 if (isset($settime)) {
-                    $chk =  strtotime($settime[1]);
+                    $chk =  strtotime(isset($settime[1]) ? $settime[1] : '');
                 }            
                 $chekout = date('Y-m-d', $chk);
+                if(!empty($request->destinations)){
+                    $destinations = implode(",",$request->destinations);
+                }    
+                if(!empty($request->inspirstion)){
+                    $inspiration = implode(",",$request->inspirstion);
+                }
+                
+                $user = User::find(\Session::get('uid'));
 
-                $destinations = implode(",",$request->destinations);
-                $inspiration = implode(",",$request->inspirstion);
-
-                $return_array = array();
-                if (!\Auth::check())
-                    return Redirect::to('user/login');
-                    $user = User::find(\Session::get('uid'));
-
-                        $data['customer_id'] = $user->id;
-                        $data['first_name'] = $request->first_name;
-                        $data['adults'] = $request->adults;           
-                        $data['youth'] = $request->youth;
-                        $data['children'] = $request->children;
-                        $data['toddlers'] = $request->toddlers;
-                        $data['earliest_arrival'] = $arrival;
-                        $data['late_check_out'] = $chekout;
-                        $data['stay_time'] = $request->stay_time;
-                        $data['destinations'] = $destinations;
-                        $data['inspirations'] = $inspiration;
-                        $data['experiences'] = $experience;
-                        $data['note'] = $request->note;
-                        $data['created'] = date('y-m-d');
-                        $data['updated'] = date('Y-m-d');
-                        \DB::table('tb_personalized_services')->where('customer_id', \Auth::user()->id)->insert($data);
-                        return redirect::to('/users/my-preferences')->with('massage','Preference added succesfully!');
-            }else{
-            return redirect::to('/users/my-preferences')->with('Errmassage',' Error ocured!');
-            }
-        }
-        
+                    $data['customer_id'] = $user->id;
+                    $data['first_name'] = isset($request->first_name) ? $request->first_name : '';
+                    $data['adults'] = isset($request->adults) ? $request->adults : '';           
+                    $data['youth'] = isset($request->youth) ? $request->youth : '';
+                    $data['children'] = isset($request->children) ? $request->children : '';
+                    $data['toddlers'] = isset($request->toddlers) ? $request->toddlers : '';
+                    $data['earliest_arrival'] = isset($arrival) ? $arrival : '';
+                    $data['late_check_out'] = isset($chekout) ? $chekout : '';
+                    $data['stay_time'] = isset($request->stay_time) ? $request->stay_time : '';
+                    $data['destinations'] = isset($destinations) ? $destinations : '';
+                    $data['inspirations'] = isset($inspiration) ? $inspiration : '';
+                    $data['experiences'] = isset($experience) ? $experience : '';
+                    $data['note'] = isset($request->note) ? $request->note : '';
+                    $data['created'] = date('y-m-d');
+                    $data['updated'] = date('Y-m-d');
+                    
+                    \DB::table('tb_personalized_services')
+                        ->where('customer_id', \Auth::user()->id)
+                        ->insert($data);
+                    
+                    return redirect::to('/users/my-preferences')
+                        ->with('massage','Preference added succesfully!');                    
+        }          
     }
 
     public function getReservation(){

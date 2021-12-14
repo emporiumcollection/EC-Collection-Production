@@ -684,6 +684,7 @@
         });
 
         $(document).on('click','.clickconfirm',function(e) {
+            
             var mobile_number = $("#txtmobileNumber").val();
             var email = $("#email").val();
             var password = $("#password").val();

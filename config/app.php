@@ -94,6 +94,10 @@ return [
     'EmporiumIslands' =>'EI',
     'EmporiumSafari' => 'ESF',
 
+    'TWILIO_AUTH_TOKEN' => 'bae1f61e772858e149dba8f78f38e57a',
+    'TWILIO_SID' => 'ACbe338ce42add35a607cdaa43f9838bdc',
+    'TWILIO_VERIFY_SID' => 'VAc455d3aea7239baf19d2a92b44df0968',
+
     /*
     |--------------------------------------------------------------------------
     | Logging Configuration

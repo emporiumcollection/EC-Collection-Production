@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Session;
 use ValidateRequests;
 use Validator;
 
+
 class AuthController extends Controller
 {
     /*
@@ -63,29 +64,29 @@ class AuthController extends Controller
      */
     protected function create(Request $request)
     {
-        // echo "<pre>";print_r($request->all());exit();
         $replace = "+";
         $Countrycode = substr_replace($request->code, $replace, 0, 0);
         $space = ltrim($request->mobile_number," ");
         $mobile_number = ltrim($space,0);
         $request->mobile_number =  $Countrycode.$mobile_number;
-        // echo "<pre>";print_r( $request->mobile_number);exit;
-        // $valid = $this->validate($request, [
-        //     'mobile_number' => 'required|unique:tb_users',
-        //     'email' => 'required|string||unique:tb_users',
-        //     'password' => 'required|string|max:15',
-        // ]);
-        // if (empty($valid)) {
-        // $token = Config::get('app.TWILIO_AUTH_TOKEN');
-        // $twilio_sid = Config::get("app.TWILIO_SID");
-        // $twilio_verify_sid = Config::get("app.TWILIO_VERIFY_SID");
-        // $twilio = new Client($twilio_sid, $token);
-        // $varification = $twilio->verify->v2->services($twilio_verify_sid)
-        //     ->verifications
-        //     ->create($request->mobile_number, "sms");
-        // }else{
-        //     return redirect()->to('/dashboard')->with(['message' => 'Please Enter valis detail']);
-        // }
+        
+        $valid = $this->validate($request, [
+            'mobile_number' => 'required|unique:tb_users',
+            'email' => 'required|string||unique:tb_users',
+            'password' => 'required|string|max:15',
+        ]);
+
+        if (empty($valid)) {
+        $token = Config::get('app.TWILIO_AUTH_TOKEN');
+        $twilio_sid = Config::get("app.TWILIO_SID");
+        $twilio_verify_sid = Config::get("app.TWILIO_VERIFY_SID");
+        $twilio = new Client($twilio_sid, $token);
+        $varification = $twilio->verify->v2->services($twilio_verify_sid)
+            ->verifications
+            ->create($request->mobile_number, "sms");
+        }else{
+            return redirect()->to('/dashboard')->with(['message' => 'Please Enter valis detail']);
+        }
 
     }
 
@@ -105,13 +106,13 @@ class AuthController extends Controller
         );
         $validator = Validator::make($request->all(), $rules);
         /* Get credentials from .env */
-        // $token = Config::get('app.TWILIO_AUTH_TOKEN');
-        // $twilio_sid = Config::get("app.TWILIO_SID");
-        // $twilio_verify_sid = Config::get("app.TWILIO_VERIFY_SID");
-        // $twilio = new Client($twilio_sid, $token);
-        // $verification = $twilio->verify->v2->services($twilio_verify_sid)
-        //     ->verificationChecks
-        //     ->create($request->verification_code, array('to' => $request->mobile_number));
+        $token = Config::get('app.TWILIO_AUTH_TOKEN');
+        $twilio_sid = Config::get("app.TWILIO_SID");
+        $twilio_verify_sid = Config::get("app.TWILIO_VERIFY_SID");
+        $twilio = new Client($twilio_sid, $token);
+        $verification = $twilio->verify->v2->services($twilio_verify_sid)
+            ->verificationChecks
+            ->create($request->verification_code, array('to' => $request->mobile_number));
 
         if ($validator->passes()) {
 

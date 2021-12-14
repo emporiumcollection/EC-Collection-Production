@@ -680,11 +680,11 @@ $(document).ready(function(){
     $("#payment_form").validate();
     $(document).on('click', '#btn-payment-save', function(){
           $.ajax({
-              url: "/reservation/savepaymentmethod",
-              type: "POST",
-              data: $('#payment_form').serialize(),
-              dataType: 'json',
-            success: function(response) {
+                type: "POST",
+                url: "/reservation/savepaymentmethod",
+                data: $('#payment_form').serialize(),
+                dataType: 'json',
+                success: function(response) {
                 $('.form-control').removeClass('is-invalid');
                 $('.invalid-feedback').empty();
                 if(response.status == true){

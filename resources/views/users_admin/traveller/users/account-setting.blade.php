@@ -12,80 +12,81 @@
         <div class="card-body px-0">
            
             <div class="card-added">
-                @foreach($card_detail as $detail )
-                <div class="d-flex align-items-center list-divider">
-                    @if($detail->select_card == 1)
-                    <div class="ico-inline mr-5">
-                        <i class="ico-payment mastercard"></i>
-                    </div>
-                    @endif
-
-                    @if($detail->select_card == 2)
-                    <div class="ico-inline mr-5">
-                        <i class="ico-payment visa"></i>
-                    </div>
-                    @endif
-
-                    @if($detail->select_card == 3)
-                    <div class="ico-inline mr-5">
-                         <i class="ico-payment american-express"></i>
-                    </div>
-                    @endif
-
-                    @if($detail->select_card == 4)
-                    <div class="ico-inline mr-5">
-                        <i class="ico-payment discover"></i>
-                    </div>
-                    @endif
-
-                    <div class="d-flex flex-column flex-grow-1">
-                        <div
-                            class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                            <?php
-                                $full_card_number = \Crypt::decrypt($detail->card_number);
-                                $card_number = '•••• •••• •••• ' . substr($full_card_number,-4);
-                            ?>
-                            {{ $card_number }}
-                            @if ($detail->default_card == 1)
-                                <span class="default-set">default</span>
+                @if($card_detail)
+                    @foreach($card_detail as $detail )
+                        <div class="d-flex align-items-center list-divider">
+                            @if($detail->select_card == 1)
+                            <div class="ico-inline mr-5">
+                                <i class="ico-payment mastercard"></i>
+                            </div>
                             @endif
-                        </div>
-                        <span class="text-muted font-weight-bold">Expiration:
-                            {{ \Crypt::decrypt($detail->expires_on) }}</span>
-                    </div>
-                   
-                    <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
-                        title="" data-placement="left" data-original-title="Quick actions">
-                        <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
-                            data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="ki ki-bold-more-hor"></i>
-                        </a>
-                        <div
-                            class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
-                            <ul class="navi navi-hover">
-                                <li class="navi-item">
-                                    <a href="/users/default-card/{{$detail->id}}" class="navi-link">
-                                        <span class="navi-text">
-                                            Set Default
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="/users/CardDetail/{{$detail->id}}" class="navi-link">
-                                        <span class="navi-text">
-                                            Remove
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <!--end::Navigation-->
-                        </div>
-                    </div>
-                    <!--end::Dropdown-->
-                </div>
-                 @endforeach
 
+                            @if($detail->select_card == 2)
+                            <div class="ico-inline mr-5">
+                                <i class="ico-payment visa"></i>
+                            </div>
+                            @endif
+
+                            @if($detail->select_card == 3)
+                            <div class="ico-inline mr-5">
+                                 <i class="ico-payment american-express"></i>
+                            </div>
+                            @endif
+
+                            @if($detail->select_card == 4)
+                            <div class="ico-inline mr-5">
+                                <i class="ico-payment discover"></i>
+                            </div>
+                            @endif
+
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div
+                                    class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
+                                    <?php
+                                        $full_card_number = \Crypt::decrypt($detail->card_number);
+                                        $card_number = '•••• •••• •••• ' . substr($full_card_number,-4);
+                                    ?>
+                                    {{ $card_number }}
+                                    @if ($detail->default_card == 1)
+                                        <span class="default-set">default</span>
+                                    @endif
+                                </div>
+                                <span class="text-muted font-weight-bold">Expiration:
+                                    {{ \Crypt::decrypt($detail->expires_on) }}</span>
+                            </div>
+                           
+                            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
+                                title="" data-placement="left" data-original-title="Quick actions">
+                                <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="ki ki-bold-more-hor"></i>
+                                </a>
+                                <div
+                                    class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
+                                    <ul class="navi navi-hover">
+                                        <li class="navi-item">
+                                            <a href="/users/default-card/{{$detail->id}}" class="navi-link">
+                                                <span class="navi-text">
+                                                    Set Default
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="navi-item">
+                                            <a href="/users/CardDetail/{{$detail->id}}" class="navi-link">
+                                                <span class="navi-text">
+                                                    Remove
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <!--end::Navigation-->
+                                </div>
+                            </div>
+                            <!--end::Dropdown-->
+                        </div>
+                    @endforeach
+                @endif     
             </div>
             <a href="#addPayment" class="btn btn-primary mt-10" data-toggle="modal">Add
                 payment method</a>

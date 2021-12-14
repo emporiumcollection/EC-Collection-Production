@@ -15,18 +15,18 @@
                   <h3 class="font-saol font-weight-boldest">My Reservations
                   </h3>
                 </div>
-                <div class="col-4">
+                {{-- <div class="col-4">
                   <select class="form-control">
                     <option value="1">2021</option>
                     <option value="2">2020</option>
                     <option value="3">2019</option>
                   </select>
-                </div>
+                </div> --}}
               </div>
             </div>
             <div class="card-header-body">
               <div class="row justify-content-center">
-                <div class="col-4">
+                {{-- <div class="col-4">
                   <div class="text-center text-white mb-3">
                     Book Again
                   </div>
@@ -34,7 +34,7 @@
                     <a href="#"
                       class="btn btn-outline-white btn-action-card btn-block">View</a>
                   </div>
-                </div>
+                </div> --}}
               </div>
             </div>
           </div>
@@ -46,11 +46,6 @@
 
              <div class="reservation-widget">
               @foreach($reservations as  $val)
-              <?php 
-                  $date1 = date_create(date('Y-m-d'));
-                  $date2 = date_create(date('Y-m-d', strtotime($val->checkin_date)));
-                  $diff=date_diff($date1,$date2);
-              ?>
                 <div class="d-flex align-items-center mb-10">
                   <!--begin::Bullet-->
                   <span
@@ -67,7 +62,7 @@
                   <div class="d-flex flex-column flex-grow-1">
                     <a href="#"
                       class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1"> {{ $val->property->property_short_name }}</a>
-                    <span class="text-muted font-weight-bold"> {{ $diff->format("%a Due") }}</span>
+                    <span class="text-muted font-weight-bold"> {{ $val->checkin_date }} | {{ $val->checkout_date }}</span>
                   </div>
                   <!--end::Text-->
                 </div>
