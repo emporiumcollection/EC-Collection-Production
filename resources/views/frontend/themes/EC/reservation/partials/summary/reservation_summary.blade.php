@@ -96,11 +96,11 @@
                                                 <span class="text-dark flex-root font-weight-bold text-right"><a
                                                         href="#">View</a></span>
                                             </div> --}}
-                                            <div class="d-flex mb-3">
+                                            {{-- <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Suite Name</span>
                                                 <span class="text-dark flex-root font-weight-bold text-right">Lorem
                                                     Lipsum</span>
-                                            </div>
+                                            </div> --}}
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Check-in</span>
                                                 <span class="text-dark flex-root font-weight-bold text-right">{{ date('d-m-Y', strtotime($reservations->checkin_date)) }}</span>

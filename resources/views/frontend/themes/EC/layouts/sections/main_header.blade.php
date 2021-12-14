@@ -1,10 +1,10 @@
 <header>
   <div class="top-header">
     <div class="top-header-inner">
-      <div class="row align-items-md-end align-items-center">
+      <div class="row align-items-center">
         <div class="col-md-5 col-4">
           <div id="menunav">
-            <a href="#dashF" class="mr-2 menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
+            <a href="#dashF" class="menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
               aria-controls="dashF">
               <i class="ico ico-dash" data-toggle="tooltip" title="Navigate to our collection"></i>
             </a>
@@ -41,34 +41,35 @@
               @endif  
           </div>
         </div>
-        <div class="col-md-5 col-4 text-center">
-          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
+        <div class="col-md-2 col-4 text-center px-0">
+          <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
             <i class="t-logo logo-2"></i>
           </a>
         </div>
-        <div class="col-md-2 col-4 text-right mobile-flex">
-          @if(Auth::check() && Auth::user()->avatar)
-            <a href="/dashboard" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
-              <div class="user-profile-img">
-                <img src="{{ asset('/images/user_avatar/'.Auth::user()->avatar) }}" alt="">
-              </div>
-            </a>
-          @else  
-            <a href="/register" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
-              <div class="user-profile-img">
-                <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
-                <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
-              </div>
-            </a>
-          @endif
-          @if(Request::segment(1) == 'reservation')
-          @else  
+        <div class="col-md-5 col-4 text-right mobile-flex">
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
-          <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
+            @if(Auth::check() && Auth::user()->avatar)
+              <a href="/dashboard" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
+                <div class="user-profile-img">
+                  <img src="{{ asset('/images/user_avatar/'.Auth::user()->avatar) }}" alt="">
+                </div>
+              </a>
+            @else  
+              <a href="/register" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
+                <div class="user-profile-img">
+                  <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                  <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
+                </div>
+              </a>
+            @endif
+            @if(Request::segment(1) == 'reservation')
+            @else  
+          
+            <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
 
             <div class="menu">
               <a href="#" class="close-menu">
@@ -343,19 +344,19 @@
     </div>
   </div>
   <div class="second-header">
-    <div class="px-4 pt-2">
+    <div class="px-4 py-3">
       <div class="row">
         <div class="col-4 mobile-off">
-          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
+          <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
             <i class="t-logo logo-2"></i>
           </a>
         </div>
         <div class="col-md-8 pl-2">
           <div class="d-flex align-items-center">
             <div id="menunav">
-              <a href="#searchF" class="menu-nav search-f mr-3 mobile-on" data-toggle="collapse" role="button"
+              <a href="#searchF" class="menu-nav search-f mr-3" data-toggle="collapse" role="button"
                 aria-expanded="false" aria-controls="searchF">
-                <i class="ico ico-search"></i>
+                <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
               </a>
               @if(Request::segment(1) == 'reservation')
               <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
@@ -424,6 +425,145 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="px-4 py-3 nav-dest menu-s">
+      <div class="d-flex align-items-center">
+        <?php if(strpos(request()->route()->getAction()['controller'], 'PropertyController')): ?>
+        
+          <ul class="nav nav-text mt-0 mobile-off ml-0">
+              <li class="nav-item">
+                <a class="nav-link pb-0" href="#destination-menu" data-toggle="collapse">
+                  Destinations
+                </a>
+              </li>
+              @if(!empty($experiences))
+              <li class="nav-item dropdown" id="experience_dropdown">
+                <a class="nav-link pb-0 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Experiences
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                  @foreach($experiences as $exp)
+                    <a href="javascript:void(0);" data-value="<?php echo $exp->category_alias;?>" class="dropdown-item">{{ $exp->category_name }}</a>
+                  @endforeach                
+                </div>
+              </li>
+              @endif
+              @if(!empty($atmosphere))
+              <li class="nav-item dropdown" id="atmosphere_dropdown_bottom">
+                <a class="nav-link pb-0 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Atmosphere
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-inner filter-checkbox">
+                    @foreach($atmosphere as $atm)
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="atmosphere[]" class="custom-control-input" id="s_setting1{{ $atm->id }}" 
+                        value="{{ $atm->id }}"
+                        @if(!empty($atmosphere_data))
+                          @foreach($atmosphere_data as $selected_atm)
+                            {{ $selected_atm[0]->id == $atm->id ? 'checked' : '' }}
+                          @endforeach
+                        @endif>
+                        <label class="custom-control-label" for="s_setting1{{ $atm->id}}">{{ $atm->category_name }}</label>
+                      </div>
+                    @endforeach
+                  </div>
+                </div>
+              </li>
+              @endif
+              @if(!empty($facilities))
+              <li class="nav-item dropdown" id="facilities_dropdown_bottom">
+                <a class="nav-link pb-0 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Facilities
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-inner filter-checkbox">
+                    @foreach($facilities as $fac)
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="facilities[]" class="custom-control-input" id="s_fasilities{{ $fac->id }}" value="{{ $fac->id }}" 
+                        @if(!empty($facility_data)) 
+                          @foreach($facility_data as $selected_fac)
+                            {{ $selected_fac[0]->id == $fac->id ? 'checked' : '' }}
+                          @endforeach 
+                        @endif>
+                        <label class="custom-control-label" for="s_fasilities{{ $fac->id }}">{{ $fac->category_name }} </label>
+                      </div>
+                    @endforeach  
+                  </div>
+                </div>
+              </li>
+              @endif
+              @if(!empty($style))
+              <li class="nav-item dropdown" id="style_dropdown_bottom">
+                <a class="nav-link pb-0 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Style
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-inner filter-checkbox">
+                    @foreach($style as $sty)
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="style[]" class="custom-control-input" id="s_style{{ $sty->id }}" value="{{ $sty->id }}" 
+                        @if(!empty($selected_style))
+                          @foreach($selected_style as $sty_sel) 
+                            {{ $sty_sel[0]->id == $sty->id ? 'checked' : '' }}
+                          @endforeach 
+                        @endif>
+                        <label class="custom-control-label" for="s_style{{ $sty->id }}">{{ $sty->category_name }}</label>
+                      </div>
+                    @endforeach
+                  </div>
+                </div>
+              </li>
+              @endif
+              <li class="nav-item dropdown">
+                <a class="nav-link pb-0 dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Price
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-inner filter-checkbox">
+                    <div class="custom-control custom-checkbox">
+                      <div class="filter-list">
+                          <h5 class="filter-title mb-4">By price</h5>
+                          <div class="px-2">
+                              <div id="price_range" class="price-range"></div>
+                          </div>
+                          <div class="row align-items-center price-input">
+                              <div class="col">
+                                  <label>Min:</label>
+                                  <div class="input-filter">
+                                      <span>€</span>
+                                      <input type="text" class="priceValue form-control" data-index="0" id="min" value="80" />
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <label>Max:</label>
+                                  <div class="input-filter">
+                                      <span>€</span>
+                                      <input type="text" class="priceValue form-control" data-index="1" id="max" value="10000" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row align-items-left price-input">
+                            <div class="col">
+                              <div class="input-filter">
+                                <a href="javascript:void(0);" class="btn btn-primary  filter_price">Filter Price</a>
+                              </div> 
+                            </div>
+                          </div>  
+                      </div>
+                    </div>  
+                  </div>
+                </div>
+              </li>
+            </ul>
+        
+        <?php endif; ?>
+        
       </div>
     </div>
   </div>

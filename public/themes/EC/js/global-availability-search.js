@@ -720,21 +720,21 @@ $(document).ready(function(){
     searchResults(url);
   });
 
-  $('#atmosphere_dropdown .custom-control-input').on("click",function(){
+  $('#atmosphere_dropdown .custom-control-input, #atmosphere_dropdown_bottom .custom-control-input').on("click",function(){
     setBreadcrumb($(this));
     var url = createSearchUrl();
     searchResults(url);
     return true;
   });
 
-  $('#facilities_dropdown .custom-control-input').on("click",function(){
+  $('#facilities_dropdown .custom-control-input, #facilities_dropdown_bottom .custom-control-input').on("click",function(){
     setBreadcrumb($(this));
     var url = createSearchUrl();
     searchResults(url);
     return true;
   });
 
-  $('#style_dropdown .custom-control-input').on("click",function(){
+  $('#style_dropdown .custom-control-input #style_dropdown_bottom .custom-control-input').on("click",function(){
     setBreadcrumb($(this));
     var url = createSearchUrl();
     searchResults(url);
@@ -863,6 +863,11 @@ function createSearchUrl(experience = ''){
       atmospheres.push($(this).val());
     }
   });
+
+  var uniqueAtmospheres = atmospheres.filter(function(item, i, atmospheres) {
+    return i == atmospheres.indexOf(item);
+  });
+   
   $("input[name='facilities[]']").each(function(){
     if($(this).prop('checked') === true){
       facilities.push($(this).val());
@@ -883,7 +888,7 @@ function createSearchUrl(experience = ''){
   }else{
     keyword = getUrlParam('s');
   }
-  var atmosphere_ids = atmospheres.join(',');
+  var atmosphere_ids = uniqueAtmospheres.join(',');
   var facility_ids = facilities.join(',');
   var style_ids = styles.join(',');
   

@@ -135,7 +135,7 @@
 									</div>
 									<input type="text"
 										class="form-control form-control-solid form-control-lg"
-										name="landline_number" value="{{ $info->landline_number }}">
+										name="landline_number" value="{{ $info->landline_number }}" maxlength="10">
 								</div>
 							</div>
 						</div>
@@ -154,7 +154,7 @@
 									</div>
 									<input type="text"
 										class="form-control form-control-solid form-control-lg"
-										name="mobile_number" value="{{ $info->mobile_number }}">
+										name="mobile_number" value="{{ $info->mobile_number }}" maxlength="10">
 								</div>
 							</div>
 						</div>

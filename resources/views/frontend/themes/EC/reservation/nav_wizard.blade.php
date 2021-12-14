@@ -35,22 +35,50 @@
           </div>
         </div>            
         <ul class="nav mt-4 mb-4 nav-wizard-primary">
+          <?php 
+          $step_links = [
+            'when' => 1,
+            'where' => 2,
+            'suite' => 3,
+            'board' => 4,
+            'policies' => 5,
+            'whoistravelling' => 6,
+            'paymentmethod' => 7,
+            'bookingsummary' => 8,
+        ];
+        $current_path = request()->path(); 
+        $action = explode('/',$current_path);
+        $action = $action[1];
+        $actionIndex = $step_links[$action];
+       ?>
           <li>
-            <a class="nav-link {{ Request::is('reservation/when*') ? 'active' : ''}} " href="/reservation/when/{{ Session::get('property_id') }}">When</a>
+            @if ($actionIndex >= 1)     
+              <a class="nav-link {{ Request::is('reservation/when*') ? 'active' : ''}} " href="/reservation/when/{{ Session::get('property_id') }}">When</a>
+            @endif
           </li>
+
           <li>
-            <a class="nav-link {{ Request::is('reservation/where') ? 'active' : ''}}" href="/reservation/where">Where</a>
+            @if ($actionIndex >= 2)
+              <a class="nav-link {{ Request::is('reservation/where') ? 'active' : ''}}" href="/reservation/where">Where</a>
+            @endif
           </li>
+
           <li>
-            <a class="nav-link {{ Request::is('reservation/suite*') ? 'active' : ''}}" href="/reservation/suite">Suite</a>
+            @if ($actionIndex >= 3)
+              <a class="nav-link {{ Request::is('reservation/suite*') ? 'active' : ''}}" href="/reservation/suite">Suite</a>
+            @endif
           </li>
           @if(count($suite_board) > 0)
             <li>
-              <a class="nav-link {{ Request::is('reservation/board') ? 'active' : ''}}" href="/reservation/board">Suite Board</a>
+              @if ($actionIndex >= 4)
+                <a class="nav-link {{ Request::is('reservation/board') ? 'active' : ''}}" href="/reservation/board">Suite Board</a>
+              @endif
             </li>
           @endif
           <li>
-            <a class="nav-link {{ Request::is('reservation/policies') ? 'active' : ''}}" href="/reservation/policies">Policies</a>
+              @if ($actionIndex >= 5)
+              <a class="nav-link {{ Request::is('reservation/policies') ? 'active' : ''}}" href="/reservation/policies">Policies</a>
+              @endif
           </li>
          {{--  <li>
             <a class="nav-link {{ Request::is('reservation/services') ? 'active' : ''}}" href="/reservation/services">
@@ -58,10 +86,14 @@
             </a>
           </li> --}}
           <li>
-            <a class="nav-link {{ Request::is('reservation/whoistravelling') ? 'active' : ''}}" href="/reservation/whoistravelling">Who’s travelling</a>
+              @if ($actionIndex >= 6)
+                <a class="nav-link {{ Request::is('reservation/whoistravelling') ? 'active' : ''}}" href="/reservation/whoistravelling">Who’s travelling</a>
+              @endif
           </li>
           <li>
-            <a class="nav-link {{ Request::is('reservation/paymentmethod') ? 'active' : ''}}" href="/reservation/paymentmethod">Payment Method</a>
+              @if ($actionIndex >= 7)
+                <a class="nav-link {{ Request::is('reservation/paymentmethod') ? 'active' : ''}}" href="/reservation/paymentmethod">Payment Method</a>
+              @endif
           </li>
           {{-- <li>
             <a class="nav-link {{ Request::is('reservation/hotelpolicies') ? 'active' : ''}}" href="/reservation/hotelpolicies">
@@ -69,7 +101,9 @@
             </a>
           </li> --}}
           <li>
-            <a class="nav-link {{ Request::is('reservation/bookingsummary') ? 'active' : ''}}" href="/reservation/bookingsummary">Booking Summary</a>
+              @if ($actionIndex >= 8)
+                <a class="nav-link {{ Request::is('reservation/bookingsummary') ? 'active' : ''}}" href="/reservation/bookingsummary">Booking Summary</a>
+              @endif
           </li>
         </ul>
       </div>
