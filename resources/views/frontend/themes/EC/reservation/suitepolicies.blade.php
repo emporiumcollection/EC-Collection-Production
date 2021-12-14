@@ -1,4 +1,3 @@
-
 @extends('frontend.themes.EC.layouts.main')
 {{--  For Title --}}
 @section('title', 'Global search availability')
@@ -32,20 +31,21 @@
               @elseif(!empty($hotel_policy->smookingpolicy || $hotel_policy->children_policy))
                 <p>{{ $hotel_policy->smookingpolicy }}</p>
                 <p>{{ $hotel_policy->children_policy }}</p>
+                <hr>
               @endif 
-                <hr>     
-                  <div class="col-sm-3">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
-                      Terms and Conditions
-                    </button>
-                  </div>
+              <div class="col-sm-3">
+                <a href="#" data-toggle="modal" data-target="#terms-and-conditions">
+                  <b>Terms and Conditions</b>
+                </a>
+              </div>
               <div class="booking-tearms mt-4" >
                 <h3>Booking terms and conditions</h3>
                 <div class="custom-control custom-checkbox mb-5">
                   <input type="checkbox" name="policies_ckh" class="custom-control-input chkpolicies" id="customCheck2">
-                  <label class="custom-control-label" for="customCheck2">Your reservation is made subject to our <a href="#" class="underline"><b>Terms & Conditions</b></a>, and the specific payment terms (deposit, tax and cancellation) set out above, Please check this box to agree to these terms and proceed with your booking. By confirming your booking, you agree with all provisions of the <a href="#" class="underline"><b>privacy policy</b></a></label>
+                  <label class="custom-control-label" for="customCheck2">Your reservation is made subject to our <a href="#"  data-toggle="modal" 
+                    data-target="#terms-and-conditions"><b>Terms & Conditions</b></a>, and the specific payment terms (deposit, tax and cancellation) set out above, Please check this box to agree to these terms and proceed with your booking. By confirming your booking, you agree with all provisions of the <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a></label>
                 </div>
-                <p>For further information about how we use your data, please see our <a href="#" class="underline"><b>privacy policy</b></a></p>
+                <p>For further information about how we use your data, please see our <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a></p>
                 <div id="guestValidationMsg" class="alert alert-danger fade show mt-4" style="display: none;">
                   <p id="massage" class="mb-0"></p>
                 </div>
@@ -73,4 +73,5 @@
   </div>
 </div>
 @include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
+@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
 @endsection

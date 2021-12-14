@@ -280,7 +280,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/collection.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reservation.js') }}"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/credit.js') }}"></script>
 <script type="text/javascript">
     jQuery(function ( $ ){
