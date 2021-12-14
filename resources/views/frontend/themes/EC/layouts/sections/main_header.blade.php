@@ -38,7 +38,7 @@
                     </div>
                   </div>
                 </a>
-              @endif  
+            @endif  
           </div>
         </div>
         <div class="col-md-2 col-4 text-center px-0">
@@ -130,8 +130,8 @@
                 </div>
               </div>
             </div>
+            @endif
           </div>
-          @endif
         </div>
       </div>
     </div>    
