@@ -93,7 +93,7 @@
 							<label class="text-left"> Language Preference </label>	
 							<select class="form-control" name="language">
 								@foreach(SiteHelpers::langOption() as $lang)
-								<option value="{{ $lang['folder'] }}" @if(Session::get('lang') ==$lang['folder']) selected @endif>  {{  $lang['name'] }}</option>
+								<option value="{{ $lang['folder'] }}" @if(Session::get('lang') ==$lang['folder'] || $lang['name']=='English') selected @endif>  {{  $lang['name'] }}</option>
 								@endforeach
 							</select>								
 							<div class="clr"></div>

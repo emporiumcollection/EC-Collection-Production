@@ -1,6 +1,6 @@
 <header>
-  <div class="header-landing">
-    <div class="px-4 pt-2">
+  <div class="header-landing top-header">
+    <div class="top-header-inner">
       <div class="row align-items-md-end align-items-center">
         <div class="col-md-5 col-4">
           <div class="d-flex">
@@ -8,7 +8,7 @@
           </div>
         </div>
         <div class="col-md-2 col-4 text-center">
-          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
+          <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
             <i class="t-logo logo-2"></i>
           </a>
         </div>
@@ -191,7 +191,6 @@
           </div>
         </div>
       </div>
-      <hr class="mb-0">
 
         {{-- <div class="menu-s">
           <div class="menu-mobile">

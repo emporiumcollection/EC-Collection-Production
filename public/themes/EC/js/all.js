@@ -594,6 +594,7 @@ var ajaxReq = 'ToCancelPrevReq';
                 homePageFeaturedProperties = data;
             //if(data.status == "success"){
                 $('.title-2').html(data[0]['property_name']);
+                $('.title-third').html(data[0]['city']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
 
                 var containername;
@@ -616,6 +617,8 @@ var ajaxReq = 'ToCancelPrevReq';
                   `/property-image" class="img-fluid" alt="" />`);                
 
                 $('.to-right .title-2').html(data[0]['property_name']);
+                // alert(data[0]['city']);
+                $('.title-third').html(data[0]['city']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);                
             //}
         }

@@ -132,8 +132,8 @@
 										</div>
 										<input type="text"
 											class="form-control form-control-solid form-control-lg"
-											name="phone_number" value=" @if(isset($data)){{  $data->phone_number ? $data->phone_number : ''}}@endif"
-											placeholder="Phone Number">
+											name="phone_number" value="@if(isset($data)){{  $data->phone_number ? $data->phone_number : ''}}@endif"
+											placeholder="Phone Number" maxlength="10">
 									</div>
 								</div>
 							</div>
@@ -145,8 +145,8 @@
 								</label>
 								<div class="col-lg-9 col-xl-9">
 									<select name="gender" class="form-control">
-										<option value="Man" @if(isset($data)){{  $data->gender == 'Man' ? 'selected' : ''}} @endif>Male</option>
-										<option value="Woman" @if(isset($data)){{  $data->gender == 'Woman' ? 'selected' : ''}} @endif>Woman</option>
+										<option value="Male" @if(isset($data)){{  $data->gender == 'Male' ? 'selected' : ''}} @endif>Male</option>
+										<option value="Female" @if(isset($data)){{  $data->gender == 'Female' ? 'selected' : ''}} @endif>Female</option>
 										<option value="Non-Binary" @if(isset($data)){{  $data->gender == 'Non-Binary' ? 'selected' : ''}} @endif>Non-Binary</option>
 										<option value="Cigender" @if(isset($data)){{  $data->gender == 'Cigender' ? 'selected' : ''}} @endif>Cigender</option>
 										<option value="Intersex" @if(isset($data)){{  $data->gender == 'Intersex' ? 'selected' : ''}} @endif>Intersex</option>

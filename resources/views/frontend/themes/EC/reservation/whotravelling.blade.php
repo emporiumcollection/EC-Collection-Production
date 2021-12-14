@@ -438,15 +438,15 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Phone<span class="text-danger">*</span></label>
-                            <input type="text" name="phone" id="comapnion_phone" class="form-control phone" placeholder="Enter your phone">
+                            <input type="text" name="phone" id="comapnion_phone" class="form-control phone" placeholder="Enter your phone" maxlength="10">
                             <div class="invalid-feedback ac_phone errMsg"></div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Gender<span class="text-danger">*</span></label>
                             <select name="gender" class="form-control gender" id="gender">
                               <option value="" selected disabled>Select</option>
-                              <option value="Man">Man</option>
-                              <option value="Woman">Woman</option>
+                              <option value="Male">Male</option>
+                              <option value="Female">Female</option>
                               <option value="Non-Binary">Non-Binary</option>
                               <option value="Cigender">Cigender</option>
                               <option value="Intersex">Intersex</option>

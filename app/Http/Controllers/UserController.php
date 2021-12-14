@@ -462,8 +462,8 @@ class UserController extends Controller {
             return redirect('user/login');
 
         $genders = [ 
-            'Man',
-            'Women',
+            'Male',
+            'Female',
             'Non-Binary',
             'Cigender',
             'Intersex',
