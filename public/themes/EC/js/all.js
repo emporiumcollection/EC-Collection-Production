@@ -2346,8 +2346,24 @@ $(document).ready(function () {
     $('.include-form').fadeIn("fast");
   });
   
-  picker.data('daterangepicker').hide = function () { };
-  picker.data('daterangepicker').show();
+  $(window).scroll(function() {
+    var scroll = $(window).scrollTop();
+    if ( (scroll > 0) && (scroll < 130)) {
+      $(".top-header").removeClass("header-transition header-fixed");
+    } else if ( (scroll > 150) && (scroll < 200)) { 
+      $(".top-header").addClass("header-transition");
+
+    } else if ( (scroll > 220) && (scroll < 300)) {
+      $(".top-header").addClass("header-fixed");
+    }
+  });
+
+  try{
+    picker.data('daterangepicker').hide = function () { };
+    picker.data('daterangepicker').show();
+  }catch(e){
+    
+  }
 
 });
 
