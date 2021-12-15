@@ -62,7 +62,7 @@
                   <div class="d-flex flex-column flex-grow-1">
                     <a href="#"
                       class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1"> {{ $val->property->property_short_name }}</a>
-                    <span class="text-muted font-weight-bold"> {{ $val->checkin_date }} | {{ $val->checkout_date }}</span>
+                    <span class="text-muted font-weight-bold"> {{ date("d/m/Y",strtotime($val->checkin_date)) }} | {{ date("d/m/Y",strtotime($val->checkout_date)) }}</span>
                   </div>
                   <!--end::Text-->
                 </div>
