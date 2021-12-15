@@ -2346,9 +2346,6 @@ $(document).ready(function () {
     $('.include-form').fadeIn("fast");
   });
   
-  // picker.data('daterangepicker').hide = function () { };
-  // picker.data('daterangepicker').show();
-
   $(window).scroll(function() {
     var scroll = $(window).scrollTop();
     if ( (scroll > 0) && (scroll < 130)) {
@@ -2360,6 +2357,14 @@ $(document).ready(function () {
       $(".top-header").addClass("header-fixed");
     }
   });
+
+  try{
+    picker.data('daterangepicker').hide = function () { };
+    picker.data('daterangepicker').show();
+  }catch(e){
+    
+  }
+
 });
 
 (function( func ) {
