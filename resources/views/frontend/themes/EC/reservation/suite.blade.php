@@ -20,7 +20,7 @@
 @section('content')
 <div class="content-em">
   <div class="top-wrapper">
-    <div class="container ">
+    <div class="container-full  ">
       @include('frontend.themes.EC.reservation.nav_wizard')
 
       <div id="step-3" class="tab-pane" role="tabpanel">
@@ -75,8 +75,8 @@
                           if(isset($image['file'])) $file_name = $image['file']['file_name'];
                         ?>
                           <div>
-                            <a href="detail-page.html">                  
-                              <img src="{{ asset('/room-image/resize/500x700/' . $container_name . '/' . $name . '/' . $file_name) }}"
+                            <a href="#">                  
+                              <img src="{{ asset('/room-image/resize/320x266/' . $container_name . '/' . $name . '/' . $file_name) }}"
                                 class="img-full" alt="">
                             </a>
                           </div>

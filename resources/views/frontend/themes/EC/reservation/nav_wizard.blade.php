@@ -52,32 +52,32 @@
         $actionIndex = $step_links[$action];
        ?>
           <li>
-            @if ($actionIndex >= 1)     
-              <a class="nav-link {{ Request::is('reservation/when*') ? 'active' : ''}} " href="/reservation/when/{{ Session::get('property_id') }}">When</a>
+            @if ($actionIndex >= 1)
+              <a class="nav-link done{{ Request::is('reservation/when*') ? 'active' : ''}} " href="/reservation/when/{{ Session::get('property_id') }}"><div>1</div>When</a>
             @endif
           </li>
 
           <li>
             @if ($actionIndex >= 2)
-              <a class="nav-link {{ Request::is('reservation/where') ? 'active' : ''}}" href="/reservation/where">Where</a>
+              <a class="nav-link done{{ Request::is('reservation/where') ? 'active' : ''}}" href="/reservation/where"><div>2</div>Where</a>
             @endif
           </li>
 
           <li>
             @if ($actionIndex >= 3)
-              <a class="nav-link {{ Request::is('reservation/suite*') ? 'active' : ''}}" href="/reservation/suite">Suite</a>
+              <a class="nav-link done{{ Request::is('reservation/suite*') ? 'active' : ''}}" href="/reservation/suite"><div>3</div>Suite</a>
             @endif
           </li>
           @if(count($suite_board) > 0)
             <li>
               @if ($actionIndex >= 4)
-                <a class="nav-link {{ Request::is('reservation/board') ? 'active' : ''}}" href="/reservation/board">Suite Board</a>
+                <a class="nav-link done{{ Request::is('reservation/board') ? 'active' : ''}}" href="/reservation/board"><div>4</div>Suite Board</a>
               @endif
             </li>
           @endif
           <li>
               @if ($actionIndex >= 5)
-              <a class="nav-link {{ Request::is('reservation/policies') ? 'active' : ''}}" href="/reservation/policies">Policies</a>
+              <a class="nav-link done{{ Request::is('reservation/policies') ? 'active' : ''}}" href="/reservation/policies"><div>5</div>Policies</a>
               @endif
           </li>
          {{--  <li>
@@ -87,12 +87,12 @@
           </li> --}}
           <li>
               @if ($actionIndex >= 6)
-                <a class="nav-link {{ Request::is('reservation/whoistravelling') ? 'active' : ''}}" href="/reservation/whoistravelling">Who’s travelling</a>
+                <a class="nav-link done{{ Request::is('reservation/whoistravelling') ? 'active' : ''}}" href="/reservation/whoistravelling"><div>6</div>Who’s travelling</a>
               @endif
           </li>
           <li>
               @if ($actionIndex >= 7)
-                <a class="nav-link {{ Request::is('reservation/paymentmethod') ? 'active' : ''}}" href="/reservation/paymentmethod">Payment Method</a>
+                <a class="nav-link done{{ Request::is('reservation/paymentmethod') ? 'active' : ''}}" href="/reservation/paymentmethod"><div>7</div>Payment Method</a>
               @endif
           </li>
           {{-- <li>
@@ -102,7 +102,7 @@
           </li> --}}
           <li>
               @if ($actionIndex >= 8)
-                <a class="nav-link {{ Request::is('reservation/bookingsummary') ? 'active' : ''}}" href="/reservation/bookingsummary">Booking Summary</a>
+                <a class="nav-link done{{ Request::is('reservation/bookingsummary') ? 'active' : ''}}" href="/reservation/bookingsummary"><div>8</div>Booking Summary</a>
               @endif
           </li>
         </ul>
