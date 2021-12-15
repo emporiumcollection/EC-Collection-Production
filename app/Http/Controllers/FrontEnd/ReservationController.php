@@ -585,10 +585,9 @@ class ReservationController extends Controller {
         if (!\Auth::check())
             return redirect('user/login');
             
-            if(isset($request->card_id)){
-                Session::put('payment_card_id',$request->card_id);
-                return response()->json(['status' => true, 'card_id' => $request->card_id]);
-            }else{
+            if(isset($request->card_type) && 
+                isset($request->card_number) &&
+                    isset($request->exp_month)){
                 $rules = array(
                     'card_type' => 'required',
                     'card_number' => 'required|min:16',
@@ -620,15 +619,18 @@ class ReservationController extends Controller {
                         'srequirements' => $requirements
                     );
                     $payment_id = \DB::table('tb_cards')->insertGetId($payment_data);
-                    Session::put('payment_card_id', $payment_id);
-                    return response()->json(['status' => true, 'card_id' => $payment_id]);
+                    if(isset($payment_id)){
+                        Session::put('payment_card_id', $payment_id);
+                        return response()->json(['status' => true, 'card_id' => $payment_id]);
+                    }
                 }
                 else {
                     return json_encode(['ststus' => false, 'errors' => $validator->errors()]);
-                } 
-            }
-            
-            
+                }
+            }else{
+                Session::put('payment_card_id',$request->card_id);
+                return response()->json(['status' => true, 'card_id' => $request->card_id]); 
+            }                        
     }
 
     public function bookingsummary(Request $request)

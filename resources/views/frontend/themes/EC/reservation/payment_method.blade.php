@@ -29,29 +29,29 @@
         
         <div class="row">
           <div class="col-lg-9 col-md-8">
-            <form action="#" method="POST" id="payment_form">
+            <form method="POST" action="#" id="payment_form">
             {!! csrf_field() !!}
             @if(isset($cards))
                 @foreach($cards as $card)
                   <div class="row">
                     <div class="col-lg-7 col-md-8">
                       <div class="d-flex align-items-center list-divider">
-                          @if($card->select_card == 1)
-                            <div class="ico-inline mr-5">
-                                <i class="ico-payment mastercard"></i>
-                            </div>
-                          @endif
-                          @if($card->select_card == 2)
+                          @if(\Crypt::decrypt($card->card_type) == 1)
                             <div class="ico-inline mr-5">
                                 <i class="ico-payment visa"></i>
                             </div>
                           @endif
-                          @if($card->select_card == 3)
+                          @if(\Crypt::decrypt($card->card_type) == 2)
+                            <div class="ico-inline mr-5">
+                                <i class="ico-payment mastercard"></i>
+                            </div>
+                          @endif
+                          @if(\Crypt::decrypt($card->card_type) == 3)
                             <div class="ico-inline mr-5">
                                  <i class="ico-payment american-express"></i>
                             </div>
                           @endif
-                          @if($card->select_card == 4)
+                          @if(\Crypt::decrypt($card->card_type) == 4)
                             <div class="ico-inline mr-5">
                                 <i class="ico-payment discover"></i>
                             </div>

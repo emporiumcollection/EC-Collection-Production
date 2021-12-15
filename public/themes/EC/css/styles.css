@@ -35602,7 +35602,7 @@ footer {
   padding: 2px 5px;
   border-radius: 5px; }
 
-/*.visa {
+.visa {
   display: inline-block;
   background: url(../images/visa.svg) no-repeat center center/contain;
   width: 50px;
@@ -35624,7 +35624,7 @@ footer {
   display: inline-block;
   background: url(../images/discover-network.svg) no-repeat center center/contain;
   width: 50px;
-  height: 32px; }*/
+  height: 32px; }
 
 .ico-payment {
   border: 1px #ebedf3 solid;
