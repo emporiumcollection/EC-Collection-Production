@@ -61,12 +61,9 @@
               <div class="suite-board d-block section-shadow">
                 <div class="row align-items-center">
                   <div class="col-2 col---s">
-                    <?php
-                      if (isset($property_image)) {
-                        $file_name = $property_image[0]->propertyImages[0]->file->file_name ; 
-                      }
-                    ?>
-                    <img src="{{ asset('/room-image/resize/69x58/' . $file_name) }}" class="img-full" alt="">
+                    
+                    
+                    <img src="{{ asset('/property-image/resize/69x58/'.$container_name.'/'.$property_image.'/property-image') }}" class="img-full" alt="">
                   </div>
                   <div class="col">
                     <h3>{{ $suitesboards->property_short_name }}</h3>
