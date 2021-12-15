@@ -718,7 +718,6 @@ class UserController extends Controller {
         if ($validator->passes()) { 
             
                 $newfilename = "";
-
                 if (!is_null($request->profile_avatar)) {
                     $file = $request->profile_avatar;
                     $image_name = time() . '.' . $file->getClientOriginalExtension();
@@ -741,7 +740,9 @@ class UserController extends Controller {
                 $user->gender = $request->input('gender');              
                 $user->prefer_communication_with = $request->input('prefer_communication_with');
                 $user->preferred_currency = $request->preferred_currency;
-                $user->avatar = $newfilename;            
+                if($newfilename){
+                    $user->avatar = $newfilename;            
+                }
                 $user->save();        
                 //insert contracts
                 //\CommonHelper::submit_contracts($contracts,'sign-up');
