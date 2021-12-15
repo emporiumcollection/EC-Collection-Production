@@ -153,6 +153,8 @@ class ReservationController extends Controller {
         
         $selected_suite = Session::get('suite_array');
 
+        $this->data['images'] = $this->suite_images();
+
         $this->_checkBoards($property_id);
 
         if(Session::has('board_id')) {
@@ -200,7 +202,7 @@ class ReservationController extends Controller {
             return redirect('user/login');
 
         $arr = $this->reserveSuite();
-
+        $this->data['images'] = $this->suite_images();
         $this->_checkBoards(Session::get('property_id'));
 
         if(Session::has('board_id')) {
@@ -220,11 +222,11 @@ class ReservationController extends Controller {
             {
                 $this->data['suites_board'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')->where('id',$suit_id)->first();
             } */
-            
-            $this->data['suitesboards'] = properties::with('boards')
+            $this->data['property_image'] = $this->getPropertyById(Session::get('property_id'));
+
+            $this->data['suitesboards'] = properties::with('boards')   
                 ->where('id',Session::get('property_id'))
                 ->first();
-
             
             $this->data['layout_type'] = 'old';
             $this->data['keyword'] = '';
@@ -307,7 +309,7 @@ class ReservationController extends Controller {
             return redirect('user/login');
 
         $arr = $this->reserveSuite();
-
+        $this->data['images'] = $this->suite_images();
         $this->_checkBoards(Session::get('property_id'));
         $this->data['numberOfNights'] = $this->getNumberOfNights();
         if(Session::has('board_id')) {
@@ -392,11 +394,14 @@ class ReservationController extends Controller {
         $suite = PropertyCategoryTypes::find($suites_id[0]);
 
         $suites = $this->reserveSuite();
+            
+        $images = $this->suite_images();
+        // print_r($images);exit;
         $numberOfNights = $this->getNumberOfNights();
 
         $suite_selection_html = view('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])->render();
         
-        $reserve_suite_html = view('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites ,'selected_suite' => $selected_suite ,'numberOfNights' => $numberOfNights])->render(); 
+        $reserve_suite_html = view('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites ,'selected_suite' => $selected_suite ,'numberOfNights' => $numberOfNights , 'images' => $images])->render(); 
             
         return json_encode([
             'suite_selection_html' => $suite_selection_html,
@@ -413,6 +418,7 @@ class ReservationController extends Controller {
         ->get();
 
         $arr = $this->reserveSuite();
+        $this->data['images'] = $this->suite_images();
         $this->data['numberOfNights'] = $this->getNumberOfNights();
         // Session::forget('companions');
 
@@ -550,7 +556,7 @@ class ReservationController extends Controller {
         $arr = $this->reserveSuite();
 
         $this->_checkBoards(Session::get('property_id'));
-
+        $this->data['images'] = $this->suite_images();
         $this->data['numberOfNights'] = $this->getNumberOfNights();
 
         if(Session::has('board_id')) {
@@ -648,7 +654,7 @@ class ReservationController extends Controller {
         $this->data['numberOfNights'] = $this->getNumberOfNights();
 
         $this->_checkBoards(Session::get('property_id'));
-
+        $this->data['images'] = $this->suite_images();
         $this->data['properties'] = properties::where('id',Session::get('property_id'))
             ->get();
 
@@ -951,5 +957,18 @@ class ReservationController extends Controller {
         $numberOfNights = $checkout_date->diff($checkin_date)->format("%a");
         // Session::put('number_of_nights',$numberOfNights);
         return $numberOfNights;
+    }
+
+    public function suite_images()
+    {
+        $selected_suites = Session::get('suite_array');
+        $suite_images = [];
+        if(!empty($selected_suites)){
+            foreach($selected_suites as $selected_suite_id => $selected_suite){
+                $images = $this->getRoomImages(Session::get('property_id'),$selected_suite_id);
+                $suite_images[$selected_suite_id] = $images[0];
+            }
+        }
+        return $suite_images;
     }
 }

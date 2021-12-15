@@ -59,6 +59,19 @@
           <div class="col-lg-9 col-md-8">
             <form method="post" action="{{ route('store.suiteboard') }}">
               <div class="suite-board d-block section-shadow">
+                <div class="row align-items-center">
+                  <div class="col-2 col---s">
+                    <?php
+                      if (isset($property_image)) {
+                        $file_name = $property_image[0]->propertyImages[0]->file->file_name ; 
+                      }
+                    ?>
+                    <img src="{{ asset('/room-image/resize/69x58/' . $file_name) }}" class="img-full" alt="">
+                  </div>
+                  <div class="col">
+                    <h3>{{ $suitesboards->property_short_name }}</h3>
+                  </div>
+                </div>
                 <div class="suite-board-header">
                 </div>
                 <div class="row suite-board-body">

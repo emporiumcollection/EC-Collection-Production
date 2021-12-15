@@ -27,13 +27,30 @@
 ?>  
 @if(!empty($suites))
   @if(isset($suites))
-    
-    @foreach($suites as $suite)
-      @foreach($suite as $value)
+  <?php if(!empty($images)): ?>
+  @foreach($suites as $suite)    
+    @foreach($suite as $value)
         @if(isset($selected_suite[$value->id]))
         <div class="reservation-summary section-shadow">
-          <h4>SUITE &nbsp; {{ $pos++ }}</h4>
-          <p><b>{{ $value->category_name }}</b></p>
+          <div class="row align-items-center mb-3">
+            <div class="col-lg-3 pr-0 asd-sad">
+            <?php
+            $image = $images[$value->id];
+            if(isset($image['file']) && !empty($image['file'])){
+              if(isset($image['file'])) $name = $image['file']['name'];
+              if(isset($image['file'])) $file_name = $image['file']['file_name'];
+
+            ?>
+            <div class="col-lg-3 pr-0 asd-sad">
+              <img src="{{ asset('/room-image/resize/69x58/'. $name . '/' . $file_name) }}" class="img-full" alt="">
+            </div>
+           <?php } ?>
+            </div>
+            <div class="col-lg-9">
+              <h4>SUITE &nbsp; {{ $pos++ }}</h4>
+              <p><b>{{ $value->category_name }}</b></p>
+            </div>
+          </div>
           <table class="table table-borderless mb-0">
             <tr>
               <td class="px-0 py-1">Adult</td>
@@ -77,8 +94,9 @@
           @endif
         </div>
         @endif
-      @endforeach
     @endforeach
+  @endforeach
+<?php endif;?>   
     <?php $grand_total = $total + $board_price ?>
       <div class="reservation-total">
         <table class="table table-borderless mb-0">
