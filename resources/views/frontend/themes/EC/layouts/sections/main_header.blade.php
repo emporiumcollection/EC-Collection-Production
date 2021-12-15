@@ -3,6 +3,7 @@
     <div class="top-header-inner">
       <div class="row align-items-center">
         <div class="col-md-5 col-4">
+          @if(Request::segment(1) != 'reservation')
           <div id="menunav">
             <a href="#dashF" class="menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
               aria-controls="dashF">
@@ -12,7 +13,6 @@
               aria-controls="searchF">
               <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
             </a>
-            @if(Request::segment(1) != 'reservation')
               @if(!empty(\Session::get('keyword')))
                 <a href="#cityList" class="menu-nav text-menu city-f">
                   <span data-toggle="tooltip" title="Change destination">
@@ -37,9 +37,9 @@
                       </div>
                     </div>
                   </div>
-                </a>
-            @endif  
+                </a> 
           </div>
+        @endif 
         </div>
         <div class="col-md-2 col-4 text-center px-0">
           <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
