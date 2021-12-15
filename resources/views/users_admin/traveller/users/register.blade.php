@@ -385,7 +385,7 @@
                                             type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
                                         
                                         <a class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe "
-                                            title="Terms & Conditions" data-toggle="modal" data-target="#exampleModalLong">Terms & Conditions</a>
+                                            title="Terms & Conditions" data-toggle="modal" data-target="#terms-and-conditions">Terms & Conditions</a>
                                     </div>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1" checked>
@@ -464,7 +464,7 @@
         </div>
     </div>
 </div></div>
-{{-- @include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions') --}}
+@include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
 
 <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/popper.min.js')}}"></script>
