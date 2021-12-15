@@ -32,7 +32,7 @@
         @if(isset($selected_suite[$value->id]))
         <div class="reservation-summary section-shadow">
           <div class="row align-items-center mb-3">
-            <div class="col-lg-3 pr-0 asd-sad">
+            <div class="col-lg-3">
             <?php if(!empty($images)): ?>
             <?php
             $image = $images[$value->id];
@@ -41,9 +41,7 @@
               if(isset($image['file'])) $file_name = $image['file']['file_name'];
 
             ?>  
-            <div class="col-lg-3 pr-0 asd-sad">
               <img src="{{ asset('/room-image/resize/69x58/'.$container_name.'/'. $name . '/' . $file_name) }}" class="img-full" alt="">
-            </div>
            <?php } ?>
            <?php endif;?>
             </div>
