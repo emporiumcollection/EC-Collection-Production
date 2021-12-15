@@ -464,7 +464,7 @@
         </div>
     </div>
 </div></div>
-@include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
+{{-- @include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions') --}}
 
 <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/popper.min.js')}}"></script>
