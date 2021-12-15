@@ -38450,3 +38450,8 @@ button#clear span {
     font-size: 12px; }
   .menu-nav.text-menu {
     padding: 7px 2px; } }
+.select-guest {
+    color: #ffffff;
+    background-color: #090909;
+    border-color: #090909;
+}
