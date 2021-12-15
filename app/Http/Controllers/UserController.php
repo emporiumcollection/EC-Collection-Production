@@ -706,7 +706,8 @@ class UserController extends Controller {
         $rules = array(
             'firstname' => 'required',
             'lastname' => 'required',
-            'mobile_number' => 'required',
+            'mobile_number' => 'required|max:10',
+            'mobile_code'=>'required'
         );
 
         if ($request->input('email') != \Session::get('eid')) {
@@ -735,14 +736,16 @@ class UserController extends Controller {
                 $user->first_name = $request->input('firstname');
                 $user->last_name = $request->input('lastname');
                 $user->email = $request->input('email');
-                $user->landline_number = $request->input('landline_number');
+                $user->mobile_code = $request->input('mobile_code');
                 $user->mobile_number = $request->input('mobile_number');
                 $user->gender = $request->input('gender');              
                 $user->prefer_communication_with = $request->input('prefer_communication_with');
                 $user->preferred_currency = $request->preferred_currency;
+
                 if($newfilename){
                     $user->avatar = $newfilename;            
                 }
+                
                 $user->save();        
                 //insert contracts
                 //\CommonHelper::submit_contracts($contracts,'sign-up');
