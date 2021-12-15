@@ -14,7 +14,7 @@
 @section('content')
 <div class="content-em">
   <div class="top-wrapper">
-    <div class="container ">
+    <div class="container-full ">
 
       @include('frontend.themes.EC.reservation.nav_wizard')
         <h2 class="mb-5 d-flex align-items-center">
