@@ -717,21 +717,19 @@ class UserController extends Controller {
 
         if ($validator->passes()) { 
             
-            if (!is_null($request->profile_avatar)) {
-
                 $newfilename = "";
-
-                $file = $request->profile_avatar;
-                
-                $image_name = time() . '.' . $file->getClientOriginalExtension();
-                $destinationPath = public_path('/images/user_avatar');
-                if( !is_dir( $destinationPath ) ){
-                    mkdir( $destinationPath, 0755, true );
+                if (!is_null($request->profile_avatar)) {
+                    $file = $request->profile_avatar;
+                    $image_name = time() . '.' . $file->getClientOriginalExtension();
+                    $destinationPath = public_path('/images/user_avatar');
+                    if( !is_dir( $destinationPath ) ){
+                        mkdir( $destinationPath, 0755, true );
+                    }
+                    $extension = $file->getClientOriginalExtension(); //if you need extension of the file
+                    $newfilename = \Session::get('uid') . '.' . $extension;
+                    // echo "<pre>";print_r($newfilename);exit(); 
+                    $file->move($destinationPath,$newfilename);
                 }
-                $extension = $file->getClientOriginalExtension(); //if you need extension of the file
-                $newfilename = \Session::get('uid') . '.' . $extension;
-                // echo "<pre>";print_r($newfilename);exit(); 
-                $file->move($destinationPath,$newfilename);
 
                 $user = User::find(\Session::get('uid'));
                 $user->first_name = $request->input('firstname');
@@ -742,16 +740,15 @@ class UserController extends Controller {
                 $user->gender = $request->input('gender');              
                 $user->prefer_communication_with = $request->input('prefer_communication_with');
                 $user->preferred_currency = $request->preferred_currency;
-                $user->avatar = $newfilename;            
+                if($newfilename){
+                    $user->avatar = $newfilename;            
+                }
                 $user->save();        
                 //insert contracts
                 //\CommonHelper::submit_contracts($contracts,'sign-up');
                 //End
-                return redirect::to('/users/profile')->with('massage', 'Profile has been saved!');
-                }else{
-                    return redirect::to('/users/profile')->with('Errmassage', 'Please upload your Avator!');   
-                }
-
+                return redirect::to('/users/profile')
+                ->with('massage', 'Profile has been saved!');                
         } else {
             return Redirect::to('/users/profile')->with('Errmassage', 'Error Ocured!');
         }
