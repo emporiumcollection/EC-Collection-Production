@@ -438,8 +438,15 @@
                         </div>
                         <div class="form-group col-md-6">
                             <label>Phone<span class="text-danger">*</span></label>
-                            <input type="text" name="phone" id="comapnion_phone" class="form-control phone" placeholder="Enter your phone" maxlength="10">
-                            <div class="invalid-feedback ac_phone errMsg"></div>
+                            <div class="d-flex">
+
+                              <input type="text" style="max-width: 65px;" name="phone_code" 
+                                      id="comapnion_phone_code" class="form-control form-control-solid form-control-lg" 
+                                      placeholder="+49" maxlength="4">
+                              <div class="invalid-feedback ac_phone_code errMsg"></div>
+                              <input type="number" name="phone" id="comapnion_phone" class="form-control phone ml-2" placeholder="Enter your phone" maxlength="10">
+                              <div class="invalid-feedback ac_phone errMsg"></div>
+                            </div>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Gender<span class="text-danger">*</span></label>
@@ -480,7 +487,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary font-weight-bold add_companion" data-dismiss="modal" aria-label="Close">Close</button>
+                    <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" aria-label="Close">Close</button>
                     <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Companion</button>
                 </div>
         </div>

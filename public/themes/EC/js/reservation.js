@@ -612,6 +612,7 @@ $(document).ready(function(){
     $(document).on('click', ".add_companion", function(){        
         var first_name = $('#comapnion_f_name').val();
         var last_name = $('#comapnion_l_name').val();
+        var phone_code = $('#comapnion_phone_code').val();
         var phone = $('#comapnion_phone').val();
         var email = $('#comapnion_email').val();
         var preferred_language = $("#preferred_language").val();
@@ -625,6 +626,7 @@ $(document).ready(function(){
                 first_name: first_name,
                 last_name: last_name,
                 email: email,
+                phone_code: phone_code,
                 phone: phone,
                 gender: gender,
                 preferred_language: preferred_language,

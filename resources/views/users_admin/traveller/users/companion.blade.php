@@ -122,15 +122,13 @@
 								<label class="col-xl-3 col-lg-3 col-form-label">
 									Phone Number
 								</label>
-								<div class="col-lg-9 col-xl-9">
+								<div class="col-lg-9 col-xl-9 d-flex">
+									<div class="col-c-code" style="max-width: 65px;">
+										<input type="text" name="phone_code" id="code" value="@if(isset($data)){{  $data->phone_code ? $data->phone_code : ''}}@endif" class="form-control form-control-solid form-control-lg" placeholder="+49" maxlength="4" required>
+									</div>
 									<div
 										class="input-group input-group-solid input-group-lg">
-										<div class="input-group-prepend">
-											<span class="input-group-text">
-												<i class="la la-phone"></i>
-											</span>
-										</div>
-										<input type="text"
+										<input type="number"
 											class="form-control form-control-solid form-control-lg"
 											name="phone_number" value="@if(isset($data)){{  $data->phone_number ? $data->phone_number : ''}}@endif"
 											placeholder="Phone Number" maxlength="10">

@@ -485,6 +485,7 @@ class ReservationController extends Controller {
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email',
+            'phone_code' => 'required',
             'phone' => 'required|digits:10|numeric',
             'gender' => 'required',
             'preferred_language' => 'required',
@@ -507,6 +508,7 @@ class ReservationController extends Controller {
             $companion->first_name = $request->first_name;
             $companion->last_name = $request->last_name;
             $companion->email = $request->email;
+            $companion->phone_code = $request->phone_code;
             $companion->phone_number = $request->phone;
             $companion->gender = $request->gender;
             $companion->preferred_language = $request->preferred_language;
