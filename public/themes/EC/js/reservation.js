@@ -688,7 +688,7 @@ $(document).ready(function(){
                 $('.form-control').removeClass('is-invalid');
                 $('.invalid-feedback').empty();
                 if(response.status == true){
-                    // window.location.href = '/reservation/bookingsummary';
+                    window.location.href = '/reservation/bookingsummary';
                 }else{
                     $.each(response.errors, function(key, val){
                         $('.'+key).addClass('is-invalid');
