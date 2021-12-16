@@ -63,7 +63,6 @@ function replacePropertyData(id){
       // field = $(this).attr('data-replace');
       //console.log(properties[id][field]);
       var suites = properties[id]['suites'];
-      var imgRooms = [];
       var imageview = '';
       var spanid = 1;
       var grid = 1;
@@ -72,8 +71,8 @@ function replacePropertyData(id){
 
       suites.forEach(function(s){
         spanid = 1;
-        imgRooms[0] = rooms[0];
-        imgRooms.forEach(function(r){
+        rooms = s.rooms;
+        rooms.forEach(function(r){
           if(typeof r.images !== 'undefined' && r.images.length){
             rimages = r.images;
             if(rimages.length){          
@@ -89,6 +88,7 @@ function replacePropertyData(id){
               });
             }
           }
+          break;
         });
       });
       $(this).html(imageview);
