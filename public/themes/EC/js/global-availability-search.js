@@ -71,8 +71,8 @@ function replacePropertyData(id){
 
       suites.forEach(function(s){
         spanid = 1;
-        rooms[0] = s.rooms[0];
-        rooms.forEach(function(r){
+        imgRooms[0] = rooms[0];
+        imgRooms.forEach(function(r){
           if(typeof r.images !== 'undefined' && r.images.length){
             rimages = r.images;
             if(rimages.length){          
