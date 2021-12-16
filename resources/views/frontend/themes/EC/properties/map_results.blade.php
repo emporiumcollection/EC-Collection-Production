@@ -196,7 +196,7 @@
         }
         var popupContent = '<div class="map-detail-container">' +
           '<div class="map-hotel-img">' +
-          '<div class="popup-slider">' +
+          '<div>' +
           slideshowContent +
           '</div>' +
           // '<div class="popup-nav">' +
