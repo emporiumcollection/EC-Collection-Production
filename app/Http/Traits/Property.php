@@ -856,7 +856,6 @@ trait Property {
         ->select(['rack_rate'])
         //->whereIn('category_id', $roomIds) for amadeus
         ->where('category_id', '=', $suite_id)        
-        ->where('season_id', '!=', 0)
         ->orderBy('rack_rate', 'asc')
         ->get()
         ->toArray();
