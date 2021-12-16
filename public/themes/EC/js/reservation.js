@@ -44,25 +44,25 @@ $(document).ready(function(){
         return true;
     });
 
-    $('.fromdate').daterangepicker({
-        singleDatePicker: true,
-        minDate:new Date(), 
-        locale: {
-            format: 'DD MMM YYYY'
-        }
-    });
+    // $('.fromdate').daterangepicker({
+    //     singleDatePicker: true,
+    //     minDate:new Date(), 
+    //     locale: {
+    //         format: 'DD MMM YYYY'
+    //     }
+    // });
 
-    $('.fromdate').on('apply.daterangepicker', function (ev, picker) {
-        $('.todate').prop("disabled", false);
-    });
+    // $('.fromdate').on('apply.daterangepicker', function (ev, picker) {
+    //     $('.todate').prop("disabled", false);
+    // });
 
-    $('.todate').daterangepicker({
-        singleDatePicker: true,
-        minDate:new Date(), 
-        locale: {
-            format: 'DD MMM YYYY'
-        }
-    });
+    // $('.todate').daterangepicker({
+    //     singleDatePicker: true,
+    //     minDate:new Date(), 
+    //     locale: {
+    //         format: 'DD MMM YYYY'
+    //     }
+    // });
 
     $('.policies').on('show.bs.collapse', function () {
         $('.collapse.show').each(function () {
@@ -427,8 +427,11 @@ $( document ).ready(function() {
 });
 
 $(document).on('click', ".stay_dates", function(){
-    var arrival_date = $("#arrival_date").val();
-    var departure_date = $("#departure_date").val();
+    // var arrival_date = $("#arrival_date").val();
+    // var departure_date = $("#departure_date").val();
+    var date = $(".range_date").val().split('-');
+    var arrival_date = date[0];
+    var departure_date = date[1];
     var propertyid = $("#property_id").val();
 
     $.ajax({
@@ -449,8 +452,8 @@ $(document).on('click', ".stay_dates", function(){
 
 
 $(document).on('click', ".step_where", function(){
-    var arrival_date = $("#arrival_date").val();
-    var departure_date = $("#departure_date").val();
+    var date = $(".range_date").val().split('-');
+    var arrival_date = date[0]; 
     var propertyid = $("#property_id").val();
     if(arrival_date == ''){
         $('#guestValidationMsg').find('#massage').html("Please select your stay dates");
@@ -458,12 +461,12 @@ $(document).on('click', ".step_where", function(){
         return false;
     }else{
         $.ajax({
-            type: 'post',            
-            url: '/store_dates/session',             
+            type: 'POST',            
+            url: '/store_id/session',             
             data: {
                 property_id:propertyid,
-                arrival_date:arrival_date,
-                departure_date:departure_date
+                // arrival_date:arrival_date,
+                // departure_date:departure_date
             },
             success:function(response){
                 window.location.href ="/reservation/where";

@@ -957,7 +957,11 @@ class ReservationController extends Controller {
         }
         return $suite_images;
     }
-
+    
+    public function storepopertyid(Request $request)
+    {
+        Session::put('property_id',$request->property_id);
+    }
     private function setSummaryData(){
         $property = $this->getPropertyById(Session::get('property_id'));
         // print_r($property);exit;

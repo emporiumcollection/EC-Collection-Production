@@ -724,11 +724,29 @@ trait Property {
                     ->where('category_id', '=', $category_id)
                     ->where('season_id', '=', $sdate['season_id'])
                     ->get()
-                    ->toArray();                    
-                    if(empty($roomPrices)){
-                        continue;    
-                    }
+                    ->toArray();  
 
+                    if(empty($roomPrices)){
+                        $roomPrices = PropertyRoomPrices::select([
+                            'monday_price', 
+                            'tuesday_price',
+                            'wednesday_price',
+                            'thursday_price',
+                            'friday_price',
+                            'saturday_price',
+                            'sunday_price',
+                        ])
+                        //->whereIn('category_id', $roomIds) for amadeus
+                        ->where('category_id', '=', $category_id)
+                        ->where('season_id', '=', 0)
+                        ->get()
+                        ->toArray();
+                          
+                        if(empty($roomPrices)){ 
+                            continue;
+                        }
+                    }
+                    
                     $start = $sdate['season_from_date'];
                     $end = $sdate['season_to_date'];
 

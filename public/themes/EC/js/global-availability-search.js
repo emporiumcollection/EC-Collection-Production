@@ -837,7 +837,8 @@ function filterDestination(dest){
   currentSearch = dest;
   $('.close-collapse').trigger("click");
   var url = createSearchUrl();
-  searchResults(url);
+  //searchResults(url);
+  document.location = url;
 }
 
 function createSearchUrl(experience = ''){

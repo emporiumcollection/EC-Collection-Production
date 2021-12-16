@@ -25,20 +25,12 @@
           <h5 class="mb-2 mt-3">Your selected stay dates:</h5>
           <div class="row mb-5">            
             <div class="col">
-              <p><b>Arrival date</b></p>
               <div class="form-group form-inline-group form-date-lg">
                 <input type="hidden" name="property_id" id="property_id" value="<?php echo $property_id?>">
-                <input type="text" class="form-control form-line fromdate" name="arrival_date" id="arrival_date"  value="{!! date('d-M-Y', strtotime(Session::get('arrival')));  !!}">
-                <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
+                <input type="text" class="form-control range_date" name="daterange" value="{!! date('m-d-Y', strtotime(Session::get('arrival'))); !!} - {!! date('m-d-Y', strtotime(Session::get('departure'))); !!}"/>                
               </div>
             </div>
-            <div class="col">
-              <p><b>Departure date</b></p>
-              <div class="form-group form-inline-group form-date-lg">
-                <input type="text" class="form-control form-line todate" name="departure_date" id="departure_date" value="{!! date('d-M-Y', strtotime(Session::get('departure')));  !!}">
-                <span><i class="fa fa-calendar-o" aria-hidden="true"></i></span>
-              </div>
-            </div>
+            
           </div>
           <div class="row">
             <p class="alert alert-success" id="msg" style="display:none;"></p>
@@ -62,4 +54,13 @@
   </div>
 </div>
 </div>
+<script>
+  $(function() {
+    $('input[name="daterange"]').daterangepicker({
+      opens: 'true'
+    }, function(start, end, label) {
+      console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+    });
+  });
+</script>
 @endsection

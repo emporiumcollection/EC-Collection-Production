@@ -2324,6 +2324,12 @@ $(document).ready(function () {
     $("#price_range").slider("values", $this.data("index"), $this.val());
   });
   
+  $("#price_reset").click(function(){
+      $("#price_range").slider("option", "values", [80,824]);
+      $("#min").val(80);
+      $("#max").val(10000);
+  });
+
   $(".who").click(function (e) {
      var dest = $("#inlineFormInputGroup").val();
      $("#collection").val('View ' + dest + ' Collection');

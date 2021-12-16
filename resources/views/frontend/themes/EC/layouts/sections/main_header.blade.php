@@ -294,6 +294,7 @@
                           <div class="col">
                             <div class="input-filter">
                               <a href="javascript:void(0);" class="btn btn-primary  filter_price">Filter Price</a>
+                              <button type="button" class="btn btn-primary" id="price_reset">Reset price</button>
                             </div> 
                           </div>
                         </div>  
