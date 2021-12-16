@@ -847,12 +847,13 @@ var currentSearch = '';
 function filterDestination(dest){
   currentSearch = dest;
   $('.close-collapse').trigger("click");
-  var url = createSearchUrl();
+  var view = getUrlParam('view');
+  var url = createSearchUrl('', view);
   //searchResults(url);
   document.location = url;
 }
 
-function createSearchUrl(experience = ''){
+function createSearchUrl(experience = '', layoutView = 'ajax'){
   $('.pageload').show();
 
   if(experience !== null && !experience){
@@ -906,7 +907,7 @@ function createSearchUrl(experience = ''){
   
   var url = document.location.origin + document.location.pathname + `?s=`+keyword+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience+`&min=`+min+`&max=`+max;
   window.history.pushState({}, '', url);
-  return url + '&view=ajax';
+  return url + '&view=' + layoutView;
 }
 
 function resetSearch(){
