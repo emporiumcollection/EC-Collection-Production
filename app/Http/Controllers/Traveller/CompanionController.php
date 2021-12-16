@@ -47,7 +47,8 @@ class CompanionController extends Controller {
             'first_name' => 'required',
             'last_name' => 'required',
             'email' => 'required|email',
-            'phone_code' => 'required'
+            'phone_code' => 'required',
+            'phone_number' => 'required|max:10',
         );
         $validator = Validator::make($request->all(), $rules);
         $id = $request->input('id'); 

@@ -149,9 +149,11 @@
 
             </div>
             <div class="col-md-4">
-                <div class="side-detail mb-3" data-place="reserve-link">
+                <div class="side-detail mb-3">
+                    <p data-place="checkin"> </p>
+                    <p data-place="checkout"> </p>
                     <p>Reserve now, pay at the Hotel</p>                    
-                    <a href="/reservation/when" class="btn btn-dark btn-block">Reservation</a>
+                    <a data-place="reserve-link" href="/reservation/when" class="btn btn-dark btn-block">Reservation</a>
                 </div>
 
                 <!-- display only on dektop -->
