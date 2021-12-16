@@ -791,7 +791,6 @@ trait Property {
         $price = PropertyRoomPrices::first()
         ->select(['rack_rate'])
         ->where('property_id', '=', $id)
-        ->where('season_id', '!=', 0)
         ->orderBy('rack_rate', 'asc')
         ->get()
         ->toArray();
