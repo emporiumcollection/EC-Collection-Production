@@ -63,6 +63,7 @@ function replacePropertyData(id){
       // field = $(this).attr('data-replace');
       //console.log(properties[id][field]);
       var suites = properties[id]['suites'];
+      var imgRooms = [];
       var imageview = '';
       var spanid = 1;
       var grid = 1;
