@@ -27328,15 +27328,7 @@ a:hover {
         order: 1;
         text-align: left !important; }
       .top-header.header-fixed .header-right {
-        order: 3; }
-      .top-header.header-fixed .menu-s .nav-left {
-        display: none; }
-      .top-header.header-fixed .menu-s .nav-text {
-        margin-left: 0; }
-        .top-header.header-fixed .menu-s .nav-text::before {
-          display: none; }
-      .top-header.header-fixed .menu-s .nav-item:first-child {
-        margin-left: 0; }  
+        order: 3; }  
 .second-header {
   position: fixed;
   left: 0;

@@ -72,7 +72,7 @@
             <a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews" onclick="replaceReviewData()">
                 Reviews
             </a>
-            <a href="#" class="view btn-sidebar i-none" data-sidebar="#suiteinfo" onclick="replaceSuiteBoard();">
+            <a href="#" class="view btn-sidebar i-none suite_info" data-sidebar="#suiteinfo" onclick="replaceSuiteBoard();">
                 Suite Info
             </a>
             <a href="/reservation/when/<!--PROPERTY-ID-->" class="view i-none">

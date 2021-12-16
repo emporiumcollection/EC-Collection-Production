@@ -327,7 +327,14 @@ function replaceSuiteList(id){
       }else{
           suiteItem = suiteItem.replace('<!--COVID-LINK-->', '#');
       }
+
       $('#suiteslist').append(suiteItem);
+      
+      if(properties[id].boards.length != 0){
+        $('.suite_info').show();
+      }else{
+        $('.suite_info').hide();
+      }
     }
 
     $('.no-beds').each(function(e){
@@ -408,9 +415,13 @@ function replaceSuiteDetail(property_id, category_id){
     $('[data-place="covid_link"]').attr("href", "http://"+properties[property_id].covid_link);
   }
 
-  $('[data-place="reserve-link"]').html(`<p>Reserve now, pay at the Hotel</p>                    
-                    <a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-block">Reservation</a>`);  
-
+  $('[data-place="reserve-link"]').attr('href','/reservation/when/' + property_id );
+  var checkin = properties[property_id].checkin;
+  var checkout = properties[property_id].checkout;
+  if(checkin != null && checkout != null){
+    $('[data-place="checkin"]').html("<strong>Check-in:</strong>" + checkin);
+    $('[data-place="checkout"]').html("<strong>Check-out:</strong>"+ checkout);
+  }
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout("$('.nav-item #suite').addClass('show');", 1000);
   setTimeout('appendSlider()', 2000);
