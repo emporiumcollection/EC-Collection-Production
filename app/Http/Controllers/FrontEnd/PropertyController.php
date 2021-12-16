@@ -7226,8 +7226,8 @@ class PropertyController extends Controller {
      * 
      */
     public function propertyRoomPrices(Request $request){
-        $usdRate = Session::get('current_rate');
-        if(!$usdRate){
+        //$usdRate = Session::get('current_rate');
+        //if(!$usdRate){
             $rsGbp = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=9c25f1b7954b2cc85b74449e328ae2dc&symbols=GBP');
             $rsGbp = json_decode($rsGbp);
 
@@ -7239,7 +7239,7 @@ class PropertyController extends Controller {
             $usdRate = $rsUsd->rates->USD;
 
             $request->session()->put('current_rate', $usdRate);
-        }
+        //}
 
         $property_id = $request->query->get('property_id');
         $category_id = $request->query->get('category_id');
