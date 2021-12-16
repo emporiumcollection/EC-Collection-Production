@@ -72,21 +72,23 @@ function replacePropertyData(id){
       suites.forEach(function(s){
         spanid = 1;
         rooms = s.rooms;
-        rooms.forEach(function(r){
-          if(typeof r.images !== 'undefined' && r.images.length){
-            rimages = r.images;
-            if(rimages.length){          
-              rimages.forEach(function(e){
-                try{
-                  imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
-                  imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '" ><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
-                  spanid=2;
-                  grid = 2;
-                }catch(e){
+        rooms.forEach(function(r, ind){
+          if(ind == 0){          
+            if(typeof r.images !== 'undefined' && r.images.length){
+              rimages = r.images;
+              if(rimages.length){          
+                rimages.forEach(function(e){
+                  try{
+                    imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
+                    imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '" ><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+                    spanid=2;
+                    grid = 2;
+                  }catch(e){
 
-                }
-              });
-            }
+                  }
+                });
+              }
+            }  
           }
         });
       });
