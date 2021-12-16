@@ -7258,10 +7258,23 @@ class PropertyController extends Controller {
         );
         
         if(empty($propertyPrices)){
+            $roomPrices = PropertyRoomPrices::select([
+                'rack_rate',
+            ])
+            ->where('category_id', '=', $category_id)
+            ->where('season_id', '=', 0)
+            ->get()
+            ->toArray();  
+
+            $finalPrice = 100;
+            if(!empty($roomPrices)){
+                $finalPrice = $roomPrices[0]['rack_rate'];
+            }
+
             $default = [];
             $trip = \CommonHelper::getDateRange($arrival, $departure);
             foreach($trip as $key => $date){
-                $default[$date] = 100;
+                $default[$date] = $finalPrice;
             }
             $propertyPrices = $default;
         }
