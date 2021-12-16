@@ -32,7 +32,7 @@
       </div>
       <?php endforeach;?>
     </div>
-    <div class="my-dropdown">
+    {{--<div class="my-dropdown">
       <div class="btn-group dropleft">
         <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="ico ico-diamon diamon-label"></i>
@@ -45,7 +45,7 @@
         </div>
       </div>
 
-    </div>
+    </div>--}}
     <div class="hotel-meta full-width is-small">
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $property->id;?>)">
         Reviews
