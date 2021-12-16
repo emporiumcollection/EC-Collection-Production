@@ -88,7 +88,6 @@ function replacePropertyData(id){
               });
             }
           }
-          break;
         });
       });
       $(this).html(imageview);
