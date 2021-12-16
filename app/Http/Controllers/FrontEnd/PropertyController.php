@@ -6,6 +6,7 @@ use App\Models\Container;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Models\PropertyRoomPrices;
 use App\Models\properties;
 use App\Http\Traits\Property;
 use App\Http\Traits\Category;
