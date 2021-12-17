@@ -152,7 +152,7 @@
             </a>
             <?php endif;?>
             <?php if(Request::get('view')!='map'):?>
-            <a class="nav-link" href="<?php echo str_replace('&view=channel','',Request::fullUrl()).'&view=map';?>">
+            <a class="nav-link" href="<?php echo str_replace('&view=results','&view=map',Request::fullUrl());?>">
               <i class="ico ico-place"></i>
             </a>
             <?php endif;?>              
