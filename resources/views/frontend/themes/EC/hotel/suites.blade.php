@@ -27,6 +27,7 @@
         <div class="col-lg-8 col-hotel-slider" id="suiteinfo" style="display: none;">
             @include('frontend.themes.EC.properties.subtemplates.suite_detail_template')
         </div>
+        <input type="hidden" name="city_" id="city" value="<?php echo $property->city;?>">
       </div>
     </div>
   </div>
@@ -48,6 +49,7 @@
     });
 
   });
+  var city = <?php echo $property->city;?>;
 </script>
 <?php endif; ?>
 @endsection

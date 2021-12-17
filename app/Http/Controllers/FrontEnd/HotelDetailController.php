@@ -48,7 +48,9 @@ class HotelDetailController extends Controller
         $this->setGalleryAndFormat($this->data['property']);
         $this->data['property'] = $this->data['property'][0];
         $this->data['property_id'] = $property_id;
-
+        $this->setFitlerOptions();
+        $this->data = $this->setFitlerOptions();
+        
         $file_name = 'frontend.themes.EC.hotel.suites';      
         return view($file_name, $this->data);
     }
@@ -170,7 +172,8 @@ class HotelDetailController extends Controller
         $this->data['property'] = $this->getPropertyById($id);
         $this->setGalleryAndFormat($this->data['property']);
         $this->data['property'] = $this->data['property'][0];
-
+        $this->setFitlerOptions();
+        $this->data = $this->setFitlerOptions();
         $file_name = 'frontend.themes.EC.hotel.location';      
         return view($file_name, $this->data);
     }

@@ -17,6 +17,7 @@
             @include('frontend.themes.EC.hotel.sidebar_nav_hd')
         </div>        
         @include('frontend.themes.EC.hotel.subtemplates.location')
+        <input type="hidden" name="city_" id="city" value="<?php echo $property->city; ?>">
       </div>
     </div>
   </div>

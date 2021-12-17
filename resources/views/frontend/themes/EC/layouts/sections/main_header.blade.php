@@ -48,10 +48,14 @@
         </div>
         <div class="col-md-5 col-4 text-right mobile-flex">
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
-            @if(Auth::check() && Auth::user()->avatar)
+            @if(Auth::check() && Auth::user()->username)
               <a href="/dashboard" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
                 <div class="user-profile-img">
-                  <img src="{{ asset('/images/user_avatar/'.Auth::user()->avatar) }}" alt="">
+                  @if(!empty(Auth::user()->avatar))
+                   <img src="{{ asset('/images/user_avatar/'.Auth::user()->avatar) }}" alt="">
+                  @else
+                    <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                  @endif
                 </div>
               </a>
             @else  
@@ -138,7 +142,7 @@
     <hr class="mb-0">
     <div class="menu-s">
       <div class="d-flex align-items-center">
-        <?php if(strpos(request()->route()->getAction()['controller'], 'PropertyController')): ?>
+        <?php if(strpos(request()->route()->getAction()['controller'], 'PropertyController') || strpos(request()->route()->getAction()['controller'], 'HotelDetailController')): ?>
         <ul class="nav nav-left mobile-off">
           {{-- <li class="nav-item">
             <a class="nav-link btn-sidebar" href="#" data-sidebar="#filterbar">
