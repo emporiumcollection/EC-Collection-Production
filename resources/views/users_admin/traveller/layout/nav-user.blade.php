@@ -153,27 +153,49 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Card number <span class="text-danger">*</span></label>
+                        <label>Card Number <span class="text-danger">*</span></label>
                         <input type="text" name="card_number" class="form-control" placeholder="Enter Card Number">
                     </div>
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <label>Expires On <span class="text-danger">*</span></label>
-                            <input type="text" name="expire" class="form-control" placeholder="Enter expiry date">
+                            <label>Expiry Month <span class="text-danger">*</span></label>
+                            <select name="exp_month" class="form-control">
+                                <option value="" selected disabled>Month</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Security Code <span class="text-danger">*</span></label>
-                            <input type="text" name="security_code" class="form-control" placeholder="Enter your passcode">
+                            <label>Expiry Year <span class="text-danger">*</span></label>
+                            <select class="form-control" name="exp_year" id="expire_year">
+                                <option value="" selected disabled>Year</option>
+                                <?php $years = range(date('Y'), (date('Y') + 20)); ?>
+                                @foreach($years as $year)
+                                    <option value="{{ $year }}">{{ $year }}</option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="form-group col-md-6">
-                            <label>First name <span class="text-danger">*</span></label>
-                            <input type="text" name="first_name" class="form-control" placeholder="Enter your firsname">
+                        <div class="form-group col-md-12">
+                            <label>Security Code <span class="text-danger">*</span></label>
+                            <input type="password" name="security_code" class="form-control" placeholder="Enter your passcode">
                         </div>
-                        <div class="form-group col-md-6">
-                            <label>Last Name <span class="text-danger">*</span></label>
-                            <input type="text" name="last_name" class="form-control" placeholder="Enter your lastname">
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Name on Card <span class="text-danger">*</span></label>
+                            <input type="text" name="name" class="form-control" placeholder="Enter name">
                         </div>
                     </div>
                     <div class="row">

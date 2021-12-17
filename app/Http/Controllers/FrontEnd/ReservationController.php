@@ -552,6 +552,12 @@ class ReservationController extends Controller {
         
         // $this->data['selected_suite'] = $selected_suite;
         // $this->data['suites'] = $arr;
+        $this->data['card_logos'] = [
+            1 => 'mastercard',
+            2 => 'visa',
+            3 => 'american-express',
+            4 => 'discover'
+        ];
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -593,20 +599,18 @@ class ReservationController extends Controller {
                     $full_name = $request->card_name;
                     $name = explode(" ", $full_name); 
                     
-                    $card_type = Crypt::encrypt($request->card_type);
-                    $card_number = Crypt::encrypt($request->card_number);
-                    $first_name = Crypt::encrypt($name[0]);
-                    $last_name = Crypt::encrypt($name[1]);
-                    $requirements = Crypt::encrypt($request->requirements);
+                    $card_number = \CommonHelper::encrypt($request->card_number);
+                    $first_name = \CommonHelper::encrypt($name[0]);
+                    $last_name = \CommonHelper::encrypt($name[1]);
+                    $requirements = \CommonHelper::encrypt($request->requirements);
                     $payment_data = array(
                         'user_id' => Auth::user()->id, 
-                        'card_type' => $card_type, 
+                        'select_card' => $request->card_type, 
                         'card_number' => $card_number, 
                         'exp_month' => $request->exp_month, 
                         'exp_year' => $request->exp_year,
                         'first_name' => $first_name,
                         'last_name' => $last_name,
-                        'created_at' => date("Y-m-d"),
                         'srequirements' => $requirements
                     );
                     $payment_id = \DB::table('tb_cards')->insertGetId($payment_data);

@@ -15,35 +15,15 @@
                 @if($card_detail)
                     @foreach($card_detail as $detail )
                         <div class="d-flex align-items-center list-divider">
-                            @if($detail->select_card == 1)
                             <div class="ico-inline mr-5">
-                                <i class="ico-payment mastercard"></i>
+                                <i class="ico-payment {{ $card_logos[$detail->select_card] }}"></i>
                             </div>
-                            @endif
-
-                            @if($detail->select_card == 2)
-                            <div class="ico-inline mr-5">
-                                <i class="ico-payment visa"></i>
-                            </div>
-                            @endif
-
-                            @if($detail->select_card == 3)
-                            <div class="ico-inline mr-5">
-                                 <i class="ico-payment american-express"></i>
-                            </div>
-                            @endif
-
-                            @if($detail->select_card == 4)
-                            <div class="ico-inline mr-5">
-                                <i class="ico-payment discover"></i>
-                            </div>
-                            @endif
 
                             <div class="d-flex flex-column flex-grow-1">
                                 <div
                                     class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
                                     <?php
-                                        $full_card_number = \Crypt::decrypt($detail->card_number);
+                                        $full_card_number = \CommonHelper::decrypt($detail->card_number);
                                         $card_number = '•••• •••• •••• ' . substr($full_card_number,-4);
                                     ?>
                                     {{ $card_number }}
@@ -51,8 +31,7 @@
                                         <span class="default-set">default</span>
                                     @endif
                                 </div>
-                                <span class="text-muted font-weight-bold">Expiration:
-                                    {{ \Crypt::decrypt($detail->expires_on) }}</span>
+                                <span class="text-muted font-weight-bold">Expiration: {{ $detail->exp_month }} / {{ $detail->exp_year }}</span>
                             </div>
                            
                             <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"

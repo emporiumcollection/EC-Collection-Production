@@ -36,34 +36,17 @@
                   <div class="row">
                     <div class="col-lg-7 col-md-8">
                       <div class="d-flex align-items-center list-divider">
-                          @if(\Crypt::decrypt($card->card_type) == 1)
                             <div class="ico-inline mr-5">
-                                <i class="ico-payment visa"></i>
+                              <i class="ico-payment {{ $card_logos[$card->select_card] }}"></i>
                             </div>
-                          @endif
-                          @if(\Crypt::decrypt($card->card_type) == 2)
-                            <div class="ico-inline mr-5">
-                                <i class="ico-payment mastercard"></i>
-                            </div>
-                          @endif
-                          @if(\Crypt::decrypt($card->card_type) == 3)
-                            <div class="ico-inline mr-5">
-                                 <i class="ico-payment american-express"></i>
-                            </div>
-                          @endif
-                          @if(\Crypt::decrypt($card->card_type) == 4)
-                            <div class="ico-inline mr-5">
-                                <i class="ico-payment discover"></i>
-                            </div>
-                          @endif
                             <div class="d-flex flex-column flex-grow-1">
                               <div class="text-dark-75 text-hover-primary font-weight-bold 
                                   font-size-lg mb-1">
                                 <?php
-                                  $full_card_number = \Crypt::decrypt($card->card_number);
+                                  $full_card_number = \CommonHelper::decrypt($card->card_number);
                                   $card_number = '•••• •••• •••• ' . substr($full_card_number, -4);
                                 ?>
-                                {{ \Crypt::decrypt($card->card_type) }} {{ $card_number }} 
+                                {{ $card_number }} 
                                 @if($card->default_card)
                                   <span class="default-set">default</span>
                                 @endif
@@ -88,10 +71,10 @@
               </div>
               <div class="col-md-8 form-group">
                 <select class="form-control card_type" name="card_type" id="card_type">
-                  <option value="1">Visa</option>
-                  <option value="2">Master Card</option>
-                  <option value="3">American Express</option>
-                  <option value="4">discover</option>
+                  <option value="1">Mastercard</option>
+                  <option value="2">Visa</option>
+                  <option value="3">American-express</option>
+                  <option value="4">Discover</option>
                 </select>
                 <div class="invalid-feedback"></div>
               </div>

@@ -1600,14 +1600,15 @@ class UserController extends Controller {
 
     public function userCardDetail(Request $request){
 
-        $user = User::find(\Session::get('uid'));
         if (!\Auth::check())
             return Redirect::to('user/login');
+
         $rules = array(
-            'first_name' => 'required',
-            'last_name' => 'required',
             'card_number' => 'required',
+            'exp_month' => 'required',
+            'exp_year' => 'required',
             'security_code' => 'required',
+            'name' => 'required',
             'postal_code' => 'required',
             'country' => 'required'
         );
@@ -1615,28 +1616,37 @@ class UserController extends Controller {
         $validator = Validator::make($request->all(), $rules);
          if ($validator->passes()) {
 
-            $card_type = Crypt::encrypt($request->input('card_type'));
+            /*$card_type = Crypt::encrypt($request->input('card_type'));
             $card_number = Crypt::encrypt($request->card_number);
             $expire = Crypt::encrypt($request->input('expire'));
             $first_name = Crypt::encrypt($request->input('first_name'));
             $last_name = Crypt::encrypt($request->input('last_name'));
             $postal_code = Crypt::encrypt($request->input('postal_code'));
             $country = Crypt::encrypt($request->input('country'));
-            $security_code = Crypt::encrypt($request->input('security_code'));
+            $security_code = Crypt::encrypt($request->input('security_code'));*/
 
-            $user = User::find(\Session::get('uid'));
+            $name = explode(' ', $request->input('name'));
+            $first_name = $name[0];
+            $last_name = isset($name[1]) ? $name[1] : NULL;
+
+            $card_type = \CommonHelper::encrypt($request->input('card_type'));
+            $card_number = \CommonHelper::encrypt($request->input('card_number'));
+            $first_name = \CommonHelper::encrypt($first_name);
+            $last_name = \CommonHelper::encrypt($last_name);
+            $security_code = \CommonHelper::encrypt($request->input('security_code'));
+
+            $user = User::find(\Auth::user()->id);
             $card_data['user_id'] = $user->id;
             $card_data['select_card'] = $request->input('select_card');
             $card_data['card_type'] = $card_type;
             $card_data['card_number'] = $card_number;
-            $card_data['expires_on'] = $expire;
+            $card_data['exp_month'] = $request->input('exp_month');
+            $card_data['exp_year'] = $request->input('exp_year');
             $card_data['security_code'] = $security_code;
             $card_data['first_name'] = $first_name;
             $card_data['last_name'] = $last_name;
-            $card_data['postal_code'] = $postal_code;
-            $card_data['country'] = $country;
-            $card_data['created_at'] = date("Y-m-d");
-            $card_data['updated_at'] = date("Y-m-d");
+            $card_data['postal_code'] = $request->input('postal_code');
+            $card_data['country'] = $request->input('country');
 
             \DB::table('tb_cards')->insert($card_data);
                 return Redirect::to('users/setting')->with('message', 'Invites send successfully')->with('msgstatus', 'success');
@@ -1664,11 +1674,16 @@ class UserController extends Controller {
     }
 
     public function getSettings(){
-        $user = User::find(\Session::get('uid'));
-               
-        $card_detail = CardDetail::where('user_id',Auth::user()->id)->get();
+        $user_id = \Auth::user()->id;
+        $card_logos = [
+            1 => 'mastercard',
+            2 => 'visa',
+            3 => 'american-express',
+            4 => 'discover'
+        ];
+        $card_detail = CardDetail::where('user_id', $user_id)->get();
         $file_name = 'users_admin.traveller.users.account-setting';      
-        return view($file_name,compact('card_detail'));
+        return view($file_name, compact('card_detail', 'card_logos'));
     }
     public function getCompany(){
         $user = User::find(\Session::get('uid'));

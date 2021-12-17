@@ -1,9 +1,12 @@
 <?php
 namespace App\Helpers;
 use Session, DB ;
+use Illuminate\Support\Facades\Crypt;
 
 class CommonHelper
 {   
+    private static $encrypter_key = 'HXTCX0lUzU2xrSIvWTOB3ZHVrJrbDEgR';
+    
     static function submit_contracts($all_contracts_data,$type,$oid=0,$cType=""){
         $contracts = $all_contracts_data;
         
@@ -1405,5 +1408,25 @@ $allowedCurrenciesinProject=array("OMR","BHD","KWD","USD","CHF","EUR","KYD","GIP
         }
 
         return $array;
+    }
+
+    public static function encrypt($data)
+    {
+        if($data == '')
+            return $data;
+
+        $key = self::$encrypter_key;
+        $encrypter = new \Illuminate\Encryption\Encrypter( $key, \Config::get( 'app.cipher' ) );
+        return $encrypter->encrypt($data);
+    }
+
+    public static function decrypt($data)
+    {
+        if($data == '')
+            return $data;
+
+        $key = self::$encrypter_key;
+        $encrypter = new \Illuminate\Encryption\Encrypter( $key, \Config::get( 'app.cipher' ) );
+        return $encrypter->decrypt($data);
     }
 }
