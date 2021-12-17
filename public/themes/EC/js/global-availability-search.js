@@ -733,21 +733,21 @@ $(document).ready(function(){
     searchResults(url);
   });
 
-  $('#atmosphere_dropdown .custom-control-input, #atmosphere_dropdown_bottom .custom-control-input').on("click",function(){
+  $('#atmosphere_dropdown .custom-control-input').on("click",function(){
     setBreadcrumb($(this));
     var url = createSearchUrl();
     searchResults(url);
     return true;
   });
 
-  $('#facilities_dropdown .custom-control-input, #facilities_dropdown_bottom .custom-control-input').on("click",function(){
+  $('#facilities_dropdown .custom-control-input').on("click",function(){
     setBreadcrumb($(this));
     var url = createSearchUrl();
     searchResults(url);
     return true;
   });
 
-  $('#style_dropdown .custom-control-input #style_dropdown_bottom .custom-control-input').on("click",function(){
+  $('#style_dropdown .custom-control-input').on("click",function(){
     setBreadcrumb($(this));
     var url = createSearchUrl();
     searchResults(url);
@@ -820,7 +820,7 @@ function searchResults(url){
         url: url,
         dataType:'html',
         type: 'get',
-        async:false,
+        async:true,
         success: function(response){ 
           $('#search-results-content').html(response);
           appendSearchGridSlider();
@@ -908,6 +908,13 @@ function createSearchUrl(experience = '', layoutView = 'ajax'){
   var style_ids = styles.join(',');
   
   var url = document.location.origin + document.location.pathname + `?s=`+keyword+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience+`&min=`+min+`&max=`+max;
+
+  if(document.location.pathname !='/globalsearchavailability'){
+    var city = $("#city").val();
+    url = `/globalsearchavailability` + `?s=`+city+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience+`&min=`+min+`&max=`+max+ '&view=results';
+    return document.location=url;
+  }
+
   window.history.pushState({}, '', url);
   return url + '&view=' + layoutView;
 }

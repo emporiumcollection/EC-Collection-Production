@@ -15,12 +15,24 @@
         <div class="col-md-5 col-4 text-right">
           
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
-            <a href="/register" class="login-nav mr-3 pr-1">
-              <div class="user-profile-img">
-                <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
-                <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
-              </div>
-            </a>
+            @if(Auth::check() && Auth::user()->username)
+              <a href="/dashboard" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
+                <div class="user-profile-img">
+                  @if(!empty(Auth::user()->avatar))
+                   <img src="{{ asset('/images/user_avatar/'.Auth::user()->avatar) }}" alt="">
+                  @else
+                    <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                  @endif
+                </div>
+              </a>
+            @else  
+              <a href="/register" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
+                <div class="user-profile-img">
+                  <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                  <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
+                </div>
+              </a>
+            @endif
             <div class="humburger-menu">
               <div class="line"></div>
               <div class="line"></div>
