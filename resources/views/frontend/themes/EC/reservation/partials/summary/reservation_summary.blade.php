@@ -160,7 +160,9 @@
                                                             </tr>
                                                             <tr>
                                                               <td class="px-0 py-1">Suite</td>
-                                                              <td class="px-0 py-1 text-right">€{{ $suite->price }}</td>
+                                                              <td class="px-0 py-1 text-right">
+                                                            <?php $suite_price = $reservations->number_of_nights * $suite->price ?>
+                                                                {{$suite->number_of_nights }} * €{{ $suite_price }}</td>
                                                             </tr>
                                                             {{-- <tr>
                                                               <td class="px-0 py-1">Tax</td>
@@ -168,19 +170,16 @@
                                                             </tr> --}}
                                                           </table>
                                                           <hr class="mb-2">
-                                                          <table class="table table-borderless mb-0">
-                                                            <tr>
-                                                              <td class="px-0 py-1">Gourmet Experience</td>
-                                                              <td class="px-0 py-1 text-right">2</td>
-                                                            </tr>
-                                                          </table>
+                                                          
                                                           <hr class="mt-2">
                                                           <table class="table table-borderless mb-0">
                                                             <tr>
                                                               <td class="px-0 py-1">Subtotal</td>
-                                                              <td class="px-0 py-1 text-right"><b>€{{ $suite->price }}</b></td>
+                                                              <td class="px-0 py-1 text-right"><b>€{{ 
+                                                              $suite_price }}</b></td>
                                                             </tr>
-                                                            <?php $grand_total += (float)$suite->price; ?>
+                                                            <?php $grand_total += (float)
+                                                            $suite_price; ?>
                                                           </table>
                                                         </div>
                                                         @endforeach
