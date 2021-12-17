@@ -645,8 +645,7 @@ class ReservationController extends Controller {
             ->get();
 
         $hotel_name = $this->data['properties'][0]->property_name;
-        $words = explode(' ', $hotel_name);
-        $this->data['hotel_name'] = $words[0][0].$words[1][0];
+        $this->data['hotel_name'] = str_replace(" ", "", $hotel_name);
 
         $this->data['db'] = $this->databaseName();
         
