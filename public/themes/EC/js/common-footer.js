@@ -263,6 +263,28 @@ function setMapLocation(lat, long, loc){
     }
 }
 
+function setMapLocationDetail(lat, long, loc){
+  var locations = [
+    [loc, lat, long],
+  ];
+
+  if(!map){      
+    mapboxgl.accessToken = 'pk.eyJ1IjoibnVtYmVyN2V2ZW4iLCJhIjoiY2tpNjVrNDB5MnJmZzJzbHRwc3A1emN5ZSJ9.8hbjMM5UBnta7I26RaQX6g';
+      map = new mapboxgl.Map({
+      container: 'map2', // container ID
+      style: 'mapbox://styles/mapbox/satellite-v9', // style URL
+      // center: [lat,long], // starting position [lng, lat]
+      center: [long, lat],
+      zoom: 18 // starting zoom
+      });
+  }else{
+    map.setView([lat, long], 18);
+  }
+  const marker = new mapboxgl.Marker()
+  .setLngLat([long, lat])
+  .addTo(map);
+}
+
 $(function() {
     // For header range calendar
     var pickerDate = $('#date_range').daterangepicker({

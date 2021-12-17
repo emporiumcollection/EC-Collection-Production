@@ -38,7 +38,7 @@ function replacePropertyData(id){
   });
 
    if($('#map2').length){
-     setMapLocation(properties[id]['latitude'], properties[id]['longitude'],properties[id]['address']);
+    setMapLocationDetail(properties[id]['latitude'], properties[id]['longitude'],properties[id]['address']);
   }
 
   $('[data-place="property-images"]').each(function() {
