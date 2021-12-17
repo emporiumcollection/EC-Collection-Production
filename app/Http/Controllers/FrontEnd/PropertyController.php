@@ -2766,6 +2766,8 @@ class PropertyController extends Controller {
             $site_url = Config::get('app.spadomain');
         }elseif($sitename == 'island'){
             $site_url = Config::get('app.islandsdomain');
+        }elseif($sitename == 'magazine'){
+            $site_url = Config::get('app.magazinedomain');
         }
 
         if($coll_type == 'hotel'){
@@ -3329,6 +3331,9 @@ class PropertyController extends Controller {
         $this->data['reviews'] = $this->getReviews($id);
         $this->setGalleryAndFormat($this->data['hotel_data']);
         $this->data['layout_type'] = 'old';
+        $this->setFitlerOptions();
+        $this->data = $this->setFitlerOptions();
+
         return view('frontend.themes.EC.hotel.hotel_detail', $this->data);
     }
 

@@ -82,7 +82,7 @@ return [
     'safaridomain' => env('EC_SAFARI_URL', 'emporium-safari.com'),
     'islandsdomain' => env('EC_ISLANDS_URL', 'emporium-islands.com'),
     'voyagedomain' => env('EC_VOYAGE_URL', 'emporium-voyage.com'),
-    'magazinedomain' => 'emporium-magazine.com',
+    'magazinedomain' => env('EC_MAGAZINE','emporium-magazine.com'),
     'root_destinations' => env('ROOT_DESTINATIONS', ''),
 
     'key' => env('APP_KEY', 'YrKh1BgM5ONj2ia81k77Z2nD7hDrDniF'),
