@@ -162,7 +162,7 @@
                                                               <td class="px-0 py-1">Suite</td>
                                                               <td class="px-0 py-1 text-right">
                                                             <?php $suite_price = $reservations->number_of_nights * $suite->price ?>
-                                                                {{$suite->number_of_nights }} * €{{ $suite_price }}</td>
+                                                                {{$reservations->number_of_nights }} * €{{ $suite_price }}</td>
                                                             </tr>
                                                             {{-- <tr>
                                                               <td class="px-0 py-1">Tax</td>
