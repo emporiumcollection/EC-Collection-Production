@@ -292,6 +292,17 @@ var ajaxReq = 'ToCancelPrevReq';
     dots: false,
   });
 
+  $('.weekselect .custom-control-input').change(function () {
+    var valDta = $(this).val();
+    $('.valweak').html(valDta);
+  });
+
+  $('.monthselect .custom-control-input').change(function () {
+    var valDta = $(this).attr('id');
+    $('[data-id="' + valDta + '"]').toggleClass('show');
+    $(this).toggleClass('checked');
+  });
+
   $(".left-side").hover(function () {
     $(".right-side").css("opacity", "0.2");
     $(".left-side").css("opacity", "1");
@@ -1492,9 +1503,9 @@ var ajaxReq = 'ToCancelPrevReq';
               var p_avs = '';
               if (typeof objAvs != 'undefined') {
                 $(objAvs).each(function (key, value) {
-                  //p_avs += value['title']+", ";
-                  p_availableservices_html += '<p class="mb-0">' + value['title'] + '</p>';
+                  p_avs += value['title']+", ";
                 });
+                p_availableservices_html += '<p class="mb-0">' + p_avs.replace(/, +$/g, "");+'</p>';
               }
               //p_availableservices_html += '<p class="mb-0">'+p_avs+'</p>';
               p_availableservices_html += '</div>';
