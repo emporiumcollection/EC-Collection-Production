@@ -2228,12 +2228,14 @@ class PropertiesController extends Controller {
                     $exFtype = explode('/', $ftype);
                     if ($exFtype[0] == "image") {
                         // open an image file
+                        // print $destinationPath . $fileName;exit;
                         $thimg = \Image::make($destinationPath . $fileName, array(
                             'width' => 128,
                             'height' => 130,
                             'crop' => true,
                         //'grayscale' => true
                         ));
+
                         // now you are able to resize the instance
                         //$thimg->resize(128, 130);
                         // finally we save the image as a new file
@@ -2241,10 +2243,11 @@ class PropertiesController extends Controller {
                         $thimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
 
                         // open an image file
-                        $mdimg = \Image::make($destinationPath . $fileName);
+                        // $mdimg = \Image::make($destinationPath . $fileName);
                         // now you are able to resize the instance
                         $thactualsize = getimagesize($destinationPath . $fileName);
                         if ($thactualsize[0] > $thactualsize[1]) {
+
                             $mdimg = \Image::make($destinationPath . $fileName, array(
                                 'width' => 320,
                                 //'height' => 130,
@@ -2292,7 +2295,7 @@ class PropertiesController extends Controller {
                         // $pthimg->resize(80, 80);
                         $pthimg = \Image::make($destinationPath . $fileName, array(
                             'width' => 80,
-                            'height' => 80,
+                            // 'height' => 80,
                             'crop' => true,
                         //'grayscale' => true
                         ));
@@ -2340,7 +2343,7 @@ class PropertiesController extends Controller {
                             $bkimg->save($copytofolder . $bkimgfile);
 
                             // open an image file
-                            $mdimg = \Image::make($destinationPath . $fileName);
+                            // $mdimg = \Image::make($destinationPath . $fileName);
                             $thactualsize = getimagesize($destinationPath . $fileName);
                             if ($thactualsize[0] > $thactualsize[1]) {
                                 $mdimg = \Image::make($destinationPath . $fileName, array(
