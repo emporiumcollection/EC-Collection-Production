@@ -23,11 +23,11 @@
         <div class="row h-100">
             <div class="col-md-8 bg-white" style="overflow: auto">
                 <div class="mb-4">
-                    <a href="main-page.html" class="back-abs">
+                    <a href="/" class="back-abs">
                         <i class="ico ico-back"></i>
                     </a>
                 </div>
-                <div class="auth-container-inner wizard" style="margin-top:70px;top:0;transform: translate(-50%, 0);padding-bottom:70px">
+                <div class="auth-container-inner wizard" style="margin-top:19px;top:0;transform: translate(-50%, 0);padding-bottom:70px">
 
                     <div class="mb-5">
                         <img src="images/logo.svg" alt="">

@@ -5,7 +5,7 @@
         <div class="row h-100">
             <div class="col-md-8 bg-white">
                 <div class="mb-4">
-                    <a href="main-page.html" class="back-abs">
+                    <a href="/" class="back-abs">
                         <i class="ico ico-back"></i>
                     </a>
                 </div>

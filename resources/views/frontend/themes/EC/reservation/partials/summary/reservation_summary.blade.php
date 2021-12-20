@@ -32,13 +32,13 @@
                                                 @foreach($trip_dates as $td_key => $date)
                                                     <div class="d-flex itinirary-list py-5 align-items-center">
                                                         <div class="itn-text">
-                                                            <p class="mb-0 month-nav">{{ date('d. M. Y', strtotime($date)) }}</p>
-                                                            <p class="mb-0">{{ date('l', strtotime($date)) }}</p>
                                                             @if(strtotime($date) == strtotime($reservations->checkin_date))
                                                                 <p class="mb-0 mt-2"><b>Arrival date</b></p>
                                                             @elseif(strtotime($date) == strtotime($reservations->checkout_date))
                                                                 <p class="mb-0 mt-2"><b>Departure date</b></p>
                                                             @endif
+                                                            <p class="mb-0 month-nav">{{ date('d M Y', strtotime($date)) }}</p>
+                                                            <p class="mb-0">{{ date('l', strtotime($date)) }}</p>
                                                         </div>
                                                     </div>
                                                 @endforeach

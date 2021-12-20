@@ -14,6 +14,9 @@
     color: #fff;
     font-family: "SaolDisplay-Regular";
   }
+  .wherepopup .nav-link{
+    font-size: 16px !important;
+  }
 </style>
 <form name="collection-search" method="post" action="{{URL::to('globalavailability')}}" id="collection_search">
   @include('frontend.themes.EC.pages.home_left_navigation')

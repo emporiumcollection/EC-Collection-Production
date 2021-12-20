@@ -22,12 +22,14 @@
             </li>
             <!--end::Item-->
             <!--begin::Item-->
+            @if (\Session::get('gid') == 5)
             <li class="nav-item mb-3" data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="Property Management System">
                 <a href="#" class="nav-link btn btn-icon btn-clean btn-lg">
                     <i class="flaticon-analytics"></i>
                 </a>
             </li>
+            @endif
             <!--end::Item-->
             <!--begin::Item-->
             <li class="nav-item mb-3" data-toggle="tooltip" data-placement="right" data-container="body"
@@ -46,12 +48,14 @@
             </li>
             <!--end::Item-->
             <!--begin::Item-->
+            @if (\Session::get('gid') == 5)
             <li class="nav-item mb-3 " data-toggle="tooltip" data-placement="right" data-container="body"
                 data-boundary="window" title="Dynamic Rate Management">
                 <a href="#" class="nav-link btn btn-icon btn-clean btn-lg">
                     <i class="flaticon-line-graph"></i>
                 </a>
             </li>
+            @endif
             <!--end::Item-->
         </ul>
         <!--end::Nav-->
