@@ -285,7 +285,6 @@
             <div class="img-left-when">
               <img src="images/60c5a787075247-1.5dad757ad76ab.jpg" alt="">
             </div>
-            </div>
             <div class="fetaruer to-right">
               <h2 class="title-2 title-i"></h2>
               <h3 class="title-3 title-i">— featured hotel —</h3>

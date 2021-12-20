@@ -636,20 +636,24 @@ var ajaxReq = 'ToCancelPrevReq';
                 // console.log(images);
                 var d_image = '';                
                   $(images).each(function (key, value) {
-                    console.log(value);
-                    // console.log(value['property_images'][0]['file']['file_name']);
-                    d_image += '<div>'
+                    try{
+                      d_image += '<div>'
                       +'<img src="/property-image/resize/645x600/'+ containername +'/'+ value['file']['file_name']+'/property-image" class="img-fluid" alt="">'
                       +'</div>';
+                    }catch(e){
+
+                    }
                   }); 
                   // console.log('here',d_image);
                   $("#images").html(d_image);
                   
-                  $('.quick-prev').slick({
-                    slidesToShow: 1,
-                    prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-                    nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-                  });
+                  setTimeout(function () {                    
+                    $('.quick-prev').slick({
+                      slidesToShow: 1,
+                      prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+                      nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+                    });
+                  }, 800);
         }
     });
   }
