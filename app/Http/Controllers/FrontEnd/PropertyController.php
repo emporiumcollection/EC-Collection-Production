@@ -7230,12 +7230,12 @@ class PropertyController extends Controller {
      * 
      */
     public function propertyRoomPrices(Request $request){
-        //$usdRate = Session::get('current_rate');
-        //if(!$usdRate){
-            $rsGbp = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=9c25f1b7954b2cc85b74449e328ae2dc&symbols=GBP');
+        $usdRate = Session::get('current_rate');
+        if(!$usdRate){
+            $rsGbp = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=d75c2e77cb519be7fbf901abed36a4cb&symbols=GBP');
             $rsGbp = json_decode($rsGbp);
 
-            $rsUsd = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=9c25f1b7954b2cc85b74449e328ae2dc&symbols=USD');
+            $rsUsd = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=d75c2e77cb519be7fbf901abed36a4cb&symbols=USD');
             $rsUsd = json_decode($rsUsd);
             
             $euroRate = (1 / (float) $rsGbp->rates->GBP);
@@ -7243,7 +7243,7 @@ class PropertyController extends Controller {
             $usdRate = $rsUsd->rates->USD;
 
             $request->session()->put('current_rate', $usdRate);
-        //}
+        }
 
         $property_id = $request->query->get('property_id');
         $category_id = $request->query->get('category_id');
@@ -7291,7 +7291,7 @@ class PropertyController extends Controller {
             if(strtotime($dt) >= strtotime($arrival) &&  strtotime($dt) <= strtotime($departure)){
                 $this->data['propertyPrices'][] = [
                     'date' => date("M, d Y", strtotime($dt)), 
-                    'price' => '€' . number_format($euroRate * $price,0), 
+                    'price' => '€' . number_format($price,0), 
                     'usd_price' => '$' . number_format($price * $usdRate,0)
                 ];
                 $this->data['totalPrice'] += $price;
