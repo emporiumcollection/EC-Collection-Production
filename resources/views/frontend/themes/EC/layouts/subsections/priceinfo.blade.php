@@ -92,12 +92,12 @@
                 </div>
                 <hr>
                 <div class="booking-tearms">
-                    <h3><b>Teams and Conditions</b></h3>
+                    <h3><b>Terms and Conditions</b></h3>
                     <div class="custom-control custom-checkbox mb-5">
                         <input type="checkbox" class="custom-control-input" id="policies43">
                         <label class="custom-control-label" for="policies43">
                             Your reservation is made subject to our
-                            <a href="#" class="underline"><b>Terms & Conditions</b> </a>(available
+                            <a href="#" data-toggle="modal" data-target="#terms-and-conditions" ><b>Terms & Conditions</b> </a>(available
                             in other
                             languages <a href="#" class="underline"><b>here</b></a>) and the
                             specific
@@ -105,12 +105,12 @@
                             check
                             this box to agree to these terms and proceed with your booking. By
                             confirming your booking, you agree with all provisions of the
-                            <a href="#" class="underline"><b>privacy policy</b></a>
+                            <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a>
                         </label>
                     </div>
                     <p>
                         For further information about how we use your data, please see our
-                        <a href="#" class="underline"><b>privacy policy</b></a>
+                        <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a>
                     </p>
                     <div class="row mt-4">
                         <div class="col-6">

@@ -49,18 +49,25 @@
                                     <div class="col-8">
                                         <div class="grid-layout" id="location_gallery_hotel">
                                             <?php 
-                                            $spanid = 1;
-                                            $grid = 1;
+                                            // $spanid = 1;
+                                            // $grid = 1;
                                             if(!empty($photos->results)):
-                                            foreach($photos->results as $photo):
+                                            foreach($photos->results as $key => $photo):
+                                            if($key === array_key_first($photos->results)){
                                             ?>
-                                            <a href="<?php echo $photo->urls->regular; ?>"
-                                                data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-<?php echo $grid;?> span-<?php //echo $spanid;?>">
-                                                <img data-src="<?php echo $photo->urls->regular; ?>" alt="" class="location-photos">
-                                            </a>
+                                                <a href="<?php echo $photo->urls->regular; ?>"
+                                                    data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-1 span-1">
+                                                    <img data-src="<?php echo $photo->urls->regular; ?>" alt="" class="location-photos">
+                                                </a>
                                             <?php
-                                            $spanid=2;
-                                            $grid++;
+                                            } else { ?>
+                                                <a href="<?php echo $photo->urls->regular; ?>"
+                                                    data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-2 span-2">
+                                                    <img data-src="<?php echo $photo->urls->regular; ?>" alt="" class="location-photos">
+                                                </a>
+                                            <?php }
+                                            // $spanid=2;
+                                            // $grid++;
                                             endforeach;
                                             endif;
                                             ?>

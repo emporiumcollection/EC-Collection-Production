@@ -33,6 +33,8 @@
   </div>
 </div>
 </div>
+@include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
+@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
 @include('frontend.themes.EC.layouts.subsections.priceinfo')
 @include('frontend.themes.EC.layouts.subsections.quick_info')
 @include('frontend.themes.EC.layouts.subsections.reviews')

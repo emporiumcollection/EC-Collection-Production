@@ -62,16 +62,25 @@
                   <div class="row w-100">
                     <div class="col-sm-4">
                       <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
-                      <?php 
-                      if(!empty($menu_experiences)):
+                        <?php 
                       $lmenus = [];
-                      foreach($menu_experiences as $experience):?>
-                          <li class="nav-item">
-                            <a class="nav-link active" href="<?php //echo createSearchUrl('experience', $experience->category_alias);?>"><?php echo $experience->category_name;?></a>
-                          </li>
-                      <?php endforeach;
-                      endif;
-                      ?>
+                      foreach($landing_menus as $menu):
+                          $mmenu = '<li class="nav-item">
+                              <a class="nav-link" href="#">'.$menu['menu_name'].' </a>
+                            </li>';
+                          $cmenu = '';
+                          foreach($menu['childs'] as $child):
+                            $cmenu .= '<li class="nav-item">
+                              <a class="nav-link" href="'.$child['url'].'">'.$child['menu_name'].' </a>
+                            </li>';
+                          endforeach;
+                          $lmenus[] = ['main' => $mmenu, 'childs' => $cmenu];
+                          ?>
+                      <?php endforeach;?>
+                      <?php foreach($lmenus as $lmenu):?>
+                      <?php echo $lmenu['main'];?>
+                      <?php echo $lmenu['childs'];?>
+                      <?php endforeach;?>
                       </ul>
                       <div class="menu-media">
                         <a href="#" class="nav-sos"><i class="fa fa-facebook" aria-hidden="true"></i></a>
@@ -79,30 +88,16 @@
                         <a href="#" class="nav-sos"><i class="fa fa-twitter" aria-hidden="true"></i></a>
                       </div>
                     </div>
-                      <?php 
-                      $lmenus = [];
-                      foreach($landing_menus as $menu):
-                          $mmenu = '<li class="nav-item">
-                              <a class="nav-link" href="#">'.$menu['menu_name'].' <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                            </li>';
-                          $cmenu = '';
-                          foreach($menu['childs'] as $child):
-                            $cmenu .= '<li class="nav-item">
-                              <a class="nav-link" href="'.$child['url'].'">'.$child['menu_name'].' <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                            </li>';
-                          endforeach;
-                          $lmenus[] = ['main' => $mmenu, 'childs' => $cmenu];
-                          ?>
-                      <?php endforeach;?>
+                      
                       <div class="col-sm-8">
                         <div class="row">
                           <div class="col-12">
-                          <?php foreach($lmenus as $lmenu):?>
+                          <?php /*foreach($lmenus as $lmenu):?>
                             <ul class="nav flex-column">
                               <?php echo $lmenu['main'];?>
                               <?php echo $lmenu['childs'];?>
                             </ul>
-                          <?php endforeach;?>
+                          <?php endforeach; */?>
                           </div>
                         </div>
                       </div>
