@@ -7197,7 +7197,7 @@ class PropertyController extends Controller {
         $prop_info_arr['prop_usp'] = $prop_usp;
         $prop_info_arr['amneties'] = $amnties;
         $prop_info_arr['room_amneties'] = $room_amnties;
-        $prop_info_arr['available_services'] = str_replace(","," ",$available_services);
+        $prop_info_arr['available_services'] = $available_services;
         echo json_encode($prop_info_arr);
     }
 

@@ -832,7 +832,7 @@ trait Property {
             }
         }
         if(!empty($all)){
-            return implode(',', $all);
+            return implode('<br/>', $all);
         }else{
             return '';
         }
