@@ -6,6 +6,9 @@
     min-height: 0px;
     max-height: 500px;
   }
+  .search-field .wherepopup .nav-link{
+    font-size: 16px !important;
+  }
 </style>
 <?php 
 if(isset($trendingFilters)):
