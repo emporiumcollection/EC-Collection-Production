@@ -109,20 +109,20 @@
       <div class="hero-meta">
         <div class="left-meta">
           <ul class="nav nav-pills nav-fill">
+            @if(!empty($editorChoice->suites->toArray()))
             <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $editorChoice->id;?>)">Reviews</a>
+              <a class="nav-link btn-sidebar" href="#" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">Suites</a>
             </li>
+            @endif
             <li class="nav-item">
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">Hotel Info</a>
             </li>
             <li class="nav-item">
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">Gallery</a>
             </li>
-            @if(!empty($editorChoice->suites->toArray()))
             <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">Suites</a>
+              <a class="nav-link btn-sidebar" href="#" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $editorChoice->id;?>)">Reviews</a>
             </li>
-            @endif
           </ul>
         </div>
         <div class="right-meta align-self-center">
