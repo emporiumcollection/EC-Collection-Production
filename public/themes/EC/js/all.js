@@ -653,6 +653,7 @@ var ajaxReq = 'ToCancelPrevReq';
                       prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
                       nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
                     });
+                    $('.quick-prev').slick('setPosition');
                   }, 800);
         }
     });
