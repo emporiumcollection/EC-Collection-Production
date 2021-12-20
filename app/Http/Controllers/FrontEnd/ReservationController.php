@@ -786,25 +786,25 @@ class ReservationController extends Controller {
 
     public function databaseName(){
 
-        if(request()->getHost() == 'development.emporium-voyage.com'){
+        if(Config::get('app.currentdomain') == 'voyage'){
 
         $db = Config::get('app.EmporiumVoyage');   
 
         }
 
-        if(request()->getHost() == 'emporium-safari.com'){
+        if(Config::get('app.currentdomain') == 'safari'){
 
         $db = Config::get('app.EmporiumSafari');   
 
         }
 
-        if(request()->getHost() == 'emporium-spa.com'){
+        if(Config::get('app.currentdomain') == 'spa'){
 
         $db = Config::get('app.EmporiumSpa');   
 
         }
 
-        if(request()->getHost() == 'emporium-islands.com'){
+        if(Config::get('app.currentdomain') == 'islands'){
 
         $db = Config::get('app.EmporiumIslands');   
 
