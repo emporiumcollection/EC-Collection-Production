@@ -99,7 +99,7 @@
                             Your reservation is made subject to our
                             <a href="#" data-toggle="modal" data-target="#terms-and-conditions" ><b>Terms & Conditions</b> </a>(available
                             in other
-                            languages <a href="#" class="underline"><b>here</b></a>) and the
+                            languages <a href="#"><b>here</b></a>) and the
                             specific
                             payment terms (deposit, tax and cancellation) set out above, Please
                             check
