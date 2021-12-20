@@ -379,13 +379,6 @@
           </div>
         </a>
         <?php endif;?>
-        <?php if($currentdomain != 'golf'):?>
-        <a href="https://emporium-golf.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
-          <div class="p-2 d-flex align-items-center">
-            <i class="ico ico-golf mr-2"></i> <span>Golf</span>
-          </div>
-        </a>
-        <?php endif;?>
       </div>
     </div>
     <div class="collapse clp" id="cityList" data-parent="#menunav">

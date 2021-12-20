@@ -28,19 +28,6 @@
             </div>
         </div>
         <div class="slider-container hotel-page-list">
-            <div class="my-dropdown">
-                <div class="btn-group dropleft">
-                    <a href="#" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class="ico ico-diamon diamon-label"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Add to collection</a>
-                        <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                    </div>
-                </div>
-            </div>
             <a href="#" data-place="covid_link" target="_blank">
                 <div class="covid-info align-items-center">
                     <div class="ico-security">

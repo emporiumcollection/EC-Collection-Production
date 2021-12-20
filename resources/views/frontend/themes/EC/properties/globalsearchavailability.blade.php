@@ -215,6 +215,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
 @include('frontend.themes.EC.layouts.subsections.property_gallery')
 @include('frontend.themes.EC.layouts.subsections.search_history')
 @include('frontend.themes.EC.layouts.subsections.ask_question')
-
+@include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
+@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
 
 @endsection
