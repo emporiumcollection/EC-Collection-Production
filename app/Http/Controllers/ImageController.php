@@ -183,7 +183,7 @@ class ImageController extends Controller {
                 //$thumbnail->effects()->grayscale();
                 $thumbnail->save($this->destination_path);
             }catch(Exception $e){*/
-                Image::make($this->file_path,array(
+                Image::make($this->file_path, array(
                     'width' => $this->width,
                     'height' => $this->height,
                     'crop' => true,

@@ -486,6 +486,7 @@ trait Property {
                             if(!isset($properties[$k]->suites[$sk]->rooms[$rk]->images)){
                                 $properties[$k]->suites[$sk]->rooms[$rk]->images = $this->getRoomImages($room->property_id, $room->category_id);
                             }
+                            break;
                         }
 
                         //$properties[$k]->suites[$sk]->rooms[0]->images = $this->getRoomImages($property->id, $suite->id);
@@ -832,7 +833,7 @@ trait Property {
             }
         }
         if(!empty($all)){
-            return implode(',', $all);
+            return implode('<br/>', $all);
         }else{
             return '';
         }

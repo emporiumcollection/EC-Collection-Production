@@ -423,12 +423,12 @@
         <div class="col-xl-6">
           <div class="d-flex justify-content-center pt-3">
             <ul class="nav calendar-nav">
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link active" href="#calendarselect" data-toggle="tab">Calendar</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#flexible" data-toggle="tab">I'm flexible</a>
-              </li>
+              </li> --}}
             </ul>
           </div>
           <div class="tab-content">

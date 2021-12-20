@@ -775,6 +775,9 @@
     var chart = new ApexCharts(element, options);
     chart.render();
 
+    $(document).on("click",".add_card", function(){
+        
+    });
     jQuery(function($) {
       $(document).ready(function() {
 

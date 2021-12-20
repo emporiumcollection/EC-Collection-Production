@@ -53,7 +53,7 @@
                                             // $grid = 1;
                                             if(!empty($photos->results)):
                                             foreach($photos->results as $key => $photo):
-                                            if($key === array_key_first($photos->results)){
+                                            if($key == 0){
                                             ?>
                                                 <a href="<?php echo $photo->urls->regular; ?>"
                                                     data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-1 span-1">
