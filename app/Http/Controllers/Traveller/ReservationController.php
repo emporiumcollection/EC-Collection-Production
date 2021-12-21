@@ -27,6 +27,10 @@ class ReservationController extends Controller {
     public function reservationList()
     {    
         $file_name = 'users_admin.traveller.users.reservation_list';
+        $this->data['companion'] = \DB::table('tb_companion')
+        ->where('user_id', Auth::user()->id)
+        ->get();
+
         return view($file_name, $this->data);   
     }
 

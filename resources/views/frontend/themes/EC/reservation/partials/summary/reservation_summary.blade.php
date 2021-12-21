@@ -1301,7 +1301,7 @@
                                                 </div>
                                             </div>
                                             @endif
-                                            <a href="/reservation/whoistravelling">
+                                            <a href="#addCompanionModal" data-toggle="modal"> {{-- /reservation/whoistravelling--}}
                                                 <div class="d-flex itinirary-list py-5 align-items-center">
                                                     <div style="width: 40px;">
                                                         <i class="fas fa-users"
