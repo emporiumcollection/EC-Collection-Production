@@ -889,7 +889,8 @@ trait Property {
             return $query
             ->leftJoin('tb_container', 'tb_container_files.folder_id', 
                 '=', 'tb_container.id')
-            ->select(['tb_container_files.id', 'file_name', 'tb_container.name']);
+            ->select(['tb_container_files.id', 'file_name', 'tb_container.name'])
+            ->orderBy('file_sort_num', 'asc');
         }])
         ->where('property_id', '=', $property_id)
         ->where('category_id', '=', $room_id)

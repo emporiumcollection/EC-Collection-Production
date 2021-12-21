@@ -2884,6 +2884,10 @@ class PropertyController extends Controller {
     */
     function globalsearchavailability(Request $request) {
         $keyword = $request->input('s');
+        
+        if($keyword==''){
+            return Redirect::to($request->fullUrl().'&s='.\Session::get('keyword'));
+        }
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
 
