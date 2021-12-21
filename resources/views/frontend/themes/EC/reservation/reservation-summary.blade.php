@@ -128,7 +128,7 @@
             @endif
           @endif
           <tr>
-            <?php $total_price = round($grand_total + $vat, 2); ?>
+            <?php $total_price = round($grand_total + isset($vat), 2); ?>
             <td class="px-0 py-1">Total</td>
             <td class="px-0 py-1 text-right">
               <b>€{{ $total_price }}</b>
