@@ -372,20 +372,12 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <a href="https://www.iubenda.com/privacy-policy/70156957"
-                                            class="iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe "
-                                            title="Privacy Policy ">Privacy Policy</a>
-                                        <script
-                                            type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+                                        <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>Privacy Policy</b></a>
 
-                                        <a href="https://www.iubenda.com/privacy-policy/70156957/cookie-policy"
-                                            class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe "
-                                            title="Cookie Policy ">Cookie Policy</a>
-                                        <script
-                                            type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+                                        <a href="#" data-toggle="modal" data-target="#cookie_policy"><b>Cookie Policy</b></a>
                                         
-                                        <a class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe "
-                                            title="Terms & Conditions" data-toggle="modal" data-target="#terms-and-conditions">Terms & Conditions</a>
+                                        <a href="#" data-toggle="modal" data-target="#terms-and-conditions"><b>Terms & Conditions</b></a>
+
                                     </div>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1" checked>
@@ -464,8 +456,9 @@
         </div>
     </div>
 </div></div>
+@include('frontend.themes.EC.reservation.partials.privacy_model.Cookie_policy')
 @include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
-
+@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
 <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js')}}"></script>

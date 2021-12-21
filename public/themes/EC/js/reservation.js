@@ -686,7 +686,7 @@ $(document).ready(function(){
     $(document).on('click', '#btn-payment-save', function(){
           $.ajax({
                 type: "POST",
-                url: "/savepayment_method",
+                url: "/reservation/savepaymentmethod",
                 data: $('#payment_form').serialize(),
                 dataType: 'json',
                 success: function(response) {

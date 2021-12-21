@@ -127,7 +127,7 @@
                     <i aria-hidden="true" class="ki ki-close"></i>
                 </button>
             </div>
-            <form action="#">
+            <form action="/users/CardDetail" method="post">
                 <div class="modal-body">
                     <div class="mb-4">
                         <img src="{{ asset('images/credit-cards-768x178.png')}}" class="img-fluid" alt="">
@@ -212,13 +212,13 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-light-primary font-weight-bold"
                         data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-light-primary font-weight-bold add_card">add_card</button>
-                    {{-- <button type="submit" class="btn btn-primary font-weight-bold add_card">Add Card</button> --}}
+                    <button type="submit" class="btn btn-primary font-weight-bold add_card">Add Card</button>
                 </div>
             </form>
         </div>
     </div>
 </div>
+
 <!-- Popup Preferences -->
 @include('users_admin/traveller/layout/preferences-popup')
 

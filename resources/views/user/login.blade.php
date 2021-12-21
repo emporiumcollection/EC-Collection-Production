@@ -16,7 +16,7 @@
                     <form method="post" action="{{ url('user/signin')}}">
                     	<ul class="nav" id="myTab" role="tablist">
 		                    <li class="nav-item " role="presentation">
-		                        <a class="nav-link active" href="/register">Register</a>
+		                        <a class="nav-link active" href="/register">Sign up</a>
 		                    </li>
 		                    <li class="nav-item " role="presentation">
 		                        <a class="nav-link" href="login">Sign in</a>

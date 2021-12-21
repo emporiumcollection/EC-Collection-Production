@@ -76,7 +76,7 @@ Route::get('reservation/policies', 'FrontEnd\ReservationController@Policies');
 Route::get('reservation/services', 'FrontEnd\ReservationController@aditionalServices');
 Route::get('reservation/whoistravelling','FrontEnd\ReservationController@whoistravelling');
 Route::get('reservation/paymentmethod', 'FrontEnd\ReservationController@paymentmethod');
-// Route::post('/reservation/savepaymentmethod', 'FrontEnd\ReservationController@savepaymentmethod');
+Route::post('/reservation/savepaymentmethod', 'FrontEnd\ReservationController@savepaymentmethod');
 Route::post('/savepayment_method','FrontEnd\ReservationController@savepaymentmethod');
 Route::get('reservation/hotelpolicies', 'FrontEnd\ReservationController@hotelpolicies');
 Route::get('/reservation/bookingsummary', 'FrontEnd\ReservationController@bookingsummary');

@@ -37,12 +37,12 @@
                   <button type="button" class="close" data-dismiss="alert">&times;</button>
                   <strong>Success!</strong> {!! Session::get('massage') !!}.
               </div>
-            @endif
-            @if(!empty($services->title))
+            @endif            
+            @if(!empty($available_services->title))
               <div class="suite-fasility section-shadow mb-5">
                 <h3>ALL STAYS INCLUDE</h3>
                 <ul>
-                    @foreach($services as $value)
+                    @foreach($available_services as $value)
                       <li>{{ $value->title }}</li>
                     @endforeach
                 </ul>
