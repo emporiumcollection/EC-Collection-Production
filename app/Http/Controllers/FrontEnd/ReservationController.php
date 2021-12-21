@@ -39,7 +39,7 @@ class ReservationController extends Controller {
             Session::save();
             return redirect('user/login');
         }
-        $this->setSummaryData();
+        // $this->setSummaryData();
         $this->_checkBoards($id);
 
         $property = properties::find($id);
@@ -990,16 +990,16 @@ class ReservationController extends Controller {
         
         $vattax = properties::where('id',Session::get('property_id'))
         ->get();
-
-        if($vattax[0]->vattax_id == 1){
-            $this->data['vattax_id'] = 1;   
-        }
-        elseif($vattax[0]->vattax_id == 2){
-            $this->data['vattax_id'] = 2;      
-        }else{
-            $this->data['vattax_id'] = 3;
-        }
-
+        if(isset($vattax[0]->vattax_id)){
+            if($vattax[0]->vattax_id == 1){
+                $this->data['vattax_id'] = 1;   
+            }
+            elseif($vattax[0]->vattax_id == 2){
+                $this->data['vattax_id'] = 2;      
+            }else{
+                $this->data['vattax_id'] = 3;
+            }
+        }    
         $property = $this->getPropertyById(Session::get('property_id'));
         
         $this->data['property_image'] = 'default-image.png';
