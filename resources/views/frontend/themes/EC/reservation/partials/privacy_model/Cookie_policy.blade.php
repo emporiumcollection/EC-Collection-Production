@@ -9,30 +9,7 @@
       </div>
       <div class="modal-body">
       <div class="iubenda_legal_document"> 
-        <script type="text/javascript">
-    var $body = $('body');
-
-    // Add `all-collapsed` class to body in order to have all the expandable panel collapsed at page load and:
-    // 1. avoid the closing animation
-    // 2. allow all browsers (Firefox had issue) to scroll to an anchor if provided in the URL (e.g. #manage_cookies)
-    // 3. done via JS in order to not have panels collapsed for browsers with disabled JS
-    $body.addClass('all-collapsed')
-      .on('click', '.expand .expand-click', function () {
-        if ($body.hasClass('all-collapsed')) {
-          // Remove `all-collapsed` class from the body and set all panels collapsed so toggleClass behaves as expected
-          $('.expand-content').hide();
-          $('.expand').addClass('collapsed');
-          $body.removeClass('all-collapsed');
-        }
-
-        var $this = $(this);
-        $this.parents('.expand').toggleClass('collapsed').toggleClass('expanded')
-          .children('.expand-content').slideToggle('fast');
-        $this.parents('.expand-item').toggleClass('hover');
-        $this.children('.icon-17').toggleClass('icon-expand').toggleClass('icon-collapse');
-      });
-  </script>
-
+       
   <div id="wbars_all">
   <div class="iub_container iub_base_container">
     <div id="wbars">
@@ -326,18 +303,6 @@ Google may use the Data collected to contextualize and personalize the ads of it
 </div> <!-- /wbars_wrapper -->
 
 
-
-
-  <script type="text/javascript">
-    var privacyPolicy = new PrivacyPolicy({
-      id:1215110,
-      noBrand:true 
-    })
-
-    $(document).ready(function() {
-      privacyPolicy.start();
-    });
-  </script>
 
       </div>
       </div>

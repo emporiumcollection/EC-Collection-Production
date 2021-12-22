@@ -373,11 +373,11 @@
                                     </div>
                                     <div class="form-group">
                                         <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>Privacy Policy</b></a>
-
+                                        ||
                                         <a href="#" data-toggle="modal" data-target="#cookie_policy"><b>Cookie Policy</b></a>
-                                        
+                                        ||
                                         <a href="#" data-toggle="modal" data-target="#terms-and-conditions"><b>Terms & Conditions</b></a>
-
+                                        ||
                                     </div>
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1" checked>
