@@ -9,7 +9,25 @@
         </div>
         <div class="col-md-2 col-4 text-center">
           <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
-            <i class="t-logo logo-2"></i>
+            <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Voyage-Logo-150dpi.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'spa'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Spa-Logo-150.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'safari'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Safari-Logo-150.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'islands'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-islands-Logo.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'magazine'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Collection-Logo-150.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
           </a>
         </div>
         <div class="col-md-5 col-4 text-right">
