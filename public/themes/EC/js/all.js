@@ -654,7 +654,7 @@ var ajaxReq = 'ToCancelPrevReq';
                       nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
                     });
                     $('.quick-prev').slick('setPosition');
-                  }, 800);
+                  }, 2000);
         }
     });
   }
