@@ -152,32 +152,6 @@
     </div>
 </div>
 
-<!-- companion popup start -->
-<div class="modal fade bd-example-modal-lg" id="addCompanionModal" data-backdrop="static" tabindex="-1" role="dialog"
-aria-labelledby="staticBackdrop" aria-hidden="true">
-<div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Add Companion</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <i aria-hidden="true" class="ki ki-close"></i>
-            </button>
-        </div>
-            <div class="modal-body">
-              <div id="companion_list" class="row">
-                {{-- @foreach($companion as $data)
-                  @include('frontend.themes.EC.reservation.partials.whotravelling.companion-detail', ['companion' => $data])
-                @endforeach --}}
-              </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" aria-label="Close">Close</button>
-                <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Companion</button>
-            </div>
-    </div>
-</div>
-</div>
-<!-- companion popup end -->
 
 <!-- Popup Create Company -->
 <!--begin::Demo Panel-->

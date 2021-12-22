@@ -1,8 +1,8 @@
 <header>
-  <div class="top-header header-fixed">
+  <div class="top-header ">
     <div class="top-header-inner">
       <div class="row align-items-center">
-        <div class="col-md-5 col-4">
+        <div class="col-md-5 header-left col-4">
           @if(Request::segment(1) != 'reservation')
           <div id="menunav">
             <a href="#dashF" class="menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
@@ -41,12 +41,30 @@
           </div>
         @endif 
         </div>
-        <div class="col-md-2 col-4 text-center px-0">
+        <div class="col-md-2 col-4 header-center text-center px-0">
           <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
-            <i class="t-logo logo-2"></i>
+            <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Voyage-Logo-150dpi.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'spa'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Spa-Logo-150.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'safari'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Safari-Logo-150.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'islands'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-islands-Logo.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'magazine'){?>
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Collection-Logo-150.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+            <?php } ?>
           </a>
         </div>
-        <div class="col-md-5 col-4 text-right mobile-flex">
+        <div class="col-md-5 col-4 header-right text-right mobile-flex">
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
             @if(Auth::check() && Auth::user()->username)
               <a href="/dashboard" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
@@ -61,7 +79,7 @@
             @else  
               <a href="/register" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
                 <div class="user-profile-img">
-                  <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                  <img src="{{ asset('themes/EC/images/user-icon-emporium-collection-default.svg') }}" alt="">
                   <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
                 </div>
               </a>
@@ -91,7 +109,7 @@
                       $lmenus = [];
                       foreach($landing_menus as $menu):
                           $mmenu = '<li class="nav-item">
-                              <a class="nav-link" href="#">'.$menu['menu_name'].' </a>
+                              <a class="nav-link" href='.$menu['url'].'>'.$menu['menu_name'].' </a>
                             </li>';
                           $cmenu = '';
                           foreach($menu['childs'] as $child):
@@ -302,13 +320,13 @@
               </div>
             </li>
           </ul>
-        <div class="menu-mobile">
+        {{-- <div class="menu-mobile">
           <div class="humburger-second-menu" id="secondMenu">
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
           </div>
-        </div>
+        </div> --}}
         <ul class="nav nav-right ml-auto">
           {{-- <li class="nav-item">
             <a class="nav-link btn-sidebar" href="#" data-sidebar="#searchHistory">
