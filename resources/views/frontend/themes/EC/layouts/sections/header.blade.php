@@ -28,7 +28,7 @@
             @else  
               <a href="/register" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
                 <div class="user-profile-img">
-                  <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                  <img src="{{ asset('themes/EC/images/user-icon-emporium-collection-default.svg') }}" alt="">
                   <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
                 </div>
               </a>
@@ -66,7 +66,7 @@
                       $lmenus = [];
                       foreach($landing_menus as $menu):
                           $mmenu = '<li class="nav-item">
-                              <a class="nav-link" href="#">'.$menu['menu_name'].' </a>
+                              <a class="nav-link" href='.$menu['url'].'>'.$menu['menu_name'].' </a>
                             </li>';
                           $cmenu = '';
                           foreach($menu['childs'] as $child):

@@ -373,11 +373,11 @@ function replaceSuiteDetail(property_id, category_id){
   var containerName = getContainerName(property_id);
   var roomimages = ``;
 
-  if(typeof suite.rooms !== 'undefined' && suite.rooms.length){
-    if(typeof suite.rooms[0].images !== 'undefined' && suite.rooms[0].images.length){
-      $('[data-place="suite_image"]').attr('src', '/room-image/resize/85x71/'+containerName+'/'+suite.rooms[0].images[0]['file']['name']+'/'+suite.rooms[0].images[0]['file']['file_name'])
-    }
-  }
+  // if(typeof suite.rooms !== 'undefined' && suite.rooms.length){
+  //   if(typeof suite.rooms[0].images !== 'undefined' && suite.rooms[0].images.length){
+  //     $('[data-place="suite_image"]').attr('src', '/room-image/resize/85x71/'+containerName+'/'+suite.rooms[0].images[0]['file']['name']+'/'+suite.rooms[0].images[0]['file']['file_name'])
+  //   }
+  // }
   
   try{
     suite.rooms[0].images.forEach(function(rm){
@@ -669,7 +669,25 @@ function replacePrices(cat_id, property_id = null){
         suite = e;
       }
     });
-  
+    var containerName = getContainerName(property_id);
+    var roomimages = ``;
+
+    if(typeof suite.rooms !== 'undefined' && suite.rooms.length){
+      if(typeof suite.rooms[0].images !== 'undefined' && suite.rooms[0].images.length){
+        $('[data-place="suite_image"]').attr('src', '/room-image/resize/85x71/'+containerName+'/'+suite.rooms[0].images[0]['file']['name']+'/'+suite.rooms[0].images[0]['file']['file_name'])
+      }
+    }
+    
+    try{
+      suite.rooms[0].images.forEach(function(rm){
+        roomimages += `<div>
+          <img src="/room-image/resize/780x540/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+        </div>`;
+      });
+    }catch(e){
+      
+    }
+
     $('[data-place="suite_category_name"]').html(suite.category_name);
     $('#priceinfo .sub-price-content').html('Loading...');
     $.ajax({
