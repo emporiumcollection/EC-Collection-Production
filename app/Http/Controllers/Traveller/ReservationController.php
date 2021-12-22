@@ -48,9 +48,6 @@ class ReservationController extends Controller {
         $diff = date_diff($current_date, $checkin_date);
         $diffdate = $diff->format("%a");
         $cancelation_status = false;
-        echo "<pre>";
-        print_r($reservations->reservedSuites);
-        echo "<pre>"; die();
         foreach($reservations->reservedSuites as $key => $reservedSuite){
             $period = $reservedSuite->suite->cancelation_period;
             if($period && $diffdate >= $period){
