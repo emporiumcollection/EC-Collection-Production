@@ -108,6 +108,7 @@
               <b>€{{ $grand_total }}</b>
             </td>
           </tr>
+          @if(isset($vattax_id))
             @if($vattax_id == 1)
               <?php $vat = round(($grand_total * 20) / 100, 2); ?>
               <tr>
@@ -125,8 +126,9 @@
                 </td>
               </tr>
             @endif
+          @endif
           <tr>
-            <?php $total_price = round($grand_total + $vat, 2); ?>
+            <?php $total_price = round($grand_total + isset($vat), 2); ?>
             <td class="px-0 py-1">Total</td>
             <td class="px-0 py-1 text-right">
               <b>€{{ $total_price }}</b>

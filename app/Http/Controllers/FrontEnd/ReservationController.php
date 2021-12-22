@@ -39,7 +39,7 @@ class ReservationController extends Controller {
             Session::save();
             return redirect('user/login');
         }
-        $this->setSummaryData();
+        // $this->setSummaryData();
         $this->_checkBoards($id);
 
         $property = properties::find($id);
@@ -379,14 +379,25 @@ class ReservationController extends Controller {
         $numberOfNights = $this->getNumberOfNights();
 
         $suite_selection_html = view('frontend.themes.EC.reservation.partials.suite.guest-selection', ['suite' => $suite])->render();
-        
-        $reserve_suite_html = view('frontend.themes.EC.reservation.reservation-summary', [
-            'suites' => $this->data['suites'],
-            'selected_suite' => $this->data['selected_suite'],
-            'numberOfNights' => $numberOfNights , 
-            'images' => $this->data['images'],
-            'container_name' => $this->data['container_name'] ,
-            'vattax_id' => $this->data['vattax_id']])->render(); 
+        if(isset($this->data['vattax_id'])){
+            $view_array = [
+                'suites' => $this->data['suites'],
+                'selected_suite' => $this->data['selected_suite'],
+                'numberOfNights' => $numberOfNights , 
+                'images' => $this->data['images'],
+                'container_name' => $this->data['container_name'] ,
+                'vattax_id' => $this->data['vattax_id']
+            ];
+        }else{
+            $view_array = [
+                'suites' => $this->data['suites'],
+                'selected_suite' => $this->data['selected_suite'],
+                'numberOfNights' => $numberOfNights , 
+                'images' => $this->data['images'],
+                'container_name' => $this->data['container_name']
+            ];
+        }
+        $reserve_suite_html = view('frontend.themes.EC.reservation.reservation-summary', $view_array)->render(); 
             
         return json_encode([
             'suite_selection_html' => $suite_selection_html,
@@ -732,16 +743,19 @@ class ReservationController extends Controller {
         $vat_percentage = '';
         $this->_reCalculateGuestTotal();
         $this->setSummaryData();
-        if($this->data['vattax_id'] == 1){
+        if(isset($this->data['vattax_id'])){
+            if($this->data['vattax_id'] == 1){
             $vattax = 20;
             $vat_percentage = 20;
-        }elseif($this->data['vattax_id'] == 2){
-            $vattax = 2;
-            $vat_percentage = 2;
-        }elseif($this->data['vattax_id'] == 3){
-            $vattax = 2;
-            $vat_percentage = 2;
-        } 
+            }elseif($this->data['vattax_id'] == 2){
+                $vattax = 2;
+                $vat_percentage = 2;
+            }elseif($this->data['vattax_id'] == 3){
+                $vattax = 2;
+                $vat_percentage = 2;
+            }    
+        }
+         
         $data['price'] = $data['adult'] = $data['junior'] = $data['baby'] = 0;
         $data['user_id'] = Auth::user()->id;
         $data['property_id'] = Session::get('property_id');
@@ -990,16 +1004,16 @@ class ReservationController extends Controller {
         
         $vattax = properties::where('id',Session::get('property_id'))
         ->get();
-
-        if($vattax[0]->vattax_id == 1){
-            $this->data['vattax_id'] = 1;   
-        }
-        elseif($vattax[0]->vattax_id == 2){
-            $this->data['vattax_id'] = 2;      
-        }else{
-            $this->data['vattax_id'] = 3;
-        }
-
+        if(isset($vattax[0]->vattax_id)){
+            if($vattax[0]->vattax_id == 1){
+                $this->data['vattax_id'] = 1;   
+            }
+            elseif($vattax[0]->vattax_id == 2){
+                $this->data['vattax_id'] = 2;      
+            }else{
+                $this->data['vattax_id'] = 3;
+            }
+        }    
         $property = $this->getPropertyById(Session::get('property_id'));
         
         $this->data['property_image'] = 'default-image.png';
