@@ -157,7 +157,7 @@
             <a href="#" class="sidebar-back" data-close="sidebar">
                 <i class="ico ico-back"></i>
             </a>
-            <h3 class="mb-5">The Ludlow Hotel</h3>
+            <h3 class="mb-5"><?php echo $editorChoice->property_name;?></h3>
         </div>
         <div class="filter-list">
             <div class="accordion accordion-ex" id="accordionExample">
@@ -165,7 +165,7 @@
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
                             <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-link btn-block text-left">
-                                View The Ludlow Hotel
+                                View <?php echo $editorChoice->property_name;?>
                             </a>
                         </h2>
                     </div>
@@ -278,7 +278,7 @@
             <a href="#" class="sidebar-back" data-close="sidebar">
                 <i class="ico ico-back"></i>
             </a>
-            <h3 class="mb-5">The Ludlow Hotel</h3>
+            <h3 class="mb-5"><?php echo $editorChoice->property_name;?></h3>
         </div>
     </div>
 </div>
