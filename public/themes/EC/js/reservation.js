@@ -335,7 +335,7 @@ $( document ).ready(function() {
             type: 'get',            
             url:'/reserve_data',
             success: function(response){
-                // window.location.href ="/reservation/receipt";
+                window.location.href ="/reservation/receipt";
             }
         });
     });
