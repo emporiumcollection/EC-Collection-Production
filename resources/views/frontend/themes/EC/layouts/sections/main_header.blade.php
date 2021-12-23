@@ -33,7 +33,7 @@
                   <div class="filter-lst expand filter-guest filter-white">
                     <div class="input-group">
                       <div class="gust-dropdown">
-                        <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Suites</div>
+                        <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span>Guests</div>
                       </div>
                     </div>
                   </div>
