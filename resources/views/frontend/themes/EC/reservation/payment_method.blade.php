@@ -31,7 +31,7 @@
           <div class="col-lg-9 col-md-8">
             <form method="POST" action="#" id="payment_form">
             {!! csrf_field() !!}
-            @if(isset($cards))
+            @if(isset($cards->id) && isset($cards->id))
                 @foreach($cards as $card)
                   <div class="row">
                     <div class="col-lg-7 col-md-8">
@@ -138,6 +138,7 @@
                 <div class="form-group">
                   <textarea class="form-control" name="requirements" id="" cols="30" rows="10"
                     placeholder="Type your requirement here"></textarea>
+                    <div class="invalid-feedback"></div>
                 </div>
               </div>
             </div>
