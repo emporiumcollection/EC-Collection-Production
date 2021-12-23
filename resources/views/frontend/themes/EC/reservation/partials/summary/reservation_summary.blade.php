@@ -1,4 +1,8 @@
-
+<style>
+.modal-backdrop.show {
+    opacity: 0;
+}
+</style>
 <!--begin::Demo Panel-->
 
     <!--begin::Header-->
@@ -1303,7 +1307,7 @@
                                                 </div>
                                             </div>
                                             @endif
-                                            <a href="#addCompanionModal" data-toggle="modal"> {{-- /reservation/whoistravelling--}}
+                                            <a href="#addCompanionModal" data-toggle="modal" class="manage_guests"> {{-- /reservation/whoistravelling--}}
                                                 <div class="d-flex itinirary-list py-5 align-items-center">
                                                     <div style="width: 40px;">
                                                         <i class="fas fa-users"
@@ -1549,7 +1553,32 @@
         <!--end::Purchase-->
     </div>
     <!--end::Content-->
-
+<!-- companion popup start -->
+<div class="modal fade bd-example-modal-lg" id="addCompanionModal" data-backdrop="static" tabindex="-1" role="dialog"
+aria-labelledby="staticBackdrop" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Companion</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i aria-hidden="true" class="ki ki-close"></i>
+            </button>
+        </div>
+            <div class="modal-body">
+              <div id="companion_list" class="row">
+                {{-- @foreach($companion as $data)
+                  @include('frontend.themes.EC.reservation.partials.whotravelling.companion-detail', ['companion' => $data])
+                @endforeach --}}
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" aria-label="Close">Close</button>
+                <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Companion</button>
+            </div>
+    </div>
+</div>
+</div>
+<!-- companion popup end -->
 <!--end::Demo Panel-->
 <script type="text/javascript">
 jQuery(function($) {
@@ -1577,6 +1606,9 @@ jQuery(function($) {
             });
         });    
     });
+$(document).on('click', '.manage_guests', function(){
+    $('.fade').removeClass('modal-backdrop')
+});
 $(document).on('click', '.copy_address', function(){
     var element = $(this);
     var $temp = $("<input>");

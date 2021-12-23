@@ -4907,7 +4907,10 @@ button.bg-dark:focus {
 
 .d-inline-flex {
   display: inline-flex !important; }
-
+  @media (max-width: 576px) {
+    .d-xs-none {
+      display: none !important; }
+  }
 @media (min-width: 576px) {
   .d-sm-none {
     display: none !important; }
@@ -27323,7 +27326,7 @@ a:hover {
       .top-header.header-fixed .ico-dash {
         display: none; }
       .top-header.header-fixed .header-left {
-        order: 2; }
+        /*order: 2;*/ }
       .top-header.header-fixed .header-center {
         order: 1;
         text-align: left !important; }
@@ -38215,7 +38218,7 @@ button#clear span {
   .menu-dedicated {
     display: block !important; }
     .top-header.header-fixed .header-left {
-      order: 1;
+      /* order: 1; */
       flex: 0 0 70%;
       max-width: 70%; }
     .top-header.header-fixed .header-center {
