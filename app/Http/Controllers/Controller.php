@@ -27,6 +27,15 @@ abstract class Controller extends BaseController {
         $landing_menus = \SiteHelpers::menus('landing');
 	    $this->data['landing_menus'] = $landing_menus;
 
+	    $top_menus = \SiteHelpers::menus('Top');
+	    $this->data['top_menus'] = $top_menus;
+
+	    $popup_menus = \SiteHelpers::menus('Popup');
+	    $this->data['popup_menus'] = $popup_menus;
+
+	    $popup_menus2 = \SiteHelpers::menus('Popup2');
+	    $this->data['popup_menus2'] = $popup_menus2;
+
 		$this->data['menu_experiences'] = \DB::table('tb_categories')
 		->select(['id', 'category_name', 'category_alias'])
 		->where('category_approved', 1)
