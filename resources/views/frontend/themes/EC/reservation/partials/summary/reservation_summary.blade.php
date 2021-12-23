@@ -182,8 +182,9 @@
                                                               <td class="px-0 py-1 text-right"><b>€{{ 
                                                               $suite_price }}</b></td>
                                                             </tr>
-                                                            <?php $grand_total += (float)
-                                                            $suite_price; ?>
+                                                            <?php 
+                                                    $grand_total += (float)$suite_price;
+                                                            ?>
                                                           </table>
                                                         </div>
                                                         @endforeach
@@ -191,7 +192,8 @@
                                                           <table class="table table-borderless mb-0">
                                                             <tr>
                                                               <td class="px-0 py-1">Total</td>
-                                                              <td class="px-0 py-1 text-right"><b>€{{ $grand_total }}</b></td>
+                                                              <td class="px-0 py-1 text-right"><b>
+                                                              €{{ $reservations->price }}</b></td>
                                                             </tr>
                                                           </table>
                                                         </div>

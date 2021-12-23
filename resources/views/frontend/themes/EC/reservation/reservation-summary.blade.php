@@ -14,10 +14,12 @@
       <td class="px-0 py-1">Check-out</td>
       <td class="px-0 py-1 text-right">{{ \Session::get('departure') ? date('d F Y', strtotime(\Session::get('departure'))) : '' }}</td>
     </tr>
-    <tr>
-      <td class="px-0 py-1">Suites</td>
-      <td class="px-0 py-1 text-right">{{ \Session::get('selected_suite_number')}}</td>
-    </tr>
+    <?php if(\Session::has('selected_suite_number')){ ?>
+      <tr>
+        <td class="px-0 py-1">Suites</td>
+        <td class="px-0 py-1 text-right">{{ \Session::get('selected_suite_number') }}</td>
+      </tr>
+    <?php } ?>
   </table>
 </div>
 <?php
@@ -95,15 +97,43 @@
         @endif
     @endforeach
   @endforeach   
-    <?php $grand_total = $total + $board_price ?>
+    <?php
+      $grand_total = $total + $board_price 
+    ?>
       <div class="reservation-total">
         <table class="table table-borderless mb-0">
           <tr>
-            <td class="px-0 py-1">Total</td>
+            <td class="px-0 py-1">Subtotal</td>
             <td class="px-0 py-1 text-right">
               <b>€{{ $grand_total }}</b>
             </td>
           </tr>
+          @if(isset($vattax_id))
+            @if($vattax_id == 1)
+              <?php $vat = round(($grand_total * 20) / 100, 2); ?>
+              <tr>
+                <td class="px-0 py-1">VAT(20%)</td>
+                <td class="px-0 py-1 text-right">
+                  <b>€{{ $vat }}</b>
+                </td>
+              </tr>
+            @elseif($vattax_id == 2 || $vattax_id == 3)
+              <?php $vat = round(($grand_total * 2) / 100, 2); ?>
+              <tr>
+                <td class="px-0 py-1">VAT(2%)</td>
+                <td class="px-0 py-1 text-right">
+                  <b>€{{ $vat }}</b>
+                </td>
+              </tr>
+            @endif
+          @endif
+          <tr>
+            <?php $total_price = round($grand_total + isset($vat), 2); ?>
+            <td class="px-0 py-1">Total</td>
+            <td class="px-0 py-1 text-right">
+              <b>€{{ $total_price }}</b>
+            </td>
+          </tr>  
         </table>
       </div>
     @else

@@ -27,7 +27,16 @@
             <div class="col">
               <div class="form-group form-inline-group form-date-lg">
                 <input type="hidden" name="property_id" id="property_id" value="<?php echo $property_id?>">
-                <input type="text" class="form-control range_date" name="daterange" value="{!! date('m-d-Y', strtotime(Session::get('arrival'))); !!} - {!! date('m-d-Y', strtotime(Session::get('departure'))); !!}"/>                
+                <?php
+                  if(Session::has('arrival') && Session::has('departure')){
+                    $arrival = date('m-d-Y', strtotime(Session::get('arrival')));
+                    $departure = date('m-d-Y', strtotime(Session::get('departure')));
+                  }else{
+                    $arrival = date('m-d-Y');
+                    $departure = date('m-d-Y');
+                  }
+                ?>
+                <input type="text" class="form-control range_date" name="daterange" value="{!! $arrival !!} - {!! $departure !!}"/>                
               </div>
             </div>
             
@@ -57,7 +66,7 @@
 <script>
   $(function() {
     $('input[name="daterange"]').daterangepicker({
-      opens: 'true'
+      opens: 'true',
     }, function(start, end, label) {
       console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
     });
