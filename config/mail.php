@@ -15,7 +15,8 @@ return [
     |
     */
 
-    'driver' => 'mail',
+    // 'driver' => 'mail',
+    'driver' => env('MAIL_DRIVER', 'mail'),
 
     /*
     |--------------------------------------------------------------------------
@@ -28,7 +29,8 @@ return [
     |
     */
 
-    'host' => 'mail.emporium-voyage.com',
+    // 'host' => 'mail.emporium-voyage.com',
+    'host' => env('MAIL_HOST', 'mail.emporium-voyage.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -41,7 +43,8 @@ return [
     |
     */
 
-    'port' => '587',
+    // 'port' => '587',
+    'port' => env('MAIL_PORT', '587'),
 
     /*
     |--------------------------------------------------------------------------
@@ -54,7 +57,8 @@ return [
     |
     */
 
-    'from' => 'marketing@emporium-voyage.com',
+    // 'from' => 'marketing@emporium-voyage.com',
+    'from' => env('MAIL_FROM_ADDRESS', 'marketing@emporium-voyage.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -67,7 +71,7 @@ return [
     |
     */
 
-    'encryption' =>  'tls',
+    'encryption' =>  env('MAIL_ENCRYPTION', 'tls'),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,7 +84,8 @@ return [
     |
     */
 
-    'username' => 'marketing@emporium-voyage.com',
+    // 'username' => 'marketing@emporium-voyage.com',
+    'username' => env('MAIL_USERNAME', 'marketing@emporium-voyage.com'),
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +98,8 @@ return [
     |
     */
 
-    'password' => 'Bpd9Daggmp',
+    // 'password' => 'Bpd9Daggmp',
+    'password' => env('MAIL_PASSWORD', 'Bpd9Daggmp'),
 
     /*
     |--------------------------------------------------------------------------
