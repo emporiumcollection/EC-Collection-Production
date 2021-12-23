@@ -44,23 +44,23 @@
         <div class="col-md-2 col-4 header-center text-center px-0">
           <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
             <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Voyage-Logo-150dpi.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Voyage-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'spa'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Spa-Logo-150.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Spa-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'safari'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Safari-Logo-150.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Safari-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'islands'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-islands-Logo.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Islands-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'magazine'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Collection-Logo-150.png') }}) no-repeat center center; background-size: 160px 55px;"></i>.
+              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Magazine-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
             <?php } ?>
           </a>
         </div>
