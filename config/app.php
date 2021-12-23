@@ -84,6 +84,9 @@ return [
     'voyagedomain' => env('EC_VOYAGE_URL', 'emporium-voyage.com'),
     'magazinedomain' => env('EC_MAGAZINE','emporium-magazine.com'),
     'root_destinations' => env('ROOT_DESTINATIONS', ''),
+    'lifestyle_package_id' => env('LIFESTYLE_PCK_ID', '38'),
+    'dedicated_package_id' => env('DEDICATED_PCK_ID', '39'),
+    'bespoke_package_id' => env('BESPOKE_PCK_ID', '40'),
 
     'key' => env('APP_KEY', 'YrKh1BgM5ONj2ia81k77Z2nD7hDrDniF'),
     

@@ -661,11 +661,11 @@ trait Property {
         foreach($results as $property){
             $record = $property->toArray();
             if(!isset($record['property_category_packages']['package_id'])) continue;
-            if($record['property_category_packages']['package_id'] == '38'){
+            if($record['property_category_packages']['package_id'] == config('app.lifestyle_package_id')){
                 $lifestyle[] = $property;
-            }elseif($record['property_category_packages']['package_id'] == '39'){
+            }elseif($record['property_category_packages']['package_id'] == config('app.dedicated_package_id')){
                 $dedicated[] = $property;
-            }elseif($record['property_category_packages']['package_id'] == '40'){
+            }elseif($record['property_category_packages']['package_id'] == config('app.bespoke_package_id')){
                 $bespoke[] = $property;
             }
         }
