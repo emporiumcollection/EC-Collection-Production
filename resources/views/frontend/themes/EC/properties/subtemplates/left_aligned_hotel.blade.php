@@ -170,7 +170,7 @@
                         </h2>
                     </div>
                 </div>
-                <div class="card">
+                {{--<div class="card">
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
                             <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#Byexperience">
@@ -190,7 +190,7 @@
                             <a href="detail-suite.html" class="nav-link">Suite Name</a>
                         </div>
                     </div>
-                </div>
+                </div>--}}
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
@@ -212,8 +212,8 @@
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
-                            <a href="architecture.html" class="btn btn-link btn-block text-left">
-                                Architecture
+                            <a href="#" class="btn btn-link btn-block text-left">
+                                Suite
                             </a>
                         </h2>
                     </div>
@@ -221,7 +221,7 @@
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
-                            <a href="spa.html" class="btn btn-link btn-block text-left">
+                            <a href="#" class="btn btn-link btn-block text-left">
                                 Spa &amp; Wellness
                             </a>
                         </h2>
