@@ -61,7 +61,6 @@
                                                 }else{
                                                     $container_name = strtolower(str_replace(" ", "-", trim($property[0]->property_name)));
                                                 }
-
                                                 if(is_array($images)){
                                                     $file_name = $images['file_name'];
                                                 }elseif(is_object($images) && isset($image->file->file_name)){
@@ -152,7 +151,7 @@
                                                         @if(!empty($reservations))
 
                                                             @foreach($reservations->reservedSuites as $suite)
-                                                            <div class="reservation-summary section-shadow">
+                                                        <div class="reservation-summary section-shadow">
                                                           <h4>SUITE &nbsp; {{ $pos++ }}</h4>
                                                           <p><b>{{ $suite->suite->category_name }}</b></p>
                                                           <table class="table table-borderless mb-0">
@@ -187,9 +186,83 @@
                                                             ?>
                                                           </table>
                                                         </div>
+                                                        <br>
+                                                        
                                                         @endforeach
+                                                        @if(isset($suite_board))
+                                                        
+                                                        <div class="reservation-summary section-shadow">
+                                                            <h4>Suite board</h4>
+                                                            <p><b>{{ $suite_board->board_name }}</b></p>
+                                                            <table class="table table-borderless mb-0">
+                                                                <tr>
+                                                                    <td class="px-0 py-1">Price</td>
+                                                                    <td class="px-0 py-1 text-right">
+                                                                        {{ $reservations->number_of_nights }} * €{{ $suite_board->board_rackrate }}
+                                                                    </td>
+                                                                </tr>
+                                                                @if($suite_board->board_vat == 1)
+                                                                  <?php 
+                                                                    $per = 20; 
+                                                                    $tax =  $per/100 * $suite_board->board_rackrate ; 
+                                                                  ?>
+                                                                <tr>
+                                                                    <td class="px-0 py-1">Tax 20%</td>
+                                                                    <td class="px-0 py-1 text-right">
+                                                                    €{{ $tax }}</td>
+                                                                </tr>
+                                                                @elseif($suite_board->board_vat == 2)
+                                                                    <?php 
+                                                                        $per = 2; 
+                                                                        $tax =  $per/100 * $suite_board->board_rackrate ; 
+                                                                    ?>
+                                                                    <tr>
+                                                                        <td class="px-0 py-1">Tax 2%</td>
+                                                                        <td class="px-0 py-1 text-right">
+                                                                        €{{ $tax }}</td>
+                                                                    
+                                                                    </tr>
+                                                                @else
+                                                                    <?php 
+                                                                        $per = 2; 
+                                                                        $tax =  $per/100 * $suite_board->board_rackrate ; 
+                                                                    ?>
+                                                                    <tr>
+                                                                        <td class="px-0 py-1">Tax 2%</td>
+                                                                        <td class="px-0 py-1 text-right">
+                                                                        €{{ $tax }}</td>
+                                                                    </tr>
+                                                                @endif
+
+                                                                <?php $board_total = $tax + $suite_board->board_rackrate ; ?>
+                                                                <tr>
+                                                                    <td class="px-0 py-1">Sub total</td>
+                                                                    <td class="px-0 py-1 text-right">
+                                                                    €{{ $board_total }}</td>
+                                                                </tr>        
+                                                            </table>    
+                                                        </div>
+                                                        @endif
+                                                        <hr>
+                                                        <hr>
                                                         <div class="reservation-total">
                                                           <table class="table table-borderless mb-0">
+                                                            @if($vattax == 1)
+                                                            <?php
+                                                             $total_tax = round(($grand_total * 20) / 100,2);?>
+                                                            <tr>
+                                                              <td class="px-0 py-1">VAT(20%)</td>
+                                                              <td class="px-0 py-1 text-right"><b>
+                                                              €{{ $total_tax }}</b></td>
+                                                            </tr>
+                                                            @elseif($vattax == 2 || $vattax == 3)
+                                                                <?php
+                                                                 $total_tax = round(($grand_total * 20) / 100,2);?>    
+                                                                <tr>
+                                                                    <td class="px-0 py-1">VAT(2%)</td>
+                                                                    <td class="px-0 py-1 text-right">€{{ $total_tax }}</td>
+                                                                </tr>
+                                                            @endif    
                                                             <tr>
                                                               <td class="px-0 py-1">Total</td>
                                                               <td class="px-0 py-1 text-right"><b>
