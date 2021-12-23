@@ -56,13 +56,13 @@
           <div><i class="ico ico-fi-villa"></i></div>
           <div class="wiza-title">Villas</div>
         </a>
-      </li> --}}
+      </li>
       
       <li class="nav-item">
         <a href="#" class="nav-link">
           <div><i class="ico ico-fi-experience"></i></div>
           <div class="wiza-title">Experiences</div>
         </a>
-      </li>
+      </li> --}}
     </ul>
   </div>
