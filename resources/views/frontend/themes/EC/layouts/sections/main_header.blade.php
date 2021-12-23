@@ -44,23 +44,23 @@
         <div class="col-md-2 col-4 header-center text-center px-0">
           <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
             <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Voyage-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
+              <img src="{{ asset('/images/Emporium-Voyage-Large.svg') }}" width="160" height="75">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'spa'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Spa-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
+              <img src="{{ asset('/images/Emporium-Spa-Large.svg') }}" width="160" height="65">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'safari'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Safari-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
+              <img src="{{ asset('/images/Emporium-Safari-Large.svg') }}" width="160" height="75">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'islands'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Islands-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
+              <img src="{{ asset('/images/Emporium-Islands-Large.svg') }}" width="160" height="75">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'magazine'){?>
-              <i class="t-logo logo-2" style="background: url({{ asset('/images/Emporium-Magazine-Large.svg') }}) no-repeat center center; background-size: 160px 75px;"></i>.
+              <img src="{{ asset('/images/Emporium-Magazine-Large.svg') }}" width="160" height="75">
             <?php } ?>
           </a>
         </div>
@@ -364,28 +364,28 @@
     <div class="collapse clp dash-clp" id="dashF" data-parent="#menunav">
       <div class="drop-grid">
         <?php if($currentdomain != 'voyage'):?>
-        <a href="https://emporium-voyage.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
+        <a href="{{ \Config::get('app.voyagedomain').Request::getRequestUri() }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-building mr-2"></i> <span>Voyage</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'safari'):?>
-        <a href="https://emporium-safari.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
+        <a href="{{ \Config::get('app.safaridomain').Request::getRequestUri() }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-safari mr-2"></i> <span>Safari</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'spa'):?>
-        <a href="https://emporium-spa.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
+        <a href="{{ \Config::get('app.spadomain').Request::getRequestUri() }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-spa-i mr-2"></i> <span>Spa</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'islands'):?>
-        <a href="https://emporium-islands.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
+        <a href="{{ \Config::get('app.islandsdomain').Request::getRequestUri() }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-islands mr-2"></i> <span>Islands</span>
           </div>
