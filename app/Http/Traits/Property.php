@@ -243,6 +243,7 @@ trait Property {
         $destinationId = 0;
 
         return Cache::get($key, function () {
+            $destinationId = 0;
             $keyword = request()->get('s');
 
             $destination = categories::select(['id'])

@@ -15,7 +15,7 @@
     font-family: "SaolDisplay-Regular";
   }
   .wherepopup .nav-link{
-    font-size: 16px !important;
+    font-size: 20px !important;
   }
 </style>
 <form name="collection-search" method="post" action="{{URL::to('globalavailability')}}" id="collection_search">

@@ -72,11 +72,11 @@
       </div>
     </div>
     <div class="hotel-meta-mobile">
-      <a href="detail-page.html" class="btn rounded-0">
-        Suite Info
+      <a href="#" class="btn rounded-0 btn-sidebar btn-info-hotel" data-sidebar="#mobile_menu" onclick="replacePropertyMobileMenu(<?php echo $property->id;?>)">
+          Hotel Info <i class="fa fa-angle-down" aria-hidden="true"></i>
       </a>
-      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-        Check Availability
+      <a href="/hotel/hoteldetail/{{ $property->id }}" data-toggle="collapse" class="btn btn-primary rounded-0">
+        Reservation
       </a>
     </div>
   </div>
