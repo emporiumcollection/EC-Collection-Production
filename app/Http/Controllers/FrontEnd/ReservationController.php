@@ -562,7 +562,7 @@ class ReservationController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
-        $id = Session::get('uid');
+        $id = Auth()->user()->id;
         
         $this->_checkBoards(Session::get('property_id'));
         $this->data['numberOfNights'] = $this->getNumberOfNights();
@@ -595,7 +595,7 @@ class ReservationController extends Controller {
         $this->data['cards'] = CardDetail::where('user_id', '=', $id)
             ->orderBy('id','desc')
             ->get();
-
+        // print_r($this->data['cards']);exit;
         $this->data['last_id'] = CardDetail::find(\DB::table('tb_cards')
             ->where('user_id',Auth::user()->id)
             ->max('id'));
@@ -801,7 +801,7 @@ class ReservationController extends Controller {
         $companions = Session::get('companions');
 
         $reservation_id = \DB::table('tb_reservations')->insertGetId($data);
-
+        print_r($reservation_id);exit();
         foreach($reserved_suites as $suite_id => $suite){
             $reserveSuite = new ReservedSuite();
             $reserveSuite->reservation_id = $reservation_id;

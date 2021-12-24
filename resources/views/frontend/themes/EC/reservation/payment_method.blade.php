@@ -31,7 +31,7 @@
           <div class="col-lg-9 col-md-8">
             <form method="POST" action="#" id="payment_form">
             {!! csrf_field() !!}
-            @if(isset($cards->id) && isset($cards->id))
+            @if(isset($cards->id) || isset($last_id->id))
                 @foreach($cards as $card)
                   <div class="row">
                     <div class="col-lg-7 col-md-8">

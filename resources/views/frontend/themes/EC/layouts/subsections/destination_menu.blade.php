@@ -73,7 +73,7 @@ $level4TabTemplate = '<div class="tab-pane fade <!--LEVEL4-SHOWCLASS-->" id="<!-
                                 </div>
                             </div>
                             <a href="javascript:void(0);" onclick="filterDestination(\'<!--LEVEL4-NAME-->\')"><button class="btn btn-primary" style="width:100%; margin-top:10px;">View <!--LEVEL4-NAME--> Collection</button></a>
-                        </div>';                    
+                        </div>';            
 ?>
 <div class="desktop-view ">
                     <?php
