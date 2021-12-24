@@ -133,8 +133,6 @@ class ReservationController extends Controller {
             Session::put('property_id', $id);
         }
 
-        // print_r($this->data['property_image'][0]->property_name);exit;
-
         $this->data['property'] = properties::with(['container', 'suites' => function($q){
                 $q->where('show_on_booking', '=', 1);
             }])
@@ -595,7 +593,6 @@ class ReservationController extends Controller {
         $this->data['cards'] = CardDetail::where('user_id', '=', $id)
             ->orderBy('id','desc')
             ->get();
-        // print_r($this->data['cards']);exit;
         $this->data['last_id'] = CardDetail::find(\DB::table('tb_cards')
             ->where('user_id',Auth::user()->id)
             ->max('id'));
@@ -801,7 +798,6 @@ class ReservationController extends Controller {
         $companions = Session::get('companions');
 
         $reservation_id = \DB::table('tb_reservations')->insertGetId($data);
-        print_r($reservation_id);exit();
         foreach($reserved_suites as $suite_id => $suite){
             $reserveSuite = new ReservedSuite();
             $reserveSuite->reservation_id = $reservation_id;
