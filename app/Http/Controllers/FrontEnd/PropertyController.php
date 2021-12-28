@@ -3328,9 +3328,9 @@ class PropertyController extends Controller {
 
     }
 
-    public function getProperty($id){
+    public function getProperty($slug){
 
-        $this->data['hotel_data'] = $this->getPropertyById($id);
+        $this->data['hotel_data'] = $this->getPropertyByslug($slug);
 
         if(Session::has('keyword')){
             $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
@@ -3338,7 +3338,7 @@ class PropertyController extends Controller {
             $this->data['path'] = $this->getLocationPath($this->data['hotel_data'][0]->city);
         }
 
-        $this->data['reviews'] = $this->getReviews($id);
+        $this->data['reviews'] = $this->getReviews($this->data['hotel_data'][0]->id);
         $this->setGalleryAndFormat($this->data['hotel_data']);
         $this->data['layout_type'] = 'old';
         $this->setFitlerOptions();

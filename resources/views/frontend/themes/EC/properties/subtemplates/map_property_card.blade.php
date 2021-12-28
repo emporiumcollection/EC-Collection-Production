@@ -85,7 +85,7 @@
       </a>
     </div>
   </div>
-  <a href="/hotel/hoteldetail/{{ $property->id}}">
+  <a href="/hotel/{{ $property->property_slug }}">
     <div class="mb-3 mt-2 ">
       <h3 class="title-second is-small title-line mb-0"><?php echo $property->property_name;?></h3>
     </div>

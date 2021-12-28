@@ -88,7 +88,8 @@ trait Property {
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
-            'property_short_name', 
+            'property_short_name',
+            'property_slug', 
             'detail_section1_title', 
             'detail_section1_description_box1', 
             'detail_section1_description_box2', 
@@ -168,7 +169,8 @@ trait Property {
         return properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
-            'property_short_name', 
+            'property_short_name',
+            'property_slug', 
             'detail_section1_title', 
             'detail_section1_description_box1', 
             'detail_section1_description_box2', 
@@ -269,7 +271,8 @@ trait Property {
             $properties = properties::select([
                 'id', 
                 'property_name', 
-                'property_short_name', 
+                'property_short_name',
+                'property_slug', 
                 'detail_section1_title', 
                 'detail_section1_description_box1', 
                 'detail_section1_description_box2', 
@@ -377,11 +380,84 @@ trait Property {
         });            
     }
 
+    public function getPropertyByslug($slug){
+        $property = properties::select([
+            'id', 
+            'property_name', 
+            'property_short_name',
+            'property_slug', 
+            'detail_section1_title', 
+            'detail_section1_description_box1', 
+            'detail_section1_description_box2', 
+            'detail_section1_description_box2', 
+            'roomamenities', 
+            'assign_amenities', 
+            'latitude',
+            'longitude',
+            'address', 
+            'internetpublic',
+            'internetroom',
+            'children_policy',
+            'checkin',
+            'checkout',
+            'transfer',
+            'smookingpolicy',
+            'smookingrooms',
+            'numberofrooms',
+            'availableservices',
+            'pets',
+            'carpark',
+            'bar_ids',
+            'spa_ids',
+            'restaurant_ids',
+            'city',
+            'property_usp',
+            'covid_info',
+            'covid_link'
+        ])
+        ->with([
+            'boards',
+            'container',
+            //'images',
+            'PropertyCategoryPackages' => function($query){
+                $query->with(['package']);
+            },
+            'suites' => function($query){
+                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+            },
+            'propertyImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }]);
+                //->limit(20);
+            }, 
+            'roomImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }]);
+                //->limit(20);
+            }, 
+            'hotelBrochureImages' => function($query){
+                return $query->with(['file' => function($query){
+                    return $query->select(['id','file_name']);
+
+                }]);
+                //->limit(20);
+            }
+        ])
+        ->where('property_slug','=', $slug);
+
+        return $property->get();
+    }
+
     public function getPropertyById($id){
         $property = properties::select([
             'id', 
             'property_name', 
-            'property_short_name', 
+            'property_short_name',
+            'property_slug', 
             'detail_section1_title', 
             'detail_section1_description_box1', 
             'detail_section1_description_box2', 

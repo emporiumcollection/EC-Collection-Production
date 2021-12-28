@@ -4,7 +4,7 @@
       <a class="nav-link" href="#">Home</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link active" href="/hotel/hoteldetail/{{ $property->id }}">{{ $property->property_name }}</a>
+      <a class="nav-link active" href="/hotel/{{ $property->property_slug }}">{{ $property->property_name }}</a>
     </li>
   </ul>
   <div class="d-flex w-100 wow fadeInUp align-items-center" data-wow-delay=".3s">
@@ -13,7 +13,7 @@
     </a>
     <div class="title-main mb-4 w-100">
       <h2>{{ $property->property_name }}</h2>
-      <a href="/hotel/hoteldetail/{{ $property->id }}" class="main-close">
+      <a href="/hotel/{{ $property->property_slug }}" class="main-close">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
           xmlns="http://www.w3.org/2000/svg">
           <title>Close</title>
