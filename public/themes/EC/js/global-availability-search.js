@@ -337,7 +337,8 @@ function replaceSuiteList(id){
       suiteItem = suiteItem.replace('<!--SUITE-TITLE-->', suite.category_name);
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid); 
-      suiteItem = suiteItem.replace('<!--PROPERTY-ID-->', id);   
+      suiteItem = suiteItem.replace('<!--PROPERTY-ID-->', id);
+      suiteItem = suiteItem.replace('<!--M-PROPERTY-ID-->', id);
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
       suiteItem = suiteItem.replace('<!--SUITE-NO-BEDS-->', suite.bads);
       suiteItem = suiteItem.replace('<!--SUITE-SIZE-->', suite.suite_size);   

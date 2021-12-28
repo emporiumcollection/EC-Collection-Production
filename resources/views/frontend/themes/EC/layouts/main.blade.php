@@ -198,7 +198,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <body>
     @include('frontend.themes.EC.layouts.sections.preloader')
     @include('frontend.themes.EC.layouts.subsections.sidebar_collection')
-    <!--@include('frontend.themes.EC.layouts.sections.preloader')-->
+    {{-- @include('frontend.themes.EC.layouts.sections.preloader') --}}
 
     @if(isset($layout_type) && $layout_type == 'old')
         @section('header')
@@ -297,6 +297,6 @@ body {font-family: Arial, Helvetica, sans-serif;}
     setTimeout("getDefaultChannel('<?php echo isset($location[0]['category_alias']) ? $location[0]['category_alias'] : ''; ?>')", 1000);
   });
 </script>
-
+@yield('mobile_hotel_header')
 </body>
 </html>

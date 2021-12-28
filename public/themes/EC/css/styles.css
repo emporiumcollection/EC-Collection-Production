@@ -4910,6 +4910,10 @@ button.bg-dark:focus {
   @media (max-width: 576px) {
     .d-xs-none {
       display: none !important; }
+    
+    .mt-xs-5 {
+        margin-top: 3rem !important;
+    }
   }
 @media (min-width: 576px) {
   .d-sm-none {
@@ -36549,7 +36553,22 @@ button#clear span {
     max-height: 100%; }
   .modal-fullscreen .modal-dialog-scrollable .modal-content {
     max-height: 100vh; }
-
+  .scroll-totop {
+    position: fixed;
+    bottom: 15px;
+    right: 15px;
+    display: inline-flex;
+    width: 50px;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    background: #89a49f;
+    color: #fff !important;
+    border-radius: 5px;
+    z-index: 99; }
+    .scroll-totop i {
+      transform: rotate(-90deg); }
 @media (max-width: 1627.98px) {
   .hotel-book-container {
     max-width: 94%; }

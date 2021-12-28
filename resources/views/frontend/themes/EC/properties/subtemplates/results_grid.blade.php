@@ -1,6 +1,6 @@
       <div class="mt-5">
         <div class="row align-items-center">
-          <div class="col-md-6">
+          <div class="col-md-6 mt-xs-5">
             <div class="d-flex align-items-center nav-desc main-title-heading">
               <a href="/" class="sidebar-back" title="Go back to previous page" data-toggle="tooltip">
                 <i class="ico ico-back"></i>
@@ -64,7 +64,7 @@
         </div>
         <div class="dropdown dropdown-block mobile-on">
           <button class="btn btn-outline-dark btn-block dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lifestyle
           </button>
           <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
             <?php if (!empty($propertyResultsForView['lifestyle'])) : ?>

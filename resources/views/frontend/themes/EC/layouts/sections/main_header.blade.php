@@ -1,5 +1,5 @@
 <header>
-  <div class="top-header ">
+  <div class="top-header">
     <div class="top-header-inner">
       <div class="row align-items-center">
         <div class="col-md-5 header-left col-4">

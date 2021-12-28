@@ -830,7 +830,7 @@
 </div>
 <!--end::Demo Panel-->
                         </div>
-                        <div class="card-body">
+                        
                             <div class="mb-7">
                                 <!--begin::Subheader-->
                                 <div class="row align-items-center">
@@ -1537,7 +1537,7 @@
                                 </div>
                             </div>
                             <!--end::Entry-->
-                        </div>
+                        
                     </div>
                     <!--end::Card-->
 <div id="reservation_popup" class="offcanvas offcanvas-right p-10 offcanvas-off" style="width: 90%;">

@@ -133,7 +133,7 @@
         <a href="#" class="btn rounded-0 btn-sidebar btn-info-hotel" data-sidebar="#mobile_menu" onclick="replacePropertyMobileMenu(<?php echo $editorChoice->id;?>)">
           Hotel Info <i class="fa fa-angle-down" aria-hidden="true"></i>
         </a>
-        <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" data-toggle="collapse" class="btn btn-primary rounded-0">
+        <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-primary rounded-0">
           Reservation
         </a>
       </div>
