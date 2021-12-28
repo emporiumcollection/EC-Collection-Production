@@ -607,11 +607,7 @@ class ReservationController extends Controller {
     {
         if (!\Auth::check())
             return redirect('user/login');
-            
-            if(isset($request->card_type) && 
-                isset($request->card_number) &&
-                    isset($request->exp_month)){
-                $rules = array(
+            $rules = array(
                     'card_type' => 'required',
                     'card_number' => 'required|min:16',
                     'exp_month' => 'required',
@@ -620,7 +616,12 @@ class ReservationController extends Controller {
                     'requirements' => 'required'
                 );
         
-                $validator = Validator::make($request->all(), $rules);
+            $validator = Validator::make($request->all(), $rules);
+
+            if(isset($request->card_type) && 
+                isset($request->card_number) &&
+                    isset($request->exp_month)){
+                
                 if ($validator->passes()) {
                     $full_name = $request->card_name;
                     $name = explode(" ", $full_name); 
@@ -648,9 +649,12 @@ class ReservationController extends Controller {
                 else {
                     return json_encode(['ststus' => false, 'errors' => $validator->errors()]);
                 }
-            }else{
+            }elseif(isset($request->card_id)){
                 Session::put('payment_card_id',$request->card_id);
                 return response()->json(['status' => true, 'card_id' => $request->card_id]); 
+            }else{
+                $validator = Validator::make($request->all(), $rules);
+                return json_encode(['ststus' => false, 'errors' => $validator->errors()]);
             }                        
     }
 

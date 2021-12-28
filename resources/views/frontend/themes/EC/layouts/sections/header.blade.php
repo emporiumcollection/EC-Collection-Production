@@ -107,18 +107,61 @@
                       </div>
                     </div>
                       
-                      <div class="col-sm-8">
+                      <div class="col-sm-6">
                         <div class="row">
-                          <div class="col-12">
-                          <?php /*foreach($lmenus as $lmenu):?>
+                          <div class="col-6">
                             <ul class="nav flex-column">
-                              <?php echo $lmenu['main'];?>
-                              <?php echo $lmenu['childs'];?>
+                              @foreach($top_menus as $menu)
+                                <li class="nav-item">
+                                  <a class="nav-link" href="{{ $menu['url'] }}">{{ $menu['menu_name'] }} <i class="fa fa-chevron-right"
+                                      aria-hidden="true"></i></a>
+                                </li>
+                                @foreach($menu['childs'] as $child)
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="{{ $child['url'] }}">{{ $child['menu_name'] }} 
+                                      <i class="fa fa-chevron-right"
+                                      aria-hidden="true"></i></a>
+                                  </li>
+                                @endforeach
+                              @endforeach
                             </ul>
-                          <?php endforeach; */?>
+                          </div>
+                          <div class="col-6">
+                            <ul class="nav flex-column">
+                              @foreach($popup_menus as $menu)
+                                <li class="nav-item">
+                                  <a class="nav-link" href="{{ $menu['url'] }}">{{ $menu['menu_name'] }} <i class="fa fa-chevron-right"
+                                      aria-hidden="true"></i></a>
+                                </li>
+                                @foreach($menu['childs'] as $child)
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="{{ $child['url'] }}">{{ $child['menu_name'] }} 
+                                      <i class="fa fa-chevron-right"
+                                      aria-hidden="true"></i></a>
+                                  </li>
+                                @endforeach
+                              @endforeach
+                            </ul>
+                          </div>
+                          <div class="col-6">
+                            <ul class="nav flex-column">
+                              @foreach($popup_menus2 as $menu)
+                                <li class="nav-item">
+                                  <a class="nav-link" href="{{ $menu['url'] }}">{{ $menu['menu_name'] }} <i class="fa fa-chevron-right"
+                                      aria-hidden="true"></i></a>
+                                </li>
+                                @foreach($menu['childs'] as $child)
+                                  <li class="nav-item">
+                                    <a class="nav-link" href="{{ $child['url'] }}">{{ $child['menu_name'] }} 
+                                      <i class="fa fa-chevron-right"
+                                      aria-hidden="true"></i></a>
+                                  </li>
+                                @endforeach
+                              @endforeach
+                            </ul>
                           </div>
                         </div>
-                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

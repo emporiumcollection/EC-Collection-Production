@@ -128,7 +128,14 @@
             @endif
           @endif
           <tr>
-            <?php $total_price = round($grand_total + isset($vat), 2); ?>
+
+          <?php  
+            if(isset($vat)){
+              $total_price = $grand_total + $vat;
+            }else{
+              $total_price = $grand_total;
+            }
+          ?>
             <td class="px-0 py-1">Total</td>
             <td class="px-0 py-1 text-right">
               <b>€{{ $total_price }}</b>

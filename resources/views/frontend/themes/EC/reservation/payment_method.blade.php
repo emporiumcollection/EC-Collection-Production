@@ -154,7 +154,28 @@
               </div>
               </div>
             </div>
-
+            <hr class="my-5">
+            <div class="row">
+              <div class="col-lg-9">
+                <h5 class="mb-4">Special requirements <span class="small color-grey">(*Required)</span></h5>
+                <div class="form-group">
+                  <textarea class="form-control" name="requirements" id="" cols="30" rows="10"
+                    placeholder="Type your requirement here"></textarea>
+                    <div class="invalid-feedback"></div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-12 d-flex justify-content-between mt-4">
+                <a href="/reservation/whoistravelling" class="btn btn-dark px-5">Go back</a>
+                <button type="submit" class="btn btn-dark px-5 save-payment" id="btn-payment-save">Next</button>
+              </div>
+            </div>
+          </form>
+          </div>
+          <div class="col-lg-3 col-md-4">
+            @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+          </div>
           </div>
         </div>
       </div>

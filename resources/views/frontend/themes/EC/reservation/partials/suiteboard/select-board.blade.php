@@ -17,6 +17,7 @@
             $per = 20; 
             $tax =  $per/100 * $board->board_rackrate ; 
           ?>
+          
           <td class="px-0 py-1">Tax 20%</td>
           <td class="px-0 py-1 text-right"> €{{ $tax }}</td>
         @elseif($board->board_vat == 2)
