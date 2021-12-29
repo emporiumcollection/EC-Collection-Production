@@ -30,8 +30,7 @@
     <div class="main-content p-0">
       <div class="map-location">
         
-        
-        <div id="map2"></div>
+        <div id="map3"></div>
     </div>
   </div>
 </div>
@@ -43,5 +42,4 @@
     setMapLocation(lat, long ,loc);
   });
 </script>
-@include('frontend.themes.EC.hotel.gallery')
 @include('frontend.themes.EC.layouts.subsections.share')

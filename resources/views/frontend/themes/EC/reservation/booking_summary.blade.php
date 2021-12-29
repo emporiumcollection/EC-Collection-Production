@@ -93,7 +93,7 @@
                     </ul>
                   @endif  
                   @if(!empty($properties))
-                    <div id="map2"></div>
+                    <div id="map3"></div>
                   @else
                     <h2>Location Not Found</h2>
                   @endif
