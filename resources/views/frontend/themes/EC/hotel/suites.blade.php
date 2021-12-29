@@ -51,7 +51,7 @@
     });
 
   });
-  var city = <?php echo $property->city;?>;
+  var city = '<?php echo $property->city;?>';
 </script>
 <?php endif; ?>
 @endsection
