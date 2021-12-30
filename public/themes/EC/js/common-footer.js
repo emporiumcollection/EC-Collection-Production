@@ -240,7 +240,7 @@ function setMapLocation(lat, long, loc){
         center: [lat, long],
         zoom: 9 // starting zoom
         });*/
-      map = L.map('map2');
+      map = L.map('map3');
       map.setView([lat, long], 18);
     }else{
       map.setView([lat, long], 18);

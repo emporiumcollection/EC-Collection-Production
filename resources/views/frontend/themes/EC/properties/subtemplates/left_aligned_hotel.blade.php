@@ -9,7 +9,7 @@
 <div class="mb-5">
   <div class="row align-items-center">
     <div class="col-md-6">
-      <a href="/hotel/hoteldetail/<?php echo $editorChoice->id; ?>">
+      <a href="/hotel/{{ $editorChoice->property_slug }}">
         <h3 class="title-second title-line mb-0"><?php echo $editorChoice->property_name;?></h3>
       </a>
     </div>
@@ -126,14 +126,14 @@
           </ul>
         </div>
         <div class="right-meta align-self-center">
-          <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-primary btn-block rounded-0">Reservation</a>
+          <a href="/hotel/{{ $editorChoice->property_slug }}" class="btn btn-primary btn-block rounded-0">Reservation</a>
         </div>
       </div>
       <div class="hotel-meta-mobile col-lg-6">
         <a href="#" class="btn rounded-0 btn-sidebar btn-info-hotel" data-sidebar="#mobile_menu" onclick="replacePropertyMobileMenu(<?php echo $editorChoice->id;?>)">
           Hotel Info <i class="fa fa-angle-down" aria-hidden="true"></i>
         </a>
-        <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-primary rounded-0">
+        <a href="/hotel/{{ $editorChoice->property_slug }}" data-toggle="collapse" class="btn btn-primary rounded-0">
           Reservation
         </a>
       </div>

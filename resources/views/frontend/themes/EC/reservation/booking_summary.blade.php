@@ -87,6 +87,28 @@
                               <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
                           </li>
 
+                      <li class="nav-item">
+                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>
+                          Get directions <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
+                      </li>
+                    </ul>
+                  @endif  
+                  @if(!empty($properties))
+                    <div id="map3"></div>
+                  @else
+                    <h2>Location Not Found</h2>
+                  @endif
+                     
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-5 col-lg-12">
+              <div class="row h-100">
+                <div class="col-md-5 mmb-4 h-100">
+                  <div class="bg-grey p-3 h-100">
+                    <ul class="nav nav-step5 flex-column">
+                      @if(!empty($trip_dates))
+                        @foreach($trip_dates as $date)
                           <li class="nav-item">
                             <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>
                               Get directions <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>

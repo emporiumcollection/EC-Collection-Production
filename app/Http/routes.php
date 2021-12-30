@@ -40,14 +40,14 @@ Route::get('/users/setting', 'UserController@getSettings');
 
 //HotelDetail Routes
 
-Route::get('/hotel/hoteldetail/{id}', 'FrontEnd\PropertyController@getProperty');
-Route::get('/hotel/suite/{property_id}', 'FrontEnd\HotelDetailController@suites');
+Route::get('/hotel/{slug}', 'FrontEnd\PropertyController@getProperty');
+Route::get('/hotel/{slug}/{suite}', 'FrontEnd\HotelDetailController@suites');
 Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
 Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture');
 Route::get('/hotel/spa', 'FrontEnd\HotelDetailController@spa');
 Route::get('/hotel/restaurant', 'FrontEnd\HotelDetailController@restaurant');
 Route::get('/hotel/detailrestaurant','FrontEnd\HotelDetailController@detailrestaurant');
-Route::get('/hotel/location/{id}','FrontEnd\HotelDetailController@location');
+Route::get('/hotel-location/{slug}','FrontEnd\HotelDetailController@getlocation');
 Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
 Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
 Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');

@@ -324,16 +324,21 @@ function replaceSuiteList(id){
       roomimages = '';
 
       console.log(suite.rooms[0].images.length);
-      if(suite.rooms[0].images.length !== undefined){        
-        suite.rooms[0].images.forEach(function(rm){
-          if(onlyThree < 3){        
-            roomimages += `<div>
-                <img src="/room-image/resize/780x540/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
-              </div>`;  
-          }
-          onlyThree++; 
-        });  
+      try{
+        if(suite.rooms[0].images.length !== undefined){        
+          suite.rooms[0].images.forEach(function(rm){
+            if(onlyThree < 3){        
+              roomimages += `<div>
+                  <img src="/room-image/resize/780x540/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+                </div>`;  
+            }
+            onlyThree++; 
+          });  
+        }  
+      }catch(e){
+
       }
+    
       suiteItem = suiteItem.replace('<!--SUITE-TITLE-->', suite.category_name);
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid); 

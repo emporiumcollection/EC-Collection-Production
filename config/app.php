@@ -244,7 +244,7 @@ return [
         'UnsplashUsers' => shweshi\LaravelUnsplashWrapper\UnsplashUsers::class,
         'UnsplashPhotos' => shweshi\LaravelUnsplashWrapper\UnsplashPhotos::class,
         'UnsplashCollections' => shweshi\LaravelUnsplashWrapper\UnsplashCollections::class,
-        //'Image' => Imagine\Imagick\Imagine::class,
+        'Image' => Imagine\Imagick\Imagine::class,
         'Image' => Folklore\Image\Facades\Image::class,
         'ReviewHelper'=> App\Helpers\ReviewHelper::class,
     ],

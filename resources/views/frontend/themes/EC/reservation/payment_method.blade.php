@@ -27,12 +27,23 @@
             </h2>
             <h5 class="mb-4">Your Card </h5>
 
-            <div class="row">
-              <div class="col-lg-9 col-md-8">
-                <form method="POST" action="#" id="payment_form">
-                  {!! csrf_field() !!}
-                  @if(isset($cards))
-                  @foreach($cards as $card)
+     @include('frontend.themes.EC.reservation.nav_wizard')
+     
+      <div id="step-8" class="tab-pane" role="tabpanel">
+        <h2 class="mb-5 d-flex align-items-center">
+          <a href="#" class="backwizard btn-backwizard">
+            <i class="ico ico-back mr-3"></i>
+          </a>
+          Payment Method
+        </h2>
+        <h5 class="mb-4">Your Card </h5>
+        
+        <div class="row">
+          <div class="col-lg-9 col-md-8">
+            <form method="POST" action="#" id="payment_form">
+            {!! csrf_field() !!}
+            @if(isset($cards->id) || isset($last_id->id))
+                @foreach($cards as $card)
                   <div class="row">
                     <div class="col-lg-7 col-md-8">
                       <div class="d-flex align-items-center list-divider">

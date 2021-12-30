@@ -2158,7 +2158,8 @@ This section allows you to upload your Hotels STO contract & Terms. Your contrac
 
 @section('script')
     <script type="text/javascript">
-    var activeTab = '@if($active_tab > 0){{$active_tab}}@else{{0}}@endif'; 
+    {{-- var activeTab = '@if($active_tab > 0){{$active_tab}}@else{{0}}@endif';  --}}
+    var activeTab = 0;
     activeTab = parseInt(activeTab);
     var prevTab = activeTab;
     activeTab++;

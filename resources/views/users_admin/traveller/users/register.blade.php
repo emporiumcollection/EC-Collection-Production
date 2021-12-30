@@ -707,7 +707,6 @@
             $("#laxury").hide();
             $("#sel-user-type").change(function(){
                 $("select option:selected").each(function(){
-                    alert();
                     $("#type_error").hide();
                     if($(this).attr("value")=="2"){
                         $("#laxury").show();

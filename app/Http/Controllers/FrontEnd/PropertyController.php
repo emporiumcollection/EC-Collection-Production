@@ -3328,11 +3328,17 @@ class PropertyController extends Controller {
 
     }
 
-    public function getProperty($id){
-        $this->data['hotel_data'] = $this->getPropertyById($id);
-        // echo "<pre>";
-        // print_r($this->data['hotel_data']->toArray());exit;
-        $this->data['reviews'] = $this->getReviews($id);
+    public function getProperty($slug){
+
+        $this->data['hotel_data'] = $this->getPropertyByslug($slug);
+
+        if(Session::has('keyword')){
+            $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
+        }else{
+            $this->data['path'] = $this->getLocationPath($this->data['hotel_data'][0]->city);
+        }
+
+        $this->data['reviews'] = $this->getReviews($this->data['hotel_data'][0]->id);
         $this->setGalleryAndFormat($this->data['hotel_data']);
         $this->data['layout_type'] = 'old';
         $this->setFitlerOptions();

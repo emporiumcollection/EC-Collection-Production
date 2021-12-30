@@ -75,12 +75,12 @@
       <a href="#" class="btn rounded-0 btn-sidebar btn-info-hotel" data-sidebar="#mobile_menu" onclick="replacePropertyMobileMenu(<?php echo $property->id;?>)">
           Hotel Info <i class="fa fa-angle-down" aria-hidden="true"></i>
       </a>
-      <a href="/hotel/hoteldetail/{{ $property->id }}" data-toggle="collapse" class="btn btn-primary rounded-0">
+      <a href="/hotel/{{ $property->property_slug }}" data-toggle="collapse" class="btn btn-primary rounded-0">
         Reservation
       </a>
     </div>
   </div>
-  <a href="/hotel/hoteldetail/{{ $property->id }}">
+  <a href="/hotel/{{ $property->property_slug }}">
     <div class="title-offset mt-5 ">
       <h3 class="title-second title-line mb-0"><?php echo $property->property_name;?></h3>
       <h4 class="title-font-2 title-third"><?php echo $property->city;?></h4>
