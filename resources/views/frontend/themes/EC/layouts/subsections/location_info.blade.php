@@ -23,12 +23,12 @@
             <div class="col-12">
                 <ul class="nav nav-tab-main nav-pills nav-justified mb-2">
                     <li class="nav-item">
-                        <a class="nav-link" href="#galleryTab" data-toggle="tab" role="tab" aria-selected="true">
+                        <a class="nav-link active" href="#galleryTab" data-toggle="tab" role="tab" aria-selected="true">
                             Gallery
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link active" href="#infoTab" data-toggle="tab" role="tab" aria-selected="false">
+                        <a class="nav-link" href="#infoTab" data-toggle="tab" role="tab" aria-selected="false">
                             Info
                         </a>
                     </li>
