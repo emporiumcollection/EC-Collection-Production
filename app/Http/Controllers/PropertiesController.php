@@ -2256,7 +2256,7 @@ class PropertiesController extends Controller {
                             ));
                         } else {
                             $mdimg = \Image::make($destinationPath . $fileName, array(
-                                //'width' => 320,
+                                'width' => 320,
                                 'height' => 320,
                                 'crop' => true,
                             //'grayscale' => true
@@ -2348,14 +2348,14 @@ class PropertiesController extends Controller {
                             if ($thactualsize[0] > $thactualsize[1]) {
                                 $mdimg = \Image::make($destinationPath . $fileName, array(
                                     'width' => 320,
-                                    // 'height' => 130,
+                                    'height' => 130,
                                     'crop' => true,
                                 //'grayscale' => true
                                 ));
                             } else {
                                 $mdimg = \Image::make($destinationPath . $fileName, array(
                                     'width' => 320,
-                                    // 'height' => 130,
+                                    'height' => 130,
                                     'crop' => true,
                                 //'grayscale' => true
                                 ));
