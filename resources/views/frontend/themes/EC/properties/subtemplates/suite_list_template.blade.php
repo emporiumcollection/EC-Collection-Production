@@ -89,7 +89,7 @@
                 </div>
             </a>
             <div class="ipad-view book-suite">
-                <a href="#">
+                <a href="/reservation/when/<!--IPAD-PROPERTY-ID-->">
                     Book this Suite
                 </a>
             </div>

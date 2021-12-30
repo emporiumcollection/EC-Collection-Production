@@ -24,10 +24,10 @@
 			<div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
 				@include('frontend.themes.EC.reservation.nav_wizard')
 				<div class="pt-4 wizard-reservation-content">
-					<div id="step-2" class="tab-pane" role="tabpanel">
-						<div class="row">
+					<div id="step-2" class="tab-pane pt-lg-5 pt-xl-5" role="tabpanel">
+						<div class="row pt-lg-5 pt-xl-5">
 							<div class="col-lg-9 col-md-8 mb-4">
-								<div class="row">
+								<div class="row mt-5">
 									<div class="col-md-12">
 										<h2 class="mb-5 d-flex align-items-center"><a href="javascript:void(0);"
 												class="backwizard btn-backwizard mobile-off"><i

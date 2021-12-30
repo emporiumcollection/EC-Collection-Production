@@ -18,8 +18,8 @@
       <div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
         @include('frontend.themes.EC.reservation.nav_wizard')
         <div class="pt-4 wizard-reservation-content">
-          <div id="step-5" class="tab-pane" role="tabpanel">
-            <h2 class="mb-5 d-flex align-items-center"><a href="#" class="backwizard btn-backwizard mobile-off"><i class="ico ico-back mr-3"></i></a>Policies</h2>
+          <div id="step-5" class="tab-pane pt-lg-5 pt-xl-5" role="tabpanel">
+            <h2 class="mb-5 d-flex align-items-center pt-lg-5 pt-xl-5"><a href="#" class="backwizard btn-backwizard mobile-off"><i class="ico ico-back mr-3"></i></a>Policies</h2>
             <div class="row">
               <div class="col-lg-9 col-md-8 mb-4">
                 <h3 class="mobile-off">Policies</h3>

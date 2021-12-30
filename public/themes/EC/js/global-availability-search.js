@@ -339,6 +339,7 @@ function replaceSuiteList(id){
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid); 
       suiteItem = suiteItem.replace('<!--PROPERTY-ID-->', id);
       suiteItem = suiteItem.replace('<!--M-PROPERTY-ID-->', id);
+      suiteItem = suiteItem.replace('<!--IPAD-PROPERTY-ID-->', id);
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
       suiteItem = suiteItem.replace('<!--SUITE-NO-BEDS-->', suite.bads);
       suiteItem = suiteItem.replace('<!--SUITE-SIZE-->', suite.suite_size);   

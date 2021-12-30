@@ -2404,7 +2404,10 @@ $(document).ready(function () {
       $(".top-header").addClass("header-transition");
 
     } else if ( (scroll > 220) && (scroll < 300)) {
-      $(".top-header").addClass("header-fixed");
+      if($(".reservation-em").length == 0){
+        // $("header").find(".top-header").removeClass("header-fixed");
+        $(".top-header").addClass("header-fixed");
+      }
     }
   });
 
@@ -2432,3 +2435,40 @@ $(document).ready(function () {
       return this;
   }
 })($.fn.removeClass);
+$('.humburger-menu-sidebar').click(function(){
+  $(this).closest('.sidebar-nav-section').find('.nav-collapse').toggleClass('show')
+})
+$('.close-second-menu').click(function(e){
+  e.preventDefault();
+  $(this).closest('.sidebar-nav-section').find('.nav-collapse').removeClass('show')
+  $(this).closest('.sidebar-nav-section').removeClass('show')
+})
+
+const postDetails = document.querySelector(".col-hotel-slider");
+const postSidebar = document.querySelector("#sidebar");
+const postSidebarContent = document.querySelector(".nav-collapse");
+
+const controller = new ScrollMagic.Controller();
+const scene = new ScrollMagic.Scene({
+  triggerElement: postSidebar,
+  triggerHook: 0,
+  duration: getDuration,
+  offset: -170
+}).addTo(controller);
+
+if (window.matchMedia("(min-width: 768px)").matches) {
+  scene.setPin(postSidebar, { pushFollowers: false });
+}
+
+// in your projects, you might want to debounce resize event for better performance
+window.addEventListener("resize", () => {
+  if (window.matchMedia("(min-width: 768px)").matches) {
+    scene.setPin(postSidebar, { pushFollowers: false });
+  } else {
+    scene.removePin(postSidebar, true);
+  }
+});
+
+function getDuration() {
+  return postDetails.offsetHeight - postSidebarContent.offsetHeight;
+}

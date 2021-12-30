@@ -19,9 +19,9 @@
         @include('frontend.themes.EC.reservation.nav_wizard')
         <div class="pt-4 wizard-reservation-content">
           <div id="step-1" class="tab-pane" role="tabpanel">
-            <div class="row">
-              <div class="col-lg-9 col-md-8 mb-4">
-                <h2 class="mb-5 pt-4">Stay Dates:</h2>
+            <div class="row pt-lg-5 pt-xl-5">
+              <div class="col-lg-9 col-md-8 mb-4 ">
+                <h2 class="mb-5 pt-lg-5 pt-xl-5">Stay Dates:</h2>
                 <hr>
                 <h5 class="mb-2 mt-3">Your selected stay dates:</h5>
                 <div class="row mb-5">            
@@ -92,6 +92,13 @@
 
   var x = window.matchMedia("(max-width: 767px)")
   m_reservation_header(x) 
-  x.addListener(m_reservation_header) 
+  x.addListener(m_reservation_header)
+  
+  $(window).scroll(function() {
+    var scroll = $(window).scrollTop();
+    if ( (scroll > 220) && (scroll < 300)) {
+      $(".top-header").removeClass("header-fixed");
+    }
+  });
 </script>
 @endsection

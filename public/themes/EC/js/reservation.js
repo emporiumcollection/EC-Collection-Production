@@ -740,3 +740,14 @@ function addRemoveCompanionAjaxCall(companion_id, suite_id, operation){
         error: function(response){},
     });
 }
+
+$(window).scroll(function () {
+    var sticky = $('.nav-wizard-primary'),
+      scroll = $(window).scrollTop();
+      if (scroll >= 150) {
+        sticky.addClass('fixed');
+      }else {
+        sticky.removeClass('fixed');
+      }
+    
+  });

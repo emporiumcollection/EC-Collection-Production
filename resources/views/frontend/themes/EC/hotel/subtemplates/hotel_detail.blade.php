@@ -113,7 +113,7 @@
         </div>
       </a>
       <div class="ipad-view book-suite">
-        <a href="#">
+        <a href="/reservation/when/{{ $hotel_data[0]->id }}">
           Book this Suite
         </a>
       </div>

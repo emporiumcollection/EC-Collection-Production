@@ -106,7 +106,7 @@
         </div>
       </div>
 
-      <div class="hero-meta d-sm-none d-md-none d-xl-flex d-lg-flex d-xs-none">
+      <div class="hero-meta d-xl-flex d-lg-flex d-xs-none">
         <div class="left-meta">
           <ul class="nav nav-pills nav-fill">
             @if(!empty($editorChoice->suites->toArray()))

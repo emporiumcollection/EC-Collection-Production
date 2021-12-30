@@ -277,6 +277,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 <script type="text/javascript" src="{{ asset('themes/EC/js/plugin/mapbox-gl.js') }}"></script>
 <script src="{{ asset('themes/EC/js/plugin/rellax.min.js') }}"></script>
 <script src="{{ asset('lib/yottie/jquery.yottie.bundled.js')}}"></script>
+<script type="text/javascript" src="{{ asset('themes/EC/js/ScrollMagic.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/all.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/collection.js')}}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reservation.js') }}"></script>

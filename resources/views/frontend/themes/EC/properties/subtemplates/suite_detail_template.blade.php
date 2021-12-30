@@ -94,7 +94,7 @@
                     </div>
                 </div>
                 <div class="ipad-view book-suite">
-                    <a href="#">
+                    <a data-place="reserve-link" href="#">
                         Book this Suite
                     </a>
                 </div>

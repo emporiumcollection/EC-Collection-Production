@@ -109,12 +109,12 @@
                       $lmenus = [];
                       foreach($landing_menus as $menu):
                           $mmenu = '<li class="nav-item">
-                              <a class="nav-link" href='.$menu['url'].'>'.$menu['menu_name'].' </a>
+                              <a class="nav-link" href='.$menu['url'].'>'.$menu['menu_name'].'</a>
                             </li>';
                           $cmenu = '';
                           foreach($menu['childs'] as $child):
                             $cmenu .= '<li class="nav-item">
-                              <a class="nav-link" href="'.$child['url'].'">'.$child['menu_name'].' </a>
+                              <a class="nav-link" href="'.$child['url'].'">'.$child['menu_name'].'</a>
                             </li>';
                           endforeach;
                           $lmenus[] = ['main' => $mmenu, 'childs' => $cmenu];

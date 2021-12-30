@@ -18,8 +18,8 @@
         <div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
           @include('frontend.themes.EC.reservation.nav_wizard')
           <div class="pt-4 wizard-reservation-content">
-            <div id="step-10" class="tab-pane" role="tabpanel">
-              <div class="row">
+            <div id="step-10" class="tab-pane pt-lg-5 pt-xl-5" role="tabpanel">
+              <div class="row pt-lg-5 pt-xl-5">
                 <div class="col-xl-7 col-lg-12">
                   <div class="row">
                     <div class="col-md-7">

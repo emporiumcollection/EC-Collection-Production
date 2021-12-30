@@ -24,8 +24,8 @@
       <div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
         @include('frontend.themes.EC.reservation.nav_wizard')
         <div class="pt-4 wizard-reservation-content">
-          <div id="step-3" class="tab-pane" role="tabpanel">
-            <h2 class="mb-5 d-flex align-items-center">
+          <div id="step-3" class="tab-pane pt-lg-5 pt-xl-5" role="tabpanel">
+            <h2 class="mb-5 d-flex align-items-center pt-lg-5 pt-xl-5">
               <a href="#" class="backwizard btn-backwizard mobile-off">
                 <i class="ico ico-back mr-3"></i>
               </a>

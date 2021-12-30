@@ -64,5 +64,11 @@
   var city = <?php echo $property->city;?>;
 </script>
 <?php endif; ?>
+@section('mobile_hotel_header')
+<script>
+  $('.top-header').addClass('mobile-off');
+  
+</script>
+@endsection
 @endsection
 

@@ -24,7 +24,7 @@
 
 .credit-input {
 	display: block;
-	width: 50%;
+	width: auto;
 	max-width: 400px;
 	height: 34px;
 	padding: 6px 12px;
