@@ -2295,7 +2295,7 @@ class PropertiesController extends Controller {
                         // $pthimg->resize(80, 80);
                         $pthimg = \Image::make($destinationPath . $fileName, array(
                             'width' => 80,
-                            // 'height' => 80,
+                            'height' => 80,
                             'crop' => true,
                         //'grayscale' => true
                         ));
