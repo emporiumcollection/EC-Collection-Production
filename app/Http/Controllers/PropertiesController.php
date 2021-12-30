@@ -2349,7 +2349,7 @@ class PropertiesController extends Controller {
                                 $mdimg = \Image::make($destinationPath . $fileName, array(
                                     'width' => 320,
                                     'height' => 320,
-                                    'crop' => false,
+                                    'crop' => true,
                                 //'grayscale' => true
                                 ));
                             } else {
