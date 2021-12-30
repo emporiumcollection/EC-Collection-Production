@@ -2250,7 +2250,7 @@ class PropertiesController extends Controller {
 
                             $mdimg = \Image::make($destinationPath . $fileName, array(
                                 'width' => 320,
-                                //'height' => 130,
+                                'height' => 130,
                                 'crop' => true,
                             //'grayscale' => true
                             ));
@@ -2273,13 +2273,13 @@ class PropertiesController extends Controller {
                         if ($hfactualsize[0] > $hfactualsize[1]) {
                             $mdimg = \Image::make($destinationPath . $fileName, array(
                                 'width' => 1000,
-                                // 'height' => 320,
+                                'height' => 320,
                                 'crop' => true,
                             //'grayscale' => true
                             ));
                         } else {
                             $mdimg = \Image::make($destinationPath . $fileName, array(
-                                // 'width' => 1000,
+                                'width' => 1000,
                                 'height' => 1000,
                                 'crop' => true,
                             //'grayscale' => true
@@ -2309,13 +2309,13 @@ class PropertiesController extends Controller {
                             // $fpimg->resize(425, 283);
                             $fpimg = \Image::make($destinationPath . $fileName, array(
                                 'width' => 425,
-                                // 'height' => 1000,
+                                'height' => 1000,
                                 'crop' => true,
                             //'grayscale' => true
                             ));
                         } else {
                             $fpimg = \Image::make($destinationPath . $fileName, array(
-                                // 'width' => 425,
+                                'width' => 425,
                                 'height' => 283,
                                 'crop' => true,
                             //'grayscale' => true
