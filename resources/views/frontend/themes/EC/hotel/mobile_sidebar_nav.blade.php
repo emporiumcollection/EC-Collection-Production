@@ -37,9 +37,9 @@ if(!isset($property)){
                     </div>
                     <div id="Byexperience" class="additional-collapse collapse show">
                         <div class="card-body" data-place="m_suite_btn1">
-                            <a href="/hotel/suite/{{ $property->id }}" class="nav-link">All Suite</a>
+                            <a href="/hotel/{{ $property->property_slug }}/suites" class="nav-link">All Suite</a>
                             @foreach($property->suites as $suite)
-                                <a href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}" class="nav-link"><?php echo ucfirst(strtolower($suite->category_name)); ?></a>
+                                <a href="/hotel/{{ $property->property_slug }}/suites/#{{str_replace(" ", "-", strtolower($suite->category_name))}}" class="nav-link"><?php echo ucfirst(strtolower($suite->category_name)); ?></a>
                             @endforeach
                         </div>
                     </div>
@@ -48,7 +48,7 @@ if(!isset($property)){
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
-                            <a href="/hotel/location/{{ $property->id }}" class="btn btn-link btn-block text-left">
+                            <a href="/hotel-location/{{ $property->property_slug }}" class="btn btn-link btn-block text-left">
                                 Location
                             </a>
                         </h2>

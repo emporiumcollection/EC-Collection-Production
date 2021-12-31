@@ -199,7 +199,7 @@
             @endforeach
           @endif 
         </ul>
-        <div class="tab-content pt-5">
+        <div class="tab-content pt-lg-5 pt-xl-5">
           <?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
   <div class="tab-pane fade active show" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
       <?php
