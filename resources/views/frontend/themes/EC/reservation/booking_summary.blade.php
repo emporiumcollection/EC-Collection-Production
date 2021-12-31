@@ -27,8 +27,7 @@
                         <h4>{{ $properties[0]->property_short_name }}</h4>
                         <p class="mb-0">Confirm number: EC-{{ $db }}-{{ $hotel_name }}-{{ $randomnum }}</p>
                       </div>
-                      
-                  @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])               
+                      @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])               
                       <div class="policies" id="policies">
                         <h3>Policies</h3>
                         <div class="card card-body rounded-0">
@@ -80,47 +79,20 @@
                       @if(!empty($properties))
                         <p class="mb-1"><b>Address</b></p>
                         <p>{{ $properties[0]->address }}</p>
-
                         <ul class="nav nav-step5 flex-column mb-5">
                           <li class="nav-item">
-                            <a class="nav-link copy_address" title="{{ $properties[0]->address }}" href="#" id="myAnchor"><i class="fa fa-files-o" aria-hidden="true"></i> Copy address
-                              <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
+                            <a class="nav-link copy_address" title="{{ $properties[0]->address }}" href="#" id="myAnchor"><i class="fa fa-files-o" aria-hidden="true"></i> Copy address <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
                           </li>
-
-                      <li class="nav-item">
-                        <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                          Get directions <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
-                      </li>
-                    </ul>
-                  @endif  
-                  @if(!empty($properties))
-                    <div id="map3"></div>
-                  @else
-                    <h2>Location Not Found</h2>
-                  @endif
-                     
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-5 col-lg-12">
-              <div class="row h-100">
-                <div class="col-md-5 mmb-4 h-100">
-                  <div class="bg-grey p-3 h-100">
-                    <ul class="nav nav-step5 flex-column">
-                      @if(!empty($trip_dates))
-                        @foreach($trip_dates as $date)
                           <li class="nav-item">
-                            <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i>
-                              Get directions <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
+                            <a class="nav-link" href="https://www.google.com/maps/search/?api=1&query={{ $properties[0]->latitude }},{{ $properties[0]->longitude }}" target="_blank"><i class="fa fa-map-marker" aria-hidden="true"></i> Get directions <i class="fa fa-chevron-right right-arrow" aria-hidden="true"></i></a>
                           </li>
                         </ul>
                       @endif  
                       @if(!empty($properties))
-                        <div id="map2"></div>
+                        <div id="map3"></div>
                       @else
                         <h2>Location Not Found</h2>
                       @endif
-                        
                     </div>
                   </div>
                 </div>
@@ -153,19 +125,16 @@
                     </div>              
                     <div class="col-md-7">  
                       <div class="mb-4">
-                            <a href="javascript:void(0)" class="btn btn-dark  px-5 btn-lg btn-block reserve_data">Confirm & go to dashboard</a>
-                          </div>
-                      <!--<div class="mb-4">
-                        <a href="javascript:void();" class="btn btn-primary rounded-0 btn-lg btn-block reserve_data">
-                        Get receipt
-                      </a>
-                      </div>                     -->
-                      <!--<div class="additional-list h-auto p-0 mb-4">
-                        <div class="p-4">                        
-                            <img src="{{ asset('/uploads/users/EC.jpg')}}" height="100%" width="100%">            
-                        </div>
+                        <a href="javascript:void(0)" class="btn btn-dark  px-5 btn-lg btn-block reserve_data">Confirm & go to dashboard</a>
                       </div>
-                    -->
+                      <!-- <div class="mb-4">
+                        <a href="javascript:void();" class="btn btn-primary rounded-0 btn-lg btn-block reserve_data">Get receipt</a>
+                      </div> -->
+                      <!-- <div class="additional-list h-auto p-0 mb-4">
+                        <div class="p-4">                        
+                          <img src="{{ asset('/uploads/users/EC.jpg')}}" height="100%" width="100%">            
+                        </div>
+                      </div> -->
                     </div>
                   </div>
                 </div>
@@ -173,8 +142,8 @@
             </div>
           </div>
         </div>
+      </div>
     </div>
-  </div>
   </div>
   <script>
     $(document).ready(function(){
