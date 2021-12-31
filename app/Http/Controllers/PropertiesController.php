@@ -2228,98 +2228,61 @@ class PropertiesController extends Controller {
                     $exFtype = explode('/', $ftype);
                     if ($exFtype[0] == "image") {
                         // open an image file
-                        // print $destinationPath . $fileName;exit;
-                        $thimg = \Image::make($destinationPath . $fileName, array(
-                            'width' => 128,
-                            'height' => 130,
-                            'crop' => true,
-                        //'grayscale' => true
-                        ));
-
+                        $thimg = \Image::make($destinationPath . $fileName);
                         // now you are able to resize the instance
-                        //$thimg->resize(128, 130);
+                        $thimg->resize(128, 130);
                         // finally we save the image as a new file
                         $thumbfile = 'thumb_' . $propImgFoldId . '_' . $fileName;
                         $thimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
 
                         // open an image file
-                        // $mdimg = \Image::make($destinationPath . $fileName);
+                        $mdimg = \Image::make($destinationPath . $fileName);
                         // now you are able to resize the instance
                         $thactualsize = getimagesize($destinationPath . $fileName);
                         if ($thactualsize[0] > $thactualsize[1]) {
-
-                            $mdimg = \Image::make($destinationPath . $fileName, array(
-                                'width' => 320,
-                                'height' => 320,
-                                'crop' => true,
-                            //'grayscale' => true
-                            ));
+                            $mdimg->resize(320, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
                         } else {
-                            $mdimg = \Image::make($destinationPath . $fileName, array(
-                                'width' => 320,
-                                'height' => 320,
-                                'crop' => true,
-                            //'grayscale' => true
-                            ));
+                            $mdimg->resize(null, 320, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
                         }
                         // finally we save the image as a new file
                         $thumbfile = 'format_' . $propImgFoldId . '_' . $fileName;
                         $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
 
                         // open an image file
-                        // $mdimg = \Image::make($destinationPath . $fileName);
+                        $mdimg = \Image::make($destinationPath . $fileName);
                         // now you are able to resize the instance
                         $hfactualsize = getimagesize($destinationPath . $fileName);
                         if ($hfactualsize[0] > $hfactualsize[1]) {
-                            $mdimg = \Image::make($destinationPath . $fileName, array(
-                                'width' => 1000,
-                                'height' => 320,
-                                'crop' => true,
-                            //'grayscale' => true
-                            ));
+                            $mdimg->resize(1000, null, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
                         } else {
-                            $mdimg = \Image::make($destinationPath . $fileName, array(
-                                'width' => 1000,
-                                'height' => 1000,
-                                'crop' => true,
-                            //'grayscale' => true
-                            ));
+                            $mdimg->resize(null, 1000, function ($constraint) {
+                                $constraint->aspectRatio();
+                            });
                         }
                         // finally we save the image as a new file
                         $thumbfile = 'highflip_' . $propImgFoldId . '_' . $fileName;
                         $mdimg->save(public_path() . '/uploads/thumbs/' . $thumbfile);
 
                         // open an image file
-                        // $pthimg = \Image::make($destinationPath . $fileName);
+                        $pthimg = \Image::make($destinationPath . $fileName);
                         // now you are able to resize the instance
-                        // $pthimg->resize(80, 80);
-                        $pthimg = \Image::make($destinationPath . $fileName, array(
-                            'width' => 80,
-                            'height' => 80,
-                            'crop' => true,
-                        //'grayscale' => true
-                        ));
+                        $pthimg->resize(80, 80);
                         // finally we save the image as a new file
                         $pthumbfile = $fileName;
                         $pthimg->save(public_path() . '/uploads/property_imgs_thumbs/' . $pthumbfile);
 
-                        // $fpimg = \Image::make($destinationPath . $fileName);
+                        $fpimg = \Image::make($destinationPath . $fileName);
                         $thactualsize = getimagesize($destinationPath . $fileName);
                         if ($thactualsize[0] > $thactualsize[1]) {
-                            // $fpimg->resize(425, 283);
-                            $fpimg = \Image::make($destinationPath . $fileName, array(
-                                'width' => 425,
-                                'height' => 1000,
-                                'crop' => true,
-                            //'grayscale' => true
-                            ));
+                            $fpimg->resize(425, 283);
                         } else {
-                            $fpimg = \Image::make($destinationPath . $fileName, array(
-                                'width' => 425,
-                                'height' => 283,
-                                'crop' => true,
-                            //'grayscale' => true
-                            ));
+                            $fpimg->resize(212, 283);
                         }
                         $thumbfile = 'front_property_' . $propImgFoldId . '_' . $fileName;
                         $fpimg->save(public_path() . '/uploads/property_imgs_thumbs/' . $thumbfile);
@@ -2331,34 +2294,22 @@ class PropertiesController extends Controller {
                         if ($countfile == 0) {
                             $copytofolder = public_path() . '/uploads/folder_cover_imgs/';
                             // image for backend
-                            // $bkimg = \Image::make($destinationPath . $fileName);
-                            $bkimg = \Image::make($destinationPath . $fileName, array(
-                                'width' => 128,
-                                'height' => 130,
-                                'crop' => true,
-                            //'grayscale' => true
-                            ));
-                            
+                            $bkimg = \Image::make($destinationPath . $fileName);
+                            $bkimg->resize(128, 130);
                             $bkimgfile = 'thumb_' . $fileName;
                             $bkimg->save($copytofolder . $bkimgfile);
 
                             // open an image file
-                            // $mdimg = \Image::make($destinationPath . $fileName);
+                            $mdimg = \Image::make($destinationPath . $fileName);
                             $thactualsize = getimagesize($destinationPath . $fileName);
                             if ($thactualsize[0] > $thactualsize[1]) {
-                                $mdimg = \Image::make($destinationPath . $fileName, array(
-                                    'width' => 320,
-                                    'height' => 320,
-                                    'crop' => true,
-                                //'grayscale' => true
-                                ));
+                                $mdimg->resize(320, null, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                });
                             } else {
-                                $mdimg = \Image::make($destinationPath . $fileName, array(
-                                    'width' => 320,
-                                    'height' => 320,
-                                    'crop' => true,
-                                //'grayscale' => true
-                                ));
+                                $mdimg->resize(null, 320, function ($constraint) {
+                                    $constraint->aspectRatio();
+                                });
                             }
                             $thumbfile = 'format_' . $fileName;
                             $mdimg->save($copytofolder . $thumbfile);
@@ -2372,7 +2323,7 @@ class PropertiesController extends Controller {
 
                     $data['folder_id'] = $propImgFoldId;
                     $data['file_name'] = $fileName;
-					$data['file_display_name'] = $fileNamedis;
+                    $data['file_display_name'] = $fileNamedis;
                     $data['file_type'] = $file[0]->getClientMimeType();
                     $data['file_size'] = $file[0]->getClientSize();
                     $data['user_id'] = \Auth::user()->id;
