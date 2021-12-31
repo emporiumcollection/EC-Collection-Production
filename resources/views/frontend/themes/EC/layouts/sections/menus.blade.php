@@ -4,7 +4,7 @@
       <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
         <?php 
         $lmenus = [];
-        foreach($landing_menus as $menu):
+        foreach($top_menus as $menu):
             $mmenu = '<li class="nav-item">
                 <a class="nav-link" href='.$menu['url'].'>'.$menu['menu_name'].' </a>
               </li>';
@@ -32,7 +32,7 @@
       <div class="row">
         <div class="col-6">
           <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
-            @foreach($top_menus as $menu)
+            @foreach($landing_menus as $menu)
               <li class="nav-item">
                 <a class="nav-link" href="{{ $menu['url'] }}">{{ $menu['menu_name'] }} </a>
               </li>
