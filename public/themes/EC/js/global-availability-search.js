@@ -123,18 +123,18 @@ function replacePropertyMobileMenu(id){
   $('[data-replace="m_reviews_btn"]').attr('onclick','replaceReviewData('+id+')');
   $('[data-replace="m_suite_btn"]').attr('onclick','replacePropertySuites('+id+')');
   $('[data-replace="m_quickinfo_btn"]').attr('onclick','replacePropertyData('+id+')');
-  $('[data-replace="m_property_link"]').html( `<a href="/hotel/hoteldetail/`+id+`" class="btn btn-link btn-block text-left" >View `+ properties[id]['property_short_name'] +` </a>`);
+  $('[data-replace="m_property_link"]').html( `<a href="/hotel/`+properties[id]['property_slug']+`" class="btn btn-link btn-block text-left" >View `+ properties[id]['property_short_name'] +` </a>`);
 
   var suiteview = '';
   var firstsuite = 0;
   $('[data-place="m_suite_btn1"]').each(function() {
-    suiteview += `<a href="all-suite.html" class="nav-link">All Suite</a>`;
+    suiteview += `<a href="hotel/`+properties[id]['property_slug']+`/suite" class="nav-link">All Suite</a>`;
     var values = properties[id]['suites'];
     values.forEach(function(e){
       if(!firstsuite){
         firstsuite = e.id;
       }
-      suiteview +=`<a href="hotel/suite/`+id+`/`+e.id+`" class="nav-link text-capitalize">` + e.category_name.toLowerCase() + `</a>`;
+      suiteview +=`<a href="hotel/`+properties[id]['property_slug']+`/suite/#`+e.category_name.toLowerCase().replace(" ", "-")+`" class="nav-link text-capitalize">` + e.category_name.toLowerCase() + `</a>`;
     })
     $(this).html(suiteview);
     
