@@ -33,7 +33,7 @@ abstract class Controller extends BaseController {
 	    $popup_menus = \SiteHelpers::menus('Popup');
 	    $this->data['popup_menus'] = $popup_menus;
 
-	    $popup_menus2 = \SiteHelpers::menus('Popup2');
+	    $popup_menus2 = \SiteHelpers::menus('popup_2');
 	    $this->data['popup_menus2'] = $popup_menus2;
 
 		$this->data['menu_experiences'] = \DB::table('tb_categories')
