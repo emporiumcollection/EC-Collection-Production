@@ -28,9 +28,9 @@
         <a href="#" class="nav-sos"><i class="fa fa-twitter" aria-hidden="true"></i></a>
       </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-sm-8">
       <div class="row">
-        <div class="col-6">
+        <div class="col-4">
           <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
             @foreach($landing_menus as $menu)
               <li class="nav-item">
@@ -44,7 +44,7 @@
             @endforeach
           </ul>
         </div>
-        <div class="col-6">
+        <div class="col-4">
           <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
             @foreach($popup_menus as $menu)
               <li class="nav-item">
@@ -58,7 +58,7 @@
             @endforeach
           </ul>
         </div>
-        <div class="col-6">
+        <div class="col-4">
           <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
             @foreach($popup_menus2 as $menu)
               <li class="nav-item">
