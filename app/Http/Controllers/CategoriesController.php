@@ -161,13 +161,6 @@ class CategoriesController extends Controller {
             mkdir($destinationPath, 0777, true);
         }
 
-		if($request->hasFile('category_image')){
-			$file = $request->file('category_image');
-            $filename = $file->getClientOriginalName();
-            $extension = $file->getClientOriginalExtension();
-            $upload_status = $file->move($destinationPath, $filename);
-		}
-
 		$container = new Container;
 		$container->parent_id = 10294; // emotional-gallery
 		$container->name = $name_slug;
