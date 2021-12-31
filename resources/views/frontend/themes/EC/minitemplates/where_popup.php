@@ -1,11 +1,11 @@
 <style type="text/css">
-  .wherepopup{
+  /* .wherepopup{
     display: block;
     overflow: scroll;
     overflow-x: hidden;
     min-height: 0px;
     max-height: 500px;
-  }
+  } */
   .search-field .wherepopup .nav-link{
     font-size: 16px !important;
   }
@@ -48,36 +48,36 @@ if(isset($trendingFilters)):
 <?php endif;?>
 <?php
 $voyage = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-desti-header">Voyage</h3>
-        <ul class="flex-column voyage-destination">
+        <ul class="nav border-bottom-0 flex-column voyage-destination">
         </ul>';
 
 $spa = '
         <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-desti-header">Spa</h3>
-        <ul class="flex-column spa-destination">
+        <ul class="nav border-bottom-0 flex-column spa-destination">
         </ul>';
 
 $safari = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-desti-header">Safari</h3>
-        <ul class="flex-column safari-destination">
+        <ul class="nav border-bottom-0 flex-column safari-destination">
         </ul>';
 
 $islands = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-desti-header">Islands</h3>
-        <ul class="flex-column islands-destination">
+        <ul class="nav border-bottom-0 flex-column islands-destination">
         </ul>';
 
 $voyage_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-hotel-header">Voyage</h3>
-        <ul class="flex-column voyage-hotels">
+        <ul class="nav border-bottom-0 flex-column voyage-hotels">
         </ul>';
 
 $spa_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-hotel-header">Spa</h3>
-        <ul class="flex-column spa-hotels">
+        <ul class="nav border-bottom-0 flex-column spa-hotels">
         </ul>';
 
 $safari_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-hotel-header">Safari</h3>
-        <ul class="flex-column safari-hotels">
+        <ul class="nav border-bottom-0 flex-column safari-hotels">
         </ul>';
 
 $islands_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-hotel-header">Islands</h3>
-        <ul class="flex-column islands-hotels">
+        <ul class="nav border-bottom-0 flex-column islands-hotels">
         </ul>';      
 ?>
 <div class="wherepopup" style="display:none;">
@@ -135,6 +135,9 @@ $islands_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;
         }
         ?>
       </div>
+    </div>
+    <div class="scrolldown">
+      <i class="down-arrow"></i>
     </div>
   </div>
 </div>

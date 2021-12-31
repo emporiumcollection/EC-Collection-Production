@@ -646,15 +646,25 @@ var ajaxReq = 'ToCancelPrevReq';
                   }); 
                   // console.log('here',d_image);
                   $("#images").html(d_image);
-                  
+
                   setTimeout(function () {                    
                     $('.quick-prev').slick({
                       slidesToShow: 1,
-                      prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-                      nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+                      prevArrow: '<button type="button" class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+                      nextArrow: '<button type="button" class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
                     });
-                    $('.quick-prev').slick('setPosition');
                   }, 2000);
+
+                  var height = $(window).height();
+
+                  setTimeout(function(){
+                    $('.quick-prev').slick('setPosition');
+                    $(window).height(height - 1);
+                  }, 3000);
+
+                  setTimeout(function(){
+                    $(window).height(height);
+                  }, 3500);
         }
     });
   }
