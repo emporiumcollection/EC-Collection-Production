@@ -17,26 +17,15 @@
     <div class="container-full ">
       <div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
         @include('frontend.themes.EC.reservation.nav_wizard')
-        <div class="pt-4 wizard-reservation-content">
+        <div class="pt-4 wizard-reservation-content pt-lg-5 pt-xl-5">
           <div id="step-8" class="tab-pane" role="tabpanel">
-            <h2 class="mb-5 d-flex align-items-center">
+            <h2 class="mb-5 d-flex align-items-center pt-lg-5 pt-xl-5">
               <a href="#" class="backwizard btn-backwizard mobile-off">
                 <i class="ico ico-back mr-3"></i>
               </a>
               Payment Method
             </h2>
             <h5 class="mb-4">Your Card </h5>
-
-     @include('frontend.themes.EC.reservation.nav_wizard')
-     
-      <div id="step-8" class="tab-pane" role="tabpanel">
-        <h2 class="mb-5 d-flex align-items-center">
-          <a href="#" class="backwizard btn-backwizard">
-            <i class="ico ico-back mr-3"></i>
-          </a>
-          Payment Method
-        </h2>
-        <h5 class="mb-4">Your Card </h5>
         
         <div class="row">
           <div class="col-lg-9 col-md-8">
@@ -54,9 +43,9 @@
                           <div class="text-dark-75 text-hover-primary font-weight-bold 
                                       font-size-lg mb-1">
                             <?php
-                                      $full_card_number = \CommonHelper::decrypt($card->card_number);
-                                      $card_number = '•••• •••• •••• ' . substr($full_card_number, -4);
-                                    ?>
+                              $full_card_number = \CommonHelper::decrypt($card->card_number);
+                              $card_number = '•••• •••• •••• ' . substr($full_card_number, -4);
+                            ?>
                             {{ $card_number }}
                             @if($card->default_card)
                             <span class="default-set">default</span>
