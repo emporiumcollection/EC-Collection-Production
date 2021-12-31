@@ -66,7 +66,7 @@
           <div class="col-6">
             <div class="is-left-pad">
               <div class="title-with-icon align-items-center">
-                <a href="/" class="sidebar-back step-1">
+                <a href="/" class="sidebar-back step-1" onclick="document.location=''">
                   <i class="ico ico-back" data-toggle="tooltip" title="Go back to previous page"></i>
                 </a>
                 <div>
@@ -153,7 +153,7 @@
         <div class="row">
           <div class="col-6">
             <div class="title-with-icon align-items-center pt-4">
-              <a href="/" class="sidebar-back step-2">
+              <a href="/" class="sidebar-back step-2" onclick="document.location=''">
                 <i class="ico ico-back" data-toggle="tooltip" title="Go back to previous page"></i>
               </a>
               <i class="ico ico-profile-pp icon-fx"></i>

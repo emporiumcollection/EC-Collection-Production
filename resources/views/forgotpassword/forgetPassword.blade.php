@@ -25,7 +25,7 @@
                             <a class="nav-link active" href="/register">Sign up</a>
                         </li>
                         <li class="nav-item " role="presentation">
-                            <a class="nav-link" href="login">Sign in</a>
+                            <a class="nav-link" href="/user/login">Sign in</a>
                         </li>
                         <li class="nav-item " role="presentation">
                             <a class="nav-link" href="/forget-password">Forgot Password</a>
