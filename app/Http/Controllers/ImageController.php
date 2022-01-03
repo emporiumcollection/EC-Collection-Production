@@ -181,7 +181,7 @@ class ImageController extends Controller {
             /*$thimg->fit($this->width, $this->height, function ($constraint) {
                 $constraint->upsize();
             });*/
-            $thimg->resize($this->width, $this->height, function ($constraint) {
+            $thimg->resize(null, $this->height, function ($constraint) {
                 $constraint->aspectRatio();
                 $constraint->upsize();
             });
