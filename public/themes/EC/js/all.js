@@ -655,29 +655,13 @@ var ajaxReq = 'ToCancelPrevReq';
                     });
                   }, 2000);
 
-                  var height = $(window).height();
-
-                  setTimeout(function(){
+                  $(document).on("scroll", function () {
                     $('.quick-prev').slick('setPosition');
-                    // $(window).height(height - 25);
                     $('.quick-prev').slick('resize');
-                  }, 3000);
-
-                  setTimeout(function(){
-                    // $(window).height(height);
-                    // $('.quick-prev').slick('reinit');
-                  }, 4500);
+                  });
         }
     });
   }
-
-  /*$(window).resize(function() {
-    $('.quick-prev').slick('resize');
-  });
-
-  $(window).on('orientationchange', function() {
-    $('.quick-prev').slick('reinit');
-  });*/
 
   $(document).on('click', '.step-3', function () {
     if(!homePageFeaturedProperties[1]){
