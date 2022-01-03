@@ -2,9 +2,10 @@
 
 use App\Http\Controllers\controller;
 use App\Models\Categories;
+use App\Models\Container;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
-use Validator, Input, Redirect ; 
+use Validator, Input, Redirect, Auth, Config ; 
 
 
 class CategoriesController extends Controller {
@@ -150,13 +151,42 @@ class CategoriesController extends Controller {
 		return view('categories.view',$this->data);	
 	}	
 
+	public function insertContainer($request)
+	{
+		$filename = '';
+		$name_slug = strtolower(str_replace(' ', '-', $request->input('category_name')));
+
+		$destinationPath = public_path("uploads/container_user_files/emotional-gallery-loader/$name_slug/");
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+		$container = new Container;
+		$container->parent_id = 10294; // emotional-gallery
+		$container->name = $name_slug;
+		$container->display_name = $request->input('category_name');
+		$container->file_type = 'folder';
+		$container->user_id = Auth::user()->id;
+		$container->title = $request->input('category_name');
+		$container->description = $request->input('category_description');
+		$container->sort_num = 7;
+		$container->temp_cover_img = $filename;
+		$container->temp_cover_img_masonry = $filename;
+		$container->created = date('Y-m-d H:i:s');
+		$container->updated = date('Y-m-d H:i:s');
+		$container->save();
+		return $container->id;
+	}
+
 	function postSave( Request $request)
 	{
 		$uid = \Auth::user()->id;
 		$id = $request->input('id');
 		$rules = $this->validateForm();
 		$validator = Validator::make($request->all(), $rules);	
+
 		if ($validator->passes()) {
+
 			$data = $this->validatePost('tb_categories');
 			
 			$alias = \SiteHelpers::seoUrl(Input::get('category_name'));
@@ -211,7 +241,18 @@ class CategoriesController extends Controller {
 			}
 
 			$id = $this->model->insertRow($data , $request->input('id'));
-            
+
+			$config_root_destinations = explode(',', Config::get('app.root_destinations'));
+			if(in_array($request->input('parent_category_id'), $config_root_destinations)){
+				$name_slug = strtolower(str_replace(' ', '-', $request->input('category_name')));
+				$fetch_containers = Container::where('name', '=', $name_slug)
+					->get()
+					->toArray();
+				if(empty($fetch_containers)){
+					$container_id = $this->insertContainer($request);
+				}
+			}
+
 			/** Start Meta tags **/
             $meta_data['category_id'] = $id;
             $meta_data['meta_title'] = $request->input('meta_title');
