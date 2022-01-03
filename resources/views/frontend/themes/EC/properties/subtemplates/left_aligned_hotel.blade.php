@@ -54,7 +54,7 @@
                 $file_name = 'default-image.png';
               }
             ?>
-            <img src="<?php echo 'property-image/resize/627x627/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
+            <img src="<?php echo 'property-image/resize/1200x700/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
           <?php endif;?>
           <div class="hero-desc">
             <h4><?php echo $editorChoice->detail_section1_title;?></h4>
