@@ -178,7 +178,10 @@ class ImageController extends Controller {
             }
 
             $thimg = Image::make($this->file_path);
-            $thimg->resize($this->width, $this->height);
+            $thimg->resize($this->width, $this->height, 
+                function($constraint) {
+                    $constraint->aspectRatio();
+            });
             $thimg->save($this->destination_path);
 
             /*try{
