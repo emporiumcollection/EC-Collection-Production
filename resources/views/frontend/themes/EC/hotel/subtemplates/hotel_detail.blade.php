@@ -56,7 +56,7 @@
       ?>
         <div>
           <a href="" class="slider-item-inner">
-            <img <?php echo 'src="/property-image/resize/830x350/'.$container_name.'/'.$file_name.'/property-image"';?> id="heading-img" class="img-fluid" alt="">
+            <img <?php echo 'src="/property-image/resize/840x540/'.$container_name.'/'.$file_name.'/property-image"';?> id="heading-img" class="img-fluid" alt="">
             <div class="view-images-btn">
               <i class="ico icon-camera"></i> View Images
             </div>
