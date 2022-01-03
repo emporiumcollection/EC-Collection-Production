@@ -95,7 +95,7 @@
           ?>
             <div class="col-md-6">
               <div class="hero-item">
-                <img src="<?php echo 'property-image/resize/311x311/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
+                <img src="<?php echo 'property-image/resize/1200x700/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
               </div>
             </div>
           <?php 
