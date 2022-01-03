@@ -2,9 +2,19 @@
         <div class="row align-items-center">
           <div class="col-md-6 mt-xs-5">
             <div class="d-flex align-items-center nav-desc main-title-heading">
-              <a href="/" class="sidebar-back" title="Go back to previous page" data-toggle="tooltip">
-                <i class="ico ico-back"></i>
-              </a>
+              <?php
+                $full_url = Request::fullUrl();
+                $path_count = count($path);
+              ?>
+              @if($path_count > 1)
+                <a href="{{ str_replace( $keyword, $path[$path_count - 2], urldecode($full_url)) }}"  title="Go back to previous page" data-toggle="tooltip">
+                  <i class="ico ico-back"></i>
+                </a>
+              @else
+                <a href="/"  title="Go back to previous page" data-toggle="tooltip">
+                  <i class="ico ico-back"></i>
+                </a>
+              @endif
               <div class="title-main pl-0">
                 <h2><span data-toggle="tooltip" title="Your selected destination experience">{{$keyword}}</span> <a
                     href="javascript:void(0)" onclick="resetSearch();" data-toggle="collapse"><i class="ico ico-reload reload-offset"
