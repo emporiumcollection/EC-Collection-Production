@@ -147,7 +147,7 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->whereRaw(" (city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%' ) ")
+        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%' ) ")
         //->where('country', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
         ->where('property_status', '=', 1)
@@ -229,7 +229,7 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->whereRaw(" (city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%' ) ")
+        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%' ) ")
         //->where('country', '=', $keyword)
         ->where('feature_property', '=', 1)
         ->where('property_status', '=', 1)
@@ -335,10 +335,10 @@ trait Property {
                 }
             ])
             //->whereIn('city', $cities)
-            ->whereRaw(" (city = '$keyword' or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%' ) ")
+            ->whereRaw(" (country = '$keyword' or city = '$keyword' or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%') ")
             //->where('country', '=', $keyword)
-            ->where('latitude', '!=', '')
-            ->where('longitude', '!=', '')
+            //->where('latitude', '!=', '')
+            //->where('longitude', '!=', '')
             ->where('feature_property', '!=', '1')
             ->where('editor_choice_property', '!=', '1')
             ->where('property_status', '=', 1);
