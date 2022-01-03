@@ -8,6 +8,8 @@ class container extends Sximo  {
 	
 	protected $table = 'tb_container';
 	protected $primaryKey = 'id';
+	const CREATED_AT = 'created';
+    const UPDATED_AT = 'updated';
 
 	public function __construct() {
 		parent::__construct();

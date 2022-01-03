@@ -643,7 +643,7 @@ var ajaxReq = 'ToCancelPrevReq';
                     }catch(e){
 
                     }
-                  }); 
+                  });
                   // console.log('here',d_image);
                   $("#images").html(d_image);
 
@@ -655,19 +655,14 @@ var ajaxReq = 'ToCancelPrevReq';
                     });
                   }, 2000);
 
-                  var height = $(window).height();
-
-                  setTimeout(function(){
+                  $(document).on("scroll", function () {
                     $('.quick-prev').slick('setPosition');
-                    $(window).height(height - 1);
-                  }, 3000);
-
-                  setTimeout(function(){
-                    $(window).height(height);
-                  }, 3500);
+                    $('.quick-prev').slick('resize');
+                  });
         }
     });
   }
+
   $(document).on('click', '.step-3', function () {
     if(!homePageFeaturedProperties[1]){
       return true;

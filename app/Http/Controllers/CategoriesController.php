@@ -2,9 +2,11 @@
 
 use App\Http\Controllers\controller;
 use App\Models\Categories;
+use App\Models\Container;
 use Illuminate\Http\Request;
+use App\Helpers\CommonHelper;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
-use Validator, Input, Redirect ; 
+use Validator, Input, Redirect, Auth, Config ; 
 
 
 class CategoriesController extends Controller {
@@ -148,7 +150,7 @@ class CategoriesController extends Controller {
 		$this->data['id'] = $id;
 		$this->data['access']		= $this->access;
 		return view('categories.view',$this->data);	
-	}	
+	}
 
 	function postSave( Request $request)
 	{
@@ -156,7 +158,9 @@ class CategoriesController extends Controller {
 		$id = $request->input('id');
 		$rules = $this->validateForm();
 		$validator = Validator::make($request->all(), $rules);	
+
 		if ($validator->passes()) {
+
 			$data = $this->validatePost('tb_categories');
 			
 			$alias = \SiteHelpers::seoUrl(Input::get('category_name'));
@@ -211,7 +215,24 @@ class CategoriesController extends Controller {
 			}
 
 			$id = $this->model->insertRow($data , $request->input('id'));
-            
+
+			$config_root_destinations = explode(',', Config::get('app.root_destinations'));
+			if(in_array($request->input('parent_category_id'), $config_root_destinations)){
+				$name_slug = strtolower(str_replace(' ', '-', trim($request->input('category_name'))));
+				$fetch_containers = Container::where('name', '=', $name_slug)
+					->get()
+					->toArray();
+				if(empty($fetch_containers)){
+					$data = [
+						'user_id' => Auth::user()->id,
+						'category_name' => trim($request->input('category_name')),
+						'slug' => $name_slug,
+						'category_description' => trim($request->input('category_description'))
+					];
+					$container_id = CommonHelper::insertContainer($data);
+				}
+			}
+
 			/** Start Meta tags **/
             $meta_data['category_id'] = $id;
             $meta_data['meta_title'] = $request->input('meta_title');
@@ -423,6 +444,4 @@ class CategoriesController extends Controller {
 			return Redirect::to($ret_url)->with('messagetext','No record found')->with('msgstatus','error');
 		}
 	}
-
-
 }
