@@ -178,7 +178,8 @@ class ImageController extends Controller {
             }
 
             $thimg = Image::make($this->file_path);
-            $thimg->resize($this->width, $this->height);
+            // $thimg->resize($this->width, $this->height);
+            $thimg->crop($this->width, $this->height);
             $thimg->save($this->destination_path);
 
             /*try{
