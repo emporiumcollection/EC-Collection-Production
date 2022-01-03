@@ -342,7 +342,7 @@ class CategoriesController extends Controller {
 		if ($results) {
 		foreach($results['rows'] as $row) {
 		  $folder_tree_array[] = array("id" => $row->id, "name" => $spacing . $row->category_name);
-		  // $folder_tree_array = $this->fetchCategoryTree($row->id, $spacing . '>>>', $folder_tree_array);
+		  $folder_tree_array = $this->fetchCategoryTree($row->id, $spacing . '>>>', $folder_tree_array);
 		}
 	  }
 	  return $folder_tree_array;
