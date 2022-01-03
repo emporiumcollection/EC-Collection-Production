@@ -643,7 +643,7 @@ var ajaxReq = 'ToCancelPrevReq';
                     }catch(e){
 
                     }
-                  }); 
+                  });
                   // console.log('here',d_image);
                   $("#images").html(d_image);
 
@@ -659,15 +659,26 @@ var ajaxReq = 'ToCancelPrevReq';
 
                   setTimeout(function(){
                     $('.quick-prev').slick('setPosition');
-                    $(window).height(height - 1);
+                    // $(window).height(height - 25);
+                    $('.quick-prev').slick('resize');
                   }, 3000);
 
                   setTimeout(function(){
-                    $(window).height(height);
-                  }, 3500);
+                    // $(window).height(height);
+                    // $('.quick-prev').slick('reinit');
+                  }, 4500);
         }
     });
   }
+
+  /*$(window).resize(function() {
+    $('.quick-prev').slick('resize');
+  });
+
+  $(window).on('orientationchange', function() {
+    $('.quick-prev').slick('reinit');
+  });*/
+
   $(document).on('click', '.step-3', function () {
     if(!homePageFeaturedProperties[1]){
       return true;
