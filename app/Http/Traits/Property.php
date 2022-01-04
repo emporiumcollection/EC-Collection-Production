@@ -858,8 +858,7 @@ trait Property {
     public function getLoaderImages($location){
         $locationSlug = strtolower(str_replace(' ', '-', $location));
         $loaderImages = Container::where('parent_id', '=', 10294)
-        ->where('display_name', 'like', '%'.$location.'%')
-        ->orWhere('display_name', 'like', '%'.$locationSlug.'%')
+        ->whereRaw("(display_name like '%".$location."%' or display_name like '%".$locationSlug."%')")
         ->with(['files'])
         ->get()
         ->toArray();
