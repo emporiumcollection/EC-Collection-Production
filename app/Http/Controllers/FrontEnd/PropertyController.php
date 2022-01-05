@@ -2771,13 +2771,13 @@ class PropertyController extends Controller {
         }
 
         if($coll_type == 'hotel'){
-            $hotel = properties::on($sitename.'conn')->select(['id'])
+            $hotel = properties::on($sitename.'conn')->select(['property_slug'])
                 ->where('property_name', '=', $coll_where)
                 ->get()
                 ->toArray();
 
             if(!empty($hotel)){
-                return redirect($site_url.'/hotel/hoteldetail/'.$hotel[0]['id']);
+                return redirect($site_url.'/hotel/'.$hotel[0]['property_slug']);
             }
         }
 
