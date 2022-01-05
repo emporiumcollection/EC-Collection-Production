@@ -905,8 +905,9 @@ function filterDestination(dest){
 }
 
 function createSearchUrl(experience = '', layoutView = 'ajax'){
-  $('.pageload').show();
-
+  if(layoutView == 'ajax'){
+    $('.pageload').show();
+  }
   if(experience !== null && !experience){
     experience = getUrlParam('experience');
     if(!experience){
