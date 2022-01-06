@@ -28,19 +28,6 @@
             </div>
         </div>
         <div class="slider-container hotel-page-list">
-            <div class="my-dropdown">
-                <div class="btn-group dropleft">
-                    <a href="#" data-toggle="dropdown" aria-haspopup="true"
-                        aria-expanded="false">
-                        <i class="ico ico-diamon diamon-label"></i>
-                    </a>
-                    <div class="dropdown-menu">
-                        <a href="#" class="dropdown-item">Add to collection</a>
-                        <a href="#" class="dropdown-item btn-sidebar create-collection"
-                            data-sidebar="#myCollection">Create new collection</a>
-                    </div>
-                </div>
-            </div>
             <a href="#" data-place="covid_link" target="_blank">
                 <div class="covid-info align-items-center">
                     <div class="ico-security">
@@ -107,7 +94,7 @@
                     </div>
                 </div>
                 <div class="ipad-view book-suite">
-                    <a href="#">
+                    <a data-place="reserve-link" href="#">
                         Book this Suite
                     </a>
                 </div>
@@ -149,9 +136,11 @@
 
             </div>
             <div class="col-md-4">
-                <div class="side-detail mb-3" data-place="reserve-link">
+                <div class="side-detail mb-3">
+                    <p data-place="checkin"> </p>
+                    <p data-place="checkout"> </p>
                     <p>Reserve now, pay at the Hotel</p>                    
-                    <a href="/reservation/when" class="btn btn-dark btn-block">Reservation</a>
+                    <a data-place="reserve-link" href="/reservation/when" class="btn btn-dark btn-block">Reservation</a>
                 </div>
 
                 <!-- display only on dektop -->

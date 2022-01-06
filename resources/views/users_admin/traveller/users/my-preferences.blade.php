@@ -115,7 +115,7 @@
                                 </h1>
                                 {{-- <p>You can specify one or more destinations</p> --}}
                                 <div class="form-group">
-                                    <input type="text" name="first_name" id="first_name" class="form-control">
+                                    <input type="text" name="first_name" value="{{old('first_name')}}" id="first_name" class="form-control">
                                 </div>
                             </div>
 
@@ -129,7 +129,8 @@
                                         name="destinations[]" multiple="multiple">
                                         @if(isset($category)) 
                                             @foreach($category as $categories)
-                                            <option value="{{ $categories->id }}" >
+                                            <option value="{{ $categories->id }}" 
+                                                {{ (is_array(old('destinations')) and in_array($categories->category_name, old('destinations'))) ? 'selected' : '' }}>
                                                 {{ $categories->category_name }}
                                             </option>                                        
                                         @endforeach    
@@ -158,7 +159,8 @@
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" id="destination" value="{{ $dest->id }}" />
+                                                        <input type="checkbox" name="inspirstion[]" id="destination" value="{{ $dest->id }}" 
+                                                        {{ (is_array(old('inspirstion')) and in_array($dest->id, old('inspirstion'))) ? ' checked' : '' }}/>    
                                                         <img src="{{ asset('/uploads/category_imgs/'.$dest->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">
@@ -182,7 +184,7 @@
                                             <div>
                                                 <div class="checkbox-inline checkbox-cs checkbox-experience m-0">
                                                     <label class="checkbox">
-                                                        <input type="checkbox" name="inspirstion[]" value="{{ $atm->id }}" />
+                                                        <input type="checkbox" name="inspirstion[]" value="{{ $atm->id }}" {{ (is_array(old('inspirstion')) and in_array($dest->id, old('inspirstion'))) ? ' checked' : '' }}/>
                                                         <img src="{{ asset('/uploads/category_imgs/'.$atm->category_image)}}"
                                                             class="img-fluid" alt="">
                                                         <div class="label-inner">

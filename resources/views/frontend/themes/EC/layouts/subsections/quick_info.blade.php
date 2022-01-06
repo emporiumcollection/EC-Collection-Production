@@ -27,8 +27,11 @@
             </div>
             <div class="col-lg-8">
                 <div class="row mb-5">
-                    <p style="font-size: 19px;margin-bottom: 55px;" data-place="property" data-replace="detail_section1_description_box1">
-                </p>
+                    <div class="col-lg-8">
+                        <p style="font-size: 19px;margin-bottom: 55px;" data-place="property" data-replace="detail_section1_description_box1">
+                        </p>
+
+                    </div>
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Address</h4>
@@ -96,17 +99,20 @@
                             <p class="mb-0"><b>Car park / valet service :</b> <br><span class="mb-0" data-place="property" data-replace="carpark"> 65 US$ per day</span></p>
                         </div>
                     </div>
-                </div>
-                <h4 class="mb-4">Amenities</h4>
-                <div class="row mb-5">
-                    <div class="col-md-12 col-sm-12 mb-12" data-place="property-multi-value" data-replace="assign_amenities">
-                        <p class="mb-0">Pool</p>
-                        <p class="mb-0">Wlan</p>
-                        <p class="mb-0">Smart-TV</p>
-                        <p class="mb-0">Koffeemaschine</p>
-                        <p class="mb-0">Laundry service</p>
+                    <div class="col-lg-4 col-md-6 mb-5">
+                        <div class="qv-list">
+                            <h4>Amenities</h4>
+                            <p class="mb-0" data-place="property-multi-value" data-replace="assign_amenities">
+                                <p class="mb-0">Pool</p>
+                                <p class="mb-0">Wlan</p>
+                                <p class="mb-0">Smart-TV</p>
+                                <p class="mb-0">Koffeemaschine</p>
+                                <p class="mb-0">Laundry service</p>
+                            </p>
+                        </div>
                     </div>
                 </div>
+                
                 <!--<div class="row my-5">
                     <div class="col text-center">
                         <div class="i-touch">
@@ -157,9 +163,9 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-lg-8"></div>
-            <div class="col-lg-4">
-                <div class="text-right mb-4" data-place="property-book-button">
+            <div class="col-8"></div>
+            <div class="col-4">
+                <div class="text-right mt-4" data-place="property-book-button">
                     <a href="#" class="btn btn-primary btn-block rounded-0">BOOK</a>
                 </div>
             </div>

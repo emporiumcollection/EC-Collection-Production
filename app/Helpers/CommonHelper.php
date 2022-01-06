@@ -1,9 +1,13 @@
 <?php
 namespace App\Helpers;
-use Session, DB ;
+use App\Models\Container;
+use Illuminate\Support\Facades\Crypt;
+use Session, DB, Auth;
 
 class CommonHelper
 {   
+    private static $encrypter_key = 'HXTCX0lUzU2xrSIvWTOB3ZHVrJrbDEgR';
+    
     static function submit_contracts($all_contracts_data,$type,$oid=0,$cType=""){
         $contracts = $all_contracts_data;
         
@@ -1405,5 +1409,52 @@ $allowedCurrenciesinProject=array("OMR","BHD","KWD","USD","CHF","EUR","KYD","GIP
         }
 
         return $array;
+    }
+
+    public static function encrypt($data)
+    {
+        if($data == '')
+            return $data;
+
+        $key = self::$encrypter_key;
+        $encrypter = new \Illuminate\Encryption\Encrypter( $key, \Config::get( 'app.cipher' ) );
+        return $encrypter->encrypt($data);
+    }
+
+    public static function decrypt($data)
+    {
+        if($data == '')
+            return $data;
+
+        $key = self::$encrypter_key;
+        $encrypter = new \Illuminate\Encryption\Encrypter( $key, \Config::get( 'app.cipher' ) );
+        return $encrypter->decrypt($data);
+    }
+
+    public static function insertContainer($data)
+    {
+        $filename = '';
+        $slug = $data['slug'];
+
+        $destinationPath = public_path("uploads/container_user_files/emotional-gallery-loader/$slug/");
+        if (!file_exists($destinationPath)) {
+            mkdir($destinationPath, 0777, true);
+        }
+
+        $container = new Container;
+        $container->parent_id = 10237; // emotional-gallery
+        $container->name = $slug;
+        $container->display_name = $data['category_name'];
+        $container->file_type = 'folder';
+        $container->user_id = $data['user_id'];
+        $container->title = $data['category_name'];
+        $container->description = $data['category_description'];
+        $container->sort_num = 7;
+        $container->temp_cover_img = $filename;
+        $container->temp_cover_img_masonry = $filename;
+        $container->created = date('Y-m-d H:i:s');
+        $container->updated = date('Y-m-d H:i:s');
+        $container->save();
+        return $container->id;
     }
 }

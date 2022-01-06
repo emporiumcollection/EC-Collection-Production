@@ -12,13 +12,14 @@ use Illuminate\Support\Facades\Validator;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Property;
-
+use Illuminate\Support\Facades\Session;
 class HotelDetailController extends Controller
 {
     use Property;
     
     public function hoteldetail()
     {
+
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -34,8 +35,9 @@ class HotelDetailController extends Controller
         return view($file_name, $this->data);
     }
 
-    public function suites($property_id)
+    public function suites($slug,$suite)
     {
+        
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -43,12 +45,20 @@ class HotelDetailController extends Controller
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
         $this->data['photos'] = '';
-
-        $this->data['property'] = $this->getPropertyById($property_id);
+        $this->data['property'] = $this->getPropertyByslug($slug);
         $this->setGalleryAndFormat($this->data['property']);
         $this->data['property'] = $this->data['property'][0];
-        $this->data['property_id'] = $property_id;
+        $this->data['property_id'] = $this->data['property']->id;
 
+        if(Session::has('keyword')){
+            $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
+        }else{
+            $this->data['path'] = $this->getLocationPath($this->data['property']->city);
+        }
+
+        $this->setFitlerOptions();
+        $this->data = $this->setFitlerOptions();
+        
         $file_name = 'frontend.themes.EC.hotel.suites';      
         return view($file_name, $this->data);
     }
@@ -157,7 +167,7 @@ class HotelDetailController extends Controller
         return view($file_name, $this->data);
     }
 
-    public function location($id)
+    public function getlocation($slug)
     {
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -167,10 +177,11 @@ class HotelDetailController extends Controller
         $this->data['location'] = '';
         $this->data['photos'] = '';
 
-        $this->data['property'] = $this->getPropertyById($id);
+        $this->data['property'] = $this->getPropertyByslug($slug);
         $this->setGalleryAndFormat($this->data['property']);
         $this->data['property'] = $this->data['property'][0];
-
+        $this->setFitlerOptions();
+        $this->data = $this->setFitlerOptions();
         $file_name = 'frontend.themes.EC.hotel.location';      
         return view($file_name, $this->data);
     }

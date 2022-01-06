@@ -4,6 +4,8 @@ use App\Http\Controllers;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Redirect;
+use App\Models\Reservations;
+use Auth;
 
 class DashboardController extends Controller {
 
@@ -26,14 +28,16 @@ class DashboardController extends Controller {
         $this->data['container'] = new ContainerController();
         $preferences = \DB::table('tb_personalized_services')->select( 'ps_id', 'first_name', 'created')->orderby('ps_id','DESC')->limit(3)->get();
         
+        $reservations = Reservations::with(['property'])->where('user_id',Auth()->user()->id)->orderby('id','DESC')->limit(3)->get();
      //    $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
      //    (strlen($is_demo6) > 0)?$is_demo6.
 
         $is_demo6 = trim(\CommonHelper::isHotelDashBoard());        
         $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.dashboard':'dashboard.index'; 
 
-        $u_id = \Session::get('uid');
+        $u_id = Auth::user()->id;
         $this->data['logged_user'] = \DB::table('tb_users')->where('id', $u_id)->first();
+        
         $this->data['online_users'] = \DB::table('tb_users')->orderBy('last_activity','desc')->limit(10)->get(); 
         
         $this->data['currency'] = \DB::table('tb_settings')->where('key_value', 'default_currency')->first();
@@ -112,7 +116,7 @@ class DashboardController extends Controller {
           }
 
           $data = $this->data;
-	     return view($file_name, compact('data','preferences'));
+	     return view($file_name, compact('data','preferences','reservations'));
 	}
 
 }

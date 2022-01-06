@@ -55,8 +55,11 @@
 							<div class="col-lg-9 col-xl-9">
 								<div class="image-input image-input-outline"
 									id="kt_user_add_avatar">
-									<img class="image-input-wrapper" id="avatar" src="{{ asset('/uploads/user_avatar/'.$info->avatar)}}">
-									
+									@if(!empty($info->avatar))
+										<img class="image-input-wrapper" id="avatar" src="{{ asset('/images/user_avatar/'.$info->avatar)}}">
+									@else
+										<img class="image-input-wrapper" id="avatar" src="{{ asset('/images/profile-pic.png')}}">
+									@endif
 									<label
 										class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
 										data-action="change" data-toggle="tooltip"
@@ -121,40 +124,21 @@
 						</div>
 						<!--end::Group-->
 						<!--begin::Group-->
-						<div class="form-group row fv-plugins-icon-container">
-							<label class="col-xl-3 col-lg-3 col-form-label">
-								Phone Number
-							</label>
-							<div class="col-lg-9 col-xl-9">
-								<div
-									class="input-group input-group-solid input-group-lg">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="la la-phone"></i>
-										</span>
-									</div>
-									<input type="text"
-										class="form-control form-control-solid form-control-lg"
-										name="landline_number" value="{{ $info->landline_number }}">
-								</div>
-							</div>
-						</div>
+						
 						<!--end::Group-->
 						<div class="form-group row fv-plugins-icon-container">
 							<label class="col-xl-3 col-lg-3 col-form-label">
 								Mobile Number
 							</label>
-							<div class="col-lg-9 col-xl-9">
+							<div class="col-lg-9 col-xl-9 d-flex">
+								<div class="col-c-code" style="max-width: 65px;">
+									<input type="text" name="mobile_code" id="code" value="{{ $info->mobile_code }}" class="form-control form-control-solid form-control-lg" placeholder="+49" maxlength="4" required>
+								</div>
 								<div
-									class="input-group input-group-solid input-group-lg">
-									<div class="input-group-prepend">
-										<span class="input-group-text">
-											<i class="la la-phone"></i>
-										</span>
-									</div>
-									<input type="text"
+									class="input-group input-group-solid input-group-lg ml-5">
+									<input type="number"
 										class="form-control form-control-solid form-control-lg"
-										name="mobile_number" value="{{ $info->mobile_number }}">
+										name="mobile_number" value="{{ $info->mobile_number }}" maxlength="10">
 								</div>
 							</div>
 						</div>

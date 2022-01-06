@@ -5,7 +5,7 @@
         <div class="row h-100">
             <div class="col-md-8 bg-white">
                 <div class="mb-4">
-                    <a href="main-page.html" class="back-abs">
+                    <a href="/" class="back-abs">
                         <i class="ico ico-back"></i>
                     </a>
                 </div>
@@ -16,7 +16,7 @@
                     <form method="post" action="{{ url('user/signin')}}">
                     	<ul class="nav" id="myTab" role="tablist">
 		                    <li class="nav-item " role="presentation">
-		                        <a class="nav-link active" href="/register">Register</a>
+		                        <a class="nav-link active" href="/register">Sign up</a>
 		                    </li>
 		                    <li class="nav-item " role="presentation">
 		                        <a class="nav-link" href="login">Sign in</a>
@@ -93,7 +93,7 @@
 							<label class="text-left"> Language Preference </label>	
 							<select class="form-control" name="language">
 								@foreach(SiteHelpers::langOption() as $lang)
-								<option value="{{ $lang['folder'] }}" @if(Session::get('lang') ==$lang['folder']) selected @endif>  {{  $lang['name'] }}</option>
+								<option value="{{ $lang['folder'] }}" @if(Session::get('lang') ==$lang['folder'] || $lang['name']=='English') selected @endif>  {{  $lang['name'] }}</option>
 								@endforeach
 							</select>								
 							<div class="clr"></div>

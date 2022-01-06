@@ -1,4 +1,8 @@
-
+<style>
+.modal-backdrop.show {
+    opacity: 0;
+}
+</style>
 <!--begin::Demo Panel-->
 
     <!--begin::Header-->
@@ -32,13 +36,13 @@
                                                 @foreach($trip_dates as $td_key => $date)
                                                     <div class="d-flex itinirary-list py-5 align-items-center">
                                                         <div class="itn-text">
-                                                            <p class="mb-0 month-nav">{{ date('d. M. Y', strtotime($date)) }}</p>
-                                                            <p class="mb-0">{{ date('l', strtotime($date)) }}</p>
                                                             @if(strtotime($date) == strtotime($reservations->checkin_date))
                                                                 <p class="mb-0 mt-2"><b>Arrival date</b></p>
                                                             @elseif(strtotime($date) == strtotime($reservations->checkout_date))
                                                                 <p class="mb-0 mt-2"><b>Departure date</b></p>
                                                             @endif
+                                                            <p class="mb-0 month-nav">{{ date('d M Y', strtotime($date)) }}</p>
+                                                            <p class="mb-0">{{ date('l', strtotime($date)) }}</p>
                                                         </div>
                                                     </div>
                                                 @endforeach
@@ -47,7 +51,7 @@
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
-                                    <div class="reservation-img mb-8">
+                                    <div class="reservation-img mb-8" style="height:300px;">
                                         <div class="result-grid">
                                         <?php
                                             foreach($property[0]->propertyImages as $images):
@@ -57,7 +61,6 @@
                                                 }else{
                                                     $container_name = strtolower(str_replace(" ", "-", trim($property[0]->property_name)));
                                                 }
-
                                                 if(is_array($images)){
                                                     $file_name = $images['file_name'];
                                                 }elseif(is_object($images) && isset($image->file->file_name)){
@@ -88,8 +91,7 @@
                                             <span class="text-dark-50 flex-root font-weight-bold">
                                                 Tearms & Condition
                                             </span>
-                                            <a href="http://development.emporium-voyage.com/" class="iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe " title="Privacy and cookie policy" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">View</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-                                            <script src="https://cdn.iubenda.com/iubenda.js"></script><script src="https://cdn.iubenda.com/iubenda.js"></script><script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+                                            
                                         </div>
                                             {{-- <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">View
@@ -97,11 +99,11 @@
                                                 <span class="text-dark flex-root font-weight-bold text-right"><a
                                                         href="#">View</a></span>
                                             </div> --}}
-                                            <div class="d-flex mb-3">
+                                            {{-- <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Suite Name</span>
                                                 <span class="text-dark flex-root font-weight-bold text-right">Lorem
                                                     Lipsum</span>
-                                            </div>
+                                            </div> --}}
                                             <div class="d-flex mb-3">
                                                 <span class="text-dark-50 flex-root font-weight-bold">Check-in</span>
                                                 <span class="text-dark flex-root font-weight-bold text-right">{{ date('d-m-Y', strtotime($reservations->checkin_date)) }}</span>
@@ -149,7 +151,7 @@
                                                         @if(!empty($reservations))
 
                                                             @foreach($reservations->reservedSuites as $suite)
-                                                            <div class="reservation-summary section-shadow">
+                                                        <div class="reservation-summary section-shadow">
                                                           <h4>SUITE &nbsp; {{ $pos++ }}</h4>
                                                           <p><b>{{ $suite->suite->category_name }}</b></p>
                                                           <table class="table table-borderless mb-0">
@@ -161,7 +163,9 @@
                                                             </tr>
                                                             <tr>
                                                               <td class="px-0 py-1">Suite</td>
-                                                              <td class="px-0 py-1 text-right">€{{ $suite->price }}</td>
+                                                              <td class="px-0 py-1 text-right">
+                                                            <?php $suite_price = $reservations->number_of_nights * $suite->price ?>
+                                                                {{$reservations->number_of_nights }} * €{{ $suite_price }}</td>
                                                             </tr>
                                                             {{-- <tr>
                                                               <td class="px-0 py-1">Tax</td>
@@ -169,27 +173,100 @@
                                                             </tr> --}}
                                                           </table>
                                                           <hr class="mb-2">
-                                                          <table class="table table-borderless mb-0">
-                                                            <tr>
-                                                              <td class="px-0 py-1">Gourmet Experience</td>
-                                                              <td class="px-0 py-1 text-right">2</td>
-                                                            </tr>
-                                                          </table>
+                                                          
                                                           <hr class="mt-2">
                                                           <table class="table table-borderless mb-0">
                                                             <tr>
                                                               <td class="px-0 py-1">Subtotal</td>
-                                                              <td class="px-0 py-1 text-right"><b>€{{ $suite->price }}</b></td>
+                                                              <td class="px-0 py-1 text-right"><b>€{{ 
+                                                              $suite_price }}</b></td>
                                                             </tr>
-                                                            <?php $grand_total += (float)$suite->price; ?>
+                                                            <?php 
+                                                    $grand_total += (float)$suite_price;
+                                                            ?>
                                                           </table>
                                                         </div>
+                                                        <br>
+                                                        
                                                         @endforeach
+                                                        @if(isset($suite_board))
+                                                        
+                                                        <div class="reservation-summary section-shadow">
+                                                            <h4>Suite board</h4>
+                                                            <p><b>{{ $suite_board->board_name }}</b></p>
+                                                            <table class="table table-borderless mb-0">
+                                                                <tr>
+                                                                    <td class="px-0 py-1">Price</td>
+                                                                    <td class="px-0 py-1 text-right">
+                                                                        {{ $reservations->number_of_nights }} * €{{ $suite_board->board_rackrate }}
+                                                                    </td>
+                                                                </tr>
+                                                                @if($suite_board->board_vat == 1)
+                                                                  <?php 
+                                                                    $per = 20; 
+                                                                    $tax =  $per/100 * $suite_board->board_rackrate ; 
+                                                                  ?>
+                                                                <tr>
+                                                                    <td class="px-0 py-1">Tax 20%</td>
+                                                                    <td class="px-0 py-1 text-right">
+                                                                    €{{ $tax }}</td>
+                                                                </tr>
+                                                                @elseif($suite_board->board_vat == 2)
+                                                                    <?php 
+                                                                        $per = 2; 
+                                                                        $tax =  $per/100 * $suite_board->board_rackrate ; 
+                                                                    ?>
+                                                                    <tr>
+                                                                        <td class="px-0 py-1">Tax 2%</td>
+                                                                        <td class="px-0 py-1 text-right">
+                                                                        €{{ $tax }}</td>
+                                                                    
+                                                                    </tr>
+                                                                @else
+                                                                    <?php 
+                                                                        $per = 2; 
+                                                                        $tax =  $per/100 * $suite_board->board_rackrate ; 
+                                                                    ?>
+                                                                    <tr>
+                                                                        <td class="px-0 py-1">Tax 2%</td>
+                                                                        <td class="px-0 py-1 text-right">
+                                                                        €{{ $tax }}</td>
+                                                                    </tr>
+                                                                @endif
+
+                                                                <?php $board_total = $tax + $suite_board->board_rackrate ; ?>
+                                                                <tr>
+                                                                    <td class="px-0 py-1">Sub total</td>
+                                                                    <td class="px-0 py-1 text-right">
+                                                                    €{{ $board_total }}</td>
+                                                                </tr>        
+                                                            </table>    
+                                                        </div>
+                                                        @endif
+                                                        <hr>
+                                                        <hr>
                                                         <div class="reservation-total">
                                                           <table class="table table-borderless mb-0">
+                                                            @if($vattax == 1)
+                                                            <?php
+                                                             $total_tax = round(($grand_total * 20) / 100,2);?>
+                                                            <tr>
+                                                              <td class="px-0 py-1">VAT(20%)</td>
+                                                              <td class="px-0 py-1 text-right"><b>
+                                                              €{{ $total_tax }}</b></td>
+                                                            </tr>
+                                                            @elseif($vattax == 2 || $vattax == 3)
+                                                                <?php
+                                                                 $total_tax = round(($grand_total * 20) / 100,2);?>    
+                                                                <tr>
+                                                                    <td class="px-0 py-1">VAT(2%)</td>
+                                                                    <td class="px-0 py-1 text-right">€{{ $total_tax }}</td>
+                                                                </tr>
+                                                            @endif    
                                                             <tr>
                                                               <td class="px-0 py-1">Total</td>
-                                                              <td class="px-0 py-1 text-right"><b>€{{ $grand_total }}</b></td>
+                                                              <td class="px-0 py-1 text-right"><b>
+                                                              €{{ $reservations->price }}</b></td>
                                                             </tr>
                                                           </table>
                                                         </div>
@@ -1303,7 +1380,7 @@
                                                 </div>
                                             </div>
                                             @endif
-                                            <a href="/reservation/whoistravelling">
+                                            <a href="#addCompanionModal" data-toggle="modal" class="manage_guests"> {{-- /reservation/whoistravelling--}}
                                                 <div class="d-flex itinirary-list py-5 align-items-center">
                                                     <div style="width: 40px;">
                                                         <i class="fas fa-users"
@@ -1462,7 +1539,7 @@
                                         <div class="w-100">
                                             <p class="mb-0"><b>Address</b></p>
                                             <p class="mb-0">
-                                                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Vero
+                                                {{$reservations->property->address}}
                                             </p>
                                         </div>
                                     </div>
@@ -1471,14 +1548,14 @@
                                             <div style="width: 40px;">
                                                 <i class="far fa-copy" style="color: #000; font-size: 13px;"></i>
                                             </div>
-                                            <div class="w-100" style="color: #000;">Copy address</div>
+                                            <div class="w-100 copy_address" style="color: #000;" title="{{$reservations->property->address}}">Copy address</div>
                                             <div class="text-right">
                                                 <i class="fas fa-chevron-right"
                                                     style="color: #000;font-size: 12px;"></i>
                                             </div>
                                         </div>
                                     </a>
-                                    <a href="#">
+                                    <a href="https://www.google.com/maps/search/?api=1&query={{ $reservations->property->latitude }},{{ $reservations->property->longitude }}" target="_blank">
                                         <div class="d-flex itinirary-list py-5 align-items-center">
                                             <div style="width: 40px;">
                                                 <i class="fas fa-map-marker-alt"
@@ -1491,20 +1568,19 @@
                                             </div>
                                         </div>
                                     </a>
-                                    <div style="height: 4px; background: #ebedf3;"></div>
-                                    <h3 class="font-weight-bolder font-size-h3 text-dark-75 mb-2 mt-7">
-                                        Checking in & out
-                                    </h3>
+                                    @if(!empty($reservations->property->checkin) && !empty($reservations->property->checkout))
+                                        <div style="height: 4px; background: #ebedf3;"></div>
+                                        <h3 class="font-weight-bolder font-size-h3 text-dark-75 mb-2 mt-7">
+                                            Checking in & out
+                                        </h3>
 
-                                    <div class="d-flex itinirary-list py-5 align-items-center">
-                                        <div class="w-100">
-                                            <p class="mb-2"><b>Check-in</b></p>
-                                            <p class="mb-0">
-                                                Introductions will be visible during your stay
-                                            </p>
+                                        <div class="d-flex itinirary-list py-5 align-items-center">
+                                            <div class="w-100">
+                                                <p class="mb-2"><b>Check-in </b> {{$reservations->property->checkin}}</p>
+                                                <p class="mb-2"><b>Check-Out </b>{{$reservations->property->checkout}}</p>
+                                            </div>
                                         </div>
-                                    </div>
-
+                                    @endif    
                                     <div style="height: 4px; background: #ebedf3;"></div>
                                     <h3 class="font-weight-bolder font-size-h3 text-dark-75 mb-2 mt-7">
                                         Where you're staying
@@ -1550,7 +1626,32 @@
         <!--end::Purchase-->
     </div>
     <!--end::Content-->
-
+<!-- companion popup start -->
+<div class="modal fade bd-example-modal-lg" id="addCompanionModal" data-backdrop="static" tabindex="-1" role="dialog"
+aria-labelledby="staticBackdrop" aria-hidden="true">
+<div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Add Companion</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i aria-hidden="true" class="ki ki-close"></i>
+            </button>
+        </div>
+            <div class="modal-body">
+              <div id="companion_list" class="row">
+                {{-- @foreach($companion as $data)
+                  @include('frontend.themes.EC.reservation.partials.whotravelling.companion-detail', ['companion' => $data])
+                @endforeach --}}
+              </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary font-weight-bold" data-dismiss="modal" aria-label="Close">Close</button>
+                <button type="submit" class="btn btn-primary font-weight-bold add_companion">Add Companion</button>
+            </div>
+    </div>
+</div>
+</div>
+<!-- companion popup end -->
 <!--end::Demo Panel-->
 <script type="text/javascript">
 jQuery(function($) {
@@ -1578,4 +1679,19 @@ jQuery(function($) {
             });
         });    
     });
+$(document).on('click', '.manage_guests', function(){
+    $('.fade').removeClass('modal-backdrop')
+});
+$(document).on('click', '.copy_address', function(){
+    var element = $(this);
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val(element.attr('title')).select();
+    document.execCommand("copy");
+    $temp.remove();
+    element.html("<font color='green';>Copied!</font>");
+    setTimeout(function(){
+        element.html('Copy address');
+    }, 2000);
+});
 </script>

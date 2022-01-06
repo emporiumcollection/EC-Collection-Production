@@ -23,11 +23,11 @@
         <div class="row h-100">
             <div class="col-md-8 bg-white" style="overflow: auto">
                 <div class="mb-4">
-                    <a href="main-page.html" class="back-abs">
+                    <a href="/" class="back-abs">
                         <i class="ico ico-back"></i>
                     </a>
                 </div>
-                <div class="auth-container-inner wizard" style="margin-top:70px;top:0;transform: translate(-50%, 0);padding-bottom:70px">
+                <div class="auth-container-inner wizard" style="margin-top:19px;top:0;transform: translate(-50%, 0);padding-bottom:70px">
 
                     <div class="mb-5">
                         <img src="images/logo.svg" alt="">
@@ -121,10 +121,10 @@
                                         <label class="font-2 label-2">Mobile</label>
                                         <div class="d-flex">
                                             <div class="col-c-code">
-                                                <input type="text" name="country_code" id="code" class="form-control" placeholder="+49">
+                                                <input type="text" name="country_code" id="code" class="form-control" placeholder="+49" maxlength="4" required>
                                             </div>
                                             <div class="m-nmbr">
-                                                <input class="form-control txtmobileNumber"  name="txtmobileNumber" id="txtmobileNumber" type="tel" >
+                                                <input class="form-control txtmobileNumber"  name="txtmobileNumber" id="txtmobileNumber" type="tel" maxlength="10" required>
                                                 <span id="valid-msg" class="hide" style="color: green;">✓ Valid</span>
                                                 <span id="error-msg" class="hide" style="color: red;">Invalid number</span>
                                             </div>
@@ -372,20 +372,15 @@
                                         </select>
                                     </div>
                                     <div class="form-group">
-                                        <a href="https://www.iubenda.com/privacy-policy/70156957"
-                                            class="iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe "
-                                            title="Privacy Policy ">Privacy Policy</a>
-                                        <script
-                                            type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
-
-                                        <a href="https://www.iubenda.com/privacy-policy/70156957/cookie-policy"
-                                            class="iubenda-white iubenda-noiframe iubenda-embed iubenda-noiframe "
-                                            title="Cookie Policy ">Cookie Policy</a>
-                                        <script
-                                            type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+                                        <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>Privacy Policy</b></a>
+                                        ||
+                                        <a href="#" data-toggle="modal" data-target="#cookie_policy"><b>Cookie Policy</b></a>
+                                        ||
+                                        <a href="#" data-toggle="modal" data-target="#terms-and-conditions"><b>Terms & Conditions</b></a>
+                                        ||
                                     </div>
                                     <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1">
+                                        <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1" checked>
                                         <label class="custom-control-label" for="customCheck1">
                                             I agree to the Emporium-Collection Terms & Conditions and have read the Privacy
                                             Policy.
@@ -393,7 +388,7 @@
                                         <p style="color: red; display: none" id="term"><strong>Please select role</strong></p>
                                     </div>
                                     <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" name="B" class="custom-control-input" id="customCheck2">
+                                        <input type="checkbox" name="B" class="custom-control-input" id="customCheck2" checked>
                                         <label class="custom-control-label" for="customCheck2">
                                             I agree that my personal data will be collected and stored and used
                                             electronically to help the reservation agents with specialized offers pertaining
@@ -404,7 +399,7 @@
                                         <p style="color: red; display: none" id="B"><strong>Please select role</strong></p>
                                     </div>
                                     <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" name="C" class="custom-control-input" id="customCheck3">
+                                        <input type="checkbox" name="C" class="custom-control-input" id="customCheck3" checked>
                                         <label class="custom-control-label" for="customCheck3">
                                             Emporium-Collection Privacy Policy <br>
                                             I have read and agree to the Emporium-Collection Privacy Policy.
@@ -412,7 +407,7 @@
                                         <p style="color: red; display: none" id="C"><strong>Please select role</strong></p>
                                     </div>
                                     <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" name="D" class="custom-control-input" id="customCheck4">
+                                        <input type="checkbox" name="D" class="custom-control-input" id="customCheck4" checked>
                                         <label class="custom-control-label" for="customCheck4">
                                             I Agree to the Emporium-Collection Privacy &amp; Data Protection Policy
                                         </label>
@@ -461,6 +456,9 @@
         </div>
     </div>
 </div></div>
+@include('frontend.themes.EC.reservation.partials.privacy_model.Cookie_policy')
+@include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
+@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
 <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/popper.min.js')}}"></script>
 <script type="text/javascript" src="{{ asset('js/bootstrap.min.js')}}"></script>
@@ -684,6 +682,7 @@
         });
 
         $(document).on('click','.clickconfirm',function(e) {
+            
             var mobile_number = $("#txtmobileNumber").val();
             var email = $("#email").val();
             var password = $("#password").val();

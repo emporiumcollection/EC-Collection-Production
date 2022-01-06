@@ -9,7 +9,7 @@
 <div class="mb-5">
   <div class="row align-items-center">
     <div class="col-md-6">
-      <a href="/hotel/hoteldetail/<?php echo $editorChoice->id; ?>">
+      <a href="/hotel/{{ $editorChoice->property_slug }}">
         <h3 class="title-second title-line mb-0"><?php echo $editorChoice->property_name;?></h3>
       </a>
     </div>
@@ -54,7 +54,7 @@
                 $file_name = 'default-image.png';
               }
             ?>
-            <img src="<?php echo 'property-image/resize/627x627/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
+            <img src="<?php echo 'property-image/resize/1200x700/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
           <?php endif;?>
           <div class="hero-desc">
             <h4><?php echo $editorChoice->detail_section1_title;?></h4>
@@ -95,7 +95,7 @@
           ?>
             <div class="col-md-6">
               <div class="hero-item">
-                <img src="<?php echo 'property-image/resize/311x311/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
+                <img src="<?php echo 'property-image/resize/1200x700/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
               </div>
             </div>
           <?php 
@@ -106,28 +106,36 @@
         </div>
       </div>
 
-      <div class="hero-meta">
+      <div class="hero-meta d-xl-flex d-lg-flex d-xs-none">
         <div class="left-meta">
           <ul class="nav nav-pills nav-fill">
+            @if(!empty($editorChoice->suites->toArray()))
             <li class="nav-item">
-              <a class="nav-link btn-sidebar" href="#" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $editorChoice->id;?>)">Reviews</a>
+              <a class="nav-link btn-sidebar" href="#" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">Suites</a>
             </li>
+            @endif
             <li class="nav-item">
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">Hotel Info</a>
             </li>
             <li class="nav-item">
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $editorChoice->id;?>)">Gallery</a>
             </li>
-            @if(!empty($editorChoice->suites->toArray()))
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">Suites</a>
-              </li>
-            @endif
+            <li class="nav-item">
+              <a class="nav-link btn-sidebar" href="#" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $editorChoice->id;?>)">Reviews</a>
+            </li>
           </ul>
         </div>
         <div class="right-meta align-self-center">
-          <a href="/hotel/hoteldetail/{{ $editorChoice->id }}" class="btn btn-primary btn-block rounded-0">Reservation</a>
+          <a href="/hotel/{{ $editorChoice->property_slug }}" class="btn btn-primary btn-block rounded-0">Reservation</a>
         </div>
+      </div>
+      <div class="hotel-meta-mobile col-lg-6">
+        <a href="#" class="btn rounded-0 btn-sidebar btn-info-hotel" data-sidebar="#mobile_menu" onclick="replacePropertyMobileMenu(<?php echo $editorChoice->id;?>)">
+          Hotel Info <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
+        <a href="/hotel/{{ $editorChoice->property_slug }}" data-toggle="collapse" class="btn btn-primary rounded-0">
+          Reservation
+        </a>
       </div>
     </div>
   </div>

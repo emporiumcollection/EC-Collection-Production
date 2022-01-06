@@ -51,9 +51,9 @@
 									<div class="image-input image-input-outline"
 										id="kt_user_add_avatar">
 										@if(isset($data->avatar))
-										<img class="image-input-wrapper" id="avatar" src="{{ asset( ($data->avatar == '') ? '/images/profile-pic.png' : '/uploads/users/'.$data->avatar)}}">	
+										<img class="image-input-wrapper" id="avatar" src="{{ asset( ($data->avatar == '') ? '/images/profile-pic.png' : '/images/companion/'.$data->avatar)}}">	
 										@else	
-										<img class="image-input-wrapper" id="avatar" src="{{ asset('/uploads/users/')}}" onerror="this.onerror=null;this.src='{{ asset('/images/profile-pic.png')}}';">		
+										<img class="image-input-wrapper" id="avatar" src="{{ asset('/images/companion/')}}" onerror="this.onerror=null;this.src='{{ asset('/images/profile-pic.png')}}';">		
 										@endif
 										<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
 											data-action="change" data-toggle="tooltip"
@@ -122,18 +122,16 @@
 								<label class="col-xl-3 col-lg-3 col-form-label">
 									Phone Number
 								</label>
-								<div class="col-lg-9 col-xl-9">
+								<div class="col-lg-9 col-xl-9 d-flex">
+									<div class="col-c-code" style="max-width: 65px;">
+										<input type="text" name="phone_code" id="code" value="@if(isset($data)){{  $data->phone_code ? $data->phone_code : ''}}@endif" class="form-control form-control-solid form-control-lg" placeholder="+49" maxlength="4" required>
+									</div>
 									<div
 										class="input-group input-group-solid input-group-lg">
-										<div class="input-group-prepend">
-											<span class="input-group-text">
-												<i class="la la-phone"></i>
-											</span>
-										</div>
-										<input type="text"
+										<input type="number"
 											class="form-control form-control-solid form-control-lg"
-											name="phone_number" value=" @if(isset($data)){{  $data->phone_number ? $data->phone_number : ''}}@endif"
-											placeholder="Phone Number">
+											name="phone_number" value="@if(isset($data)){{  $data->phone_number ? $data->phone_number : ''}}@endif"
+											placeholder="Phone Number" maxlength="10">
 									</div>
 								</div>
 							</div>
@@ -145,8 +143,8 @@
 								</label>
 								<div class="col-lg-9 col-xl-9">
 									<select name="gender" class="form-control">
-										<option value="Man" @if(isset($data)){{  $data->gender == 'Man' ? 'selected' : ''}} @endif>Male</option>
-										<option value="Woman" @if(isset($data)){{  $data->gender == 'Woman' ? 'selected' : ''}} @endif>Woman</option>
+										<option value="Male" @if(isset($data)){{  $data->gender == 'Male' ? 'selected' : ''}} @endif>Male</option>
+										<option value="Female" @if(isset($data)){{  $data->gender == 'Female' ? 'selected' : ''}} @endif>Female</option>
 										<option value="Non-Binary" @if(isset($data)){{  $data->gender == 'Non-Binary' ? 'selected' : ''}} @endif>Non-Binary</option>
 										<option value="Cigender" @if(isset($data)){{  $data->gender == 'Cigender' ? 'selected' : ''}} @endif>Cigender</option>
 										<option value="Intersex" @if(isset($data)){{  $data->gender == 'Intersex' ? 'selected' : ''}} @endif>Intersex</option>

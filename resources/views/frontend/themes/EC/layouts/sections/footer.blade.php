@@ -47,7 +47,7 @@
         <div class="footer-top pb-4">
             <div class="row">
                 <?php foreach($footer_menus as $menu):?>
-                <div class="col-md-3 mmb-4">
+                <div class="col-md-3 mmb-4 mb-lg-4">
                     <h4><?php echo $menu['menu_name'];?></h4>
                     <nav class="nav flex-column">
                         <?php foreach($menu['childs'] as $child):?>

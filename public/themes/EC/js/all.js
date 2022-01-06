@@ -292,6 +292,17 @@ var ajaxReq = 'ToCancelPrevReq';
     dots: false,
   });
 
+  $('.weekselect .custom-control-input').change(function () {
+    var valDta = $(this).val();
+    $('.valweak').html(valDta);
+  });
+
+  $('.monthselect .custom-control-input').change(function () {
+    var valDta = $(this).attr('id');
+    $('[data-id="' + valDta + '"]').toggleClass('show');
+    $(this).toggleClass('checked');
+  });
+
   $(".left-side").hover(function () {
     $(".right-side").css("opacity", "0.2");
     $(".left-side").css("opacity", "1");
@@ -591,9 +602,11 @@ var ajaxReq = 'ToCancelPrevReq';
         dataType: "json",
         data: {'type':_type, 'collection':_collection, '_token':_token, 'keyword':_location},
         success: function (data){
+          // console.log(data);
                 homePageFeaturedProperties = data;
             //if(data.status == "success"){
                 $('.title-2').html(data[0]['property_name']);
+                $('.title-third').html(data[0]['city']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
 
                 var containername;
@@ -616,11 +629,40 @@ var ajaxReq = 'ToCancelPrevReq';
                   `/property-image" class="img-fluid" alt="" />`);                
 
                 $('.to-right .title-2').html(data[0]['property_name']);
-                $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);                
-            //}
+                // alert(data[0]['city']);
+                $('.title-third').html(data[0]['city']);
+                $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
+                var images = data[0]['property_images'];
+                // console.log(images);
+                var d_image = '';                
+                  $(images).each(function (key, value) {
+                    try{
+                      d_image += '<div>'
+                      +'<img src="/property-image/resize/645x600/'+ containername +'/'+ value['file']['file_name']+'/property-image" class="img-fluid" alt="">'
+                      +'</div>';
+                    }catch(e){
+
+                    }
+                  });
+                  // console.log('here',d_image);
+                  $("#images").html(d_image);
+
+                  setTimeout(function () {                    
+                    $('.quick-prev').slick({
+                      slidesToShow: 1,
+                      prevArrow: '<button type="button" class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+                      nextArrow: '<button type="button" class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+                    });
+                  }, 2000);
+
+                  $(document).on("scroll", function () {
+                    $('.quick-prev').slick('setPosition');
+                    $('.quick-prev').slick('resize');
+                  });
         }
     });
   }
+
   $(document).on('click', '.step-3', function () {
     if(!homePageFeaturedProperties[1]){
       return true;
@@ -661,6 +703,16 @@ var ajaxReq = 'ToCancelPrevReq';
     $('.who-container').addClass('show');
   });
 
+  // $('.quick-prev').slick({
+  //   slidesToShow: 1,
+  //   prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+  //   nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+  // });
+  // $('.step-3').click(function () {
+  //   $(this).closest('.when-container').removeClass('show');
+  //   $('.who-container').addClass('show');
+  //   $('.quick-prev').slick('setPosition')
+  // });
   $('.all-drop').click(function(e){
     e.preventDefault();
     $('.all-result').fadeIn();
@@ -1489,9 +1541,9 @@ var ajaxReq = 'ToCancelPrevReq';
               var p_avs = '';
               if (typeof objAvs != 'undefined') {
                 $(objAvs).each(function (key, value) {
-                  //p_avs += value['title']+", ";
-                  p_availableservices_html += '<p class="mb-0">' + value['title'] + '</p>';
+                  p_avs += value['title']+", ";
                 });
+                p_availableservices_html += '<p class="mb-0">' + p_avs.replace(/, +$/g, "");+'</p>';
               }
               //p_availableservices_html += '<p class="mb-0">'+p_avs+'</p>';
               p_availableservices_html += '</div>';
@@ -2321,6 +2373,12 @@ $(document).ready(function () {
     $("#price_range").slider("values", $this.data("index"), $this.val());
   });
   
+  $("#price_reset").click(function(){
+      $("#price_range").slider("option", "values", [80,824]);
+      $("#min").val(80);
+      $("#max").val(10000);
+  });
+
   $(".who").click(function (e) {
      var dest = $("#inlineFormInputGroup").val();
      $("#collection").val('View ' + dest + ' Collection');
@@ -2343,8 +2401,27 @@ $(document).ready(function () {
     $('.include-form').fadeIn("fast");
   });
   
-  picker.data('daterangepicker').hide = function () { };
-  picker.data('daterangepicker').show();
+  $(window).scroll(function() {
+    var scroll = $(window).scrollTop();
+    if ( (scroll > 0) && (scroll < 130)) {
+      $(".top-header").removeClass("header-transition header-fixed");
+    } else if ( (scroll > 150) && (scroll < 200)) { 
+      $(".top-header").addClass("header-transition");
+
+    } else if ( (scroll > 220) && (scroll < 300)) {
+      if($(".reservation-em").length == 0){
+        // $("header").find(".top-header").removeClass("header-fixed");
+        $(".top-header").addClass("header-fixed");
+      }
+    }
+  });
+
+  try{
+    picker.data('daterangepicker').hide = function () { };
+    picker.data('daterangepicker').show();
+  }catch(e){
+    
+  }
 
 });
 
@@ -2363,3 +2440,40 @@ $(document).ready(function () {
       return this;
   }
 })($.fn.removeClass);
+$('.humburger-menu-sidebar').click(function(){
+  $(this).closest('.sidebar-nav-section').find('.nav-collapse').toggleClass('show')
+})
+$('.close-second-menu').click(function(e){
+  e.preventDefault();
+  $(this).closest('.sidebar-nav-section').find('.nav-collapse').removeClass('show')
+  $(this).closest('.sidebar-nav-section').removeClass('show')
+})
+
+const postDetails = document.querySelector(".col-hotel-slider");
+const postSidebar = document.querySelector("#sidebar");
+const postSidebarContent = document.querySelector(".nav-collapse");
+
+const controller = new ScrollMagic.Controller();
+const scene = new ScrollMagic.Scene({
+  triggerElement: postSidebar,
+  triggerHook: 0,
+  duration: getDuration,
+  offset: -170
+}).addTo(controller);
+
+if (window.matchMedia("(min-width: 768px)").matches) {
+  scene.setPin(postSidebar, { pushFollowers: false });
+}
+
+// in your projects, you might want to debounce resize event for better performance
+window.addEventListener("resize", () => {
+  if (window.matchMedia("(min-width: 768px)").matches) {
+    scene.setPin(postSidebar, { pushFollowers: false });
+  } else {
+    scene.removePin(postSidebar, true);
+  }
+});
+
+function getDuration() {
+  return postDetails.offsetHeight - postSidebarContent.offsetHeight;
+}

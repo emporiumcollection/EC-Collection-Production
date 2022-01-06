@@ -46,7 +46,9 @@ class CompanionController extends Controller {
         $rules = array(
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email'
+            'email' => 'required|email',
+            'phone_code' => 'required',
+            'phone_number' => 'required|max:10',
         );
         $validator = Validator::make($request->all(), $rules);
         $id = $request->input('id'); 
@@ -57,6 +59,7 @@ class CompanionController extends Controller {
         $companion_data['first_name'] = $request->input('first_name');
         $companion_data['last_name'] = $request->input('last_name');           
         $companion_data['email'] = $request->input('email');
+        $companion_data['phone_code'] = $request->input('phone_code');
         $companion_data['phone_number'] = $request->input('phone_number');
         $companion_data['gender'] = $request->input('gender');
         $companion_data['preferred_language'] = $request->input('preferred_language');
@@ -71,7 +74,7 @@ class CompanionController extends Controller {
                     if (!is_null(Input::file('profile_avatar'))) {
                         $file = $request->file('profile_avatar');
                         
-                        $destinationPath = public_path().'/uploads/users';
+                        $destinationPath = public_path().'/images/companion';
                         $filename = $file->getClientOriginalName();
                         $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                         $newfilename = $id . '.' . $extension;
@@ -119,7 +122,7 @@ class CompanionController extends Controller {
                     if (!is_null(Input::file('profile_avatar'))) {
 
                         $file = $request->file('profile_avatar');
-                        $destinationPath = public_path('uploads\users');
+                        $destinationPath = public_path('/images/companion');
                         $filename = $file->getClientOriginalName();
                         $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                         // $newfilename = \Session::get('uid') . '.' . $extension;

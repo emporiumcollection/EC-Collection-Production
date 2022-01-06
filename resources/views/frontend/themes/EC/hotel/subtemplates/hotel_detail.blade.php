@@ -25,19 +25,7 @@
     <a href="#" class="hotel-info btn-sidebar" data-sidebar="#quickinfo">
       Hotel info
     </a>
-    <div class="my-dropdown">
-      <div class="btn-group dropleft">
-        <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <i class="ico ico-diamon diamon-label"></i>
-        </a>
-        <div class="dropdown-menu">
-          <a href="#" class="dropdown-item">Add to collection</a>
-          <a href="#" class="dropdown-item btn-sidebar create-collection"
-            data-sidebar="#myCollection">Create
-            new collection</a>
-        </div>
-      </div>
-    </div>
+    
 
     <!-- Data video popup -->
     {{-- <div style="display:none;" id="video1">
@@ -68,7 +56,7 @@
       ?>
         <div>
           <a href="" class="slider-item-inner">
-            <img <?php echo 'src="/property-image/resize/830x350/'.$container_name.'/'.$file_name.'/property-image"';?> id="heading-img" class="img-fluid" alt="">
+            <img <?php echo 'src="/property-image/resize/840x540/'.$container_name.'/'.$file_name.'/property-image"';?> id="heading-img" class="img-fluid" alt="">
             <div class="view-images-btn">
               <i class="ico icon-camera"></i> View Images
             </div>
@@ -85,7 +73,7 @@
       <a href="#" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $hotel_data[0]->id ;?>)" class="view btn-sidebar i-none">
         Hotel Info
       </a>
-
+      <input type="hidden" name="city_" id="city" value="<?php echo $hotel_data[0]->city?>">
       <a href="" class="view btn-sidebar i-none iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe" title="Privacy and cookie policy" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Policies</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
       <script src="https://cdn.iubenda.com/iubenda.js"></script><script src="https://cdn.iubenda.com/iubenda.js"></script><script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
 
@@ -125,7 +113,7 @@
         </div>
       </a>
       <div class="ipad-view book-suite">
-        <a href="#">
+        <a href="/reservation/when/{{ $hotel_data[0]->id }}">
           Book this Suite
         </a>
       </div>
@@ -133,7 +121,7 @@
 
   </div>
   <div class="hotel-meta-mobile meta-sticky">
-    <div class="dropdown dropdown-suite w-100">
+    <div class="dropdown dropdown-suite w-50">
       <a href="#" class="btn dropdown-toggle text-left" type="button" id="suiteDetail"
         data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         Hotel Info
@@ -153,7 +141,12 @@
         <a class="dropdown-item scrollto btn-sidebar" href="#ask" data-sidebar="">Ask Questions</a>
       </div>
     </div>
-    <a href="reservation.html" class="btn btn-primary rounded-0">
+    <div class="dropdown d-flex align-items-center w-50 view-suite-btn">
+      <a href="#" class="btn dropdown-toggle btn-block text-left btn-sidebar" data-sidebar="#mobile_menu">
+        View Suites
+      </a>
+    </div>
+    <a href="/reservation/when/{{ $hotel_data[0]->id }}" class="btn btn-primary rounded-0 btn-reservation-detail">
       Reservation
     </a>
   </div>
@@ -275,48 +268,20 @@
             <h4 class="mb-4 color-dark-grey ">Amenities</h4>
             <div class="row">
               <div class="col-md-4 mb-4">
-                <p class="mb-0">Pool</p>
-                <p class="mb-0">Wlan</p>
-                <p class="mb-0">Smart-TV</p>
-                <p class="mb-0">Koffeemaschine</p>
-                <p class="mb-0">Laundry service</p>
+                @if(!empty($hotel_data))
+                  @foreach($hotel_data as $amenitie)              
+                    <p class="mb-0">
+                      @if(!empty($amenitie->suites->toArray()))
+                        @if(!empty($amenitie->suites[0]->amenities->toArray()))
+                          {{ $amenitie->suites[0]->amenities[0]->amenities_eng }}
+                        @endif
+                      @endif
+                    </p>
+                  @endforeach
+                @else
+                <p>Amenities Not Found</p>  
+                @endif
               </div>
-              <div class="col-md-4 mb-4">
-                <p class="mb-0">Pool</p>
-                <p class="mb-0">Wlan</p>
-                <p class="mb-0">Smart-TV</p>
-                <p class="mb-0">Koffeemaschine</p>
-                <p class="mb-0">Laundry service</p>
-              </div>
-              <div class="col-md-4 mb-4">
-                <p class="mb-0">Pool</p>
-                <p class="mb-0">Wlan</p>
-                <p class="mb-0">Smart-TV</p>
-                <p class="mb-0">Koffeemaschine</p>
-                <p class="mb-0">Laundry service</p>
-              </div>
-              <div class="col-md-4 mb-4">
-                <p class="mb-0">Pool</p>
-                <p class="mb-0">Wlan</p>
-                <p class="mb-0">Smart-TV</p>
-                <p class="mb-0">Koffeemaschine</p>
-                <p class="mb-0">Laundry service</p>
-              </div>
-              <div class="col-md-4 mb-4">
-                <p class="mb-0">Pool</p>
-                <p class="mb-0">Wlan</p>
-                <p class="mb-0">Smart-TV</p>
-                <p class="mb-0">Koffeemaschine</p>
-                <p class="mb-0">Laundry service</p>
-              </div>
-              <div class="col-md-4 mb-4">
-                <p class="mb-0">Pool</p>
-                <p class="mb-0">Wlan</p>
-                <p class="mb-0">Smart-TV</p>
-                <p class="mb-0">Koffeemaschine</p>
-                <p class="mb-0">Laundry service</p>
-              </div>
-
             </div>
           </div>
         </div>
@@ -341,29 +306,38 @@
                   <div class="col-lg-4 col-md-6 mb-5">
                     <div class="qv-list">
                       <h4>Address</h4>
-                      <i class="fa fa-map-marker" aria-hidden="true"></i> 35 east 76th st, New York
+                      <i class="fa fa-map-marker" aria-hidden="true"></i> {{ $hotel_data[0]->address }}
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-6 mb-5">
                     <div class="qv-list">
                       <h4>Internet</h4>
-                      <p class="mb-0"><b>Public areas :</b> Free</p>
-                      <p class="mb-0"><b>In room :</b> Free</p>
+                      @if(!empty($hotel_data[0]->internetpublic))
+                        <p class="mb-0"><b>Public areas :</b> {{$hotel_data[0]->internetpublic }}</p>
+                      @endif
+                      @if(!empty($hotel_data[0]->internetroom))
+                      <p class="mb-0"><b>In room :</b> {{$hotel_data[0]->internetroom }}</p>
+                      @endif
                     </div>
                   </div>
-                  <div class="col-lg-4 col-md-6 mb-5">
-                    <div class="qv-list">
-                      <h4>Children policy</h4>
-                      <p class="mb-0">Children are welcome</p>
+                  @if(!empty($hotel_data[0]->children_policy))
+                    <div class="col-lg-4 col-md-6 mb-5">
+                      <div class="qv-list">
+                        <h4>Children policy</h4>
+                        <p class="mb-0">{{$hotel_data[0]->children_policy }}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-4 col-md-6 mb-5">
-                    <div class="qv-list">
-                      <h4>Check-in / Check-out</h4>
-                      <p class="mb-0"><b>Check-in :</b> 3 pm</p>
-                      <p class="mb-0"><b>Check-out :</b> noon</p>
+                  @endif
+                  @if (!empty($hotel_data[0]->checkin) && !empty($hotel_data[0]->checkout))
+                    <div class="col-lg-4 col-md-6 mb-5">
+                      <div class="qv-list">
+                        
+                        <h4>Check-in / Check-out</h4>
+                          <p class="mb-0"><b>Check-in :</b> {{ $hotel_data[0]->checkin }}</p>
+                          <p class="mb-0"><b>Check-out :</b> {{ $hotel_data[0]->checkout }}</p>
+                      </div>
                     </div>
-                  </div>
+                  @endif
                   <div class="col-lg-4 col-md-6 mb-5">
                     <div class="qv-list">
                       <h4>Transportation and transfer</h4>
@@ -373,8 +347,8 @@
                   <div class="col-lg-4 col-md-6 mb-5">
                     <div class="qv-list">
                       <h4>Smooking policy</h4>
-                      <p class="mb-0">Non smooking public spaces</p>
-                      <p class="mb-0"><b>Smooking rooms:</b> not available</p>
+                      <p class="mb-0">{{$hotel_data[0]->smookingpolicy }}</p>
+                      <p class="mb-0"><b>Smooking rooms:</b> {{$hotel_data[0]->smookingrooms }}</p>
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-6 mb-5">
@@ -394,18 +368,22 @@
                       <p class="mb-0">Concirge service</p>
                     </div>
                   </div>
-                  <div class="col-lg-4 col-md-6 mb-5">
-                    <div class="qv-list">
-                      <h4>Pets</h4>
-                      <p class="mb-0">Small dogs allowed</p>
+                  @if(!empty($hotel_data[0]->pets))
+                    <div class="col-lg-4 col-md-6 mb-5">
+                      <div class="qv-list">
+                        <h4>Pets</h4>
+                        <p class="mb-0">{{$hotel_data[0]->pets }}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-4 col-md-6 mb-5">
-                    <div class="qv-list">
-                      <h4>Parking</h4>
-                      <p class="mb-0"><b>Car park / valet service :</b> 65 US$ per day</p>
+                  @endif
+                  @if(!empty($hotel_data[0]->carpark))
+                    <div class="col-lg-4 col-md-6 mb-5">
+                      <div class="qv-list">
+                        <h4>Parking</h4>
+                        <p class="mb-0">{{$hotel_data[0]->carpark }}</p>
+                      </div>
                     </div>
-                  </div>
+                  @endif
                 </div>
                 <div class="row my-5">
                   <div class="col text-center">

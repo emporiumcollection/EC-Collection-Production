@@ -14,6 +14,9 @@
     color: #fff;
     font-family: "SaolDisplay-Regular";
   }
+  .wherepopup .nav-link{
+    font-size: 20px !important;
+  }
 </style>
 <form name="collection-search" method="post" action="{{URL::to('globalavailability')}}" id="collection_search">
   @include('frontend.themes.EC.pages.home_left_navigation')
@@ -45,9 +48,11 @@
         <p>
           <?php echo $slide->slider_description;?>
         </p>
-        <div class="action-button">
-          <a href="<?php echo $slide->slider_link;?>" class="btn btn-outline-white btn-lg">View</a>
-        </div>
+        <?php if( !empty($slide->slider_link) ) { ?>
+          <div class="action-button">
+            <a href="<?php echo $slide->slider_link;?>" class="btn btn-outline-white btn-lg">View</a>
+          </div>
+        <?php } ?>
       </div>
     </div>
 <?php endforeach;?>
@@ -60,9 +65,14 @@
         <div class="row">
           <div class="col-6">
             <div class="is-left-pad">
-              <div class="title-with-icon">
-                <i class="ico ico-calendar"></i>
-                <h2>When</h2>
+              <div class="title-with-icon align-items-center">
+                <a href="/" class="sidebar-back step-1" onclick="document.location=''">
+                  <i class="ico ico-back" data-toggle="tooltip" title="Go back to previous page"></i>
+                </a>
+                <div>
+                  <i class="ico ico-calendar icon-fx"></i>
+                </div>
+                <h2 class="mb-0">When</h2>
                 <a href="/" class="main-close mr-3">
                   <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                     <title>Close</title>
@@ -118,7 +128,10 @@
             </div>
 
             <div class="fetaruer">
-              <h2 class="title-2"></h2>
+              <div class="title-offset mt-5">
+                <h3 class="title-2 title-second title-line mb-0"></h3>
+                <h4 class="title-font-2 title-third">experience</h4>
+              </div>
               <h3 class="title-3 title-i">— featured hotel —</h3>
               <p class="font-2">
                 <i>
@@ -139,9 +152,12 @@
       <div class="container pt-5">
         <div class="row">
           <div class="col-6">
-            <div class="title-with-icon">
-              <i class="ico ico-profile-pp"></i>
-              <h2>WHO</h2>
+            <div class="title-with-icon align-items-center pt-4">
+              <a href="/" class="sidebar-back step-2" onclick="document.location=''">
+                <i class="ico ico-back" data-toggle="tooltip" title="Go back to previous page"></i>
+              </a>
+              <i class="ico ico-profile-pp icon-fx"></i>
+              <h2 class="mb-0">WHO</h2>
               <a href="/" class="main-close mr-3">
                 <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
                   <title>Close</title>
@@ -181,9 +197,9 @@
                           <div class="row field-count-guest align-items-center">
                             <button type="button" class="min" data-id="0" data-type="adult">-</button>
                             <div class="col text-center">
-                              <span class="mr-1 adult-val">1 </span>
+                              <span class="mr-1 adult-val">2 </span>
                               <input type="hidden" name="rooms[]" id="rooms" />
-                              <input type="hidden" name="adult[]" class="inp-adult" id="adult" value="1" />
+                              <input type="hidden" name="adult[]" class="inp-adult" id="adult" value="2" />
                             </div>
                             <button type="button" class="plus mr-3" data-id="0" data-type="adult">+</button>
                           </div>
@@ -197,8 +213,8 @@
                           <div class="row field-count-guest align-items-center">
                             <button type="button" class="min" data-id="0" data-type="children">-</button>
                             <div class="col text-center">
-                              <span class="mr-1 child-val">1 </span>
-                              <input type="hidden" name="child[]" id="child" class="inp-child" value="1" />
+                              <span class="mr-1 child-val">0 </span>
+                              <input type="hidden" name="child[]" id="child" class="inp-child" value="0" />
                             </div>
                             <button type="button" class="plus mr-3" data-id="0" data-type="children">+</button>
                           </div>
@@ -259,13 +275,18 @@
                   </div>
                 </div>
               </div>
-  </div>
-  </div>
+              <h3 class="title-3 title-i">— featured hotel —</h3>
+              <div class="oldo-o">
+                <div class="quick-prev" id="images">
+                  
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="col-6 pl-0 pr--md-0">
             <div class="img-left-when">
               <img src="images/60c5a787075247-1.5dad757ad76ab.jpg" alt="">
             </div>
-
             <div class="fetaruer to-right">
               <h2 class="title-2 title-i"></h2>
               <h3 class="title-3 title-i">— featured hotel —</h3>

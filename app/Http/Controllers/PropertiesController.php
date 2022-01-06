@@ -2323,7 +2323,7 @@ class PropertiesController extends Controller {
 
                     $data['folder_id'] = $propImgFoldId;
                     $data['file_name'] = $fileName;
-					$data['file_display_name'] = $fileNamedis;
+                    $data['file_display_name'] = $fileNamedis;
                     $data['file_type'] = $file[0]->getClientMimeType();
                     $data['file_size'] = $file[0]->getClientSize();
                     $data['user_id'] = \Auth::user()->id;

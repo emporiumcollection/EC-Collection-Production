@@ -12,6 +12,7 @@ use App\Http\Controllers\TwilioSMSController;
 |
 */
 
+
 Route::get('forget-password', 'Auth\PasswordController@showForgetPasswordForm')->name('forget.password.get');
 Route::post('forget-password','Auth\PasswordController@submitForgetPasswordForm')->name('forget.password.post');
 Route::get('reset-password/{token}', 'Auth\PasswordController@showResetPasswordForm')->name('reset.password.get');
@@ -39,14 +40,14 @@ Route::get('/users/setting', 'UserController@getSettings');
 
 //HotelDetail Routes
 
-Route::get('/hotel/hoteldetail/{id}', 'FrontEnd\PropertyController@getProperty');
-Route::get('/hotel/suite/{property_id}', 'FrontEnd\HotelDetailController@suites');
+Route::get('/hotel/{slug}', 'FrontEnd\PropertyController@getProperty');
+Route::get('/hotel/{slug}/{suite}', 'FrontEnd\HotelDetailController@suites');
 Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
 Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture');
 Route::get('/hotel/spa', 'FrontEnd\HotelDetailController@spa');
 Route::get('/hotel/restaurant', 'FrontEnd\HotelDetailController@restaurant');
 Route::get('/hotel/detailrestaurant','FrontEnd\HotelDetailController@detailrestaurant');
-Route::get('/hotel/location/{id}','FrontEnd\HotelDetailController@location');
+Route::get('/hotel-location/{slug}','FrontEnd\HotelDetailController@getlocation');
 Route::get('/hotel/experiences','FrontEnd\HotelDetailController@experiences');
 Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
 Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
@@ -76,10 +77,12 @@ Route::get('reservation/policies', 'FrontEnd\ReservationController@Policies');
 Route::get('reservation/services', 'FrontEnd\ReservationController@aditionalServices');
 Route::get('reservation/whoistravelling','FrontEnd\ReservationController@whoistravelling');
 Route::get('reservation/paymentmethod', 'FrontEnd\ReservationController@paymentmethod');
-Route::post('reservation/savepaymentmethod', 'FrontEnd\ReservationController@savepaymentmethod');
+Route::post('/reservation/savepaymentmethod', 'FrontEnd\ReservationController@savepaymentmethod');
+Route::post('/savepayment_method','FrontEnd\ReservationController@savepaymentmethod');
 Route::get('reservation/hotelpolicies', 'FrontEnd\ReservationController@hotelpolicies');
-Route::get('reservation/bookingsummary', 'FrontEnd\ReservationController@bookingsummary');
+Route::get('/reservation/bookingsummary', 'FrontEnd\ReservationController@bookingsummary');
 Route::post('/store_dates/session', 'FrontEnd\ReservationController@storewhere');
+Route::post('/store_id/session', 'FrontEnd\ReservationController@storepopertyid');
 Route::get('/select/board/{id}', 'FrontEnd\ReservationController@select_board');
 
 Route::post('/suite', 'FrontEnd\ReservationController@selected_suite');

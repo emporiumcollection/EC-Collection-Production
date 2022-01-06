@@ -77,12 +77,16 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
-    'currentdomain' => 'voyage',
-    'spadomain' => 'emporium-spa.com',
-    'safaridomain' => 'emporium-safari.com',
-    'islandsdomain' => 'emporium-islands.com',
-    'voyagedomain' => 'emporium-voyage.com',
-    'magazinedomain' => 'emporium-magazine.com',
+    'currentdomain' => env('EC_CURRENT_DOMAIN','voyage'),
+    'spadomain' => env('EC_SPA_URL', 'emporium-spa.com'),
+    'safaridomain' => env('EC_SAFARI_URL', 'emporium-safari.com'),
+    'islandsdomain' => env('EC_ISLANDS_URL', 'emporium-islands.com'),
+    'voyagedomain' => env('EC_VOYAGE_URL', 'emporium-voyage.com'),
+    'magazinedomain' => env('EC_MAGAZINE','emporium-magazine.com'),
+    'root_destinations' => env('ROOT_DESTINATIONS', ''),
+    'lifestyle_package_id' => env('LIFESTYLE_PCK_ID', '38'),
+    'dedicated_package_id' => env('DEDICATED_PCK_ID', '39'),
+    'bespoke_package_id' => env('BESPOKE_PCK_ID', '40'),
 
     'key' => env('APP_KEY', 'YrKh1BgM5ONj2ia81k77Z2nD7hDrDniF'),
     
@@ -92,6 +96,10 @@ return [
     'EmporiumVoyage' => 'EV',
     'EmporiumIslands' =>'EI',
     'EmporiumSafari' => 'ESF',
+
+    'TWILIO_AUTH_TOKEN' => 'bae1f61e772858e149dba8f78f38e57a',
+    'TWILIO_SID' => 'ACbe338ce42add35a607cdaa43f9838bdc',
+    'TWILIO_VERIFY_SID' => 'VAc455d3aea7239baf19d2a92b44df0968',
 
     /*
     |--------------------------------------------------------------------------
@@ -165,7 +173,7 @@ return [
         Barryvdh\Debugbar\ServiceProvider::class,
         Laravel\Cashier\CashierServiceProvider::class,
         Kouz\LaravelAirbrake\ServiceProvider::class,
-        Folklore\Image\ImageServiceProvider::class,
+        //Folklore\Image\ImageServiceProvider::class,
 
     ],
 
@@ -221,7 +229,7 @@ return [
         'Markdown'  => GrahamCampbell\Markdown\Facades\Markdown::class,
 		'Zipper' 	=> Chumper\Zipper\Zipper::class,
 		'PDF' 		=> Barryvdh\DomPDF\Facade::class,
-		//'Image' => Intervention\Image\Facades\Image::class,
+		'Image' => Intervention\Image\Facades\Image::class,
 		'Excel' => Maatwebsite\Excel\Facades\Excel::class,
 		'TagsFinder' => App\Helpers\TagsFinder::class,
 		'CategoryMenu' => App\Helpers\CategoryMenu::class,
@@ -237,7 +245,7 @@ return [
         'UnsplashPhotos' => shweshi\LaravelUnsplashWrapper\UnsplashPhotos::class,
         'UnsplashCollections' => shweshi\LaravelUnsplashWrapper\UnsplashCollections::class,
         //'Image' => Imagine\Imagick\Imagine::class,
-        'Image' => Folklore\Image\Facades\Image::class,
+        //'Image' => Folklore\Image\Facades\Image::class,
         'ReviewHelper'=> App\Helpers\ReviewHelper::class,
     ],
 

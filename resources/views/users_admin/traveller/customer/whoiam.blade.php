@@ -925,99 +925,101 @@ Note: You may revoke your consent at any time by e-mail to info@emporium-voyage.
     					</span>
     				</button>   				
     			</div>
-    			<div class="modal-body">
-                    <div class="m-portlet m-portlet--full-height">
-                        
-                        <div class="m-portlet__body">
-                            <div class="m-form__section m-form__section--first">
-                                <div class="form-group m-form__group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">Company Name</label>
-                                    <div class="col-xl-9 col-lg-9">
-                                        <input type="text" name="onrequest_companyname" class="form-control" placeholder="Company name" required="required" value="{{ $company->company_name }}" />
-                                    </div> 
-                                </div>
-                                
-                                <div class="form-group m-form__group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">Email</label>
-                                    <div class="col-xl-9 col-lg-9">
-                                        <input type="text" name="onrequest_email" class="form-control" placeholder="Email" required="required" value="{{ $company->company_email }}" />
-                                    </div> 
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">Address</label>
-                                    <div class="col-xl-9 col-lg-9">
-                                        <input type="text" name="onrequest_address" class="form-control" placeholder="Address" required="required" value="{{ $company->company_address }}" />
-                                    </div> 
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">City</label>
-                                    <div class="col-xl-9 col-lg-9">
-                                        <input type="text" name="onrequest_city" class="form-control" placeholder="City" required="required" value="{{ $company->company_city }}" />
-                                    </div> 
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">State</label>
-                                    <div class="col-xl-9 col-lg-9">
-                                        <input type="text" name="onrequest_state" class="form-control" placeholder="State" required="required" value="{{ $company->company_state }}" />
-                                    </div> 
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">Country</label>
-                                    <div class="col-xl-9 col-lg-9">
-                                        <input type="text" name="onrequest_country" class="form-control" placeholder="Country" required="required" value="{{ $company->company_country }}" />
-                                    </div> 
-                                </div>
-                                <div class="form-group m-form__group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">Zip Code</label>
-                                    <div class="col-xl-9 col-lg-9">
-                                        <input type="text" name="onrequest_zipcode" class="form-control" placeholder="Zip Code" required="required" value="{{ $company->company_postal_code }}" />
-                                    </div> 
-                                </div>
-                                                                
-                                <div class="form-group m-form__group row">
-									<label class="col-xl-3 col-lg-3 col-form-label">
-										Registered European Company
-									</label>
-									<div class="col-xl-9 col-lg-9">
-                                        <div class="m-radio-inline">
-                							<label class="m-radio">
-                							     <input type="radio" name="european" value="1" <?php echo $user->european==1 ? 'checked="checked"' : ''; ?> />
-                                                    Yes
-                                                 <span></span>
-                							</label>
-                                            <label class="m-radio">
-                							     <input type="radio" name="european" value="0" <?php echo $user->european==0 ? 'checked="checked"' : ''; ?> />
-                                                    No
-                                                 <span></span>
-                							</label>
-                						</div>
-                                    </div>
-                                </div>
-                                <div id="dv_vat_no">
-                                    <div class="form-group m-form__group row" >
-                                        <label class="col-xl-3 col-lg-3 col-form-label">
-											
-										</label>
-										<div class="col-xl-9 col-lg-9">
-											Under article 44 EU VAT Directive 2006/112/EC that deals with the place of supply of services, electronic services are deemed to be taxable where the Business customer belongs. Under article 196 EU VAT Directive, the VAT will be levied from the customer, based on the reverse charge mechanism. Emporium-Voyage will request a valid VAT number in one of the EU member states in order not to invoice the VAT to the Business customer. If such VAT number is not provided or is invalid, Emporium-Voyage will invoice the VAT of the country where the Business customer belongs.  
-										</div>
-									</div>
-                                    <div class="form-group m-form__group row">
+    			@if(isset($company->company_name))
+	    			<div class="modal-body">
+	                    <div class="m-portlet m-portlet--full-height">
+	                        
+	                        <div class="m-portlet__body">
+	                            <div class="m-form__section m-form__section--first">
+	                                <div class="form-group m-form__group row">
+	                                    <label class="col-xl-3 col-lg-3 col-form-label">Company Name</label>
+	                                    <div class="col-xl-9 col-lg-9">
+	                                        <input type="text" name="onrequest_companyname" class="form-control" placeholder="Company name" required="required" value="{{ $company->company_name }}" />
+	                                    </div> 
+	                                </div>
+	                                
+	                                <div class="form-group m-form__group row">
+	                                    <label class="col-xl-3 col-lg-3 col-form-label">Email</label>
+	                                    <div class="col-xl-9 col-lg-9">
+	                                        <input type="text" name="onrequest_email" class="form-control" placeholder="Email" required="required" value="{{ $company->company_email }}" />
+	                                    </div> 
+	                                </div>
+	                                <div class="form-group m-form__group row">
+	                                    <label class="col-xl-3 col-lg-3 col-form-label">Address</label>
+	                                    <div class="col-xl-9 col-lg-9">
+	                                        <input type="text" name="onrequest_address" class="form-control" placeholder="Address" required="required" value="{{ $company->company_address }}" />
+	                                    </div> 
+	                                </div>
+	                                <div class="form-group m-form__group row">
+	                                    <label class="col-xl-3 col-lg-3 col-form-label">City</label>
+	                                    <div class="col-xl-9 col-lg-9">
+	                                        <input type="text" name="onrequest_city" class="form-control" placeholder="City" required="required" value="{{ $company->company_city }}" />
+	                                    </div> 
+	                                </div>
+	                                <div class="form-group m-form__group row">
+	                                    <label class="col-xl-3 col-lg-3 col-form-label">State</label>
+	                                    <div class="col-xl-9 col-lg-9">
+	                                        <input type="text" name="onrequest_state" class="form-control" placeholder="State" required="required" value="{{ $company->company_state }}" />
+	                                    </div> 
+	                                </div>
+	                                <div class="form-group m-form__group row">
+	                                    <label class="col-xl-3 col-lg-3 col-form-label">Country</label>
+	                                    <div class="col-xl-9 col-lg-9">
+	                                        <input type="text" name="onrequest_country" class="form-control" placeholder="Country" required="required" value="{{ $company->company_country }}" />
+	                                    </div> 
+	                                </div>
+	                                <div class="form-group m-form__group row">
+	                                    <label class="col-xl-3 col-lg-3 col-form-label">Zip Code</label>
+	                                    <div class="col-xl-9 col-lg-9">
+	                                        <input type="text" name="onrequest_zipcode" class="form-control" placeholder="Zip Code" required="required" value="{{ $company->company_postal_code }}" />
+	                                    </div> 
+	                                </div>
+	                                                                
+	                                <div class="form-group m-form__group row">
 										<label class="col-xl-3 col-lg-3 col-form-label">
-											Vat Number
+											Registered European Company
 										</label>
 										<div class="col-xl-9 col-lg-9">
-											<input type="text" name="onrequest_vatnumber" class="form-control" id="onrequest_vatnumber" required="required" value="{{ $company->company_tax_number }}" />  
+	                                        <div class="m-radio-inline">
+	                							<label class="m-radio">
+	                							     <input type="radio" name="european" value="1" <?php echo $user->european==1 ? 'checked="checked"' : ''; ?> />
+	                                                    Yes
+	                                                 <span></span>
+	                							</label>
+	                                            <label class="m-radio">
+	                							     <input type="radio" name="european" value="0" <?php echo $user->european==0 ? 'checked="checked"' : ''; ?> />
+	                                                    No
+	                                                 <span></span>
+	                							</label>
+	                						</div>
+	                                    </div>
+	                                </div>
+	                                <div id="dv_vat_no">
+	                                    <div class="form-group m-form__group row" >
+	                                        <label class="col-xl-3 col-lg-3 col-form-label">
+												
+											</label>
+											<div class="col-xl-9 col-lg-9">
+												Under article 44 EU VAT Directive 2006/112/EC that deals with the place of supply of services, electronic services are deemed to be taxable where the Business customer belongs. Under article 196 EU VAT Directive, the VAT will be levied from the customer, based on the reverse charge mechanism. Emporium-Voyage will request a valid VAT number in one of the EU member states in order not to invoice the VAT to the Business customer. If such VAT number is not provided or is invalid, Emporium-Voyage will invoice the VAT of the country where the Business customer belongs.  
+											</div>
 										</div>
-									</div>
-                                </div>
-                                                    
-                            </div>
-                        </div>
-                        
-                        
-                    </div>                				
-    			</div>
+	                                    <div class="form-group m-form__group row">
+											<label class="col-xl-3 col-lg-3 col-form-label">
+												Vat Number
+											</label>
+											<div class="col-xl-9 col-lg-9">
+												<input type="text" name="onrequest_vatnumber" class="form-control" id="onrequest_vatnumber" required="required" value="{{ $company->company_tax_number }}" />  
+											</div>
+										</div>
+	                                </div>
+	                                                    
+	                            </div>
+	                        </div>
+	                        
+	                        
+	                    </div>                				
+	    			</div>
+	    		@endif	
     			<div class="modal-footer">    				
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="submit" class="btn btn-primary">Submit</button>

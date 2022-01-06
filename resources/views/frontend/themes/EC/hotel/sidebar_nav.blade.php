@@ -45,7 +45,7 @@ if(!isset($property)){
       </a>
       <ul class="nav flex-column nav-sidebar is-small onstickmainpage2">
         <li class="nav-item">
-          <a href="/hotel/hoteldetail/<?php echo $property->id;?>">
+          <a href="/hotel/<?php echo $property->property_slug;?>">
             <i class="ico ico-back mb-4"></i>
           </a>
         </li>
@@ -107,7 +107,7 @@ if(!isset($property)){
           </div>
         </li>--}}
         <li class="nav-item">
-          <a class="nav-link @@locActive" href="/hotel/location/{{ $property->id }}">Location</a>
+          <a class="nav-link @@locActive" href="/hotel-location/{{ $property->property_slug }}">Location</a>
         </li>
         <!--<li class="nav-item">
           <a class="nav-link active" href="/hotel/experiences">Experiences</a>

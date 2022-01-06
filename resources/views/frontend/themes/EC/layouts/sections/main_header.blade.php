@@ -1,10 +1,11 @@
 <header>
   <div class="top-header">
     <div class="top-header-inner">
-      <div class="row align-items-md-end align-items-center">
-        <div class="col-md-5 col-4">
+      <div class="row align-items-center">
+        <div class="col-md-5 header-left col-4">
+          @if(Request::segment(1) != 'reservation')
           <div id="menunav">
-            <a href="#dashF" class="mr-2 menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
+            <a href="#dashF" class="menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
               aria-controls="dashF">
               <i class="ico ico-dash" data-toggle="tooltip" title="Navigate to our collection"></i>
             </a>
@@ -12,69 +13,85 @@
               aria-controls="searchF">
               <i class="ico ico-search" data-toggle="tooltip" title="Search our collection"></i>
             </a>
-            @if(!empty(\Session::get('keyword')))
-              <a href="#cityList" class="menu-nav text-menu city-f">
-                <span data-toggle="tooltip" title="Change destination">
-                {{ \Session::get('keyword') }}</span>
-              </a>
-            @endif
-            @if(Request::is('reservation/when*'))
-            @else
-            <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
-                <span class="cal-date" data-toggle="tooltip" title="Change availability">
-                  @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
-                    {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
-                  @else
-                    Selected Date
-                  @endif
-              </span>
-              </a>
+              @if(!empty(\Session::get('keyword')))
+                <a href="#cityList" class="menu-nav text-menu city-f">
+                  <span data-toggle="tooltip" title="Change destination">
+                  {{ substr(\Session::get('keyword'), 0, 26) }}</span>
+                </a>
               @endif
-
-              @if(Request::is('reservation/where'))
-              @else
+              <a href="#calcF" class="menu-nav text-menu cal-f" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="calcF">
+                  <span class="cal-date" data-toggle="tooltip" title="Change availability">
+                    @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
+                      {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
+                    @else
+                      Selecte Date
+                    @endif
+                </span>
+                </a>
                 <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button" aria-expanded="false"
                   aria-controls="whoF">
                   <div class="filter-lst expand filter-guest filter-white">
                     <div class="input-group">
                       <div class="gust-dropdown">
-                        <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }}</span> Guests</div>
+                        <div class="guest-option rto" data-toggle="tooltip" title="Change guest"><span class="guest-count">{{ \Session::get('Guests') }} </span>Guests</div>
                       </div>
                     </div>
                   </div>
-                </a>
-              @endif  
+                </a> 
           </div>
+        @endif 
         </div>
-        <div class="col-md-5 col-4 text-center">
-          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
-            <i class="t-logo logo-2"></i>
+        <div class="col-md-2 col-4 header-center text-center px-0">
+          <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
+            <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
+              <img src="{{ asset('/images/Emporium-Voyage-Large.svg') }}" width="160" height="75">
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'spa'){?>
+              <img src="{{ asset('/images/Emporium-Spa-Large.svg') }}" width="160" height="65">
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'safari'){?>
+              <img src="{{ asset('/images/Emporium-Safari-Large.svg') }}" width="160" height="75">
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'islands'){?>
+              <img src="{{ asset('/images/Emporium-Islands-Large.svg') }}" width="160" height="75">
+            <?php } ?>
+
+            <?php if(\Config::get('app.currentdomain') == 'magazine'){?>
+              <img src="{{ asset('/images/Emporium-Magazine-Large.svg') }}" width="160" height="75">
+            <?php } ?>
           </a>
         </div>
-        <div class="col-md-2 col-4 text-right mobile-flex">
-          @if(Auth::check() && Auth::user()->avatar)
-            <a href="/dashboard" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
-              <div class="user-profile-img">
-                <img src="{{ asset('uploads/user_avatar/'.Auth::user()->avatar) }}" alt="">
-                <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
-              </div>
-            </a>
-          @else  
-            <a href="/register" class="login-nav" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard" style="width: 150px;">
-              <div class="user-profile-img">
-                <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
-                <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
-              </div>
-            </a>
-          @endif
-          @if(Request::segment(1) == 'reservation')
-          @else  
+        <div class="col-md-5 col-4 header-right text-right mobile-flex">
           <div class="d-flex justify-content-end align-items-center my-2 menu-col-nav">
-          <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
-            <div class="line"></div>
-            <div class="line"></div>
-            <div class="line"></div>
-          </div>
+            @if(Auth::check() && Auth::user()->username)
+              <a href="/dashboard" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
+                <div class="user-profile-img">
+                  @if(!empty(Auth::user()->avatar))
+                   <img src="{{ asset('/images/user_avatar/'.Auth::user()->avatar) }}" alt="">
+                  @else
+                    <img src="{{ asset('themes/EC/images/user-icon-emporium-collection.svg') }}" alt="">
+                  @endif
+                </div>
+              </a>
+            @else  
+              <a href="/register" class="login-nav mr-3 pr-1" data-toggle="tooltip" title="" data-original-title="Login, Register or go to dashboard">
+                <div class="user-profile-img">
+                  <img src="{{ asset('themes/EC/images/user-icon-emporium-collection-default.svg') }}" alt="">
+                  <!-- <img src="https://i.pravatar.cc/300" alt=""> -->
+                </div>
+              </a>
+            @endif
+            @if(Request::segment(1) == 'reservation')
+            @else  
+          
+            <div class="humburger-menu" title="" data-toggle="tooltip" data-original-title="Navigate to main menu">
+              <div class="line"></div>
+              <div class="line"></div>
+              <div class="line"></div>
+            </div>
 
             <div class="menu">
               <a href="#" class="close-menu">
@@ -84,66 +101,17 @@
                   </path>
                 </svg>
               </a>
-              <div class="container h-100 d-flex align-items-center">
-                <div class="row w-100">
-                  <div class="col-sm-4">
-                    <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
-                    <?php 
-                    if(!empty($menu_experiences)):
-                    $lmenus = [];
-                    foreach($menu_experiences as $experience):?>
-                        <li class="nav-item">
-                          <a class="nav-link active" href="<?php //echo createSearchUrl('experience', $experience->category_alias);?>"><?php echo $experience->category_name;?></a>
-                        </li>
-                    <?php endforeach;
-                    endif;
-                    ?>
-                    </ul>
-                    <div class="menu-media">
-                      <a href="#" class="nav-sos"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-                      <a href="#" class="nav-sos"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-                      <a href="#" class="nav-sos"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-                    </div>
-                  </div>
-                    <?php 
-                    $lmenus = [];
-                    foreach($landing_menus as $menu):
-                        $mmenu = '<li class="nav-item">
-                            <a class="nav-link" href="#">'.$menu['menu_name'].' <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>';
-                        $cmenu = '';
-                        foreach($menu['childs'] as $child):
-                          $cmenu .= '<li class="nav-item">
-                            <a class="nav-link" href="'.$child['url'].'">'.$child['menu_name'].' <i class="fa fa-chevron-right" aria-hidden="true"></i></a>
-                          </li>';
-                        endforeach;
-                        $lmenus[] = ['main' => $mmenu, 'childs' => $cmenu];
-                        ?>
-                    <?php endforeach;?>
-                    <div class="col-sm-8">
-                      <div class="row">
-                        <div class="col-12">
-                        <?php foreach($lmenus as $lmenu):?>
-                          <ul class="nav flex-column">
-                            <?php echo $lmenu['main'];?>
-                            <?php echo $lmenu['childs'];?>
-                          </ul>
-                        <?php endforeach;?>
-                        </div>
-                      </div>
-                    </div>
-                </div>
-              </div>
+              @include('frontend.themes.EC.layouts.sections.menus')      
             </div>
+            @endif
           </div>
-          @endif
         </div>
       </div>
     </div>    
     <hr class="mb-0">
     <div class="menu-s">
       <div class="d-flex align-items-center">
-        <?php if(strpos(request()->route()->getAction()['controller'], 'PropertyController')): ?>
+        <?php if(strpos(request()->route()->getAction()['controller'], 'PropertyController') || strpos(request()->route()->getAction()['controller'], 'HotelDetailController')): ?>
         <ul class="nav nav-left mobile-off">
           {{-- <li class="nav-item">
             <a class="nav-link btn-sidebar" href="#" data-sidebar="#filterbar">
@@ -157,7 +125,7 @@
             </a>
             <?php endif;?>
             <?php if(Request::get('view')!='map'):?>
-            <a class="nav-link" href="<?php echo str_replace('&view=channel','',Request::fullUrl()).'&view=map';?>">
+            <a class="nav-link" href="<?php echo str_replace('&view=results','&view=map',Request::fullUrl());?>">
               <i class="ico ico-place"></i>
             </a>
             <?php endif;?>              
@@ -299,6 +267,7 @@
                           <div class="col">
                             <div class="input-filter">
                               <a href="javascript:void(0);" class="btn btn-primary  filter_price">Filter Price</a>
+                              <button type="button" class="btn btn-primary" id="price_reset">Reset price</button>
                             </div> 
                           </div>
                         </div>  
@@ -308,13 +277,13 @@
               </div>
             </li>
           </ul>
-        <div class="menu-mobile">
+        {{-- <div class="menu-mobile">
           <div class="humburger-second-menu" id="secondMenu">
             <div class="line"></div>
             <div class="line"></div>
             <div class="line"></div>
           </div>
-        </div>
+        </div> --}}
         <ul class="nav nav-right ml-auto">
           {{-- <li class="nav-item">
             <a class="nav-link btn-sidebar" href="#" data-sidebar="#searchHistory">
@@ -348,130 +317,34 @@
       </div>
     </div>
   </div>
-  <div class="second-header">
-    <div class="px-4 pt-2">
-      <div class="row">
-        <div class="col-4 mobile-off">
-          <a href="#" class="mr-2 menu-nav btn-sidebar" data-sidebar="#dashboard_menu">
-            <i class="t-logo logo-2"></i>
-          </a>
-        </div>
-        <div class="col-md-8 pl-2">
-          <div class="d-flex align-items-center">
-            <div id="menunav">
-              <a href="#searchF" class="menu-nav search-f mr-3 mobile-on" data-toggle="collapse" role="button"
-                aria-expanded="false" aria-controls="searchF">
-                <i class="ico ico-search"></i>
-              </a>
-              @if(Request::is('reservation/when*'))
-              @else
-                <a href="#calcF" class="menu-nav text-menu cal-f ml-0" data-toggle="collapse" role="button"
-                  aria-expanded="false" aria-controls="calcF">
-                  <span class="cal-date">
-                    @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
-                      {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
-                    @else
-                      Selecte Date
-                    @endif
-                  </span>
-                </a>
-              @endif
-              
-              @if(Request::is('reservation/where'))
-              @else  
-                <a href="#whoF" class="menu-nav text-menu who-f" data-toggle="collapse" role="button"
-                  aria-expanded="false" aria-controls="whoF">
-                  <div class="filter-lst expand filter-guest filter-white">
-                    <div class="input-group">
-                      <div class="gust-dropdown">
-                        <div class="guest-option rto"><span class="guest-count">
-                          {{ \Session::get('Guests') }}
-                        </span> Guest</div>
-                      </div>
-                    </div>
-                  </div>
-                </a>
-              @endif
-              <!-- <a href="#" class="menu-nav text-menu">Destinations</a> -->
-              <a href="javascript:void(0);" class="menu-nav text-menu">Reservation</a>
-              <div class="humburger-menu ml-auto align-self-center mobile-on">
-                <div class="line"></div>
-                <div class="line"></div>
-                <div class="line"></div>
-              </div>
-            </div>
-            <div class="d-flex is-w-100">
-              <div class="menu-mobile">
-                <div class="humburger-second-menu" id="secondMenu">
-                  <div class="line"></div>
-                  <div class="line"></div>
-                  <div class="line"></div>
-                </div>
-              </div>
-              <ul class="nav nav-right ml-auto">
-                
-                {{-- <li class="nav-item">
-                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#question">
-                    <i class="ico ico-convertation"></i>
-                  </a>
-                </li> --}}
-                <li class="nav-item">
-                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#share">
-                    <i class="ico ico-share-2"></i>
-                  </a>
-                </li>
-                {{-- <li class="nav-item dropdown">
-                  <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="ico ico-diamon"></i>
-                  </a>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="#">Add to collection</a>
-                    <a class="dropdown-item btn-sidebar" href="#" data-sidebar="#myCollection">Create new collection</a>
-                  </div>
-                </li> --}}
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
   <div class="menunav-group">
     <div class="collapse clp dash-clp" id="dashF" data-parent="#menunav">
       <div class="drop-grid">
         <?php if($currentdomain != 'voyage'):?>
-        <a href="https://emporium-voyage.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
+        <a href="{{ \Config::get('app.voyagedomain').Request::getRequestUri() }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-building mr-2"></i> <span>Voyage</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'safari'):?>
-        <a href="https://emporium-safari.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
+        <a href="{{ \Config::get('app.safaridomain').Request::getRequestUri() }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-safari mr-2"></i> <span>Safari</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'spa'):?>
-        <a href="https://emporium-spa.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
+        <a href="{{ \Config::get('app.spadomain').Request::getRequestUri() }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-spa-i mr-2"></i> <span>Spa</span>
           </div>
         </a>
         <?php endif;?>
         <?php if($currentdomain != 'islands'):?>
-        <a href="https://emporium-islands.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
+        <a href="{{ \Config::get('app.islandsdomain').Request::getRequestUri() }}">
           <div class="p-2 d-flex align-items-center">
             <i class="ico ico-islands mr-2"></i> <span>Islands</span>
-          </div>
-        </a>
-        <?php endif;?>
-        <?php if($currentdomain != 'golf'):?>
-        <a href="https://emporium-golf.com/globalsearchavailability?s={{ \Session::get('keyword') }}">
-          <div class="p-2 d-flex align-items-center">
-            <i class="ico ico-golf mr-2"></i> <span>Golf</span>
           </div>
         </a>
         <?php endif;?>
@@ -525,12 +398,12 @@
         <div class="col-xl-6">
           <div class="d-flex justify-content-center pt-3">
             <ul class="nav calendar-nav">
-              <li class="nav-item">
+              {{-- <li class="nav-item">
                 <a class="nav-link active" href="#calendarselect" data-toggle="tab">Calendar</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="#flexible" data-toggle="tab">I'm flexible</a>
-              </li>
+              </li> --}}
             </ul>
           </div>
           <div class="tab-content">
@@ -654,7 +527,7 @@
                 <div class="guest-pick-header">
                   <div class="row align-items-center">
                     <div class="col-lg-9 col-7">
-                      <p class="mb-0"><b>Guests</b></p>
+                      <p class="mb-0"><b>Suites</b></p>
                     </div>
                     <div class="col-lg-3 col-5">
                       <div class="row field-count-guest align-items-center">
@@ -758,7 +631,7 @@
                 </div>
                 <div class="guest-pick-footer">
                   <div class="text-right">
-                    <a href="javascript:void(0);" class="btn btn-dark px-4 select-guest">Update Guests</a>
+                    <a href="javascript:void(0);" class="btn btn-primary px-4 select-guest">Confirm Guest(s)</a>
                   </div>
                 </div>
               </div>

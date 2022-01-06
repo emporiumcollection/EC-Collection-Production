@@ -38,11 +38,11 @@
                     </a>
                 </li>
                 @if (\Session::get('gid') == 3)
-                 <li class="navi-item">
+                 {{-- <li class="navi-item">
                     <a href="#" class="navi-link">
                         <span class="navi-text">My Collections</span>
                     </a>
-                </li>
+                </li> --}}
                 @endif
                 <li class="navi-item">
                     <a href="{{ URL::to('/users/profile')}}" class="navi-link">
@@ -97,11 +97,11 @@
                         <span class="navi-text">Communication</span>
                     </a>
                 </li>
-                <li class="navi-item">
+                {{-- <li class="navi-item">
                     <a href="{{ URL::to('/users/contracts')}}" class="navi-link" data-canvas="popup">
                         <span class="navi-text">Billings & Contracts</span>
                     </a>
-                </li>
+                </li> --}}
                 <li class="navi-item">
                     <a href="{{ URL::to('/logout')}}" class="navi-link">
                         <span class="navi-text">Log Out</span>
@@ -115,87 +115,6 @@
     <!--end::Dropdown-->
 </div>
 
-
-<!-- Modal Add Payment-->
-<div class="modal fade" id="addPayment" data-backdrop="static" tabindex="-1" role="dialog"
-    aria-labelledby="staticBackdrop" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Payment Method</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <i aria-hidden="true" class="ki ki-close"></i>
-                </button>
-            </div>
-            <form action="/users/CardDetail" method="post">
-                <div class="modal-body">
-                    <div class="mb-4">
-                        <img src="{{ asset('images/credit-cards-768x178.png')}}" class="img-fluid" alt="">
-                    </div>
-                     <div class="form-group">
-                        <label> Select Card
-                            <span class="text-danger">*</span>
-                        </label>
-                        <select class="form-control" name="select_card">
-                            <option value="1">Mastercard</option>
-                            <option value="2">Visa</option>
-                            <option value="3">American-express</option>
-                            <option value="4">Discover</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label> Card Type
-                            <span class="text-danger">*</span>
-                        </label>
-                        <select class="form-control" name="card_type">
-                            <option value="Private">Private</option>
-                            <option value="Business">Business</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label>Card number <span class="text-danger">*</span></label>
-                        <input type="text" name="card_number" class="form-control" placeholder="Enter Card Number">
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label>Expires On <span class="text-danger">*</span></label>
-                            <input type="text" name="expire" class="form-control" placeholder="Enter your address">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Security Code <span class="text-danger">*</span></label>
-                            <input type="text" name="security_code" class="form-control" placeholder="Enter your passcode">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label>First name <span class="text-danger">*</span></label>
-                            <input type="text" name="first_name" class="form-control" placeholder="Enter your firsname">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Last Name <span class="text-danger">*</span></label>
-                            <input type="text" name="last_name" class="form-control" placeholder="Enter your lastname">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="form-group col-md-6">
-                            <label>Postal Code <span class="text-danger">*</span></label>
-                            <input type="text" name="postal_code" class="form-control" placeholder="Enter your postal code">
-                        </div>
-                        <div class="form-group col-md-6">
-                            <label>Country <span class="text-danger">*</span></label>
-                            <input type="text" name="country" class="form-control" placeholder="Enter your country">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-light-primary font-weight-bold"
-                        data-dismiss="modal">Cancel</button>
-                    <button type="submit" class="btn btn-primary font-weight-bold">Add Card</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div>
 <!-- Popup Preferences -->
 @include('users_admin/traveller/layout/preferences-popup')
 

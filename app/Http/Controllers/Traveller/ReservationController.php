@@ -27,6 +27,7 @@ class ReservationController extends Controller {
     public function reservationList()
     {    
         $file_name = 'users_admin.traveller.users.reservation_list';
+        
         return view($file_name, $this->data);   
     }
 
@@ -35,10 +36,13 @@ class ReservationController extends Controller {
         $reservations = Reservations::with(['reservedSuites.suite', 'reservedCompanions.companion', 'property',])
             ->where('id', '=', $id)
             ->first();
+        
         $property = $this->getPropertyById($reservations->property_id);
         $this->setGalleryAndFormat($property);
         
-        
+        $companion = \DB::table('tb_companion')
+        ->where('user_id', Auth::user()->id)
+        ->get();
         $checkin_date = new \DateTime($reservations->checkin_date);
         $current_date = new \DateTime();
         
@@ -55,16 +59,45 @@ class ReservationController extends Controller {
         $hotel_name = $reservations->property->property_name;        
         $booking_number = $reservations->booking_number;
 
+        if(isset($reservations->vattax)){
+            if($reservations->vattax == 1){
+                $vattax = 1;   
+            }
+            elseif($reservations->vattax == 2){
+                $vattax = 2;      
+            }else{
+                $vattax = 3;
+            }
+        }
+
         $trip_dates = CommonHelper::getDateRange($reservations->checkin_date, $reservations->checkout_date);
-        $reserve_summary = view('frontend.themes.EC.reservation.partials.summary.reservation_summary',
-            [   
-                'reservations' => $reservations,
-                'property' => $property,
-                'hotel_name' => $hotel_name,
-                'booking_number' => $booking_number,
-                'trip_dates' => $trip_dates,
-                'cancelation_status' => $cancelation_status
-            ])->render();
+        $suite_board = \DB::table('tb_boards')->where('id',$reservations->board)->first();
+        // print_r($suite_board);exit;
+        if(isset($vattax) || isset($suite_board->board_vat)){
+            $reserve_summary = view('frontend.themes.EC.reservation.partials.summary.reservation_summary',
+                [   
+                    'reservations' => $reservations,
+                    'property' => $property,
+                    'hotel_name' => $hotel_name,
+                    'booking_number' => $booking_number,
+                    'trip_dates' => $trip_dates,
+                    'cancelation_status' => $cancelation_status,
+                    'companion' =>$companion,
+                    'vattax' => $vattax,
+                    'suite_board' => $suite_board
+                ])->render();
+        }else{
+            $reserve_summary = view('frontend.themes.EC.reservation.partials.summary.reservation_summary',
+                [   
+                    'reservations' => $reservations,
+                    'property' => $property,
+                    'hotel_name' => $hotel_name,
+                    'booking_number' => $booking_number,
+                    'trip_dates' => $trip_dates,
+                    'cancelation_status' => $cancelation_status,
+                    'companion' =>$companion
+                ])->render();
+        }
 
         return json_encode([
             'reserve_summary' => $reserve_summary

@@ -1,10 +1,20 @@
       <div class="mt-5">
         <div class="row align-items-center">
-          <div class="col-md-6">
+          <div class="col-md-6 mt-xs-5">
             <div class="d-flex align-items-center nav-desc main-title-heading">
-              <a href="/" class="sidebar-back" title="Go back to previous page" data-toggle="tooltip">
-                <i class="ico ico-back"></i>
-              </a>
+              <?php
+                $full_url = Request::fullUrl();
+                $path_count = count($path);
+              ?>
+              @if($path_count > 1)
+                <a href="{{ str_replace( $keyword, $path[$path_count - 2], urldecode($full_url)) }}"  title="Go back to previous page" data-toggle="tooltip">
+                  <i class="ico ico-back"></i>
+                </a>
+              @else
+                <a href="/"  title="Go back to previous page" data-toggle="tooltip">
+                  <i class="ico ico-back"></i>
+                </a>
+              @endif
               <div class="title-main pl-0">
                 <h2><span data-toggle="tooltip" title="Your selected destination experience">{{$keyword}}</span> <a
                     href="javascript:void(0)" onclick="resetSearch();" data-toggle="collapse"><i class="ico ico-reload reload-offset"
@@ -42,7 +52,12 @@
           <ul class="nav nav-pills tabs-w3" id="myTab" role="tablist">
             <?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
               <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true">LIFESTYLE (<?php print count($propertyResultsForView['lifestyle'])?>)</a>
+                <?php 
+                  $total_editors = count($editorsProperties);
+                  $total_feature = count($featureProperties);
+                  $total_properties= $total_editors + $total_feature;
+                ?>
+                <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true">LIFESTYLE (<?php print count($propertyResultsForView['lifestyle']) + $total_properties ?>)</a>
               </li>
             <?php endif; ?>
             <?php if (!empty($propertyResultsForView['dedicated'])) : ?>
@@ -59,7 +74,7 @@
         </div>
         <div class="dropdown dropdown-block mobile-on">
           <button class="btn btn-outline-dark btn-block dropdown-toggle" type="button" id="dropdownMenuButton"
-            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">            
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lifestyle
           </button>
           <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
             <?php if (!empty($propertyResultsForView['lifestyle'])) : ?>
@@ -194,7 +209,7 @@
             @endforeach
           @endif 
         </ul>
-        <div class="tab-content pt-5">
+        <div class="tab-content pt-lg-5 pt-xl-5">
           <?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
   <div class="tab-pane fade active show" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
       <?php

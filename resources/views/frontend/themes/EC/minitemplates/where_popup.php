@@ -1,10 +1,13 @@
 <style type="text/css">
-  .wherepopup{
+  /* .wherepopup{
     display: block;
     overflow: scroll;
     overflow-x: hidden;
     min-height: 0px;
     max-height: 500px;
+  } */
+  .search-field .wherepopup .nav-link{
+    font-size: 16px !important;
   }
 </style>
 <?php 
@@ -43,39 +46,98 @@ if(isset($trendingFilters)):
   ?>
 </div> -->
 <?php endif;?>
+<?php
+$voyage = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-desti-header">Voyage</h3>
+        <ul class="nav border-bottom-0 flex-column voyage-destination">
+        </ul>';
+
+$spa = '
+        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-desti-header">Spa</h3>
+        <ul class="nav border-bottom-0 flex-column spa-destination">
+        </ul>';
+
+$safari = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-desti-header">Safari</h3>
+        <ul class="nav border-bottom-0 flex-column safari-destination">
+        </ul>';
+
+$islands = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-desti-header">Islands</h3>
+        <ul class="nav border-bottom-0 flex-column islands-destination">
+        </ul>';
+
+$voyage_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-hotel-header">Voyage</h3>
+        <ul class="nav border-bottom-0 flex-column voyage-hotels">
+        </ul>';
+
+$spa_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-hotel-header">Spa</h3>
+        <ul class="nav border-bottom-0 flex-column spa-hotels">
+        </ul>';
+
+$safari_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-hotel-header">Safari</h3>
+        <ul class="nav border-bottom-0 flex-column safari-hotels">
+        </ul>';
+
+$islands_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-hotel-header">Islands</h3>
+        <ul class="nav border-bottom-0 flex-column islands-hotels">
+        </ul>';      
+?>
 <div class="wherepopup" style="display:none;">
   <div class="whereinner">
     <div class="row">
       <div class="col-6" id="destisresults">
         <h2 style="text-transform: uppercase; color: #FFF;">Destinations</h2>
-        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-desti-header">Voyage</h3>
-        <ul class="flex-column voyage-destination">
-        </ul>
-        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-desti-header">Spa</h3>
-        <ul class="flex-column spa-destination">
-        </ul>
-        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-desti-header">Safari</h3>
-        <ul class="flex-column safari-destination">
-        </ul>
-        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-desti-header">Islands</h3>
-        <ul class="flex-column islands-destination">
-        </ul>
+        <?php
+        if(\Config::get('app.currentdomain') == 'voyage'){
+          echo $voyage;
+          echo $spa;
+          echo $safari;
+          echo $islands;
+        }else if(\Config::get('app.currentdomain') == 'spa'){
+          echo $spa;
+          echo $voyage;
+          echo $safari;
+          echo $islands;
+        }else if(\Config::get('app.currentdomain') == 'safari'){
+          echo $safari;
+          echo $spa;
+          echo $voyage;
+          echo $islands;
+        }else if(\Config::get('app.currentdomain') == 'islands'){
+          echo $islands;
+          echo $spa;
+          echo $voyage;
+          echo $safari;
+        }
+        ?>
       </div>
       <div class="col-6" id="hotelsresults">
         <h2 style="text-transform: uppercase; color: #FFF;">Hotels</h2>
-        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-hotel-header">Voyage</h3>
-        <ul class="flex-column voyage-hotels">
-        </ul>
-        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-hotel-header">Spa</h3>
-        <ul class="flex-column spa-hotels">
-        </ul>
-        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-hotel-header">Safari</h3>
-        <ul class="flex-column safari-hotels">
-        </ul>
-        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-hotel-header">Islands</h3>
-        <ul class="flex-column islands-hotels">
-        </ul>
+        <?php
+        if(\Config::get('app.currentdomain') == 'voyage'){
+          echo $voyage_hotel;
+          echo $spa_hotel;
+          echo $safari_hotel;
+          echo $islands_hotel;
+        }else if(\Config::get('app.currentdomain') == 'spa'){
+          echo $spa_hotel;
+          echo $voyage_hotel;
+          echo $safari_hotel;
+          echo $islands_hotel;
+        }else if(\Config::get('app.currentdomain') == 'safari'){
+          echo $safari_hotel;
+          echo $spa_hotel;
+          echo $voyage_hotel;
+          echo $islands_hotel;
+        }else if(\Config::get('app.currentdomain') == 'islands'){
+          echo $islands_hotel;
+          echo $spa_hotel;
+          echo $voyage_hotel;
+          echo $safari_hotel;
+        }
+        ?>
       </div>
+    </div>
+    <div class="scrolldown">
+      <i class="down-arrow"></i>
     </div>
   </div>
 </div>

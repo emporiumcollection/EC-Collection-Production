@@ -192,10 +192,11 @@
           slideshowContent += '<div class="image-list' + (i === 1 ? ' active' : '') + '">' +
             '<img src="' + img + '" class="img-fluid" />' +
             '</div>';
+            break;
         }
         var popupContent = '<div class="map-detail-container">' +
           '<div class="map-hotel-img">' +
-          '<div class="popup-slider">' +
+          '<div>' +
           slideshowContent +
           '</div>' +
           // '<div class="popup-nav">' +
@@ -238,14 +239,14 @@
           $('.hotel-info-content').removeClass('active');
           $('#' + dataId).find('.hotel-info-content').addClass('active');
           $('.close-view').css('display', 'flex')
-          setTimeout(function () {
+          /*setTimeout(function () {
             $('.popup-slider').slick({
               slidesToShow: 1,
               prevArrow: '<button class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
               nextArrow: '<button class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
             });
             $('.popup-slider').addClass('show');
-          }, 100);
+          }, 100);*/
           $('.hotel-list-onmap').addClass('show');
         });
 

@@ -43,6 +43,9 @@
   <!--begin::Main-->
   {{-- begin::Header header-mobile-fixed-> --}}
   <div id="kt_header_mobile" class="header-mobile">
+    <a href="#">
+			<img alt="Logo" src="http://development.emporium-voyage.com/assets/users/assets/media/logo.png" class="logo-default max-h-30px">
+		</a>
     <div class="d-flex align-items-center">
       <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
         <span></span>
@@ -189,7 +192,7 @@
       <!--begin::Entry-->
       <div class="d-flex flex-column-fluid">
         <!--begin::Container-->
-        <div class="container-fluid mt-5">
+        <div class="container mt-5">
           <!--begin::Card-->
           <div class="card card-custom">
             <div class="card-header flex-wrap border-0 pt-6 pb-0">
@@ -775,6 +778,9 @@
     var chart = new ApexCharts(element, options);
     chart.render();
 
+    $(document).on("click",".add_card", function(){
+        
+    });
     jQuery(function($) {
       $(document).ready(function() {
 

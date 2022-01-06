@@ -830,16 +830,16 @@
 </div>
 <!--end::Demo Panel-->
                         </div>
-                        <div class="card-body">
+                        
                             <div class="mb-7">
                                 <!--begin::Subheader-->
                                 <div class="row align-items-center">
-                                    <div class="col-lg-9 col-xl-8">
+                                    <div class="col-lg-12">
                                         <div class="row align-items-center">
-                                            <div class="col-md-3">
+                                            {{-- <div class="col-md-3">
                                                 <input type='text' class="form-control" id="calRange" readonly
                                                     placeholder="Select time" type="text" />
-                                            </div>
+                                            </div> --}}
                                             <div class="col-md-3 my-2 my-md-0">
                                                 <div class="input-icon">
                                                     <input type="text" class="form-control" placeholder="Search..."
@@ -849,7 +849,7 @@
                                                     </span>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 my-2 my-md-0">
+                                            {{-- <div class="col-md-3 my-2 my-md-0">
                                                 <div class="d-flex align-items-center">
                                                     <label class="mr-3 mb-0 d-none d-md-block">Status:</label>
                                                     <select class="form-control" id="kt_datatable_search_status">
@@ -858,7 +858,7 @@
                                                         <option value="2">Done</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> 
                                             <div class="col-md-3 my-2 my-md-0">
                                                 <div class="d-flex align-items-center">
                                                     <label class="mr-3 mb-0 d-none d-md-block">Type:</label>
@@ -870,17 +870,17 @@
                                                         <option value="4">Voyage</option>
                                                     </select>
                                                 </div>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-xl-4 mt-5 mt-lg-0">
                                         <div class="d-flex justify-content-between align-items-center">
-                                            <div>
+                                            {{-- <div>
                                                 <a href="#"
                                                     class="btn btn-light-primary px-6 font-weight-bold">Search</a>
-                                            </div>
+                                            </div> --}}
                                             <div>
-                                                <ul class="nav">
+                                                {{-- <ul class="nav">
                                                     <li class="nav-item">
                                                         <a class="nav-link px-2 active" data-toggle="tab"
                                                             href="#data-table" aria-selected="true">
@@ -893,7 +893,7 @@
                                                             <i class="text-dark-50 flaticon-squares-1"></i>
                                                         </a>
                                                     </li>
-                                                </ul>
+                                                </ul> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -1537,7 +1537,7 @@
                                 </div>
                             </div>
                             <!--end::Entry-->
-                        </div>
+                        
                     </div>
                     <!--end::Card-->
 <div id="reservation_popup" class="offcanvas offcanvas-right p-10 offcanvas-off" style="width: 90%;">

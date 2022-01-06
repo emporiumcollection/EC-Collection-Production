@@ -45,7 +45,7 @@ if(!isset($property)){
       </a>
       <ul class="nav flex-column nav-sidebar is-small onstickmainpage2">
         <li class="nav-item">
-          <a href="/hotel/hoteldetail/{{ $property->id }}">
+          <a href="/globalsearchavailability?s={{ \Session::get('keyword') ? \Session::get('keyword') : $property->city }}">
             <i class="ico ico-back mb-4"></i>
           </a>
         </li>
@@ -57,16 +57,13 @@ if(!isset($property)){
             <div class="collapse show" id="suite">
               <ul class="nav flex-column nav-sidebar is-small">
                 <li class="nav-item">
-                  <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}">All Suites</a>
+                  <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/suites">All Suites</a>
                 </li>
-              
                 @foreach($property->suites as $suite)
-
-                <li class="nav-item">
-                  <a class="nav-link nav-link-sub" href="/hotel/suite/{{ $property->id }}/#{{$suite->id}}">{{ ucfirst(strtolower($suite->category_name))}}</a>
-                </li>
+                  <li class="nav-item">
+                    <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/suites/#{{str_replace(" ", "-", strtolower($suite->category_name))}}"> <?php echo ucfirst(strtolower($suite->category_name)); ?> </a>
+                  </li>
                 @endforeach
-                
               </ul>
             </div>
           </li>
@@ -100,7 +97,7 @@ if(!isset($property)){
           </div>
         </li>--}}
         <li class="nav-item">
-          <a class="nav-link @@locActive" href="/hotel/location/{{ $property->id }}">Location</a>
+          <a class="nav-link @@locActive" href="/hotel-location/{{ $property->property_slug }}">Location</a>
         </li>
         <!--<li class="nav-item">
           <a class="nav-link active" href="/hotel/experiences">Experiences</a>
@@ -115,4 +112,4 @@ if(!isset($property)){
       </ul>
     </div>
   </div>
-  @include('frontend.themes.EC.layouts.subsections.property_gallery')
+  

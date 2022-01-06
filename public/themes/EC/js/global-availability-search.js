@@ -38,7 +38,7 @@ function replacePropertyData(id){
   });
 
    if($('#map2').length){
-     setMapLocation(properties[id]['latitude'], properties[id]['longitude'],properties[id]['address']);
+    setMapLocationDetail(properties[id]['latitude'], properties[id]['longitude'],properties[id]['address']);
   }
 
   $('[data-place="property-images"]').each(function() {
@@ -72,21 +72,23 @@ function replacePropertyData(id){
       suites.forEach(function(s){
         spanid = 1;
         rooms = s.rooms;
-        rooms.forEach(function(r){
-          if(typeof r.images !== 'undefined' && r.images.length){
-            rimages = r.images;
-            if(rimages.length){          
-              rimages.forEach(function(e){
-                try{
-                  imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
-                  imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '" ><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
-                  spanid=2;
-                  grid = 2;
-                }catch(e){
+        rooms.forEach(function(r, ind){
+          if(ind == 0){          
+            if(typeof r.images !== 'undefined' && r.images.length){
+              rimages = r.images;
+              if(rimages.length){          
+                rimages.forEach(function(e){
+                  try{
+                    imgUrl = '/room-image/resize/1200x700/' + containerName + '/' + e['file']['name'] + '/' + e.file.file_name;
+                    imageview += '<a href="' + imgUrl + '" data-sub-html="' + e.file.file_title + '" class="suite-id-' +  s.id + ' grid-item grid-row-' + grid + ' span-' + spanid + '" ><img src="' + imgUrl + '" class="img-fluid" alt=""></a>';
+                    spanid=2;
+                    grid = 2;
+                  }catch(e){
 
-                }
-              });
-            }
+                  }
+                });
+              }
+            }  
           }
         });
       });
@@ -115,6 +117,30 @@ function replacePropertyData(id){
   replaceGalleryNames(id);
 }
 
+function replacePropertyMobileMenu(id){
+  $('[data-replace="m_property_short_name"]').html(properties[id]['property_short_name']);
+  $('[data-replace="m_property_gallery_btn"]').attr('onclick','replacePropertyData('+id+')');
+  $('[data-replace="m_reviews_btn"]').attr('onclick','replaceReviewData('+id+')');
+  $('[data-replace="m_suite_btn"]').attr('onclick','replacePropertySuites('+id+')');
+  $('[data-replace="m_quickinfo_btn"]').attr('onclick','replacePropertyData('+id+')');
+  $('[data-replace="m_property_link"]').html( `<a href="/hotel/`+properties[id]['property_slug']+`" class="btn btn-link btn-block text-left" >View `+ properties[id]['property_short_name'] +` </a>`);
+
+  var suiteview = '';
+  var firstsuite = 0;
+  $('[data-place="m_suite_btn1"]').each(function() {
+    suiteview += `<a href="hotel/`+properties[id]['property_slug']+`/suite" class="nav-link">All Suite</a>`;
+    var values = properties[id]['suites'];
+    values.forEach(function(e){
+      if(!firstsuite){
+        firstsuite = e.id;
+      }
+      suiteview +=`<a href="hotel/`+properties[id]['property_slug']+`/suite/#`+e.category_name.toLowerCase().replace(" ", "-")+`" class="nav-link text-capitalize">` + e.category_name.toLowerCase() + `</a>`;
+    })
+    $(this).html(suiteview);
+    
+});
+
+}
 function initializeAllGalleries(){
 
   lightGallery(document.getElementById('gallery_hotel'), {
@@ -263,8 +289,8 @@ function replacePropertySuites(id){
           firstsuite = e.id;
         }
         suiteview += `<li class="nav-item" onclick="replaceSuiteDetail(` + id + `, ` + e.id + `)">
-            <a class="nav-link nav-link-sub" id="suitelist1-tab-` + e.id + `" data-toggle="pill"
-                href="#suitelist1" role="tab" aria-controls="suitelist1" aria-selected="false"> ` + e.category_name + `</a>
+            <a class="nav-link nav-link-sub text-capitalize" id="suitelist1-tab-` + e.id + `" data-toggle="pill"
+                href="#suitelist1" role="tab" aria-controls="suitelist1" aria-selected="false"> ` + e.category_name.toLowerCase() + `</a>
         </li>`;
       })
       $(this).html(suiteview);
@@ -298,20 +324,27 @@ function replaceSuiteList(id){
       roomimages = '';
 
       console.log(suite.rooms[0].images.length);
-      if(suite.rooms[0].images.length !== undefined){        
-        suite.rooms[0].images.forEach(function(rm){
-          if(onlyThree < 3){        
-            roomimages += `<div>
-                <img src="/room-image/resize/780x540/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
-              </div>`;  
-          }
-          onlyThree++; 
-        });  
+      try{
+        if(suite.rooms[0].images.length !== undefined){        
+          suite.rooms[0].images.forEach(function(rm){
+            if(onlyThree < 3){        
+              roomimages += `<div>
+                  <img src="/room-image/resize/780x540/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
+                </div>`;  
+            }
+            onlyThree++; 
+          });  
+        }  
+      }catch(e){
+
       }
+    
       suiteItem = suiteItem.replace('<!--SUITE-TITLE-->', suite.category_name);
       suiteItem = suiteItem.replace('<!--TEMPLATE-SUITE-GALLERY-->', roomimages);  
       suiteItem = suiteItem.replace('<!--SUITEID-->', sid); 
-      suiteItem = suiteItem.replace('<!--PROPERTY-ID-->', id);   
+      suiteItem = suiteItem.replace('<!--PROPERTY-ID-->', id);
+      suiteItem = suiteItem.replace('<!--M-PROPERTY-ID-->', id);
+      suiteItem = suiteItem.replace('<!--IPAD-PROPERTY-ID-->', id);
       suiteItem = suiteItem.replace('<!--SUITE-PRICE-->', suite.price);
       suiteItem = suiteItem.replace('<!--SUITE-NO-BEDS-->', suite.bads);
       suiteItem = suiteItem.replace('<!--SUITE-SIZE-->', suite.suite_size);   
@@ -327,7 +360,14 @@ function replaceSuiteList(id){
       }else{
           suiteItem = suiteItem.replace('<!--COVID-LINK-->', '#');
       }
+
       $('#suiteslist').append(suiteItem);
+      
+      if(properties[id].boards.length != 0){
+        $('.suite_info').show();
+      }else{
+        $('.suite_info').hide();
+      }
     }
 
     $('.no-beds').each(function(e){
@@ -364,11 +404,11 @@ function replaceSuiteDetail(property_id, category_id){
   var containerName = getContainerName(property_id);
   var roomimages = ``;
 
-  if(typeof suite.rooms !== 'undefined' && suite.rooms.length){
-    if(typeof suite.rooms[0].images !== 'undefined' && suite.rooms[0].images.length){
-      $('[data-place="suite_image"]').attr('src', '/room-image/resize/85x71/'+containerName+'/'+suite.rooms[0].images[0]['file']['name']+'/'+suite.rooms[0].images[0]['file']['file_name'])
-    }
-  }
+  // if(typeof suite.rooms !== 'undefined' && suite.rooms.length){
+  //   if(typeof suite.rooms[0].images !== 'undefined' && suite.rooms[0].images.length){
+  //     $('[data-place="suite_image"]').attr('src', '/room-image/resize/85x71/'+containerName+'/'+suite.rooms[0].images[0]['file']['name']+'/'+suite.rooms[0].images[0]['file']['file_name'])
+  //   }
+  // }
   
   try{
     suite.rooms[0].images.forEach(function(rm){
@@ -408,9 +448,13 @@ function replaceSuiteDetail(property_id, category_id){
     $('[data-place="covid_link"]').attr("href", "http://"+properties[property_id].covid_link);
   }
 
-  $('[data-place="reserve-link"]').html(`<p>Reserve now, pay at the Hotel</p>                    
-                    <a href="/reservation/when/` + property_id + `" class="btn btn-dark btn-block">Reservation</a>`);  
-
+  $('[data-place="reserve-link"]').attr('href','/reservation/when/' + property_id );
+  var checkin = properties[property_id].checkin;
+  var checkout = properties[property_id].checkout;
+  if(checkin != null && checkout != null){
+    $('[data-place="checkin"]').html("<strong>Check-in:</strong>" + checkin);
+    $('[data-place="checkout"]').html("<strong>Check-out:</strong>"+ checkout);
+  }
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout("$('.nav-item #suite').addClass('show');", 1000);
   setTimeout('appendSlider()', 2000);
@@ -656,7 +700,25 @@ function replacePrices(cat_id, property_id = null){
         suite = e;
       }
     });
-  
+    var containerName = getContainerName(property_id);
+    var roomimages = ``;
+
+    if(typeof suite.rooms !== 'undefined' && suite.rooms.length){
+      if(typeof suite.rooms[0].images !== 'undefined' && suite.rooms[0].images.length){
+        $('[data-place="suite_image"]').attr('src', '/room-image/resize/85x71/'+containerName+'/'+suite.rooms[0].images[0]['file']['name']+'/'+suite.rooms[0].images[0]['file']['file_name'])
+      }
+    }
+    
+    try{
+      suite.rooms[0].images.forEach(function(rm){
+        roomimages += `<div>
+          <img src="/room-image/resize/780x540/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="img-fluid" alt="">
+        </div>`;
+      });
+    }catch(e){
+      
+    }
+
     $('[data-place="suite_category_name"]').html(suite.category_name);
     $('#priceinfo .sub-price-content').html('Loading...');
     $.ajax({
@@ -697,7 +759,7 @@ $(document).ready(function(){
 
   $('body').click(function (e) {
     if(!$(e.target).hasClass('sidebar-main') && !$(e.target).parents('div').hasClass('sidebar-main')){
-      // $('.sidebar-main').removeClass('show');
+      $('.sidebar-main').removeClass('show');
       $('body').css('overflow', 'auto');
       $('.sidebar-overlay').remove();      
     }
@@ -807,7 +869,7 @@ function searchResults(url){
         url: url,
         dataType:'html',
         type: 'get',
-        async:false,
+        async:true,
         success: function(response){ 
           $('#search-results-content').html(response);
           appendSearchGridSlider();
@@ -836,13 +898,16 @@ var currentSearch = '';
 function filterDestination(dest){
   currentSearch = dest;
   $('.close-collapse').trigger("click");
-  var url = createSearchUrl();
-  searchResults(url);
+  var view = getUrlParam('view');
+  var url = createSearchUrl('', view);
+  //searchResults(url);
+  document.location = url;
 }
 
-function createSearchUrl(experience = ''){
-  $('.pageload').show();
-
+function createSearchUrl(experience = '', layoutView = 'ajax'){
+  if(layoutView == 'ajax'){
+    $('.pageload').show();
+  }
   if(experience !== null && !experience){
     experience = getUrlParam('experience');
     if(!experience){
@@ -863,6 +928,11 @@ function createSearchUrl(experience = ''){
       atmospheres.push($(this).val());
     }
   });
+
+  var uniqueAtmospheres = atmospheres.filter(function(item, i, atmospheres) {
+    return i == atmospheres.indexOf(item);
+  });
+   
   $("input[name='facilities[]']").each(function(){
     if($(this).prop('checked') === true){
       facilities.push($(this).val());
@@ -883,13 +953,20 @@ function createSearchUrl(experience = ''){
   }else{
     keyword = getUrlParam('s');
   }
-  var atmosphere_ids = atmospheres.join(',');
+  var atmosphere_ids = uniqueAtmospheres.join(',');
   var facility_ids = facilities.join(',');
   var style_ids = styles.join(',');
   
   var url = document.location.origin + document.location.pathname + `?s=`+keyword+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience+`&min=`+min+`&max=`+max;
+
+  if(document.location.pathname !='/globalsearchavailability'){
+    var city = $("#city").val();
+    url = `/globalsearchavailability` + `?s=`+city+`&atmosphere_ids=`+atmosphere_ids+`&facility_ids=`+facility_ids+`&style_ids=`+style_ids+`&experience=`+experience+`&min=`+min+`&max=`+max+ '&view=results';
+    return document.location=url;
+  }
+
   window.history.pushState({}, '', url);
-  return url + '&view=ajax';
+  return url + '&view=' + layoutView;
 }
 
 function resetSearch(){

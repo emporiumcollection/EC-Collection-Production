@@ -12,80 +12,60 @@
         <div class="card-body px-0">
            
             <div class="card-added">
-                @foreach($card_detail as $detail )
-                <div class="d-flex align-items-center list-divider">
-                    @if($detail->select_card == 1)
-                    <div class="ico-inline mr-5">
-                        <i class="ico-payment mastercard"></i>
-                    </div>
-                    @endif
+                @if($card_detail)
+                    @foreach($card_detail as $detail )
+                        <div class="d-flex align-items-center list-divider">
+                            <div class="ico-inline mr-5">
+                                <i class="ico-payment {{ $card_logos[$detail->select_card] }}"></i>
+                            </div>
 
-                    @if($detail->select_card == 2)
-                    <div class="ico-inline mr-5">
-                        <i class="ico-payment visa"></i>
-                    </div>
-                    @endif
-
-                    @if($detail->select_card == 3)
-                    <div class="ico-inline mr-5">
-                         <i class="ico-payment american-express"></i>
-                    </div>
-                    @endif
-
-                    @if($detail->select_card == 4)
-                    <div class="ico-inline mr-5">
-                        <i class="ico-payment discover"></i>
-                    </div>
-                    @endif
-
-                    <div class="d-flex flex-column flex-grow-1">
-                        <div
-                            class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
-                            <?php
-                                $full_card_number = \Crypt::decrypt($detail->card_number);
-                                $card_number = '•••• •••• •••• ' . substr($full_card_number,-4);
-                            ?>
-                            {{ $card_number }}
-                            @if ($detail->default_card == 1)
-                                <span class="default-set">default</span>
-                            @endif
+                            <div class="d-flex flex-column flex-grow-1">
+                                <div
+                                    class="text-dark-75 text-hover-primary font-weight-bold font-size-lg mb-1">
+                                    <?php
+                                        $full_card_number = \CommonHelper::decrypt($detail->card_number);
+                                        $card_number = '•••• •••• •••• ' . substr($full_card_number,-4);
+                                    ?>
+                                    {{ $card_number }}
+                                    @if ($detail->default_card == 1)
+                                        <span class="default-set">default</span>
+                                    @endif
+                                </div>
+                                <span class="text-muted font-weight-bold">Expiration: {{ $detail->exp_month }} / {{ $detail->exp_year }}</span>
+                            </div>
+                           
+                            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
+                                title="" data-placement="left" data-original-title="Quick actions">
+                                <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
+                                    data-toggle="dropdown" aria-haspopup="true"
+                                    aria-expanded="false">
+                                    <i class="ki ki-bold-more-hor"></i>
+                                </a>
+                                <div
+                                    class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
+                                    <ul class="navi navi-hover">
+                                        <li class="navi-item">
+                                            <a href="/users/default-card/{{$detail->id}}" class="navi-link">
+                                                <span class="navi-text">
+                                                    Set Default
+                                                </span>
+                                            </a>
+                                        </li>
+                                        <li class="navi-item">
+                                            <a href="/users/CardDetail/{{$detail->id}}" class="navi-link">
+                                                <span class="navi-text">
+                                                    Remove
+                                                </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                    <!--end::Navigation-->
+                                </div>
+                            </div>
+                            <!--end::Dropdown-->
                         </div>
-                        <span class="text-muted font-weight-bold">Expiration:
-                            {{ \Crypt::decrypt($detail->expires_on) }}</span>
-                    </div>
-                   
-                    <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip"
-                        title="" data-placement="left" data-original-title="Quick actions">
-                        <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
-                            data-toggle="dropdown" aria-haspopup="true"
-                            aria-expanded="false">
-                            <i class="ki ki-bold-more-hor"></i>
-                        </a>
-                        <div
-                            class="dropdown-menu p-0 m-0 dropdown-menu-sm dropdown-menu-right">
-                            <ul class="navi navi-hover">
-                                <li class="navi-item">
-                                    <a href="/users/default-card/{{$detail->id}}" class="navi-link">
-                                        <span class="navi-text">
-                                            Set Default
-                                        </span>
-                                    </a>
-                                </li>
-                                <li class="navi-item">
-                                    <a href="/users/CardDetail/{{$detail->id}}" class="navi-link">
-                                        <span class="navi-text">
-                                            Remove
-                                        </span>
-                                    </a>
-                                </li>
-                            </ul>
-                            <!--end::Navigation-->
-                        </div>
-                    </div>
-                    <!--end::Dropdown-->
-                </div>
-                 @endforeach
-
+                    @endforeach
+                @endif     
             </div>
             <a href="#addPayment" class="btn btn-primary mt-10" data-toggle="modal">Add
                 payment method</a>
@@ -242,5 +222,110 @@
         </div>
     </div>
 </div>
-    
+
+//Model
+<!-- Modal Add Payment-->
+<div class="modal fade" id="addPayment" data-backdrop="static" tabindex="-1" role="dialog"
+    aria-labelledby="staticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Payment Method</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <i aria-hidden="true" class="ki ki-close"></i>
+                </button>
+            </div>
+            <form action="/users/CardDetail" method="post">
+                <div class="modal-body">
+                    <div class="mb-4">
+                        <img src="{{ asset('images/credit-cards-768x178.png')}}" class="img-fluid" alt="">
+                    </div>
+                     <div class="form-group">
+                        <label> Select Card
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control" name="select_card">
+                            <option value="1">Mastercard</option>
+                            <option value="2">Visa</option>
+                            <option value="3">American-express</option>
+                            <option value="4">Discover</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label> Card Type
+                            <span class="text-danger">*</span>
+                        </label>
+                        <select class="form-control" name="card_type">
+                            <option value="Private">Private</option>
+                            <option value="Business">Business</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Card Number <span class="text-danger">*</span></label>
+                        <input type="text" name="card_number" class="form-control" placeholder="Enter Card Number">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Expiry Month <span class="text-danger">*</span></label>
+                            <select name="exp_month" class="form-control">
+                                <option value="" selected disabled>Month</option>
+                                <option value="01">01</option>
+                                <option value="02">02</option>
+                                <option value="03">03</option>
+                                <option value="04">04</option>
+                                <option value="05">05</option>
+                                <option value="06">06</option>
+                                <option value="07">07</option>
+                                <option value="08">08</option>
+                                <option value="09">09</option>
+                                <option value="10">10</option>
+                                <option value="11">11</option>
+                                <option value="12">12</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Expiry Year <span class="text-danger">*</span></label>
+                            <select class="form-control" name="exp_year" id="expire_year">
+                                <option value="" selected disabled>Year</option>
+                                <?php $years = range(date('Y'), (date('Y') + 20)); ?>
+                                @foreach($years as $year)
+                                    <option value="{{ $year }}">{{ $year }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Security Code <span class="text-danger">*</span></label>
+                            <input type="password" name="security_code" class="form-control" placeholder="Enter your passcode">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label>Name on Card <span class="text-danger">*</span></label>
+                            <input type="text" name="name" class="form-control" placeholder="Enter name">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label>Postal Code <span class="text-danger">*</span></label>
+                            <input type="text" name="postal_code" class="form-control" placeholder="Enter your postal code">
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Country <span class="text-danger">*</span></label>
+                            <input type="text" name="country" class="form-control" placeholder="Enter your country">
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light-primary font-weight-bold"
+                        data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary font-weight-bold add_card">Add Card</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 @endsection

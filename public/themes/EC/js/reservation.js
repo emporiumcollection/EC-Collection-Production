@@ -44,25 +44,25 @@ $(document).ready(function(){
         return true;
     });
 
-    $('.fromdate').daterangepicker({
-        singleDatePicker: true,
-        minDate:new Date(), 
-        locale: {
-            format: 'DD MMM YYYY'
-        }
-    });
+    // $('.fromdate').daterangepicker({
+    //     singleDatePicker: true,
+    //     minDate:new Date(), 
+    //     locale: {
+    //         format: 'DD MMM YYYY'
+    //     }
+    // });
 
-    $('.fromdate').on('apply.daterangepicker', function (ev, picker) {
-        $('.todate').prop("disabled", false);
-    });
+    // $('.fromdate').on('apply.daterangepicker', function (ev, picker) {
+    //     $('.todate').prop("disabled", false);
+    // });
 
-    $('.todate').daterangepicker({
-        singleDatePicker: true,
-        minDate:new Date(), 
-        locale: {
-            format: 'DD MMM YYYY'
-        }
-    });
+    // $('.todate').daterangepicker({
+    //     singleDatePicker: true,
+    //     minDate:new Date(), 
+    //     locale: {
+    //         format: 'DD MMM YYYY'
+    //     }
+    // });
 
     $('.policies').on('show.bs.collapse', function () {
         $('.collapse.show').each(function () {
@@ -230,8 +230,8 @@ function sticky_relocate() {
 }
 
 $(function() {
-  $(window).scroll(sticky_relocate);
-  sticky_relocate();
+//   $(window).scroll(sticky_relocate);
+//   sticky_relocate();
 });
 
 function initilize(){
@@ -427,8 +427,11 @@ $( document ).ready(function() {
 });
 
 $(document).on('click', ".stay_dates", function(){
-    var arrival_date = $("#arrival_date").val();
-    var departure_date = $("#departure_date").val();
+    // var arrival_date = $("#arrival_date").val();
+    // var departure_date = $("#departure_date").val();
+    var date = $(".range_date").val().split('-');
+    var arrival_date = date[0];
+    var departure_date = date[1];
     var propertyid = $("#property_id").val();
 
     $.ajax({
@@ -440,20 +443,35 @@ $(document).on('click', ".stay_dates", function(){
             departure_date:departure_date
         },
         success:function(response){
-            // window.location.href ="/reservation/where";
+            $("#msg").show();
+            $("#msg").html("Date selected");
+            $("#msg").fadeOut(5000);
         }
     });
 });
 
 
 $(document).on('click', ".step_where", function(){
-    var arrival_date = $("#arrive").val();
+    var date = $(".range_date").val().split('-');
+    var arrival_date = date[0]; 
+    var propertyid = $("#property_id").val();
     if(arrival_date == ''){
         $('#guestValidationMsg').find('#massage').html("Please select your stay dates");
         $('#guestValidationMsg').show();
         return false;
     }else{
-        window.location.href = '/reservation/where';
+        $.ajax({
+            type: 'POST',            
+            url: '/store_id/session',             
+            data: {
+                property_id:propertyid,
+                // arrival_date:arrival_date,
+                // departure_date:departure_date
+            },
+            success:function(response){
+                window.location.href ="/reservation/where";
+            }
+        });
     }
 });
 
@@ -597,6 +615,7 @@ $(document).ready(function(){
     $(document).on('click', ".add_companion", function(){        
         var first_name = $('#comapnion_f_name').val();
         var last_name = $('#comapnion_l_name').val();
+        var phone_code = $('#comapnion_phone_code').val();
         var phone = $('#comapnion_phone').val();
         var email = $('#comapnion_email').val();
         var preferred_language = $("#preferred_language").val();
@@ -610,6 +629,7 @@ $(document).ready(function(){
                 first_name: first_name,
                 last_name: last_name,
                 email: email,
+                phone_code: phone_code,
                 phone: phone,
                 gender: gender,
                 preferred_language: preferred_language,
@@ -665,11 +685,11 @@ $(document).ready(function(){
     $("#payment_form").validate();
     $(document).on('click', '#btn-payment-save', function(){
           $.ajax({
-              url: "/reservation/savepaymentmethod",
-              type: "POST",
-              data: $('#payment_form').serialize(),
-              dataType: 'json',
-            success: function(response) {
+                type: "POST",
+                url: "/reservation/savepaymentmethod",
+                data: $('#payment_form').serialize(),
+                dataType: 'json',
+                success: function(response) {
                 $('.form-control').removeClass('is-invalid');
                 $('.invalid-feedback').empty();
                 if(response.status == true){
@@ -688,6 +708,21 @@ $(document).ready(function(){
           return false;
       });
     //save paymet end
+
+    //copy to clipboard
+    $(document).on('click', '.copy_address', function(){
+        var element = $(this);
+        var $temp = $("<input>");
+        $("body").append($temp);
+        $temp.val(element.attr('title')).select();
+        document.execCommand("copy");
+        $temp.remove();
+        element.html("<font color='green'>Copied!</font>");
+        setTimeout(function(){
+            element.html('<i class="fa fa-files-o" aria-hidden="true"></i>Copy address');
+        }, 2000);
+    });
+
 });
 
 function addRemoveCompanionAjaxCall(companion_id, suite_id, operation){
@@ -705,3 +740,14 @@ function addRemoveCompanionAjaxCall(companion_id, suite_id, operation){
         error: function(response){},
     });
 }
+
+$(window).scroll(function () {
+    var sticky = $('.nav-wizard-primary'),
+      scroll = $(window).scrollTop();
+      if (scroll >= 150) {
+        sticky.addClass('fixed');
+      }else {
+        sticky.removeClass('fixed');
+      }
+    
+  });

@@ -6,6 +6,7 @@ use App\Models\Container;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Http\Controllers\Controller;
 use App\User;
+use App\Models\PropertyRoomPrices;
 use App\Models\properties;
 use App\Http\Traits\Property;
 use App\Http\Traits\Category;
@@ -17,6 +18,7 @@ use UnsplashSearch;
 use DateTime;
 use Session;
 use Cache;
+use Config;
 
 class PropertyController extends Controller {
     // Uses Property trait
@@ -2757,23 +2759,25 @@ class PropertyController extends Controller {
 
         $site_url = url('/');
         if($sitename == 'voyage'){
-            $site_url = 'http://development.emporium-voyage.com';
+            $site_url = Config::get('app.voyagedomain');
         }elseif($sitename == 'safari'){
-            $site_url = 'http://staging.emporium-safari.com';
+            $site_url = Config::get('app.safaridomain');
         }elseif($sitename == 'spa'){
-            $site_url = 'http://staging.emporium-spa.com';
+            $site_url = Config::get('app.spadomain');
         }elseif($sitename == 'island'){
-            $site_url = 'http://staging.emporium-islands.com';
+            $site_url = Config::get('app.islandsdomain');
+        }elseif($sitename == 'magazine'){
+            $site_url = Config::get('app.magazinedomain');
         }
 
         if($coll_type == 'hotel'){
-            $hotel = properties::on($sitename.'conn')->select(['id'])
+            $hotel = properties::on($sitename.'conn')->select(['property_slug'])
                 ->where('property_name', '=', $coll_where)
                 ->get()
                 ->toArray();
 
             if(!empty($hotel)){
-                return redirect($site_url.'/hotel/hoteldetail/'.$hotel[0]['id']);
+                return redirect($site_url.'/hotel/'.$hotel[0]['property_slug']);
             }
         }
 
@@ -2880,6 +2884,10 @@ class PropertyController extends Controller {
     */
     function globalsearchavailability(Request $request) {
         $keyword = $request->input('s');
+        
+        if($keyword==''){
+            return Redirect::to($request->fullUrl().'&s='.\Session::get('keyword'));
+        }
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
 
@@ -3320,13 +3328,22 @@ class PropertyController extends Controller {
 
     }
 
-    public function getProperty($id){
-        $this->data['hotel_data'] = $this->getPropertyById($id);
-        // echo "<pre>";
-        // print_r($this->data['hotel_data']->toArray());exit;
-        $this->data['reviews'] = $this->getReviews($id);
+    public function getProperty($slug){
+
+        $this->data['hotel_data'] = $this->getPropertyByslug($slug);
+
+        if(Session::has('keyword')){
+            $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
+        }else{
+            $this->data['path'] = $this->getLocationPath($this->data['hotel_data'][0]->city);
+        }
+
+        $this->data['reviews'] = $this->getReviews($this->data['hotel_data'][0]->id);
         $this->setGalleryAndFormat($this->data['hotel_data']);
         $this->data['layout_type'] = 'old';
+        $this->setFitlerOptions();
+        $this->data = $this->setFitlerOptions();
+
         return view('frontend.themes.EC.hotel.hotel_detail', $this->data);
     }
 
@@ -7191,7 +7208,6 @@ class PropertyController extends Controller {
         $prop_info_arr['amneties'] = $amnties;
         $prop_info_arr['room_amneties'] = $room_amnties;
         $prop_info_arr['available_services'] = $available_services;
-
         echo json_encode($prop_info_arr);
     }
 
@@ -7226,10 +7242,10 @@ class PropertyController extends Controller {
     public function propertyRoomPrices(Request $request){
         $usdRate = Session::get('current_rate');
         if(!$usdRate){
-            $rsGbp = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=9c25f1b7954b2cc85b74449e328ae2dc&symbols=GBP');
+            $rsGbp = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=d75c2e77cb519be7fbf901abed36a4cb&symbols=GBP');
             $rsGbp = json_decode($rsGbp);
 
-            $rsUsd = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=9c25f1b7954b2cc85b74449e328ae2dc&symbols=USD');
+            $rsUsd = file_get_contents('http://api.exchangeratesapi.io/v1/latest?access_key=d75c2e77cb519be7fbf901abed36a4cb&symbols=USD');
             $rsUsd = json_decode($rsUsd);
             
             $euroRate = (1 / (float) $rsGbp->rates->GBP);
@@ -7257,10 +7273,23 @@ class PropertyController extends Controller {
         );
         
         if(empty($propertyPrices)){
+            $roomPrices = PropertyRoomPrices::select([
+                'rack_rate',
+            ])
+            ->where('category_id', '=', $category_id)
+            ->where('season_id', '=', 0)
+            ->get()
+            ->toArray();  
+
+            $finalPrice = 100;
+            if(!empty($roomPrices)){
+                $finalPrice = $roomPrices[0]['rack_rate'];
+            }
+
             $default = [];
             $trip = \CommonHelper::getDateRange($arrival, $departure);
             foreach($trip as $key => $date){
-                $default[$date] = 100;
+                $default[$date] = $finalPrice;
             }
             $propertyPrices = $default;
         }
@@ -7272,7 +7301,7 @@ class PropertyController extends Controller {
             if(strtotime($dt) >= strtotime($arrival) &&  strtotime($dt) <= strtotime($departure)){
                 $this->data['propertyPrices'][] = [
                     'date' => date("M, d Y", strtotime($dt)), 
-                    'price' => '€' . number_format($euroRate * $price,0), 
+                    'price' => '€' . number_format($price,0), 
                     'usd_price' => '$' . number_format($price * $usdRate,0)
                 ];
                 $this->data['totalPrice'] += $price;

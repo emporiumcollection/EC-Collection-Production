@@ -43,20 +43,20 @@
 
     </div>
     <div class="hotel-meta full-width is-small">
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $property->id;?>)">
-        Reviews
-      </a>  
+      @if(!empty($property->suites->toArray()))
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
+        Suite(s)
+      </a>
+      @endif  
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Quick info
       </a>
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery
       </a>
-      @if(!empty($property->suites->toArray()))
-        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
-          Suite(s)
-        </a>
-      @endif
+      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $property->id;?>)">
+        Reviews
+      </a>
       <div class="hotel-prices hotel-price-detail d-flex">
         <div class="row align-items-center justify-content-center">
           <div class="mr-2">
@@ -72,15 +72,15 @@
       </div>
     </div>
     <div class="hotel-meta-mobile">
-      <a href="detail-page.html" class="btn rounded-0">
-        Suite Info
+      <a href="#" class="btn rounded-0 btn-sidebar btn-info-hotel" data-sidebar="#mobile_menu" onclick="replacePropertyMobileMenu(<?php echo $property->id;?>)">
+          Hotel Info <i class="fa fa-angle-down" aria-hidden="true"></i>
       </a>
-      <a href="#calcF" data-toggle="collapse" class="btn btn-primary rounded-0">
-        Check Availability
+      <a href="/hotel/{{ $property->property_slug }}" data-toggle="collapse" class="btn btn-primary rounded-0">
+        Reservation
       </a>
     </div>
   </div>
-  <a href="/hotel/hoteldetail/{{ $property->id }}">
+  <a href="/hotel/{{ $property->property_slug }}">
     <div class="title-offset mt-5 ">
       <h3 class="title-second title-line mb-0"><?php echo $property->property_name;?></h3>
       <h4 class="title-font-2 title-third"><?php echo $property->city;?></h4>

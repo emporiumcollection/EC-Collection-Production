@@ -30591,7 +30591,7 @@ span.calElement.prev:hover {
   .ico-back:before {
     content: "";
     position: absolute;
-    background: url(../images/Emporium-Collection-Right-Arrow-New.svg) no-repeat center center/contain;
+    background: url(/images/Emporium-Collection-Right-Arrow-New.svg) no-repeat center center/contain;
     top: 0;
     left: 0;
     display: inline-block;
@@ -30599,7 +30599,7 @@ span.calElement.prev:hover {
     height: 40px;
     transform: rotate(180deg); }
   .ico-back:hover:before {
-    background: url(../images/Emporium-Collection-Right-Arrow-New-hover.svg) no-repeat center center/contain;
+    background: url(/images/Emporium-Collection-Right-Arrow-New-hover.svg) no-repeat center center/contain;
     width: 38px;
     height: 40px; }
 

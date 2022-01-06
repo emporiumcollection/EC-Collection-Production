@@ -4,9 +4,11 @@
   properties[<?php echo $property->id;?>]['images'] = <?php echo json_encode($property->propertyImages);?>;
 </script>
 <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
-    <div class="hotel-tag-label" style="background: #89a49f;">
-      <?php echo $block_title;?>
-    </div>
+    @if(!empty($block_title))
+      <div class="hotel-tag-label" style="background: #89a49f;">
+        <?php echo $block_title;?>
+      </div>
+    @endif
     <div class="pr-lst result-grid">
       <?php if($block_title):?>
       <?php endif;?>
@@ -30,7 +32,7 @@
       </div>
       <?php endforeach;?>
     </div>
-    <div class="my-dropdown">
+    {{--<div class="my-dropdown">
       <div class="btn-group dropleft">
         <a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i class="ico ico-diamon diamon-label"></i>
@@ -43,7 +45,7 @@
         </div>
       </div>
 
-    </div>
+    </div>--}}
     <div class="hotel-meta full-width is-small">
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#reviews" onclick="replaceReviewData(<?php echo $property->id;?>)">
         Reviews
@@ -54,9 +56,11 @@
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#property-gallery" onclick="replacePropertyData(<?php echo $property->id;?>)">
         Gallery
       </a>
-      <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
-        Suite(s)
-      </a>
+      @if(!empty($property->suites->toArray()))
+        <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
+          Suite(s)
+        </a>
+      @endif
       <div class="hotel-prices hotel-price-detail d-flex">
         <div class="row align-items-center justify-content-center">
           <div class="mr-2">
@@ -81,7 +85,7 @@
       </a>
     </div>
   </div>
-  <a href="#">
+  <a href="/hotel/{{ $property->property_slug }}">
     <div class="mb-3 mt-2 ">
       <h3 class="title-second is-small title-line mb-0"><?php echo $property->property_name;?></h3>
     </div>

@@ -49,68 +49,100 @@
 }
 </style>
 @section('content')
-<div class="content-em">
+<div class="reservation-em content-em">
   <div class="top-wrapper">
-    <div class="container">
-      @include('frontend.themes.EC.reservation.nav_wizard')
-      <div id="step-4" class="tab-pane" role="tabpanel">
-        <h2 class="mb-5 d-flex align-items-center"><a href="#" class="backwizard btn-backwizard"><i class="ico ico-back mr-3"></i></a>Suite Board</h2>
-        <div class="row">
-          <div class="col-lg-9 col-md-8">
-            <form method="post" action="{{ route('store.suiteboard') }}">
-              <div class="suite-board d-block section-shadow">
-                <div class="suite-board-header">
-                </div>
-                <div class="row suite-board-body">
-                  @if(count($suitesboards->boards) > 0)
-                    @foreach($suitesboards->boards as $data)
-                      <div class="col-lg-4 col-md-12 suite-price-feature">
-                        <div class="suite-board-main">
-                          <h4>{{ $data->board_name }}</h4>
-                          <ul class="pl-3">
-                            <li>Accommodation</li>
-                            <li>Daily breakfast</li>
-                          </ul>
-                        </div>
-                        <div class="suite-board-footer">                  
-                          <div class="footer-sdse">
-                            <p>€{{ $data->board_rackrate }} per night inclusive of all taxes and fees</p>
-                            {{-- <a href="javascript:void(0);" class="btn btn-dark btn-block rounded-0 btn-nextwizard">Select</a> --}}
-                            <div class="radio-toolbar">
-                              <input type="radio" id="board_{{ $data->id }}" name="board" class="board-selection" value="{{ $data->id }}" {{ $board == $data->id ? 'checked' : '' }}>
-                              <label for="board_{{ $data->id }}">Select</label> 
-                              <a href="javascript:void(0);" class="remove_board_selection" style="display: {{ \Session::get('board_id') == $data->id ? 'block' : 'none' }};">Remove</a>
+    <div class="container-full">
+      <div id="smartwizard" class="wizard-reservation sw sw-theme-arrows sw-justified">
+        @include('frontend.themes.EC.reservation.nav_wizard')
+        <div class="pt-4 wizard-reservation-content">
+          <div id="step-4" class="tab-pane" role="tabpanel">
+            <h2 class="mb-5 d-flex align-items-center"><a href="#" class="backwizard btn-backwizard"><i class="ico ico-back mr-3"></i></a>Suite Board</h2>
+            <div class="row">
+              <div class="col-lg-9 col-md-8">
+                <form method="post" action="{{ route('store.suiteboard') }}">
+                  <div class="suite-board d-block section-shadow">
+                    <div class="row align-items-center">
+                      <div class="col-2 col---s">
+                        
+                        
+                        <img src="{{ asset('/property-image/resize/69x58/'.$container_name.'/'.$property_image.'/property-image') }}" class="img-full" alt="">
+                      </div>
+                      <div class="col">
+                        <h3>{{ $suitesboards->property_short_name }}</h3>
+                      </div>
+                    </div>
+                    <div class="suite-board-header">
+                    </div>
+                    <div class="row suite-board-body">
+                      @if(count($suitesboards->boards) > 0)
+                        @foreach($suitesboards->boards as $data)
+                          <div class="col-lg-4 col-md-12 suite-price-feature">
+                            <div class="suite-board-main">
+                              <h4>{{ $data->board_name }}</h4>
+                              <ul class="pl-3">
+                                <li>Accommodation</li>
+                                <li>Daily breakfast</li>
+                              </ul>
+                            </div>
+                            <div class="suite-board-footer">                  
+                              <div class="footer-sdse">
+                                <p>€{{ $data->board_rackrate }} per night inclusive of all taxes and fees</p>
+                                {{-- <a href="javascript:void(0);" class="btn btn-dark btn-block rounded-0 btn-nextwizard">Select</a> --}}
+                                <div class="radio-toolbar">
+                                  <input type="radio" id="board_{{ $data->id }}" name="board" class="board-selection" value="{{ $data->id }}" {{ $board == $data->id ? 'checked' : '' }}>
+                                  <label for="board_{{ $data->id }}">Select</label> 
+                                  <a href="javascript:void(0);" class="remove_board_selection" style="display: {{ \Session::get('board_id') == $data->id ? 'block' : 'none' }};">Remove</a>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
+                        @endforeach
+                      @else
+                        <h2>Suite Boards are not available!</h2>
+                      @endif
+                    </div>            
+                  </div>
+                  <div class="row">
+                    <div class="col-md-6 mt-4">
+                      <div class="text-left">
+                        <a href="/reservation/suite" class="btn btn-dark px-5">Go back</a>
                       </div>
-                    @endforeach
-                  @else
-                    <h2>Suite Boards are not available!</h2>
-                  @endif
-                </div>            
-              </div>
-              <div class="row">
-                <div class="col-md-6 mt-4">
-                  <div class="text-left">
-                    <a href="/reservation/suite" class="btn btn-dark px-5">Go back</a>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                      <div class="text-right">
+                        <button type="submit" class="btn btn-dark px-5 availability-check ">Next</button>
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-md-6 mt-4">
-                  <div class="text-right">
-                    <button type="submit" class="btn btn-dark px-5 availability-check ">Next</button>
-                  </div>
-                </div>
+                </form>
               </div>
-            </form>
-          </div>
-          <div class="col-lg-3 col-md-4" id="suiteboard">
-            @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+              <div class="col-lg-3 col-md-4" id="suiteboard">
+                @include('frontend.themes.EC.reservation.reservation-summary', ['suites' => $suites])
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+<script>
+  function m_reservation_header(x) {
+    if (x.matches) { // If media query matches
+      $('.top-header').addClass('top-header-reservation');
+      $('.top-header-reservation').removeClass('top-header');
+      $('.top-header-reservation').addClass('mobile-off');
+    }
+    else{
+      $('.top-header-reservation').addClass('top-header');
+      $('.top-header').removeClass('top-header-reservation');
+      $('.top-header').removeClass('mobile-off');
+    }
+  }
+
+  var x = window.matchMedia("(max-width: 767px)")
+  m_reservation_header(x) 
+  x.addListener(m_reservation_header)
+</script>
 @endsection
 
