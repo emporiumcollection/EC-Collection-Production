@@ -382,8 +382,7 @@
                                     <div class="custom-control custom-checkbox">
                                         <input type="checkbox" name="terms" class="custom-control-input" id="customCheck1" checked>
                                         <label class="custom-control-label" for="customCheck1">
-                                            I agree to the Emporium-Collection Terms & Conditions and have read the Privacy
-                                            Policy.
+                                            I agree to the Emporium-Collection <a href="#" data-toggle="modal" data-target="#terms-and-conditions"><b>Terms & Conditions</b></a> and have read the <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>Privacy Policy</b></a>.
                                         </label>
                                         <p style="color: red; display: none" id="term"><strong>Please select role</strong></p>
                                     </div>
@@ -397,14 +396,6 @@
                                             account admin.
                                         </label>
                                         <p style="color: red; display: none" id="B"><strong>Please select role</strong></p>
-                                    </div>
-                                    <div class="custom-control custom-checkbox mb-2">
-                                        <input type="checkbox" name="C" class="custom-control-input" id="customCheck3" checked>
-                                        <label class="custom-control-label" for="customCheck3">
-                                            Emporium-Collection Privacy Policy <br>
-                                            I have read and agree to the Emporium-Collection Privacy Policy.
-                                        </label>
-                                        <p style="color: red; display: none" id="C"><strong>Please select role</strong></p>
                                     </div>
                                     <div class="custom-control custom-checkbox mb-2">
                                         <input type="checkbox" name="D" class="custom-control-input" id="customCheck4" checked>
@@ -440,11 +431,12 @@
 
                                     <div class="row mt-5">
                                         <div class="col-6">
-                                            <a href="#" class="btn btn-outline-dark">Send new code</a>
+                                            <a href="#" class="btn btn-outline-dark send-new-code clickconfirm">Send new code</a>
                                         </div>
                                         <div class="col-6 text-right">
                                             <button type="submit" class="btn btn-outline-dark px-5 thirdwizard">Confirm</button>
                                         </div>
+                                        <p class="alert alert-success ml-3" id="msg" style="display:none;">Sending code</p>
                                     </div>
                                 </div>
 
@@ -493,7 +485,12 @@
 <script type="text/javascript" src="{{ asset('js/all.js')}}"></script>
 <script src="https://www.emporium-voyage.com/sximo/assets/js/intlTelInput.js" type="text/javascript"></script>
     <script>
-        $(document).ready(function(){    
+        $(document).ready(function(){
+
+        $(".send-new-code").on("click",function(){
+            $("#msg").show();
+            $("#msg").fadeOut(3000);
+        });    
             $("#lifestyle").hide();
             $("#dedicated").hide();
             $("#bespoke").hide();
