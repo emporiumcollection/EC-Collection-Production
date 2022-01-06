@@ -1,5 +1,5 @@
 <div class="container pr-0">
-        <div class="header-suite-list justify-content-between align-items-center mb-2">
+        <div class="header-suite-list justify-content-between align-items-center mb-2 hotel-name">
             <div class="title-outer-container">
                 <div class="title-main offset-930 pr-3 title-subs">
                     <h2 data-place="property_name">Premiere Suite</h2>

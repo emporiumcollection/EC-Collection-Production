@@ -2332,6 +2332,10 @@ $(document).ready(function(){
     $('#destisresults').hide();
     $('#hotelsresults').hide();
   });
+  
+  $("#suiteslist-tab").click(function(){
+    setTimeout("$('.nav-item #suite').addClass('show');", 1000);
+  });
     
 });      
 
