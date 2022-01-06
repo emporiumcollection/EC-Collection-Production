@@ -2332,7 +2332,7 @@ $(document).ready(function(){
 
 });
 $("#suiteslist-tab").click(function(){
-  $("#property-name").show();
+  setTimeout("$('.nav-item #suite').addClass('show');", 1000);
 });
     
 });      
