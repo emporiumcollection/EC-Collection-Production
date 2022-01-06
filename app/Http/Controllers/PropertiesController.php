@@ -2409,6 +2409,7 @@ class PropertiesController extends Controller {
             $data['user_id'] = $uid;
             $data['amenities'] = $request->input('amenities_de');
             $data['amenities_eng'] = $request->input('amenities_eng');
+            $data['why_we_love_it'] = $request->input('why_we_love_it');
             if (!empty($request->input('assigned_amenities'))) {
                 $data['amenity_ids'] = implode(',', $request->input('assigned_amenities'));
             } else {

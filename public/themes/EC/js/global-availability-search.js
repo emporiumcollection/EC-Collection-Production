@@ -410,7 +410,7 @@ function replaceSuiteDetail(property_id, category_id){
   //     $('[data-place="suite_image"]').attr('src', '/room-image/resize/85x71/'+containerName+'/'+suite.rooms[0].images[0]['file']['name']+'/'+suite.rooms[0].images[0]['file']['file_name'])
   //   }
   // }
-  
+  var amenities = suite.amenities[0].why_we_love_it;
   try{
     suite.rooms[0].images.forEach(function(rm){
       roomimages += `<div>
@@ -440,7 +440,12 @@ function replaceSuiteDetail(property_id, category_id){
   }else{
     $('[data-place="suite-size"]').closest('div').hide();
   }
-  $('[data-place="property_usp"]').html(properties[property_id].property_usp);
+
+  if(amenities != null){
+    $('[data-place="property_usp"]').html(amenities);  
+  }else{    
+    $('[data-place="property_usp"]').html(properties[property_id].property_usp);
+  }
   $('[data-place="covid_info"]').html(properties[property_id].covid_info);
 
   if (properties[property_id].covid_link != null && properties[property_id].covid_link.includes('http://') == true){
