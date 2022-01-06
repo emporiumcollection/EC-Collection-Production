@@ -2331,7 +2331,9 @@ $(document).ready(function(){
   });
 
 });
-
+$("#suiteslist-tab").click(function(){
+  $("#property-name").show();
+});
     
 });      
 

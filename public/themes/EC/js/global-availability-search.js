@@ -276,8 +276,8 @@ function replacePropertySuites(id){
   var firstsuite = 0;
   currentPropertyId = id;
   
+  $('[data-place="property_name"]').html(properties[id]['property_name']);
   replaceSuiteList(id);
-
   $('[data-place="property-suites"]').each(function() {
       suiteview += `<li class="nav-item">
           <a class="nav-link" id="suiteslist-tab" data-toggle="pill" href="#suiteslist" role="tab"
@@ -390,6 +390,7 @@ function replaceSuiteList(id){
 }
 
 function replaceSuiteDetail(property_id, category_id){
+
   currentPropertyId = property_id;
   var suite;
   properties[property_id]['suites'].forEach(function(e){
@@ -460,7 +461,9 @@ function replaceSuiteDetail(property_id, category_id){
   setTimeout("$('.nav-item #suite').addClass('show');", 1000);
   setTimeout('appendSlider()', 2000);
   replacePropertyData(property_id);
-  setTimeout("$('.suite-popup').slick('setPosition');", 4000);  
+  setTimeout("$('.suite-popup').slick('setPosition');", 4000);
+
+  $("#property-name").hide();
 }
 
 function replaceSuiteBoard(){
