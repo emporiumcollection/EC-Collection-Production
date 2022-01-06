@@ -398,6 +398,7 @@ function replaceSuiteDetail(property_id, category_id){
     }
   });
 
+  $('[data-place="property_name"]').html(properties[currentPropertyId]['property_name']);
   $('[data-place="suite_category_name"]').html(suite.category_name);
   $('[data-place="suite_description"]').html(suite.room_desc);
   $('[data-place="suite_amenities"]').html(suite.suiteamenities);

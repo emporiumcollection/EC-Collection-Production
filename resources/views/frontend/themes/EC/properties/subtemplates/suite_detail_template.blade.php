@@ -2,9 +2,15 @@
         <div class="header-suite-list justify-content-between align-items-center mb-2">
             <div class="title-outer-container">
                 <div class="title-main offset-930 pr-3 title-subs">
+                    <h2 data-place="property_name">Premiere Suite</h2>
+                </div>
+            </div>
+        </div>
+        <div class="header-suite-list justify-content-between align-items-center mb-2">
+            <div class="title-outer-container">
+                <div class="title-main offset-930 pr-3 title-subs">
                     <h2 data-place="suite_category_name">Premiere Suite</h2>
                 </div>
-                
             </div>
             <div class="dropdown ipad-view">
                 <button class="btn dropdown-toggle p-0" type="button" id="suiteDetail"
