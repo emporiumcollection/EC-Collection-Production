@@ -327,12 +327,12 @@ function replaceSuiteList(id){
       try{
         if(suite.rooms[0].images.length !== undefined){        
           suite.rooms[0].images.forEach(function(rm){
-            if(onlyThree < 3){        
+            //if(onlyThree < 3){        
               roomimages += `<div>
                   <img src="/room-image/resize/780x540/` + containerName + `/` + rm['file']['name'] + `/` + rm['file']['file_name'] + `" class="w-100" alt="">
                 </div>`;  
-            }
-            onlyThree++; 
+            //}
+            //onlyThree++; 
           });  
         }  
       }catch(e){
