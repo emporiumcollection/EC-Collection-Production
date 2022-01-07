@@ -38488,3 +38488,6 @@ button#clear span {
     right: 30px;
     z-index: 999;
     margin-top: 0 !important; }
+#suites-popup .hotel-name {
+display: none !important;
+}
