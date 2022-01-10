@@ -1054,19 +1054,19 @@ trait Property {
         $this->data['atmosphere'] = \DB::table('tb_categories')
         ->where('category_approved', 1)
         ->where('category_published', 1)
-        ->where('parent_category_id', 886)
+        ->where('parent_category_id', config('app.atmosphere_category_id'))
         ->get();
 
         $this->data['facilities'] = \DB::table('tb_categories')
         ->where('category_approved', 1)
         ->where('category_published', 1)
-        ->where('parent_category_id', 897)
+        ->where('parent_category_id', config('app.facilities_category_id'))
         ->get();
 
         $this->data['style'] = \DB::table('tb_categories')
         ->where('category_approved', 1)
         ->where('category_published', 1)
-        ->where('parent_category_id', 909)
+        ->where('parent_category_id', config('app.style_category_id'))
         ->get();
 
         return $this->data;
