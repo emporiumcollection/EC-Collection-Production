@@ -695,6 +695,21 @@ function getDefaultChannel(catt){
     });
 }     
 
+function getHotelDefaultChannel(id){            
+  $('[data-place="property-name"]').html(properties[id]['property_name']);
+    var youtube_channel= properties[id].youtube_channel;
+    $('.yt-hdrvideos').yottie({  
+        key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+        
+        channel:  youtube_channel,
+        content: {
+            columns: 4,
+            rows: 2
+        },
+    });
+
+}
+
 function replacePrices(cat_id, property_id = null){
     if(!property_id){
       property_id = currentPropertyId;
