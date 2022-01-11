@@ -1176,9 +1176,8 @@ trait Property {
         if($properties[0]->location_info == ''){
 
             $curl = curl_init();
-
             curl_setopt_array($curl, array(
-                CURLOPT_URL => 'https://api.roadgoat.com/api/v2/destinations/auto_complete?q='.$keyword,
+                CURLOPT_URL => 'https://api.roadgoat.com/api/v2/destinations/auto_complete?q=' . urlencode($keyword),
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_ENCODING => '',
                 CURLOPT_MAXREDIRS => 10,
@@ -1195,11 +1194,14 @@ trait Property {
 
             curl_close($curl);
             $response_att = json_decode($response);
-            $json = $response_att->data[0]->attributes;
-            $json_att = json_encode($json);
-
-            DB::table('tb_categories')->where('category_name', $keyword)->update(['location_info' => $json_att]);
-            return json_decode($response);         
+            if(!empty($response_att)){   
+                $json = $response_att->data[0]->attributes;
+                $json_att = json_encode($json);
+                DB::table('tb_categories')->where('category_name', $keyword)->update(['location_info' => $json_att]);
+            }else{
+                $json_att = [];
+            }
+            return $json_att;         
         }
         else{
             return $properties[0]->location_info;
