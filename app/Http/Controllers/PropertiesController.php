@@ -2368,7 +2368,9 @@ class PropertiesController extends Controller {
         if ($Foldername != '') {
             $dirPath = (new ContainerController)->getContainerUserPath($ParentfolderId);
             $slug = \SiteHelpers::seoUrl(trim($Foldername));
-            $result = \File::makeDirectory($dirPath . $slug, 0777, true);
+            if(!file_exists($dirPath . $slug)){
+                $result = \File::makeDirectory($dirPath . $slug, 0777, true);
+            }
             $fdata['parent_id'] = $ParentfolderId;
             $fdata['name'] = $slug;
             $fdata['display_name'] = $Foldername;
