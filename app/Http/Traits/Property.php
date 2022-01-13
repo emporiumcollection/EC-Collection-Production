@@ -123,7 +123,7 @@ trait Property {
             'boards',
             'container',
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -205,7 +205,7 @@ trait Property {
             'container',
             //'images',
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -310,7 +310,7 @@ trait Property {
                     $query->with(['package']);
                 },
                 'suites' => function($query){
-                    return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                    return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
                 },
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
@@ -423,7 +423,7 @@ trait Property {
                 $query->with(['package']);
             },
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -495,7 +495,7 @@ trait Property {
                 $query->with(['package']);
             },
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
