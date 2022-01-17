@@ -582,6 +582,7 @@
                 }
             });
         });
+
     });
 
     $('.experience-slider').slick({
@@ -783,7 +784,9 @@
     });
     jQuery(function($) {
       $(document).ready(function() {
-
+        $(document).on("click",'.change_password' ,function(){
+          alert();
+        });
         @yield('companion_datatable')
 
         @yield('Preference_Datatable')

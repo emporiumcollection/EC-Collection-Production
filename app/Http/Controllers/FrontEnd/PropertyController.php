@@ -7,6 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Models\PropertyRoomPrices;
+use App\Models\LocationImage;
 use App\Models\properties;
 use App\Http\Traits\Property;
 use App\Http\Traits\Category;
@@ -2206,6 +2207,7 @@ class PropertyController extends Controller {
                 }
             }
 
+
             if($roomType==0){
                 //$query = "SELECT COUNT(id) as noOfRooms, property_id, category_id FROM tb_properties_category_rooms where 1=1 and (CASE WHEN active_full_year = 0 THEN ";
                 //$query .="( room_active_from <= '".$arrive_date."' AND room_active_to >= '".$departure_date."')";
@@ -2878,6 +2880,7 @@ class PropertyController extends Controller {
         return Redirect::to($querry_string);
     }
 
+
     /**
      * Mahesh: Global search availability function 
      * 
@@ -2899,14 +2902,20 @@ class PropertyController extends Controller {
         if (Cache::has($cacheKey)) {
             $photos = Cache::get($cacheKey);
         }
-    
-        if(empty(json_decode($photos))){
-            $us = new UnsplashSearch();
-            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-            Cache::store('file')->put($cacheKey, $photos, 100000);
+        
+        $dir_exist = public_path("cached-images/container_user_files/locations/$keyword");
+        
+        if(!file_exists($dir_exist)){
+            if(empty(json_decode($photos))){
+                $photos = $this->gallery_image_Api($keyword,$cacheKey);
+            }
         }
-        $this->data['photos'] = json_decode($photos);
+        else
+        {
+            $photos = LocationImage::where('location', $keyword)->get();   
+        }
 
+        $this->data['photos'] = json_decode($photos);
         $type = $request->input('type');
 
         $arrive = $request->input('arrive');
@@ -7423,5 +7432,34 @@ class PropertyController extends Controller {
         $property = $this->getPropertyById($id);
         return response()->json($property);
         exit;
+    }
+    public function gallery_image_Api($keyword,$cacheKey){
+        $count = 0;
+        $us = new UnsplashSearch();
+            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+            Cache::store('file')->put($cacheKey, $photos, 100000);
+
+        $this->data['photos'] = json_decode($photos);
+        
+        $destinationPath = public_path("cached-images/container_user_files/locations/$keyword/");
+        if (!file_exists($destinationPath)) {
+            foreach($this->data['photos']->results as $key => $photo){
+                $count = $count + 1;
+                
+                mkdir($destinationPath, 0777, true);
+
+                if (!is_null($photo->urls->regular)) {
+                    $file = $photo->urls->regular;
+                    $file_name = file_get_contents($photo->urls->regular);
+                    // print_r($photo->urls->regular);exit;
+                    $myfile = file_put_contents($destinationPath.$count.'.jpg',$file_name);
+                }
+                $locationimage = new LocationImage();
+                $locationimage->location = $keyword;
+                $locationimage->image = $photo->urls->regular;
+                $locationimage->save();
+            }
+        }    
+        return $photos;
     }
 }

@@ -2207,6 +2207,7 @@ class PropertiesController extends Controller {
                     $destinationPath = (new ContainerController)->getContainerUserPath($propImgFoldId);
                     $file = $request->file('files');
                     // GET THE FILE EXTENSION
+
                     $extension = $file[0]->getClientOriginalExtension();
                     // RENAME THE UPLOAD WITH RANDOM NUMBER
                     $fileName = rand(11111111111, 99999999999) . '-' .rand(11111111111, 99999999999) . '.' . $extension;

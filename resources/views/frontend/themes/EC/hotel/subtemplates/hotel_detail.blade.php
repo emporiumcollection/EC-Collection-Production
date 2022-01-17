@@ -1918,7 +1918,7 @@
       </div> --}}
 
     </div>
-    <h4 class="mt-5 mb-4 color-dark-grey">Inspiration</h4>
+    {{-- <h4 class="mt-5 mb-4 color-dark-grey">Inspiration</h4>
     <div class="row">
       <div class="col-md-4 mb-4">
         <div class="mb-3">
@@ -1941,7 +1941,7 @@
         <h4>Off the beaten track</h4>
         <p>Here are some of your favourite winter sun destinations</p>
       </div>
-    </div>
+    </div> --}}
   </div>
 </div>
 

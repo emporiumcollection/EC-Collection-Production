@@ -726,6 +726,7 @@ class UserController extends Controller {
                     if( !is_dir( $destinationPath ) ){
                         mkdir( $destinationPath, 0755, true );
                     }
+                    
                     $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                     $newfilename = \Session::get('uid') . '.' . $extension;
                     // echo "<pre>";print_r($newfilename);exit(); 

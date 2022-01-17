@@ -696,6 +696,12 @@
                         },
                 success: function(dataResult){
                     console.log(dataResult);
+
+                    // var errorString = '<ul>';
+                    // $.each(dataResult, function( key, value) {
+                    //     errorString += '<li>' + value + '</li>';
+                    // });
+                    // errorString += '</ul>';
                 }
             });
         });
