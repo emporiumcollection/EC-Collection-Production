@@ -2893,7 +2893,9 @@ class PropertyController extends Controller {
         }
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
-
+        $location_data = $this->getLocationInfoRoadGoat($keyword);
+        $this->data['location_info'] = json_decode($location_data);
+        
         \Session::put('keyword', $keyword);
         \Session::save();
         
@@ -2923,7 +2925,6 @@ class PropertyController extends Controller {
 
         $rac = $request->input('rac');
         $query_str = $request->query();
-        // dump($query_str); die;
 
         $arrive_date = '';
         if($arrive!=''){

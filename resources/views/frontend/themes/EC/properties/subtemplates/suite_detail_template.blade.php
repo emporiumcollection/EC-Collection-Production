@@ -1,12 +1,13 @@
 <div class="container pr-0">
-        <div class="header-suite-list justify-content-between align-items-center mb-2 hotel-name">
-            <div class="title-outer-container">
-                <div class="title-main offset-930 pr-3 title-subs">
-                    <h2 data-place="property_name">Premiere Suite</h2>
-                </div>
+        <div class="d-flex w-100 wow fadeInUp align-items-center" data-wow-delay=".3s">
+            <a href="#" class="back-btn ipad-view">
+            <i class="ico ico-back"></i>
+            </a>
+            <div class="title-main mb-4 w-100">
+                <h2 data-place="property_name">Premiere Suite</h2>
             </div>
         </div>
-        <div class="header-suite-list justify-content-between align-items-center mb-2">
+        {{-- <div class="header-suite-list justify-content-between align-items-center mb-2">
             <div class="title-outer-container">
                 <div class="title-main offset-930 pr-3 title-subs">
                     <h2 data-place="suite_category_name">Premiere Suite</h2>
@@ -32,7 +33,7 @@
                         Questions</a>
                 </div>
             </div>
-        </div>
+        </div> --}}
         <div class="slider-container hotel-page-list">
             <a href="#" data-place="covid_link" target="_blank">
                 <div class="covid-info align-items-center">
@@ -169,7 +170,7 @@
                 <!-- display only on dektop end -->
             </div>
         </div>
-    </div>
+</div>
 <!--
     <div class="container pr-0">
         <div class="accordion accordion-ex" id="accordionExample">

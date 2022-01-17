@@ -29,7 +29,7 @@
         <div class="col-lg-4 mb-4 pt-3">
             @include('frontend.themes.EC.hotel.sidebar_nav')
         </div>
-        <div class="col-lg-8" id="suiteslist-column">
+        <div class="col-lg-8 col-hotel-slider" id="suiteslist-column">
             <div class="header-suite-list justify-content-between align-items-center mb-2">
                 <div class="title-outer-container">
                     <div class="title-main offset-930 pr-3 title-subs">
@@ -57,6 +57,7 @@
 @include('frontend.themes.EC.layouts.subsections.reviews')
 @include('frontend.themes.EC.layouts.subsections.share')
 @include('frontend.themes.EC.layouts.subsections.suiteinfo')
+@include('frontend.themes.EC.layouts.subsections.channel_popup')
 <?php if(isset($property_id)):?>
 <script>
    $('.top-header').addClass('mobile-off');
