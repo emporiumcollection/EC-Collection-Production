@@ -123,7 +123,7 @@ trait Property {
             'boards',
             'container',
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
             }, 
             'roomImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -205,7 +205,7 @@ trait Property {
             'container',
             //'images',
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -310,7 +310,7 @@ trait Property {
                     $query->with(['package']);
                 },
                 'suites' => function($query){
-                    return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                    return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
                 },
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
@@ -423,7 +423,7 @@ trait Property {
                 $query->with(['package']);
             },
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -495,7 +495,7 @@ trait Property {
                 $query->with(['package']);
             },
             'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('show_on_booking', '=', 1);
+                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
             },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
@@ -1054,19 +1054,19 @@ trait Property {
         $this->data['atmosphere'] = \DB::table('tb_categories')
         ->where('category_approved', 1)
         ->where('category_published', 1)
-        ->where('parent_category_id', 886)
+        ->where('parent_category_id', config('app.atmosphere_category_id'))
         ->get();
 
         $this->data['facilities'] = \DB::table('tb_categories')
         ->where('category_approved', 1)
         ->where('category_published', 1)
-        ->where('parent_category_id', 897)
+        ->where('parent_category_id', config('app.facilities_category_id'))
         ->get();
 
         $this->data['style'] = \DB::table('tb_categories')
         ->where('category_approved', 1)
         ->where('category_published', 1)
-        ->where('parent_category_id', 909)
+        ->where('parent_category_id', config('app.style_category_id'))
         ->get();
 
         return $this->data;
