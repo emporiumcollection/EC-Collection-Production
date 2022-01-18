@@ -7425,7 +7425,6 @@ class PropertyController extends Controller {
         if(empty($photos)){
             $us = new UnsplashSearch();
             $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-                Cache::store('file')->put($cacheKey, $photos, 100000);
 
             if(isset($photos->results) && !empty($photos->results)){
                 $destinationPath = public_path("cached-images/container_user_files/locations/".str_slug($keyword)."/");
