@@ -2899,25 +2899,8 @@ class PropertyController extends Controller {
         \Session::put('keyword', $keyword);
         \Session::save();
         
-        $cacheKey = 'location_photos'.strtolower(str_replace(" ", "", $keyword));
-        $photos = json_encode([]);
-        if (Cache::has($cacheKey)) {
-            $photos = Cache::get($cacheKey);
-        }
-        
-        $dir_exist = public_path("cached-images/container_user_files/locations/$keyword");
-        
-        if(!file_exists($dir_exist)){
-            if(empty(json_decode($photos))){
-                $photos = $this->gallery_image_Api($keyword,$cacheKey);
-            }
-        }
-        else
-        {
-            $photos = LocationImage::where('location', $keyword)->get();   
-        }
+        $this->data['photos'] = $this->gallery_image_Api($keyword,$cacheKey);
 
-        $this->data['photos'] = json_decode($photos);
         $type = $request->input('type');
 
         $arrive = $request->input('arrive');
@@ -7434,32 +7417,41 @@ class PropertyController extends Controller {
         return response()->json($property);
         exit;
     }
-    public function gallery_image_Api($keyword,$cacheKey){
-        $us = new UnsplashSearch();
+
+    public function gallery_image_Api($keyword){
+        $photos = LocationImage::where('location', '=', $keyword)
+        ->get()->toArray();
+
+        if(empty($photos)){
+            $us = new UnsplashSearch();
             $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-            Cache::store('file')->put($cacheKey, $photos, 100000);
+                Cache::store('file')->put($cacheKey, $photos, 100000);
 
-        $this->data['photos'] = json_decode($photos);
-        
-        $destinationPath = public_path("cached-images/container_user_files/locations/$keyword/");
-        
-            foreach($this->data['photos']->results as $key => $photo){
-                $random_code = rand(10,10000);
-                if (!file_exists($destinationPath)) {
-                    mkdir($destinationPath, 0777, true);
-                }
+            if(isset($photos->results) && !empty($photos->results)){
+                $destinationPath = public_path("cached-images/container_user_files/locations/".str_slug($keyword)."/");
+                
+                foreach($photos->results as $key => $photo){
+                    $random_code = md5(rand(10,10000).strtotime(date("YmdHis")));
+                    if (!file_exists($destinationPath)) {
+                        mkdir($destinationPath, 0777, true);
+                    }
 
-                if (!is_null($photo->urls->regular)) {
-                    $file = $photo->urls->regular;
-                    $file_name = file_get_contents($photo->urls->regular);
-                    // print_r($photo->urls->regular);exit;
-                    $myfile = file_put_contents($destinationPath.$random_code.'.jpg',$file_name);
-                }
-                $locationimage = new LocationImage();
-                $locationimage->location = $keyword;
-                $locationimage->image = $photo->urls->regular;
-                $locationimage->save();
+                    if (!is_null($photo->urls->regular)) {
+                        $file = $photo->urls->regular;
+                        $file_name = file_get_contents($photo->urls->regular);
+                        $myfile = file_put_contents($destinationPath.$random_code.'.jpg',$file_name);
+                    }
+
+                    $locationimage = new LocationImage();
+                    $locationimage->location = $keyword;
+                    $locationimage->image = $random_code.'.jpg';
+                    $locationimage->save();
+                }    
             }
+
+            $photos = LocationImage::where('location', '=', $keyword)
+            ->get()->toArray();
+        }
          
         return $photos;
     }
