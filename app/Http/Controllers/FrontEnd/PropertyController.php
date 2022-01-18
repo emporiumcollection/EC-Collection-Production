@@ -7447,6 +7447,7 @@ class PropertyController extends Controller {
                 if (!file_exists($destinationPath)) {
                     mkdir($destinationPath, 0777, true);
                 }
+                
 
                 if (!is_null($photo->urls->regular)) {
                     $file = $photo->urls->regular;
