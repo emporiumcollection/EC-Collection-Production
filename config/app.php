@@ -87,6 +87,9 @@ return [
     'lifestyle_package_id' => env('LIFESTYLE_PCK_ID', '38'),
     'dedicated_package_id' => env('DEDICATED_PCK_ID', '39'),
     'bespoke_package_id' => env('BESPOKE_PCK_ID', '40'),
+    'atmosphere_category_id' => env('EC_ATMOSPHERE_CATEGORY_ID', '0'),
+    'facilities_category_id' => env('EC_FACILITIES_CATEGORY_ID', '0'),
+    'style_category_id' => env('EC_STYLE_CATEGORY_ID', '0'),
 
     'key' => env('APP_KEY', 'YrKh1BgM5ONj2ia81k77Z2nD7hDrDniF'),
     
