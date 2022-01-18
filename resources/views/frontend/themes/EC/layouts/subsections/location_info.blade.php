@@ -49,7 +49,6 @@
                                             // $spanid = 1;
                                             // $grid = 1;
                                             if(!empty($photos->results)):
-
                                             foreach($photos->results as $key => $photo):
                                             if($key == 0){
                                             ?>
@@ -71,6 +70,7 @@
                                             if(!empty($photos)):
 
                                                 foreach($photos as $key => $photo):
+                                                
                                                 if($key == 0){
                                                 ?>
                                                     <a href="<?php echo $photo->image; ?>"
