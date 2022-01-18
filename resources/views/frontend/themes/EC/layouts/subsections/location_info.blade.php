@@ -52,15 +52,15 @@
                                                 foreach($photos as $key => $photo):
                                                 if($key == 0){
                                                 ?>
-                                                    <a href="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo->image;  ?>"
-                                                        data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-1 span-1">
-                                                        <img data-src="<?php echo $photo->urls->regular; ?>" alt="" class="location-photos">
+                                                    <a href="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo['image'];  ?>"
+                                                        data-sub-html="<?php echo \Session::get('keyword');?> image" class="grid-item grid-row-1 span-1">
+                                                        <img data-src="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>" alt="" class="location-photos">
                                                     </a>
                                                 <?php
                                                 } else { ?>
-                                                    <a href="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo->image;  ?>"
-                                                        data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-2 span-2">
-                                                        <img data-src="<?php echo $photo->urls->regular; ?>" alt="" class="location-photos">
+                                                    <a href="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo['image'];  ?>"
+                                                        data-sub-html="<?php echo \Session::get('keyword');?> image" class="grid-item grid-row-2 span-2">
+                                                        <img data-src="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo['image'];  ?>" alt="" class="location-photos">
                                                     </a>
                                                 <?php }
                                                 endforeach;
