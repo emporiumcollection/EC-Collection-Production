@@ -32,11 +32,6 @@
                             Info
                         </a>
                     </li>
-                    <!--<li class="nav-item">
-                        <a class="nav-link" href="#videosTab" data-toggle="tab" role="tab" aria-selected="false" onclick="getDefaultChannel('<?php echo strtolower(str_replace(" ", "-", $keyword)); ?>')">
-                            Videos
-                        </a>
-                    </li>-->
                 </ul>
                 <div class="tab-content pt-4">
                     <div class="tab-pane fade show active" id="galleryTab">
@@ -73,12 +68,42 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="infoTab">
-                        <?php echo isset($location[0]['category_description'])?$location[0]['category_description']:'';?>
-                        <?php echo "<br> latitude :-". $location_info->latitude; ?>
-                        <?php echo "<br> longitude :-". $location_info->longitude; ?>
-                        <?php echo "<br> destination type :-". $location_info->destination_type; ?>
-                        <?php echo "<br> average rating :-". $location_info->average_rating; ?>
-
+                        <?php // echo isset($location[0]['category_description'])?$location[0]['category_description']:'';?>
+                        <?php // echo "<br> latitude :-". $location_info->latitude; ?>
+                        <?php // echo "<br> longitude :-". $location_info->longitude; ?>
+                        <?php // echo "<br> destination type :-". $location_info->destination_type; ?>
+                        <?php // echo "<br> average rating :-". $location_info->average_rating; ?>
+                        <div class="row">
+                            <div class="col-4">
+                                <select id="best-place" class="w-100 mb-3">
+                                    <option value="Popular with Visitors"><img src="/themes/EC/images/fs-icons/popular-with-visitors.png" height="20px" width="20px">Popular with Visitors</option>
+                                    <option value="Top Picks">Top Picks</option>
+                                    <option value="Trending">Trending</option>
+                                    <option value="Food">Food</option>
+                                    <option value="Coffee">Coffee</option>
+                                    <option value="Nightlife">Nightlife</option>
+                                    <option value="Fun">Fun</option>
+                                    <option value="Outdoor Fun">Outdoor Fun</option>
+                                    <option value="Beach">Beach</option>
+                                    <option value="Hiking">Hiking</option>
+                                    <option value="Museums">Museums</option>
+                                    <option value="Hotel">Hotel</option>
+                                    <option value="Shopping">Shopping</option>
+                                    <option value="Breakfast">Breakfast</option>
+                                    <option value="Lunch">Lunch</option>
+                                    <option value="Dinner">Dinner</option>
+                                </select>
+                            </div>
+                        </div>
+                        @if(Session::has('keyword'))
+                            <?php $near = Session::get('keyword'); ?>
+                        @else
+                            <?php $near = $hotel_data[0]->city; ?>
+                        @endif
+                        <input type="hidden" name="best_places_near" value="{{ $near }}">
+                        <div id="best-places-section">
+                            @include('frontend.themes.EC.layouts.subsections.best-places-section')
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="videosTab">
                         <div class="title-main mb-4">

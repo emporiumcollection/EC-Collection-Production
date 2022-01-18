@@ -862,7 +862,26 @@ $(document).ready(function(){
           console.log('error loading ' + element.data('src'));
       }
   });*/
+
+  getBestPlases('Popular with Visitors', $('input[name="best_places_near"]').val());
+  $(document).on('change', '#best-place', function(){
+    var category = $(this).val();
+    var near = $('input[name="best_places_near"]').val();
+    getBestPlases(category, near);
+  });
 });
+
+function getBestPlases(category, near){
+  $.ajax({
+    url: '/property/best-places/'+category+'/'+near,
+    type: 'GET',
+    dataType: 'json',
+    success: function(response){
+      $('#best-places-section').html(response.html);
+    },
+    error: function(response){}
+  });
+}
 
  
 $(window).on('load', function() {

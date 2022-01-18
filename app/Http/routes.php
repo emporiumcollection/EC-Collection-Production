@@ -603,6 +603,7 @@ Route::get('featuredproperty', 'FrontEnd\PropertyController@featuredProperty');
 Route::get('property/prices', 'FrontEnd\PropertyController@propertyRoomPrices');
 Route::get('property/refresh-map/{lat}/{lng}', 'FrontEnd\PropertyController@refreshMap');
 Route::get('api/property/{id}', 'FrontEnd\PropertyController@apiPropertyDetail');
+Route::get('property/best-places/{category}/{near}', 'FrontEnd\PropertyController@getBestPlaces');
 
 Route::post('getyoutubechannel', 'FrontEnd\FrontendPagesController@getyoutubechannel');
 Route::post('gethdyoutubechannel', 'FrontEnd\FrontendPagesController@gethdyoutubechannel');

@@ -9,6 +9,7 @@ use App\User;
 use App\Models\PropertyRoomPrices;
 use App\Models\LocationImage;
 use App\Models\properties;
+use App\Models\BestPlace;
 use App\Http\Traits\Property;
 use App\Http\Traits\Category;
 use App\Http\Traits\ReviewTrait;
@@ -3326,10 +3327,13 @@ class PropertyController extends Controller {
         $this->data['hotel_data'] = $this->getPropertyByslug($slug);
 
         if(Session::has('keyword')){
-            $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
+            $city = Session::get('keyword');
         }else{
-            $this->data['path'] = $this->getLocationPath($this->data['hotel_data'][0]->city);
+            $city = $this->data['hotel_data'][0]->city;
         }
+        $this->data['path'] = $this->getLocationPath($city);
+        $location_data = $this->getLocationInfoRoadGoat($city);
+        $this->data['location_info'] = json_decode($location_data);
 
         $this->data['reviews'] = $this->getReviews($this->data['hotel_data'][0]->id);
         $this->setGalleryAndFormat($this->data['hotel_data']);
@@ -7454,5 +7458,102 @@ class PropertyController extends Controller {
         }
          
         return $photos;
+    }
+
+    public function getBestPlaces($category, $near)
+    {
+        $best_place = \DB::table('tb_best_places')->where('location', '=', $near)->where('category', '=', $category)->get();
+        if(empty($best_place)){
+            $html = '';
+            $curl = curl_init();
+            curl_setopt_array($curl, [
+                CURLOPT_URL => 'https://api.foursquare.com/v3/places/search?query='.urlencode($category).'&near='.urlencode($near),
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => [
+                    'Authorization: fsq3O4oOXo6t/2AzZXe2T5drb5MAfv/DJ4anMomLTHrgy7Y='
+                ],
+            ]);
+            $response = curl_exec($curl);
+            $curl_status = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            curl_close($curl);
+            if($curl_status == 200){
+                $response = json_decode($response);
+                $places = $response->results;
+                foreach($places as $place){
+                    $data[]= [
+                        'fsq_id' => $place->fsq_id,
+                        'name' => $place->name,
+                        'location' => $place->location,
+                        'geocodes' => $place->geocodes,
+                        'image' => $this->getBestPlacesImages($place->fsq_id)
+                    ];
+                }
+                $place_list = json_encode($data);
+                // print_r($places);
+                \DB::table('tb_best_places')->insert([
+                    'location' => $near,
+                    'category' => $category,
+                    'best_places' => $place_list
+                ]);
+                $best_place_list = json_decode($place_list);
+                if(!empty($places)){
+                    $html .= view('frontend.themes.EC.layouts.subsections.best-places-section', ['places' => $best_place_list])->render();
+                }
+            }
+            echo json_encode([
+                'html' => $html,
+                'status' => $curl_status
+            ]);
+            exit;
+        }
+        else{
+            $place_list = json_decode($best_place[0]->best_places);
+            $html = '';
+            $html .= view('frontend.themes.EC.layouts.subsections.best-places-section', ['places' => $place_list])->render();
+            echo json_encode([
+                'html' => $html
+            ]);
+            exit;
+        }
+    }
+
+    public function getBestPlacesImages($fsq_id)
+    {
+        $PlaceImageUrl = '';
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+        CURLOPT_URL => 'https://api.foursquare.com/v3/places/'.$fsq_id.'/photos',
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_ENCODING => '',
+        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_TIMEOUT => 0,
+        CURLOPT_FOLLOWLOCATION => true,
+        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+        CURLOPT_CUSTOMREQUEST => 'GET',
+        CURLOPT_HTTPHEADER => array(
+            'Authorization: fsq3O4oOXo6t/2AzZXe2T5drb5MAfv/DJ4anMomLTHrgy7Y='
+        ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $PlaceImages = json_decode($response);
+        if(!empty($PlaceImages)){
+            foreach($PlaceImages as $PlaceImage){
+                $prefix = $PlaceImage->prefix;
+                $suffix = $PlaceImage->suffix;
+                $PlaceImageUrl = $prefix."200x100".$suffix;
+                break;
+            }
+        }
+        return $PlaceImageUrl;
     }
 }

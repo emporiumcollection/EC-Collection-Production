@@ -1173,7 +1173,7 @@ trait Property {
     public function getLocationInfoRoadGoat($keyword){
         $properties = \DB::table('tb_categories')->where('category_name', '=', $keyword)->get();
         
-        if($properties[0]->location_info == ''){
+        if(!$properties[0]->location_info == ''){
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -1194,6 +1194,7 @@ trait Property {
 
             curl_close($curl);
             $response_att = json_decode($response);
+            // print_r($response_att);exit;
             if(!empty($response_att)){   
                 $json = $response_att->data[0]->attributes;
                 $json_att = json_encode($json);
@@ -1208,4 +1209,44 @@ trait Property {
         }
         exit;
     }
+
+    /*public function getLocationInfoRoadGoat($keyword){
+        // $properties = \DB::table('tb_categories')->where('category_name', '=', $keyword)->get();
+        
+        // if(!$properties[0]->location_info == ''){
+            print $authKey = base64_encode('03671ed6ee9f460f74d724e649cd8328:'.'119da579f5280d26d9bd5f9a046912f9');
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL => 'https://api.roadgoat.com/api/v2/destinations/new-york-ny-usa/foursquare_venues?q=Hotel',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => 'GET',
+                CURLOPT_HTTPHEADER => array(
+                    'Authorization: Basic ' . $authKey
+                ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            $response_att = json_decode($response);
+            print_r($response_att);exit;
+            if(!empty($response_att)){   
+                $json = $response_att->data[0]->attributes;
+                $json_att = json_encode($json);
+                DB::table('tb_categories')->where('category_name', $keyword)->update(['location_info' => $json_att]);
+            }else{
+                $json_att = [];
+            }
+            return $json_att;         
+        // }
+        // else{
+        //     return $properties[0]->location_info;
+        // }
+        // exit;
+    }*/
 }
