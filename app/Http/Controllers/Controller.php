@@ -46,7 +46,7 @@ abstract class Controller extends BaseController {
         $routePath = request()->route()->getActionName();
         if(!strpos($routePath, 'HomeController')){
 	        $cacheKey = 'destinationsmenu';
-	        if (!Cache::has($cacheKey)) {
+	        if (Cache::has($cacheKey)) {
 	            $this->data['destinationMenu'] = Cache::get($cacheKey);
 	        }else{
 				$this->data['destinationMenu'] = $this->destinationTree();
