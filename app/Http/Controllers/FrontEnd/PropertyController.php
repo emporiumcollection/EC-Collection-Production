@@ -7435,7 +7435,6 @@ class PropertyController extends Controller {
         exit;
     }
     public function gallery_image_Api($keyword,$cacheKey){
-        $count = 0;
         $us = new UnsplashSearch();
             $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
             Cache::store('file')->put($cacheKey, $photos, 100000);
@@ -7443,24 +7442,25 @@ class PropertyController extends Controller {
         $this->data['photos'] = json_decode($photos);
         
         $destinationPath = public_path("cached-images/container_user_files/locations/$keyword/");
-        if (!file_exists($destinationPath)) {
+        
             foreach($this->data['photos']->results as $key => $photo){
-                $count = $count + 1;
-                
-                mkdir($destinationPath, 0777, true);
+                $random_code = rand(10,10000);
+                if (!file_exists($destinationPath)) {
+                    mkdir($destinationPath, 0777, true);
+                }
 
                 if (!is_null($photo->urls->regular)) {
                     $file = $photo->urls->regular;
                     $file_name = file_get_contents($photo->urls->regular);
                     // print_r($photo->urls->regular);exit;
-                    $myfile = file_put_contents($destinationPath.$count.'.jpg',$file_name);
+                    $myfile = file_put_contents($destinationPath.$random_code.'.jpg',$file_name);
                 }
                 $locationimage = new LocationImage();
                 $locationimage->location = $keyword;
                 $locationimage->image = $photo->urls->regular;
                 $locationimage->save();
             }
-        }    
+         
         return $photos;
     }
 }
