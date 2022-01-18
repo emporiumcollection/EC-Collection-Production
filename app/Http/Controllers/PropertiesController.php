@@ -1335,6 +1335,7 @@ class PropertiesController extends Controller {
                 $data['video_link_type'] = $request->input('video_link_type');
             }
             $data['video_link'] = $request->input('video_link');
+            $data['youtube_channel'] = $request->input('youtube_channel');
             if (!is_null($request->file('video_image'))) {
                 $video_file = $request->file('video_image');
                 $video_filename = $video_file->getClientOriginalName();
