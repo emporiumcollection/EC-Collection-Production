@@ -54,7 +54,7 @@
                                                 ?>
                                                     <a href="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo['image'];  ?>"
                                                         data-sub-html="<?php echo \Session::get('keyword');?> image" class="grid-item grid-row-1 span-1">
-                                                        <img data-src="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>" alt="" class="location-photos">
+                                                        <img data-src="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo['image'];  ?>" alt="" class="location-photos">
                                                     </a>
                                                 <?php
                                                 } else { ?>
