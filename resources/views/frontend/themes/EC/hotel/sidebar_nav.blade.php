@@ -119,7 +119,11 @@ if(!isset($property)){
        {{--<li class="nav-item">
           <a class="nav-link @@sosActive" href="/hotel/social">Social</a>
         </li>--}}
-        
+        @if (!empty($property->youtube_channel))
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" onclick="getHotelDefaultChannel(<?php echo $property->id;?>)" data-sidebar="#channel-popup">Video Channel</a>
+          </li>
+        @endif
         
       </ul>
     </div>
