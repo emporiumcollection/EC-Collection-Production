@@ -2899,7 +2899,7 @@ class PropertyController extends Controller {
         \Session::put('keyword', $keyword);
         \Session::save();
         
-        $this->data['photos'] = $this->gallery_image_Api($keyword,$cacheKey);
+        $this->data['photos'] = $this->gallery_image_Api($keyword);
 
         $type = $request->input('type');
 
