@@ -2994,9 +2994,6 @@ class PropertyController extends Controller {
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
         $this->setGalleryAndFormat($this->data['propertyResults']);
 
-        print_r($this->data['propertyResults']->toArray());
-        exit;
-
         if($request->get('max') && $request->get('min')){
             $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
         }
