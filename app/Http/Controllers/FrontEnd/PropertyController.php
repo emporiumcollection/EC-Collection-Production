@@ -2994,6 +2994,9 @@ class PropertyController extends Controller {
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
         $this->setGalleryAndFormat($this->data['propertyResults']);
 
+        print_r($this->data['propertyResults']->toArray());
+        exit;
+
         if($request->get('max') && $request->get('min')){
             $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
         }
@@ -3324,6 +3327,7 @@ class PropertyController extends Controller {
     public function getProperty_Ajax($id){
         $this->data['property'] = $this->getPropertyById($id);
         $this->formatPropertyRecords($this->data['property']);
+        $this->setGalleryAndFormat($this->data['property']);
 
         return response()->json($this->data['property'][0]);
     }

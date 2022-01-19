@@ -128,6 +128,7 @@ function getPropertybyId(id){
       async:false,
       success:function(response){
         properties[id] = response;
+        properties[id]['images'] = response.property_images;
       }
   });
 }  
@@ -504,9 +505,9 @@ function replaceSuiteDetail(property_id, category_id){
 }
 
 function replaceSuiteBoard(){
-  // if(!properties[id]){
-  //   getPropertybyId(id);
-  // }
+  if(!properties[id]){
+     getPropertybyId(currentPropertyId);
+  }
 
   if(!boardTemplate){
     boardTemplate = $('#suiteinfo .suite-board-body').html();
