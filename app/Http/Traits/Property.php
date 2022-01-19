@@ -565,7 +565,7 @@ trait Property {
                         foreach($suite->rooms as $rk => $room){
                             //$properties[$k]->suites[$sk]->rooms[$rk]->price = $this->getRoomPrice($room->id);
 
-                            if(!isset($properties[$k]->suites[$sk]->rooms[$rk]->images)){
+                            if(!isset($properties[$k]->suites[$sk]->rooms[$rk]->images) && isset($room->property_id)){
                                 $properties[$k]->suites[$sk]->rooms[$rk]->images = $this->getRoomImages($room->property_id, $room->category_id);
                             }
                             break;
