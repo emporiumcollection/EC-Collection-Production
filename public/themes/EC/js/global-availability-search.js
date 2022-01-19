@@ -5,6 +5,9 @@ var currentPropertyId = '';
 var priceTemplate = '';
 
 function replacePropertyData(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   currentPropertyId = id;
   var field = '';
   $('[data-place="property"]').each(function() {
@@ -117,7 +120,22 @@ function replacePropertyData(id){
   replaceGalleryNames(id);
 }
 
+function getPropertybyId(id){
+  return $.ajax({
+      url: '/getpropertyById/'+id,
+      type: 'get',
+      dataType: 'json',
+      async:false,
+      success:function(response){
+        properties[id] = response;
+      }
+  });
+}  
+
 function replacePropertyMobileMenu(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   $('[data-replace="m_property_short_name"]').html(properties[id]['property_short_name']);
   $('[data-replace="m_property_gallery_btn"]').attr('onclick','replacePropertyData('+id+')');
   $('[data-replace="m_reviews_btn"]').attr('onclick','replaceReviewData('+id+')');
@@ -182,6 +200,9 @@ function initializeAllGalleries(){
 }
 
 function replaceGalleryImages(id, place, list, image_path){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   try{
     $('[data-place="' + place + '"]').each(function() {
         // field = $(this).attr('data-replace');
@@ -210,6 +231,9 @@ function replaceGalleryImages(id, place, list, image_path){
 }
 
 function replaceGalleryNames(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   var suitenamelist = `<li class="nav-item">
         <a class="nav-link" href="#" onclick="showSuiteImages('')">All Suites</a>
       </li>`;
@@ -272,6 +296,9 @@ function showGalleryImages(gallery, divid){
 }
 
 function replacePropertySuites(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   var suiteview = '';
   var firstsuite = 0;
   currentPropertyId = id;
@@ -299,6 +326,9 @@ function replacePropertySuites(id){
 }
 
 function replaceSuiteList(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   $('#suites-popup').hide();
   $('#suites-loader').show();
 
@@ -390,7 +420,9 @@ function replaceSuiteList(id){
 }
 
 function replaceSuiteDetail(property_id, category_id){
-
+  if(!properties[property_id]){
+    getPropertybyId(property_id);
+  }
   currentPropertyId = property_id;
   var suite;
   properties[property_id]['suites'].forEach(function(e){
@@ -472,7 +504,10 @@ function replaceSuiteDetail(property_id, category_id){
 }
 
 function replaceSuiteBoard(){
-  console.log('hello');
+  // if(!properties[id]){
+  //   getPropertybyId(id);
+  // }
+
   if(!boardTemplate){
     boardTemplate = $('#suiteinfo .suite-board-body').html();
   }
@@ -514,6 +549,9 @@ function appendSearchGridSlider(){
 }
 
 function replaceRooms(property_id, category_id){
+  if(!properties[property_id]){
+    getPropertybyId(property_id);
+  }
   var suite;
   properties[property_id]['suites'].forEach(function(e){
     if(category_id === e.id){
@@ -711,6 +749,9 @@ function getHotelDefaultChannel(id){
 }
 
 function replacePrices(cat_id, property_id = null){
+    if(!properties[property_id]){
+      getPropertybyId(property_id);
+    }
     if(!property_id){
       property_id = currentPropertyId;
     }

@@ -3321,6 +3321,13 @@ class PropertyController extends Controller {
 
     }
 
+    public function getProperty_Ajax($id){
+        $this->data['property'] = $this->getPropertyById($id);
+        $this->formatPropertyRecords($this->data['property']);
+
+        return response()->json($this->data['property'][0]);
+    }
+
     public function getProperty($slug){
 
         $this->data['hotel_data'] = $this->getPropertyByslug($slug);

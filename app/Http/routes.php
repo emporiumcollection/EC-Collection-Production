@@ -597,6 +597,8 @@ Route::post('globalavailability', 'FrontEnd\PropertyController@propertyglobalava
 Route::post('getpdppage', 'FrontEnd\PropertyController@getpdppage');
 Route::post('getdestinationpage', 'FrontEnd\PropertyController@getdestinationpage');
 
+Route::get('getpropertyById/{id}','FrontEnd\PropertyController@getProperty_Ajax');
+
 Route::get('globalsearchavailability', 'FrontEnd\PropertyController@globalsearchavailability');
 Route::get('searchavailability', 'FrontEnd\PropertyController@propertySearchAvailability');
 Route::get('featuredproperty', 'FrontEnd\PropertyController@featuredProperty');

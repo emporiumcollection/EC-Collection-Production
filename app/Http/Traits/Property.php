@@ -94,45 +94,45 @@ trait Property {
             'detail_section1_description_box1', 
             'detail_section1_description_box2', 
             'detail_section1_description_box2', 
-            'roomamenities', 
-            'assign_amenities', 
-            'latitude',
-            'longitude',
-            'address', 
-            'internetpublic',
-            'internetroom',
-            'children_policy',
-            'checkin',
-            'checkout',
-            'transfer',
-            'smookingpolicy',
-            'smookingrooms',
-            'numberofrooms',
-            'availableservices',
-            'pets',
-            'carpark',
-            'bar_ids',
-            'spa_ids',
-            'restaurant_ids',
+            // 'roomamenities', 
+            // 'assign_amenities', 
+            // 'latitude',
+            // 'longitude',
+            // 'address', 
+            // 'internetpublic',
+            // 'internetroom',
+            // 'children_policy',
+            // 'checkin',
+            // 'checkout',
+            // 'transfer',
+            // 'smookingpolicy',
+            // 'smookingrooms',
+            // 'numberofrooms',
+            // 'availableservices',
+            // 'pets',
+            // 'carpark',
+            // 'bar_ids',
+            // 'spa_ids',
+            // 'restaurant_ids',
             'city',
             'property_usp',
-            'covid_info',
-            'covid_link',
+            // 'covid_info',
+            // 'covid_link',
             'youtube_channel'
             ])
         ->with([
-            'boards',
-            'container',
-            'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
-            }, 
-            'roomImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
+            // 'boards',
+            // 'container',
+            // 'suites' => function($query){
+            //     return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
+            // }, 
+            // 'roomImages' => function($query){
+            //     return $query->with(['file' => function($query){
+            //         return $query->select(['id','file_name']);
 
-                }]);
-                //->limit(20);
-            },
+            //     }]);
+            //     //->limit(20);
+            // },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
@@ -140,13 +140,13 @@ trait Property {
                 }]);
                 //->limit(20);
             }, 
-            'hotelBrochureImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
+            // 'hotelBrochureImages' => function($query){
+            //     return $query->with(['file' => function($query){
+            //         return $query->select(['id','file_name']);
 
-                }]);
-                //->limit(20);
-            }
+            //     }]);
+            //     //->limit(20);
+            // }
         ])
         ->whereRaw(" (country = '$keyword' or city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%' ) ")
         //->where('country', '=', $keyword)
@@ -175,40 +175,40 @@ trait Property {
             'detail_section1_title', 
             'detail_section1_description_box1', 
             'detail_section1_description_box2', 
-            'detail_section1_description_box2', 
-            'roomamenities', 
-            'assign_amenities', 
-            'latitude',
-            'longitude',
-            'address', 
-            'internetpublic',
-            'internetroom',
-            'children_policy',
-            'checkin',
-            'checkout',
-            'transfer',
-            'smookingpolicy',
-            'smookingrooms',
-            'numberofrooms',
-            'availableservices',
-            'pets',
-            'carpark',
-            'bar_ids',
-            'spa_ids',
-            'restaurant_ids',
+            // 'detail_section1_description_box2', 
+            // 'roomamenities', 
+            // 'assign_amenities', 
+            // 'latitude',
+            // 'longitude',
+            // 'address', 
+            // 'internetpublic',
+            // 'internetroom',
+            // 'children_policy',
+            // 'checkin',
+            // 'checkout',
+            // 'transfer',
+            // 'smookingpolicy',
+            // 'smookingrooms',
+            // 'numberofrooms',
+            // 'availableservices',
+            // 'pets',
+            // 'carpark',
+            // 'bar_ids',
+            // 'spa_ids',
+            // 'restaurant_ids',
             'city',
             'property_usp',
-            'covid_info',
-            'covid_link',
+            // 'covid_info',
+            // 'covid_link',
             'youtube_channel'
         ])
         ->with([
-            'boards',
-            'container',
-            //'images',
-            'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
-            },
+            // 'boards',
+            // 'container',
+            // //'images',
+            // 'suites' => function($query){
+            //     return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
+            // },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
@@ -216,20 +216,20 @@ trait Property {
                 }]);
                 //->limit(20);
             }, 
-            'roomImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
+            // 'roomImages' => function($query){
+            //     return $query->with(['file' => function($query){
+            //         return $query->select(['id','file_name']);
 
-                }]);
-                //->limit(20);
-            }, 
-            'hotelBrochureImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
+            //     }]);
+            //     //->limit(20);
+            // }, 
+            // 'hotelBrochureImages' => function($query){
+            //     return $query->with(['file' => function($query){
+            //         return $query->select(['id','file_name']);
 
-                }]);
-                //->limit(20);
-            }
+            //     }]);
+            //     //->limit(20);
+            // }
         ])
         ->whereRaw(" (country = '$keyword' or city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%' ) ")
         //->where('country', '=', $keyword)
@@ -246,7 +246,7 @@ trait Property {
         request()->get('style_ids'));
         $destinationId = 0;
 
-        return Cache::get($key, function () {
+        // return Cache::get($key, function () {
             $destinationId = 0;
             $keyword = request()->get('s');
 
@@ -279,30 +279,30 @@ trait Property {
                 'detail_section1_description_box1', 
                 'detail_section1_description_box2', 
                 'detail_section1_description_box2', 
-                'roomamenities', 
-                'assign_amenities', 
-                'latitude',
-                'longitude',
-                'address', 
-                'internetpublic',
-                'internetroom',
-                'children_policy',
-                'checkin',
-                'checkout',
-                'transfer',
-                'smookingpolicy',
-                'smookingrooms',
-                'numberofrooms',
-                'availableservices',
-                'pets',
-                'carpark',
-                'bar_ids',
-                'spa_ids',
-                'restaurant_ids',
+                // 'roomamenities', 
+                // 'assign_amenities', 
+                // 'latitude',
+                // 'longitude',
+                // 'address', 
+                // 'internetpublic',
+                // 'internetroom',
+                // 'children_policy',
+                // 'checkin',
+                // 'checkout',
+                // 'transfer',
+                // 'smookingpolicy',
+                // 'smookingrooms',
+                // 'numberofrooms',
+                // 'availableservices',
+                // 'pets',
+                // 'carpark',
+                // 'bar_ids',
+                // 'spa_ids',
+                // 'restaurant_ids',
                 'city',
                 'property_usp',
-                'covid_info',
-                'covid_link',
+                // 'covid_info',
+                // 'covid_link',
                 'youtube_channel'
             ])
             ->with([
@@ -312,9 +312,9 @@ trait Property {
                 'PropertyCategoryPackages' => function($query){
                     $query->with(['package']);
                 },
-                'suites' => function($query){
-                    return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
-                },
+                // 'suites' => function($query){
+                //     return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
+                // },
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
                         return $query->select(['id','file_name']);
@@ -322,20 +322,20 @@ trait Property {
                     }]);
                     //->limit(20);
                 }, 
-                'roomImages' => function($query){
-                    return $query->with(['file' => function($query){
-                        return $query->select(['id','file_name']);
+                // 'roomImages' => function($query){
+                //     return $query->with(['file' => function($query){
+                //         return $query->select(['id','file_name']);
 
-                    }]);
-                    //->limit(20);
-                }, 
-                'hotelBrochureImages' => function($query){
-                    return $query->with(['file' => function($query){
-                        return $query->select(['id','file_name']);
+                //     }]);
+                //     //->limit(20);
+                // }, 
+                // 'hotelBrochureImages' => function($query){
+                //     return $query->with(['file' => function($query){
+                //         return $query->select(['id','file_name']);
 
-                    }]);
-                    //->limit(20);
-                }
+                //     }]);
+                //     //->limit(20);
+                // }
             ])
             //->whereIn('city', $cities)
             ->whereRaw(" (country = '$keyword' or city = '$keyword' or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%') ")
@@ -380,7 +380,7 @@ trait Property {
             return $properties
             //->limit(6)
             ->get();
-        });            
+        // });            
     }
 
     public function getPropertyByslug($slug){
@@ -495,7 +495,7 @@ trait Property {
         ->with([
             'boards',
             'container',
-            //'images',
+            'images',
             'PropertyCategoryPackages' => function($query){
                 $query->with(['package']);
             },
@@ -524,9 +524,9 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->where('id', '=', $id);
-
-        return $property->get();
+        ->where('id', '=', $id)
+        ->get();
+        return $property;
     }
 
     private function filterByprice($max,$min,&$propertyResults){
