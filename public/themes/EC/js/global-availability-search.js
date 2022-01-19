@@ -128,7 +128,7 @@ function getPropertybyId(id){
       async:false,
       success:function(response){
         properties[id] = response;
-        properties[id]['images'] = response.property_images;
+        properties[id]['images'] = response.propertyImages;
       }
   });
 }  
