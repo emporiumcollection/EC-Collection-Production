@@ -497,9 +497,9 @@ function replaceSuiteDetail(property_id, category_id){
   }
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout("$('.nav-item #suite').addClass('show');", 1000);
-  setTimeout('appendSlider()', 2000);
+  setTimeout('appendSlider()', 1000);
   replacePropertyData(property_id);
-  setTimeout("$('.suite-popup').slick('setPosition');", 2000);
+  setTimeout("$('.suite-popup').slick('setPosition');", 1000);
 
   $("#property-name").hide();
 }
