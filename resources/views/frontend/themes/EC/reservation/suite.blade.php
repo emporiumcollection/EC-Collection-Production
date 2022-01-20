@@ -77,7 +77,7 @@
                             ?>
                               <div>
                                 <a href="#">                  
-                                  <img src="{{ asset('/room-image/resize/650x600/' . $container_name . '/' . $name . '/' . $file_name) }}"
+                                  <img src="{{ asset('/room-image/resize/615x650/' . $container_name . '/' . $name . '/' . $file_name) }}"
                                     class="img-full" alt="">
                                 </a>
                               </div>
