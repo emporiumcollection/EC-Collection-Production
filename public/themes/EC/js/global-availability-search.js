@@ -414,10 +414,10 @@ function replaceSuiteList(id){
     });
 
   });
-  setTimeout('appendResultGridSlider()', 2000);    
-  setTimeout("$('#suites-loader').hide();", 3000);
-  setTimeout("$('#suites-popup').show();", 3000);
-  setTimeout("$('#suiteslist .result-grid').slick('setPosition');", 3000);  
+  setTimeout('appendResultGridSlider()', 1000);    
+  setTimeout("$('#suites-loader').hide();", 2000);
+  setTimeout("$('#suites-popup').show();", 2000);
+  setTimeout("$('#suiteslist .result-grid').slick('setPosition');", 2000);  
 }
 
 function replaceSuiteDetail(property_id, category_id){
@@ -499,7 +499,7 @@ function replaceSuiteDetail(property_id, category_id){
   setTimeout("$('.nav-item #suite').addClass('show');", 1000);
   setTimeout('appendSlider()', 2000);
   replacePropertyData(property_id);
-  setTimeout("$('.suite-popup').slick('setPosition');", 4000);
+  setTimeout("$('.suite-popup').slick('setPosition');", 2000);
 
   $("#property-name").hide();
 }
@@ -945,7 +945,7 @@ function searchResults(url){
             $('body').css('overflow', 'auto');
             $('.pageload').hide();
             lazyLoadMe('results-media');
-          }, 500)
+          }, 200)
         }
     });
 }
