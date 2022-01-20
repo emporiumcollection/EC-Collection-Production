@@ -162,28 +162,28 @@
         <p>
           {{ $hotel_data[0]->detail_section1_description_box2 }}
         </p>
-
-        <div class="i-none">
-          <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
-          <div class="row mb-4">
-            @if(!empty($hotel_data))
-              @foreach($hotel_data as $amenitie)              
-              <div class="col-md-4 mb-4">
-                <p class="mb-0">
-                  @if(!empty($amenitie->suites->toArray()))
-                    @if(!empty($amenitie->suites[0]->amenities->toArray()))
-                      {{ $amenitie->suites[0]->amenities[0]->amenities_eng }}
+        @if(!empty($hotel_data[0]->suites[0]->amenities[0]->amenities_eng))
+          <div class="i-none">
+            <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
+            <div class="row mb-4">
+              @if(!empty($hotel_data))
+                @foreach($hotel_data as $amenitie)              
+                <div class="col-md-4 mb-4">
+                  <p class="mb-0">
+                    @if(!empty($amenitie->suites->toArray()))
+                      @if(!empty($amenitie->suites[0]->amenities->toArray()))
+                        {{ $amenitie->suites[0]->amenities[0]->amenities_eng }}
+                      @endif
                     @endif
-                  @endif
-                </p>
-              </div>
-              @endforeach
-            @else
-            <p>Amenities Not Found</p>  
-            @endif
+                  </p>
+                </div>
+                @endforeach
+              @else
+              <p>Amenities Not Found</p>  
+              @endif
+            </div>
           </div>
-        </div>
-
+        @endif  
       </div>
       <div class="col-md-4">
         <div class="side-detail mb-3">
