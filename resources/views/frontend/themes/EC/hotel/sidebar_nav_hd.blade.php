@@ -99,12 +99,18 @@ if(!isset($property)){
         <li class="nav-item">
           <a class="nav-link @@locActive" href="/hotel-location/{{ $property->property_slug }}">Location</a>
         </li>
-        <!--<li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link active" href="/hotel/experiences">Experiences</a>
-        </li>-->
+        </li> --}}
         <li class="nav-item">
           <a class="nav-link btn-sidebar" href="#" onclick="replacePropertyData(<?php echo $property->id;?>)" data-sidebar="#property-gallery">Gallery</a>
         </li>
+        @if (!empty($property->youtube_channel))
+          
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" onclick="getHotelDefaultChannel(<?php echo $property->id;?>)" data-sidebar="#channel-popup">Video Channel</a>
+          </li>
+        @endif
        {{--<li class="nav-item">
           <a class="nav-link @@sosActive" href="/hotel/social">Social</a>
         </li>--}}

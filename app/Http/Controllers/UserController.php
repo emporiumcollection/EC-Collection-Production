@@ -726,6 +726,7 @@ class UserController extends Controller {
                     if( !is_dir( $destinationPath ) ){
                         mkdir( $destinationPath, 0755, true );
                     }
+                    
                     $extension = $file->getClientOriginalExtension(); //if you need extension of the file
                     $newfilename = \Session::get('uid') . '.' . $extension;
                     // echo "<pre>";print_r($newfilename);exit(); 
@@ -872,10 +873,9 @@ class UserController extends Controller {
             $user->password = \Hash::make($request->input('password'));
             $user->save();
 
-            return Redirect::to('user/profile')->with('message', \SiteHelpers::alert('success', 'Password has been saved!'));
+            return Redirect::to('user/profile')->with('massage', 'Password has been saved!');
         } else {
-            return Redirect::to('user/profile')->with('message', \SiteHelpers::alert('error', 'The following errors occurred')
-                    )->withErrors($validator)->withInput();
+            return Redirect::to('user/profile')->with('Errmassage', 'The following errors occurred' )->withErrors($validator)->withInput();
         }
     }
 

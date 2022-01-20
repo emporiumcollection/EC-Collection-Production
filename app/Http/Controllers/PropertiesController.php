@@ -1335,6 +1335,7 @@ class PropertiesController extends Controller {
                 $data['video_link_type'] = $request->input('video_link_type');
             }
             $data['video_link'] = $request->input('video_link');
+            $data['youtube_channel'] = $request->input('youtube_channel');
             if (!is_null($request->file('video_image'))) {
                 $video_file = $request->file('video_image');
                 $video_filename = $video_file->getClientOriginalName();
@@ -2207,6 +2208,7 @@ class PropertiesController extends Controller {
                     $destinationPath = (new ContainerController)->getContainerUserPath($propImgFoldId);
                     $file = $request->file('files');
                     // GET THE FILE EXTENSION
+
                     $extension = $file[0]->getClientOriginalExtension();
                     // RENAME THE UPLOAD WITH RANDOM NUMBER
                     $fileName = rand(11111111111, 99999999999) . '-' .rand(11111111111, 99999999999) . '.' . $extension;
@@ -2368,7 +2370,9 @@ class PropertiesController extends Controller {
         if ($Foldername != '') {
             $dirPath = (new ContainerController)->getContainerUserPath($ParentfolderId);
             $slug = \SiteHelpers::seoUrl(trim($Foldername));
-            $result = \File::makeDirectory($dirPath . $slug, 0777, true);
+            if(!file_exists($dirPath . $slug)){
+                $result = \File::makeDirectory($dirPath . $slug, 0777, true);
+            }
             $fdata['parent_id'] = $ParentfolderId;
             $fdata['name'] = $slug;
             $fdata['display_name'] = $Foldername;
@@ -2409,6 +2413,7 @@ class PropertiesController extends Controller {
             $data['user_id'] = $uid;
             $data['amenities'] = $request->input('amenities_de');
             $data['amenities_eng'] = $request->input('amenities_eng');
+            $data['why_we_love_it'] = $request->input('why_we_love_it');
             if (!empty($request->input('assigned_amenities'))) {
                 $data['amenity_ids'] = implode(',', $request->input('assigned_amenities'));
             } else {

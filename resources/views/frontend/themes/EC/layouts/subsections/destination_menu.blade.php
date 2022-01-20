@@ -2,9 +2,6 @@
 if(!isset($path)){
     $path = [];
 }
-// echo '<pre>';
-// print_r($path);
-// echo '</pre>';
 $destinationTabContent = '';
 $destinationTemplate = '
 <div class="tab-pane fade <!--LEVEL1-SHOWCLASS--> show" id="<!--LEVEL1-CATALIAS-->">

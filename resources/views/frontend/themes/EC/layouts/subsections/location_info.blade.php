@@ -48,24 +48,22 @@
                                             <?php 
                                             // $spanid = 1;
                                             // $grid = 1;
-                                            if(!empty($photos->results)):
-                                            foreach($photos->results as $key => $photo):
-                                            if($key == 0){
-                                            ?>
-                                                <a href="<?php echo $photo->urls->regular; ?>"
-                                                    data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-1 span-1">
-                                                    <img data-src="<?php echo $photo->urls->regular; ?>" alt="" class="location-photos">
-                                                </a>
-                                            <?php
-                                            } else { ?>
-                                                <a href="<?php echo $photo->urls->regular; ?>"
-                                                    data-sub-html="<?php echo $photo->alt_description; ?>" class="grid-item grid-row-2 span-2">
-                                                    <img data-src="<?php echo $photo->urls->regular; ?>" alt="" class="location-photos">
-                                                </a>
-                                            <?php }
-                                            // $spanid=2;
-                                            // $grid++;
-                                            endforeach;
+                                            if(!empty($photos)):
+                                                foreach($photos as $key => $photo):
+                                                if($key == 0){
+                                                ?>
+                                                    <a href="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo['image'];  ?>"
+                                                        data-sub-html="<?php echo \Session::get('keyword');?> image" class="grid-item grid-row-1 span-1">
+                                                        <img data-src="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo['image'];  ?>" alt="" class="location-photos">
+                                                    </a>
+                                                <?php
+                                                } else { ?>
+                                                    <a href="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo['image'];  ?>"
+                                                        data-sub-html="<?php echo \Session::get('keyword');?> image" class="grid-item grid-row-2 span-2">
+                                                        <img data-src="/cached-images/container_user_files/locations/<?php echo str_slug(\Session::get('keyword'));  ?>/<?php echo $photo['image'];  ?>" alt="" class="location-photos">
+                                                    </a>
+                                                <?php }
+                                                endforeach;
                                             endif;
                                             ?>
                                         </div>
@@ -76,6 +74,11 @@
                     </div>
                     <div class="tab-pane fade" id="infoTab">
                         <?php echo isset($location[0]['category_description'])?$location[0]['category_description']:'';?>
+                        <?php echo "<br> latitude :-". $location_info->latitude; ?>
+                        <?php echo "<br> longitude :-". $location_info->longitude; ?>
+                        <?php echo "<br> destination type :-". $location_info->destination_type; ?>
+                        <?php echo "<br> average rating :-". $location_info->average_rating; ?>
+
                     </div>
                     <div class="tab-pane fade" id="videosTab">
                         <div class="title-main mb-4">

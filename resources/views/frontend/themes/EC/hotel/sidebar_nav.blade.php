@@ -13,6 +13,7 @@ if(!isset($property)){
         replacePropertySuites(<?php echo $property->id;?>);
 
         $('#suite .nav-item .nav-link-sub').click(function(){
+            $("#suiteslist-column").hide();
             $('#suiteslist').hide();
             $('#suiteinfo').show();
             setTimeout('appendSuiteSlider()', 500);
@@ -54,7 +55,6 @@ if(!isset($property)){
             <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button" aria-expanded="true" aria-controls="suite">
               Suites <i class="fa fa-angle-down" aria-hidden="true"></i>
             </a>
-            
             <div class="collapse show" id="suite">
               <ul class="nav flex-column nav-sidebar is-small" data-place="property-suites">
                 <li class="nav-item">
@@ -119,7 +119,11 @@ if(!isset($property)){
        {{--<li class="nav-item">
           <a class="nav-link @@sosActive" href="/hotel/social">Social</a>
         </li>--}}
-        
+        @if (!empty($property->youtube_channel))
+          <li class="nav-item">
+            <a class="nav-link btn-sidebar" href="#" onclick="getHotelDefaultChannel(<?php echo $property->id;?>)" data-sidebar="#channel-popup">Video Channel</a>
+          </li>
+        @endif
         
       </ul>
     </div>

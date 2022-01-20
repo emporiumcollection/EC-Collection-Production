@@ -56,7 +56,7 @@
       ?>
         <div>
           <a href="" class="slider-item-inner">
-            <img <?php echo 'src="/property-image/resize/830x350/'.$container_name.'/'.$file_name.'/property-image"';?> id="heading-img" class="img-fluid" alt="">
+            <img <?php echo 'src="/property-image/resize/840x540/'.$container_name.'/'.$file_name.'/property-image"';?> id="heading-img" class="img-fluid" alt="">
             <div class="view-images-btn">
               <i class="ico icon-camera"></i> View Images
             </div>
@@ -1918,7 +1918,7 @@
       </div> --}}
 
     </div>
-    <h4 class="mt-5 mb-4 color-dark-grey">Inspiration</h4>
+    {{-- <h4 class="mt-5 mb-4 color-dark-grey">Inspiration</h4>
     <div class="row">
       <div class="col-md-4 mb-4">
         <div class="mb-3">
@@ -1941,7 +1941,7 @@
         <h4>Off the beaten track</h4>
         <p>Here are some of your favourite winter sun destinations</p>
       </div>
-    </div>
+    </div> --}}
   </div>
 </div>
 

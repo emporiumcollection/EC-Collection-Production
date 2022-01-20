@@ -3,8 +3,6 @@
   if(properties === undefined){
     var properties = [];
   }
-  properties[<?php echo $editorChoice->id;?>] = <?php echo json_encode($editorChoice);?>;
-  properties[<?php echo $editorChoice->id;?>]['images'] = <?php echo json_encode($propertyImages);?>;
 </script>
 <div class="mb-5">
   <div class="row align-items-center">
@@ -54,7 +52,7 @@
                 $file_name = 'default-image.png';
               }
             ?>
-            <img src="<?php echo 'property-image/resize/627x627/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
+            <img src="<?php echo 'property-image/resize/1200x700/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
           <?php endif;?>
           <div class="hero-desc">
             <h4><?php echo $editorChoice->detail_section1_title;?></h4>
@@ -95,7 +93,7 @@
           ?>
             <div class="col-md-6">
               <div class="hero-item">
-                <img src="<?php echo 'property-image/resize/311x311/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
+                <img src="<?php echo 'property-image/resize/1200x700/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
               </div>
             </div>
           <?php 

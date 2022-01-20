@@ -66,10 +66,6 @@
             if(secondchk.length == 0){
                 document.getElementById('B').style.display="block";
             }
-            var thirdchk = document.querySelectorAll('input[name="C"]:checked');
-            if(thirdchk.length == 0){
-                document.getElementById('C').style.display="block";
-            }
             var fourthchk = document.querySelectorAll('input[name="D"]:checked');
             if(fourthchk.length == 0){
                 document.getElementById('D').style.display="block";
