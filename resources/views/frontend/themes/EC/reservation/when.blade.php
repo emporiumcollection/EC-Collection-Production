@@ -21,7 +21,7 @@
           <div id="step-1" class="tab-pane pt-lg-5 pt-xl-5" role="tabpanel">
             <div class="row pt-lg-5 pt-xl-5">
               <div class="col-lg-9 col-md-8 mb-4 ">
-                <h2 class="mb-5 d-flex align-items-center"><a href="javascript:void(0);"
+                <h2 class="mb-5 d-flex align-items-center"><a href="/hotel/{{ $property_slug }}"
                   class="backwizard btn-backwizard mobile-off"><i
                     class="ico ico-back mr-3"></i></a> Stay Dates:</h2>
                 <hr>
