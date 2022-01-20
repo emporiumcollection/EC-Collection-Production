@@ -90,7 +90,7 @@
         </div>
         <ul class="nav nav-tags my-4" id="Exp">
             @if(!empty(request()->get('experience')))
-            <li class="nav-item" id="experience">
+            <li class="nav-item" id="experienced">
               <span class="nav-link">
                 <a class="" href="#">
                   <span class="taxonomyTags-roundedArrow">
@@ -106,7 +106,7 @@
                   </span>
                   {{-- <span class="ml-1">85</span> --}}
                 </a>
-                <a href="javascript:void();" id="delete_exp" class="delete delete_exp">
+                <a href="#" id="delete_exp" class="delete delete_exp">
                   <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
