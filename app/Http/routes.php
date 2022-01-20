@@ -61,6 +61,7 @@ Route::post('/hotel/add-reviews','FrontEnd\ReviewController@addreviews');
 Route::get('/users/security', 'UserController@getSecurity');
 Route::get('/users/contracts', 'UserController@getInvoices');
 Route::post('/users/savetravelprofile', 'UserController@postSavetravellerprofile');
+Route::post('/users/password', 'UserController@postSavepassword');
 Route::post('/users/questions', 'UserController@postSecurityQuestion');
 Route::post('/users/CardDetail', 'UserController@userCardDetail');
 Route::get('/users/default-card/{id}', 'UserController@default_Card');
@@ -596,6 +597,8 @@ Route::post('globalavailability', 'FrontEnd\PropertyController@propertyglobalava
 Route::post('getpdppage', 'FrontEnd\PropertyController@getpdppage');
 Route::post('getdestinationpage', 'FrontEnd\PropertyController@getdestinationpage');
 
+Route::get('getpropertyById/{id}','FrontEnd\PropertyController@getProperty_Ajax');
+
 Route::get('globalsearchavailability', 'FrontEnd\PropertyController@globalsearchavailability');
 Route::get('searchavailability', 'FrontEnd\PropertyController@propertySearchAvailability');
 Route::get('featuredproperty', 'FrontEnd\PropertyController@featuredProperty');
@@ -604,6 +607,7 @@ Route::get('property/refresh-map/{lat}/{lng}', 'FrontEnd\PropertyController@refr
 Route::get('api/property/{id}', 'FrontEnd\PropertyController@apiPropertyDetail');
 
 Route::post('getyoutubechannel', 'FrontEnd\FrontendPagesController@getyoutubechannel');
+Route::post('gethdyoutubechannel', 'FrontEnd\FrontendPagesController@gethdyoutubechannel');
 Route::post('getinstagramchannel', 'FrontEnd\FrontendPagesController@getinstagramchannel');
 Route::post('getDropdownBreadcrumb', 'FrontEnd\PropertyController@getDropdownBreadcrumb');
 Route::post('getSearchDropdownBreadcrumb', 'FrontEnd\PropertyController@getSearchDropdownBreadcrumb');

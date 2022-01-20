@@ -319,6 +319,12 @@
 																			<textarea name="room_amenities_desc" class="form-control input-sm">@if(!empty($room_amenties_desc)){{$room_amenties_desc[$cat['data']->id]}}@endif</textarea>
 																		</div>
 																	</div>
+																	<div class="row">
+																		<div class="form-group col-lg-12">
+																			<label for="room_name">Why We love it</label>
+																			<textarea name="why_we_love_it" class="form-control input-sm"></textarea>
+																		</div>
+																	</div>
 																</div>
 																<div class="col-lg-4 align-right">
 																	<div class="butt margin-top-10">

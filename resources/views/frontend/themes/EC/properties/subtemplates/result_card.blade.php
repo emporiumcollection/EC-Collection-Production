@@ -1,7 +1,4 @@
-<script type="text/javascript">
-  properties[<?php echo $property->id;?>] = <?php echo json_encode($property);?>;
-  properties[<?php echo $property->id;?>]['images'] = <?php echo json_encode($propertyImages);?>;
-</script>
+
 <div class="col-lg-6 col-md-6 mb-5 ">
   <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
 

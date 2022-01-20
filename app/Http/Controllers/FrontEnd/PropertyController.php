@@ -7,6 +7,7 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Http\Controllers\Controller;
 use App\User;
 use App\Models\PropertyRoomPrices;
+use App\Models\LocationImage;
 use App\Models\properties;
 use App\Http\Traits\Property;
 use App\Http\Traits\Category;
@@ -2206,6 +2207,7 @@ class PropertyController extends Controller {
                 }
             }
 
+
             if($roomType==0){
                 //$query = "SELECT COUNT(id) as noOfRooms, property_id, category_id FROM tb_properties_category_rooms where 1=1 and (CASE WHEN active_full_year = 0 THEN ";
                 //$query .="( room_active_from <= '".$arrive_date."' AND room_active_to >= '".$departure_date."')";
@@ -2771,13 +2773,13 @@ class PropertyController extends Controller {
         }
 
         if($coll_type == 'hotel'){
-            $hotel = properties::on($sitename.'conn')->select(['id'])
+            $hotel = properties::on($sitename.'conn')->select(['property_slug'])
                 ->where('property_name', '=', $coll_where)
                 ->get()
                 ->toArray();
 
             if(!empty($hotel)){
-                return redirect($site_url.'/hotel/hoteldetail/'.$hotel[0]['id']);
+                return redirect($site_url.'/hotel/'.$hotel[0]['property_slug']);
             }
         }
 
@@ -2878,6 +2880,7 @@ class PropertyController extends Controller {
         return Redirect::to($querry_string);
     }
 
+
     /**
      * Mahesh: Global search availability function 
      * 
@@ -2890,22 +2893,13 @@ class PropertyController extends Controller {
         }
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
-
+        $location_data = $this->getLocationInfoRoadGoat($keyword);
+        $this->data['location_info'] = json_decode($location_data);
+        
         \Session::put('keyword', $keyword);
         \Session::save();
         
-        $cacheKey = 'location_photos'.strtolower(str_replace(" ", "", $keyword));
-        $photos = json_encode([]);
-        if (Cache::has($cacheKey)) {
-            $photos = Cache::get($cacheKey);
-        }
-    
-        if(empty(json_decode($photos))){
-            $us = new UnsplashSearch();
-            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
-            Cache::store('file')->put($cacheKey, $photos, 100000);
-        }
-        $this->data['photos'] = json_decode($photos);
+        $this->data['photos'] = $this->gallery_image_Api($keyword);
 
         $type = $request->input('type');
 
@@ -2914,7 +2908,6 @@ class PropertyController extends Controller {
 
         $rac = $request->input('rac');
         $query_str = $request->query();
-        // dump($query_str); die;
 
         $arrive_date = '';
         if($arrive!=''){
@@ -3326,6 +3319,14 @@ class PropertyController extends Controller {
 
         return view('frontend.themes.emporium.properties.globalsearchavailability', $this->data);
 
+    }
+
+    public function getProperty_Ajax($id){
+        $this->data['property'] = $this->getPropertyById($id);
+        $this->formatPropertyRecords($this->data['property']);
+        $this->setGalleryAndFormat($this->data['property']);
+
+        return response()->json($this->data['property'][0]);
     }
 
     public function getProperty($slug){
@@ -7423,5 +7424,43 @@ class PropertyController extends Controller {
         $property = $this->getPropertyById($id);
         return response()->json($property);
         exit;
+    }
+
+    public function gallery_image_Api($keyword){
+        $photos = LocationImage::where('location', '=', $keyword)
+        ->get()->toArray();
+
+        if(empty($photos)){
+            $us = new UnsplashSearch();
+            $photos = $us->photos($keyword, ['page' => 1, 'order_by' => 'oldest', 'client_id' => 'KxiwzJMs8dbTCelqCSO8GBDb3qtQj0EGLYZY0eJbSdY']);
+            $photos = json_decode($photos);
+
+            if(isset($photos->results) && !empty($photos->results)){
+                $destinationPath = public_path("cached-images/container_user_files/locations/".str_slug($keyword)."/");
+                
+                foreach($photos->results as $key => $photo){
+                    $random_code = md5(rand(10,10000).strtotime(date("YmdHis")));
+                    if (!file_exists($destinationPath)) {
+                        mkdir($destinationPath, 0777, true);
+                    }
+
+                    if (!is_null($photo->urls->regular)) {
+                        $file = $photo->urls->regular;
+                        $file_name = file_get_contents($photo->urls->regular);
+                        $myfile = file_put_contents($destinationPath.$random_code.'.jpg',$file_name);
+                    }
+
+                    $locationimage = new LocationImage();
+                    $locationimage->location = $keyword;
+                    $locationimage->image = $random_code.'.jpg';
+                    $locationimage->save();
+                }    
+            }
+
+            $photos = LocationImage::where('location', '=', $keyword)
+            ->get()->toArray();
+        }
+         
+        return $photos;
     }
 }

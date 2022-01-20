@@ -77,6 +77,7 @@ class AuthController extends Controller
         ]);
 
         if (empty($valid)) {
+        
         $token = Config::get('app.TWILIO_AUTH_TOKEN');
         $twilio_sid = Config::get("app.TWILIO_SID");
         $twilio_verify_sid = Config::get("app.TWILIO_VERIFY_SID");
@@ -85,7 +86,7 @@ class AuthController extends Controller
             ->verifications
             ->create($request->mobile_number, "sms");
         }else{
-            return redirect()->to('/dashboard')->with(['message' => 'Please Enter valis detail']);
+            return redirect()->to('/register')->with(['message' => 'Please Enter valid detail']);
         }
 
     }

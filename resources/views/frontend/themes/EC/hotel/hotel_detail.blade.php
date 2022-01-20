@@ -62,6 +62,7 @@
 </div>
 @include('frontend.themes.EC.hotel.mobile_sidebar_nav')
 @include('frontend.themes.EC.layouts.subsections.property_gallery')
+@include('frontend.themes.EC.layouts.subsections.channel_popup')
 @section('mobile_hotel_header')
 <script>
   $('.top-header').addClass('mobile-off');

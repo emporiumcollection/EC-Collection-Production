@@ -206,6 +206,7 @@
 									</button>
 								</div>
 						</div>
+					</form>
 					</div>
 						<!--end::Group-->
 						<!--begin::Group-->
@@ -218,7 +219,6 @@
 						<h5 class="text-dark font-weight-bold mb-10">
 							Password
 						</h5>
-
 						<form method="post" action="/users/password">
 							<!--begin::Group-->
 							<div class="form-group row">

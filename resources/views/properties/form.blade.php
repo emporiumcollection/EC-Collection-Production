@@ -2558,6 +2558,15 @@
                                     </div> 
 
                                 </div>
+                                <div class="form-group">
+                                    <label for="Title" class=" control-label col-md-4 text-left"> Youtube Channel </label>
+                                    <div class="col-md-6">
+                                        {!! Form::text('youtube_channel', $row['youtube_channel'],array('class'=>'form-control', 'placeholder'=>''  )) !!} 
+                                    </div> 
+                                    <div class="col-md-2">
+
+                                    </div>
+                                </div>
 
                                 <div class="form-group videotypeupload" style="display:none;" >
                                     <label for="Video" class=" control-label col-md-4 text-left"> Video </label>

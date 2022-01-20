@@ -534,9 +534,9 @@ var ajaxReq = 'ToCancelPrevReq';
               !spa_html_destination && 
               !safari_html_destination && 
               !islands_html_destination){
-              $("#distiresults").hide();
+              $("#destisresults").hide();
             }else{
-              $("#distiresults").show();
+              $("#destisresults").show();
             }
 
             if(!voyage_html_hotel && 
@@ -2312,26 +2312,30 @@ function getDestinationHtml(result, collection_name){
 
 $(document).ready(function(){
 
-    $(function() {
-
-  $('input[name="datefilter"]').daterangepicker({
-      minDate:new Date(), 
-      autoUpdateInput: false,
-      locale: {
-          cancelLabel: 'Clear'
-      }
+  $(function() {
+    $('input[name="datefilter"]').daterangepicker({
+        minDate:new Date(), 
+        autoUpdateInput: false,
+        locale: {
+            cancelLabel: 'Clear'
+        }
+    });
+    $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
+        $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+    });
+    $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
+        $(this).val('');
+    });
   });
 
-  $('input[name="datefilter"]').on('apply.daterangepicker', function(ev, picker) {
-      $(this).val(picker.startDate.format('MM/DD/YYYY') + ' - ' + picker.endDate.format('MM/DD/YYYY'));
+  $("#clear_search").on("click",function(){
+    $('#destisresults').hide();
+    $('#hotelsresults').hide();
   });
-
-  $('input[name="datefilter"]').on('cancel.daterangepicker', function(ev, picker) {
-      $(this).val('');
+  
+  $("#suiteslist-tab").click(function(){
+    setTimeout("$('.nav-item #suite').addClass('show');", 1000);
   });
-
-});
-
     
 });      
 

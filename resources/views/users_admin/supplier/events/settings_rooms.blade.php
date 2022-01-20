@@ -572,6 +572,12 @@
 																	<div class="row">
 																		<div class="form-group col-lg-12">
 																			<label for="room_name">Amenities EN </label>
+																			<textarea name="amenities_eng" class="form-control input-sm">{{(	array_key_exists('amenty', $cat)) ? $cat['amenty']->amenities_eng : '' }}</textarea>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="form-group col-lg-12">
+																			<label for="room_name">users_admin_supplier_event</label>
 																			<textarea name="amenities_eng" class="form-control input-sm">{{(array_key_exists('amenty', $cat)) ? $cat['amenty']->amenities_eng : '' }}</textarea>
 																		</div>
 																	</div>
