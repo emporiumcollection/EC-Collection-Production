@@ -83,6 +83,7 @@ return [
     'islandsdomain' => env('EC_ISLANDS_URL', 'emporium-islands.com'),
     'voyagedomain' => env('EC_VOYAGE_URL', 'emporium-voyage.com'),
     'magazinedomain' => env('EC_MAGAZINE','emporium-magazine.com'),
+    'emporiumcollectiondomain' => env('EC_EMPORIUM_COLLECTION_URL','emporium-collection.com'),
     'root_destinations' => env('ROOT_DESTINATIONS', ''),
     'lifestyle_package_id' => env('LIFESTYLE_PCK_ID', '38'),
     'dedicated_package_id' => env('DEDICATED_PCK_ID', '39'),
