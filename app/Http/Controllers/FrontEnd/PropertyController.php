@@ -3,6 +3,7 @@ namespace App\Http\Controllers\FrontEnd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ContainerController;
 use App\Models\Container;
+use App\Helpers\CommonHelper;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Http\Controllers\Controller;
 use App\User;
