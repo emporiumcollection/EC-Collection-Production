@@ -106,6 +106,11 @@ $islands_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;
           echo $spa;
           echo $voyage;
           echo $safari;
+        }else{
+          echo $voyage;
+          echo $spa;
+          echo $safari;
+          echo $islands;
         }
         ?>
       </div>
