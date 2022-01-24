@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="slider-container hotel-page-list">
-    <a href="#" class="hotel-info btn-sidebar" data-sidebar="#quickinfo">
+    <a href="#" class="hotel-info btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $hotel_data[0]->id ;?>)">
       Hotel info
     </a>
     
