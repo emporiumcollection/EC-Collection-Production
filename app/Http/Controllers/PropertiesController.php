@@ -1362,7 +1362,9 @@ class PropertiesController extends Controller {
             $data['junior_tax'] = $request->input('junior_tax');
             $data['baby_tax'] = $request->input('baby_tax');
 
-            $data['assigned_user_id'] =  $data['assigned_user_id'][0];
+            if(!empty($data['assigned_user_id'])){
+                $data['assigned_user_id'] =  $data['assigned_user_id'][0];
+            }
             $id = $this->model->insertRow($data, $request->input('id'));
 
             if (!is_null($request->input('copy_amenities_rooms')) && !empty($request->input('assigned_amenities'))) {
