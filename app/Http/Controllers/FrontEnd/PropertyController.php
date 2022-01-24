@@ -2988,9 +2988,17 @@ class PropertyController extends Controller {
         $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
         $this->setGalleryAndFormat($this->data['editorsProperties']);
 
+        if($request->get('max') && $request->get('min')){
+            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['editorsProperties']);
+        }
+
         //Get featured choice properties
         $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
         $this->setGalleryAndFormat($this->data['featureProperties']);
+
+        if($request->get('max') && $request->get('min')){
+            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['featureProperties']);
+        }
 
         //Get featured choice properties
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
