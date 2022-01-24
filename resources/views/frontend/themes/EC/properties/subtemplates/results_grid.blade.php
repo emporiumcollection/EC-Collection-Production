@@ -133,10 +133,10 @@
                     </span> 
                     <span class="taxonomyTags-tagTitle">
                       {{ $atm[0]->category_name }}
-                    </span>
+                    </span>delete
                     {{-- <span class="ml-1">85</span> --}}
                   </a>
-                  <a href="javascript:void();" class="delete" onclick="removeMe(this,'setting1{{ $atm[0]->id }}')">
+                  <a href="javascript:void(0);" class="delete" onclick="removeMe(this,'setting1{{ $atm[0]->id }}')">
                     <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
                       xmlns="http://www.w3.org/2000/svg">
                       <path
