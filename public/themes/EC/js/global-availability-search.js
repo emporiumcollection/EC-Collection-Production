@@ -816,7 +816,7 @@ function replacePrices(cat_id, property_id = null){
 
 $(document).ready(function(){
 
-  $(".nav-item .nav-link .delete_exp").click(function(e) {
+  $(document).on('click', '.delete_exp', function(e){
     e.preventDefault();
     $("#experienced").remove();
     var url = createSearchUrl(null);   

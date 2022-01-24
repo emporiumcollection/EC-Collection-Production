@@ -92,7 +92,7 @@
             @if(!empty(request()->get('experience')))
             <li class="nav-item" id="experienced">
               <span class="nav-link">
-                <a class="" href="#">
+                <a class="" href="javascript:void(0);">
                   <span class="taxonomyTags-roundedArrow">
                     <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
                       style="vertical-align: auto;">
