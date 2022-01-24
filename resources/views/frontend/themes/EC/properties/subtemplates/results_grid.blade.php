@@ -92,7 +92,7 @@
             @if(!empty(request()->get('experience')))
             <li class="nav-item" id="experienced">
               <span class="nav-link">
-                <a class="" href="#">
+                <a class="" href="javascript:void(0);">
                   <span class="taxonomyTags-roundedArrow">
                     <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
                       style="vertical-align: auto;">
@@ -106,7 +106,7 @@
                   </span>
                   {{-- <span class="ml-1">85</span> --}}
                 </a>
-                <a href="#" id="delete_exp" class="delete delete_exp">
+                <a href="javascript:void(0);" id="delete_exp" class="delete delete_exp">
                   <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
