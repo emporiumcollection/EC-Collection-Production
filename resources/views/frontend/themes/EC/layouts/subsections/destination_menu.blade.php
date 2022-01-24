@@ -95,7 +95,7 @@ $level4TabTemplate = '<div class="tab-pane fade <!--LEVEL4-SHOWCLASS-->" id="<!-
                             $destinationLevel3 = '';
                             $level3TabContent= '';
                             foreach($level2['children'] as $level3){
-                                $destinationLevel3 .= '<a class="nav-link '.(in_array($level3['category_name'], $path) ? 'active' : '').'" href="#'.$level3['category_alias'].'" data-toggle="tab" role="tab">'.$level3['category_name'].'</a>';
+                                $destinationLevel3 .= '<a  onclick="HideDestination(\''.$level3['category_alias'].'\')" class="nav-link '.(in_array($level3['category_name'], $path) ? 'active' : '').'" href="#'.$level3['category_alias'].'" data-toggle="tab" role="tab">'.$level3['category_name'].'</a>';
                                 
                                 $destinationLevel4 = '';
                                 $level4TabContent = '';

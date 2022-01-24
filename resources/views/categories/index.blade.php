@@ -84,7 +84,7 @@
 				 
 				<td>{!! SiteHelpers::showUploadedFile($row->category_image,'/uploads/category_imgs/') !!} </td>
 				<td> {{ $row->category_name }} </td>
-				<td> {{ ($row->parent_category_id!=0) ? $parent_categories[$row->parent_category_id]->category_name : '' }} </td>
+				<td> {{ ($row->parent_category_id!=0 && isset($parent_categories[$row->parent_category_id])) ? $parent_categories[$row->parent_category_id]->category_name : '' }} </td>
 				<td> {!! $row->category_description !!} </td>
 				
 				<td > 
