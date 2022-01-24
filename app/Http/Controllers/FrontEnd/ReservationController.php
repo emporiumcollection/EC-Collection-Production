@@ -58,7 +58,7 @@ class ReservationController extends Controller {
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
         $this->data['boards'] = '';       
-
+        $this->data['property_slug'] = $property->property_slug;
         $file_name = 'frontend.themes.EC.reservation.when';
         return view($file_name, $this->data);   
     }

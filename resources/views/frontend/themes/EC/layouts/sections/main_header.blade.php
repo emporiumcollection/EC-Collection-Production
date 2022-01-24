@@ -44,23 +44,27 @@
         <div class="col-md-2 col-4 header-center text-center px-0">
           <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
             <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
-              <img src="{{ asset('/images/Emporium-Voyage-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-Voyage-Logo-72dpi.png') }}" width="131" height="60">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'spa'){?>
-              <img src="{{ asset('/images/Emporium-Spa-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-Spa-Logo-72.png') }}" width="131" height="60">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'safari'){?>
-              <img src="{{ asset('/images/Emporium-Safari-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-Safari-Logo-72dpi.png') }}" width="131" height="60">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'islands'){?>
-              <img src="{{ asset('/images/Emporium-Islands-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-islands.300dpi.png') }}" width="131" height="60">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'magazine'){?>
-              <img src="{{ asset('/images/Emporium-Magazine-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-Magazine-Large.svg') }}" width="131" height="60">
+            <?php } ?>
+            
+            <?php if(\Config::get('app.currentdomain') == 'emporiumcollection'){?>
+              <img src="{{ asset('/images/Emporium-Collection-Logo-1.png') }}" width="131" height="60">
             <?php } ?>
           </a>
         </div>

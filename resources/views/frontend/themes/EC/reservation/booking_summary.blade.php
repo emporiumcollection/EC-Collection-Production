@@ -67,8 +67,11 @@
                           </p>
                         </div>
                         <div class="row mb-4">
-                          <div class="col-6">
+                          <div class="col-5">
                             <a href="/reservation/paymentmethod" class="btn btn-dark  px-5">Go back</a>
+                          </div>
+                          <div class="col-7">
+                            <a href="javascript:void(0)" class="btn btn-dark px-5 btn-block reserve_data">Confirm & go to dashboard</a>
                           </div>
                         </div>
                       </div>
