@@ -368,7 +368,8 @@ trait Property {
 
     private function filterByprice($max,$min,&$propertyResults){
         foreach ($propertyResults as $k => $property) {
-            if($property->price >= $min && $property->price <= $max ){
+            $price = (int) str_replace(",", '', $property->price);
+            if($price >= $min && $price <= $max ){
                 
             }else{  
                 unset($propertyResults[$k]);
