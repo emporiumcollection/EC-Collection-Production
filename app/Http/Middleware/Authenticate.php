@@ -47,8 +47,9 @@ class Authenticate
             } else {
 
                 $currentdomain = \Config::get('app.currentdomain');
+                $onelogindomain = \Config::get('app.onelogindomain');
                 if($currentdomain != 'onelogin'){
-                    return Redirect::to('http://onelogin.emporium-collection.com/check-one-login?referer='.request()->getHost());
+                    return Redirect::to($onelogindomain.'/check-one-login?referer='.request()->getSchemeAndHttpHost());
                 }
                 // return redirect()->guest('user/login');
             }
