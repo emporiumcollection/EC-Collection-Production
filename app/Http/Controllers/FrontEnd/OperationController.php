@@ -13,7 +13,7 @@ class OperationController extends Controller
 
 	function removeCategoryDir()
     {
-        $path = public_path("cached-images/container_user_files/categories/category_imgs/hh");
+        $path = public_path("cached-images/container_user_files/categories/category_imgs/");
         $tmp = CommonHelper::deleteDir($path);
     }
 
