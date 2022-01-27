@@ -275,7 +275,7 @@ function setMapLocationDetail(lat, long, loc){
       style: 'mapbox://styles/mapbox/satellite-v9', // style URL
       // center: [lat,long], // starting position [lng, lat]
       center: [long, lat],
-      zoom: 18 // starting zoom
+      zoom: 16 // starting zoom
       });
   }else{
     map.setView([lat, long], 18);

@@ -44,23 +44,27 @@
         <div class="col-md-2 col-4 header-center text-center px-0">
           <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
             <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
-              <img src="{{ asset('/images/Emporium-Voyage-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-Voyage-Logo-72dpi.png') }}" width="131" height="60">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'spa'){?>
-              <img src="{{ asset('/images/Emporium-Spa-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-Spa-Logo-72.png') }}" width="131" height="60">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'safari'){?>
-              <img src="{{ asset('/images/Emporium-Safari-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-Safari-Logo-72dpi.png') }}" width="131" height="60">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'islands'){?>
-              <img src="{{ asset('/images/Emporium-Islands-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-islands.300dpi.png') }}" width="131" height="60">
             <?php } ?>
 
             <?php if(\Config::get('app.currentdomain') == 'magazine'){?>
-              <img src="{{ asset('/images/Emporium-Magazine-Large.svg') }}" width="160" height="60">
+              <img src="{{ asset('/images/Emporium-Magazine-Large.svg') }}" width="131" height="60">
+            <?php } ?>
+            
+            <?php if(\Config::get('app.currentdomain') == 'emporiumcollection'){?>
+              <img src="{{ asset('/images/Emporium-Collection-Logo-1.png') }}" width="131" height="60">
             <?php } ?>
           </a>
         </div>
@@ -533,8 +537,8 @@
                       <div class="row field-count-guest align-items-center">
                         <button type="button" class="min-room {{ \Session::get('total_suite') <= 1 ? 'disable' : '' }}">-</button>
                         <div class="col text-center">
-                          <span class="mr-1 room-val">{{ \Session::get('total_suite') }}</span>
-                          <input type="hidden" name="suite[]" id="suites" class="suite" value="{{ \Session::get('total_suite') }}"/>
+                          <span class="mr-1 room-val">@if( \Session::has('total_suite') ) {{\Session::get('total_suite')}} @else{{"1"}} @endif</span>
+                          <input type="hidden" name="suite[]" id="suites" class="suite" value="@if( \Session::has('total_suite') ) {{\Session::get('total_suite')}} @else{{"1"}} @endif"/>
                         </div>
                         <button type="button" class="plus-room mr-3">+</button>
                       </div>
@@ -626,6 +630,41 @@
                         </div>
                       </div>
                       @endforeach
+                      @else
+                      <div class="col-12 col-ews mb-3" id="room-0">
+                        <p><b>Suite Allocation 1</b></p>
+                        <input type="hidden" name="rooms[]" id="rooms_0"/>
+                        <div class="row align-items-center py-2">
+                          <div class="col-7">
+                            <p class="mb-0"><b>Adult(s)</b></p>
+                          </div>
+                          <div class="col-5">
+                            <div class="row field-count-guest align-items-center">
+                              <button type="button" class="min">-</button>
+                              <div class="col text-center">
+                                <span class="mr-1 adult-val">2</span>
+                                <input type="hidden" name="adult[]" class="inp-adult" id="adult" value="2" />
+                              </div>
+                              <button type="button" class="plus mr-3">+</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row align-items-center py-2">
+                          <div class="col-7">
+                            <p class="mb-0"><b>Children(s)</b></p>
+                          </div>
+                          <div class="col-5">
+                            <div class="row field-count-guest align-items-center">
+                              <button type="button" class="min">-</button>
+                              <div class="col text-center">
+                                <span class="mr-1 child-val">0</span>
+                                <input type="hidden" name="child[]" id="" class="inp-child" value="0" />
+                              </div>
+                              <button type="button" class="plus mr-3">+</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     @endif
                   </div>
                 </div>

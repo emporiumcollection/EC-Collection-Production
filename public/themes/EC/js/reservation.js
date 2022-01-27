@@ -697,7 +697,7 @@ $(document).ready(function(){
                 }else{
                     $.each(response.errors, function(key, val){
                         $('.'+key).addClass('is-invalid');
-                        $('.'+key).next('.invalid-feedback').html(val);
+                        $('.'+key).nextAll('.invalid-feedback').html(val);
                     });
                 }
               }, 

@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+<script src="{{ asset('sximo/js/typeahead.bundle.js')}}"></script>
+<link href="{{ asset('sximo/assets/css/custom_ps.css')}}" rel="stylesheet" type="text/css"/>
 {{--*/ usort($tableGrid, "SiteHelpers::_sort") /*--}}
   <div class="page-content row">
     <!-- Page header -->
@@ -44,8 +46,10 @@
 			<i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
 			@endif
 
-					<input class="pull-right"  placeholder="Search" type="text" name="search_keyword">
-
+					{{-- <input class="pull-right"  placeholder="Search" type="text" name="search_keyword"> --}}
+			<div id="searchform-navbar" class="searchform-navbar" style="float:right;">
+				<input  class="bh-search-input typeahead search-navbar search-box" name="s" id="search-navbar" placeholder="Search" type="text">
+			</div>	
 		</div> 		
 
 	
@@ -80,7 +84,7 @@
 				 
 				<td>{!! SiteHelpers::showUploadedFile($row->category_image,'/uploads/category_imgs/') !!} </td>
 				<td> {{ $row->category_name }} </td>
-				<td> {{ ($row->parent_category_id!=0) ? $parent_categories[$row->parent_category_id]->category_name : '' }} </td>
+				<td> {{ ($row->parent_category_id!=0 && isset($parent_categories[$row->parent_category_id])) ? $parent_categories[$row->parent_category_id]->category_name : '' }} </td>
 				<td> {!! $row->category_description !!} </td>
 				
 				<td > 
@@ -200,5 +204,45 @@ function change_ordering(type, fieldId)
 		$( "#change_category_order_num" ).submit();
 	}
 }
+
+var substringMatcher = function(strs) {
+  return function findMatches(q, cb) {
+    var matches, substringRegex;
+
+    // an array that will be populated with substring matches
+    matches = [];
+
+    // regex used to determine if a string contains the substring `q`
+    substrRegex = new RegExp(q, 'i');
+
+    // iterate through the pool of strings and for any string that
+    // contains the substring `q`, add it to the `matches` array
+    $.each(strs, function(i, str) {
+      if (substrRegex.test(str)) {
+        matches.push(str);
+      }
+    });
+
+    cb(matches);
+  };
+};
+
+var states = [{!! TagsFinder::finddestinations() !!}];
+
+$('.searchform-navbar .typeahead').typeahead({
+  hint: true,
+  highlight: true,
+  minLength: 1
+},
+{
+  name: 'states',
+  source: substringMatcher(states)
+});
+
+$('.search-navbar').on('typeahead:selected', function (e, datum) {
+	var propname = $(this);
+	var sname = propname.val();
+	window.location.href = "{{URL::to('categories')}}?search=category_name:equal:" + sname + "|";
+});
 </script>		
 @stop

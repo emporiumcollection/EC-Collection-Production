@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\controller;
 use App\Models\Core\Groups;
+use App\Models\Globalpolicies;
 use App\User;
 use Illuminate\Http\Request;
 use Validator, Input, Redirect; 
@@ -125,7 +126,40 @@ class ConfigController extends Controller {
 	}
 
 
+	public function getPolicies()
+	{
+		$this->data['globalpolicies'] = \DB::table('tb_global_policies')->select('domain','policy')->get();
+		$this->data['active'] = 'policies';
+		$this->data['pageTitle'] = 'Policies';
 
+		// print_r($this->data['globalpolicies']);die();
+		return view('sximo.config.policies',$this->data);
+	}
+
+	public function postPolicies(Request $request)
+	{
+		
+		$this->data = array(
+			'pageTitle'	=> 'Policies',
+			'active'		=> 'policies',
+		);
+
+		foreach( $request->domains as $domain => $value ){
+			$domainPolicie = Globalpolicies::where('domain', '=', $domain)->get()->toArray();
+			if(empty($domainPolicie)){
+
+				$policies = new Globalpolicies();
+				$policies->policy = $value;
+				$policies->domain = $domain;
+				$policies->save();
+			}
+			else{
+				\DB::table('tb_global_policies')->where('domain', $domain)->update(array('policy' => $value));
+			}
+		}
+		return Redirect::to('sximo/config/policies')->with('messagetext', 'policies Has Been Updated')->with('msgstatus','success');
+		
+	}
 
 	public function getEmail()
 	{

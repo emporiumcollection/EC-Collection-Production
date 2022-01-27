@@ -2988,9 +2988,17 @@ class PropertyController extends Controller {
         $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
         $this->setGalleryAndFormat($this->data['editorsProperties']);
 
+        if($request->get('max') && $request->get('min')){
+            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['editorsProperties']);
+        }
+
         //Get featured choice properties
         $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
         $this->setGalleryAndFormat($this->data['featureProperties']);
+
+        if($request->get('max') && $request->get('min')){
+            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['featureProperties']);
+        }
 
         //Get featured choice properties
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
@@ -3334,7 +3342,8 @@ class PropertyController extends Controller {
     public function getProperty($slug){
 
         $this->data['hotel_data'] = $this->getPropertyByslug($slug);
-
+        $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['hotel_data'][0]->id)->first();
+        
         if(Session::has('keyword')){
             $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
         }else{
