@@ -161,22 +161,25 @@ trait Property {
     }
 
     public function searchPropertiesByKeyword($cities, $keyword){
-        $key = md5($keyword.request()->get('experience').
+        /*$key = md5($keyword.request()->get('experience').
         request()->get('facility_ids').
         request()->get('atmosphere_ids').
-        request()->get('style_ids'));
+        request()->get('style_ids'));*/
         $destinationId = 0;
 
         // return Cache::get($key, function () {
             $destinationId = 0;
-            $keyword = request()->get('s');
+            // $keyword = request()->get('s');
 
-            $destination = categories::select(['id'])
-            ->where('category_name', '=', $keyword)
-            ->get()
-            ->toArray();
-            if(!empty($destination)){
-                $destinationId = $destination[0]['id'];
+            $destinations = categories::select(['id'])
+                ->where('category_name', '=', $keyword)
+                ->get()
+                ->toArray();
+
+            if(!empty($destinations)){
+                foreach($destinations as $destination){
+                    $destinationId = $destination['id'];
+                }
             }
 
             //Query starts
@@ -392,12 +395,6 @@ trait Property {
             if(!empty($property->suites)){
                 $suiteNameList = [];
                 foreach($property->suites as $sk => $suite){
-/*                    if(!$suite->status){
-                        unset($property->suites[$sk]);
-                        continue;
-                    }
-*/                    
-                    $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
                     $suiteNameList[] = '<a href="/hotel/suite/'.$suite->property_id.'/#'.$suite->id.'">'.ucwords($suite->cat_short_name).'</a>';
                     if(!empty($suite->rooms->toArray())){
                         foreach($suite->rooms as $rk => $room){
@@ -425,6 +422,10 @@ trait Property {
                                 'name' => 'room-1',
                             ]
                         ];
+                    }
+                    $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
+                    if($property->suites[$sk]->price == 0){
+                        unset($property->suites[$sk]);
                     }
                 }
             }
@@ -459,9 +460,9 @@ trait Property {
                 $prestau[$res->id]['title'] = $res->title;
                 $prestau[$res->id]['gallery'] = $this->getResSpaBarGallery($res->id, 'res');
             }
-            $properties[$k]->restaurantList = $prestau;
 
-        }
+            $properties[$k]->restaurantList = $prestau;
+        }        
     }
 
     private function getResSpaBarGallery($id, $type){

@@ -300,14 +300,10 @@ class ReservationController extends Controller {
         $this->data['numberOfNights'] = $this->getNumberOfNights();
         $this->_checkBoards(Session::get('property_id'));
         $this->setSummaryData();
-        // if(Session::has('board_id')) {
-        //     $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
-        // }
-        // $this->data['images'] = $this->suite_images();
-        // $arr = $this->reserveSuite();
-        // $selected_suite = Session::get('suite_array');
-        // $this->data['selected_suite'] = $selected_suite;
-        // $this->data['suites'] = $arr;
+        
+        $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id',Session::get('property_id'))->first();
+        $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
+
 
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -692,6 +688,9 @@ class ReservationController extends Controller {
         $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')
             ->where('id',Session::get('suit_id'))
             ->first();
+        $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id',Session::get('property_id'))->first();
+        $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
+
         $this->setSummaryData();
         $selected_suite = Session::get('suit_id');
         $arr = [];

@@ -3343,7 +3343,9 @@ class PropertyController extends Controller {
 
         $this->data['hotel_data'] = $this->getPropertyByslug($slug);
         $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['hotel_data'][0]->id)->first();
-        
+
+        $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
+
         if(Session::has('keyword')){
             $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
         }else{
