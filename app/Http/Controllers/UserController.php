@@ -425,6 +425,11 @@ class UserController extends Controller {
                         } else {
                             \Session::put('lang', 'en');
                         }
+
+                        if(\Session::has('referer')){
+                            return Redirect::to('/check-one-login');
+                        }
+
                         if (CNF_FRONT == 'false') :
                             return Redirect::to($redirect_to);
                         else :
