@@ -13,6 +13,7 @@ $tabs = array(
 		'designer'			=> 'Designer',
         'contract'			=> 'Contract',
         'citytax'			=> 'City Tax',
+        'policies'			=> 'Policies',
 	);
 
 ?>

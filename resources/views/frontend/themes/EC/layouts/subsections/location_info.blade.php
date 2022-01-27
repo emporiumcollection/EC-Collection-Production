@@ -73,12 +73,13 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="infoTab">
+                        <?php if(isset($location_info->latitude) && isset($location_info->longitude)) { ?>
                         <?php echo isset($location[0]['category_description'])?$location[0]['category_description']:'';?>
                         <?php echo "<br> latitude :-". $location_info->latitude; ?>
                         <?php echo "<br> longitude :-". $location_info->longitude; ?>
                         <?php echo "<br> destination type :-". $location_info->destination_type; ?>
                         <?php echo "<br> average rating :-". $location_info->average_rating; ?>
-
+                        <?php } ?>
                     </div>
                     <div class="tab-pane fade" id="videosTab">
                         <div class="title-main mb-4">

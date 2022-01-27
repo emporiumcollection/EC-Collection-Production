@@ -42,7 +42,7 @@
       <div class="title-main offset-381 mt-5 wow fadeInUp mobile-off">
         <div class="row align-items-end">
           <div class="col-9">
-            <h2><?php echo $keyword;?> <a href="index.html"><i class="ico ico-reload reload-offset"></i></a></h2>
+            <h2><?php echo $keyword;?> <a href="javascript:void(0)" onclick="resetSearch();"><i class="ico ico-reload reload-offset"></i></a></h2>
           </div>
           <div class="col-3 text-right">
             <a class="m-none" href="<?php echo str_replace('&view=map','',Request::fullUrl());?>">

@@ -300,14 +300,10 @@ class ReservationController extends Controller {
         $this->data['numberOfNights'] = $this->getNumberOfNights();
         $this->_checkBoards(Session::get('property_id'));
         $this->setSummaryData();
-        // if(Session::has('board_id')) {
-        //     $this->data['boards'] = $this->fetchBoards(Session::get('board_id'));
-        // }
-        // $this->data['images'] = $this->suite_images();
-        // $arr = $this->reserveSuite();
-        // $selected_suite = Session::get('suite_array');
-        // $this->data['selected_suite'] = $selected_suite;
-        // $this->data['suites'] = $arr;
+        
+        $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id',Session::get('property_id'))->first();
+        $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
+
 
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -692,6 +688,9 @@ class ReservationController extends Controller {
         $this->data['suites'] = PropertyCategoryTypes::select('id','property_id','category_name','room_desc')
             ->where('id',Session::get('suit_id'))
             ->first();
+        $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id',Session::get('property_id'))->first();
+        $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
+
         $this->setSummaryData();
         $selected_suite = Session::get('suit_id');
         $arr = [];
@@ -828,30 +827,35 @@ class ReservationController extends Controller {
         
         $data['reservations'] = Reservations::with(['reservedSuites.suite', 'reservedCompanions.companion', 'property',])
             ->where('id', '=',$reservation_id)
-            ->first();  
-        
+            ->first();
+        $data['admin_email'] = env('ADMIN_EMAIL_ADDRESS');
         try{
-            $mail_ = \Mail::send('frontend.themes.EC.reservation.emails.reserve_email', $data, function($message) use ($data) { 
-                $message->from("ravi678parmar@gmail.com");
-                $message->to("ravi678parmar@gmail.com");
-                $message->subject("EmporiumVoyage");
+            $mail_ = \Mail::send('frontend.themes.EC.reservation.emails.reservation_email', $data, function($message) use ($data) { 
+                $message->from("emporium_voyage@yopmail.com");
+                $message->to($data['user']->email);
+                $message->subject("Reservation Detail");
+            });
+
+            $admin_mail = \Mail::send('frontend.themes.EC.reservation.emails.admin_reserve_email', $data, function($message) use ($data) { 
+                $message->from($data['admin_email']);
+                $message->to($data['admin_email']);
+                $message->subject("Reservation Detail");
             });
 
         }catch(Exception $e){
             print_r($e); 
         }
-        // exit();
 
-        // Session::forget('arrival');
-        // Session::forget('departure');
-        // Session::forget('adult');
-        // Session::forget('children');
-        // Session::forget('board');
-        // Session::forget('suite_array');
-        // Session::forget('companions');
-        // Session::forget('reservation');
-        // Session::forget('suite_id');
-        // Session::forget('board_id');
+        Session::forget('arrival');
+        Session::forget('departure');
+        Session::forget('adult');
+        Session::forget('children');
+        Session::forget('board');
+        Session::forget('suite_array');
+        Session::forget('companions');
+        Session::forget('reservation');
+        Session::forget('suite_id');
+        Session::forget('board_id');
     }
 
     public function databaseName(){

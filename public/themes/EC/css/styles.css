@@ -27333,7 +27333,7 @@ a:hover {
         /*order: 2;*/ }
       .top-header.header-fixed .header-center {
         order: 1;
-        text-align: left !important; }
+        text-align: center !important; }
       .top-header.header-fixed .header-right {
         order: 3; }  
 .second-header {

@@ -294,6 +294,8 @@ Route::get('social-instagram/{continent}/{region}/{country}/{cat}', 'FrontEnd\Fr
 Route::get('social-stream', 'FrontEnd\FrontendPagesController@socialStreamWall');
 
 Route::resource('sximoapi', 'SximoapiController');
+Route::resource('/onelogin', 'UserController@onelogin');
+
 Route::group(['middleware' => 'auth'], function()
 {
 
@@ -594,6 +596,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('addtagtitle', 'TagmanagerController@addtagtitle');
 });
 
+
 Route::post('globalavailability', 'FrontEnd\PropertyController@propertyglobalavailability');
 Route::post('getpdppage', 'FrontEnd\PropertyController@getpdppage');
 Route::post('getdestinationpage', 'FrontEnd\PropertyController@getdestinationpage');
@@ -659,6 +662,9 @@ Route::get('fetchadvertisementpackagedetails/{pckid}', 'FrontEnd\AdvertisementCo
 Route::get('hotel/propertymanagement', 'FrontEnd\PropertymanagementController@propertyManagementList');
 Route::get('hotel/propertymanagement/property-detail/{propid}', 'FrontEnd\PropertymanagementController@propertyManagementDetail');
 Route::post('hotel/propertymanagement/savepropertydetail', 'FrontEnd\PropertymanagementController@propertyManagementSaveDetail');
+
+Route::get('/remove-categorty-dir', 'FrontEnd\OperationController@removeCategoryDir');
+Route::get('/remove-property-dir/{id}', 'FrontEnd\OperationController@removePropertyDir');
 
 Route::post('frontend_hotelpost', 'HomeController@addHotelInfoFrontend');
 Route::post('save_previous_page_image', 'HomeController@save_previous_page_image');

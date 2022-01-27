@@ -128,6 +128,7 @@
               <i class="ico ico-menu-grid mr-2"></i>
             </a>
             <?php endif;?>
+            @if(Request::segment(1) != 'hotel')
             <?php if(Request::get('view')!='map'):?>
             <a class="nav-link" href="<?php echo str_replace('&view=results','&view=map',Request::fullUrl());?>">
               <i class="ico ico-place"></i>
@@ -144,11 +145,7 @@
               <i class="ico ico-info-rounded"></i>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="ico ico-instagram"></i>
-            </a>
-          </li> -->
+          @endif
         </ul>
         <ul class="nav nav-text mobile-off">
             <li class="nav-item">
@@ -537,8 +534,8 @@
                       <div class="row field-count-guest align-items-center">
                         <button type="button" class="min-room {{ \Session::get('total_suite') <= 1 ? 'disable' : '' }}">-</button>
                         <div class="col text-center">
-                          <span class="mr-1 room-val">{{ \Session::get('total_suite') }}</span>
-                          <input type="hidden" name="suite[]" id="suites" class="suite" value="{{ \Session::get('total_suite') }}"/>
+                          <span class="mr-1 room-val">@if( \Session::has('total_suite') ) {{\Session::get('total_suite')}} @else{{"1"}} @endif</span>
+                          <input type="hidden" name="suite[]" id="suites" class="suite" value="@if( \Session::has('total_suite') ) {{\Session::get('total_suite')}} @else{{"1"}} @endif"/>
                         </div>
                         <button type="button" class="plus-room mr-3">+</button>
                       </div>
@@ -630,6 +627,41 @@
                         </div>
                       </div>
                       @endforeach
+                      @else
+                      <div class="col-12 col-ews mb-3" id="room-0">
+                        <p><b>Suite Allocation 1</b></p>
+                        <input type="hidden" name="rooms[]" id="rooms_0"/>
+                        <div class="row align-items-center py-2">
+                          <div class="col-7">
+                            <p class="mb-0"><b>Adult(s)</b></p>
+                          </div>
+                          <div class="col-5">
+                            <div class="row field-count-guest align-items-center">
+                              <button type="button" class="min">-</button>
+                              <div class="col text-center">
+                                <span class="mr-1 adult-val">2</span>
+                                <input type="hidden" name="adult[]" class="inp-adult" id="adult" value="2" />
+                              </div>
+                              <button type="button" class="plus mr-3">+</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row align-items-center py-2">
+                          <div class="col-7">
+                            <p class="mb-0"><b>Children(s)</b></p>
+                          </div>
+                          <div class="col-5">
+                            <div class="row field-count-guest align-items-center">
+                              <button type="button" class="min">-</button>
+                              <div class="col text-center">
+                                <span class="mr-1 child-val">0</span>
+                                <input type="hidden" name="child[]" id="" class="inp-child" value="0" />
+                              </div>
+                              <button type="button" class="plus mr-3">+</button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     @endif
                   </div>
                 </div>

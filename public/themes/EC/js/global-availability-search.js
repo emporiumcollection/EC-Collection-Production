@@ -816,10 +816,10 @@ function replacePrices(cat_id, property_id = null){
 
 $(document).ready(function(){
 
-  $(".nav-item .nav-link .delete_exp").click(function(e) {
+  $(document).on('click', '.delete_exp', function(e){
     e.preventDefault();
-    $("#experience").remove();
-    var url = createSearchUrl();   
+    $("#experienced").remove();
+    var url = createSearchUrl(null);   
     searchResults(url);
   });
 
@@ -974,6 +974,7 @@ function createSearchUrl(experience = '', layoutView = 'ajax'){
   if(layoutView == 'ajax'){
     $('.pageload').show();
   }
+
   if(experience !== null && !experience){
     experience = getUrlParam('experience');
     if(!experience){
@@ -1091,4 +1092,12 @@ function appendBreadCrumb(lb, lbId){
         </a>
       </span>
     </li>`);
+}
+
+
+function HideDestination(currentdesti){
+  var childData = $('.row .col-9 .row .col-3 nav', $('#' + currentdesti));
+  if(childData.html().trim() == ''){
+    $('.row .col-9', $('#' + currentdesti)).hide();
+  }
 }

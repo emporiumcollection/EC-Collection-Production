@@ -3,6 +3,7 @@ namespace App\Http\Controllers\FrontEnd;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ContainerController;
 use App\Models\Container;
+use App\Helpers\CommonHelper;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use App\Http\Controllers\Controller;
 use App\User;
@@ -2894,8 +2895,9 @@ class PropertyController extends Controller {
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
         $location_data = $this->getLocationInfoRoadGoat($keyword);
-        $this->data['location_info'] = json_decode($location_data);
-        
+        if(!empty($location_data)){
+            $this->data['location_info'] = json_decode($location_data);    
+        }   
         \Session::put('keyword', $keyword);
         \Session::save();
         
@@ -2986,9 +2988,17 @@ class PropertyController extends Controller {
         $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
         $this->setGalleryAndFormat($this->data['editorsProperties']);
 
+        if($request->get('max') && $request->get('min')){
+            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['editorsProperties']);
+        }
+
         //Get featured choice properties
         $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
         $this->setGalleryAndFormat($this->data['featureProperties']);
+
+        if($request->get('max') && $request->get('min')){
+            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['featureProperties']);
+        }
 
         //Get featured choice properties
         $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
@@ -3332,6 +3342,9 @@ class PropertyController extends Controller {
     public function getProperty($slug){
 
         $this->data['hotel_data'] = $this->getPropertyByslug($slug);
+        $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['hotel_data'][0]->id)->first();
+
+        $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
 
         if(Session::has('keyword')){
             $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
