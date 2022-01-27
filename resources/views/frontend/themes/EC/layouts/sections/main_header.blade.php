@@ -128,6 +128,7 @@
               <i class="ico ico-menu-grid mr-2"></i>
             </a>
             <?php endif;?>
+            @if(Request::segment(1) != 'hotel')
             <?php if(Request::get('view')!='map'):?>
             <a class="nav-link" href="<?php echo str_replace('&view=results','&view=map',Request::fullUrl());?>">
               <i class="ico ico-place"></i>
@@ -144,11 +145,7 @@
               <i class="ico ico-info-rounded"></i>
             </a>
           </li>
-          <!-- <li class="nav-item">
-            <a class="nav-link" href="#">
-              <i class="ico ico-instagram"></i>
-            </a>
-          </li> -->
+          @endif
         </ul>
         <ul class="nav nav-text mobile-off">
             <li class="nav-item">
