@@ -1,10 +1,11 @@
 <?php
 
 namespace App\Http\Middleware;
-
+use Illuminate\Support\Facades\URL;
 use Closure;
+use Illuminate\Http\Request;
 use Illuminate\Contracts\Auth\Guard;
-
+use Validator, Input, Redirect ;
 class Authenticate
 {
     /**
@@ -34,19 +35,22 @@ class Authenticate
      */
     public function handle($request, Closure $next)
     {
-        
        /* if(isset($request->user()->group_id) && ($request->user()->group_id==3 || $request->user()->group_id==4) ){
 
             return redirect('customer/profile');
          }
         */
          
-        // echo "hello";exit;
         if ($this->auth->guest()) {
             if ($request->ajax()) {
                 return response('Unauthorized.', 401);
             } else {
-                return redirect()->guest('user/login');
+
+                $currentdomain = \Config::get('app.currentdomain');
+                if($currentdomain != 'onelogin'){
+                    return Redirect::to('http://onelogin.emporium-collection.com/check-one-login?referer='.request()->getHost());
+                }
+                // return redirect()->guest('user/login');
             }
         }
         

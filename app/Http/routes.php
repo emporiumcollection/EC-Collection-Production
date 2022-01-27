@@ -293,6 +293,8 @@ Route::get('social-instagram/{continent}/{region}/{country}/{cat}', 'FrontEnd\Fr
 Route::get('social-stream', 'FrontEnd\FrontendPagesController@socialStreamWall');
 
 Route::resource('sximoapi', 'SximoapiController');
+Route::resource('/onelogin', 'UserController@onelogin');
+
 Route::group(['middleware' => 'auth'], function()
 {
 
