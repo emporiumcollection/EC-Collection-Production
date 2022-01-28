@@ -3354,7 +3354,9 @@ class PropertyController extends Controller {
         }
         $this->data['path'] = $this->getLocationPath($city);
         $location_data = $this->getLocationInfoRoadGoat($city);
-        $this->data['location_info'] = json_decode($location_data);
+        if($location_data){
+            $this->data['location_info'] = json_decode($location_data);
+        }
 
         $this->data['reviews'] = $this->getReviews($this->data['hotel_data'][0]->id);
         $this->setGalleryAndFormat($this->data['hotel_data']);
