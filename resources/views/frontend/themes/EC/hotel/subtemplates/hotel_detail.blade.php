@@ -22,7 +22,7 @@
     </div>
   </div>
   <div class="slider-container hotel-page-list">
-    <a href="#" class="hotel-info btn-sidebar" data-sidebar="#quickinfo">
+    <a href="#" class="hotel-info btn-sidebar" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $hotel_data[0]->id ;?>)">
       Hotel info
     </a>
     
@@ -74,8 +74,9 @@
         Hotel Info
       </a>
       <input type="hidden" name="city_" id="city" value="<?php echo $hotel_data[0]->city?>">
-      <a href="" class="view btn-sidebar i-none iubenda-white iubenda-noiframe iubenda-embed iub-legal-only iubenda-noiframe" title="Privacy and cookie policy" style="outline: 0px; border: 0px; text-decoration: none; display: inline-block; background: none; width: 116px; height: 25px;">Policies</a><script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script>
-      <script src="https://cdn.iubenda.com/iubenda.js"></script><script src="https://cdn.iubenda.com/iubenda.js"></script><script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script>
+      <a href="#" class="view btn-sidebar i-none" title="Privacy and cookie policy" data-toggle="modal" data-target="#privacy_policy">Policies</a>
+      {{-- <script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script> --}}
+      {{-- <script src="https://cdn.iubenda.com/iubenda.js"></script><script src="https://cdn.iubenda.com/iubenda.js"></script><script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script> --}}
 
       <div class="dropdown dropdown-bs mobile-on">
         <a href="#" class="btn dropdown-toggle btn-block text-left btn-sidebar" data-sidebar="#mobile_menu">
@@ -162,28 +163,28 @@
         <p>
           {{ $hotel_data[0]->detail_section1_description_box2 }}
         </p>
-
-        <div class="i-none">
-          <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
-          <div class="row mb-4">
-            @if(!empty($hotel_data))
-              @foreach($hotel_data as $amenitie)              
-              <div class="col-md-4 mb-4">
-                <p class="mb-0">
-                  @if(!empty($amenitie->suites->toArray()))
-                    @if(!empty($amenitie->suites[0]->amenities->toArray()))
-                      {{ $amenitie->suites[0]->amenities[0]->amenities_eng }}
+        @if(!empty($hotel_data[0]->suites[0]->amenities[0]->amenities_eng))
+          <div class="i-none">
+            <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
+            <div class="row mb-4">
+              @if(!empty($hotel_data))
+                @foreach($hotel_data as $amenitie)              
+                <div class="col-md-4 mb-4">
+                  <p class="mb-0">
+                    @if(!empty($amenitie->suites->toArray()))
+                      @if(!empty($amenitie->suites[0]->amenities->toArray()))
+                        {{ $amenitie->suites[0]->amenities[0]->amenities_eng }}
+                      @endif
                     @endif
-                  @endif
-                </p>
-              </div>
-              @endforeach
-            @else
-            <p>Amenities Not Found</p>  
-            @endif
+                  </p>
+                </div>
+                @endforeach
+              @else
+              <p>Amenities Not Found</p>  
+              @endif
+            </div>
           </div>
-        </div>
-
+        @endif  
       </div>
       <div class="col-md-4">
         <div class="side-detail mb-3">

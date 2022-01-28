@@ -46,6 +46,28 @@
                 </li>
               @endforeach
             </ul>
+            <div class="dropdown mobile-breadcrumb dropdown-block mobile-on">
+              <button class="btn btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Home
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-493px, -300px, 0px);" x-out-of-boundaries="">
+                @foreach($path as $cid => $cat)
+                  @if(count($path) > 3)
+                    @if(count($path) - 1 == $cid || count($path) - 2 == $cid)
+                    <a class="dropdown-item" href="/globalsearchavailability?s={{ $cat }}">{{ $cat }}</a>
+                    @else
+                      <a class="dropdown-item" class="nav-link mb-0">{{ $cat }}</a>
+                    @endif
+                  @else
+                    @if(count($path) - 1 == $cid)
+                      <a class="dropdown-item" href="/globalsearchavailability?s={{ $cat }}">{{ $cat }}</a>
+                    @else
+                      <a class="dropdown-item" class="nav-link mb-0">{{ $cat }}</a>
+                    @endif
+                  @endif
+              @endforeach
+              </div>
+            </div>
           </div>
         </div>
         <div class="mobile-off">          
@@ -90,9 +112,9 @@
         </div>
         <ul class="nav nav-tags my-4" id="Exp">
             @if(!empty(request()->get('experience')))
-            <li class="nav-item" id="experience">
+            <li class="nav-item" id="experienced">
               <span class="nav-link">
-                <a class="" href="#">
+                <a class="" href="javascript:void(0);">
                   <span class="taxonomyTags-roundedArrow">
                     <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
                       style="vertical-align: auto;">
@@ -106,7 +128,7 @@
                   </span>
                   {{-- <span class="ml-1">85</span> --}}
                 </a>
-                <a href="javascript:void();" id="delete_exp" class="delete delete_exp">
+                <a href="javascript:void(0);" id="delete_exp" class="delete delete_exp">
                   <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
                     xmlns="http://www.w3.org/2000/svg">
                     <path
@@ -133,10 +155,10 @@
                     </span> 
                     <span class="taxonomyTags-tagTitle">
                       {{ $atm[0]->category_name }}
-                    </span>
+                    </span>delete
                     {{-- <span class="ml-1">85</span> --}}
                   </a>
-                  <a href="javascript:void();" class="delete" onclick="removeMe(this,'setting1{{ $atm[0]->id }}')">
+                  <a href="javascript:void(0);" class="delete" onclick="removeMe(this,'setting1{{ $atm[0]->id }}')">
                     <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
                       xmlns="http://www.w3.org/2000/svg">
                       <path
@@ -207,6 +229,36 @@
                 </span>
               </li>
             @endforeach
+          @endif
+          @if(!empty($selected_style) || !empty($facility_data) || !empty($atmosphere_data) || !empty(request()->get('experience')))
+            
+              <li class="nav-item">
+                <span class="nav-link">
+                  <a class="" href="#">
+                    <span class="taxonomyTags-roundedArrow">
+                      <svg width="20" height="26" viewBox="0 0 20 26" xmlns="http://www.w3.org/2000/svg"
+                        style="vertical-align: auto;">
+                        <path
+                          d="M14.874 26c-.957.012-2.011-.227-3.167-.711-1.155-.484-2.07-1.068-2.747-1.752l-7.964-8.05C.332 14.814 0 13.988 0 13.008c0-.98.332-1.807.996-2.477L8.96 2.48c.677-.684 1.592-1.267 2.747-1.751C12.863.245 13.925 0 14.895 0h5.106v26h-5.127z"
+                          fill="currentColor" fill-rule="evenodd"></path>
+                      </svg>
+                    </span>
+                    <span class="taxonomyTags-tagTitle">
+                      Clear All
+                    </span>
+                    {{-- <span class="ml-1">85</span> --}}
+                  </a>
+                  <a href="/globalsearchavailability?s={{$keyword}}" class="delete">
+                    <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+                      xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+                      </path>
+                    </svg>
+                  </a>
+                </span>
+              </li>
+            
           @endif 
         </ul>
         <div class="tab-content pt-lg-5 pt-xl-5">

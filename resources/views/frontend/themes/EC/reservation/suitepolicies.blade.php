@@ -30,9 +30,8 @@
                         <p>{{ $val->booking_policy }}</p>
                       @endif  
                     @endforeach                 
-                  @elseif(!empty($hotel_policy->smookingpolicy || $hotel_policy->children_policy))
-                    <p>{{ $hotel_policy->smookingpolicy }}</p>
-                    <p>{{ $hotel_policy->children_policy }}</p>
+                  @elseif(isset( $terms_n_conditions->terms_n_conditions ) && !empty( $terms_n_conditions->terms_n_conditions ))
+                    {{ $terms_n_conditions->terms_n_conditions }}
                     <hr>
                   @endif 
                   <div class="col-sm-3">

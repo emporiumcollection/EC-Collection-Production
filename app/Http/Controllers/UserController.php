@@ -66,7 +66,7 @@ class UserController extends Controller {
                 ];
                 dispatch(new SendEmailJob($details));
             }
-            return Redirect::to($redirect_to);
+            return Redirect::to('/check-one-login');
         }
         return redirect()->back();
     }
@@ -425,6 +425,10 @@ class UserController extends Controller {
                         } else {
                             \Session::put('lang', 'en');
                         }
+                        if(\Session::has('page') || \Session::has('referer')){
+                            return Redirect::to('/check-one-login');
+                        }
+
                         if (CNF_FRONT == 'false') :
                             return Redirect::to($redirect_to);
                         else :
@@ -990,6 +994,48 @@ class UserController extends Controller {
         return self::autoSignin($user);
     }
 
+    public function onelogin(){
+        // echo "hello"; die();
+        $authdata = request()->input('authdata');
+        $page = request()->input('page');
+        if($page){            
+            \Session::put('page', $page);
+            \Session::save();
+        }
+        // print_r(\Session::get('page'));die();
+		if(isset($authdata)){
+			$decodeurl = base64_decode($authdata);
+			$reqauthdata=explode("|",$decodeurl);
+
+            //check if $reqauthdata[0] email user does exists in users table
+                //make entry
+            //endif
+            $finduser = User::where('email', '=', $reqauthdata[0])->first();
+            // echo "<pre>";
+            // print_r($finduser);
+            // echo "</pre>";die();
+            if($finduser === null){
+                // echo "hello";die();
+                $code = rand(10000, 10000000);
+                $authen = new User;
+                $authen->id = $reqauthdata[3];
+                $authen->first_name = $reqauthdata[1];
+                $authen->last_name = $reqauthdata[2];
+                $authen->email = $reqauthdata[0];
+                $authen->activation = $code;
+                $authen->group_id = $reqauthdata[4];
+                $authen->last_login = $reqauthdata[5];
+                $authen->password = $reqauthdata[6];
+                $authen->username = $reqauthdata[7];
+                $authen->active = '1';
+                $authen->save();
+                // return self::autoSignin($user);
+            }
+            $user = User::where('email', $reqauthdata[0])->first();
+            return self::autoSignin($user);
+		}	
+    }
+
     function autoSignin($user) {
 
         if (is_null($user)) {
@@ -1015,7 +1061,9 @@ class UserController extends Controller {
                     Session::put('gid', $row->group_id);
                     Session::put('eid', $row->group_email);
                     Session::put('fid', $row->first_name . ' ' . $row->last_name);
-                    if (CNF_FRONT == 'false') :
+                    if (\Session::get('page')) :
+                        return Redirect::to(\Session::get('page'));
+                    elseif(CNF_FRONT == 'false') :
                         return Redirect::to('dashboard');
                     else :
                         return Redirect::to('');

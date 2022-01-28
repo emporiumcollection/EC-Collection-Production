@@ -3,8 +3,6 @@
   if(properties === undefined){
     var properties = [];
   }
-  properties[<?php echo $editorChoice->id;?>] = <?php echo json_encode($editorChoice);?>;
-  properties[<?php echo $editorChoice->id;?>]['images'] = <?php echo json_encode($propertyImages);?>;
 </script>
 <div class="mb-5">
   <div class="row align-items-center">

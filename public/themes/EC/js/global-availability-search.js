@@ -5,6 +5,9 @@ var currentPropertyId = '';
 var priceTemplate = '';
 
 function replacePropertyData(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   currentPropertyId = id;
   var field = '';
   $('[data-place="property"]').each(function() {
@@ -117,7 +120,23 @@ function replacePropertyData(id){
   replaceGalleryNames(id);
 }
 
+function getPropertybyId(id){
+  return $.ajax({
+      url: '/getpropertyById/'+id,
+      type: 'get',
+      dataType: 'json',
+      async:false,
+      success:function(response){
+        properties[id] = response;
+        properties[id]['images'] = response.propertyImages;
+      }
+  });
+}  
+
 function replacePropertyMobileMenu(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   $('[data-replace="m_property_short_name"]').html(properties[id]['property_short_name']);
   $('[data-replace="m_property_gallery_btn"]').attr('onclick','replacePropertyData('+id+')');
   $('[data-replace="m_reviews_btn"]').attr('onclick','replaceReviewData('+id+')');
@@ -182,6 +201,9 @@ function initializeAllGalleries(){
 }
 
 function replaceGalleryImages(id, place, list, image_path){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   try{
     $('[data-place="' + place + '"]').each(function() {
         // field = $(this).attr('data-replace');
@@ -210,6 +232,9 @@ function replaceGalleryImages(id, place, list, image_path){
 }
 
 function replaceGalleryNames(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   var suitenamelist = `<li class="nav-item">
         <a class="nav-link" href="#" onclick="showSuiteImages('')">All Suites</a>
       </li>`;
@@ -272,6 +297,9 @@ function showGalleryImages(gallery, divid){
 }
 
 function replacePropertySuites(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   var suiteview = '';
   var firstsuite = 0;
   currentPropertyId = id;
@@ -299,6 +327,9 @@ function replacePropertySuites(id){
 }
 
 function replaceSuiteList(id){
+  if(!properties[id]){
+    getPropertybyId(id);
+  }
   $('#suites-popup').hide();
   $('#suites-loader').show();
 
@@ -383,14 +414,16 @@ function replaceSuiteList(id){
     });
 
   });
-  setTimeout('appendResultGridSlider()', 2000);    
-  setTimeout("$('#suites-loader').hide();", 3000);
-  setTimeout("$('#suites-popup').show();", 3000);
-  setTimeout("$('#suiteslist .result-grid').slick('setPosition');", 3000);  
+  setTimeout('appendResultGridSlider()', 1000);    
+  setTimeout("$('#suites-loader').hide();", 2000);
+  setTimeout("$('#suites-popup').show();", 2000);
+  setTimeout("$('#suiteslist .result-grid').slick('setPosition');", 2000);  
 }
 
 function replaceSuiteDetail(property_id, category_id){
-
+  if(!properties[property_id]){
+    getPropertybyId(property_id);
+  }
   currentPropertyId = property_id;
   var suite;
   properties[property_id]['suites'].forEach(function(e){
@@ -464,15 +497,18 @@ function replaceSuiteDetail(property_id, category_id){
   }
   $('[data-place="suite_room_images"]').html(roomimages);
   setTimeout("$('.nav-item #suite').addClass('show');", 1000);
-  setTimeout('appendSlider()', 2000);
+  setTimeout('appendSlider()', 1000);
   replacePropertyData(property_id);
-  setTimeout("$('.suite-popup').slick('setPosition');", 4000);
+  setTimeout("$('.suite-popup').slick('setPosition');", 1000);
 
   $("#property-name").hide();
 }
 
 function replaceSuiteBoard(){
-  console.log('hello');
+  if(!properties[id]){
+     getPropertybyId(currentPropertyId);
+  }
+
   if(!boardTemplate){
     boardTemplate = $('#suiteinfo .suite-board-body').html();
   }
@@ -514,6 +550,9 @@ function appendSearchGridSlider(){
 }
 
 function replaceRooms(property_id, category_id){
+  if(!properties[property_id]){
+    getPropertybyId(property_id);
+  }
   var suite;
   properties[property_id]['suites'].forEach(function(e){
     if(category_id === e.id){
@@ -711,6 +750,9 @@ function getHotelDefaultChannel(id){
 }
 
 function replacePrices(cat_id, property_id = null){
+    if(!properties[property_id]){
+      getPropertybyId(property_id);
+    }
     if(!property_id){
       property_id = currentPropertyId;
     }
@@ -774,10 +816,10 @@ function replacePrices(cat_id, property_id = null){
 
 $(document).ready(function(){
 
-  $(".nav-item .nav-link .delete_exp").click(function(e) {
+  $(document).on('click', '.delete_exp', function(e){
     e.preventDefault();
-    $("#experience").remove();
-    var url = createSearchUrl();   
+    $("#experienced").remove();
+    var url = createSearchUrl(null);   
     searchResults(url);
   });
 
@@ -922,7 +964,7 @@ function searchResults(url){
             $('body').css('overflow', 'auto');
             $('.pageload').hide();
             lazyLoadMe('results-media');
-          }, 500)
+          }, 200)
         }
     });
 }
@@ -951,6 +993,7 @@ function createSearchUrl(experience = '', layoutView = 'ajax'){
   if(layoutView == 'ajax'){
     $('.pageload').show();
   }
+
   if(experience !== null && !experience){
     experience = getUrlParam('experience');
     if(!experience){
@@ -1068,4 +1111,12 @@ function appendBreadCrumb(lb, lbId){
         </a>
       </span>
     </li>`);
+}
+
+
+function HideDestination(currentdesti){
+  var childData = $('.row .col-9 .row .col-3 nav', $('#' + currentdesti));
+  if(childData.html().trim() == ''){
+    $('.row .col-9', $('#' + currentdesti)).hide();
+  }
 }

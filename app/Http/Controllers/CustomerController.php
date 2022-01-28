@@ -27,9 +27,19 @@ class CustomerController extends Controller {
     }
 
     public function getRegister(Request $request, $pid = null) {
+        $reff = $request->input('referer');
+        if($reff){
+            \Session::put('referer', $reff);
+            \Session::save();
+        }
         if (\Auth::check()):
             return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         endif;
+        $currentdomain = \Config::get('app.currentdomain');
+        $onelogindomain = \Config::get('app.onelogindomain');
+        if($currentdomain != 'onelogin'){
+            return Redirect::to($onelogindomain.'/register?referer='.request()->getSchemeAndHttpHost());
+        }
         if (CNF_REGIST == 'false') :
             if (\Auth::check()):
                 return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));

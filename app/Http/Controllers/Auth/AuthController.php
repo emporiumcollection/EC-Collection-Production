@@ -173,6 +173,7 @@ class AuthController extends Controller
         Session::forget('selected_suite_guest');
         Session::forget('booking_number');
         Session::forget('Guests');
+        Session::forget('page');
         
         Auth::logout();
         return redirect('/');

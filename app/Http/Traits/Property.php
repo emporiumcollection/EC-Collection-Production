@@ -85,7 +85,7 @@ trait Property {
             $destinationId = $destination[0]['id'];
         }
 
-        return properties::orderByRaw("RAND()")->select([
+        $properties = properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
             'property_short_name',
@@ -94,67 +94,28 @@ trait Property {
             'detail_section1_description_box1', 
             'detail_section1_description_box2', 
             'detail_section1_description_box2', 
-            'roomamenities', 
-            'assign_amenities', 
             'latitude',
             'longitude',
-            'address', 
-            'internetpublic',
-            'internetroom',
-            'children_policy',
-            'checkin',
-            'checkout',
-            'transfer',
-            'smookingpolicy',
-            'smookingrooms',
-            'numberofrooms',
-            'availableservices',
-            'pets',
-            'carpark',
-            'bar_ids',
-            'spa_ids',
-            'restaurant_ids',
             'city',
             'property_usp',
-            'covid_info',
-            'covid_link',
             'youtube_channel'
             ])
         ->with([
-            'boards',
-            'container',
-            'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
-            }, 
-            'roomImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }]);
-                //->limit(20);
-            },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
                 }]);
-                //->limit(20);
             }, 
-            'hotelBrochureImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }]);
-                //->limit(20);
-            }
         ])
-        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%' ) ")
+        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0 ) ")
         //->where('country', '=', $keyword)
         ->where('editor_choice_property', '=', 1)
-        ->where('property_status', '=', 1)
-        ->limit(2)
-        ->get();
+        ->where('property_status', '=', 1);
 
+        $this->applyFilter($properties);
+
+        return $properties->limit(2)->get();
     }
 
     public function getFeaturedProperties($cities,$keyword){
@@ -167,7 +128,7 @@ trait Property {
             $destinationId = $destination[0]['id'];
         }
 
-        return properties::orderByRaw("RAND()")->select([
+        $properties = properties::orderByRaw("RAND()")->select([
             'id', 
             'property_name', 
             'property_short_name',
@@ -175,101 +136,53 @@ trait Property {
             'detail_section1_title', 
             'detail_section1_description_box1', 
             'detail_section1_description_box2', 
-            'detail_section1_description_box2', 
-            'roomamenities', 
-            'assign_amenities', 
             'latitude',
             'longitude',
-            'address', 
-            'internetpublic',
-            'internetroom',
-            'children_policy',
-            'checkin',
-            'checkout',
-            'transfer',
-            'smookingpolicy',
-            'smookingrooms',
-            'numberofrooms',
-            'availableservices',
-            'pets',
-            'carpark',
-            'bar_ids',
-            'spa_ids',
-            'restaurant_ids',
             'city',
             'property_usp',
-            'covid_info',
-            'covid_link',
             'youtube_channel'
         ])
         ->with([
-            'boards',
-            'container',
-            //'images',
-            'suites' => function($query){
-                return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
-            },
             'propertyImages' => function($query){
                 return $query->with(['file' => function($query){
                     return $query->select(['id','file_name']);
 
                 }]);
-                //->limit(20);
             }, 
-            'roomImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }]);
-                //->limit(20);
-            }, 
-            'hotelBrochureImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
-
-                }]);
-                //->limit(20);
-            }
         ])
-        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%' ) ")
+        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
         //->where('country', '=', $keyword)
         ->where('feature_property', '=', 1)
-        ->where('property_status', '=', 1)
-        ->limit(2)
-        ->get();
+        ->where('property_status', '=', 1);
+
+        $this->applyFilter($properties);
+
+        return $properties->limit(2)->get();
     }
 
     public function searchPropertiesByKeyword($cities, $keyword){
-        $key = md5($keyword.request()->get('experience').
+        /*$key = md5($keyword.request()->get('experience').
         request()->get('facility_ids').
         request()->get('atmosphere_ids').
-        request()->get('style_ids'));
+        request()->get('style_ids'));*/
         $destinationId = 0;
 
-        return Cache::get($key, function () {
+        // return Cache::get($key, function () {
             $destinationId = 0;
-            $keyword = request()->get('s');
+            // $keyword = request()->get('s');
 
-            $destination = categories::select(['id'])
-            ->where('category_name', '=', $keyword)
-            ->get()
-            ->toArray();
-            if(!empty($destination)){
-                $destinationId = $destination[0]['id'];
-            }
-
-
-            //Query starts
-            $experience_id = false;
-            if(request()->get('experience')){
-                $experience = categories::select(['id'])
-                ->where('category_alias', '=', request()->get('experience'))
+            $destinations = categories::select(['id'])
+                ->where('category_name', '=', $keyword)
                 ->get()
                 ->toArray();
 
-                $experience_id = $experience[0]['id'];
+            if(!empty($destinations)){
+                foreach($destinations as $destination){
+                    $destinationId = $destination['id'];
+                }
             }
 
+            //Query starts
             $properties = properties::select([
                 'id', 
                 'property_name', 
@@ -279,108 +192,35 @@ trait Property {
                 'detail_section1_description_box1', 
                 'detail_section1_description_box2', 
                 'detail_section1_description_box2', 
-                'roomamenities', 
-                'assign_amenities', 
                 'latitude',
                 'longitude',
-                'address', 
-                'internetpublic',
-                'internetroom',
-                'children_policy',
-                'checkin',
-                'checkout',
-                'transfer',
-                'smookingpolicy',
-                'smookingrooms',
-                'numberofrooms',
-                'availableservices',
-                'pets',
-                'carpark',
-                'bar_ids',
-                'spa_ids',
-                'restaurant_ids',
                 'city',
                 'property_usp',
-                'covid_info',
-                'covid_link',
                 'youtube_channel'
             ])
             ->with([
                 'boards',
                 'container',
-                //'images',
                 'PropertyCategoryPackages' => function($query){
                     $query->with(['package']);
-                },
-                'suites' => function($query){
-                    return $query->with(['rooms', 'amenities'])->where('status', 0)->where('show_on_booking', '=', 1);
                 },
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
                         return $query->select(['id','file_name']);
 
                     }]);
-                    //->limit(20);
                 }, 
-                'roomImages' => function($query){
-                    return $query->with(['file' => function($query){
-                        return $query->select(['id','file_name']);
-
-                    }]);
-                    //->limit(20);
-                }, 
-                'hotelBrochureImages' => function($query){
-                    return $query->with(['file' => function($query){
-                        return $query->select(['id','file_name']);
-
-                    }]);
-                    //->limit(20);
-                }
             ])
-            //->whereIn('city', $cities)
-            ->whereRaw(" (country = '$keyword' or city = '$keyword' or property_category_id = '$destinationId' or property_category_id like '%,$destinationId' or property_category_id like '$destinationId,%') ")
-            //->where('country', '=', $keyword)
-            //->where('latitude', '!=', '')
-            //->where('longitude', '!=', '')
+            ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
             ->where('feature_property', '!=', '1')
             ->where('editor_choice_property', '!=', '1')
             ->where('property_status', '=', 1);
 
-            if(request()->get('atmosphere_ids')){            
-                $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
-                $aWhere = [];
-                foreach($atmosphere_ids as $id){
-                    $aWhere[] = "atmosphere_ids = '$id' or atmosphere_ids like '%,$id' or atmosphere_ids like '$id,%' ";
-                }    
-                $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
-            }
-
-            if(request()->get('facility_ids')){
-                $facility_ids = explode(",",request()->get('facility_ids'));
-                $aWhere = [];
-                foreach($facility_ids as $id){
-                    $aWhere[] = "facility_ids = '$id' or facility_ids like '%,$id' or facility_ids like '$id,%' ";
-                }    
-                $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
-            }
-
-            if(request()->get('style_ids')){
-                $style_ids = explode(",",request()->get('style_ids'));
-                $aWhere = [];
-                foreach($style_ids as $id){
-                    $aWhere[] = "style_ids = '$id' or style_ids like '%,$id' or style_ids like '$id,%' ";
-                }    
-                $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
-            }
-
-            if($experience_id){
-                $properties->whereRaw("(property_category_id = '$experience_id' or property_category_id like '%,$experience_id' or property_category_id like '$experience_id,%')");
-            }   
+            $this->applyFilter($properties);
 
             return $properties
-            //->limit(6)
             ->get();
-        });            
+        // });            
     }
 
     public function getPropertyByslug($slug){
@@ -495,7 +335,7 @@ trait Property {
         ->with([
             'boards',
             'container',
-            //'images',
+            'images',
             'PropertyCategoryPackages' => function($query){
                 $query->with(['package']);
             },
@@ -524,14 +364,15 @@ trait Property {
                 //->limit(20);
             }
         ])
-        ->where('id', '=', $id);
-
-        return $property->get();
+        ->where('id', '=', $id)
+        ->get();
+        return $property;
     }
 
     private function filterByprice($max,$min,&$propertyResults){
         foreach ($propertyResults as $k => $property) {
-            if($property->price >= $min && $property->price <= $max ){
+            $price = (int) str_replace(",", '', $property->price);
+            if($price >= $min && $price <= $max ){
                 
             }else{  
                 unset($propertyResults[$k]);
@@ -554,18 +395,12 @@ trait Property {
             if(!empty($property->suites)){
                 $suiteNameList = [];
                 foreach($property->suites as $sk => $suite){
-/*                    if(!$suite->status){
-                        unset($property->suites[$sk]);
-                        continue;
-                    }
-*/                    
-                    $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
                     $suiteNameList[] = '<a href="/hotel/suite/'.$suite->property_id.'/#'.$suite->id.'">'.ucwords($suite->cat_short_name).'</a>';
                     if(!empty($suite->rooms->toArray())){
                         foreach($suite->rooms as $rk => $room){
                             //$properties[$k]->suites[$sk]->rooms[$rk]->price = $this->getRoomPrice($room->id);
 
-                            if(!isset($properties[$k]->suites[$sk]->rooms[$rk]->images)){
+                            if(!isset($properties[$k]->suites[$sk]->rooms[$rk]->images) && isset($room->property_id)){
                                 $properties[$k]->suites[$sk]->rooms[$rk]->images = $this->getRoomImages($room->property_id, $room->category_id);
                             }
                             break;
@@ -587,6 +422,10 @@ trait Property {
                                 'name' => 'room-1',
                             ]
                         ];
+                    }
+                    $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
+                    if($property->suites[$sk]->price == 0){
+                        unset($property->suites[$sk]);
                     }
                 }
             }
@@ -621,9 +460,9 @@ trait Property {
                 $prestau[$res->id]['title'] = $res->title;
                 $prestau[$res->id]['gallery'] = $this->getResSpaBarGallery($res->id, 'res');
             }
-            $properties[$k]->restaurantList = $prestau;
 
-        }
+            $properties[$k]->restaurantList = $prestau;
+        }        
     }
 
     private function getResSpaBarGallery($id, $type){
@@ -1194,7 +1033,6 @@ trait Property {
 
             curl_close($curl);
             $response_att = json_decode($response);
-            // print_r($response_att);exit;
             if(!empty($response_att)){   
                 $json = $response_att->data[0]->attributes;
                 $json_att = json_encode($json);
@@ -1210,6 +1048,7 @@ trait Property {
         exit;
     }
 
+<<<<<<< HEAD
     /*public function getLocationInfoRoadGoat($keyword){
         // $properties = \DB::table('tb_categories')->where('category_name', '=', $keyword)->get();
         
@@ -1249,4 +1088,48 @@ trait Property {
         // }
         // exit;
     }*/
+=======
+    private function applyFilter(&$properties){
+        $experience_id = false;
+        if(request()->get('experience')){
+            $experience = categories::select(['id'])
+            ->where('category_alias', '=', request()->get('experience'))
+            ->get()
+            ->toArray();
+
+            $experience_id = $experience[0]['id'];
+        }
+
+        if(request()->get('atmosphere_ids')){            
+            $atmosphere_ids = explode(",",request()->get('atmosphere_ids'));
+            $aWhere = [];
+            foreach($atmosphere_ids as $id){                
+                $aWhere[] = "FIND_IN_SET('".$id."',`atmosphere_ids`) <> 0";
+            }    
+            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
+        }
+
+        if(request()->get('facility_ids')){
+            $facility_ids = explode(",",request()->get('facility_ids'));
+            $aWhere = [];
+            foreach($facility_ids as $id){                
+                $aWhere[] = "FIND_IN_SET('".$id."',`facility_ids`) <> 0";
+            }    
+            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
+        }
+
+        if(request()->get('style_ids')){
+            $style_ids = explode(",",request()->get('style_ids'));
+            $aWhere = [];
+            foreach($style_ids as $id){
+                $aWhere[] = "FIND_IN_SET('".$id."',`style_ids`) <> 0";
+            }    
+            $properties->whereRaw(' ('.implode(' OR ', $aWhere) . ') ');
+        }
+
+        if($experience_id){
+            $properties->whereRaw("FIND_IN_SET('".$experience_id."',`property_category_id`) <> 0");
+        }
+    }
+>>>>>>> b47b8f09bd49004578788979b76de0dcad61a37a
 }
