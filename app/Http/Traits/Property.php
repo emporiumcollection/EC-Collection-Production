@@ -1090,5 +1090,4 @@ trait Property {
             $properties->whereRaw("FIND_IN_SET('".$experience_id."',`property_category_id`) <> 0");
         }
     }
->>>>>>> b47b8f09bd49004578788979b76de0dcad61a37a
 }
