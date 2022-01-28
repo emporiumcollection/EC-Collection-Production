@@ -46,6 +46,28 @@
                 </li>
               @endforeach
             </ul>
+            <div class="dropdown mobile-breadcrumb dropdown-block mobile-on">
+              <button class="btn btn-block dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                Home
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(-493px, -300px, 0px);" x-out-of-boundaries="">
+                @foreach($path as $cid => $cat)
+                  @if(count($path) > 3)
+                    @if(count($path) - 1 == $cid || count($path) - 2 == $cid)
+                    <a class="dropdown-item" href="/globalsearchavailability?s={{ $cat }}">{{ $cat }}</a>
+                    @else
+                      <a class="dropdown-item" class="nav-link mb-0">{{ $cat }}</a>
+                    @endif
+                  @else
+                    @if(count($path) - 1 == $cid)
+                      <a class="dropdown-item" href="/globalsearchavailability?s={{ $cat }}">{{ $cat }}</a>
+                    @else
+                      <a class="dropdown-item" class="nav-link mb-0">{{ $cat }}</a>
+                    @endif
+                  @endif
+              @endforeach
+              </div>
+            </div>
           </div>
         </div>
         <div class="mobile-off">          

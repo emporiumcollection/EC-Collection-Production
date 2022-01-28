@@ -315,7 +315,6 @@ class ReservationController extends Controller {
         $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id',Session::get('property_id'))->first();
         $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
 
-
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
         $this->data['arrive'] = '';
@@ -848,7 +847,7 @@ class ReservationController extends Controller {
             });
 
             $admin_mail = \Mail::send('frontend.themes.EC.reservation.emails.admin_reserve_email', $data, function($message) use ($data) { 
-                $message->from($data['admin_email']);
+                $message->from("emporium_voyage@yopmail.com");
                 $message->to($data['admin_email']);
                 $message->subject("Reservation Detail");
             });
