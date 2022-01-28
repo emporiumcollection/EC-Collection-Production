@@ -21,6 +21,8 @@ Route::get('/logout', 'Auth\AuthController@logout');
 Route::post('/sendSMS', 'Auth\AuthController@create');
 Route::post('/userregister', 'Auth\AuthController@verify');
 
+Route::get('/check-one-login', 'OneLoginController@getloggedIn');
+
 Route::post('/sendinvitation','UserController@EmailInvitation');
 
 // Route::post('/invite/companionemail', 'UserController@inviteCompanion');
@@ -292,6 +294,8 @@ Route::get('social-instagram/{continent}/{region}/{country}/{cat}', 'FrontEnd\Fr
 Route::get('social-stream', 'FrontEnd\FrontendPagesController@socialStreamWall');
 
 Route::resource('sximoapi', 'SximoapiController');
+Route::resource('/onelogin', 'UserController@onelogin');
+
 Route::group(['middleware' => 'auth'], function()
 {
 
