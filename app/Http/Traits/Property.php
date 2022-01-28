@@ -1033,7 +1033,7 @@ trait Property {
 
             curl_close($curl);
             $response_att = json_decode($response);
-            if(!empty($response_att)){   
+            if(isset($response_att->data[0]->attributes)){   
                 $json = $response_att->data[0]->attributes;
                 $json_att = json_encode($json);
                 DB::table('tb_categories')->where('category_name', $keyword)->update(['location_info' => $json_att]);
