@@ -68,6 +68,7 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="infoTab">
+                        <?php  echo isset($location[0]['category_description'])?$location[0]['category_description']:'';?>
                         <div class="row">
                             <div class="col-4">
                                 <select id="best-place" class="w-100 mb-3">
