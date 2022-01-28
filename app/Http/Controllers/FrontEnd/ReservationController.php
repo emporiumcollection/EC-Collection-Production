@@ -45,7 +45,7 @@ class ReservationController extends Controller {
             $reservation = Session::get('reservation');
             $onelogin = Session::get('onelogin');
             $currentdomain = \Config::get('app.currentdomain');
-            if($currentdomain != 'onelogin'){
+            if($currentdomain != 'emporiumcollection'){
                 $onelogindomain = \Config::get('app.onelogindomain');
                 return Redirect::to($onelogindomain.'/check-one-login?referer='.$onelogin['page'].'&page='.$onelogin['path']);
             }
