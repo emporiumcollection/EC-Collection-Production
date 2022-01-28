@@ -59,7 +59,7 @@
                             <p style="color: red; display: none" id="email_error"><strong>select checkboxe</strong></p>
                             <div class="form-group">
                                 <button type="submit" name="submit" class="btn btn-primary btn-block mb-3 send">Send invitations</button>
-                                <a href="{{ $redirect_to }}" class="btn btn-outline-dark btn-block">Skip for now</a>
+                                <a href="/check-one-login" class="btn btn-outline-dark btn-block">Skip for now</a>
                             </div>
                         </div>
                     </form>

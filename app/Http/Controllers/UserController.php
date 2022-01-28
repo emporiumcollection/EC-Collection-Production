@@ -66,7 +66,7 @@ class UserController extends Controller {
                 ];
                 dispatch(new SendEmailJob($details));
             }
-            return Redirect::to($redirect_to);
+            return Redirect::to('/check-one-login');
         }
         return redirect()->back();
     }
@@ -425,8 +425,7 @@ class UserController extends Controller {
                         } else {
                             \Session::put('lang', 'en');
                         }
-
-                        if(\Session::has('referer')){
+                        if(\Session::has('page') || \Session::has('referer')){
                             return Redirect::to('/check-one-login');
                         }
 
@@ -996,7 +995,14 @@ class UserController extends Controller {
     }
 
     public function onelogin(){
+        // echo "hello"; die();
         $authdata = request()->input('authdata');
+        $page = request()->input('page');
+        if($page){            
+            \Session::put('page', $page);
+            \Session::save();
+        }
+        // print_r(\Session::get('page'));die();
 		if(isset($authdata)){
 			$decodeurl = base64_decode($authdata);
 			$reqauthdata=explode("|",$decodeurl);
@@ -1055,7 +1061,9 @@ class UserController extends Controller {
                     Session::put('gid', $row->group_id);
                     Session::put('eid', $row->group_email);
                     Session::put('fid', $row->first_name . ' ' . $row->last_name);
-                    if (CNF_FRONT == 'false') :
+                    if (\Session::get('page')) :
+                        return Redirect::to(\Session::get('page'));
+                    elseif(CNF_FRONT == 'false') :
                         return Redirect::to('dashboard');
                     else :
                         return Redirect::to('');

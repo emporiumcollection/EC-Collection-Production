@@ -21,6 +21,7 @@ use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Illuminate\Support\Facades\Session;
 use Response;
 use Validator;
+use Redirect;
 use Illuminate\Support\Facades\Crypt;
 
 class ReservationController extends Controller {
@@ -34,10 +35,20 @@ class ReservationController extends Controller {
 
         if (!\Auth::check()){
             Session::put('reservation', [
-                'redirect_url' => $url != '' ? $url : $request->fullUrl()
+                'redirect_url' => $url != '' ? $url : $request->fullUrl(),
+            ]);
+            Session::put('onelogin', [
+                'page' => $request->getSchemeAndHttpHost(),
+                'path' => $url != '' ? $url : $request->path(),
             ]);
             Session::save();
-            return redirect('user/login');
+            $reservation = Session::get('reservation');
+            $onelogin = Session::get('onelogin');
+            $currentdomain = \Config::get('app.currentdomain');
+            if($currentdomain != 'onelogin'){
+                $onelogindomain = \Config::get('app.onelogindomain');
+                return Redirect::to($onelogindomain.'/check-one-login?referer='.$onelogin['page'].'&page='.$onelogin['path']);
+            }
         }
         // $this->setSummaryData();
         $this->_checkBoards($id);
