@@ -17,30 +17,29 @@
             {{ $terms_n_conditions->terms_n_conditions }} </div>
         @else
       <div class="iubenda_legal_document"> 
-        <h1 style="outline: none;">Privacy Policy of <strong>emporium-collection.com</strong></h1> 
         <p>
           @if(isset($global_policies))
             @foreach($global_policies as $policy)
               @if(Config::get('app.currentdomain') == 'voyage')  
                 @if($policy->domain == 'voyage')
-                  {{$policy->policy }}
+                  <?php echo $policy->policy; ?>
                 @endif 
               @elseif(Config::get('app.currentdomain') == 'safari')
                   @if($policy->domain == 'safari')
-                    {{ $policy->policy }}
+                    <?php echo $policy->policy; ?>
                   @endif                  
               @elseif(Config::get('app.currentdomain') == 'spa')
                   @if($policy->domain == 'spa')
-                    {{ $policy->policy }}
+                    <?php echo $policy->policy; ?>
                   @endif  
               @elseif(Config::get('app.currentdomain') == 'islands')
                   @if($policy->domain == 'islands')
-                    {{$policy->policy}}
+                    <?php echo $policy->policy; ?>
                   @endif  
               @endif
             @endforeach
           @endif      
-        ?></p>
+        </p>
         </div>
       </div>
       @endif
