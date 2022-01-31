@@ -825,9 +825,9 @@ $(document).ready(function(){
 
   $('body').click(function (e) {
     if(!$(e.target).hasClass('sidebar-main') && !$(e.target).parents('div').hasClass('sidebar-main')){
-      $('.sidebar-main').removeClass('show');
-      $('body').css('overflow', 'auto');
-      $('.sidebar-overlay').remove();      
+      // $('.sidebar-main').removeClass('show');
+      // $('body').css('overflow', 'auto');
+      // $('.sidebar-overlay').remove();      
     }
   });
 

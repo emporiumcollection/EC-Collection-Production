@@ -734,18 +734,6 @@
     //   map.invalidateSize();
     // }, 10);
   });
-  $(".close-sidebar, .sidebar-back").click(function (e) {
-    e.preventDefault();
-    $(this).closest('.sidebar-main').removeClass('show');
-    $(this).closest('body').css('overflow', 'auto');
-    $('.sidebar-overlay').remove();
-  });
-  $('body').on('click', '.sidebar-overlay', function () {
-    $('.sidebar-main').removeClass('show');
-    $('.sidebar-overlay').remove();
-    $('body').css('overflow', 'auto');
-    $('.sidebar').removeClass('show');
-  });
   $('.suite-list').on('click', '.select-sd', function (e) {
     e.preventDefault();
     $('.suite-board').removeClass('active');

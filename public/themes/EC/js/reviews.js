@@ -2,7 +2,7 @@
 var reviews = [];
 $(document).ready(function(){
     $(document).on('click', '#btn-review-save', function(){
-        if(!$('#review_form').valid()) 
+        if(!$('#review_form').valid() || !$('#review_form_mobileview').valid()) 
         {
             $('#error-msg').html('Please Insert all Fields');
         }
@@ -11,14 +11,67 @@ $(document).ready(function(){
         
     $("#review_form").validate({
         submitHandler: function(form) {
-            if(!$('[name="rate"]:checked').length){
-                $('#error-msg').html('Please Insert all Fields');
-                return false;
-            }
+            // if(!$('[name="rate"]:checked').length){
+            //     $('#error-msg').html('Please Insert all Fields');
+            //     return false;
+            // }
             $.ajax({
-                url: "/hotel/add-reviews",
+                url: "/add-reviews",
                 type: "POST",
                 data: $('#review_form').serialize(),
+                dataType: 'json',
+                success: function(data) {
+                    //console.log(data);
+                    var post = '<div class="col-lg-6 reviews_list reviews-sidebar">'
+                                    +'<div class="row">'
+                                        +'<div class="col-3 pl-5">'
+                                            +'<p><b>'+data.fname+' '+data.lname+'</b></p>'
+                                            +'<p>'+data.country+'</p>'
+                                        +'</div>'
+                                        +'<div class="col pr-5">'
+                                            +'<div class="rate mb-1">'
+                                                +'<span class="mr-4">';
+                                                for(var count = 0; count < data.rating; count++){
+
+                                                    post+='<i class="fa fa-star mr-2" aria-hidden="true"></i>';
+                                                }
+                                                post+='</span>'
+                                            +'<span>'
+                                                    +'<b>'+data.rating+'/10</b>'
+                                                +'</span>'
+                                            +'</div>'
+                                            +'<div class="review-content">'
+                                                +'<p>'+data.comment+'</p>'
+                                            +'</div>'
+                                        +'</div>'
+                                    +'</div>'
+                                +'</div>';
+                    
+                    $('#reviews_list').prepend(post);
+    
+                    $('#review_form').trigger("reset");
+                    $('#error-msg').html('Review Added successfully');
+                    
+    
+                }, 
+                error: function(data) {
+                    console.log('Error:', data);
+                    $('#btn-save').html('Save Changes');
+                }
+            });
+        }
+    });
+
+    $("#review_form_mobileview").validate({
+        submitHandler: function(form) {
+            // if(!$('[name="rate"]:checked').length){
+            //     $('#error-msg').html('Please Insert all Fields');
+            //     return false;
+            // }
+            $.ajax({
+                url: "/mobile_add-reviews",
+                type: "POST",
+                data: $('#review_form_mobileview').serialize(),
                 dataType: 'json',
                 success: function(data) {
                     //console.log(data);
@@ -88,7 +141,7 @@ function replaceReviewData(id = null){
     $('#hotelid').val(id);
     $('#hotelnm').html(properties[id]['property_name']);
     $.ajax({
-        url: "/hotel/get-reviews/"+id,
+        url: "/get-reviews/"+id,
         type: "GET",
         data: $(this).serialize(),
         dataType: 'json',

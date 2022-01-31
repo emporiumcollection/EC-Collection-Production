@@ -45,7 +45,9 @@ class HotelDetailController extends Controller
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
         $this->data['photos'] = '';
+        print_r($slug);exit;
         $this->data['property'] = $this->getPropertyByslug($slug);
+        print_r($this->data['property']);exit;
         $this->setGalleryAndFormat($this->data['property']);
         $this->data['property'] = $this->data['property'][0];
         $this->data['property_id'] = $this->data['property']->id;

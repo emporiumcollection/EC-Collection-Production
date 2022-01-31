@@ -15,6 +15,7 @@ class ReviewController extends Controller
     use ReviewTrait;
 
     public function addreviews(Request $request){
+        
         $reviews_data = array(
                     'hotel_id' => $request->hotelid, 
                     'rating' => $request->rate, 
@@ -28,6 +29,20 @@ class ReviewController extends Controller
         return response()->json( $reviews_data);
     }
 
+    public function addreviewsMobileView(Request $request){
+        print_r($request->all());exit;
+        $reviews_data = array(
+                    'hotel_id' => $request->hotelid, 
+                    'rating' => $request->rate, 
+                    'fname' => $request->fname, 
+                    'lname' => $request->lname, 
+                    'country' => $request->country, 
+                    'comment' => $request->comment
+                    );
+
+        $reviews = review::insert( ['hotel_id' => $request->hotelid, 'rating' => $request->rate, 'fname' => $request->fname, 'lname' => $request->lname, 'country' => $request->country, 'comment' => $request->comment]);
+        return response()->json( $reviews_data);   
+    }
     public function getPropertyReviews($id){
         $this->data['reviews'] = $this->getReviews($id);
         return response()->json($this->data['reviews']);

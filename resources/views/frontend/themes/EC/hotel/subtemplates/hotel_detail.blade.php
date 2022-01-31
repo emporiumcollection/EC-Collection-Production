@@ -311,9 +311,9 @@
                     </div>
                   </div>
                   <div class="col-lg-4 col-md-6 mb-5">
+                    @if(!empty($hotel_data[0]->internetpublic))
                     <div class="qv-list">
                       <h4>Internet</h4>
-                      @if(!empty($hotel_data[0]->internetpublic))
                         <p class="mb-0"><b>Public areas :</b> {{$hotel_data[0]->internetpublic }}</p>
                       @endif
                       @if(!empty($hotel_data[0]->internetroom))
@@ -339,34 +339,46 @@
                       </div>
                     </div>
                   @endif
-                  <div class="col-lg-4 col-md-6 mb-5">
-                    <div class="qv-list">
-                      <h4>Transportation and transfer</h4>
-                      <p class="mb-0"><b>Transfer :</b> subject to supplement</p>
+                  @if(isset($hotel_data[0]->transfer))
+                    <div class="col-lg-4 col-md-6 mb-5">
+                      <div class="qv-list">
+                        <h4>Transportation and transfer</h4>
+                        <p class="mb-0"><b>Transfer :</b> subject to supplement</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-4 col-md-6 mb-5">
-                    <div class="qv-list">
-                      <h4>Smooking policy</h4>
-                      <p class="mb-0">{{$hotel_data[0]->smookingpolicy }}</p>
-                      <p class="mb-0"><b>Smooking rooms:</b> {{$hotel_data[0]->smookingrooms }}</p>
+                  @endif  
+                  @if(isset($hotel_data[0]->smookingpolicy))
+                    <div class="col-lg-4 col-md-6 mb-5">
+                      <div class="qv-list">
+                        <h4>Smooking policy</h4>
+                        <p class="mb-0">{{$hotel_data[0]->smookingpolicy }}</p>
+                        <p class="mb-0"><b>Smooking rooms:</b> {{$hotel_data[0]->smookingrooms }}</p>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-4 col-md-6 mb-5">
-                    <div class="qv-list">
-                      <h4>Rooms</h4>
-                      <p class="mb-0">190 rooms and suites</p>
-                      <p class="mb-0"><b>In-room amenities :</b> iPod dock, flatscreen TV, in-room safe,
-                        minibar
-                      </p>
+                  @endif
+                  @if(isset($hotel_data[0]))
+                    <div class="col-lg-4 col-md-6 mb-5">
+                      <div class="qv-list">
+                        <h4>Suites</h4>
+                        @foreach($hotel_data as $val)
+                          @foreach ($val->suites as $key => $value)
+                            <p class="mb-0">{{ $value->category_name }}</p>
+                          @endforeach        
+                        @endforeach  
+                        {{-- <p class="mb-0"><b>In-room amenities :</b> iPod dock, flatscreen TV, in-room safe,
+                          minibar
+                        </p> --}}
+                      </div>
                     </div>
-                  </div>
+                  @endif  
                   <div class="col-lg-4 col-md-6 mb-5">
                     <div class="qv-list">
                       <h4>Available services</h4>
-                      <p class="mb-0">Air conditioned hotel</p>
-                      <p class="mb-0">Laundry service</p>
-                      <p class="mb-0">Concirge service</p>
+                      @if(isset($available_services))
+                        @foreach($available_services as $val)
+                          <p class="mb-0">{{ $val->title}}</p>
+                        @endforeach
+                      @endif  
                     </div>
                   </div>
                   @if(!empty($hotel_data[0]->pets))
@@ -434,7 +446,7 @@
             </div>
           </div>
         </div>
-      </div>
+      
       <div class="card ipad-view">
         <div class="card-header" id="review_id">
           <h2 class="mb-0">
@@ -478,474 +490,102 @@
                   </div>
                 </div>
               </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>P.M</b></p>
-                    <p>United Kingdom</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>9.03/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        Fantastic hotel, great atmosphere, room upgrade was much appreciated. All the
-                        staff I
-                        interacted with were great. One of the best hotel experiences I have ever had I
-                        would
-                        unreservedly recommend the hotel and will return.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>G.P</b></p>
-                    <p>United Kingdom</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>9.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        Probably the best City hotel weve stayed at. Alal Gogo was particularly
-                        outstanding.
-                        He
-                        managed to arrange for us to attend the Woody Allan Band show with our guest (who
-                        is a
-                        musician) even when it had been booked out and was very courteous throughout.
-                        Thank
-                        you
-                        so muclh. A wonderful stay.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>C.M</b></p>
-                    <p>United States</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>8.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        We love the hotel and its location. The front desk staff was extremely pleasant.
-                        The
-                        breakfast staff are very friendly and efficient.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>C.M</b></p>
-                    <p>United States</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>8.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        We love the hotel and its location. The front desk staff was extremely pleasant.
-                        The
-                        breakfast staff are very friendly and efficient.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>P.M</b></p>
-                    <p>United Kingdom</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>9.03/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        Fantastic hotel, great atmosphere, room upgrade was much appreciated. All the
-                        staff I
-                        interacted with were great. One of the best hotel experiences I have ever had I
-                        would
-                        unreservedly recommend the hotel and will return.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>G.P</b></p>
-                    <p>United Kingdom</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>9.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        Probably the best City hotel weve stayed at. Alal Gogo was particularly
-                        outstanding.
-                        He
-                        managed to arrange for us to attend the Woody Allan Band show with our guest (who
-                        is a
-                        musician) even when it had been booked out and was very courteous throughout.
-                        Thank
-                        you
-                        so muclh. A wonderful stay.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>C.M</b></p>
-                    <p>United States</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>8.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        We love the hotel and its location. The front desk staff was extremely pleasant.
-                        The
-                        breakfast staff are very friendly and efficient.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>C.M</b></p>
-                    <p>United States</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>8.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        We love the hotel and its location. The front desk staff was extremely pleasant.
-                        The
-                        breakfast staff are very friendly and efficient.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>P.M</b></p>
-                    <p>United Kingdom</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>9.03/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        Fantastic hotel, great atmosphere, room upgrade was much appreciated. All the
-                        staff I
-                        interacted with were great. One of the best hotel experiences I have ever had I
-                        would
-                        unreservedly recommend the hotel and will return.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>G.P</b></p>
-                    <p>United Kingdom</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>9.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        Probably the best City hotel weve stayed at. Alal Gogo was particularly
-                        outstanding.
-                        He
-                        managed to arrange for us to attend the Woody Allan Band show with our guest (who
-                        is a
-                        musician) even when it had been booked out and was very courteous throughout.
-                        Thank
-                        you
-                        so muclh. A wonderful stay.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>C.M</b></p>
-                    <p>United States</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>8.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        We love the hotel and its location. The front desk staff was extremely pleasant.
-                        The
-                        breakfast staff are very friendly and efficient.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>C.M</b></p>
-                    <p>United States</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>8.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        We love the hotel and its location. The front desk staff was extremely pleasant.
-                        The
-                        breakfast staff are very friendly and efficient.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>P.M</b></p>
-                    <p>United Kingdom</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>9.03/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        Fantastic hotel, great atmosphere, room upgrade was much appreciated. All the
-                        staff I
-                        interacted with were great. One of the best hotel experiences I have ever had I
-                        would
-                        unreservedly recommend the hotel and will return.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>G.P</b></p>
-                    <p>United Kingdom</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>9.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        Probably the best City hotel weve stayed at. Alal Gogo was particularly
-                        outstanding.
-                        He
-                        managed to arrange for us to attend the Woody Allan Band show with our guest (who
-                        is a
-                        musician) even when it had been booked out and was very courteous throughout.
-                        Thank
-                        you
-                        so muclh. A wonderful stay.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-6 reviews-list reviews-mobile">
-                <div class="row">
-                  <div class="col-3 pl-5">
-                    <p><b>C.M</b></p>
-                    <p>United States</p>
-                  </div>
-                  <div class="col pr-5">
-                    <div class="rate mb-1">
-                      <span class="mr-4">
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                        <i class="fa fa-star mr-2" aria-hidden="true"></i>
-                      </span>
-                      <span>
-                        <b>8.68/10</b>
-                      </span>
-                    </div>
-                    <div class="review-content">
-                      <p>
-                        We love the hotel and its location. The front desk staff was extremely pleasant.
-                        The
-                        breakfast staff are very friendly and efficient.
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
             <div class="text-center mb-3">
-              <div class="mb-3">
-                <a href="#" class="underline" id="loadMore">SEE MORE COMMENTS</a>
+              <div class="row reviews" id="reviews_list">
+                @if(isset($reviews))
+                  @foreach($reviews as $review)
+                    <div class="col-lg-6 reviews_list reviews-sidebar" style="display: none;">
+                        <div class="row">
+                            <div class="col-3 pl-5">
+                                <p><b>{{ $review->fname }} {{ $review->lname }}</b></p>
+                                <p>{{ $review->country }}</p>
+                            </div>
+                            <div class="col pr-5">
+                                <div class="rate mb-1">
+                                    <span class="mr-4">
+                                       
+                                        @for ($x = 0; $x < $review->rating ; $x++)
+                                            <i class="fa fa-star mr-2" aria-hidden="true"></i>
+                                        @endfor
+                                       
+                                    </span>
+                                    <span>
+                                        <b>{{ $review->rating }}/10</b>
+                                    </span>
+                                </div>
+                                <div class="review-content">
+                                    <p>
+                                        {{ $review->comment }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                  @endforeach
+                @endif
+              </div>
+              <div class="text-center mb-3">
+                  <div class="mb-3">
+                      <a href="javascript:void(0);" class="underline" id="loadMore">SEE MORE COMMENTS</a>
+                  </div>
+                  <!-- <a href="#" class="btn btn-dark btn-lg px-5 rounded-0">BOOK</a> -->
+              </div>
+              <div class="row">
+                <div class="col-md-6">
+                    <h4 class="my-4">Add Review</h4>
+                    <form method="POST" name="addreview" id="review_form_mobileview">
+                        {{ csrf_field() }}
+                        <input type="hidden" name="hotelid" id="hotelid" value="{{ isset($hotel_data[0]->id)?$hotel_data[0]->id:'' }}">
+                        <div id="error-msg"></div>
+                        <label for="crate">Rating</label>
+                        <div class="form-group">
+                            <div class="rate-input">
+                                
+                                <input type="radio" id="m_star10" name="rate" value="10" />
+                                <label for="star10" title="text">10 stars</label>
+                                <input type="radio" id="m_star9" name="rate" value="9" />
+                                <label for="star9" title="text">9 stars</label>
+                                <input type="radio" id="m_star8" name="rate" value="8" />
+                                <label for="star8" title="text">8 stars</label>
+                                <input type="radio" id="m_star7" name="rate" value="7" />
+                                <label for="star7" title="text">7 stars</label>
+                                <input type="radio" id="m_star6" name="rate" value="6" />
+                                <label for="star6" title="text">6 stars</label>
+                                <input type="radio" id="m_star5" name="rate" value="5" />
+                                <label for="star5" title="text">5 stars</label>
+                                <input type="radio" id="m_star4" name="rate" value="4" />
+                                <label for="star4" title="text">4 stars</label>
+                                <input type="radio" id="m_star3" name="rate" value="3" />
+                                <label for="star3" title="text">3 stars</label>
+                                <input type="radio" id="m_star2" name="rate" value="2" />
+                                <label for="star2" title="text">2 stars</label>
+                                <input type="radio" id="m_star1" name="rate" value="1" />
+                                <label for="star1" title="text">1 star</label>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="form-group">
+                            <label for="fname">First Name</label>
+                            <input type="text" name="fname" id="m_fname" class="form-control" minlength="2" required >
+                        </div>
+                        <div class="form-group">
+                            <label for="lname">Last Name</label>
+                            <input type="text" name="lname" id="m_lname" class="form-control" minlength="2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <input type="text" id="m_country" name="country" class="form-control" minlength="2" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Comment</label>
+                            <textarea id="m_comment" class="form-control" name="comment" cols="30" rows="4" minlength="2" required></textarea>
+                        </div>
+                        <div class="form-group text-right">
+                            <button type="submit" class="btn btn-primary" id="btn-review-save" style="text-align: center;">Submit</button>
+                        </div>
+                    </form>
+                </div>
               </div>
             </div>
           </div>
@@ -972,8 +612,7 @@
                     <button class="btn btn-link btn-block btn-text-14 text-left btn-accordion collapsed"
                       type="button" data-toggle="collapse" data-target="#policies1" aria-expanded="false"
                       aria-controls="policies1">
-                      Collapsible Group Item #1
-
+                        Terms And Conditions
                       <i class="fa fa-chevron-right" aria-hidden="true"></i>
                     </button>
                   </h2>
@@ -982,65 +621,44 @@
                 <div id="policies1" class="collapse" aria-labelledby="policesOne"
                   data-parent="#policiesAccordion">
                   <div class="card-body">
-                    Some placeholder content for the first accordion panel. This panel is shown by
-                    default,
-                    thanks
-                    to
-                    the <code>.show</code> class.
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="policesTwo">
-                  <h2 class="mb-0">
-                    <button class="btn btn-link btn-block btn-text-14 text-left btn-accordion collapsed"
-                      type="button" data-toggle="collapse" data-target="#policies2" aria-expanded="false"
-                      aria-controls="policies2">
-                      Collapsible Group Item #2
+                    @if(isset($hotel_data[0]->suites[0]->booking_policy) && !empty($hotel_data[0]->suites[0]->booking_policy) )
+                    <div class="iubenda_legal_document">
+                    {{ $hotel_data[0]->suites[0]->booking_policy }} </div>
 
-                      <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                    </button>
-                  </h2>
-                </div>
-
-                <div id="policies2" class="collapse" aria-labelledby="policesTwo"
-                  data-parent="#policiesAccordion">
-                  <div class="card-body">
-                    Some placeholder content for the first accordion panel. This panel is shown by
-                    default,
-                    thanks
-                    to
-                    the <code>.show</code> class.
-                  </div>
-                </div>
-              </div>
-              <div class="card">
-                <div class="card-header" id="policesThree">
-                  <h2 class="mb-0">
-                    <button class="btn btn-link btn-block btn-text-14 text-left btn-accordion collapsed"
-                      type="button" data-toggle="collapse" data-target="#policies3" aria-expanded="false"
-                      aria-controls="policies3">
-                      Collapsible Group Item #3
-
-                      <i class="fa fa-chevron-right" aria-hidden="true"></i>
-                    </button>
-                  </h2>
-                </div>
-
-                <div id="policies3" class="collapse" aria-labelledby="policesThree"
-                  data-parent="#policiesAccordion">
-                  <div class="card-body">
-                    Some placeholder content for the first accordion panel. This panel is shown by
-                    default,
-                    thanks
-                    to
-                    the <code>.show</code> class.
+                    @elseif(isset( $terms_n_conditions->terms_n_conditions ) && !empty( $terms_n_conditions->terms_n_conditions ))
+                        {{ $terms_n_conditions->terms_n_conditions }} </div>
+                    @else
+                      <p>
+                        @if(isset($global_policies))
+                          @foreach($global_policies as $policy)
+                            @if(Config::get('app.currentdomain') == 'voyage')  
+                              @if($policy->domain == 'voyage')
+                                <?php echo $policy->policy; ?>
+                              @endif 
+                            @elseif(Config::get('app.currentdomain') == 'safari')
+                                @if($policy->domain == 'safari')
+                                  <?php echo $policy->policy; ?>
+                                @endif                  
+                            @elseif(Config::get('app.currentdomain') == 'spa')
+                                @if($policy->domain == 'spa')
+                                  <?php echo $policy->policy; ?>
+                                @endif  
+                            @elseif(Config::get('app.currentdomain') == 'islands')
+                                @if($policy->domain == 'islands')
+                                  <?php echo $policy->policy; ?>
+                                @endif  
+                            @endif
+                          @endforeach
+                        @endif
+                      </p>
+                    @endif  
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+      </div>
       </div>
       <!-- display on ipad only end -->
       {{-- <div class="card">

@@ -52,9 +52,9 @@ Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
 Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
 Route::post('/add_collection','FrontEnd\HotelDetailController@add_collection');
 //HotelDetail Reviews
-Route::get('/hotel/get-reviews/{id}','FrontEnd\ReviewController@getPropertyReviews');
-Route::post('/hotel/add-reviews','FrontEnd\ReviewController@addreviews');
-
+Route::get('/get-reviews/{id}','FrontEnd\ReviewController@getPropertyReviews');
+Route::post('/add-reviews','FrontEnd\ReviewController@addreviews');
+Route::post('/mobile_add-reviews','FrontEnd\ReviewController@addreviewsMobileView');
 //
 
 Route::get('/users/security', 'UserController@getSecurity');

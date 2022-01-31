@@ -3342,6 +3342,14 @@ class PropertyController extends Controller {
     public function getProperty($slug){
 
         $this->data['hotel_data'] = $this->getPropertyByslug($slug);
+        if(isset($this->data['hotel_data'][0]->availableservices) || !empty($this->data['hotel_data'][0]->availableservices)){
+            $service_ids = explode(',',$this->data['hotel_data'][0]->availableservices);
+            $ava_services = [];
+            foreach ($service_ids as $value) {
+                $ava_services[] = availableservices::where('id',$value)->first();
+            }
+            $this->data['available_services'] = $ava_services;
+        }
         $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['hotel_data'][0]->id)->first();
 
         $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
