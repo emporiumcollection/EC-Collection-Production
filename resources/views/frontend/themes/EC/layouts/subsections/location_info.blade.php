@@ -71,7 +71,7 @@
                         <?php  echo isset($location[0]['category_description'])?$location[0]['category_description']:'';?>
                         <div class="row">
                             <div class="col-4">
-                                <select id="best-place" class="w-100 mb-3">
+                                <select id="best-place" class="form-control w-100 mb-3">
                                     <option value="Popular with Visitors"><img src="/themes/EC/images/fs-icons/popular-with-visitors.png" height="20px" width="20px">Popular with Visitors</option>
                                     <option value="Top Picks">Top Picks</option>
                                     <option value="Trending">Trending</option>

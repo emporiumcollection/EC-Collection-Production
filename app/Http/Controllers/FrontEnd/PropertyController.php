@@ -7573,7 +7573,7 @@ class PropertyController extends Controller {
             foreach($PlaceImages as $PlaceImage){
                 $prefix = $PlaceImage->prefix;
                 $suffix = $PlaceImage->suffix;
-                $PlaceImageUrl = $prefix."200x100".$suffix;
+                $PlaceImageUrl = $prefix."240x150".$suffix;
                 break;
             }
         }
