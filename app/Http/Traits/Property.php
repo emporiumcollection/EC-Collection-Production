@@ -161,6 +161,7 @@ trait Property {
     }
 
     public function searchPropertiesByKeyword($cities, $keyword){
+        $keyword = request()->get('s');
         $key = md5($keyword.request()->get('experience').
         request()->get('facility_ids').
         request()->get('atmosphere_ids').
@@ -169,7 +170,7 @@ trait Property {
 
         return Cache::get($key, function () {
             $destinationId = 0;
-            // $keyword = request()->get('s');
+            $keyword = request()->get('s');
 
             $destinations = categories::select(['id'])
                 ->where('category_name', '=', $keyword)
