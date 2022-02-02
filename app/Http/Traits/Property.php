@@ -208,7 +208,7 @@ trait Property {
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
                         return $query->select(['id','file_name']);
-                    }])->take(3);
+                    }]);
                 }, 
             ])
             ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")

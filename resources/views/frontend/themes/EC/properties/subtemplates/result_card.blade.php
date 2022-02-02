@@ -4,6 +4,7 @@
 
     <div class="pr-lst result-grid">
       <?php 
+      $pimg = 0;
       foreach($property->propertyImages as $image):
         
         if(isset($property['container']['name'])){
@@ -23,8 +24,11 @@
         <div>
           <img <?php echo 'src="property-image/resize/615x419/'.$container_name.'/default-image.png/property-image"';?> <?php echo 'data-src="property-image/resize/615x419/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100 results-media" alt="">
         </div>
-      <?php 
-      endforeach;?>
+      <?php
+      $pimg++;
+      if($pimg > 3) break; 
+      endforeach;
+      ?>
     </div>
     <div class="my-dropdown">
       <div class="btn-group dropleft">
