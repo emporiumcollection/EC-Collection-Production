@@ -978,7 +978,7 @@ class UserController extends Controller {
         }
     }
 
-    public function getLogout() {
+    public function getLogout(Request $request) {
         $currentdomain = \Config::get('app.currentdomain');
         $onelogindomain = \Config::get('app.onelogindomain');
 
