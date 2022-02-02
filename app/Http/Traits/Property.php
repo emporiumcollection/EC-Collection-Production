@@ -161,13 +161,13 @@ trait Property {
     }
 
     public function searchPropertiesByKeyword($cities, $keyword){
-        /*$key = md5($keyword.request()->get('experience').
+        $key = md5($keyword.request()->get('experience').
         request()->get('facility_ids').
         request()->get('atmosphere_ids').
-        request()->get('style_ids'));*/
+        request()->get('style_ids').$request->get('max').$request->get('min'));
         $destinationId = 0;
 
-        // return Cache::get($key, function () {
+        return Cache::get($key, function () {
             $destinationId = 0;
             // $keyword = request()->get('s');
 
@@ -207,8 +207,7 @@ trait Property {
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
                         return $query->select(['id','file_name']);
-
-                    }]);
+                    }])->limit(3);
                 }, 
             ])
             ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
@@ -220,7 +219,7 @@ trait Property {
 
             return $properties
             ->get();
-        // });            
+        });
     }
 
     public function getPropertyByslug($slug){
