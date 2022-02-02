@@ -979,9 +979,19 @@ class UserController extends Controller {
     }
 
     public function getLogout() {
+        $currentdomain = \Config::get('app.currentdomain');
+        $onelogindomain = \Config::get('app.onelogindomain');
+
         \Auth::logout();
         \Session::flush();
-        return Redirect::to('')->with('message', \SiteHelpers::alert('info', 'Sie sind derzeit nicht eingeloggt'));
+
+        if($currentdomain != 'emporiumcollection'){
+            return Redirect::to($onelogindomain.'/user/logout?referer='.request()->getSchemeAndHttpHost());
+        }else{
+            return Redirect::to($request->get('referer'))->with('message', \SiteHelpers::alert('info', 'Sie sind derzeit nicht eingeloggt'));
+        }        
+
+        //return Redirect::to('')->with('message', \SiteHelpers::alert('info', 'Sie sind derzeit nicht eingeloggt'));
     }
 
     function getSocialize($social) {
