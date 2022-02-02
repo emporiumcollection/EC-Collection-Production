@@ -926,9 +926,9 @@ function getBestPlases(category, near){
 }
 
  
-$(window).on('load', function() {
+$(document).ready(function() {
   lazyLoadMe('results-media');
-  lazyLoadMe('location-photos');  
+  lazyLoadMe('location-photos');
 });
 
 function lazyLoadMe(selector){
