@@ -168,7 +168,7 @@ trait Property {
         request()->get('style_ids').request()->get('max').request()->get('min'));
         $destinationId = 0;
 
-        //return Cache::get($key, function () {
+        return Cache::get($key, function () {
             $destinationId = 0;
             $keyword = request()->get('s');
 
@@ -220,7 +220,7 @@ trait Property {
 
             return $properties
             ->get();
-        //});
+        });
     }
 
     public function getPropertyByslug($slug){
