@@ -164,7 +164,7 @@ trait Property {
         $key = md5($keyword.request()->get('experience').
         request()->get('facility_ids').
         request()->get('atmosphere_ids').
-        request()->get('style_ids').$request->get('max').$request->get('min'));
+        request()->get('style_ids').request()->get('max').request()->get('min'));
         $destinationId = 0;
 
         return Cache::get($key, function () {
