@@ -4,6 +4,8 @@ namespace App\Http\Traits;
 
 use App\Models\Categories;
 use Config;
+use Cache;
+
 trait Category {
 
     private $parents = [];
