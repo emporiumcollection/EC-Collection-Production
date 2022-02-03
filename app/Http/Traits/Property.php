@@ -730,12 +730,19 @@ trait Property {
     }
 
     public function getLoaderImages($location){
+        $cacheKey = str_slug($location).'loaderimage';
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
         $locationSlug = strtolower(str_replace(' ', '-', $location));
         $loaderImages = Container::where('parent_id', '=', config('app.emotional_gallery_id'))
         ->whereRaw("(display_name like '%".$location."%' or display_name like '%".$locationSlug."%')")
         ->with(['files'])
         ->get()
         ->toArray();
+
+        Cache::store('file')->put($cacheKey, $loaderImages, 100000);
 
         return $loaderImages;
     }
