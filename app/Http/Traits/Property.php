@@ -24,6 +24,11 @@ use Cache;
 trait Property {
     
     public function getLocationDescription($keyword){
+        $cacheKey = str_slug($keyword).'locationdescription';
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
         $location = Categories::select(['id', 
             'parent_category_id', 
             'category_name', 
@@ -35,10 +40,17 @@ trait Property {
         ->get()
         ->toArray();
 
+        Cache::store('file')->put($cacheKey, $location, 100000);
+
         return $location;
     }
 
     public function getLocationPath($keyword){
+        $cacheKey = str_slug($keyword).'locationpath';
+        if (Cache::has($cacheKey)) {
+            return Cache::get($cacheKey);
+        }
+
         $path = [];
         
         $category = Categories::select(['id', 'parent_category_id', 'category_name'])
@@ -56,11 +68,13 @@ trait Property {
                 
                 $path[$catId] = $category[0]['category_name'];
             }
+            $path = array_reverse($path);
         } else {
-            return [];
+            $path = [];
         }
 
-        $path = array_reverse($path);
+        Cache::store('file')->put($cacheKey, $path, 100000);
+
         return $path;
 
     }
@@ -889,29 +903,45 @@ trait Property {
     }
 
      public function setFitlerOptions(){
-        $this->data['experiences_data'] = \DB::table('tb_categories')
-        ->where('category_approved', 1)
-        ->where('category_published', 1)
-        ->where('parent_category_id', 8)
-        ->get();
+        $cacheKey = 'propertyfilteroptions';
+        if (Cache::has($cacheKey)) {
+            $allfilters = Cache::get($cacheKey);
+            $this->data['experiences_data'] = $allfilters['experiences_data'];
+            $this->data['atmosphere'] = $allfilters['atmosphere'];
+            $this->data['facilities'] = $allfilters['facilities'];
+            $this->data['style'] = $allfilters['style'];
+        }else{
 
-        $this->data['atmosphere'] = \DB::table('tb_categories')
-        ->where('category_approved', 1)
-        ->where('category_published', 1)
-        ->where('parent_category_id', config('app.atmosphere_category_id'))
-        ->get();
+            $this->data['experiences_data'] = \DB::table('tb_categories')
+            ->where('category_approved', 1)
+            ->where('category_published', 1)
+            ->where('parent_category_id', 8)
+            ->get();
+            $allfilters['experiences_data'] = $this->data['experiences_data'];
 
-        $this->data['facilities'] = \DB::table('tb_categories')
-        ->where('category_approved', 1)
-        ->where('category_published', 1)
-        ->where('parent_category_id', config('app.facilities_category_id'))
-        ->get();
+            $this->data['atmosphere'] = \DB::table('tb_categories')
+            ->where('category_approved', 1)
+            ->where('category_published', 1)
+            ->where('parent_category_id', config('app.atmosphere_category_id'))
+            ->get();
+            $allfilters['atmosphere'] = $this->data['atmosphere'];
 
-        $this->data['style'] = \DB::table('tb_categories')
-        ->where('category_approved', 1)
-        ->where('category_published', 1)
-        ->where('parent_category_id', config('app.style_category_id'))
-        ->get();
+            $this->data['facilities'] = \DB::table('tb_categories')
+            ->where('category_approved', 1)
+            ->where('category_published', 1)
+            ->where('parent_category_id', config('app.facilities_category_id'))
+            ->get();
+            $allfilters['facilities'] = $this->data['facilities'];
+
+            $this->data['style'] = \DB::table('tb_categories')
+            ->where('category_approved', 1)
+            ->where('category_published', 1)
+            ->where('parent_category_id', config('app.style_category_id'))
+            ->get();
+            $allfilters['style'] = $this->data['style'];
+
+            Cache::store('file')->put($cacheKey, $allfilters, 100000);
+        }
 
         return $this->data;
     }
