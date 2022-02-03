@@ -754,7 +754,7 @@ abstract class Controller extends BaseController {
     }
 
     private function setMenuData(){
-        $cacheKey = 'menusfiltersdata';
+        $cacheKey = 'menusfiltersdatastored';
         if (Cache::has($cacheKey)) {
             $allmenus = Cache::get($cacheKey);
             $this->data['menu_experiences'] = $allmenus['menu_experiences'];
@@ -772,7 +772,7 @@ abstract class Controller extends BaseController {
 		    $this->data['footer_menus'] = $footer_menus;
 
 	        $landing_menus = \SiteHelpers::menus('landing');
-		    $this->data['landing_menus'] = $landing_menus;
+		    $allmenus['landing_menus'] = $landing_menus;
 		    $this->data['landing_menus'] = $landing_menus;
 
 		    $top_menus = \SiteHelpers::menus('Top');
