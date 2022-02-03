@@ -24,7 +24,7 @@
                     @if(!empty(\Session::get('arrival') AND \Session::get('departure')))
                       {{ date('d M', strtotime(\Session::get('arrival'))) }} - {{ date('d M', strtotime(\Session::get('departure'))) }}
                     @else
-                      Selecte Date
+                      Select Date
                     @endif
                 </span>
                 </a>
