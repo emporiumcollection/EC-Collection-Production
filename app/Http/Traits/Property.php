@@ -89,89 +89,104 @@ trait Property {
     }
 
     public function getEditorChoiceProperties($cities, $keyword){
-        $destinationId = 0;
-        $destination = categories::select(['id'])
-        ->where('category_name', '=', $keyword)
-        ->get()
-        ->toArray();
-        
-        if(!empty($destination)){
-            $destinationId = $destination[0]['id'];
-        }
+        $key = md5($keyword.request()->get('experience').
+        request()->get('facility_ids').
+        request()->get('atmosphere_ids').
+        request()->get('style_ids').request()->get('max').request()->get('min').'ecps');
 
-        $properties = properties::orderByRaw("RAND()")->select([
-            'id', 
-            'property_name', 
-            'property_short_name',
-            'property_slug', 
-            'detail_section1_title', 
-            'detail_section1_description_box1', 
-            'detail_section1_description_box2', 
-            'detail_section1_description_box2', 
-            'latitude',
-            'longitude',
-            'city',
-            'property_usp',
-            'youtube_channel'
+        return Cache::get($key, function () {
+            $destinationId = 0;
+            $destination = categories::select(['id'])
+            ->where('category_name', '=', $keyword)
+            ->get()
+            ->toArray();
+            
+            if(!empty($destination)){
+                $destinationId = $destination[0]['id'];
+            }
+
+            $properties = properties::orderByRaw("RAND()")->select([
+                'id', 
+                'property_name', 
+                'property_short_name',
+                'property_slug', 
+                'detail_section1_title', 
+                'detail_section1_description_box1', 
+                'detail_section1_description_box2', 
+                'detail_section1_description_box2', 
+                'latitude',
+                'longitude',
+                'city',
+                'property_usp',
+                'youtube_channel'
+                ])
+            ->with([
+                'propertyImages' => function($query){
+                    return $query->with(['file' => function($query){
+                        return $query->select(['id','file_name']);
+
+                    }]);
+                }, 
             ])
-        ->with([
-            'propertyImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
+            ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0 ) ")
+            //->where('country', '=', $keyword)
+            ->where('editor_choice_property', '=', 1)
+            ->where('property_status', '=', 1);
 
-                }]);
-            }, 
-        ])
-        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0 ) ")
-        //->where('country', '=', $keyword)
-        ->where('editor_choice_property', '=', 1)
-        ->where('property_status', '=', 1);
+            $this->applyFilter($properties);
 
-        $this->applyFilter($properties);
-
-        return $properties->limit(2)->get();
+            return $properties->limit(2)->get();
+        });
     }
 
     public function getFeaturedProperties($cities,$keyword){
-        $destinationId = 0;
-        $destination = categories::select(['id'])
-        ->where('category_name', '=', $keyword)
-        ->get()
-        ->toArray();
-        if(!empty($destination)){
-            $destinationId = $destination[0]['id'];
-        }
+        $key = md5($keyword.request()->get('experience').
+        request()->get('facility_ids').
+        request()->get('atmosphere_ids').
+        request()->get('style_ids').request()->get('max').request()->get('min').'fps');
 
-        $properties = properties::orderByRaw("RAND()")->select([
-            'id', 
-            'property_name', 
-            'property_short_name',
-            'property_slug', 
-            'detail_section1_title', 
-            'detail_section1_description_box1', 
-            'detail_section1_description_box2', 
-            'latitude',
-            'longitude',
-            'city',
-            'property_usp',
-            'youtube_channel'
-        ])
-        ->with([
-            'propertyImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
+        return Cache::get($key, function () {
+            $keyword = request()->get('s');
+            $destinationId = 0;
+            $destination = categories::select(['id'])
+            ->where('category_name', '=', $keyword)
+            ->get()
+            ->toArray();
+            if(!empty($destination)){
+                $destinationId = $destination[0]['id'];
+            }
 
-                }]);
-            }, 
-        ])
-        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
-        //->where('country', '=', $keyword)
-        ->where('feature_property', '=', 1)
-        ->where('property_status', '=', 1);
+            $properties = properties::orderByRaw("RAND()")->select([
+                'id', 
+                'property_name', 
+                'property_short_name',
+                'property_slug', 
+                'detail_section1_title', 
+                'detail_section1_description_box1', 
+                'detail_section1_description_box2', 
+                'latitude',
+                'longitude',
+                'city',
+                'property_usp',
+                'youtube_channel'
+            ])
+            ->with([
+                'propertyImages' => function($query){
+                    return $query->with(['file' => function($query){
+                        return $query->select(['id','file_name']);
 
-        $this->applyFilter($properties);
+                    }]);
+                }, 
+            ])
+            ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
+            //->where('country', '=', $keyword)
+            ->where('feature_property', '=', 1)
+            ->where('property_status', '=', 1);
 
-        return $properties->limit(2)->get();
+            $this->applyFilter($properties);
+
+            return $properties->limit(2)->get();
+        });
     }
 
     public function searchPropertiesByKeyword($cities, $keyword){
@@ -1119,5 +1134,13 @@ trait Property {
         if($experience_id){
             $properties->whereRaw("FIND_IN_SET('".$experience_id."',`property_category_id`) <> 0");
         }
+    }
+
+    public function getCacheKey($identifier){
+        return $key = md5($keyword.request()->get('experience').
+        request()->get('facility_ids').
+        request()->get('atmosphere_ids').
+        request()->get('style_ids').request()->get('max').request()->get('min').$identifier);
+
     }
 }

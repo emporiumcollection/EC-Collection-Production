@@ -2985,28 +2985,44 @@ class PropertyController extends Controller {
         }*/
 
         //if($request->get('view') != 'map'){
-            //Get editor's choice properties
-        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
-        $this->setGalleryAndFormat($this->data['editorsProperties']);
-
-        if($request->get('max') && $request->get('min')){
-            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['editorsProperties']);
+        //Get editor's choice properties
+        $cacheKey = $this->getCacheKey('ecps');
+        if (Cache::has($cacheKey)) {
+            $this->data['editorsProperties'] = Cache::get($cacheKey);
+        }else{            
+            $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
+            $this->setGalleryAndFormat($this->data['editorsProperties']);
+            if($request->get('max') && $request->get('min')){
+                $this->filterByprice($request->get('max'),$request->get('min'), $this->data['editorsProperties']);
+            }   
+            Cache::store('file')->put($cacheKey, $this->data['editorsProperties'], 100000);
         }
 
         //Get featured choice properties
-        $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
-        $this->setGalleryAndFormat($this->data['featureProperties']);
+        $cacheKey = $this->getCacheKey('fps');
+        if (Cache::has($cacheKey)) {
+            $this->data['featureProperties'] = Cache::get($cacheKey);
+        }else{            
+            $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
+            $this->setGalleryAndFormat($this->data['featureProperties']);
 
-        if($request->get('max') && $request->get('min')){
-            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['featureProperties']);
+            if($request->get('max') && $request->get('min')){
+                $this->filterByprice($request->get('max'),$request->get('min'), $this->data['featureProperties']);
+            }
+            Cache::store('file')->put($cacheKey, $this->data['featureProperties'], 100000);
         }
 
-        //Get featured choice properties
-        $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
-        $this->setGalleryAndFormat($this->data['propertyResults']);
-
-        if($request->get('max') && $request->get('min')){
-            $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
+        //Get all properties
+        $cacheKey = $this->getCacheKey('ps');
+        if (Cache::has($cacheKey)) {
+            $this->data['propertyResults'] = Cache::get($cacheKey);
+        }else{            
+            $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
+            $this->setGalleryAndFormat($this->data['propertyResults']);
+            if($request->get('max') && $request->get('min')){
+                $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
+            }
+            Cache::store('file')->put($cacheKey, $this->data['propertyResults'], 100000);
         }
 
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
