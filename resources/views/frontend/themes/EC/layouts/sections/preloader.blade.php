@@ -35,6 +35,6 @@
     setTimeout(function () {
       $('body').css('overflow', 'auto');
       $('.pageload').hide();
-    }, 3000)
+    }, 1500)
   });
 </script>
