@@ -1065,7 +1065,7 @@ trait Property {
     public function getLocationInfoRoadGoat($keyword){
         $properties = \DB::table('tb_categories')->where('category_name', '=', $keyword)->get();
         
-        if(!$properties[0]->location_info == ''){
+        if(!isset($properties[0]->location_info)){
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
