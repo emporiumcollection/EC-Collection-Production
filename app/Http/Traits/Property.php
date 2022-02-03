@@ -737,7 +737,7 @@ trait Property {
 
         $locationSlug = strtolower(str_replace(' ', '-', $location));
         $loaderImages = Container::where('parent_id', '=', config('app.emotional_gallery_id'))
-        ->whereRaw("(display_name like '%".$location."%' or display_name like '%".$locationSlug."%')")
+        ->whereRaw("(display_name like '%".$location."%')")
         ->with(['files'])
         ->get()
         ->toArray();
