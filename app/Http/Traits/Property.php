@@ -1136,7 +1136,7 @@ trait Property {
         }
     }
 
-    public function getCacheKey($identifier){
+    public function getCacheKey($keyword, $identifier){
         return $key = md5($keyword.request()->get('experience').
         request()->get('facility_ids').
         request()->get('atmosphere_ids').

@@ -2986,7 +2986,7 @@ class PropertyController extends Controller {
 
         //if($request->get('view') != 'map'){
         //Get editor's choice properties
-        $cacheKey = $this->getCacheKey('ecps');
+        $cacheKey = $this->getCacheKey($keyword, 'ecps');
         if (Cache::has($cacheKey)) {
             $this->data['editorsProperties'] = Cache::get($cacheKey);
         }else{            
@@ -2999,7 +2999,7 @@ class PropertyController extends Controller {
         }
 
         //Get featured choice properties
-        $cacheKey = $this->getCacheKey('fps');
+        $cacheKey = $this->getCacheKey($keyword, 'fps');
         if (Cache::has($cacheKey)) {
             $this->data['featureProperties'] = Cache::get($cacheKey);
         }else{            
@@ -3013,7 +3013,7 @@ class PropertyController extends Controller {
         }
 
         //Get all properties
-        $cacheKey = $this->getCacheKey('ps');
+        $cacheKey = $this->getCacheKey($keyword, 'ps');
         if (Cache::has($cacheKey)) {
             $this->data['propertyResults'] = Cache::get($cacheKey);
         }else{            
