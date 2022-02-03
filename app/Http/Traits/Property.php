@@ -95,6 +95,7 @@ trait Property {
         request()->get('style_ids').request()->get('max').request()->get('min').'ecps');
 
         return Cache::get($key, function () {
+            $keyword = request()->get('s');
             $destinationId = 0;
             $destination = categories::select(['id'])
             ->where('category_name', '=', $keyword)
