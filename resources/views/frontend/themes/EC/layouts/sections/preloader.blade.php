@@ -16,7 +16,7 @@
     }
   }
 ?>
-<div class="pageload" style="background-image: url(<?php echo $loaderImage;?>);">
+<div class="pageload" style="background-image: url('<?php echo $loaderImage;?>');">
   <div class="logo"></div>
   <div class="loading-dcs">
     <p class="loading-title"><?php echo $loaderTitle;?></p>
