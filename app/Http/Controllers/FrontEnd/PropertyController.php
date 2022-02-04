@@ -2888,6 +2888,11 @@ class PropertyController extends Controller {
      * 
     */
     function globalsearchavailability(Request $request) {
+        $this->data['is_admin'] = 0;
+        if(isset(\Auth::user()->id)){
+            $this->data['is_admin'] = \Auth::user()->group_id;    
+        }
+        
         $keyword = $request->input('s');
         
         if($keyword==''){

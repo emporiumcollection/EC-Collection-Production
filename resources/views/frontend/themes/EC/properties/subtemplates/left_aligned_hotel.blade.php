@@ -8,7 +8,14 @@
   <div class="row align-items-center">
     <div class="col-md-6">
       <a href="/hotel/{{ $editorChoice->property_slug }}">
-        <h3 class="title-second title-line mb-0"><?php echo $editorChoice->property_name;?></h3>
+        <h3 class="title-second title-line mb-0"><?php echo $editorChoice->property_name;?>
+        </h3>
+
+          <?php
+          if($is_admin == 1){
+            echo '(<a target="_blank" href="/properties/update/'.$property->id.'?return=">Edit</a> | <a target="_blank" href="/properties_settings/'.$property->id.'/property_images?return=">Edit Images</a>)'
+          }
+          ?>
       </a>
     </div>
     <div class="col-md-6 text-right">
