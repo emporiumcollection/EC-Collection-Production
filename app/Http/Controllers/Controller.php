@@ -26,7 +26,7 @@ abstract class Controller extends BaseController {
         $routePath = request()->route()->getActionName();
         if(!strpos($routePath, 'HomeController')){
 	        $cacheKey = 'destinationsmenu';
-	        if (Cache::has($cacheKey)) {
+	        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
 	            $this->data['destinationMenu'] = Cache::get($cacheKey);
 	        }else{
 				$this->data['destinationMenu'] = $this->destinationTree();
@@ -755,7 +755,7 @@ abstract class Controller extends BaseController {
 
     private function setMenuData(){
         $cacheKey = 'menusfiltersdatastored';
-        if (Cache::has($cacheKey)) {
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
             $allmenus = Cache::get($cacheKey);
             $this->data['menu_experiences'] = $allmenus['menu_experiences'];
             $this->data['footer_menus'] = $allmenus['footer_menus'];

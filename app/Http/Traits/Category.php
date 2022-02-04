@@ -65,7 +65,7 @@ trait Category {
     */
     public function getTrendingFilters(){
         $cacheKey = 'trandiingfilters';
-        if (Cache::has($cacheKey)) {
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
             return Cache::get($cacheKey);
         }
 

@@ -25,7 +25,7 @@ trait Property {
     
     public function getLocationDescription($keyword){
         $cacheKey = str_slug($keyword).'locationdescription';
-        if (Cache::has($cacheKey)) {
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
             return Cache::get($cacheKey);
         }
 
@@ -47,7 +47,7 @@ trait Property {
 
     public function getLocationPath($keyword){
         $cacheKey = str_slug($keyword).'locationpath';
-        if (Cache::has($cacheKey)) {
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
             return Cache::get($cacheKey);
         }
 
@@ -731,7 +731,7 @@ trait Property {
 
     public function getLoaderImages($location){
         $cacheKey = str_slug($location).'loaderimage';
-        if (Cache::has($cacheKey)) {
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
             return Cache::get($cacheKey);
         }
 
@@ -927,7 +927,7 @@ trait Property {
 
      public function setFitlerOptions(){
         $cacheKey = 'propertyfilteroptions';
-        if (Cache::has($cacheKey)) {
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
             $allfilters = Cache::get($cacheKey);
             $this->data['experiences_data'] = $allfilters['experiences_data'];
             $this->data['atmosphere'] = $allfilters['atmosphere'];
