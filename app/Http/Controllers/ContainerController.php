@@ -4805,7 +4805,8 @@ class ContainerController extends Controller {
 		$params = array(
 			'params'	=> $filter,
 			'page'=> $page_number,
-			'limit' => $record_per_page
+			'limit' => $record_per_page,
+			'order' => 'display_name'
 		);
 
 		$params1 = array(

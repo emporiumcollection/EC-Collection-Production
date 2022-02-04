@@ -1442,7 +1442,7 @@ $allowedCurrenciesinProject=array("OMR","BHD","KWD","USD","CHF","EUR","KYD","GIP
         }
 
         $container = new Container;
-        $container->parent_id = 10237; // emotional-gallery
+        $container->parent_id = config('app.emotional_gallery_id'); // emotional-gallery
         $container->name = $slug;
         $container->display_name = $data['category_name'];
         $container->file_type = 'folder';
