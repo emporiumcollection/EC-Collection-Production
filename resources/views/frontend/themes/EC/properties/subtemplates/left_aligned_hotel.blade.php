@@ -13,7 +13,7 @@
 
           <?php
           if($is_admin == 1){
-            echo '(<a target="_blank" href="/properties/update/'.$property->id.'?return=">Edit</a> | <a target="_blank" href="/properties_settings/'.$property->id.'/property_images?return=">Edit Images</a>)';
+            echo '(<a target="_blank" href="/properties/update/'.$editorChoice->id.'?return=">Edit</a> | <a target="_blank" href="/properties_settings/'.$editorChoice->id.'/property_images?return=">Edit Images</a>)';
           }
           ?>
       </a>
