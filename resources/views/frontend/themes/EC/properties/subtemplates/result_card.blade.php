@@ -86,7 +86,7 @@
       <h3 class="title-second title-line mb-0"><?php echo $property->property_name;?></h3>
       <?php
       if($is_admin == 1){
-        echo '(<a target="_blank" href="/properties/update/'.$property->id.'?return=">Edit</a> | <a target="_blank" href="/properties_settings/'.$property->id.'/property_images?return=">Edit Images</a>)'
+        echo '(<a target="_blank" href="/properties/update/'.$property->id.'?return=">Edit</a> | <a target="_blank" href="/properties_settings/'.$property->id.'/property_images?return=">Edit Images</a>)';
       }
       ?>
       <h4 class="title-font-2 title-third"><?php echo $property->city;?></h4>
