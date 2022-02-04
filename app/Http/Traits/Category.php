@@ -89,7 +89,7 @@ trait Category {
             }            
         }
         
-        Cache::store('file')->put($cacheKey, $filters, 100000);
+        Cache::store('file')->put($cacheKey, $filters, 14400);
 
         return $filters;
     }

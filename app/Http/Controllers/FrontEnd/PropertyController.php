@@ -3000,7 +3000,7 @@ class PropertyController extends Controller {
             if($request->get('max') && $request->get('min')){
                 $this->filterByprice($request->get('max'),$request->get('min'), $this->data['editorsProperties']);
             }   
-            Cache::store('file')->put($cacheKey, $this->data['editorsProperties'], 100000);
+            Cache::store('file')->put($cacheKey, $this->data['editorsProperties'], 14400);
         }
 
         //Get featured choice properties
@@ -3014,7 +3014,7 @@ class PropertyController extends Controller {
             if($request->get('max') && $request->get('min')){
                 $this->filterByprice($request->get('max'),$request->get('min'), $this->data['featureProperties']);
             }
-            Cache::store('file')->put($cacheKey, $this->data['featureProperties'], 100000);
+            Cache::store('file')->put($cacheKey, $this->data['featureProperties'], 14400);
         }
 
         //Get all properties
@@ -3027,7 +3027,7 @@ class PropertyController extends Controller {
             if($request->get('max') && $request->get('min')){
                 $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
             }
-            Cache::store('file')->put($cacheKey, $this->data['propertyResults'], 100000);
+            Cache::store('file')->put($cacheKey, $this->data['propertyResults'], 14400);
         }
 
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);

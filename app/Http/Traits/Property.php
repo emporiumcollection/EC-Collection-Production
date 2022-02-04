@@ -40,7 +40,7 @@ trait Property {
         ->get()
         ->toArray();
 
-        Cache::store('file')->put($cacheKey, $location, 100000);
+        Cache::store('file')->put($cacheKey, $location, 14400);
 
         return $location;
     }
@@ -73,7 +73,7 @@ trait Property {
             $path = [];
         }
 
-        Cache::store('file')->put($cacheKey, $path, 100000);
+        Cache::store('file')->put($cacheKey, $path, 14400);
 
         return $path;
 
@@ -742,7 +742,7 @@ trait Property {
         ->get()
         ->toArray();
 
-        Cache::store('file')->put($cacheKey, $loaderImages, 100000);
+        Cache::store('file')->put($cacheKey, $loaderImages, 14400);
 
         return $loaderImages;
     }
@@ -963,7 +963,7 @@ trait Property {
             ->get();
             $allfilters['style'] = $this->data['style'];
 
-            Cache::store('file')->put($cacheKey, $allfilters, 100000);
+            Cache::store('file')->put($cacheKey, $allfilters, 14400);
         }
 
         return $this->data;

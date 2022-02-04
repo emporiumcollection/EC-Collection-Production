@@ -30,7 +30,7 @@ abstract class Controller extends BaseController {
 	            $this->data['destinationMenu'] = Cache::get($cacheKey);
 	        }else{
 				$this->data['destinationMenu'] = $this->destinationTree();
-	            Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 100000);
+	            Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 14400);
 	        }
 		}
 
@@ -795,7 +795,7 @@ abstract class Controller extends BaseController {
 			->get();
 			$this->data['menu_experiences'] = $allmenus['menu_experiences'];
 
-            Cache::store('file')->put($cacheKey, $allmenus, 100000);
+            Cache::store('file')->put($cacheKey, $allmenus, 14400);
         }
     }
     
