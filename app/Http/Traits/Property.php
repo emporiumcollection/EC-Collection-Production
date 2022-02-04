@@ -94,7 +94,7 @@ trait Property {
         request()->get('atmosphere_ids').
         request()->get('style_ids').request()->get('max').request()->get('min').'ecps');
 
-        return Cache::get($key, function () {
+        //return Cache::get($key, function () {
             $keyword = request()->get('s');
             $destinationId = 0;
             $destination = categories::select(['id'])
@@ -137,7 +137,7 @@ trait Property {
             $this->applyFilter($properties);
 
             return $properties->limit(2)->get();
-        });
+        //});
     }
 
     public function getFeaturedProperties($cities,$keyword){
@@ -146,7 +146,7 @@ trait Property {
         request()->get('atmosphere_ids').
         request()->get('style_ids').request()->get('max').request()->get('min').'fps');
 
-        return Cache::get($key, function () {
+        //return Cache::get($key, function () {
             $keyword = request()->get('s');
             $destinationId = 0;
             $destination = categories::select(['id'])
@@ -187,7 +187,7 @@ trait Property {
             $this->applyFilter($properties);
 
             return $properties->limit(2)->get();
-        });
+        //});
     }
 
     public function searchPropertiesByKeyword($cities, $keyword){
@@ -198,7 +198,7 @@ trait Property {
         request()->get('style_ids').request()->get('max').request()->get('min'));
         $destinationId = 0;
 
-        return Cache::get($key, function () {
+        //return Cache::get($key, function () {
             $destinationId = 0;
             $keyword = request()->get('s');
 
@@ -250,7 +250,7 @@ trait Property {
 
             return $properties
             ->get();
-        });
+        //});
     }
 
     public function getPropertyByslug($slug){

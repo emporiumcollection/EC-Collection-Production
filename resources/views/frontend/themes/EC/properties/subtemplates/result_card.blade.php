@@ -26,7 +26,7 @@
         </div>
       <?php
       $pimg++;
-      if($pimg >= 3) break; 
+      if($pimg >= 4) break; 
       endforeach;
       ?>
     </div>
