@@ -3355,8 +3355,8 @@ class PropertyController extends Controller {
 
     public function getProperty_Ajax($id){
         $this->data['property'] = $this->getPropertyById($id);
-        $this->formatPropertyRecords($this->data['property']);
         $this->setGalleryAndFormat($this->data['property']);
+        // $this->formatPropertyRecords($this->data['property']);
 
         return response()->json($this->data['property'][0]);
     }

@@ -788,11 +788,11 @@ trait Property {
         
         if(!empty($allservices)){
             foreach($allservices as $service){
-                $all[] = $service['title'];
+                $all[] = trim($service['title']);
             }
         }
         if(!empty($all)){
-            return implode('<br/>', $all);
+            return implode(',', $all);
         }else{
             return '';
         }

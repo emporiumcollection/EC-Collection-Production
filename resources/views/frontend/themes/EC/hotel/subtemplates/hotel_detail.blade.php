@@ -163,30 +163,54 @@
         <p>
           {{ $hotel_data[0]->detail_section1_description_box2 }}
         </p>
-          <?php
-          $suites = $hotel_data[0]->suites->toArray();
-          $suite = [];
-          if(!empty($suites)){
-                  array_reverse($suites);
-                  $suite = array_pop($suites);
+        
+        <?php
+          $availableservicesArr = [];
+          if($hotel_data[0]->availableservices != ''){
+            $availableservicesArr = array_chunk(explode(',', $hotel_data[0]->availableservices), 5);
           }
-          ?>
-          @if(!empty($suite))
-            <div class="i-none">
-              <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
-              <div class="row mb-4">
-                @if(!empty($suite['amenities']))
-                   <div class="col-md-4 mb-4">
-                    <p class="mb-0">
-                      {{ $suite['amenities'][0]['amenities_eng'] }}
-                    </p>
-                  </div>
-                @else
-                   <p>Amenities Not Found</p>
-                @endif
-              </div>
+        ?>
+        @if(!empty($availableservicesArr))
+          <div class="i-none">
+            <h4 class="mt-5 mb-4 color-dark-grey ">Available Services</h4>
+            <div class="row mb-4">
+              @foreach($availableservicesArr as $availableservices)
+                <div class="col-md-4 mb-4">
+                  <ul style="padding-left: 20px;">
+                  @foreach($availableservices as $availableservice)
+                    {{-- <p class="mb-0">{{ $availableservice }}</p> --}}
+                    <li>{{ $availableservice }}</li>
+                  @endforeach
+                  </ul>
+                </div>
+              @endforeach
             </div>
-          @endif
+          </div>
+        @endif
+
+        <?php
+          $amenitiesArr = [];
+          if($hotel_data[0]->assign_amenities != ''){
+            $amenitiesArr = array_chunk(explode(',', $hotel_data[0]->assign_amenities), 5);
+          }
+        ?>
+        @if(!empty($amenitiesArr))
+          <div class="i-none">
+            <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
+            <div class="row mb-4">
+              @foreach($amenitiesArr as $amenities)
+                <div class="col-md-4 mb-4">
+                  <ul style="padding-left: 20px;">
+                  @foreach($amenities as $amenity)
+                    {{-- <p class="mb-0">{{ $amenity }}</p> --}}
+                    <li>{{ $amenity }}</li>
+                  @endforeach
+                  </ul>
+                </div>
+              @endforeach
+            </div>
+          </div>
+        @endif
       </div>
       <div class="col-md-4">
         <div class="side-detail mb-3">

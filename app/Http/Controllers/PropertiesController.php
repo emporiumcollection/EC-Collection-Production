@@ -2150,14 +2150,19 @@ class PropertiesController extends Controller {
     }
 
     function property_images_uploads(Request $request) {
-        $checkProp = \DB::table('tb_properties')->select('property_name')->where('id', $request->input('propId'))->first();
-        //print_r($checkProp); die;
+        $checkProp = \DB::table('tb_properties')->select(['property_name', 'property_slug'])->where('id', $request->input('propId'))->first();
         if (!empty($checkProp)) {
             $checkDir = \DB::table('tb_container')->select('id')->where('name', 'locations')->first();
             if (!empty($checkDir)) {
                 $foldVal = trim($checkProp->property_name);
                 if ($foldVal != "") {
                     $foldName = trim($foldVal);
+
+                    $cached_images_dir_path = public_path() . '/cached-images/container_user_files/locations/' . \SiteHelpers::seoUrl($foldName);
+                    if (is_dir($cached_images_dir_path)) {
+                        File::deleteDirectory($cached_images_dir_path);
+                    }
+
                     $slug = \SiteHelpers::seoUrl(trim($foldName));
                     $dirPath = (new ContainerController)->getContainerUserPath($checkDir->id);
 

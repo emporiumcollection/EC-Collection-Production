@@ -4,6 +4,16 @@ var boardTemplate = '';
 var currentPropertyId = '';
 var priceTemplate = '';
 
+Object.defineProperty(Array.prototype, 'chunk', {
+  value: function(chunkSize){
+    var temporal = [];
+    for (var i = 0; i < this.length; i+= chunkSize){
+      temporal.push(this.slice(i,i+chunkSize));
+    }
+    return temporal;
+  }
+});
+
 function replacePropertyData(id){
   if(!properties[id]){
     getPropertybyId(id);
@@ -21,19 +31,29 @@ function replacePropertyData(id){
   });
 
   $('[data-place="property-multi-value"]').each(function() {
-      field = $(this).attr('data-replace');
-      //console.log(properties[id][field]);
-      var values = properties[id][field].split(',');
       var listview = '';
-      values.forEach(function(e){
+      field = $(this).attr('data-replace');
+      var amenitiesArr = properties[id][field].split(',');
+      if(amenitiesArr.length){
+        amenitiesArr = amenitiesArr.chunk(5);
+        listview += '<h4 class="mb-4 col-12">Amenities</h4>';
+        $.each(amenitiesArr, function(i){
+          listview += '<div class="col-md-3 col-sm-6 mb-4">';
+          $.each(amenitiesArr[i], function(j){
+            listview += '<p class="mb-0">' + amenitiesArr[i][j] + '</p>';
+          });
+          listview += '</div>';
+        });
+      }
+      /*amenitiesArr.forEach(function(e){
         listview += '<p class="mb-0">' + e + '</p>';
-      })
-      if(listview){
-        $(this).html(listview);
+      })*/
+      $(this).html(listview);
+      /*if(listview){
         $(this).parents(".row").show();
       }else{
         $(this).parents(".row").hide();
-      }
+      }*/
   });
 
   $('[data-place="property-book-button"]').each(function() {
