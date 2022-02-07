@@ -12,6 +12,20 @@ use App\Http\Controllers\TwilioSMSController;
 |
 */
 
+
+/*
+|--------------------------------------------------------------------------
+| Artisan Command Routes
+|--------------------------------------------------------------------------
+|
+*/
+
+Route::get('/config-cache-clear', function(){
+	\Artisan::call('cache:clear');
+	dd("Cache is cleared");
+});
+
+
 Route::get('forget-password', 'Auth\PasswordController@showForgetPasswordForm')->name('forget.password.get');
 Route::post('forget-password','Auth\PasswordController@submitForgetPasswordForm')->name('forget.password.post');
 Route::get('reset-password/{token}', 'Auth\PasswordController@showResetPasswordForm')->name('reset.password.get');
