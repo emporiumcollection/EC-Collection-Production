@@ -81,12 +81,12 @@
                             <p class="mb-0"><b>In-room amenities :</b><br> <span data-place="property" data-replace="roomamenities"></span></p>
                         </div>
                     </div>
-                    <div class="col-lg-4 col-md-6 mb-5">
+                    {{-- <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Available services</h4>
                             <p data-place="property" data-replace="availableservices"></p>
                         </div>
-                    </div>
+                    </div> --}}
                     <div class="col-lg-4 col-md-6 mb-5">
                         <div class="qv-list">
                             <h4>Pets</h4>
@@ -113,8 +113,17 @@
                     </div> --}}
                 </div>
 
-                <div class="row mb-5" data-place="property-multi-value" data-replace="assign_amenities">
-                    <h4 class="mb-4">Amenities</h4>
+                <div class="row mb-5" data-place="property-multi-value" data-replace="availableservices" data-replace-title="Available Services">
+                    <div class="col-md-3 col-sm-6 mb-4">
+                        <p class="mb-0">Pool</p>
+                        <p class="mb-0">Wlan</p>
+                        <p class="mb-0">Smart-TV</p>
+                        <p class="mb-0">Koffeemaschine</p>
+                        <p class="mb-0">Laundry service</p>
+                    </div>
+                </div>
+
+                <div class="row mb-5" data-place="property-multi-value" data-replace="assign_amenities" data-replace-title="Amenities">
                     <div class="col-md-3 col-sm-6 mb-4">
                         <p class="mb-0">Pool</p>
                         <p class="mb-0">Wlan</p>

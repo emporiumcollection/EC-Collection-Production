@@ -22,6 +22,7 @@ function replacePropertyData(id){
   var field = '';
   $('[data-place="property"]').each(function() {
       field = $(this).attr('data-replace');
+      console.log(properties[id][field]);
       if(properties[id][field]){
         $(this).html(properties[id][field]);
         $(this).parents(".col-lg-4").show();
@@ -33,10 +34,11 @@ function replacePropertyData(id){
   $('[data-place="property-multi-value"]').each(function() {
       var listview = '';
       field = $(this).attr('data-replace');
+      title = $(this).data('replace-title');
       var amenitiesArr = properties[id][field].split(',');
-      if(amenitiesArr.length){
+      if(properties[id][field] && amenitiesArr.length){
         amenitiesArr = amenitiesArr.chunk(5);
-        listview += '<h4 class="mb-4 col-12">Amenities</h4>';
+        listview += '<h4 class="mb-4 col-12">'+title+'</h4>';
         $.each(amenitiesArr, function(i){
           listview += '<div class="col-md-3 col-sm-6 mb-4">';
           $.each(amenitiesArr[i], function(j){
@@ -45,15 +47,7 @@ function replacePropertyData(id){
           listview += '</div>';
         });
       }
-      /*amenitiesArr.forEach(function(e){
-        listview += '<p class="mb-0">' + e + '</p>';
-      })*/
       $(this).html(listview);
-      /*if(listview){
-        $(this).parents(".row").show();
-      }else{
-        $(this).parents(".row").hide();
-      }*/
   });
 
   $('[data-place="property-book-button"]').each(function() {
