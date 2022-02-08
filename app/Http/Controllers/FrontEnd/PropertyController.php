@@ -2887,6 +2887,11 @@ class PropertyController extends Controller {
      * 
     */
     function globalsearchavailability(Request $request) {
+        $this->data['is_admin'] = 0;
+        if(isset(\Auth::user()->id)){
+            $this->data['is_admin'] = \Auth::user()->group_id;    
+        }
+        
         $keyword = $request->input('s');
         
         if($keyword==''){
@@ -2984,28 +2989,44 @@ class PropertyController extends Controller {
         }*/
 
         //if($request->get('view') != 'map'){
-            //Get editor's choice properties
-        $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
-        $this->setGalleryAndFormat($this->data['editorsProperties']);
-
-        if($request->get('max') && $request->get('min')){
-            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['editorsProperties']);
+        //Get editor's choice properties
+        $cacheKey = $this->getCacheKey($keyword, 'ecps');
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
+            $this->data['editorsProperties'] = Cache::get($cacheKey);
+        }else{            
+            $this->data['editorsProperties'] = $this->getEditorChoiceProperties($cities, $keyword);
+            $this->setGalleryAndFormat($this->data['editorsProperties']);
+            if($request->get('max') && $request->get('min')){
+                $this->filterByprice($request->get('max'),$request->get('min'), $this->data['editorsProperties']);
+            }   
+            Cache::store('file')->put($cacheKey, $this->data['editorsProperties'], 14400);
         }
 
         //Get featured choice properties
-        $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
-        $this->setGalleryAndFormat($this->data['featureProperties']);
+        $cacheKey = $this->getCacheKey($keyword, 'fps');
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
+            $this->data['featureProperties'] = Cache::get($cacheKey);
+        }else{            
+            $this->data['featureProperties'] = $this->getFeaturedProperties($cities, $keyword);
+            $this->setGalleryAndFormat($this->data['featureProperties']);
 
-        if($request->get('max') && $request->get('min')){
-            $this->filterByprice($request->get('max'),$request->get('min'), $this->data['featureProperties']);
+            if($request->get('max') && $request->get('min')){
+                $this->filterByprice($request->get('max'),$request->get('min'), $this->data['featureProperties']);
+            }
+            Cache::store('file')->put($cacheKey, $this->data['featureProperties'], 14400);
         }
 
-        //Get featured choice properties
-        $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
-        $this->setGalleryAndFormat($this->data['propertyResults']);
-
-        if($request->get('max') && $request->get('min')){
-            $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
+        //Get all properties
+        $cacheKey = $this->getCacheKey($keyword, 'ps');
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
+            $this->data['propertyResults'] = Cache::get($cacheKey);
+        }else{            
+            $this->data['propertyResults'] = $this->searchPropertiesByKeyword($cities, $keyword);
+            $this->setGalleryAndFormat($this->data['propertyResults']);
+            if($request->get('max') && $request->get('min')){
+                $this->filterByprice($request->get('max'),$request->get('min'),$this->data['propertyResults']);
+            }
+            Cache::store('file')->put($cacheKey, $this->data['propertyResults'], 14400);
         }
 
         $this->data['loaderImages'] = $this->getLoaderImages($keyword);
@@ -3333,8 +3354,8 @@ class PropertyController extends Controller {
 
     public function getProperty_Ajax($id){
         $this->data['property'] = $this->getPropertyById($id);
-        $this->formatPropertyRecords($this->data['property']);
         $this->setGalleryAndFormat($this->data['property']);
+        // $this->formatPropertyRecords($this->data['property']);
 
         return response()->json($this->data['property'][0]);
     }

@@ -163,28 +163,54 @@
         <p>
           {{ $hotel_data[0]->detail_section1_description_box2 }}
         </p>
-        @if(!empty($hotel_data[0]->suites[0]->amenities[0]->amenities_eng))
+        
+        <?php
+          $availableservicesArr = [];
+          if($hotel_data[0]->availableservices != ''){
+            $availableservicesArr = array_chunk(explode(',', $hotel_data[0]->availableservices), 5);
+          }
+        ?>
+        @if(!empty($availableservicesArr))
+          <div class="i-none">
+            <h4 class="mt-5 mb-4 color-dark-grey ">Available Services</h4>
+            <div class="row mb-4">
+              @foreach($availableservicesArr as $availableservices)
+                <div class="col-md-4 mb-4">
+                  <ul style="padding-left: 20px;">
+                  @foreach($availableservices as $availableservice)
+                    {{-- <p class="mb-0">{{ $availableservice }}</p> --}}
+                    <li>{{ $availableservice }}</li>
+                  @endforeach
+                  </ul>
+                </div>
+              @endforeach
+            </div>
+          </div>
+        @endif
+
+        <?php
+          $amenitiesArr = [];
+          if($hotel_data[0]->assign_amenities != ''){
+            $amenitiesArr = array_chunk(explode(',', $hotel_data[0]->assign_amenities), 5);
+          }
+        ?>
+        @if(!empty($amenitiesArr))
           <div class="i-none">
             <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
             <div class="row mb-4">
-              @if(!empty($hotel_data))
-                @foreach($hotel_data as $amenitie)              
+              @foreach($amenitiesArr as $amenities)
                 <div class="col-md-4 mb-4">
-                  <p class="mb-0">
-                    @if(!empty($amenitie->suites->toArray()))
-                      @if(!empty($amenitie->suites[0]->amenities->toArray()))
-                        {{ $amenitie->suites[0]->amenities[0]->amenities_eng }}
-                      @endif
-                    @endif
-                  </p>
+                  <ul style="padding-left: 20px;">
+                  @foreach($amenities as $amenity)
+                    {{-- <p class="mb-0">{{ $amenity }}</p> --}}
+                    <li>{{ $amenity }}</li>
+                  @endforeach
+                  </ul>
                 </div>
-                @endforeach
-              @else
-              <p>Amenities Not Found</p>  
-              @endif
+              @endforeach
             </div>
           </div>
-        @endif  
+        @endif
       </div>
       <div class="col-md-4">
         <div class="side-detail mb-3">
@@ -269,18 +295,12 @@
             <h4 class="mb-4 color-dark-grey ">Amenities</h4>
             <div class="row">
               <div class="col-md-4 mb-4">
-                @if(!empty($hotel_data))
-                  @foreach($hotel_data as $amenitie)              
-                    <p class="mb-0">
-                      @if(!empty($amenitie->suites->toArray()))
-                        @if(!empty($amenitie->suites[0]->amenities->toArray()))
-                          {{ $amenitie->suites[0]->amenities[0]->amenities_eng }}
-                        @endif
-                      @endif
-                    </p>
-                  @endforeach
+                @if(!empty($suite['amenities']))
+                  <p class="mb-0">
+                    {{ $suite['amenities'][0]['amenities_eng'] }}
+                  </p>
                 @else
-                <p>Amenities Not Found</p>  
+                   <p>Amenities Not Found</p>
                 @endif
               </div>
             </div>

@@ -24,6 +24,11 @@ use Cache;
 trait Property {
     
     public function getLocationDescription($keyword){
+        $cacheKey = str_slug($keyword).'locationdescription';
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
+            return Cache::get($cacheKey);
+        }
+
         $location = Categories::select(['id', 
             'parent_category_id', 
             'category_name', 
@@ -35,10 +40,17 @@ trait Property {
         ->get()
         ->toArray();
 
+        Cache::store('file')->put($cacheKey, $location, 14400);
+
         return $location;
     }
 
     public function getLocationPath($keyword){
+        $cacheKey = str_slug($keyword).'locationpath';
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
+            return Cache::get($cacheKey);
+        }
+
         $path = [];
         
         $category = Categories::select(['id', 'parent_category_id', 'category_name'])
@@ -56,11 +68,13 @@ trait Property {
                 
                 $path[$catId] = $category[0]['category_name'];
             }
+            $path = array_reverse($path);
         } else {
-            return [];
+            $path = [];
         }
 
-        $path = array_reverse($path);
+        Cache::store('file')->put($cacheKey, $path, 14400);
+
         return $path;
 
     }
@@ -75,101 +89,118 @@ trait Property {
     }
 
     public function getEditorChoiceProperties($cities, $keyword){
-        $destinationId = 0;
-        $destination = categories::select(['id'])
-        ->where('category_name', '=', $keyword)
-        ->get()
-        ->toArray();
-        
-        if(!empty($destination)){
-            $destinationId = $destination[0]['id'];
-        }
+        $key = md5($keyword.request()->get('experience').
+        request()->get('facility_ids').
+        request()->get('atmosphere_ids').
+        request()->get('style_ids').request()->get('max').request()->get('min').'ecps');
 
-        $properties = properties::orderByRaw("RAND()")->select([
-            'id', 
-            'property_name', 
-            'property_short_name',
-            'property_slug', 
-            'detail_section1_title', 
-            'detail_section1_description_box1', 
-            'detail_section1_description_box2', 
-            'detail_section1_description_box2', 
-            'latitude',
-            'longitude',
-            'city',
-            'property_usp',
-            'youtube_channel'
+        //return Cache::get($key, function () {
+            //$keyword = request()->get('s');
+            $destinationId = 0;
+            $destination = categories::select(['id'])
+            ->where('category_name', '=', $keyword)
+            ->get()
+            ->toArray();
+            
+            if(!empty($destination)){
+                $destinationId = $destination[0]['id'];
+            }
+
+            $properties = properties::orderByRaw("RAND()")->select([
+                'id', 
+                'property_name', 
+                'property_short_name',
+                'property_slug', 
+                'detail_section1_title', 
+                'detail_section1_description_box1', 
+                'detail_section1_description_box2', 
+                'detail_section1_description_box2', 
+                'latitude',
+                'longitude',
+                'city',
+                'property_usp',
+                'youtube_channel'
+                ])
+            ->with([
+                'propertyImages' => function($query){
+                    return $query->with(['file' => function($query){
+                        return $query->select(['id','file_name']);
+
+                    }]);
+                }, 
             ])
-        ->with([
-            'propertyImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
+            ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0 ) ")
+            //->where('country', '=', $keyword)
+            ->where('editor_choice_property', '=', 1)
+            ->where('property_status', '=', 1);
 
-                }]);
-            }, 
-        ])
-        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0 ) ")
-        //->where('country', '=', $keyword)
-        ->where('editor_choice_property', '=', 1)
-        ->where('property_status', '=', 1);
+            $this->applyFilter($properties);
 
-        $this->applyFilter($properties);
-
-        return $properties->limit(2)->get();
+            return $properties->limit(2)->get();
+        //});
     }
 
     public function getFeaturedProperties($cities,$keyword){
-        $destinationId = 0;
-        $destination = categories::select(['id'])
-        ->where('category_name', '=', $keyword)
-        ->get()
-        ->toArray();
-        if(!empty($destination)){
-            $destinationId = $destination[0]['id'];
-        }
+        $key = md5($keyword.request()->get('experience').
+        request()->get('facility_ids').
+        request()->get('atmosphere_ids').
+        request()->get('style_ids').request()->get('max').request()->get('min').'fps');
 
-        $properties = properties::orderByRaw("RAND()")->select([
-            'id', 
-            'property_name', 
-            'property_short_name',
-            'property_slug', 
-            'detail_section1_title', 
-            'detail_section1_description_box1', 
-            'detail_section1_description_box2', 
-            'latitude',
-            'longitude',
-            'city',
-            'property_usp',
-            'youtube_channel'
-        ])
-        ->with([
-            'propertyImages' => function($query){
-                return $query->with(['file' => function($query){
-                    return $query->select(['id','file_name']);
+        //return Cache::get($key, function () {
+            //$keyword = request()->get('s');
+            $destinationId = 0;
+            $destination = categories::select(['id'])
+            ->where('category_name', '=', $keyword)
+            ->get()
+            ->toArray();
+            if(!empty($destination)){
+                $destinationId = $destination[0]['id'];
+            }
 
-                }]);
-            }, 
-        ])
-        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
-        //->where('country', '=', $keyword)
-        ->where('feature_property', '=', 1)
-        ->where('property_status', '=', 1);
+            $properties = properties::orderByRaw("RAND()")->select([
+                'id', 
+                'property_name', 
+                'property_short_name',
+                'property_slug', 
+                'detail_section1_title', 
+                'detail_section1_description_box1', 
+                'detail_section1_description_box2', 
+                'latitude',
+                'longitude',
+                'city',
+                'property_usp',
+                'youtube_channel'
+            ])
+            ->with([
+                'propertyImages' => function($query){
+                    return $query->with(['file' => function($query){
+                        return $query->select(['id','file_name']);
 
-        $this->applyFilter($properties);
+                    }]);
+                }, 
+            ])
+            ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
+            //->where('country', '=', $keyword)
+            ->where('feature_property', '=', 1)
+            ->where('property_status', '=', 1);
 
-        return $properties->limit(2)->get();
+            $this->applyFilter($properties);
+
+            return $properties->limit(2)->get();
+        //});
     }
 
     public function searchPropertiesByKeyword($cities, $keyword){
-        /*$key = md5($keyword.request()->get('experience').
+        $keyword = request()->get('s');
+        $key = md5($keyword.request()->get('experience').
         request()->get('facility_ids').
         request()->get('atmosphere_ids').
-        request()->get('style_ids'));*/
+        request()->get('style_ids').request()->get('max').request()->get('min'));
         $destinationId = 0;
 
-        // return Cache::get($key, function () {
+        //return Cache::get($key, function () {
             $destinationId = 0;
-            // $keyword = request()->get('s');
+            $keyword = request()->get('s');
 
             $destinations = categories::select(['id'])
                 ->where('category_name', '=', $keyword)
@@ -207,7 +238,6 @@ trait Property {
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
                         return $query->select(['id','file_name']);
-
                     }]);
                 }, 
             ])
@@ -220,7 +250,7 @@ trait Property {
 
             return $properties
             ->get();
-        // });            
+        //});
     }
 
     public function getPropertyByslug($slug){
@@ -700,12 +730,19 @@ trait Property {
     }
 
     public function getLoaderImages($location){
+        $cacheKey = str_slug($location).'loaderimage';
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
+            return Cache::get($cacheKey);
+        }
+
         $locationSlug = strtolower(str_replace(' ', '-', $location));
-        $loaderImages = Container::where('parent_id', '=', 10294)
-        ->whereRaw("(display_name like '%".$location."%' or display_name like '%".$locationSlug."%')")
+        $loaderImages = Container::where('parent_id', '=', config('app.emotional_gallery_id'))
+        ->whereRaw("(display_name like '%".$location."%')")
         ->with(['files'])
         ->get()
         ->toArray();
+
+        Cache::store('file')->put($cacheKey, $loaderImages, 14400);
 
         return $loaderImages;
     }
@@ -751,11 +788,11 @@ trait Property {
         
         if(!empty($allservices)){
             foreach($allservices as $service){
-                $all[] = $service['title'];
+                $all[] = trim($service['title']);
             }
         }
         if(!empty($all)){
-            return implode('<br/>', $all);
+            return implode(',', $all);
         }else{
             return '';
         }
@@ -889,29 +926,45 @@ trait Property {
     }
 
      public function setFitlerOptions(){
-        $this->data['experiences_data'] = \DB::table('tb_categories')
-        ->where('category_approved', 1)
-        ->where('category_published', 1)
-        ->where('parent_category_id', 8)
-        ->get();
+        $cacheKey = 'propertyfilteroptions';
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
+            $allfilters = Cache::get($cacheKey);
+            $this->data['experiences_data'] = $allfilters['experiences_data'];
+            $this->data['atmosphere'] = $allfilters['atmosphere'];
+            $this->data['facilities'] = $allfilters['facilities'];
+            $this->data['style'] = $allfilters['style'];
+        }else{
 
-        $this->data['atmosphere'] = \DB::table('tb_categories')
-        ->where('category_approved', 1)
-        ->where('category_published', 1)
-        ->where('parent_category_id', config('app.atmosphere_category_id'))
-        ->get();
+            $this->data['experiences_data'] = \DB::table('tb_categories')
+            ->where('category_approved', 1)
+            ->where('category_published', 1)
+            ->where('parent_category_id', 8)
+            ->get();
+            $allfilters['experiences_data'] = $this->data['experiences_data'];
 
-        $this->data['facilities'] = \DB::table('tb_categories')
-        ->where('category_approved', 1)
-        ->where('category_published', 1)
-        ->where('parent_category_id', config('app.facilities_category_id'))
-        ->get();
+            $this->data['atmosphere'] = \DB::table('tb_categories')
+            ->where('category_approved', 1)
+            ->where('category_published', 1)
+            ->where('parent_category_id', config('app.atmosphere_category_id'))
+            ->get();
+            $allfilters['atmosphere'] = $this->data['atmosphere'];
 
-        $this->data['style'] = \DB::table('tb_categories')
-        ->where('category_approved', 1)
-        ->where('category_published', 1)
-        ->where('parent_category_id', config('app.style_category_id'))
-        ->get();
+            $this->data['facilities'] = \DB::table('tb_categories')
+            ->where('category_approved', 1)
+            ->where('category_published', 1)
+            ->where('parent_category_id', config('app.facilities_category_id'))
+            ->get();
+            $allfilters['facilities'] = $this->data['facilities'];
+
+            $this->data['style'] = \DB::table('tb_categories')
+            ->where('category_approved', 1)
+            ->where('category_published', 1)
+            ->where('parent_category_id', config('app.style_category_id'))
+            ->get();
+            $allfilters['style'] = $this->data['style'];
+
+            Cache::store('file')->put($cacheKey, $allfilters, 14400);
+        }
 
         return $this->data;
     }
@@ -1012,7 +1065,7 @@ trait Property {
     public function getLocationInfoRoadGoat($keyword){
         $properties = \DB::table('tb_categories')->where('category_name', '=', $keyword)->get();
         
-        if(!$properties[0]->location_info == ''){
+        if(!isset($properties[0]->location_info)){
 
             $curl = curl_init();
             curl_setopt_array($curl, array(
@@ -1089,5 +1142,13 @@ trait Property {
         if($experience_id){
             $properties->whereRaw("FIND_IN_SET('".$experience_id."',`property_category_id`) <> 0");
         }
+    }
+
+    public function getCacheKey($keyword, $identifier){
+        return $key = md5($keyword.request()->get('experience').
+        request()->get('facility_ids').
+        request()->get('atmosphere_ids').
+        request()->get('style_ids').request()->get('max').request()->get('min').$identifier);
+
     }
 }

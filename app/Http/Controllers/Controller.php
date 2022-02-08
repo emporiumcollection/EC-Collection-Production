@@ -21,36 +21,16 @@ abstract class Controller extends BaseController {
     var $is_public = true;
 	public function __construct()
 	{
-	    $footer_menus = \SiteHelpers::menus('footer');
-	    $this->data['footer_menus'] = $footer_menus;
-
-        $landing_menus = \SiteHelpers::menus('landing');
-	    $this->data['landing_menus'] = $landing_menus;
-
-	    $top_menus = \SiteHelpers::menus('Top');
-	    $this->data['top_menus'] = $top_menus;
-
-	    $popup_menus = \SiteHelpers::menus('Popup');
-	    $this->data['popup_menus'] = $popup_menus;
-
-	    $popup_menus2 = \SiteHelpers::menus('popup_2');
-	    $this->data['popup_menus2'] = $popup_menus2;
-
-		$this->data['menu_experiences'] = \DB::table('tb_categories')
-		->select(['id', 'category_name', 'category_alias'])
-		->where('category_approved', 1)
-		->where('category_published', 1)
-		->where('parent_category_id', 8)
-		->get();
+	    $this->setMenuData();
 
         $routePath = request()->route()->getActionName();
         if(!strpos($routePath, 'HomeController')){
 	        $cacheKey = 'destinationsmenu';
-	        if (Cache::has($cacheKey)) {
+	        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
 	            $this->data['destinationMenu'] = Cache::get($cacheKey);
 	        }else{
 				$this->data['destinationMenu'] = $this->destinationTree();
-	            Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 100000);
+	            Cache::store('file')->put($cacheKey, $this->data['destinationMenu'], 14400);
 	        }
 		}
 
@@ -771,6 +751,52 @@ abstract class Controller extends BaseController {
             }
         }
         return $pakages_arr;
+    }
+
+    private function setMenuData(){
+        $cacheKey = 'menusfiltersdatastored';
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
+            $allmenus = Cache::get($cacheKey);
+            $this->data['menu_experiences'] = $allmenus['menu_experiences'];
+            $this->data['footer_menus'] = $allmenus['footer_menus'];
+            $this->data['landing_menus'] = $allmenus['landing_menus'];
+            $this->data['top_menus'] = $allmenus['top_menus'];
+            $this->data['popup_menus'] = $allmenus['popup_menus'];
+            $this->data['popup_menus2'] = $allmenus['popup_menus2'];
+            $this->data['menu_experiences'] = $allmenus['menu_experiences'];
+        }else{
+			$allmenus = [];
+			
+			$footer_menus = \SiteHelpers::menus('footer');
+		    $allmenus['footer_menus'] = $footer_menus;
+		    $this->data['footer_menus'] = $footer_menus;
+
+	        $landing_menus = \SiteHelpers::menus('landing');
+		    $allmenus['landing_menus'] = $landing_menus;
+		    $this->data['landing_menus'] = $landing_menus;
+
+		    $top_menus = \SiteHelpers::menus('Top');
+		    $allmenus['top_menus'] = $top_menus;
+		    $this->data['top_menus'] = $top_menus;
+
+		    $popup_menus = \SiteHelpers::menus('Popup');
+		    $allmenus['popup_menus'] = $popup_menus;
+		    $this->data['popup_menus'] = $popup_menus;
+
+		    $popup_menus2 = \SiteHelpers::menus('popup_2');
+		    $allmenus['popup_menus2'] = $popup_menus2;
+		    $this->data['popup_menus2'] = $popup_menus2;
+
+			$allmenus['menu_experiences'] = \DB::table('tb_categories')
+			->select(['id', 'category_name', 'category_alias'])
+			->where('category_approved', 1)
+			->where('category_published', 1)
+			->where('parent_category_id', 8)
+			->get();
+			$this->data['menu_experiences'] = $allmenus['menu_experiences'];
+
+            Cache::store('file')->put($cacheKey, $allmenus, 14400);
+        }
     }
     
 }

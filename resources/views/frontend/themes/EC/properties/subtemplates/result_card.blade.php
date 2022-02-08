@@ -4,6 +4,7 @@
 
     <div class="pr-lst result-grid">
       <?php 
+      $pimg = 0;
       foreach($property->propertyImages as $image):
         
         if(isset($property['container']['name'])){
@@ -21,10 +22,13 @@
         }
       ?>
         <div>
-          <img <?php echo 'src="property-image/resize/615x419/'.$container_name.'/default-image.png/property-image"';?> <?php echo 'data-src="property-image/resize/615x419/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100 results-media" alt="">
+          <img <?php //echo 'src="property-image/resize/615x419/'.$container_name.'/default-image.png/property-image"';?> <?php echo 'src="property-image/resize/615x419/'.$container_name.'/'.$file_name.'/property-image"';?> class="w-100 results-media" alt="">
         </div>
-      <?php 
-      endforeach;?>
+      <?php
+      $pimg++;
+      if($pimg >= 4) break; 
+      endforeach;
+      ?>
     </div>
     <div class="my-dropdown">
       <div class="btn-group dropleft">
@@ -80,6 +84,11 @@
   <a href="/hotel/{{ $property->property_slug }}">
     <div class="title-offset mt-5 ">
       <h3 class="title-second title-line mb-0"><?php echo $property->property_name;?></h3>
+      <?php
+      if($is_admin == 1){
+        echo '(<a target="_blank" href="/properties_settings/'.$property->id.'/types?return=">Edit</a> | <a target="_blank" href="/properties_settings/'.$property->id.'/property_images?return=">Edit Images</a> | <a target="_blank" href="/properties_settings/'.$property->id.'/rooms">Edit Suite Images</a>)';
+      }
+      ?>
       <h4 class="title-font-2 title-third"><?php echo $property->city;?></h4>
     </div>
   </a>

@@ -14,6 +14,7 @@ use Twilio\Rest\Client;
 use Illuminate\Support\Facades\Session;
 use ValidateRequests;
 use Validator;
+use Redirect;
 
 
 class AuthController extends Controller
@@ -157,6 +158,9 @@ class AuthController extends Controller
     }
 
     public function logout(Request $request) {
+        $currentdomain = \Config::get('app.currentdomain');
+        $onelogindomain = \Config::get('app.onelogindomain');
+
         Session::forget('arrival');
         Session::forget('departure');
         Session::forget('adult');
@@ -176,6 +180,12 @@ class AuthController extends Controller
         Session::forget('page');
         
         Auth::logout();
+
+        if($currentdomain != 'emporiumcollection'){
+            return Redirect::to($onelogindomain.'/logout?referer='.request()->getSchemeAndHttpHost());
+        }else{
+            return Redirect::to($request->get('referer'));
+        }        
         return redirect('/');
     }
 }

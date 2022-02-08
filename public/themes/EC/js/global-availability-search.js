@@ -4,6 +4,16 @@ var boardTemplate = '';
 var currentPropertyId = '';
 var priceTemplate = '';
 
+Object.defineProperty(Array.prototype, 'chunk', {
+  value: function(chunkSize){
+    var temporal = [];
+    for (var i = 0; i < this.length; i+= chunkSize){
+      temporal.push(this.slice(i,i+chunkSize));
+    }
+    return temporal;
+  }
+});
+
 function replacePropertyData(id){
   if(!properties[id]){
     getPropertybyId(id);
@@ -12,6 +22,7 @@ function replacePropertyData(id){
   var field = '';
   $('[data-place="property"]').each(function() {
       field = $(this).attr('data-replace');
+      console.log(properties[id][field]);
       if(properties[id][field]){
         $(this).html(properties[id][field]);
         $(this).parents(".col-lg-4").show();
@@ -21,19 +32,22 @@ function replacePropertyData(id){
   });
 
   $('[data-place="property-multi-value"]').each(function() {
-      field = $(this).attr('data-replace');
-      //console.log(properties[id][field]);
-      var values = properties[id][field].split(',');
       var listview = '';
-      values.forEach(function(e){
-        listview += '<p class="mb-0">' + e + '</p>';
-      })
-      if(listview){
-        $(this).html(listview);
-        $(this).parents(".row").show();
-      }else{
-        $(this).parents(".row").hide();
+      field = $(this).attr('data-replace');
+      title = $(this).data('replace-title');
+      var amenitiesArr = properties[id][field].split(',');
+      if(properties[id][field] && amenitiesArr.length){
+        amenitiesArr = amenitiesArr.chunk(5);
+        listview += '<h4 class="mb-4 col-12">'+title+'</h4>';
+        $.each(amenitiesArr, function(i){
+          listview += '<div class="col-md-3 col-sm-6 mb-4">';
+          $.each(amenitiesArr[i], function(j){
+            listview += '<p class="mb-0">' + amenitiesArr[i][j] + '</p>';
+          });
+          listview += '</div>';
+        });
       }
+      $(this).html(listview);
   });
 
   $('[data-place="property-book-button"]').each(function() {
@@ -436,6 +450,44 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_category_name"]').html(suite.category_name);
   $('[data-place="suite_description"]').html(suite.room_desc);
   $('[data-place="suite_amenities"]').html(suite.suiteamenities);
+
+  console.log(suite.bads, 'Number of Beds');
+  $('.number_of_beds_placement').hide();
+  $('.number_of_beds_placement').find('#number_of_beds').html('');
+  if(suite.bads > 0){
+    $('.number_of_beds_placement').show();
+    $('.number_of_beds_placement').find('#number_of_beds').html(suite.bads);
+  }
+
+  var more_room_desc = '';
+  if(suite.suite_size){
+    more_room_desc += `<div class="row">
+      <div class="col-5 ">Size</div>
+      <div class="col-7">`+suite.suite_size+` M<sup>2</sup></div>
+    </div>`;
+  }
+  if(suite.view){
+    more_room_desc += `<div class="row">
+      <div class="col-5 ">View</div>
+      <div class="col-7">`+suite.view+`</div>
+    </div>`;
+  }
+  if(suite.location){
+    more_room_desc += `<div class="row">
+      <div class="col-5 ">Location</div>
+      <div class="col-7">`+suite.location+`</div>
+    </div>`;
+  }
+  if(suite.bathroom){
+    more_room_desc += `<div class="row">
+      <div class="col-5 ">Bathroom</div>
+      <div class="col-7">`+suite.bathroom+`</div>
+    </div>`;
+  }
+  if(more_room_desc){
+    $('[data-place="suite_description"]').append(`<hr>`+more_room_desc+`<hr>`);
+  }
+
   var containerName = getContainerName(property_id);
   var roomimages = ``;
 
@@ -926,9 +978,9 @@ function getBestPlases(category, near){
 }
 
  
-$(window).on('load', function() {
-  lazyLoadMe('results-media');
-  lazyLoadMe('location-photos');  
+$(document).ready(function() {
+  //lazyLoadMe('results-media');
+  lazyLoadMe('location-photos');
 });
 
 function lazyLoadMe(selector){

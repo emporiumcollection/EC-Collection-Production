@@ -8,7 +8,14 @@
   <div class="row align-items-center">
     <div class="col-md-6">
       <a href="/hotel/{{ $editorChoice->property_slug }}">
-        <h3 class="title-second title-line mb-0"><?php echo $editorChoice->property_name;?></h3>
+        <h3 class="title-second title-line mb-0"><?php echo $editorChoice->property_name;?>
+        </h3>
+
+          <?php
+          if($is_admin == 1){
+            echo '(<a target="_blank" href="/properties_settings/'.$editorChoice->id.'/types?return=">Edit</a> | <a target="_blank" href="/properties_settings/'.$editorChoice->id.'/property_images?return=">Edit Images</a> | <a target="_blank" href="/properties_settings/'.$editorChoice->id.'/rooms">Edit Suite Images</a>)';
+          }
+          ?>
       </a>
     </div>
     <div class="col-md-6 text-right">
@@ -35,7 +42,7 @@
       <?php echo $block_title;?>
     </div>
     <div class="row hero-row mt-4">
-      <div class="col-lg-6">
+      <div class="col-lg-6 is-hover">
         <div class="hero-item">
           <?php if(!empty($propertyImages)):
               if(isset($editorChoice['container']['name'])){
@@ -54,7 +61,7 @@
             ?>
             <img src="<?php echo 'property-image/resize/1200x700/'.$container_name.'/'.$file_name.'/property-image';?>" alt="">
           <?php endif;?>
-          <div class="hero-desc">
+          <div class="hotel-srt-desc hero-desc">
             <h4><?php echo $editorChoice->detail_section1_title;?></h4>
           </div>
         </div>

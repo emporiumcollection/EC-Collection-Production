@@ -5,7 +5,7 @@
 
   if(isset($loaderImages[0]['files']) && !empty($loaderImages[0]['files'])){
     foreach($loaderImages as $limage){      
-      if(file_exists(public_path().'/uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . isset($limage['files'][0]['file_name']))){
+      if(file_exists(public_path().'/uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $limage['files'][0]['file_name'])){
 
         $loaderImage = 'uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $limage['files'][0]['file_name'];
 
@@ -16,7 +16,7 @@
     }
   }
 ?>
-<div class="pageload" style="background-image: url(<?php echo $loaderImage;?>);">
+<div class="pageload" style="background-image: url('<?php echo $loaderImage;?>');">
   <div class="logo"></div>
   <div class="loading-dcs">
     <p class="loading-title"><?php echo $loaderTitle;?></p>

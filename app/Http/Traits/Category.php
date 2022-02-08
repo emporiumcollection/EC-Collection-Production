@@ -4,6 +4,8 @@ namespace App\Http\Traits;
 
 use App\Models\Categories;
 use Config;
+use Cache;
+
 trait Category {
 
     private $parents = [];
@@ -62,6 +64,11 @@ trait Category {
      * so first finds parents tree and then it assigns children against parent
     */
     public function getTrendingFilters(){
+        $cacheKey = 'trandiingfilters';
+        if (Cache::has($cacheKey) && !isset($_GET['nocache'])) {
+            return Cache::get($cacheKey);
+        }
+
         $filters = [];
         $categories = Categories::select(['id', 'category_name', 'parent_category_id'])
         ->where('trending_destination', '=', 1)
@@ -81,6 +88,8 @@ trait Category {
                 $filters[$parent][] = $category;
             }            
         }
+        
+        Cache::store('file')->put($cacheKey, $filters, 14400);
 
         return $filters;
     }

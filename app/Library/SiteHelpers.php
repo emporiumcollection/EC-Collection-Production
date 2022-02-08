@@ -767,21 +767,22 @@ public static function alphaID($in, $to_num = false, $pad_up = false, $passKey =
 			
 				if($option['opt_type'] =='external')
 				{
-					
+
 					$data = DB::table($option['lookup_table'])->get();
 					$opts = '';
 					foreach($data as $row):
 						$selected = '';
-						$lookTable = $option['lookup_key'];
-						if($value == $row->$lookTable) $selected ='selected="selected"';
-						$fields = explode("|",$option['lookup_value']);
-						//print_r($fields);exit;
-						$val = "";
-						foreach($fields as $item=>$v)
-						{
-							if($v !="") $val .= $row->$v." " ;
+						if(isset($option['lookup_key']) && $option['lookup_key']){
+							$lookTable = $option['lookup_key'];
+							if($value == $row->$lookTable) $selected ='selected="selected"';
+							$fields = explode("|",$option['lookup_value']);
+							$val = "";
+							foreach($fields as $item=>$v)
+							{
+								if($v !="") $val .= $row->$v." " ;
+							}
+							$opts .= "<option $selected value='".$row->$lookTable."' $mandatory > ".$val." </option> ";
 						}
-						$opts .= "<option $selected value='".$row->$lookTable."' $mandatory > ".$val." </option> ";
 					endforeach;
 						
 				} else {

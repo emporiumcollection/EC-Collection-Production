@@ -1588,6 +1588,12 @@ class PropertiesController extends Controller {
         }
         $this->data['tabss'] = $tabdata;
         if ($active == 'types') {
+            $this->data['suite_views'] = [
+                '' => 'No View',
+                'Mountain' => 'Mountain',
+                'Ocean' => 'Ocean',
+                'City' => 'City'
+            ];
             $this->data['cat_types'] = $this->find_categories($property_id);
 
             $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
@@ -1947,6 +1953,11 @@ class PropertiesController extends Controller {
         $rules['guests_babies'] = 'required|numeric';
         $rules['suite_size'] = 'required|numeric';
         $rules['bads'] = 'required|numeric';
+        $rules['bed_1_description'] = 'max:255';
+        $rules['bed_2_description'] = 'max:255';
+        $rules['view'] = 'max:255';
+        $rules['location'] = 'max:255';
+        $rules['bathroom'] = 'max:255';
         
         $validator = Validator::make($request->all(), $rules);
         if ($validator->passes()) {
@@ -1961,11 +1972,20 @@ class PropertiesController extends Controller {
             $data['guests_juniors'] = $request->input('guests_junior');
             $data['guests_babies'] = $request->input('guests_babies');
             $data['bads'] = $request->input('bads');
+            $data['bed_1_description'] = $request->input('bed_1_description');
+            $data['bed_2_description'] = $request->input('bed_2_description');
             $data['suite_size'] = $request->input('suite_size');
-            $data['is_accessible'] = $request->input('is_accessible');
+            $data['view'] = $request->input('view');
+            $data['location'] = $request->input('location');
+            $data['bathroom'] = $request->input('bathroom');
             $data['cancelation_period'] = $request->input('cancelation_period');
             $data['cancelation_duration'] = $request->input('cancelation_duration');
             //$data['booking_policy'] =  $request->input('bookingPolicy');
+
+            $data['is_accessible'] = 0;
+            if(!is_null($request->input('is_accessible'))){
+                $data['is_accessible'] = 1;
+            }
 
             if (!is_null($request->input('count_baby'))) {
                 $data['baby_count'] = $request->input('count_baby');
@@ -2150,14 +2170,19 @@ class PropertiesController extends Controller {
     }
 
     function property_images_uploads(Request $request) {
-        $checkProp = \DB::table('tb_properties')->select('property_name')->where('id', $request->input('propId'))->first();
-        //print_r($checkProp); die;
+        $checkProp = \DB::table('tb_properties')->select(['property_name', 'property_slug'])->where('id', $request->input('propId'))->first();
         if (!empty($checkProp)) {
             $checkDir = \DB::table('tb_container')->select('id')->where('name', 'locations')->first();
             if (!empty($checkDir)) {
                 $foldVal = trim($checkProp->property_name);
                 if ($foldVal != "") {
                     $foldName = trim($foldVal);
+
+                    $cached_images_dir_path = public_path() . '/cached-images/container_user_files/locations/' . \SiteHelpers::seoUrl($foldName);
+                    if (is_dir($cached_images_dir_path)) {
+                        File::deleteDirectory($cached_images_dir_path);
+                    }
+
                     $slug = \SiteHelpers::seoUrl(trim($foldName));
                     $dirPath = (new ContainerController)->getContainerUserPath($checkDir->id);
 
