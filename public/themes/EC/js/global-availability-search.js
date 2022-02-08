@@ -450,6 +450,44 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_category_name"]').html(suite.category_name);
   $('[data-place="suite_description"]').html(suite.room_desc);
   $('[data-place="suite_amenities"]').html(suite.suiteamenities);
+
+  console.log(suite.bads, 'Number of Beds');
+  $('.number_of_beds_placement').hide();
+  $('.number_of_beds_placement').find('#number_of_beds').html('');
+  if(suite.bads > 0){
+    $('.number_of_beds_placement').show();
+    $('.number_of_beds_placement').find('#number_of_beds').html(suite.bads);
+  }
+
+  var more_room_desc = '';
+  if(suite.suite_size){
+    more_room_desc += `<div class="row">
+      <div class="col-5 ">Size</div>
+      <div class="col-7">`+suite.suite_size+` M<sup>2</sup></div>
+    </div>`;
+  }
+  if(suite.view){
+    more_room_desc += `<div class="row">
+      <div class="col-5 ">View</div>
+      <div class="col-7">`+suite.view+`</div>
+    </div>`;
+  }
+  if(suite.location){
+    more_room_desc += `<div class="row">
+      <div class="col-5 ">Location</div>
+      <div class="col-7">`+suite.location+`</div>
+    </div>`;
+  }
+  if(suite.bathroom){
+    more_room_desc += `<div class="row">
+      <div class="col-5 ">Bathroom</div>
+      <div class="col-7">`+suite.bathroom+`</div>
+    </div>`;
+  }
+  if(more_room_desc){
+    $('[data-place="suite_description"]').append(`<hr>`+more_room_desc+`<hr>`);
+  }
+
   var containerName = getContainerName(property_id);
   var roomimages = ``;
 

@@ -97,29 +97,48 @@
 													</label>
 												</div>
 											</div>
+										</div>
+										<div class="row">
 											<div class="form-group col-lg-3">
 												<label for="bads"># Beds</label>
 												<input name="bads" id="bads" type="text" class="form-control input-sm" value="{{$cat->bads}}" data-rule-number="true" required="required" /> 
 											</div>
 											<div class="form-group col-lg-3">
-												<label for="suite_size">Suite Size</label>
-												<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="{{$cat->suite_size}}" data-rule-number="true" required="required" /> 
+												<label for="bed_1_description">Bed 1</label>
+												<input name="bed_1_description" id="bed_1_description" type="text" class="form-control input-sm" value="{{ $cat->bed_1_description }}" /> 
 											</div>
 											<div class="form-group col-lg-3">
-												<div class="margin-top-10">
-													<label class="optionbox">
-														<input type="checkbox" name="is_accessible" value="1" {{($cat->is_accessible==1) ? 'checked="checked"' : ''}} > Is Accessible
-													</label>
-												</div>
+												<label for="bed_2_description">Bed 2</label>
+												<input name="bed_2_description" id="bed_2_description" type="text" class="form-control input-sm" value="{{ $cat->bed_2_description }}" /> 
+											</div>
+											<div class="form-group col-lg-3">
+												<label for="suite_size">Suite Size</label>
+												<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="{{ $cat->suite_size }}" required="required" /> 
+											</div>
+											<div class="form-group col-lg-3">
+												<label for="view">View</label>
+												<select name="view" id="view" class="form-control input-sm">
+													@foreach($suite_views as $sv_key => $suite_view)
+														<option value="{{ $sv_key }}" {{$sv_key == $cat->view ? 'selected' : '' }}>{{ $suite_view }}</option>
+													@endforeach
+												</select>
+											</div>
+											<div class="form-group col-lg-3">
+												<label for="location">Location</label>
+												<input name="location" id="location" type="text" class="form-control input-sm" value="{{ $cat->location }}" required="required" /> 
+											</div>
+											<div class="form-group col-lg-3">
+												<label for="bathroom">Bathroom(s)</label>
+												<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="{{ $cat->bathroom }}" required="required" /> 
 											</div>
 										</div>
 										<div class="row">
 											<div class="form-group col-lg-3">
-												<label for="cancelation_period">Cancelation Period</label>
+												<label for="cancelation_period">Cancellation Period</label>
 												<input name="cancelation_period" id="cancelation_period" type="text" class="form-control input-sm" value="{{$cat->cancelation_period}}" data-rule-number="true" /> 
 											</div>
 											<div class="form-group col-lg-3">
-												<label for="cancelation_duration">Cancelation Duration</label>
+												<label for="cancelation_duration">Cancellation Duration</label>
 												<select name="cancelation_duration" class="form-control input-sm">
 													<option>Select Duration</option>
 													<option value="hrs" {{ ($cat->cancelation_duration=='hrs') ? 'selected="selected"' : ''}}>Hours</option>
@@ -127,12 +146,12 @@
 												</select>
 											</div>
 										</div>
-                                        <div class="row">
-                                            <div class="form-group col-lg-12">
-                                                <label for="booingPolicy">Booking Policy</label>
-                                                <textarea name="bookingPolicy" cols="4" class="form-control">{{$cat->booking_policy}}</textarea>
-                                            </div>
-                                        </div>
+					                    <div class="row">
+					                      <div class="form-group col-lg-12">
+					                        <label for="booingPolicy">Booking Policy</label>
+					                        <textarea name="bookingPolicy" cols="4" class="form-control">{{$cat->booking_policy}}</textarea>
+					                      </div>
+					                    </div>
 									</div>
 									<div class="col-lg-3 align-right">
 										<div class="butt">
@@ -142,6 +161,12 @@
 										<div class="margin-top-10">
 											<label class="optionbox">
 												<input type="checkbox" name="show_booking" value="1" {{($cat->show_on_booking==1) ? 'checked="checked"' : ''}} > Show on Booking Platform                
+											</label>
+										</div>
+
+										<div class="margin-top-10">
+											<label class="optionbox">
+												<input type="checkbox" name="is_accessible" value="1" {{($cat->is_accessible==1) ? 'checked="checked"' : ''}} > Is Accessible
 											</label>
 										</div>
 									</div>
@@ -203,29 +228,48 @@
 												</label>
 											</div>
 										</div>
+									</div>
+									<div class="row">
 										<div class="form-group col-lg-3">
 											<label for="bads"># Beds</label>
 											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="bed_1_description">Bed 1</label>
+											<input name="bed_1_description" id="bed_1_description" type="text" class="form-control input-sm" value="" /> 
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="bed_2_description">Bed 2</label>
+											<input name="bed_2_description" id="bed_2_description" type="text" class="form-control input-sm" value="" /> 
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="suite_size">Suite Size</label>
 											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
 										<div class="form-group col-lg-3">
-											<div class="margin-top-10">
-												<label class="optionbox">
-													<input type="checkbox" name="is_accessible" value="1" {{($cat->is_accessible==1) ? 'checked="checked"' : ''}} > Is Accessible
-												</label>
-											</div>
+											<label for="view">View</label>
+											<select name="view" id="view" class="form-control input-sm">
+												@foreach($suite_views as $sv_key => $suite_view)
+													<option value="{{ $sv_key }}">{{ $suite_view }}</option>
+												@endforeach
+											</select>
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="location">Location</label>
+											<input name="location" id="location" type="text" class="form-control input-sm" value="" required="required" /> 
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="bathroom">Bathroom(s)</label>
+											<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="" required="required" /> 
 										</div>
 									</div>
 									<div class="row">
 										<div class="form-group col-lg-3">
-											<label for="cancelation_period">Cancelation Period</label>
+											<label for="cancelation_period">Cancellation Period</label>
 											<input name="cancelation_period" id="cancelation_period" type="text" class="form-control input-sm" value="" data-rule-number="true" /> 
 										</div>
 										<div class="form-group col-lg-3">
-											<label for="cancelation_duration">Cancelation Duration</label>
+											<label for="cancelation_duration">Cancellation Duration</label>
 											<select name="cancelation_duration" class="form-control input-sm" >
 												<option>Select Duration</option>
 												<option value="hrs">Hours</option>
@@ -247,6 +291,11 @@
 									<div class="margin-top-10">
 										<label class="optionbox">
 											<input type="checkbox" name="show_booking" checked="1" value="1"> Show on Booking Platform                
+										</label>
+									</div>
+									<div class="margin-top-10">
+										<label class="optionbox">
+											<input type="checkbox" name="is_accessible" value="1"> Is Accessible
 										</label>
 									</div>
 								</div>
@@ -307,29 +356,55 @@
 												</label>
 											</div>
 										</div>
+									</div>
+									<div class="row">
 										<div class="form-group col-lg-3">
 											<label for="bads"># Beds</label>
 											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
 										<div class="form-group col-lg-3">
+											<label for="bed_1_description">Bed 1</label>
+											<input name="bed_1_description" id="bed_1_description" type="text" class="form-control input-sm" value="" /> 
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="bed_2_description">Bed 2</label>
+											<input name="bed_2_description" id="bed_2_description" type="text" class="form-control input-sm" value="" /> 
+										</div>
+										<div class="form-group col-lg-3">
 											<label for="suite_size">Suite Size</label>
 											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
+										<div class="form-group col-lg-3">
+											<label for="view">View</label>
+											<select name="view" id="view" class="form-control input-sm">
+												@foreach($suite_views as $sv_key => $suite_view)
+													<option value="{{ $sv_key }}">{{ $suite_view }}</option>
+												@endforeach
+											</select>
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="location">Location</label>
+											<input name="location" id="location" type="text" class="form-control input-sm" value="" required="required" /> 
+										</div>
+										<div class="form-group col-lg-3">
+											<label for="bathroom">Bathroom(s)</label>
+											<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="" required="required" /> 
+										</div>
 									</div>
 									<div class="row">
-											<div class="form-group col-lg-3">
-												<label for="cancelation_period">Cancelation Period</label>
-												<input name="cancelation_period" id="cancelation_period" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
-											</div>
-											<div class="form-group col-lg-3">
-												<label for="cancelation_duration">Cancelation Duration</label>
-												<select name="cancelation_duration" class="form-control input-sm" required="required">
-													<option>Select Duration</option>
-													<option value="hrs" {{ ($cat->is_accessible=='hrs') ? 'selected="selected"' : ''}}>Hours</option>
-													<option value="days" {{ ($cat->is_accessible=='days') ? 'selected="selected"' : ''}}>Days</option>
-												</select>
-											</div>
+										<div class="form-group col-lg-3">
+											<label for="cancelation_period">Cancellation Period</label>
+											<input name="cancelation_period" id="cancelation_period" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
 										</div>
+										<div class="form-group col-lg-3">
+											<label for="cancelation_duration">Cancellation Duration</label>
+											<select name="cancelation_duration" class="form-control input-sm" required="required">
+												<option>Select Duration</option>
+												<option value="hrs" {{ ($cat->is_accessible=='hrs') ? 'selected="selected"' : ''}}>Hours</option>
+												<option value="days" {{ ($cat->is_accessible=='days') ? 'selected="selected"' : ''}}>Days</option>
+											</select>
+										</div>
+									</div>
                                     <div class="row">
                                         <div class="form-group col-lg-12">
                                             <label for="booingPolicy">Booking Policy</label>
@@ -345,6 +420,12 @@
 									<div class="margin-top-10">
 										<label class="optionbox">
 											<input type="checkbox" name="show_booking" checked="1" value="1"> Show on Booking Platform                
+										</label>
+									</div>
+
+									<div class="margin-top-10">
+										<label class="optionbox">
+											<input type="checkbox" name="is_accessible" value="1"> Is Accessible
 										</label>
 									</div>
 								</div>

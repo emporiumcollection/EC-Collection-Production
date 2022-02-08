@@ -82,6 +82,10 @@
                 <a href="#" class="view btn-sidebar i-none" data-sidebar="#quickinfo">
                     Hotel Info
                 </a>
+                <div class="hotel-title number_of_beds_placement">
+                    <p class="mb-0 inc">Includes</p>
+                    <p class="mb-0"><span id="number_of_beds">2</span> Bedrooms</p>
+                </div>
                 <!--<a href="#" class="view btn-sidebar i-none" data-sidebar="#policies">
                     Policies
                 </a>-->
