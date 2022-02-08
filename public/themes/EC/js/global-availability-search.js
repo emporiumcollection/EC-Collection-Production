@@ -380,7 +380,7 @@ function replaceSuiteList(id){
       suiteItem = suiteItem.replace('<!--SUITE-NO-BEDS-->', suite.bads);
       suiteItem = suiteItem.replace('<!--SUITE-SIZE-->', suite.suite_size);   
       suiteItem = suiteItem.replace('<!--COVID-INFO-->', properties[id].covid_info);
-
+      
       if(properties[id].covid_link){
         if(properties[id].covid_link.includes('http://') == true || properties[id].covid_link.includes('https://') == true){
           suiteItem = suiteItem.replace('<!--COVID-LINK-->', properties[id].covid_link);

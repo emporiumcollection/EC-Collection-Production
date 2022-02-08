@@ -6,16 +6,20 @@ use Illuminate\Http\Request;
 use App\Models\properties;
 use App\Models\PropertyImages;
 use App\Models\amenities;
+use App\Models\Restaurant;
+use App\Models\Bar;
 use App\Models\Review;
 use Illuminate\Support\Facades\Validator;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Http\Traits\Property;
+use App\Http\Traits\Restaurants;
 use Illuminate\Support\Facades\Session;
 class HotelDetailController extends Controller
 {
     use Property;
+    use Restaurants;
     
     public function hoteldetail()
     {
@@ -139,7 +143,7 @@ class HotelDetailController extends Controller
         return view($file_name, $this->data);
     }
 
-    public function restaurant()
+    public function restaurant($slug)
     {
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -148,12 +152,22 @@ class HotelDetailController extends Controller
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
         $this->data['photos'] = '';
+        $this->data['property'] = $this->getPropertyByslug($slug);
+        $this->setGalleryAndFormat($this->data['property']);
+        $this->data['property'] = $this->data['property'][0];
+        $this->data['property_id'] = $this->data['property']->id;
+        // print_r($this->data['property']);exit;
+        if(Session::has('keyword')){
+            $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
+        }else{
+            $this->data['path'] = $this->getLocationPath($this->data['property']->city);
+        }
 
         $file_name = 'frontend.themes.EC.hotel.restaurant';      
         return view($file_name, $this->data);
     }
 
-    public function detailrestaurant()
+    public function restaurant_detail($property_slug,$title,$slug)
     {
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -162,6 +176,27 @@ class HotelDetailController extends Controller
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
         $this->data['photos'] = '';
+
+        $this->data['property'] = $this->getPropertyByslug($property_slug);
+        $this->setGalleryAndFormat($this->data['property']);
+        $this->data['property'] = $this->data['property'][0];
+        $slug_name = str_replace("-"," ",$slug);
+        $slug_ = ucwords($slug_name);
+        
+        $this->data['restaurant_detail'] = Restaurant::where('id',$this->data['property']->restaurant_ids)->first();
+        $this->data['bar_detail'] = bar::where('id',$this->data['property']->bar_ids)->first();
+        $bar_detail = bar::where('title',$slug_)->first();
+
+        $restaurant_detail = Restaurant::where('title',$slug_)->first();
+        if(isset($restaurant_detail->id)){
+            $this->data['res_slider'] = $this->get_restaurant_files($restaurant_detail->id, 'res','slider');
+            $this->data['res_menu'] = $this->get_restaurant_files($restaurant_detail->id, 'res', 'menu');
+        }
+        if(Session::has('keyword')){
+            $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
+        }else{
+            $this->data['path'] = $this->getLocationPath($this->data['property']->city);
+        }
 
         $file_name = 'frontend.themes.EC.hotel.detailrestaurant';      
         return view($file_name, $this->data);

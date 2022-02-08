@@ -602,7 +602,7 @@ var ajaxReq = 'ToCancelPrevReq';
         dataType: "json",
         data: {'type':_type, 'collection':_collection, '_token':_token, 'keyword':_location},
         success: function (data){
-          // console.log(data);
+          console.log(data);
                 homePageFeaturedProperties = data;
             //if(data.status == "success"){
                 $('.title-2').html(data[0]['property_name']);
@@ -1231,6 +1231,104 @@ var ajaxReq = 'ToCancelPrevReq';
     e.preventDefault();
     $('.menu-main').toggleClass('show');
   });
+
+  $('.restaurant-slide').slick({
+      slidesToShow: 4,
+      slidesToScroll: 1,
+      arrows: false,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 767,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            variableWidth: true,
+            centerMode: true,
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            variableWidth: true,
+            centerMode: true,
+          }
+        }
+      ]
+    });
+    // $('.logo-list').slick({
+    //   slidesToShow: 7,
+    //   slidesToScroll: 3,
+    //   arrows: false,
+    //   dots: false,
+    //   variableWidth: true,
+    //   autoplay: true,
+    //   autoplayTimeout: 3000,
+    // })
+    /*$('a.scrollto[href*="#"]:not([href="#"])').click(function () {
+      if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
+        var target = $(this.hash);
+        target = target.length ? target : $('[name=' + this.hash.slice(1) + ']');
+        if (target.length) {
+          setTimeout(function () {
+            $('html, body').animate({
+              scrollTop: (target.offset().top - 160)
+            }, 1000, "easeInOutExpo");
+            return false;
+          }, 100);
+        }
+      }
+    });*/
+   
+    /*$('.dev').slick({
+        dots: true,
+        arrows: false,
+        autoplay: true,
+        infinite: false,
+        speed: 1000,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        vertical: true,
+        speed: 1000,
+        autoplaySpeed:1000,
+    });  */ 
+   
+    /*const postDetails = document.querySelector(".content-lg");
+    const postSidebar = document.querySelector("#sidebar");
+    const postSidebarContent = document.querySelector(".nav-collapse");
+
+    const controller = new ScrollMagic.Controller();
+    const scene = new ScrollMagic.Scene({
+      triggerElement: postSidebar,
+      triggerHook: 0,
+      duration: getDuration,
+      offset: -170
+    }).addTo(controller);
+
+    if (window.matchMedia("(min-width: 768px)").matches) {
+      scene.setPin(postSidebar, { pushFollowers: false });
+    }
+
+    // in your projects, you might want to debounce resize event for better performance
+    window.addEventListener("resize", () => {
+      if (window.matchMedia("(min-width: 768px)").matches) {
+        scene.setPin(postSidebar, { pushFollowers: false });
+      } else {
+        scene.removePin(postSidebar, true);
+      }
+    });
+
+    function getDuration() {
+      return postDetails.offsetHeight - postSidebarContent.offsetHeight;
+    }*/
 
   $(document).on('click', '.tab-link', function (e) {
     e.preventDefault();

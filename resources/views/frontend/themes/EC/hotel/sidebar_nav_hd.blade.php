@@ -68,34 +68,41 @@ if(!isset($property)){
             </div>
           </li>
         @endif
-        {{--<li class="nav-item">
+        {{-- <li class="nav-item">
           <a class="nav-link " href="/hotel/architecture">Architecture</a>
         </li>
         <li class="nav-item">
           <a class="nav-link " href="/hotel/spa">Spa & Wellness </a>
-        </li>
+        </li> --}}
         <li class="nav-item">
-          <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#restaurant" role="button" aria-expanded="false"
-            aria-controls="restaurant">
-            Restaurant & Bar <i class="fa fa-angle-down" aria-hidden="true"></i>
-          </a>
-          <div class="collapse " id="restaurant">
+          <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#restaurant" role="button" aria-expanded="false" aria-controls="restaurant">
+          Restaurant &amp; Bar <i class="fa fa-angle-down" aria-hidden="true"></i>
+        </a>
+          <div class="collapse show" id="restaurant">
             <ul class="nav flex-column nav-sidebar is-small">
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/restaurant">All Restaurant</a>
+                <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/restaurant">All Restaurant & Bar </a>
               </li>
+              <?php if(isset($property->restaurantList)):
+               foreach($property->restaurantList as $key => $value): 
+               $slug = str_slug($value['title']); ?>
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailrestaurant">Restaurant Name</a>
+                <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}">{{ $value['title'] }}</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailrestaurant">Restaurant Name</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/detailrestaurant">Restaurant Name</a>
-              </li>
+              <?php endforeach; 
+              endif;
+
+              if(isset($property->barList)):
+                foreach($property->barList as $key => $value): 
+                $slug = str_slug($value['title']); ?>
+                <li class="nav-item">
+                  <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/{{'bar'}}/{{$slug}}">{{ $value['title'] }}</a>
+                </li>
+              <?php endforeach; 
+              endif; ?>
             </ul>
           </div>
-        </li>--}}
+        </li>
         <li class="nav-item">
           <a class="nav-link @@locActive" href="/hotel-location/{{ $property->property_slug }}">Location</a>
         </li>

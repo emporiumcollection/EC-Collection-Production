@@ -7,9 +7,9 @@
       <a class="nav-link active" href="#">Restaurants & Bars</a>
     </li>
   </ul>
-  <div class="d-flex w-100 wow fadeInUp align-items-center" data-wow-delay=".3s">
-    <a href="main-page.html" class="back-btn ipad-view">
-      <i class="ico ico-back"></i>
+  <div class="d-flex w-100 wow fadeInUp " data-wow-delay=".3s">
+    <a href="javascript:history.go(-1)" class="back-btn ipad-view">
+      <i class="ico ico-back-btn"></i>
     </a>
     <div class="title-main mb-4 w-100">
       <h2>Restaurants & Bars</h2>
@@ -26,511 +26,59 @@
   </div>
   <div class="main-container wow fadeInUp" data-wow-delay=".3s">
     <div class="main-content">
+      <div class="bg-grey p-4 restarant-container">
         <div class="restaurant-slide">
+          <?php foreach ($property->restaurantList as $key => $value) {
+            $slug = str_slug($value['title']);
+            if(is_array($value)){
+              $file_name = $value['gallery']['files'][0]['file_name'];
+            }else{
+              $file_name = 'default-image.png';
+            }
+          ?>
           <div class="slider-item">
-            <a href="#restaurant-2" class="tab-link scrollto" data-link="#restaurant-2">
+            <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}" class="tab-lin scrollto">
               <div class="slider-item-img">
-                <img src="{{ asset('images/3b01b387078871.5dad9554e5fc7.jpg')}}" alt="">
+                <img src="{{ asset('/uploads/container_user_files/restaurants/'.$slug.'/gallery/'. $file_name)}}" alt="">
               </div>
               <div class="text-center mt-3">
-                <p class="mb-0">Lorem Lipsum dolor sit amet</p>
+                <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}">
+                <p class="mb-0">{{ $value['title'] }}</p> 
               </div>
             </a>
           </div>
-          <div class="slider-item">
-            <a href="#restaurant-3" class="tab-link scrollto" data-link="#restaurant-3">
-              <div class="slider-item-img">
-                <img src="{{ asset('images/3b01b387078871.5dad9554e5fc7.jpg')}}" alt="">
-              </div>
-              <div class="text-center mt-3">
-                <p class="mb-0">Lorem Lipsum dolor sit amet</p>
-              </div>
-            </a>
-          </div>
-          <div class="slider-item">
-            <a href="#restaurant-4" class="tab-link scrollto" data-link="#restaurant-4">
-              <div class="slider-item-img">
-                <img src="{{ asset('images/3b01b387078871.5dad9554e5fc7.jpg')}}" alt="">
-              </div>
-              <div class="text-center mt-3">
-                <p class="mb-0">Lorem Lipsum dolor sit amet</p>
-              </div>
-            </a>
-          </div>
-          <div class="slider-item">
-            <a href="#restaurant-5" class="tab-link scrollto" data-link="#restaurant-5">
-              <div class="slider-item-img">
-                <img src="{{ asset('images/3b01b387078871.5dad9554e5fc7.jpg')}}" alt="">
-              </div>
-              <div class="text-center mt-3">
-                <p class="mb-0">Lorem Lipsum dolor sit amet</p>
-              </div>
-            </a>
-          </div>
-          <div class="slider-item">
-            <a href="#restaurant-6" class="tab-link scrollto" data-link="#restaurant-6">
-              <div class="slider-item-img">
-                <img src="{{ asset('images/3b01b387078871.5dad9554e5fc7.jpg')}}" alt="">
-              </div>
-              <div class="text-center mt-3">
-                <p class="mb-0">Lorem Lipsum dolor sit amet</p>
-              </div>
-            </a>
-          </div>
-
-        </div>
-
-      <div class="mt-5">
-        <div id="restaurant-2" class="tab-em">
-          <div class="title-offset mt-5 relax-offset">
-            <h3 class="title-second title-line mb-0 font-3">Restaurant Name</h3>
-          </div>
-          <div class="py-5 px-15">
-            Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes. Then
-            translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The Ludlow
-            Resort.
-          </div>
-          <div class="row align-items-start">
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                    <div class="overlay">
-                      <p class="d-flex align-items-center justify-content-center text-center">
-                        Opening Time <br>
-                        08.00 pm
-                      </p>
+          <?php } ?>
+          <?php   
+            if (isset($property->barList) && !empty($property->barList)) {
+              foreach ($property->barList as $key => $bar) {
+                $slug = str_slug($bar['title']);
+                foreach($bar['gallery']['files'] as $key => $image){
+                  if($key == 0){
+                    if(is_array($image)){
+                      $file_name = $image['file_name'];
+                    }else{
+                      $file_name = 'default-image.png';
+                    }?>
+                    <div class="slider-item">
+                      <a href="/hotel/{{ $property->property_slug }}/{{'bar'}}/{{$slug}}" class="tab-link scrollto">
+                        <div class="slider-item-img">
+                          <img src="{{ asset('/uploads/container_user_files/restaurants/'.$slug.'/gallery/'. $file_name)}}" alt="">
+                        </div>
+                        <div class="text-center mt-3">
+                          <a href="/hotel/{{ $property->property_slug }}/{{'bar'}}/{{$slug}}">
+                          <p class="mb-0">{{ $bar['title'] }}</p> 
+                        </div>
+                      </a>
                     </div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <a href="#">
-                    <div class="img-overlay">
-                      <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                      <div class="overlay">
-                        <p class="d-flex align-items-center justify-content-center">
-                          <a href="#" class="text-white btn-sidebar" data-sidebar="#restaurant_menu">Menu</a>
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row align-items-end">
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="videoWrapper mt-5">
-            <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp"
-              preload="none" controls playsinline webkit-playsinline>
-              <source src="images/Emporium-Hotel-South-Bank.mp4" type="video/mp4">
-            </video>
+                  <?php }
+                }
+              }
+            } ?>    
           </div>
         </div>
-        <div id="restaurant-3" class="tab-em">
-          <div class="title-offset mt-5 relax-offset">
-            <h3 class="title-second title-line mb-0 font-3">Restaurant Name</h3>
-          </div>
-          <div class="py-5 px-15">
-            Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes. Then
-            translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The Ludlow
-            Resort.
-          </div>
-          <div class="row align-items-start">
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                    <div class="overlay">
-                      <p class="d-flex align-items-center justify-content-center text-center">
-                        Opening Time <br>
-                        08.00 pm
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <a href="#">
-                    <div class="img-overlay">
-                      <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                      <div class="overlay">
-                        <p class="d-flex align-items-center justify-content-center">
-                          <a href="#" class="text-white btn-sidebar" data-sidebar="#restaurant_menu">Menu</a>
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row align-items-end">
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="videoWrapper mt-5">
-            <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp"
-              preload="none" controls playsinline webkit-playsinline>
-              <source src="images/Emporium-Hotel-South-Bank.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-
-        <div id="restaurant-4" class="tab-em">
-          <div class="title-offset mt-5 relax-offset">
-            <h3 class="title-second title-line mb-0 font-3">Restaurant Name</h3>
-          </div>
-          <div class="py-5 px-15">
-            Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes. Then
-            translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The Ludlow
-            Resort.
-          </div>
-          <div class="row align-items-start">
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                    <div class="overlay">
-                      <p class="d-flex align-items-center justify-content-center text-center">
-                        Opening Time <br>
-                        08.00 pm
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <a href="#">
-                    <div class="img-overlay">
-                      <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                      <div class="overlay">
-                        <p class="d-flex align-items-center justify-content-center">
-                          <a href="#" class="text-white btn-sidebar" data-sidebar="#restaurant_menu">Menu</a>
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row align-items-end">
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="videoWrapper mt-5">
-            <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp"
-              preload="none" controls playsinline webkit-playsinline>
-              <source src="images/Emporium-Hotel-South-Bank.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-        <div id="restaurant-5" class="tab-em">
-          <div class="title-offset mt-5 relax-offset">
-            <h3 class="title-second title-line mb-0 font-3">Restaurant Name</h3>
-          </div>
-          <div class="py-5 px-15">
-            Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes. Then
-            translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The Ludlow
-            Resort.
-          </div>
-          <div class="row align-items-start">
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                    <div class="overlay">
-                      <p class="d-flex align-items-center justify-content-center text-center">
-                        Opening Time <br>
-                        08.00 pm
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <a href="#">
-                    <div class="img-overlay">
-                      <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                      <div class="overlay">
-                        <p class="d-flex align-items-center justify-content-center">
-                          <a href="#" class="text-white btn-sidebar" data-sidebar="#restaurant_menu">Menu</a>
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row align-items-end">
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="videoWrapper mt-5">
-            <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp"
-              preload="none" controls playsinline webkit-playsinline>
-              <source src="images/Emporium-Hotel-South-Bank.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-        <div id="restaurant-6" class="tab-em">
-          <div class="title-offset mt-5 relax-offset">
-            <h3 class="title-second title-line mb-0 font-3">Restaurant Name</h3>
-          </div>
-          <div class="py-5 px-15">
-            Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes. Then
-            translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The Ludlow
-            Resort.
-          </div>
-          <div class="row align-items-start">
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                    <div class="overlay">
-                      <p class="d-flex align-items-center justify-content-center text-center">
-                        Opening Time <br>
-                        08.00 pm
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-6">
-                  <a href="#">
-                    <div class="img-overlay">
-                      <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                      <div class="overlay">
-                        <p class="d-flex align-items-center justify-content-center">
-                          <a href="#" class="text-white btn-sidebar" data-sidebar="#restaurant_menu">Menu</a>
-                        </p>
-                      </div>
-                    </div>
-                  </a>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="row align-items-end">
-            <div class="col-md-6 mmb-4">
-              <div class="img-overlay">
-                <img src="images/98d13b87078871.5dad9554e33ef.jpg" alt="">
-                <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-6 mmb-4">
-              <div class="row ">
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-                <div class="col-6">
-                  <div class="img-overlay">
-                    <img src="images/788c7b4ce200637440526200b2dc8de240df101b.jpg" alt="">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="videoWrapper mt-5">
-            <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp"
-              preload="none" controls playsinline webkit-playsinline>
-              <source src="images/Emporium-Hotel-South-Bank.mp4" type="video/mp4">
-            </video>
-          </div>
-        </div>
-
       </div>
     </div>
   </div>
 </div>
-
+</div>
 @include('frontend.themes.EC.hotel.gallery')

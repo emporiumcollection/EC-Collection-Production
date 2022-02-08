@@ -1,3 +1,17 @@
+<?php
+if(isset($restaurant_detail) && !empty($restaurant_detail)){  
+  $restaurant = $restaurant_detail;
+}elseif(isset($bar_detail) && !empty($bar_detail)){
+  $restaurant = $bar_detail;
+}
+
+if(isset($property->restaurantList) AND !empty($property->restaurantList)){
+  $restaurantAndbar = $property->restaurantList;
+}elseif(isset($property->barList) AND !empty($property->barList)){
+  $restaurantAndbar = $property->barList;
+}   
+?> 
+
 <div class="col-lg-8 content-lg pt-5">
   <ul class="nav nav-pills nav-clr nav-breadcrumb nav-breadcrumb-ip mb-3 mt-3">
     <li class="nav-item">
@@ -40,21 +54,28 @@
       </div>
     </div>
     <div class="slider-detail">
+      <?php 
+      if(!empty($restaurantAndbar)):
+      foreach($restaurantAndbar as $key => $value): 
+        $re_name = str_slug($value['title']);
+        if(isset($res_slider)): 
+        foreach ($res_slider as $key => $image) :
+          if(is_array($image)){
+            $file_name = $image['file_name'];
+          }elseif(is_object($image)){
+            $file_name = $image->file_name;
+          }else{
+            $file_name = 'default-image.png';
+          }
+      ?>
       <div>
-        <img src="{{ asset('images/53511811337-49267444221.jpg')}}" id="heading-img" class="img-fluid" alt="">
+        <img src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/'.$file_name.'/property-image')}}" id="heading-img" class="img-fluid" alt="">
       </div>
-      <div>
-        <div class="videoWrapper">
-          <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp"
-            preload="none" controls playsinline webkit-playsinline>
-            <source src="{{ asset('images/Emporium-Hotel-South-Bank.mp4')}}" type="video/mp4">
-          </video>
-        </div>
-
-      </div>
-      <div>
-        <img src="{{ asset('images/53511811337-49267444221.jpg')}}" id="heading-img" class="img-fluid" alt="">
-      </div>
+      <?php endforeach;
+        endif;
+        endforeach;
+        endif;
+      ?>
     </div>
     <div class="prev"><i class="ico ico-back"></i></div>
     <div class="next"><i class="ico ico-next"></i></div>
@@ -62,6 +83,7 @@
       <a href="#" class="view btn-sidebar" data-sidebar="#reservation">
         Reservation
       </a>
+      <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar">
       <a href="#" class="view btn-sidebar" data-sidebar="#restaurant_menu">
         Menu
       </a>
@@ -70,113 +92,269 @@
       </a>
     </div>
   </div>
-  <div class="main-container">
-    <div class="title-offset mt-5 relax-offset">
-      <h3 class="title-second title-line mb-0 font-3">Restaurant Name</h3>
-    </div>
-    <div class="py-5 px-15">
-      Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes. Then
-      translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The Ludlow
-      Resort.
-    </div>
-  <div class="row align-items-start">
-      <div class="col-md-6 mmb-4">
-          <div class="row ">
-              <div class="col-6">
-                  <a href="#">
-                      <div class="img-overlay">
-                          <img src="{{ asset('images/788c7b4ce200637440526200b2dc8de240df101b.jpg')}}" alt="">
-                          <div class="overlay">
-                              <p class="d-flex align-items-center justify-content-center">
-                              <a href="#" class="text-white">Menu</a>
-                              </p>
-                          </div>
-                      </div>
-                  </a>
-              </div>
-              <div class="col-6">
-                  <a href="#">
-                      <div class="img-overlay">
-                        <img src="{{ asset('images/788c7b4ce200637440526200b2dc8de240df101b.jpg')}}" alt="">
-                          <div class="overlay">
-                              <p class="d-flex align-items-center justify-content-center">
-                              <a href="#" class="text-white">Menu</a>
-                              </p>
-                          </div>
-                      </div>
-                  </a>
-              </div>
-          </div>
+  <div class="mt-5">
+    <div id="restaurant-3" class="tab-em active  fadeIn">
+      <div class="title-offset mt-5 ">
+        <h3 class="title-second title-line mb-0 font-3">{{ $restaurant->title }}</h3>
       </div>
-      <div class="col-md-6 mmb-4">
-          <a href="#">
+      <div class="py-5 px-15">
+        {{ $restaurant->description }}
+      </div>
+      <?php if(!empty($restaurantAndbar)):
+      foreach($restaurantAndbar as $key => $value): 
+        $re_name = str_slug($value['title']); 
+      ?>
+      <div class="row align-items-start">
+        <div class="col-md-6 mmb-4">
+          <div class="row ">
+            <?php
+              foreach ($value['gallery']['files'] as $key => $image): 
+              if($key != 0){
+              if(is_array($image)){
+                $file_name = $image['file_name'];
+              }elseif(is_object($image)){
+                $file_name = $image->file_name;
+              }else{
+                $file_name = 'default-image.png';
+              }
+            ?>
+            <div class="col-6">
               <div class="img-overlay">
-                <img src="{{ asset('images/98d13b87078871.5dad9554e33ef.jpg')}}" alt="">
+                <img src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/gallery/' . $file_name)}}" alt="">
                 <div class="overlay">
-                  <p class="d-flex align-items-center justify-content-center">
-                    Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                    scenes.
-                    Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                    get
-                    The Ludlow Resort.
-                  </p>
+                  <?php if($key == 2){ ?>
+                    <p class="d-flex align-items-center justify-content-center">
+                      <a href="#" class="restaurant-reservation btn-sidebar" data-sidebar="#reservation_restaurant">Make Reservation</a>
+                    </p>
+                  <?php } else{ ?>
+                    <p class="d-flex align-items-center justify-content-center text-center">
+                      Opening Time <br>
+                      {{ $property['opening_hrs'] }}
+                    </p>
+                  <?php } ?>  
                 </div>
               </div>
-          </a>
-      </div>
-  </div>
-  <div class="row align-items-end">
-      <div class="col-md-6 mmb-4">
-        <a href="#">
+            </div>
+            <?php } 
+             endforeach;
+            ?>
+          </div>
+        </div>
+        <div class="col-md-6 mmb-4">
+          <?php
+            foreach ($value['gallery']['files'] as $key => $image): 
+            if($key == 0){
+            if(is_array($image)){
+              $file_name = $image['file_name'];
+            }elseif(is_object($image)){
+              $file_name = $image->file_name;
+            }else{
+              $file_name = 'default-image.png';
+            }
+          ?>
           <div class="img-overlay">
-            <img src="{{ asset('images/98d13b87078871.5dad9554e33ef.jpg')}}" alt="">
+            <img src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/gallery/'.$file_name)}}" alt="">
             <div class="overlay">
               <p class="d-flex align-items-center justify-content-center">
-                Think about New York of the 1980s with its large artwork, early hip hop, and punk rock
-                scenes.
-                Then translate that vitality to a lodge on the Decrease East Aspect. Put collectively you
-                get
-                The Ludlow Resort.
+                {{ $property['detail_section1_description_box1'] }}
               </p>
             </div>
           </div>
-        </a>
-      </div>
-      <div class="col-md-6 mmb-4">
-          <div class="row ">
-              <div class="col-6">
-                  <a href="#">
-                      <div class="img-overlay">
-                          <img src="{{ asset('images/788c7b4ce200637440526200b2dc8de240df101b.jpg')}}" alt="">
-                          <div class="overlay">
-                              <p class="d-flex align-items-center justify-content-center">
-                              <a href="#" class="text-white">Menu</a>
-                              </p>
-                          </div>
-                      </div>
-                  </a>
-              </div>
-              <div class="col-6">
-                  <a href="#">
-                      <div class="img-overlay">
-                          <img src="{{ asset('images/788c7b4ce200637440526200b2dc8de240df101b.jpg')}}" alt="">
-                          <div class="overlay">
-                              <p class="d-flex align-items-center justify-content-center">
-                              <a href="#" class="text-white">Menu</a>
-                              </p>
-                        </div>
-                      </div>
-                  </a>
-              </div>
+        <?php }
+        endforeach; ?>
         </div>
       </div>
-  </div>
-    <div class="videoWrapper mt-5">
-      <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp"
-        preload="none" controls playsinline webkit-playsinline>
-        <source src="images/Emporium-Hotel-South-Bank.mp4" type="video/mp4">
-      </video>
+      <?php if(isset($restaurant->video_type) AND $restaurant->video_type == 'upload') { ?>
+        <div class="videoWrapper mt-5">
+          <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp" preload="none" controls="" playsinline="" webkit-playsinline="">
+            <source src="images/Emporium-Hotel-South-Bank.mp4" type="video/mp4">
+          </video>
+        </div>
+      <?php }elseif(isset($restaurant->video_type) AND $restaurant->video_type == 'link'){ ?>
+        <iframe width="700" height="315"
+          src="{{ $restaurant->video_link }}">
+        </iframe>
+      <?php
+      } 
+      endforeach;
+      endif;
+       ?>
     </div>
+  </div>
+</div>
+
+<div class="sidebar-main pb-0" id="direction">
+  <a href="#" class="close-sidebar">
+    <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+        xmlns="http://www.w3.org/2000/svg">
+        <title>Close</title>
+        <path
+            d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+        </path>
+    </svg>
+  </a>
+
+  <div class="sidebar-scroller">
+    <div class="d-flex align-items-center mb-5">
+      <a href="#" class="sidebar-back">
+        <i class="ico ico-back"></i>
+      </a>
+      <h3 class="title-second title-line mb-0">
+        Direction
+      </h3>
+    </div>
+  </div>
+</div>
+  <div class="sidebar-main pt-4" id="restaurant_menu">
+    <a href="#" class="close-sidebar">
+      <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+          xmlns="http://www.w3.org/2000/svg">
+        <title>Close</title>
+        <path
+            d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+        </path>
+      </svg>
+    </a>
+
+    <div class="sidebar-scroller">
+      <div class="d-flex align-items-center mb-5">
+          <a href="#" class="sidebar-back">
+              <i class="ico ico-back"></i>
+          </a>
+          <h3 class="title-second title-line mb-0">
+              Menu Name
+          </h3>
+      </div>
+      <?php if(isset($res_menu)){ ?>
+      <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <?php foreach ($res_menu as $key => $data) { ?>
+          <li class="nav-item" role="presentation{{ $data->id }}">
+            <a class="nav-link @if($key == 0) active @endif" id="home-tab{{ $data->id }}" data-toggle="tab" href="#home{{ $data->id }}" role="tab" aria-controls="home{{ $data->id }}" aria-selected="@if($key == 0) true @else false @endif">{{ $data->title }}</a>
+          </li>
+        <?php } ?>
+      </ul>
+      <div class="tab-content" id="">
+        <?php foreach ($res_menu as $key => $data) { ?>
+          <div class="tab-pane fade @if($key == 0) show active @endif" id="home{{ $data->id }}" role="tabpanel" aria-labelledby="home-tab{{ $data->id }}">
+            <iframe src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/menu/' . $data->file_name)}}" width="90%" height="500px">
+            </iframe>
+          </div>
+        <?php } ?>
+      </div>
+      <?php } ?>
+    </div>
+  </div>
+</div>
+</div>
+
+</div>
+
+<div class="sidebar-main reserve-sidebar" id="reservation_restaurant">
+  <a href="#" class="close-sidebar">
+    <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+        xmlns="http://www.w3.org/2000/svg">
+        <title>Close</title>
+        <path
+            d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+        </path>
+    </svg>
+  </a>
+  <div class="sidebar-scroller">
+    <h3 class="mb-4">Reserve Table</h3>
+    <p>Please fill the form below accurately to enable us serve you better!.. welcome!</p>
+    <hr>
+    <form action="#">
+      <div class="row">
+        <div class="col-md-4">
+          <label class="mt-2">Full Name </label>
+        </div>
+        <div class="col-md-8">
+          <div class="row">
+            <div class="col-sm-6 form-group">
+              <input type="text" class="form-control">
+              <small class="form-text text-muted">First Name</small>
+            </div>
+            <div class="col-sm-6 form-group">
+              <input type="text" class="form-control">
+              <small class="form-text text-muted">Last Name</small>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-md-4">
+          <label class="mt-2">E-mail </label>
+        </div>
+        <div class="col-md-8">
+          <input type="email" class="form-control" placeholder="ex: myname@example.com">
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-md-4">
+            <label class="mt-2">Phone </label>
+        </div>
+        <div class="col-md-8">
+            <input type="text" class="form-control">
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-md-4">
+            <label class="mt-2">#of Guests </label>
+        </div>
+        <div class="col-md-8">
+            <input type="text" class="form-control">
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-md-12">
+            <label class="mt-2">Reservation</label>
+        </div>
+        <div class="col-md-12">
+            <div class="date-reserve">
+                <div class="date-time"></div>
+            </div>
+        </div>
+      </div>
+      <div class="row form-group">
+        <div class="col-md-4">
+            <label class="mt-2">Reservation Type </label>
+        </div>
+        <div class="col-md-8">
+          <select class="form-dropdown w-100">
+              <option value=""> Please Select </option>
+              <option value="Dinner"> Dinner </option>
+              <option value="VIP/Mezzanine"> VIP/Mezzanine </option>
+              <option value="Birthday/ Anniversary"> Birthday/ Anniversary </option>
+              <option value="Nightlife"> Nightlife </option>
+              <option value="Private"> Private </option>
+              <option value="Wedding"> Wedding </option>
+              <option value="Corporate"> Corporate </option>
+              <option value="Holiday"> Holiday </option>
+              <option value="Other"> Other </option>
+          </select>
+        </div>
+      </div>
+      <div class="row form-group">
+          <div class="col-md-4">
+              <label class="mt-2">If Other above, please specify </label>
+          </div>
+          <div class="col-md-8">
+              <input type="text" class="form-control">
+          </div>
+      </div>
+      <div class="row form-group">
+          <div class="col-md-4">
+              <label class="mt-2">Any special requests  </label>
+          </div>
+          <div class="col-md-8">
+              <textarea class="form-control" cols="30" rows="4"></textarea>
+          </div>
+      </div>
+
+      <div class="text-right my-4">
+          <button class="btn btn-primary">Submit</button>
+      </div>
+    </form>
   </div>
 </div>
 

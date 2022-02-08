@@ -38494,3 +38494,12 @@ button#clear span {
 #suites-popup .hotel-name {
 display: none !important;
 }
+
+#exTab1 .tab-content {
+  color : white;
+  background-color: #428bca;
+  padding : 5px 15px;
+}
+#exTab1 .nav-pills > li > a {
+  border-radius: 0;
+}

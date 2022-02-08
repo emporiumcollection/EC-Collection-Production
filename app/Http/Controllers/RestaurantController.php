@@ -768,6 +768,7 @@ class RestaurantController extends Controller {
         } else {
             return false;
         }
+        
     }
     
     function get_restaurant_files($r_id, $filetype, $foldertype='gallery') {

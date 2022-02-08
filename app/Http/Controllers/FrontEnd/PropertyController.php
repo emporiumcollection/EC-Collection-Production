@@ -2779,7 +2779,6 @@ class PropertyController extends Controller {
                 ->where('property_name', '=', $coll_where)
                 ->get()
                 ->toArray();
-
             if(!empty($hotel)){
                 return redirect($site_url.'/hotel/'.$hotel[0]['property_slug']);
             }
@@ -3341,11 +3340,11 @@ class PropertyController extends Controller {
     }
 
     public function getProperty($slug){
-
         $this->data['hotel_data'] = $this->getPropertyByslug($slug);
         $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['hotel_data'][0]->id)->first();
 
         $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
+
 
         if(Session::has('keyword')){
             $city = Session::get('keyword');
@@ -7251,6 +7250,7 @@ class PropertyController extends Controller {
         $keyword = $request->query->get('keyword');
         //Get featured choice properties
         $this->data['featureProperties'] = $this->getFeaturedProperties([], $keyword);
+        // print_r($this->data['featureProperties']);exit;
         $this->setGalleryAndFormat($this->data['featureProperties']);
         echo json_encode($this->data['featureProperties']);
         exit;
