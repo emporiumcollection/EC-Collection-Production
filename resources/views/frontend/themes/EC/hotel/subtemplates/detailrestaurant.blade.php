@@ -106,10 +106,10 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
       ?>
       <div class="row align-items-start">
         <div class="col-md-8 mmb-4">
-          <div class="row ">
+          <div class="grid-layout" id="location_gallery_hotel">
             <?php
               foreach ($value['gallery']['files'] as $key => $image): 
-              if($key != 0){
+              if($key == 0){
               if(is_array($image)){
                 $file_name = $image['file_name'];
               }elseif(is_object($image)){
@@ -118,23 +118,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
                 $file_name = 'default-image.png';
               }
             ?>
-            <div class="col-6">
-              <div class="img-overlay">
-                <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="">
-                <div class="overlay">
-                  <?php if($key == 2){ ?>
-                    <p class="d-flex align-items-center justify-content-center">
-                      <a href="#" class="restaurant-reservation btn-sidebar" data-sidebar="#reservation_restaurant">Make Reservation</a>
-                    </p>
-                  <?php } else{ ?>
-                    <p class="d-flex align-items-center justify-content-center text-center">
-                      Opening Time <br>
-                      {{ $property['opening_hrs'] }}
-                    </p>
-                  <?php } ?>  
-                </div>
-              </div>
-            </div>
+              <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="" class="grid-item grid-row-1 span-1">
             <?php } else {
               if(is_array($image)){
                 $file_name = $image['file_name'];
@@ -144,29 +128,13 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
                 $file_name = 'default-image.png';
               }
             ?>
-            <div class="col-8">
-              <div class="img-overlay">
-                <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="">
-                <div class="overlay">
-                  <?php if($key == 2){ ?>
-                    <p class="d-flex align-items-center justify-content-center">
-                      <a href="#" class="restaurant-reservation btn-sidebar" data-sidebar="#reservation_restaurant">Make Reservation</a>
-                    </p>
-                  <?php } else{ ?>
-                    <p class="d-flex align-items-center justify-content-center text-center">
-                      Opening Time <br>
-                      {{ $property['opening_hrs'] }}
-                    </p>
-                  <?php } ?>  
-                </div>
-              </div>
-            </div>
+            
+              <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="" class="grid-item grid-row-2 span-2">
             <?php }  
              endforeach;
             ?>
           </div>
         </div>
-        
       </div>
       <?php if(isset($restaurant->video_type) AND $restaurant->video_type == 'upload') { ?>
         <div class="videoWrapper mt-5">
