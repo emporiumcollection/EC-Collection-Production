@@ -105,7 +105,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
         $re_name = str_slug($value['title']); 
       ?>
       <div class="row align-items-start">
-        <div class="col-md-8 mmb-4">
+        <div class="col-md-12 mmb-4">
           <div class="grid-layout" id="location_gallery_hotel">
             <?php
               foreach ($value['gallery']['files'] as $key => $image): 
@@ -118,7 +118,9 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
                 $file_name = 'default-image.png';
               }
             ?>
-              <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="" class="grid-item grid-row-1 span-1">
+            <a href="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" data-sub-html="<?php $re_name ?> image" class="grid-item grid-row-1 span-1">
+              <img data-src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="" class="location-photos">
+          </a>
             <?php } else {
               if(is_array($image)){
                 $file_name = $image['file_name'];
@@ -128,8 +130,9 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
                 $file_name = 'default-image.png';
               }
             ?>
-            
-              <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="" class="grid-item grid-row-2 span-2">
+            <a href="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" data-sub-html="<?php $re_name ?> image" class="grid-item grid-row-2 span-2">
+              <img data-src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="" class="location-photos">
+            </a>
             <?php }  
              endforeach;
             ?>
@@ -364,5 +367,4 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
     </form>
   </div>
 </div>
-
-@include('frontend.themes.EC.hotel.gallery')
+@include('frontend.themes.EC.layouts.subsections.property_gallery')

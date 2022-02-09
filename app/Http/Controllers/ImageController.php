@@ -23,7 +23,11 @@ class ImageController extends Controller {
             $this->propertyImageResize($scale, $path, $file);
         }elseif($type == 'bar-image'){
             $this->barImageResize($scale, $path, $file);
+        }elseif($type == 'bar-slider-image'){
+            $this->restrurantImageResize($scale, $path, $file);
         }elseif($type == 'restrurant-image'){
+            $this->restrurantImageResize($scale, $path, $file);
+        }elseif($type == 'restrurant-slider-image'){
             $this->restrurantImageResize($scale, $path, $file);
         }elseif($type == 'spa-image'){
             $this->spaImageResize($scale, $path, $file);
@@ -127,6 +131,14 @@ class ImageController extends Controller {
         '/gallery/' .
         $this->file;
 
+        if(!file_exists($this->file_path)){
+            if(file_exists($this->image_path . '/container_user_files/bars/' .
+            $path . '/slider/' .$this->file)){            
+                $this->file_path = $this->image_path . '/container_user_files/bars/' . $path . '/slider/' .$this->file;
+            }
+        }
+
+
         $this->destination_dir = public_path() .
         '/cached-images/container_user_files/locations/' .
         $path .
@@ -144,6 +156,13 @@ class ImageController extends Controller {
         $path .
         '/gallery/' .
         $this->file;
+
+        if(!file_exists($this->file_path)){
+            if(file_exists($this->image_path . '/container_user_files/restaurants/' .
+            $path . '/slider/' .$this->file)){            
+                $this->file_path = $this->image_path . '/container_user_files/restaurants/' . $path . '/slider/' .$this->file;
+            }
+        }
 
         $this->destination_dir = public_path() .
         '/cached-images/container_user_files/locations/' .
