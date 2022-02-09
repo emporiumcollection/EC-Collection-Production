@@ -12,7 +12,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
 }   
 ?> 
 
-<div class="col-lg-8 content-lg pt-5">
+<div class="col-lg-8 content-lg pt-5 col-restaurant-slider">
   <ul class="nav nav-pills nav-clr nav-breadcrumb nav-breadcrumb-ip mb-3 mt-3">
     <li class="nav-item">
       <a class="nav-link" href="#">Home</a>
@@ -69,7 +69,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
           }
       ?>
       <div>
-        <img src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/'.$file_name.'/property-image')}}" id="heading-img" class="img-fluid" alt="">
+        <img src="{{ asset('/property-image/resize/1200x700/'.$re_name.'/'.$file_name.'/restrurant-image')}}" id="heading-img" class="img-fluid" alt="">
       </div>
       <?php endforeach;
         endif;
@@ -80,10 +80,10 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
     <div class="prev"><i class="ico ico-back"></i></div>
     <div class="next"><i class="ico ico-next"></i></div>
     <div class="hotel-meta full-width hotel-meta-details">
-      <a href="#" class="view btn-sidebar" data-sidebar="#reservation">
+      {{-- <a href="#" class="view btn-sidebar" data-sidebar="#reservation">
         Reservation
-      </a>
-      <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar">
+      </a> --}}
+      {{-- <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar"> --}}
       <a href="#" class="view btn-sidebar" data-sidebar="#restaurant_menu">
         Menu
       </a>
@@ -105,7 +105,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
         $re_name = str_slug($value['title']); 
       ?>
       <div class="row align-items-start">
-        <div class="col-md-6 mmb-4">
+        <div class="col-md-8 mmb-4">
           <div class="row ">
             <?php
               foreach ($value['gallery']['files'] as $key => $image): 
@@ -120,7 +120,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
             ?>
             <div class="col-6">
               <div class="img-overlay">
-                <img src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/gallery/' . $file_name)}}" alt="">
+                <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="">
                 <div class="overlay">
                   <?php if($key == 2){ ?>
                     <p class="d-flex align-items-center justify-content-center">
@@ -135,34 +135,38 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
                 </div>
               </div>
             </div>
-            <?php } 
+            <?php } else {
+              if(is_array($image)){
+                $file_name = $image['file_name'];
+              }elseif(is_object($image)){
+                $file_name = $image->file_name;
+              }else{
+                $file_name = 'default-image.png';
+              }
+            ?>
+            <div class="col-8">
+              <div class="img-overlay">
+                <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="">
+                <div class="overlay">
+                  <?php if($key == 2){ ?>
+                    <p class="d-flex align-items-center justify-content-center">
+                      <a href="#" class="restaurant-reservation btn-sidebar" data-sidebar="#reservation_restaurant">Make Reservation</a>
+                    </p>
+                  <?php } else{ ?>
+                    <p class="d-flex align-items-center justify-content-center text-center">
+                      Opening Time <br>
+                      {{ $property['opening_hrs'] }}
+                    </p>
+                  <?php } ?>  
+                </div>
+              </div>
+            </div>
+            <?php }  
              endforeach;
             ?>
           </div>
         </div>
-        <div class="col-md-6 mmb-4">
-          <?php
-            foreach ($value['gallery']['files'] as $key => $image): 
-            if($key == 0){
-            if(is_array($image)){
-              $file_name = $image['file_name'];
-            }elseif(is_object($image)){
-              $file_name = $image->file_name;
-            }else{
-              $file_name = 'default-image.png';
-            }
-          ?>
-          <div class="img-overlay">
-            <img src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/gallery/'.$file_name)}}" alt="">
-            <div class="overlay">
-              <p class="d-flex align-items-center justify-content-center">
-                {{ $property['detail_section1_description_box1'] }}
-              </p>
-            </div>
-          </div>
-        <?php }
-        endforeach; ?>
-        </div>
+        
       </div>
       <?php if(isset($restaurant->video_type) AND $restaurant->video_type == 'upload') { ?>
         <div class="videoWrapper mt-5">
@@ -203,6 +207,41 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
         Direction
       </h3>
     </div>
+    <div class="col-lg-8 content-lg">
+      <div class="d-flex w-100 wow fadeInUp align-items-center" data-wow-delay=".3s">
+        <a href="main-page.html" class="back-btn ipad-view">
+          <i class="ico ico-back"></i>
+        </a>
+        <div class="title-main mb-4 w-100">
+          <h2>{{ $restaurant->title }}</h2>
+          <a href="/hotel/{{ $property->property_slug }}" class="main-close">
+            <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
+              xmlns="http://www.w3.org/2000/svg">
+              <title>Close</title>
+              <path
+                d="M10.586 12L3.793 5.206a1 1 0 1 1 1.413-1.413L12 10.586l6.794-6.793a1 1 0 1 1 1.413 1.413L13.414 12l6.793 6.794a1 1 0 1 1-1.413 1.413L12 13.414l-6.794 6.793a1 1 0 1 1-1.413-1.413L10.586 12z">
+              </path>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="main-container wow fadeInUp" data-wow-delay=".3s">
+        
+        <div class="main-content p-0">
+          <div class="map-location">
+            
+            <div id="map3"></div>
+        </div>
+      </div>
+    </div>
+    <script>
+      $(document).ready(function(){
+        var lat  = '{{ $restaurant->latitude}}';
+        var long = '{{ $restaurant->longitude}}';
+        var loc = '{{ $property->location }}';
+        setMapLocation(lat, long ,loc);
+      });
+    </script>
   </div>
 </div>
   <div class="sidebar-main pt-4" id="restaurant_menu">

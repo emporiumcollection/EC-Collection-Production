@@ -149,136 +149,138 @@
           <?php endif;?>
           @endif
         </ul>
-        <ul class="nav nav-text mobile-off">
+        <ul class="nav @if(Request::segment(1) != 'hotel') nav-text mobile-off @endif">
             <li class="nav-item">
               <a class="nav-link" href="#destination-menu" data-toggle="collapse">
                 Destinations
               </a>
             </li>
-            @if(!empty($experiences))
-            <li class="nav-item dropdown" id="experience_dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                Experiences
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                @foreach($experiences as $exp)
-                  <a href="javascript:void(0);" data-value="<?php echo $exp->category_alias;?>" class="dropdown-item">{{ $exp->category_name }}</a>
-                @endforeach                
-              </div>
-            </li>
-            @endif
-            @if(!empty($atmosphere))
-            <li class="nav-item dropdown" id="atmosphere_dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Atmosphere
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-inner filter-checkbox">
-                  @foreach($atmosphere as $atm)
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="atmosphere[]" class="custom-control-input" id="setting1{{ $atm->id}}" 
-                      value="{{ $atm->id }}" 
-                      @if(!empty($atmosphere_data)) 
-                        @foreach($atmosphere_data as $selected_atm)
-                        {{ $selected_atm[0]->id == $atm->id ? 'checked' : '' }} 
-                        @endforeach 
-                      @endif>
-                      <label class="custom-control-label" for="setting1{{ $atm->id}}">{{ $atm->category_name }}</label>
-                    </div>
-                  @endforeach
+            @if(Request::segment(1) != 'hotel')
+              @if(!empty($experiences))
+              <li class="nav-item dropdown" id="experience_dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Experiences
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
+                  @foreach($experiences as $exp)
+                    <a href="javascript:void(0);" data-value="<?php echo $exp->category_alias;?>" class="dropdown-item">{{ $exp->category_name }}</a>
+                  @endforeach                
                 </div>
-              </div>
-            </li>
-            @endif
-            @if(!empty($facilities))
-            <li class="nav-item dropdown" id="facilities_dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Facilities
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-inner filter-checkbox">
-                  @foreach($facilities as $fac)
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="facilities[]" class="custom-control-input" id="fasilities{{ $fac->id }}" value="{{ $fac->id }}" 
-                      @if(!empty($facility_data)) 
-                        @foreach($facility_data as $selected_fac)
-                          {{ $selected_fac[0]->id == $fac->id ? 'checked' : '' }}
-                        @endforeach 
-                      @endif>
-                      <label class="custom-control-label" for="fasilities{{ $fac->id }}">{{ $fac->category_name }} </label>
-                    </div>
-                  @endforeach  
+              </li>
+              @endif
+              @if(!empty($atmosphere))
+              <li class="nav-item dropdown" id="atmosphere_dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Atmosphere
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-inner filter-checkbox">
+                    @foreach($atmosphere as $atm)
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="atmosphere[]" class="custom-control-input" id="setting1{{ $atm->id}}" 
+                        value="{{ $atm->id }}" 
+                        @if(!empty($atmosphere_data)) 
+                          @foreach($atmosphere_data as $selected_atm)
+                          {{ $selected_atm[0]->id == $atm->id ? 'checked' : '' }} 
+                          @endforeach 
+                        @endif>
+                        <label class="custom-control-label" for="setting1{{ $atm->id}}">{{ $atm->category_name }}</label>
+                      </div>
+                    @endforeach
+                  </div>
                 </div>
-              </div>
-            </li>
-            @endif
-            @if(!empty($style))
-            <li class="nav-item dropdown" id="style_dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Style
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-inner filter-checkbox">
-                  @foreach($style as $sty)
-                    <div class="custom-control custom-checkbox">
-                      <input type="checkbox" name="style[]" class="custom-control-input" id="style{{ $sty->id }}" value="{{ $sty->id }}" 
-                      @if(!empty($selected_style))
-                        @foreach($selected_style as $sty_sel) 
-                          {{ $sty_sel[0]->id == $sty->id ? 'checked' : '' }}
-                        @endforeach 
-                      @endif>
-                      <label class="custom-control-label" for="style{{ $sty->id }}">{{ $sty->category_name }}</label>
-                    </div>
-                  @endforeach
+              </li>
+              @endif
+              @if(!empty($facilities))
+              <li class="nav-item dropdown" id="facilities_dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Facilities
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-inner filter-checkbox">
+                    @foreach($facilities as $fac)
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="facilities[]" class="custom-control-input" id="fasilities{{ $fac->id }}" value="{{ $fac->id }}" 
+                        @if(!empty($facility_data)) 
+                          @foreach($facility_data as $selected_fac)
+                            {{ $selected_fac[0]->id == $fac->id ? 'checked' : '' }}
+                          @endforeach 
+                        @endif>
+                        <label class="custom-control-label" for="fasilities{{ $fac->id }}">{{ $fac->category_name }} </label>
+                      </div>
+                    @endforeach  
+                  </div>
                 </div>
-              </div>
-            </li>
-            @endif
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
-                aria-haspopup="true" aria-expanded="false">
-                Price
-              </a>
-              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <div class="dropdown-inner filter-checkbox">
-                  <div class="custom-control custom-checkbox">
-                    <div class="filter-list">
-                        <h5 class="filter-title mb-4">By price</h5>
-                        <div class="px-2">
-                            <div id="price_range" class="price-range"></div>
-                        </div>
-                        <div class="row align-items-center price-input">
-                            <div class="col">
-                                <label>Min:</label>
-                                <div class="input-filter">
-                                    <span>€</span>
-                                    <input type="text" class="priceValue form-control" data-index="0" id="min" value="80" />
-                                </div>
-                            </div>
-                            <div class="col">
-                                <label>Max:</label>
-                                <div class="input-filter">
-                                    <span>€</span>
-                                    <input type="text" class="priceValue form-control" data-index="1" id="max" value="10000" />
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row align-items-left price-input">
-                          <div class="col">
-                            <div class="input-filter">
-                              <a href="javascript:void(0);" class="btn btn-primary  filter_price">Filter Price</a>
-                              <button type="button" class="btn btn-primary" id="price_reset">Reset price</button>
-                            </div> 
+              </li>
+              @endif
+              @if(!empty($style))
+              <li class="nav-item dropdown" id="style_dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Style
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-inner filter-checkbox">
+                    @foreach($style as $sty)
+                      <div class="custom-control custom-checkbox">
+                        <input type="checkbox" name="style[]" class="custom-control-input" id="style{{ $sty->id }}" value="{{ $sty->id }}" 
+                        @if(!empty($selected_style))
+                          @foreach($selected_style as $sty_sel) 
+                            {{ $sty_sel[0]->id == $sty->id ? 'checked' : '' }}
+                          @endforeach 
+                        @endif>
+                        <label class="custom-control-label" for="style{{ $sty->id }}">{{ $sty->category_name }}</label>
+                      </div>
+                    @endforeach
+                  </div>
+                </div>
+              </li>
+              @endif
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                  aria-haspopup="true" aria-expanded="false">
+                  Price
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                  <div class="dropdown-inner filter-checkbox">
+                    <div class="custom-control custom-checkbox">
+                      <div class="filter-list">
+                          <h5 class="filter-title mb-4">By price</h5>
+                          <div class="px-2">
+                              <div id="price_range" class="price-range"></div>
                           </div>
-                        </div>  
-                    </div>
-                  </div>  
+                          <div class="row align-items-center price-input">
+                              <div class="col">
+                                  <label>Min:</label>
+                                  <div class="input-filter">
+                                      <span>€</span>
+                                      <input type="text" class="priceValue form-control" data-index="0" id="min" value="80" />
+                                  </div>
+                              </div>
+                              <div class="col">
+                                  <label>Max:</label>
+                                  <div class="input-filter">
+                                      <span>€</span>
+                                      <input type="text" class="priceValue form-control" data-index="1" id="max" value="10000" />
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="row align-items-left price-input">
+                            <div class="col">
+                              <div class="input-filter">
+                                <a href="javascript:void(0);" class="btn btn-primary  filter_price">Filter Price</a>
+                                <button type="button" class="btn btn-primary" id="price_reset">Reset price</button>
+                              </div> 
+                            </div>
+                          </div>  
+                      </div>
+                    </div>  
+                  </div>
                 </div>
-              </div>
-            </li>
+              </li>
+            @endif  
           </ul>
         {{-- <div class="menu-mobile">
           <div class="humburger-second-menu" id="secondMenu">

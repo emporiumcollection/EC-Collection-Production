@@ -2551,7 +2551,7 @@ $('.close-second-menu').click(function(e){
   $(this).closest('.sidebar-nav-section').removeClass('show')
 })
 
-const postDetails = document.querySelector(".col-hotel-slider");
+const postDetails = document.querySelector(".col-hotel-slider, .col-restaurant-slider");
 const postSidebar = document.querySelector("#sidebar");
 const postSidebarContent = document.querySelector(".nav-collapse");
 

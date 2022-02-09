@@ -1,4 +1,4 @@
-<div class="col-lg-8 content-lg">
+<div class="col-lg-8 content-lg col-restaurant-slider">
   <ul class="nav nav-pills nav-clr nav-breadcrumb nav-breadcrumb-ip mb-3 mt-3">
     <li class="nav-item">
       <a class="nav-link" href="#">Home</a>

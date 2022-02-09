@@ -1,4 +1,4 @@
-<div class="col-lg-8 content-lg pt-5">
+<div class="col-lg-8 col-hotel-slider">
   <ul class="nav nav-pills nav-clr nav-breadcrumb nav-breadcrumb-ip mb-3 mt-3">
     <li class="nav-item">
       <a class="nav-link" href="#">Home</a>
@@ -39,7 +39,7 @@
           <div class="slider-item">
             <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}" class="tab-lin scrollto">
               <div class="slider-item-img">
-                <img src="{{ asset('/uploads/container_user_files/restaurants/'.$slug.'/gallery/'. $file_name)}}" alt="">
+                <img src="{{ asset('/property-image/resize/205x300/'.$slug.'/'.$file_name.'/restrurant-image')}}" alt="">
               </div>
               <div class="text-center mt-3">
                 <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}">
@@ -62,7 +62,7 @@
                     <div class="slider-item">
                       <a href="/hotel/{{ $property->property_slug }}/{{'bar'}}/{{$slug}}" class="tab-link scrollto">
                         <div class="slider-item-img">
-                          <img src="{{ asset('/uploads/container_user_files/restaurants/'.$slug.'/gallery/'. $file_name)}}" alt="">
+                          <img src="{{ asset('/property-image/resize/205x300/'.$slug.'/'.$file_name.'/bar-image')}}" alt="">
                         </div>
                         <div class="text-center mt-3">
                           <a href="/hotel/{{ $property->property_slug }}/{{'bar'}}/{{$slug}}">
@@ -79,6 +79,4 @@
       </div>
     </div>
   </div>
-</div>
-</div>
 @include('frontend.themes.EC.hotel.gallery')
