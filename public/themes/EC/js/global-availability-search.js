@@ -78,7 +78,7 @@ function replacePropertyData(id){
 
   $('[data-place="room-images"]').each(function() {
       // field = $(this).attr('data-replace');
-      //console.log(properties[id][field]);
+      console.log(properties[id]['suites']);
       var suites = properties[id]['suites'];
       var imageview = '';
       var spanid = 1;
