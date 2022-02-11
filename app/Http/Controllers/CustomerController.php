@@ -2117,78 +2117,134 @@ $html .= '</div>';
         
         exit;     
     }
-    
+
     public function supplier(){
-        if (!\Auth::check())
-            return Redirect::to('/');
-            
-        $user = User::find(\Session::get('uid'));
-        $this->data["guestUserData"]=$user;
-        $this->data['pageTitle'] = "Supplier Wizard";
-        $this->data['pageMetakey'] = "Supplier Wizard";
-        $this->data['pageMetadesc'] = "Supplier Wizard";
-        
-        /** sign up contracts start **/
-        //get contract during signup
-        $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.id','tb_users_contracts.contract_id','tb_users_contracts.title','tb_users_contracts.description','tb_users_contracts.is_required','tb_users_contracts.is_agree','tb_users_contracts.sort_num')->where('tb_users_contracts.contract_type','supplier')->where('tb_users_contracts.accepted_by', \Auth::user()->id)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->get();
-        $resetContracts = array();
-        foreach($usersContracts as $si_contract){
-            $resetContracts[$si_contract->contract_id] = $si_contract;
-        }
-        $this->data['userContracts'] = $resetContracts;        
-        $this->data['contractdata'] = \CommonHelper::get_default_contracts('supplier');     
-        
-        /** sign up contracts end **/
-        
-        /** commission contracts start **/
-        $usersContracts = \DB::table('tb_users_contracts')->select('tb_users_contracts.*')->where('tb_users_contracts.contract_type','supplier_commission')->where('tb_users_contracts.accepted_by', \Auth::user()->id)->where('tb_users_contracts.status',1)->where('tb_users_contracts.is_expried',0)->where('tb_users_contracts.deleted',0)->orderBy('tb_users_contracts.contract_id','DESC')->first();
-        $contractdata = \CommonHelper::get_default_contracts('supplier_commission');
-        //print_r($usersContracts); die;
-        if(isset($usersContracts->contract_id)){ $this->data['commision_contractdata'] = $usersContracts; $this->data['commission_contract_selected']=true; }
-        else{ //$this->data['commision_contractdata'] = ((isset($contractdata["common"]))?$contractdata["common"]:array()); $this->data['commission_contract_selected']=false;
-            $this->data['commision_contractdata'] = ((isset($contractdata)) ? $contractdata : array()); $this->data['commission_contract_selected']=false;        
-         }
-        /** commission contracts end **/
-        //print_r($this->data['commision_contractdata']); die;
-        
-        $extra = \DB::table('tb_properties')->where('user_id', $user->id)->first();
-        $this->data['extra'] = $extra;
-        //print_r($extra); die;
-        $this->data['user'] = $user;
-        $property_assigned = \DB::table("tb_properties_users")->join('tb_properties', 'tb_properties_users.property_id', '=', 'tb_properties.id')->where('tb_properties_users.user_id', \Auth::user()->id)->first();
-        //$property_assigned = \DB::table('tb_properties')->where('assigned_user_id', $user->id)->first();
-        
-        $propid = '';
-        if(!empty($property_assigned)){
-            $propid = $property_assigned->id;
-        }
-        
-        $this->data['property_assigned'] = $property_assigned;
-        $this->data['assigned_propid'] = $propid;
-        
-        $this->data['pageslider'] = \DB::table('tb_pages_sliders')->join('tb_pages_content', 'tb_pages_sliders.slider_page_id', '=' , 'tb_pages_content.pageID')->select( 'slider_title', 'slider_description', 'slider_img', 'slider_link', 'slider_video', 'slide_type')->where('tb_pages_content.alias', 'supplier-welcome-wizard')->where('slider_status', 1)->get();
-        
-        $group_id = \Session::get('gid');
-        $this->data['packages'] = \DB::table('tb_packages')->whereRaw('FIND_IN_SET('.$group_id.',allow_user_groups)')->where('package_status', 1)->get();
-        if($propid!=''){
-            $this->data['hotelcontacts'] = (new PropertiesController)->get_property_files($propid, 'Hotel Contracts');
-            $this->data['hotel_broch'] = (new PropertiesController)->get_property_files($propid, 'Hotel Brochure');
-        }        
-        
-        $this->data['active_tab']=$user->form_wizard;
-        
-        $this->data['fid'] = \Session::get('uid');
-        
-        $this->data['company_details'] = \DB::table('tb_user_company_details')->where('user_id', $user->id)->first();
-        
-        $default_commission =  \DB::table('tb_settings')->where('key_value', 'supplier_commission')->first();
-        $this->data['default_commission'] = $default_commission;        
-        
-        $is_demo6 = trim(\CommonHelper::isHotelDashBoard($user->group_id));
-        $t_f = 'whoiam';
-        //if(isset($extra->approved)){ if(!((bool) $extra->approved)){ $t_f = 'approval_pending'; }}
-        $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.customer.'.$t_f:'customer.whoiam';      
-        return view($file_name, $this->data);
+        // if (!\Auth::check())
+        //     return Redirect::to('/');
+        return view('customer.supplier');
     }
+    public function postSupplier(Request $request){
+        $rules = array(
+            'firstname' => 'required|alpha_num|min:2',
+            'lastname' => 'required|alpha_num|min:2',
+            'email' => 'required|email|unique:tb_users',
+            'password' => 'required|numeric|min:6',
+            'confirm_password' => 'required',
+            'contact_number' => 'required|numeric|max:10',
+            'company_name'=>'required',
+            'supplier_type' => 'required',
+            'country' => 'required',
+            'city' => 'required',
+            'address' => 'required',
+            'company_country_code' => 'required',
+            'company_contact_no' => 'required',
+            'postal_code'=>'required',
+            'website'=>'required',
+            'job_title' => 'required',
+            'accept_terms' => 'required|in:on'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->passes()){
+
+            $user = User::create([
+                'group_id' => 15,
+                'first_name' => $request->firstname,
+                'last_name' => $request->lastname,
+                'email' => $request->email,
+                'mobile_code' => $request->country_code,
+                'mobile_number' => $request->phon_number,
+                'position' => $request->position,
+                'company_name'=> $request->company_name,
+                'country' => $request->country,
+                'city' => $request->city,
+                'password' => \Hash::make($request->password),
+                // 'confirm_password' => 'required',
+                // 'marketplace' => 'required',
+                // 'company_website' => 'required',
+                // 'address' => 'required',
+                // 'company_size' => 'required',
+                // 'company_size' => 'required',
+            ]);
+            
+        }else{
+            return Redirect::to('/supplier')->with('message', \SiteHelpers::alert('error', 'The following errors occurred')
+                    )->withErrors($validator)->withInput();
+        }
+    }
+
+    public function distributor(Request $request){
+
+        $fetch_cat = \DB::table('tb_categories')->orderBy('category_name', 'asc')->get();
+        $this->data['categories'] = $fetch_cat;
+        return view('customer.distributor',$this->data);
+    }
+    public function postDistributor(Request $request){
+
+        $rules = array(
+            'firstname' => 'required|alpha_num|min:2',
+            'lastname' => 'required|alpha_num|min:2',
+            'email' => 'required|email|unique:tb_users',
+            'country_code' => 'required',
+            'phon_number' => 'required|numeric|min:10',
+            // 'position' => 'required',
+            'password' => 'required|numeric|min:6',
+            'confirm_password' => 'required',
+            // 'company_name'=>'required',
+            // 'marketplace' => 'required',
+            // 'company_website' => 'required',
+            // 'country' => 'required',
+            // 'city' => 'required',
+            // 'address' => 'required',
+            // 'company_size' => 'required',
+            // 'iata_license_num' => 'sometimes|required|iata_license_num',
+            // 'agent_license_num' => 'sometimes|required|license_num',
+            // 'company_registration_num' => 'sometimes|required|agent_license_num',
+            'company_size' => 'required',
+            'accept_terms' => 'required|in:on'
+        );
+        $validator = Validator::make($request->all(), $rules);
+        if($validator->passes()){
+
+            $user = User::create([
+                'group_id' => 15,
+                'first_name' => $request->firstname,
+                'last_name' => $request->lastname,
+                'email' => $request->email,
+                'mobile_code' => $request->country_code,
+                'mobile_number' => $request->phon_number,
+                'position' => $request->position,
+                'company_name'=> $request->company_name,
+                'country' => $request->country,
+                'city' => $request->city,
+                'password' => \Hash::make($request->password),
+                // 'confirm_password' => 'required',
+                // 'marketplace' => 'required',
+                // 'company_website' => 'required',
+                // 'address' => 'required',
+                // 'company_size' => 'required',
+                // 'company_size' => 'required',
+            ]);
+
+            $user = new User;
+            $user->group_id = 15;
+            $user->first_name = $request->firstname;
+            $user->last_name = $request->lastname;
+            $user->email = $request->email;
+            $user->mobile_code = $request->country_code;
+            $user->mobile_number = $request->phon_number;
+            $user->position = $request->position;
+            $user->company_name = $request->company_name;
+            $user->country = $request->country;
+            $user->city = $request->city;
+            $user->password = \Hash::make($request->password);
+            $user->save();
+            return Redirect::to('/distributor')->with('message','data successfully submited!');
+
+        }else{
+            // print_r($validator->messages());exit;
+            return Redirect::to('/distributor')->with('message', \SiteHelpers::alert('error', 'The following errors occurred')
+                    )->withErrors($validator)->withInput();
+        }
+    }       
     
 }

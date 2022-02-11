@@ -246,8 +246,10 @@ Route::controller('/user', 'UserController');
 Route::controller('/customer', 'CustomerController');
 Route::get('/traveller', 'CustomerController@traveller');
 Route::get('/register/', 'CustomerController@getregister');
-
 Route::get('/supplier', 'CustomerController@supplier');
+Route::post('/supplier', 'CustomerController@postSupplier');
+Route::get('/distributor', 'CustomerController@distributor');
+Route::post('/distributor', 'CustomerController@postDistributor');
 
 Route::post('/traveller_skip_preferences', 'CustomerController@skipPreferences');
 
