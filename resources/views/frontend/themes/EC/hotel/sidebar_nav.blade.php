@@ -88,12 +88,12 @@ if(!isset($property)){
         <li class="nav-item">
           <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#restaurant" role="button" aria-expanded="false"
             aria-controls="restaurant">
-            Restaurant & Bar <i class="fa fa-angle-down" aria-hidden="true"></i>
+            Restaurants & Bars<i class="fa fa-angle-down" aria-hidden="true"></i>
           </a>
           <div class="collapse show" id="restaurant">
             <ul class="nav flex-column nav-sidebar is-small">
               <li class="nav-item">
-                <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/restaurant">All Restaurant & Bar</a>
+                <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/restaurant">All Restaurants & Bars</a>
               </li>
               <?php if(isset($property->restaurantList)):
                foreach($property->restaurantList as $key => $value): 

@@ -1,15 +1,23 @@
 <?php
 if(isset($restaurant_detail) && !empty($restaurant_detail)){  
+  $path = 'restrurant-image';
   $restaurant = $restaurant_detail;
 }elseif(isset($bar_detail) && !empty($bar_detail)){
+  $path = 'bars';
   $restaurant = $bar_detail;
 }
-
-if(isset($property->restaurantList) AND !empty($property->restaurantList)){
-  $restaurantAndbar = $property->restaurantList;
-}elseif(isset($property->barList) AND !empty($property->barList)){
-  $restaurantAndbar = $property->barList;
-}   
+if(Request::segment(3) == 'restaurant'){
+  if(isset($property->restaurantList) AND !empty($property->restaurantList)){
+    $path = 'restrurant-image'; 
+    $restaurantAndbar = $property->restaurantList;
+  }
+}
+if(Request::segment(3) == 'bar'){  
+  if(isset($property->barList) AND !empty($property->barList)){
+    $path = 'bars';
+    $restaurantAndbar = $property->barList;
+  }
+}
 ?> 
 
 <div class="col-lg-8 content-lg pt-5 col-restaurant-slider">
@@ -69,7 +77,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
           }
       ?>
       <div>
-        <img src="{{ asset('/property-image/resize/1200x700/'.$re_name.'/'.$file_name.'/restrurant-image')}}" id="heading-img" class="img-fluid" alt="">
+        <img src="{{ asset('/property-image/resize/1200x700/'.$re_name.'/'.$file_name.'/'.$path)}}" id="heading-img" class="img-fluid" alt="">
       </div>
       <?php endforeach;
         endif;
@@ -118,8 +126,8 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
                 $file_name = 'default-image.png';
               }
             ?>
-            <a href="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" data-sub-html="<?php $re_name ?> image" class="grid-item grid-row-1 span-1">
-              <img data-src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="" class="location-photos">
+            <a href="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/'.$path)}}" data-sub-html="<?php $re_name ?> image" class="grid-item grid-row-1 span-1">
+              <img data-src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/'.$path)}}" alt="" class="location-photos">
           </a>
             <?php } else {
               if(is_array($image)){
@@ -130,8 +138,8 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
                 $file_name = 'default-image.png';
               }
             ?>
-            <a href="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" data-sub-html="<?php $re_name ?> image" class="grid-item grid-row-2 span-2">
-              <img data-src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="" class="location-photos">
+            <a href="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/'.$path)}}" data-sub-html="<?php $re_name ?> image" class="grid-item grid-row-2 span-2">
+              <img data-src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/'.$path)}}" alt="" class="location-photos">
             </a>
             <?php }  
              endforeach;
@@ -209,7 +217,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
       $(document).ready(function(){
         var lat  = '{{ $restaurant->latitude}}';
         var long = '{{ $restaurant->longitude}}';
-        var loc = '{{ $property->location }}';
+        var loc = '{{ $restaurant->location }}';
         setMapLocation(lat, long ,loc);
       });
     </script>
@@ -246,7 +254,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
       <div class="tab-content" id="">
         <?php foreach ($res_menu as $key => $data) { ?>
           <div class="tab-pane fade @if($key == 0) show active @endif" id="home{{ $data->id }}" role="tabpanel" aria-labelledby="home-tab{{ $data->id }}">
-            <iframe src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/menu/' . $data->file_name)}}" width="90%" height="500px">
+            <iframe src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/menu/' . $data->file_name)}}" width="90%" height="800px">
             </iframe>
           </div>
         <?php } ?>
@@ -256,7 +264,6 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
   </div>
 </div>
 </div>
-
 </div>
 
 <div class="sidebar-main reserve-sidebar" id="reservation_restaurant">

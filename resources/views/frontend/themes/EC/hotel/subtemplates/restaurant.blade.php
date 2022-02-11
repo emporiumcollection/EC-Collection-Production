@@ -37,18 +37,16 @@
             }
           ?>
           <div class="slider-item">
-            <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}" class="tab-lin scrollto">
+            <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}"  class="tab-lin scrollto">
               <div class="slider-item-img">
                 <img src="{{ asset('/property-image/resize/205x300/'.$slug.'/'.$file_name.'/restrurant-image')}}" alt="">
               </div>
               <div class="text-center mt-3">
-                <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}">
-                <p class="mb-0">{{ $value['title'] }}</p> 
+                <p class="mb-0">{{ $value['title'] }}</p>
               </div>
             </a>
           </div>
-          <?php } ?>
-          <?php   
+          <?php }    
             if (isset($property->barList) && !empty($property->barList)) {
               foreach ($property->barList as $key => $bar) {
                 $slug = str_slug($bar['title']);
@@ -65,8 +63,7 @@
                           <img src="{{ asset('/property-image/resize/205x300/'.$slug.'/'.$file_name.'/bar-image')}}" alt="">
                         </div>
                         <div class="text-center mt-3">
-                          <a href="/hotel/{{ $property->property_slug }}/{{'bar'}}/{{$slug}}">
-                          <p class="mb-0">{{ $bar['title'] }}</p> 
+                          <p class="mb-0">{{ $bar['title'] }}</p>
                         </div>
                       </a>
                     </div>
@@ -79,4 +76,4 @@
       </div>
     </div>
   </div>
-@include('frontend.themes.EC.hotel.gallery')
+@include('frontend.themes.EC.layouts.subsections.property_gallery')
