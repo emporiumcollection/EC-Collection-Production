@@ -1,15 +1,23 @@
 <?php
 if(isset($restaurant_detail) && !empty($restaurant_detail)){  
+  $path = 'restrurant-image';
   $restaurant = $restaurant_detail;
 }elseif(isset($bar_detail) && !empty($bar_detail)){
+  $path = 'bars';
   $restaurant = $bar_detail;
 }
-
-if(isset($property->restaurantList) AND !empty($property->restaurantList)){
-  $restaurantAndbar = $property->restaurantList;
-}elseif(isset($property->barList) AND !empty($property->barList)){
-  $restaurantAndbar = $property->barList;
-}   
+if(Request::segment(3) == 'restaurant'){
+  if(isset($property->restaurantList) AND !empty($property->restaurantList)){
+    $path = 'restrurant-image'; 
+    $restaurantAndbar = $property->restaurantList;
+  }
+}
+if(Request::segment(3) == 'bar'){  
+  if(isset($property->barList) AND !empty($property->barList)){
+    $path = 'bars';
+    $restaurantAndbar = $property->barList;
+  }
+}
 ?> 
 
 <div class="col-lg-8 content-lg pt-5 col-restaurant-slider">
@@ -69,7 +77,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
           }
       ?>
       <div>
-        <img src="{{ asset('/property-image/resize/1200x700/'.$re_name.'/'.$file_name.'/restrurant-image')}}" id="heading-img" class="img-fluid" alt="">
+        <img src="{{ asset('/property-image/resize/1200x700/'.$re_name.'/'.$file_name.'/'.$path)}}" id="heading-img" class="img-fluid" alt="">
       </div>
       <?php endforeach;
         endif;
@@ -105,11 +113,11 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
         $re_name = str_slug($value['title']); 
       ?>
       <div class="row align-items-start">
-        <div class="col-md-8 mmb-4">
-          <div class="row ">
+        <div class="col-md-12 mmb-4">
+          <div class="grid-layout" id="location_gallery_hotel">
             <?php
               foreach ($value['gallery']['files'] as $key => $image): 
-              if($key != 0){
+              if($key == 0){
               if(is_array($image)){
                 $file_name = $image['file_name'];
               }elseif(is_object($image)){
@@ -118,23 +126,9 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
                 $file_name = 'default-image.png';
               }
             ?>
-            <div class="col-6">
-              <div class="img-overlay">
-                <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="">
-                <div class="overlay">
-                  <?php if($key == 2){ ?>
-                    <p class="d-flex align-items-center justify-content-center">
-                      <a href="#" class="restaurant-reservation btn-sidebar" data-sidebar="#reservation_restaurant">Make Reservation</a>
-                    </p>
-                  <?php } else{ ?>
-                    <p class="d-flex align-items-center justify-content-center text-center">
-                      Opening Time <br>
-                      {{ $property['opening_hrs'] }}
-                    </p>
-                  <?php } ?>  
-                </div>
-              </div>
-            </div>
+            <a href="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/'.$path)}}" data-sub-html="<?php $re_name ?> image" class="grid-item grid-row-1 span-1">
+              <img data-src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/'.$path)}}" alt="" class="location-photos">
+          </a>
             <?php } else {
               if(is_array($image)){
                 $file_name = $image['file_name'];
@@ -144,29 +138,14 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
                 $file_name = 'default-image.png';
               }
             ?>
-            <div class="col-8">
-              <div class="img-overlay">
-                <img src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/restrurant-image')}}" alt="">
-                <div class="overlay">
-                  <?php if($key == 2){ ?>
-                    <p class="d-flex align-items-center justify-content-center">
-                      <a href="#" class="restaurant-reservation btn-sidebar" data-sidebar="#reservation_restaurant">Make Reservation</a>
-                    </p>
-                  <?php } else{ ?>
-                    <p class="d-flex align-items-center justify-content-center text-center">
-                      Opening Time <br>
-                      {{ $property['opening_hrs'] }}
-                    </p>
-                  <?php } ?>  
-                </div>
-              </div>
-            </div>
+            <a href="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/'.$path)}}" data-sub-html="<?php $re_name ?> image" class="grid-item grid-row-2 span-2">
+              <img data-src="{{ asset('/property-image/resize/205x300/'.$re_name.'/'.$file_name.'/'.$path)}}" alt="" class="location-photos">
+            </a>
             <?php }  
              endforeach;
             ?>
           </div>
         </div>
-        
       </div>
       <?php if(isset($restaurant->video_type) AND $restaurant->video_type == 'upload') { ?>
         <div class="videoWrapper mt-5">
@@ -238,7 +217,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
       $(document).ready(function(){
         var lat  = '{{ $restaurant->latitude}}';
         var long = '{{ $restaurant->longitude}}';
-        var loc = '{{ $property->location }}';
+        var loc = '{{ $restaurant->location }}';
         setMapLocation(lat, long ,loc);
       });
     </script>
@@ -275,7 +254,7 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
       <div class="tab-content" id="">
         <?php foreach ($res_menu as $key => $data) { ?>
           <div class="tab-pane fade @if($key == 0) show active @endif" id="home{{ $data->id }}" role="tabpanel" aria-labelledby="home-tab{{ $data->id }}">
-            <iframe src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/menu/' . $data->file_name)}}" width="90%" height="500px">
+            <iframe src="{{ asset('/uploads/container_user_files/restaurants/'.$re_name.'/menu/' . $data->file_name)}}" width="90%" height="800px">
             </iframe>
           </div>
         <?php } ?>
@@ -285,7 +264,6 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
   </div>
 </div>
 </div>
-
 </div>
 
 <div class="sidebar-main reserve-sidebar" id="reservation_restaurant">
@@ -396,5 +374,4 @@ if(isset($property->restaurantList) AND !empty($property->restaurantList)){
     </form>
   </div>
 </div>
-
-@include('frontend.themes.EC.hotel.gallery')
+@include('frontend.themes.EC.layouts.subsections.property_gallery')

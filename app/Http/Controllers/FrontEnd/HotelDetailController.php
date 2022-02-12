@@ -180,18 +180,22 @@ class HotelDetailController extends Controller
         $this->data['property'] = $this->getPropertyByslug($property_slug);
         $this->setGalleryAndFormat($this->data['property']);
         $this->data['property'] = $this->data['property'][0];
-        $slug_name = str_replace("-"," ",$slug);
-        $slug_ = ucwords($slug_name);
         
         $this->data['restaurant_detail'] = Restaurant::where('id',$this->data['property']->restaurant_ids)->first();
         $this->data['bar_detail'] = bar::where('id',$this->data['property']->bar_ids)->first();
-        $bar_detail = bar::where('title',$slug_)->first();
 
-        $restaurant_detail = Restaurant::where('title',$slug_)->first();
-        if(isset($restaurant_detail->id)){
+        $restaurant_detail = Restaurant::where('title',$this->data['restaurant_detail']['title'])->first();
+        $bar_detail = bar::where('title',$this->data['bar_detail']['title'])->first();
+
+        if(request()->segment(3) == 'restaurant' AND isset($restaurant_detail->id)){
             $this->data['res_slider'] = $this->get_restaurant_files($restaurant_detail->id, 'res','slider');
             $this->data['res_menu'] = $this->get_restaurant_files($restaurant_detail->id, 'res', 'menu');
         }
+        if(request()->segment(3) == 'bar' AND isset($bar_detail->id)){
+            $this->data['res_slider'] = $this->get_restaurant_files($restaurant_detail->id, 'res','slider');
+            $this->data['res_menu'] = $this->get_restaurant_files($restaurant_detail->id, 'res', 'menu');   
+        }   
+
         if(Session::has('keyword')){
             $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
         }else{
