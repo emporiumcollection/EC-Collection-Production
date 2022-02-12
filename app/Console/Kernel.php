@@ -19,6 +19,7 @@ class Kernel extends ConsoleKernel
         \App\Console\Commands\UpdateAvailableHotelLocations::class,
         \App\Console\Commands\CreateCategoryFolders::class,
         \App\Console\Commands\CacheClear::class,
+        \App\Console\Commands\CreateRoomRecords::class,        
     ];
 
     /**
