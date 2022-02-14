@@ -1,4 +1,3 @@
-
 @extends('customer.layout.app')
     @section('content')
         <div class="container-wrapper h-100">
@@ -22,7 +21,8 @@
                                 </p>
                             </div>
                             <div class="row">
-                                <div class="col-lg-6 form-group">
+                                 <div class=
+                                "col-lg-6 form-group">
                                     <input type="text" class="form-control" placeholder="First name" name="firstname">
                                 </div>
                                 <div class="col-lg-6 form-group">

@@ -2241,7 +2241,6 @@ $html .= '</div>';
             return Redirect::to('/distributor')->with('message','data successfully submited!');
 
         }else{
-            // print_r($validator->messages());exit;
             return Redirect::to('/distributor')->with('message', \SiteHelpers::alert('error', 'The following errors occurred')
                     )->withErrors($validator)->withInput();
         }

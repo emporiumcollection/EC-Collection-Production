@@ -124,7 +124,8 @@ trait Property {
             ->with([
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
-                        return $query->select(['id','file_name']);
+                        return $query->select(['id','file_name'])
+                            ->orderBy('file_sort_num', 'asc');
 
                     }]);
                 }, 
@@ -174,7 +175,8 @@ trait Property {
             ->with([
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
-                        return $query->select(['id','file_name']);
+                        return $query->select(['id','file_name'])
+                            ->orderBy('file_sort_num', 'asc');
 
                     }]);
                 }, 
@@ -237,7 +239,8 @@ trait Property {
                 },
                 'propertyImages' => function($query){
                     return $query->with(['file' => function($query){
-                        return $query->select(['id','file_name']);
+                        return $query->select(['id','file_name'])
+                            ->orderBy('file_sort_num', 'asc');
                     }]);
                 }, 
             ])

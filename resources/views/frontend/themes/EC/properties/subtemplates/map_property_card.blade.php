@@ -67,13 +67,16 @@
             <i class="ico ico-info-green"></i>
           </div>
           <h3 class="mb-0">
-            <span class="title-font-2 mr-1">From</span> <span class="color-primary">€ 167 </span>
+            <?php if(isset($property->price) AND $property->price != 0 ){ ?>
+              <span class="title-font-2 mr-1">From</span> <span class="color-primary">€{{ $property->price }}</span>
+            <?php } else{ ?>
+              <span class="title-font-2 mr-1">Price on request</span>
+           <?php } ?>  
           </h3>
           <div class="ml-2">
             <span class="pernight"></span>
           </div>
         </div>
-
       </div>
     </div>
     <div class="hotel-meta-mobile">

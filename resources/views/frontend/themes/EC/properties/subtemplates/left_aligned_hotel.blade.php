@@ -20,9 +20,13 @@
     </div>
     <div class="col-md-6 text-right">
       <div class="d-flex justify-content-end align-items-center">
+        <?php if(isset($editorChoice->price) AND $editorChoice->price != 0){ ?>
         <h4 class="hover-primary mb-0">
           From € <?php echo $editorChoice->price;?>
         </h4>
+        <?php } else{ ?>
+          <button class="btn btn-primary btn-block rounded-0">Price on request</button>
+        <?php } ?>
         {{--<div class="dropdown ml-3">
           <button class="btn btn-outline-dark dropdown-toggle" type="button" id="dropdownMenuButton"
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

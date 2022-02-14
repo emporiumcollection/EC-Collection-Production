@@ -5,7 +5,7 @@
         <div class="col-md-5 header-left col-4">
           @if(Request::segment(1) != 'reservation')
           <div id="menunav">
-            <a href="#dashF" class="menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
+            <a href="#dashboard_menu" class="menu-nav grid-f" data-toggle="collapse" role="button" aria-expanded="false"
               aria-controls="dashF">
               <i class="ico ico-dash" data-toggle="tooltip" title="Navigate to our collection"></i>
             </a>

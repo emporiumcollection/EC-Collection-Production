@@ -33644,7 +33644,8 @@ button:focus {
   width: 100%;
   position: relative;
   overflow: hidden;
-  padding-bottom: 130%; }
+  padding-bottom: 130%;
+  display: none; }
   .destination-img img {
     width: auto;
     left: 50%;
