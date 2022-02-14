@@ -104,7 +104,12 @@
         <div class="hotel-prices hotel-price-detail d-flex h-100">
           <div class="row align-items-center justify-content-center">
             <h3 class="mb-0">
-              <span class="title-font-2 mr-1">From €</span> <span class="color-primary"> {{ $hotel_data[0]->price }}</span>
+              @if(isset($hotel_data[0]->price) AND $hotel_data[0]->price != 0)
+                <span class="title-font-2 mr-1">From €</span> <span class="color-primary"> {{ $hotel_data[0]->price }}</span>
+              @else
+                <span class="title-font-2 mr-1">Price on request</span>
+              @endif
+
             </h3>
             <div class="ml-2">
               <span class="pernight"></span>

@@ -621,24 +621,24 @@ var ajaxReq = 'ToCancelPrevReq';
                 }
 
                 $('.herl').html(`<img src="uploads/container_user_files/locations/` 
-                  + containername + `/property-images/` + data[0]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
+                  + containername + `/property-images/` + data[0]['propertyImages'][0]['file_name'] + `" class="img-fluid" alt="" />`);
 
                 $('.img-left-when').html(`<img src="/property-image/resize/645x600/` + 
                   containername + `/` + 
-                  data[0]['property_images'][1]['file']['file_name'] + 
+                  data[0]['propertyImages'][1]['file_name'] + 
                   `/property-image" class="img-fluid" alt="" />`);                
 
                 $('.to-right .title-2').html(data[0]['property_name']);
                 // alert(data[0]['city']);
                 $('.title-third').html(data[0]['city']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
-                var images = data[0]['property_images'];
+                var images = data[0]['propertyImages'];
                 // console.log(images);
                 var d_image = '';                
                   $(images).each(function (key, value) {
                     try{
                       d_image += '<div>'
-                      +'<img src="/property-image/resize/645x600/'+ containername +'/'+ value['file']['file_name']+'/property-image" class="img-fluid" alt="">'
+                      +'<img src="/property-image/resize/645x600/'+ containername +'/'+ value['file_name']+'/property-image" class="img-fluid" alt="">'
                       +'</div>';
                     }catch(e){
 

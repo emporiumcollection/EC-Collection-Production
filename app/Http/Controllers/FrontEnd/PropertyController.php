@@ -7529,8 +7529,8 @@ class PropertyController extends Controller {
             if($curl_status == 200){
                 $response = json_decode($response);
                 $places = $response->results;
-                foreach($places as $key => $place){
-                    $data[$key]= [
+                foreach($places as $place){
+                    $data[]= [
                         'fsq_id' => $place->fsq_id,
                         'name' => $place->name,
                         'location' => $place->location,
@@ -7539,6 +7539,7 @@ class PropertyController extends Controller {
                     ];
                 }
                 $place_list = json_encode($data);
+                
                 \DB::table('tb_best_places')->insert([
                     'location' => $near,
                     'category' => $category,
