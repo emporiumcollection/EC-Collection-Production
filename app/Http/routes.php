@@ -23,6 +23,7 @@ use App\Http\Controllers\TwilioSMSController;
 Route::get('/config-cache-clear', function(){
 	\Artisan::call('config:cache');
 	\Artisan::call('cache:clear');
+	\Artisan::call('available-hotel-location');
 	Cache::flush();
 	dd("Cache is cleared");
 });
