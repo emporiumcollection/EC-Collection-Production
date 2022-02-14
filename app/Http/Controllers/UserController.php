@@ -1075,6 +1075,8 @@ class UserController extends Controller {
                         return Redirect::to(\Session::get('page'));
                     elseif(CNF_FRONT == 'false') :
                         return Redirect::to('dashboard');
+                    elseif($row->group_id == 1) :
+                        return Redirect::to('dashboard');
                     else :
                         return Redirect::to('');
                     endif;
