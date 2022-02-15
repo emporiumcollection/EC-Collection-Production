@@ -311,7 +311,8 @@ trait Property {
             'architecture_design_video',
             'architecture_design_video_link_type',
             'architecture_design_video_link',
-            'architecture_design_url'
+            'architecture_design_url',
+            'architecture_video_link'
         ])
         ->with([
             'boards',

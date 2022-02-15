@@ -1,4 +1,3 @@
-
 <div class="col-lg-8 col-hotel-slider">
   <ul class="nav nav-pills nav-clr nav-breadcrumb nav-breadcrumb-ip mb-3 mt-3">
     <li class="nav-item">
@@ -126,21 +125,26 @@
       <div class="image-pad--1">
         <img src="{{ asset('/property-image/resize/400x267/'.$property->property_slug.'/'. $property->architecture_image2.'/architect-image')}}" class="img-fluid img-rounded" alt="">
       </div>
+      <div class="image-pad--1">
+        <div class="yt-rvideos">
+        </div>
+      </div>
       <?php if(isset($property->architecture_design_video) AND $property->architecture_design_video == 'upload') { ?>
+      <div class="image-pad--1">
         <div class="videoWrapper mt-5">
           <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp" preload="none" controls="" playsinline="" webkit-playsinline="">
             <source src="{{ asset('/property-image/resize/400x267/'.$property->property_slug.'/'. $property->architecture_design_video.'/architect-image')}}" type="video/mp4">
           </video>
         </div>
-      <?php }elseif(isset($property->architecture_design_video) 
-          AND $property->architecture_design_video_link_type == 'Youtube'
-            AND $property->architecture_design_video_link_type == 'vimeo' ){ ?>
-        <iframe width="700" height="315"
-          src="{{ $property->architecture_design_video_link }}">
-        </iframe>
-      <?php }?>
+      </div>
+      <?php } ?>
     </div>
   </div>
 </div>
-
+<script type="text/javascript">
+  var channelurl = '{{URL::to("getyoutubechannel/")}}';
+  $(window).on('load', function() {
+    setTimeout("getDefaultChannel('<?php echo isset($property->architecture_video_link) ? $property->architecture_video_link : ''; ?>')", 1000);
+  });
+</script>
 @include('frontend.themes.EC.layouts.subsections.property_gallery')
