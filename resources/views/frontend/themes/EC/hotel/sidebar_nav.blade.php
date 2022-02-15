@@ -79,10 +79,10 @@ if(!isset($property)){
             </div>
           </li>
         @endif
-        {{-- <li class="nav-item">
-          <a class="nav-link " href="/hotel/architecture">Architecture</a>
-        </li>
         <li class="nav-item">
+          <a class="nav-link " href="/hotel/{{ $property->property_slug}}/architecture">Architecture</a>
+        </li>
+        {{-- <li class="nav-item">
           <a class="nav-link " href="/hotel/spa">Spa & Wellness </a>
         </li> --}}
         <li class="nav-item">

@@ -103,7 +103,7 @@ class HotelDetailController extends Controller
         }
     }
     
-    public function detailsuite()
+    public function architecture($slug)
     {
         $this->data['layout_type'] = 'old';
         $this->data['keyword'] = '';
@@ -112,19 +112,19 @@ class HotelDetailController extends Controller
         $this->data['total_guests'] = '';        
         $this->data['location'] = '';
         $this->data['photos'] = '';
+        $this->data['property'] = $this->getPropertyByslug($slug);
+        $this->setGalleryAndFormat($this->data['property']);
+        $this->data['property'] = $this->data['property'][0];
+        $this->data['property_id'] = $this->data['property']->id;
+        // print_r($this->data['property']);exit;
+        if(Session::has('keyword')){
+            $this->data['path'] = $this->getLocationPath(Session::get('keyword'));
+        }else{
+            $this->data['path'] = $this->getLocationPath($this->data['property']->city);
+        }
 
-        $file_name = 'frontend.themes.EC.hotel.detail-suite';      
-        return view($file_name, $this->data);
-    }
-    public function architecture()
-    {
-        $this->data['layout_type'] = 'old';
-        $this->data['keyword'] = '';
-        $this->data['arrive'] = '';
-        $this->data['departure'] = '';
-        $this->data['total_guests'] = '';        
-        $this->data['location'] = '';
-        $this->data['photos'] = '';
+        $this->setFitlerOptions();
+        $this->data = $this->setFitlerOptions();
 
         $file_name = 'frontend.themes.EC.hotel.architecture';      
         return view($file_name, $this->data);

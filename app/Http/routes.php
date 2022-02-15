@@ -61,10 +61,12 @@ Route::get('/hotel/{slug}/restaurant','FrontEnd\HotelDetailController@restaurant
 
 Route::get('/hotel/{slug}/{title}/{restauratnslug}', 'FrontEnd\HotelDetailController@restaurant_detail')->where(['slug' => '.*', 'restauratnslug' => '.*']);
 
+Route::get('/hotel/{slug}/architecture','FrontEnd\HotelDetailController@architecture')->where(['slug' => '.*']);
+
 Route::get('/hotel/{slug}', 'FrontEnd\PropertyController@getProperty');
 Route::get('/hotel/{slug}/{suite}', 'FrontEnd\HotelDetailController@suites');
 Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
-Route::get('/hotel/architecture', 'FrontEnd\HotelDetailController@architecture');
+Route::get('/architecture/{slug}', 'FrontEnd\HotelDetailController@architecture');
 Route::get('/hotel/spa', 'FrontEnd\HotelDetailController@spa');
 // Route::get('/hotel/detailrestaurant','FrontEnd\HotelDetailController@detailrestaurant');
 Route::get('/hotel-location/{slug}','FrontEnd\HotelDetailController@getlocation');

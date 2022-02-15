@@ -29,6 +29,8 @@ class ImageController extends Controller {
             $this->restrurantImageResize($scale, $path, $file);
         }elseif($type == 'restrurant-slider-image'){
             $this->restrurantImageResize($scale, $path, $file);
+        }elseif($type == 'architect-image'){
+            $this->architectImageResize($scale, $path, $file);    
         }elseif($type == 'spa-image'){
             $this->spaImageResize($scale, $path, $file);
         }elseif($type == 'category-image'){
@@ -101,6 +103,21 @@ class ImageController extends Controller {
         '/resized';
 
         $this->resizeImage();
+    }
+
+    public function architectImageResize($scale, $path, $file)
+    {
+        $this->initializeValues($scale, $file);
+
+        $this->file_path = $this->image_path .
+        '/properties_subtab_imgs/'.$this->file;
+
+        $this->destination_dir = public_path() .
+        '/cached-images/container_user_files/locations/' .
+        $path .
+        '/resized';
+
+        $this->resizeImage();   
     }
 
     public function categoryImageResize($scale, $path, $file)
