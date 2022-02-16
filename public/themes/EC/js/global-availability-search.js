@@ -799,6 +799,20 @@ function getHotelDefaultChannel(id){
         },
     });
 
+}     
+
+function getHotelChannel(channelUrl){
+    var youtube_channel= channelUrl;
+    $('.yt-hdrvideos').yottie({  
+        key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+        
+        channel:  youtube_channel,
+        content: {
+            columns: 4,
+            rows: 2
+        },
+    });
+
 }
 
 function replacePrices(cat_id, property_id = null){

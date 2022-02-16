@@ -28,46 +28,69 @@
   <div class="main-container wow fadeInUp" data-wow-delay=".3s">
     <div class="main-content">
       <div class="row align-items-start">
-        <div class="col-md-12 mmb-4">
-          <div class="grid-layout" id="location_gallery_hotel">
-            <a href="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image1.'/architect-image')}}" 
-                class="grid-item grid-row-1 span-1">
-                <img data-src="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image1.'/architect-image')}}" alt="" class="location-photos">
-            </a>
-            <a href="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image2.'/architect-image')}}" 
-                class="grid-item grid-row-2 span-2">
-                <img data-src="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image2.'/architect-image')}}" alt="" class="location-photos">
-            </a>
-              <a href="{{ asset('/property-image/resize/400x267/'.$property->property_slug.'/'. $property->architecture_landscape_image1.'/architect-image')}}" 
-                class="grid-item grid-row-2 span-2">
-                <img data-src="{{ asset('/property-image/resize/400x267/'.$property->property_slug.'/'. $property->architecture_landscape_image1.'/architect-image')}}" alt="" class="location-photos">
+        <div class="col-md-6 mmb-4">
+          <div class="row ">
+            <div class="col-6">
+              <a href="#">
+                <div class="img-overlay">
+                  <img src="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image1.'/architect-image')}}" alt="">
+                </div>
               </a>
-              {{-- <p class="d-flex align-items-center justify-content-center">
+            </div>
+            <div class="col-6">
+              <a href="#">
+                <div class="img-overlay">
+                  <img src="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image2.'/architect-image')}}" alt="">
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 mmb-4">
+          <a href="#">
+            <div class="img-overlay">
+              <img src="{{ asset('/property-image/resize/400x267/'.$property->property_slug.'/'. $property->architecture_landscape_image1.'/architect-image')}}" alt="">
+              <div class="overlay">
+                <p class="d-flex align-items-center justify-content-center">
                   {{ $property->architecture_landscapehovertext_image1 }}
-              </p> --}}
-
-              <a href="{{ asset('/property-image/resize/400x267/'.$property->property_slug.'/'. $property->architecture_landscape_image2.'/architect-image')}}" 
-                class="grid-item grid-row-2 span-2">
-                <img data-src="{{ asset('/property-image/resize/400x267/'.$property->property_slug.'/'. $property->architecture_landscape_image2.'/architect-image')}}" alt="" class="location-photos">
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+      <div class="row align-items-end">
+        <div class="col-md-6 mmb-4">
+          <a href="#">
+            <div class="img-overlay">
+              <img src="{{ asset('/property-image/resize/400x267/'.$property->property_slug.'/'. $property->architecture_landscape_image2.'/architect-image')}}" alt="">
+              <div class="overlay">
+                <p class="d-flex align-items-center justify-content-center">
+                  {{ $property->architecture_landscapehovertext_image2 }}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+        <div class="col-md-6 mmb-4">
+          <div class="row ">
+            <div class="col-6">
+              <a href="#">
+                <div class="img-overlay">
+                  <img src="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'. $property->architecture_portraite_image3.'/architect-image')}}" alt="">
+                </div>
               </a>
-              {{-- <p class="d-flex align-items-center justify-content-center">
-                {{ $property->architecture_landscapehovertext_image2 }}
-              </p> --}}
-              
-            <a href="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image3.'/architect-image')}}" 
-                class="grid-item grid-row-2 span-2">
-                <img data-src="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image3.'/architect-image')}}" alt="" class="location-photos">
-            </a>
-
-            <a href="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image4.'/architect-image')}}" 
-                class="grid-item grid-row-2 span-2">
-                <img data-src="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'.$property->architecture_portraite_image4.'/architect-image')}}" alt="" class="location-photos">
-            </a>
-
+            </div>
+            <div class="col-6">
+              <a href="#">
+                <div class="img-overlay">
+                  <img src="{{ asset('/property-image/resize/185x231/'.$property->property_slug.'/'. $property->architecture_portraite_image3.'/architect-image')}}" alt="">
+                </div>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
       <div class="row mt-5">
         <div class="col-md-6">
           <p class="px-5">
@@ -103,7 +126,7 @@
         <img src="{{ asset('/property-image/resize/830x467/'.$property->property_slug.'/'. $property->architecture_image2.'/architect-image')}}" class="img-fluid img-rounded" alt="">
       </div>
       <div class="image-pad--1">
-        <div class="yt-rvideos">
+        <div class="yt-hdrvideos">
         </div>
       </div>
       <?php if(isset($property->architecture_design_video) AND $property->architecture_design_video == 'upload') { ?>
@@ -119,9 +142,8 @@
   </div>
 </div>
 <script type="text/javascript">
-  var channelurl = '{{URL::to("getyoutubechannel/")}}';
   $(window).on('load', function() {
-    setTimeout("getDefaultChannel('<?php echo isset($property->architecture_video_link) ? $property->architecture_video_link : ''; ?>')", 1000);
+    setTimeout("getHotelChannel('<?php echo isset($property->architecture_video_link) ? $property->architecture_video_link : ''; ?>')", 1000);
   });
 </script>
 @include('frontend.themes.EC.layouts.subsections.property_gallery')
