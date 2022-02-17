@@ -710,7 +710,6 @@ function replaceRooms(property_id, category_id){
                   <div class="mr-2">
                       <i class="ico ico-info-green pointer btn-sidebar" type="button"
                           data-sidebar="#priceinfo" onclick="replacePrices(` + category_id + `)"></i>
-                  </div>
                   <h3 class="mb-0">
                       <span class="title-font-2 mr-1">From</span> <span
                           class="color-primary">
@@ -718,6 +717,7 @@ function replaceRooms(property_id, category_id){
                   </h3>
                   <div class="ml-2">
                       <span class="pernight"></span>
+                  </div>
                   </div>
               </div>
           </div>

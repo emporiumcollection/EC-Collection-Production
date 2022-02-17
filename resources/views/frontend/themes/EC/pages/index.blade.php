@@ -267,16 +267,16 @@
                     </div>
                   </div>
                 </div>
-                <div class="guest-pick-footer">
+              </div>
+              <h3 class="title-3 title-i">— featured hotel —</h3>
+              <div class="guest-pick-footer" style="padding-top: 120px;">
                   <div class="text-right">
                     <!-- <a href="main-page.html" class="confirm-room">View "New York Collection"</a> -->
                     <!-- <input type="hidden" name="suites_data" class="suites_data"> -->
                     <input type="submit" class="btn btn-primary" id="collection" value=""/>
                   </div>
                 </div>
-              </div>
-              <h3 class="title-3 title-i">— featured hotel —</h3>
-              <div class="oldo-o">
+              <div>
                 <div class="quick-prev" id="images">
                   
                 </div>

@@ -1808,7 +1808,7 @@ var ajaxReq = 'ToCancelPrevReq';
 
                 roomimg_html += '';
 
-                roomimg_html += '<div class="inner-wrapper hotel-page-list">';
+                roomimg_html += '<div class="inner-wrapper col-hotel-slider">';
                 roomimg_html += '<div class="pr-lst result-grid suite-imgs">';
                 $(objimgs).each(function (key, val) {
                   roomimg_html += '<div><img src="' + imgpath + '/' + val['file_name'] + '" class="w-100" alt=""></div>';

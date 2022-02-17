@@ -7258,7 +7258,8 @@ a.text-dark:hover, a.text-dark:focus {
   [dir="rtl"] .slick-slide {
     float: right; }
   .slick-slide img {
-    display: block; }
+    display: block;
+    padding-top: 40px; }
   .slick-slide.slick-loading img {
     display: none; }
   .slick-slide.dragging img {
@@ -31173,7 +31174,7 @@ span.calElement.prev:hover {
   .filter-guest-2 .guest-pick-body .col {
     min-width: 40px; }
   .filter-guest-2 .guest-pick-footer {
-    padding-top: 0; }
+    padding-top: 150; }
 
 .confirm-room {
   font-family: "SaolDisplay-LightItalic";

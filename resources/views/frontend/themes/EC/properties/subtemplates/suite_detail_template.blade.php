@@ -86,10 +86,11 @@
                     <p class="mb-0 inc">Includes</p>
                     <p class="mb-0"><span id="number_of_beds">2</span> Bedrooms</p>
                 </div>
-                <!--<a href="#" class="view btn-sidebar i-none" data-sidebar="#policies">
+                {{-- <a href="#" class="view btn-sidebar i-none" data-sidebar="#policies">
                     Policies
-                </a>-->
+                </a> --}}
                 <div class="hotel-prices hotel-price-detail d-flex">
+                    <a href="#" class="view btn-sidebar i-none" data-sidebar="#priceinfo">
                     <div class="row align-items-center justify-content-center">
                         <div class="mr-2" data-place="price-icon">
                             <i class="ico ico-info-green pointer btn-sidebar" type="button"
@@ -103,6 +104,7 @@
                             <span class="pernight"></span>
                         </div>
                     </div>
+                </a>
                 </div>
                 <div class="ipad-view book-suite">
                     <a data-place="reserve-link" href="#">
