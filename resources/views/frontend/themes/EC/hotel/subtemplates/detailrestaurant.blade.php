@@ -116,7 +116,7 @@ if(Request::segment(3) == 'bar'){
         <div class="col-md-12 mmb-4">
           <div class="grid-layout" id="location_gallery_hotel">
             <?php
-            if(isset($value['gallery']['files']))
+            if(isset($value['gallery']['files'])){
               foreach ($value['gallery']['files'] as $key => $image): 
               if($key == 0){
               if(is_array($image)){
@@ -144,22 +144,26 @@ if(Request::segment(3) == 'bar'){
             </a>
             <?php }  
              endforeach;
-            endif;
+            }
             ?>
           </div>
         </div>
       </div>
-      <?php if(isset($restaurant->video_type) AND $restaurant->video_type == 'upload') { ?>
+      <?php if(isset($restaurant->video_type) AND $restaurant->video_type == 'upload') {
+        if(isset($restaurant->architecture_design_video)){ ?>
         <div class="videoWrapper mt-5">
           <video width="640" height="360" style="width:100%;height:100%;" poster="images/maxresdefault.webp" preload="none" controls="" playsinline="" webkit-playsinline="">
-            <source src="" type="video/mp4">
+            <source src="{{$restaurant->architecture_design_video}}" type="video/mp4">
           </video>
         </div>
-      <?php }elseif(isset($restaurant->video_link) AND $restaurant->video_type == 'link'){ ?>
+      <?php } }
+      if(isset($restaurant->video_type) AND $restaurant->video_type == 'link'){ 
+        if(isset($restaurant->video_link)) { ?>
         <iframe width="700" height="315"
           src="{{ $restaurant->video_link }}">
         </iframe>
       <?php
+        } 
       } 
       endforeach;
       endif;
