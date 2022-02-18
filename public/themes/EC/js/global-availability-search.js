@@ -325,7 +325,8 @@ function replacePropertySuites(id){
           <a class="nav-link" id="suiteslist-tab" data-toggle="pill" href="#suiteslist" role="tab"
               aria-controls="suiteslist" aria-selected="true">All Suites</a>
       </li>`;
-      var values = properties[id]['suites'];
+      let values = Object.values(properties[id]['suites']);
+      // console.log(result);
       values.forEach(function(e){
         if(!firstsuite){
           firstsuite = e.id;
@@ -360,7 +361,9 @@ function replaceSuiteList(id){
   var roomimages;
   var onlyThree;
 
-  properties[id].suites.forEach(function(suite){
+  let result = Object.values(properties[id].suites);
+  // console.log(result);
+  result.forEach(function(suite){
     if(suite.show_on_booking){
       onlyThree = 0;
       sid = suite['id'];
@@ -710,6 +713,7 @@ function replaceRooms(property_id, category_id){
                   <div class="mr-2">
                       <i class="ico ico-info-green pointer btn-sidebar" type="button"
                           data-sidebar="#priceinfo" onclick="replacePrices(` + category_id + `)"></i>
+                  </div>
                   <h3 class="mb-0">
                       <span class="title-font-2 mr-1">From</span> <span
                           class="color-primary">
@@ -717,7 +721,6 @@ function replaceRooms(property_id, category_id){
                   </h3>
                   <div class="ml-2">
                       <span class="pernight"></span>
-                  </div>
                   </div>
               </div>
           </div>
@@ -789,6 +792,20 @@ function getDefaultChannel(catt){
 function getHotelDefaultChannel(id){            
   $('[data-place="property-name"]').html(properties[id]['property_name']);
     var youtube_channel= properties[id].youtube_channel;
+    $('.yt-hdrvideos').yottie({  
+        key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
+        
+        channel:  youtube_channel,
+        content: {
+            columns: 4,
+            rows: 2
+        },
+    });
+
+}     
+
+function getHotelChannel(channelUrl){
+    var youtube_channel= channelUrl;
     $('.yt-hdrvideos').yottie({  
         key:'AIzaSyAry0SsGLQVtzh61SGb2-OtBpAWtZh7zGo',
         

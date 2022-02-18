@@ -50,7 +50,7 @@ if(!isset($property)){
             <i class="ico ico-back mb-4"></i>
           </a>
         </li>
-        @if(!empty($property->suites->toArray()))
+        @if(!empty($property->suites))
           <li class="nav-item">
             <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#suite" role="button" aria-expanded="true" aria-controls="suite">
               Suites <i class="fa fa-angle-down" aria-hidden="true"></i>

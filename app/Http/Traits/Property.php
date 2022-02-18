@@ -485,6 +485,9 @@ trait Property {
                         unset($property->suites[$sk]);
                     }
                 }
+                // print_r($property->suites->toArray());
+                $property->suites = array_values($property->suites->toArray());
+                // print_r($property->suites);exit;
             }
             $properties[$k]->suiteNameList = implode('<br>', $suiteNameList);
 

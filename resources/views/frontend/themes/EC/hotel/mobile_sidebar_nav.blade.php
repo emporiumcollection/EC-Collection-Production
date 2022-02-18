@@ -39,7 +39,7 @@ if(!isset($property)){
                         <div class="card-body" data-place="m_suite_btn1">
                             <a href="/hotel/{{ $property->property_slug }}/suites" class="nav-link">All Suite</a>
                             @foreach($property->suites as $suite)
-                                <a href="/hotel/{{ $property->property_slug }}/suites/#{{str_replace(" ", "-", strtolower($suite->category_name))}}" class="nav-link"><?php echo ucfirst(strtolower($suite->category_name)); ?></a>
+                                <a href="/hotel/{{ $property->property_slug }}/suites/#{{str_replace(" ", "-", strtolower($suite['category_name']))}}" class="nav-link"><?php echo ucfirst(strtolower($suite['category_name'])); ?></a>
                             @endforeach
                         </div>
                     </div>

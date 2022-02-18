@@ -71,6 +71,7 @@
             </div>
             -->
             <a href="#" class="btn-sidebar" data-sidebar="#priceinfo" style="align-self: center;">
+                <a href="#" class="btn-sidebar" data-sidebar="#priceinfo" style="align-self: center;">
                 <div class="hotel-prices hotel-price-detail d-flex">
                     <div class="row align-items-center justify-content-center" >
                         <div class="mr-2">
