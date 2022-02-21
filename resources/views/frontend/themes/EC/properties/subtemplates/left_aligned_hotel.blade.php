@@ -118,7 +118,7 @@
       <div class="hero-meta d-xl-flex d-lg-flex d-xs-none">
         <div class="left-meta">
           <ul class="nav nav-pills nav-fill">
-            @if(!empty($editorChoice->suites->toArray()))
+            @if(!empty($editorChoice->suites))
             <li class="nav-item">
               <a class="nav-link btn-sidebar" href="#" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $editorChoice->id;?>)">Suites</a>
             </li>

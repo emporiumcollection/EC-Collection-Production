@@ -44,7 +44,7 @@
 
     </div>
     <div class="hotel-meta full-width is-small">
-      @if(!empty($property->suites->toArray()))
+      @if(!empty($property->suites))
       <a href="#" class="view bg-btn-gl-001 btn-sidebar" data-sidebar="#suiteside" onclick="replacePropertySuites(<?php echo $property->id;?>)">
         Suite(s)
       </a>

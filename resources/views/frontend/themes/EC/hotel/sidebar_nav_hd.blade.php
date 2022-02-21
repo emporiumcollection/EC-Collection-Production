@@ -61,7 +61,7 @@ if(!isset($property)){
                 </li>
                 @foreach($property->suites as $suite)
                   <li class="nav-item">
-                    <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/suites/#{{str_replace(" ", "-", strtolower($suite['category_name']))}}"> <?php echo ucfirst(strtolower($suite['category_name'])); ?> </a>
+                    <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/suites/#{{str_replace(" ", "-", strtolower($suite['category_name']))}}"> <?php echo ucfirst(strtolower($suite->category_name)); ?> </a>
                   </li>
                 @endforeach
               </ul>
