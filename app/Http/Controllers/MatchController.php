@@ -58,7 +58,8 @@ class MatchController extends Controller
                 foreach($response as $val){
                     
                     if(trim($val->dest_type) == 'city'){
-                        $dest_id =  $this->getProperties($val->dest_id);            
+                        $hotels =  $this->getProperties($val->dest_id);
+                        return view('match.matchhotels')->with('hotels',$hotels);
                     }
                 }
             }else{
@@ -75,8 +76,7 @@ class MatchController extends Controller
             echo "cURL Error #:".$response['err'];
         } else {
             $matched = [];
-            $exthotels = [];
-            $inthotels = [];
+            $hotels = [];
             $pages_no = $response['response']->count / 20;
             for($i=0; $i <=$pages_no; $i++){
                 
@@ -93,19 +93,22 @@ class MatchController extends Controller
                         }else{
                             $searchValue = $parts[0];
                         }
-                        // print $searchValue;exit;
                         //$searchValue = str_replace(' ', ' +', $searchValue);
                         $property = properties::whereRaw("MATCH(property_name)AGAINST('\"" . $searchValue . "\"' IN BOOLEAN MODE)")->first();
                         //where('property_name','like', "%$value->hotel_name%")->first();
                         if(!empty($property) && !in_array($property->id, $matched)){
                             $matched[] = $property->id;
-                            $exthotels[] = $value->hotel_name;
-                            $inthotels[] = $property->property_name;
+                            $hotels[] = [
+                                'property_id' => $property->id,
+                                'dest_id' => $dest_id,
+                                'hotel_name' => $value->hotel_name,
+                                'hotel_id' => $value->hotel_id,
+                                'matched_property' => $property->property_name
+                            ];
                             // print $value->hotel_name . '==' . $property->property_name."\n";
                         }
                     }
-                    print_r($exthotels);exit;
-                    return redirect('/search/destination')->with('exthotels','hdfghfd');
+                    return $hotels;
                 }    
             }
         }    
@@ -146,6 +149,140 @@ class MatchController extends Controller
             }    
 
     }
+
+    private function getHotelReviews($hotel_gds_id,$property_id){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/reviews?locale=en-gb&sort_type=SORT_MOST_RELEVANT&hotel_id=".$hotel_gds_id."&customer_type=solo_traveller%2Creview_category_group_of_friends&language_filter=en-gb%2Cde%2Cfr",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: booking-com.p.rapidapi.com",
+                "x-rapidapi-key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $reviews = [];
+            $response = json_decode($response);
+            if(isset($response->result) && !empty($response->result)){
+                foreach($response->result as $value){
+                    $insert = review::insert([
+                        'hotel_id' => $property_id,
+                        'fname' => $value->author->name,
+                        'comment' => 'Pros : '.$value->pros . PHP_EOL.'Cons : '.$value->cons,
+                        'is_approved' => 1
+                    ]);
+                }
+            }    
+        }
+    }
+
+    private function getHotelPolicy($hotel_gds_id,$property_id){
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/policies?locale=en-gb&hotel_id=" . $hotel_gds_id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: booking-com.p.rapidapi.com",
+                "x-rapidapi-key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $policies = '';
+            $response = json_decode($response);
+            if(isset($response->policy)){
+                foreach ($response->policy as $key => $value) {
+                    $policies .= PHP_EOL;
+                    $policies .= str_replace("_"," ",$value->type).PHP_EOL;
+                    if (isset($value->content[0]->cribs_and_extra_beds)) {
+                        foreach($value->content[0]->cribs_and_extra_beds as $key => $data){
+
+                            if($key == 0){
+                                $policies .= PHP_EOL;
+                                $policies .='Cribs and extra beds : '. $data->text.PHP_EOL;
+                            }else{
+                                $policies .= $data->text.PHP_EOL;
+                            }    
+                        }
+                    }
+
+                    if (isset($value->content[0]->children_at_the_property)) {    
+                        foreach($value->content[0]->children_at_the_property as $key => $data){
+                            if($key == 0){
+                                $policies .= PHP_EOL;
+                                $policies .='Children at the property : '. $data->text.PHP_EOL;
+                            }else{
+                                $policies .= $data->text.PHP_EOL;   
+                            }    
+                        }
+                    }
+                    if (isset($value->content[0]->ruleset)) {
+                        foreach ($value->content[0]->ruleset as $key => $data) {
+                            foreach($data->rule as $key => $rules){
+                                if ($key == 0) {
+                                    $policies .= PHP_EOL;
+                                    $policies .= str_replace("_"," ",$data->name) .':'.$rules->content.PHP_EOL;
+                                }else{
+                                    $policies .= $rules->content.PHP_EOL;    
+                                }
+                                
+                            }
+                        }
+                    }
+                }
+                $insert = \DB::table('td_property_terms_n_conditions')
+                ->insert([
+                    'property_id' => $property_id,
+                    'terms_n_conditions' => $policies     
+                ]);
+            } 
+        }
+    }
+
+    public function saveMatchHotels(Request $request)
+    {
+        $policies = $this->getHotelPolicy($request->dest_id,$request->property_id);
+        $reviews = $this->getHotelReviews($request->dest_id,$request->property_id);
+
+        $insert = \DB::table('tb_matched_hotels')
+        ->insert([
+            'hotel_id' => $request->hotel_id,
+            'property_id' => $request->property_id,
+            'is_approved' => 0
+        ]);
+        
+        return redirect('/search/destination');
+
+    }
+
 
        
 }

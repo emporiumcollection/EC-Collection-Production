@@ -1,13 +1,4 @@
-<?php
-if(isset($exthotels)){
-    echo 'FFF';
-    echo $exthotels.'Here';
-    exit;
-}else{
-    //echo 'Here';
-}
-echo 'Here123';
-?>
+
 @extends('layouts.app')
 <script type="text/javascript">
 
@@ -21,13 +12,6 @@ echo 'Here123';
 @section('content')
 
 <div class="page-content row">
-    @if(isset($message))
-        <div class="page-header">
-          <div class="page-title">
-            <h3> {{$message}}</h3>
-          </div>
-        </div>
-    @endif
 <div class="page-content-wrapper m-t">      
     <div class="sbox animated fadeInRight">
     
@@ -59,13 +43,23 @@ echo 'Here123';
               </tr>
         </thead>
         <tbody>
-        @if(isset($property))                             
-            @foreach ($property as $data)
+        @if(isset($hotels))                             
+            @foreach ($hotels as $val)
+            <form action="/savemathhotels" method="post">
                 <tr>
-                    <td width="30">{{$data}}</td>
-                    <td width="50"></td>                                 
-                    {{-- <td>  </td> --}}
+                    <td width="30">{{ $val['hotel_name'] }}</td>
+                    <input type="hidden" name="property_id" value="{{ $val['property_id'] }}">
+                    <input type="hidden" name="hotel_id" value="{{ $val['hotel_id'] }}">
+                    <td width="50">
+                        <select class="form-control" name='matched_property' id='matched_property' style="height: 28px; margin-left: 5px;"> 
+                            @foreach ($hotels as $value)
+                                <option value="{{ $value['matched_property'] }}">{{ $value['matched_property'] }}</option>
+                            @endforeach
+                        </select>
+                    </td>                                 
+                    <td width="30"><button class="form-control">Submit</button></td>
                 </tr>
+            </form>
             @endforeach
         @endif    
         </tbody>
