@@ -399,11 +399,9 @@
 										<div class="form-group col-lg-3">
 											<label for="cancelation_duration">Cancellation Duration</label>
 											<select name="cancelation_duration" class="form-control input-sm" required="required">
-												@if(isset($cat))
 												<option>Select Duration</option>
-												<option value="hrs" {{ ($cat->is_accessible=='hrs') ? 'selected="selected"' : ''}}>Hours</option>
-												<option value="days" {{ ($cat->is_accessible=='days') ? 'selected="selected"' : ''}}>Days</option>
-												@endif
+												<option value="hrs" {{ (isset($cat) && $cat->is_accessible=='hrs') ? 'selected="selected"' : ''}}>Hours</option>
+												<option value="days" {{ (isset($cat) && $cat->is_accessible=='days') ? 'selected="selected"' : ''}}>Days</option>
 											</select>
 										</div>
 									</div>
