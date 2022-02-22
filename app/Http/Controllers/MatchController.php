@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\properties;
+use App\Models\Review;
 use DB;
 
 class MatchController extends Controller
@@ -22,11 +23,20 @@ class MatchController extends Controller
         
         $this->data['category'] = \DB::table('tb_categories')->get();
         $file_name = 'match.matchhotels'; 
-             
+        
+        // $this->data['matchHotels'] = \DB::table('tb_matched_hotels')->where('is_approved',0)->get();
+        // $this->getHotelDetail($hotel_id);
+        // print_r($this->data['matchHotels']);exit;
+
+
         return view($file_name,$this->data);
     }
 
     public function machDestination(Request $request){
+        $this->data['category'] = \DB::table('tb_categories')->get();
+        $this->data['allprops'] = properties::select(['id', 'property_name'])
+        ->orderBy('property_name', 'asc')
+        ->get();
 
         $curl = curl_init();
 
@@ -58,8 +68,8 @@ class MatchController extends Controller
                 foreach($response as $val){
                     
                     if(trim($val->dest_type) == 'city'){
-                        $hotels =  $this->getProperties($val->dest_id);
-                        return view('match.matchhotels')->with('hotels',$hotels);
+                        $this->data['hotels'] =  $this->getProperties($val->dest_id);
+                        return view('match.matchhotels')->with($this->data);
                     }
                 }
             }else{
@@ -94,7 +104,8 @@ class MatchController extends Controller
                             $searchValue = $parts[0];
                         }
                         //$searchValue = str_replace(' ', ' +', $searchValue);
-                        $property = properties::whereRaw("MATCH(property_name)AGAINST('\"" . $searchValue . "\"' IN BOOLEAN MODE)")->first();
+                        $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")->first();
+                        
                         //where('property_name','like', "%$value->hotel_name%")->first();
                         if(!empty($property) && !in_array($property->id, $matched)){
                             $matched[] = $property->id;
@@ -178,14 +189,19 @@ class MatchController extends Controller
         } else {
             $reviews = [];
             $response = json_decode($response);
+            
             if(isset($response->result) && !empty($response->result)){
-                foreach($response->result as $value){
-                    $insert = review::insert([
-                        'hotel_id' => $property_id,
-                        'fname' => $value->author->name,
-                        'comment' => 'Pros : '.$value->pros . PHP_EOL.'Cons : '.$value->cons,
-                        'is_approved' => 1
-                    ]);
+                if(review::where('hotel_id',$property_id)->exists()){
+                    return redirect('/search/destination');
+                }else{
+                    foreach($response->result as $value){
+                        $insert = review::insert([
+                            'hotel_id' => $property_id,
+                            'fname' => $value->author->name,
+                            'comment' => 'Pros : '.$value->pros . PHP_EOL.'Cons : '.$value->cons,
+                            'is_approved' => 1
+                        ]);
+                    }
                 }
             }    
         }
@@ -258,29 +274,75 @@ class MatchController extends Controller
                         }
                     }
                 }
-                $insert = \DB::table('td_property_terms_n_conditions')
-                ->insert([
-                    'property_id' => $property_id,
-                    'terms_n_conditions' => $policies     
-                ]);
+                if(\DB::table('td_property_terms_n_conditions')
+                    ->where('property_id', $property_id)->exists()) {
+                    return redirect('/search/destination');
+                }else{
+                    $insert = \DB::table('td_property_terms_n_conditions')
+                    ->insert([
+                        'property_id' => $property_id,
+                        'terms_n_conditions' => $policies     
+                    ]);
+                }    
             } 
         }
     }
 
     public function saveMatchHotels(Request $request)
     {
-        $policies = $this->getHotelPolicy($request->dest_id,$request->property_id);
-        $reviews = $this->getHotelReviews($request->dest_id,$request->property_id);
+        //$this->getRoomDetail($request->hotel_id);
+        $this->getHotelPolicy($request->hotel_id,$request->property_id);
+        $this->getHotelReviews($request->hotel_id,$request->property_id);
 
-        $insert = \DB::table('tb_matched_hotels')
-        ->insert([
-            'hotel_id' => $request->hotel_id,
-            'property_id' => $request->property_id,
-            'is_approved' => 0
+        if( \DB::table('tb_matched_hotels')
+            ->where('property_id',$request->property_id)
+            ->exists() ){
+
+            return redirect('/search/destination');
+        }else{
+            $insert = \DB::table('tb_matched_hotels')
+            ->insert([
+                'hotel_id' => $request->hotel_id,
+                'property_id' => $request->property_id,
+                'is_approved' => 1
+            ]);
+            return response()->json(['status' => true]);
+        }
+
+    }
+
+    public function getRoomDetail($hotel_id){
+        $checkin_date = date ('Y-m-d', strtotime ('+15 day'));
+        $checkout_date = date ('Y-m-d', strtotime ('+17 day'));
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/room-list?currency=AED&adults_number_by_rooms=3%2C1&checkin_date=".$checkin_date."&hotel_id=".$hotel_id."&units=metric&checkout_date=".$checkout_date."&locale=en-gb&children_number_by_rooms=2%2C1&children_ages=5%2C0%2C9",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: booking-com.p.rapidapi.com",
+                "x-rapidapi-key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
+            ],
         ]);
-        
-        return redirect('/search/destination');
 
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            // echo $response;
+            $response = json_decode($response);
+            print_r($response);exit;
+        }
     }
 
 

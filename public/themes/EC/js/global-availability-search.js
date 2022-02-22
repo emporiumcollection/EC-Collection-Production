@@ -443,7 +443,8 @@ function replaceSuiteDetail(property_id, category_id){
   }
   currentPropertyId = property_id;
   var suite;
-  properties[property_id]['suites'].forEach(function(e){
+  let values = Object.values(properties[property_id]['suites']);
+  values.forEach(function(e){
     if(category_id === e.id){
       suite = e;
     }

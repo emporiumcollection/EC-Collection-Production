@@ -56,7 +56,7 @@ Route::get('/users/setting', 'UserController@getSettings');
 // Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
 Route::get('/search/destination', 'MatchController@matchHotels');
 Route::get('matchdestination', 'MatchController@machDestination');
-Route::post('savemathhotels', 'MatchController@saveMatchHotels');
+Route::post('savematchhotels', 'MatchController@saveMatchHotels');
 
 //HotelDetail Routes
 Route::get('/hotel/{slug}/restaurant','FrontEnd\HotelDetailController@restaurant')->where(['slug' => '.*']);
