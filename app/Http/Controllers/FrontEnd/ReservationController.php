@@ -413,6 +413,7 @@ class ReservationController extends Controller {
                 'container_name' => $this->data['container_name']
             ];
         }
+        
         $reserve_suite_html = view('frontend.themes.EC.reservation.reservation-summary', $view_array)->render(); 
             
         return json_encode([
