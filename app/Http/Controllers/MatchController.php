@@ -21,7 +21,7 @@ class MatchController extends Controller
     public function matchHotels(){
         $config_root_destinations = explode(',',\Config::get('app.root_destinations'));
         
-        $this->data['category'] = \DB::table('tb_categories')->get();
+        $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
         $file_name = 'match.matchhotels'; 
         
         // $this->data['matchHotels'] = \DB::table('tb_matched_hotels')->where('is_approved',0)->get();
@@ -33,7 +33,7 @@ class MatchController extends Controller
     }
 
     public function machDestination(Request $request){
-        $this->data['category'] = \DB::table('tb_categories')->get();
+        $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
         $this->data['allprops'] = properties::select(['id', 'property_name'])
         ->orderBy('property_name', 'asc')
         ->get();
@@ -339,9 +339,17 @@ class MatchController extends Controller
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
-            // echo $response;
-            $response = json_decode($response);
-            print_r($response);exit;
+            // echo $response;exit;
+            $response = json_decode($response); 
+            $rooms = $response[0]->rooms;
+            
+            $roomsdetail = view('match.roomdetail', [
+                'rooms' => $rooms
+            ])->render();
+
+            return json_encode([
+                'roomdetail' => $roomsdetail
+            ]);
         }
     }
 
