@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\properties;
+use App\Models\categories;
 use App\Models\Review;
 use DB;
 
@@ -22,20 +23,44 @@ class MatchController extends Controller
         $config_root_destinations = explode(',',\Config::get('app.root_destinations'));
         
         $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
-        $file_name = 'match.matchhotels'; 
+
+        $this->data['approvedhotels'] = \DB::table('tb_matched_hotels')->get();
+        $this->data['allprops'] = properties::select(['id', 'property_name'])
+        ->orderBy('property_name', 'asc')
+        ->get();
+
+        // print_r($this->data['category']);exit;
+
+        // foreach($this->data['hotels'] as $value)
+        //     $this->data['properties'] = properties::where('id',$value->property_id)->get();
+        // }
         
-        // $this->data['matchHotels'] = \DB::table('tb_matched_hotels')->where('is_approved',0)->get();
-        // $this->getHotelDetail($hotel_id);
-        // print_r($this->data['matchHotels']);exit;
+        $file_name = 'match.matchhotels'; 
 
-
-        return view($file_name,$this->data);
+        return view($file_name,$this->data);    
     }
 
     public function machDestination(Request $request){
         $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
+
+        $destinationId = 0;
+        $keyword = $request->selcat;
+
+        $destinations = categories::select(['id'])
+            ->where('category_name', '=', $keyword)
+            ->get()
+            ->toArray();
+
+        if(!empty($destinations)){
+            foreach($destinations as $destination){
+                $destinationId = $destination['id'];
+            }
+        }
+
         $this->data['allprops'] = properties::select(['id', 'property_name'])
+        ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
         ->orderBy('property_name', 'asc')
+//        ->limit(2)
         ->get();
 
         $curl = curl_init();
@@ -68,7 +93,9 @@ class MatchController extends Controller
                 foreach($response as $val){
                     
                     if(trim($val->dest_type) == 'city'){
-                        $this->data['hotels'] =  $this->getProperties($val->dest_id);
+                        $res =  $this->getProperties($val->dest_id);
+                        $this->data['hotels'] = $res['hotels'];
+                        $this->data['matched'] = $res['matched'];
                         return view('match.matchhotels')->with($this->data);
                     }
                 }
@@ -85,6 +112,7 @@ class MatchController extends Controller
         if (!$response['status'] == 'success') {
             echo "cURL Error #:".$response['err'];
         } else {
+            $matchedIds = [];
             $matched = [];
             $hotels = [];
             $pages_no = $response['response']->count / 20;
@@ -107,9 +135,14 @@ class MatchController extends Controller
                         $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")->first();
                         
                         //where('property_name','like', "%$value->hotel_name%")->first();
-                        if(!empty($property) && !in_array($property->id, $matched)){
-                            $matched[] = $property->id;
-                            $hotels[] = [
+                        $hotels[] = [
+                            'hotel_id' => $value->hotel_id,
+                            'hotel_name' => $value->hotel_name,
+                            
+                        ];
+                        if(!empty($property) && !in_array($property->id, $matchedIds)){
+                            $matchedIds[] = $property->id;
+                            $matched[] = [
                                 'property_id' => $property->id,
                                 'dest_id' => $dest_id,
                                 'hotel_name' => $value->hotel_name,
@@ -119,9 +152,9 @@ class MatchController extends Controller
                             // print $value->hotel_name . '==' . $property->property_name."\n";
                         }
                     }
-                    return $hotels;
                 }    
             }
+            return ['hotels' => $hotels, 'matched' => $matched];
         }    
     }
 
@@ -339,17 +372,29 @@ class MatchController extends Controller
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
-            // echo $response;exit;
-            $response = json_decode($response); 
-            $rooms = $response[0]->rooms;
-            
-            $roomsdetail = view('match.roomdetail', [
-                'rooms' => $rooms
-            ])->render();
+            $response = json_decode($response);
+            if(!empty($response[0]->rooms)){
+                $rooms = $response[0]->rooms;
 
-            return json_encode([
-                'roomdetail' => $roomsdetail
-            ]);
+                $roomsdetail = view('match.roomdetail', [
+                'rooms' => $rooms
+                ])->render();
+
+                return json_encode([
+                    'roomdetail' => $roomsdetail
+                ]);
+            }else
+            {
+                $error = "Rooms not found!";
+                $roomsdetail = view('match.roomdetail', [
+                'error' => $error
+                ])->render();
+
+                return json_encode([
+                    'roomdetail' => $roomsdetail
+                ]);
+            }
+
         }
     }
 
