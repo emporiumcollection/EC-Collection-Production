@@ -30,42 +30,71 @@
             <table class="table table-striped ">
                 <thead>
                     <tr>
+                        <th>Emporium Hotel</th>
                         <th>Booking.com Hotel</th>
                         <th>Booking.com Prices</th>
                         <th>Edit Prices</th>
                         <th>Booking.com Suites</th>
-                        <th>Emporium Hotel</th>
                         <th>Actions</th>
                       </tr>
                 </thead>
                 <tbody>
-                @if(isset($hotels))                             
-                    @foreach ($hotels as $val)
-                        <tr>
-                            <td width="30">{{ $val['hotel_name'] }}</td>
-                            <td width="30"><a href="https://secure.booking.com/book.html?hotel_id={{ $val['hotel_id'] }}&checkout={{ date ('Y-m-d', strtotime ('+180 day')) }}&checkin={{ date ('Y-m-d', strtotime ('+178 day')) }}&interval=2&stage=1&nr_rooms_729233401_325315371_3_0_0=1" target="_blank">View Prices</a> </td>
-                            <td width="30">
-                                <a href="/properties_settings/{{ $val['property_id'] }}/types" target="_blank">Edit Prices</a>
-                            </td>
-                            <td width="30">
-                                <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal" data-attr="{{ $val['hotel_id'] }}">
-                                        View Suites
-                                    </a>
-                            </td>
-                            <input type="hidden" name="hotel_name" value="{{ $val['hotel_name'] }}">
-                            <input type="hidden" name="dest_id" value="{{ $val['dest_id'] }}">
-                            <input type="hidden" name="property_id" value="{{ $val['property_id'] }}">
-                            <input type="hidden" name="hotel_id" id="hotel_id" value="{{ $val['hotel_id'] }}">
-                            <td width="50">
-                                <select class="form-control" name='matched_property' id='matched_property' style="height: 28px; margin-left: 5px;" > 
-                                    @foreach ($allprops as $prop)
-                                        <option value="{{ $prop->id }}" <?php if($prop->id == $val['property_id']){ echo ' selected="selected"';} ?>>{{ $prop->property_name }}</option>
-                                    @endforeach
-                                </select>
-                            </td>
-                            <td width="30"><button class="btn btn-primary form-control" onclick="savematch({{ $val['hotel_id'] }}, {{ $val['property_id'] }});">Approve</button></td>
-                        </tr>
-                    @endforeach
+                <?php //if($prop->id == $val['property_id']){ echo ' selected="selected"';} 
+                $shown = [];
+                ?>
+                @if(isset($hotels))
+                @foreach ($allprops as $val)
+                    <?php 
+                    $hotelId = 0;
+                    $pId = 0;
+                    $matchedKey = array_search($val->id, array_column($matched, 'property_id'));
+                    if($matchedKey !== false && !in_array($val->id, $shown)){
+                        $hotelId = $matched[$matchedKey]['hotel_id'];
+                        $pId = $matched[$matchedKey]['property_id'];
+                        $shown[] = $val->id;
+                    }
+                    ?>
+                    <tr id="match-row-{{ $val->id }}">
+                        <td width="30">
+                            <select class="form-control emp-property" name="matched_property" style="height: 28px; margin-left: 5px;" > 
+                                <option value="">Select</option>
+                                @foreach ($allprops as $prop)
+                                    <option value="{{ $prop->id }}" 
+                                        <?php 
+                                        if($prop->id == $pId){
+                                            echo ' selected="selected"';
+                                        }
+                                        ?>
+                                        >{{ $prop->property_name }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td width="50">
+                            <select class="form-control booking-property" name='hotel_property' style="height: 28px; margin-left: 5px;" > 
+                                <option value="">Select</option>
+                                @foreach ($hotels as $hotel)
+                                    <option value="{{ $hotel['hotel_id'] }}" 
+                                    <?php
+                                    if($hotel['hotel_id'] == $hotelId){
+                                        echo ' selected="selected"';
+                                    }
+                                    ?>
+                                    >{{ $hotel['hotel_name'] }}</option>
+                                @endforeach
+                            </select>
+                        </td>
+                        <td width="30">
+                            <a href="javascript:void(0)" target="_blank" onclick="viewPrice({{ $val->id }})">View Prices</a>
+                        </td>
+                        <td width="30">
+                            <a href="javascript:void(0)" target="_blank" onclick="editPrice({{ $val->id }})">Edit Prices</a>
+                        </td>
+                        <td width="30">
+                            <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal">View Suites</a>
+                        </td>
+                        <td width="30"><button class="btn btn-primary form-control" onclick="savematch({{ $val->id }});">Approve</button></td>
+                    </tr>
+                @endforeach
                 @endif    
                 </tbody>
             </table>  
@@ -88,15 +117,41 @@
         </div>
     </div>
 </div>
+href="/properties_settings/PID/types" target="_blank"
 
 <script type="text/javascript">
+    function editPrice(id){
+        var property_id = $('.emp-property', $('#match-row-' + id)).val();
+        if(!property_id){
+            alert("Please select emporium hotel");
+            return false;
+        }
+        window.open("/properties_settings/"+property_id+"/price");
+    }
+
+    function viewPrice(id){
+        var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
+        if(!hotel_id){
+            alert("Please select booking.com hotel");
+            return false;
+        }
+        window.open("https://secure.booking.com/book.html?hotel_id=" + hotel_id + "&checkout={{ date ('Y-m-d', strtotime ('+180 day')) }}&checkin={{ date ('Y-m-d', strtotime ('+178 day')) }}&interval=2&stage=1&nr_rooms_729233401_325315371_3_0_0=1");
+    }
 
     function machhotels(catg)
     {
         window.location.href = "{{URL::to('matchhotels')}}?selcat="+catg;
     }
 
-    function savematch(hotel_id,property_id){
+    function savematch(id){
+        var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
+        var property_id = $('.emp-property', $('#match-row-' + id)).val();
+
+        if(!property_id || !hotel_id){
+            alert("Please select both emporium and booking.com hotels");
+            return false;
+        }
+
         $.ajax({
             url: '/savematchhotels',
             data:{ hotel_id: hotel_id,
@@ -114,14 +169,20 @@
         });
     }
 
-     $(document).on('click', '#mediumButton', function(event) {
+     $(document).on('click', '#mediumButton', function(event) {        
             event.preventDefault();
-            var hotel_id = $("#hotel_id").val("");
-            let href = $(this).attr('data-attr');
+            $('#mediumBody').html("");
+            var hotel_id = $('.booking-property', $(event.target).parents('tr')).val();
+
+            if(!hotel_id){
+                alert("Please select booking.com hotel");
+                return false;
+            }
+
             $.ajax({
                 type:'GET',
                 dataType: 'json',
-                url: 'roomdetail/'+href,
+                url: 'roomdetail/'+hotel_id,
                 beforeSend: function() {
                     $('#loader').show();
                 },
