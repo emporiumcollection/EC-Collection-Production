@@ -117,8 +117,6 @@
         </div>
     </div>
 </div>
-href="/properties_settings/PID/types" target="_blank"
-
 <script type="text/javascript">
     function editPrice(id){
         var property_id = $('.emp-property', $('#match-row-' + id)).val();
