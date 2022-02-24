@@ -54,7 +54,7 @@ class MatchController extends Controller
         $this->data['allprops'] = properties::select(['id', 'property_name'])
         ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
         ->orderBy('property_name', 'asc')
-//        ->limit(2)
+       // ->limit(2)
         ->get();
 
         $curl = curl_init();
