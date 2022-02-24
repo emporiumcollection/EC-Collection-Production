@@ -779,15 +779,30 @@ trait Property {
     }
 
     public function getPropertyPrice($id){
-        $price = PropertyRoomPrices::first()
-        ->select(['rack_rate'])
+        $price = PropertyRoomPrices::select(['season_id', 'rack_rate'])
         ->where('property_id', '=', $id)
-        ->orderBy('rack_rate', 'asc')
+        //->orderBy('rack_rate', 'asc')
         ->get()
         ->toArray();
 
+        $cats = [];
+        $minPrice = null;
+        if (!empty($price)) {
+            foreach ($price as $k => $room_price) {
+                $cats[$room_price['season_id']] = $room_price;
+            }
+
+            foreach($cats as $season => $sprice){
+                if(is_null($minPrice)){
+                    $minPrice = $sprice['rack_rate'];
+                }elseif($sprice['rack_rate'] < $minPrice){
+                    $minPrice = $sprice['rack_rate'];
+                }
+            }
+        }
+
         if(!empty($price)){
-            return number_format($price[0]['rack_rate'],2);
+            return number_format($minPrice, 2);
         }else{
             return 0;
         }
