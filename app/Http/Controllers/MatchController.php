@@ -28,12 +28,6 @@ class MatchController extends Controller
         $this->data['allprops'] = properties::select(['id', 'property_name'])
         ->orderBy('property_name', 'asc')
         ->get();
-
-        // print_r($this->data['category']);exit;
-
-        // foreach($this->data['hotels'] as $value)
-        //     $this->data['properties'] = properties::where('id',$value->property_id)->get();
-        // }
         
         $file_name = 'match.matchhotels'; 
 
@@ -162,7 +156,7 @@ class MatchController extends Controller
         $curl = curl_init();
 
             curl_setopt_array($curl, [
-                CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/search?checkout_date=2022-08-06&room_number=1&filter_by_currency=AED&dest_type=city&locale=en-gb&checkin_date=2022-08-05&adults_number=2&order_by=popularity&units=metric&dest_id=".$dest_id."&children_number=2&categories_filter_ids=class%3A%3A2%2Cclass%3A%3A4%2Cfree_cancellation%3A%3A1&children_ages=5%2C0&include_adjacency=true&page_number=".$pages_no,
+                CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/search?checkin_date=2022-03-19&checkout_date=2022-03-21&room_number=1&filter_by_currency=USD&dest_type=city&locale=en-gb&adults_number=2&order_by=popularity&units=metric&dest_id=".$dest_id."&children_number=2&page_number=".$pages_no,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_ENCODING => "",
@@ -373,8 +367,8 @@ class MatchController extends Controller
             echo "cURL Error #:" . $err;
         } else {
             $response = json_decode($response);
-            if(!empty($response[0]->rooms)){
-                $rooms = $response[0]->rooms;
+            if(!empty($response[0]->block)){
+                $rooms = $response[0]->block;
 
                 $roomsdetail = view('match.roomdetail', [
                 'rooms' => $rooms

@@ -13,7 +13,7 @@
                    <div class="row">
                         <div class="col-sm-6">
                             <select class="form-control" name='property_category' id='property_category' style="height: 28px; margin-left: 5px;" 
-                            onchange="machhotels(this.value);" > 
+                            onchange="machhotels(this.value);"> 
                             <option>Select</option>
                                 @if(!empty($category))
                                     @foreach($category as $catlist)
@@ -26,79 +26,81 @@
                 </div>
             </div>
         </div>
-        <div class="table-responsive" style="min-height:300px;">
-            <table class="table table-striped ">
-                <thead>
-                    <tr>
-                        <th>Emporium Hotel</th>
-                        <th>Booking.com Hotel</th>
-                        <th>Booking.com Prices</th>
-                        <th>Edit Prices</th>
-                        <th>Booking.com Suites</th>
-                        <th>Actions</th>
-                      </tr>
-                </thead>
-                <tbody>
-                <?php //if($prop->id == $val['property_id']){ echo ' selected="selected"';} 
-                $shown = [];
-                ?>
-                @if(isset($hotels))
-                @foreach ($allprops as $val)
-                    <?php 
-                    $hotelId = 0;
-                    $pId = 0;
-                    $matchedKey = array_search($val->id, array_column($matched, 'property_id'));
-                    if($matchedKey !== false && !in_array($val->id, $shown)){
-                        $hotelId = $matched[$matchedKey]['hotel_id'];
-                        $pId = $matched[$matchedKey]['property_id'];
-                        $shown[] = $val->id;
-                    }
+        @if(isset($hotels))
+            <div class="table-responsive" style="min-height:300px;">
+                <table class="table table-striped ">
+                    <thead>
+                        <tr>
+                            <th>Emporium Hotel</th>
+                            <th>Booking.com Hotel</th>
+                            <th>Booking.com Prices</th>
+                            <th>Edit Prices</th>
+                            <th>Booking.com Suites</th>
+                            <th>Actions</th>
+                          </tr>
+                    </thead>
+                    <tbody>
+                    <?php //if($prop->id == $val['property_id']){ echo ' selected="selected"';} 
+                    $shown = [];
                     ?>
-                    <tr id="match-row-{{ $val->id }}">
-                        <td width="30">
-                            <select class="form-control emp-property" name="matched_property" style="height: 28px; margin-left: 5px;" > 
-                                <option value="">Select</option>
-                                @foreach ($allprops as $prop)
-                                    <option value="{{ $prop->id }}" 
-                                        <?php 
-                                        if($prop->id == $pId){
+                    @if(isset($hotels))
+                    @foreach ($allprops as $val)
+                        <?php 
+                        $hotelId = 0;
+                        $pId = 0;
+                        $matchedKey = array_search($val->id, array_column($matched, 'property_id'));
+                        if($matchedKey !== false && !in_array($val->id, $shown)){
+                            $hotelId = $matched[$matchedKey]['hotel_id'];
+                            $pId = $matched[$matchedKey]['property_id'];
+                            $shown[] = $val->id;
+                        }
+                        ?>
+                        <tr id="match-row-{{ $val->id }}">
+                            <td width="30">
+                                <select class="form-control emp-property" name="matched_property" style="height: 28px; margin-left: 5px;" id="emp-property"> 
+                                    <option value="">Select</option>
+                                    @foreach ($allprops as $prop)
+                                        <option value="{{ $prop->id }}" 
+                                            <?php 
+                                            if($prop->id == $pId){
+                                                echo ' selected="selected"';
+                                            }
+                                            ?>
+                                            >{{ $prop->property_name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td width="50">
+                                <select class="form-control booking-property" name='hotel_property'style="height: 28px; margin-left: 5px;" id="booking-property"> 
+                                    <option value="">Select</option>
+                                    @foreach ($hotels as $hotel)
+                                        <option value="{{ $hotel['hotel_id'] }}" 
+                                        <?php
+                                        if($hotel['hotel_id'] == $hotelId){
                                             echo ' selected="selected"';
                                         }
                                         ?>
-                                        >{{ $prop->property_name }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td width="50">
-                            <select class="form-control booking-property" name='hotel_property' style="height: 28px; margin-left: 5px;" > 
-                                <option value="">Select</option>
-                                @foreach ($hotels as $hotel)
-                                    <option value="{{ $hotel['hotel_id'] }}" 
-                                    <?php
-                                    if($hotel['hotel_id'] == $hotelId){
-                                        echo ' selected="selected"';
-                                    }
-                                    ?>
-                                    >{{ $hotel['hotel_name'] }}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td width="30">
-                            <a href="javascript:void(0)" target="_blank" onclick="viewPrice({{ $val->id }})">View Prices</a>
-                        </td>
-                        <td width="30">
-                            <a href="javascript:void(0)" target="_blank" onclick="editPrice({{ $val->id }})">Edit Prices</a>
-                        </td>
-                        <td width="30">
-                            <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal">View Suites</a>
-                        </td>
-                        <td width="30"><button class="btn btn-primary form-control" onclick="savematch({{ $val->id }});">Approve</button></td>
-                    </tr>
-                @endforeach
-                @endif    
-                </tbody>
-            </table>  
-        </div>
+                                        >{{ $hotel['hotel_name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td width="30">
+                                <a href="javascript:void(0)" target="_blank" onclick="viewPrice({{ $val->id }})">View Prices</a>
+                            </td>
+                            <td width="30">
+                                <a href="javascript:void(0)" target="_blank" onclick="editPrice({{ $val->id }})">Edit Prices</a>
+                            </td>
+                            <td width="30">
+                                <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal">View Suites</a>
+                            </td>
+                            <td width="30"><button class="btn btn-primary form-control" onclick="savematch({{ $val->id }});">Approve</button></td>
+                        </tr>
+                    @endforeach
+                    @endif    
+                    </tbody>
+                </table>  
+            </div>
+        @endif    
     </div>        
 </div>
 
@@ -117,8 +119,6 @@
         </div>
     </div>
 </div>
-href="/properties_settings/PID/types" target="_blank"
-
 <script type="text/javascript">
     function editPrice(id){
         var property_id = $('.emp-property', $('#match-row-' + id)).val();
@@ -205,6 +205,18 @@ href="/properties_settings/PID/types" target="_blank"
                 timeout: 8000
             })
         });
+
+    $(document).ready(function () {
+        $('.matched_property').selectize({
+            sortField: 'text'
+        });
+        $('.emp-property').selectize({
+            sortField: 'text'
+        });
+        $('.booking-property').selectize({
+            sortField: 'text'
+        });
+    });
 
 </script> 
 @stop
