@@ -122,6 +122,12 @@ class MatchController extends Controller
                     
                         if(count($parts)>=2){
                             $searchValue = "$parts[0] $parts[1]";
+                            if(isset($parts[2])){
+                                $searchValue = "$parts[0] $parts[1] $parts[2]";
+                            }
+                            if(isset($parts[3])){
+                                $searchValue = "$parts[0] $parts[1] $parts[2] $parts[3]";
+                            }
                         }else{
                             $searchValue = $parts[0];
                         }
