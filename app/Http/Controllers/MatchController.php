@@ -54,7 +54,7 @@ class MatchController extends Controller
         $this->data['allprops'] = properties::select(['id', 'property_name'])
         ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
         ->orderBy('property_name', 'asc')
-       // ->limit(2)
+       // ->limit(2)    
         ->get();
 
         $curl = curl_init();
@@ -163,10 +163,12 @@ class MatchController extends Controller
     }
 
     private function getHotelDetail($pages_no,$dest_id){ 
+        $checkin_date = date ('Y-m-d', strtotime ('+28 day'));
+        $checkout_date = date ('Y-m-d', strtotime ('+30 day'));
         $curl = curl_init();
 
             curl_setopt_array($curl, [
-                CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/search?checkin_date=2022-03-19&checkout_date=2022-03-21&room_number=1&filter_by_currency=USD&dest_type=city&locale=en-gb&adults_number=2&order_by=popularity&units=metric&dest_id=".$dest_id."&children_number=2&page_number=".$pages_no,
+                CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/search?checkin_date=".$checkin_date."&checkout_date=".$checkout_date."&room_number=1&filter_by_currency=USD&dest_type=city&locale=en-gb&adults_number=2&order_by=popularity&units=metric&dest_id=".$dest_id."&children_number=2&page_number=".$pages_no,
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_ENCODING => "",
