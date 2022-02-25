@@ -87,7 +87,7 @@ class MatchController extends Controller
                 foreach($response as $val){
                     
                     if(trim($val->dest_type) == 'city'){
-                        $res =  $this->getProperties($val->dest_id);
+                        $res =  $this->getProperties($val->dest_id, $keyword, $destinationId);
                         $this->data['hotels'] = $res['hotels'];
                         $this->data['matched'] = $res['matched'];
                         return view('match.matchhotels')->with($this->data);
@@ -100,7 +100,7 @@ class MatchController extends Controller
     }
 
 
-    private function getProperties($dest_id){
+    private function getProperties($dest_id, $keyword, $destinationId){
         $response = $this->getHotelDetail(0,$dest_id);
         
         if (!$response['status'] == 'success') {
@@ -132,7 +132,9 @@ class MatchController extends Controller
                             $searchValue = $parts[0];
                         }
                         $searchValue = str_replace(' ', ' +', $searchValue);
-                        $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")->first();
+                        $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")
+                        ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
+                        ->first();
                         
                         //where('property_name','like', "%$value->hotel_name%")->first();
                         $hotels[] = [
