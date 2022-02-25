@@ -89,10 +89,10 @@
                                 </select>
                             </td>
                             <td width="30">
-                                <a href="javascript:void(0)" target="_blank" onclick="viewPrice('{{ $key.'-'.$val['property_id'] }}')">View Prices</a>
+                                <a href="javascript:void(0)" onclick="viewPrice('{{ $key.'-'.$val['property_id'] }}')">View Prices</a>
                             </td>
                             <td width="30">
-                                <a href="javascript:void(0)" target="_blank" onclick="editPrice('{{ $key.'-'.$val['property_id'] }}')">Edit Prices</a>
+                                <a href="javascript:void(0)" onclick="editPrice('{{ $key.'-'.$val['property_id'] }}')">Edit Prices</a>
                             </td>
                             <td width="30">
                                 <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal">View Suites</a>
