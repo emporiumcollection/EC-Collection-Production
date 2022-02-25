@@ -48,7 +48,7 @@
                         <?php 
                         $hotelId = 0;
                         $pId = 0;
-                        $matchedKey = array_search($val->id, array_column($matched, 'property_id'));
+                        $matchedKey = array_search($val->id, array_column($matched, 'hotel_id'));
                         if($matchedKey !== false){// && !in_array($val->id, $shown)
                             $hotelId = $matched[$matchedKey]['hotel_id'];
                             $pId = $matched[$matchedKey]['property_id'];
