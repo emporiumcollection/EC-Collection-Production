@@ -118,6 +118,8 @@ class MatchController extends Controller
                 } else {
                     foreach ($response['response']->result as $value) {
                         $searchValue = addslashes($value->hotel_name);
+                        $searchValue = str_replace("Hotel", "", $searchValue);
+                        $searchValue = str_replace("$keyword", "", $searchValue);
                         $parts = explode(" ", $searchValue);
                     
                         if(count($parts)>=2){
