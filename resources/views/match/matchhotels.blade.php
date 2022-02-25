@@ -44,10 +44,11 @@
                     $shown = [];
                     ?>
                     @if(isset($hotels))
-                    @foreach ($allprops as $val)
+                    @foreach ($matched as $key => $val)
                         <?php 
-                        $hotelId = 0;
-                        $pId = 0;
+                        $hotelId = $val['hotel_id'];
+                        $pId = $val['property_id'];
+                        /*
                         $matchedKey = array_search($val->id, array_column($matched, 'hotel_id'));
                         if($matchedKey !== false){// && !in_array($val->id, $shown)
                             $hotelId = $matched[$matchedKey]['hotel_id'];
@@ -56,8 +57,9 @@
                         }else{
                             continue;
                         }
+                        */
                         ?>
-                        <tr id="match-row-{{ $val->id }}">
+                        <tr id="match-row-{{ $key.'-'.$val['property_id'] }}">
                             <td width="30">
                                 <select class="form-control emp-property" name="matched_property" style="height: 28px; margin-left: 5px;" id="emp-property"> 
                                     <option value="">Select</option>
@@ -87,15 +89,15 @@
                                 </select>
                             </td>
                             <td width="30">
-                                <a href="javascript:void(0)" target="_blank" onclick="viewPrice({{ $val->id }})">View Prices</a>
+                                <a href="javascript:void(0)" target="_blank" onclick="viewPrice({{ $key.'-'.$val['property_id'] }})">View Prices</a>
                             </td>
                             <td width="30">
-                                <a href="javascript:void(0)" target="_blank" onclick="editPrice({{ $val->id }})">Edit Prices</a>
+                                <a href="javascript:void(0)" target="_blank" onclick="editPrice({{ $key.'-'.$val['property_id'] }})">Edit Prices</a>
                             </td>
                             <td width="30">
                                 <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal">View Suites</a>
                             </td>
-                            <td width="30"><button class="btn btn-primary form-control" onclick="savematch({{ $val->id }});">Approve</button></td>
+                            <td width="30"><button class="btn btn-primary form-control" onclick="savematch({{ $key.'-'.$val['property_id'] }});">Approve</button></td>
                         </tr>
                     @endforeach
                     @endif    
