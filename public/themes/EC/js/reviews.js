@@ -81,6 +81,9 @@ function replaceReviewData(id = null){
     if(!id){
         id = currentPropertyId;
     }
+    if(!properties[id]){
+        getPropertybyId(id);
+      }
     if(reviews[id] !== undefined){
         appendReviewData(reviews[id]);
         return true;

@@ -66,6 +66,7 @@ Route::get('/hotel/{slug}/{title}/{restauratnslug}', 'FrontEnd\HotelDetailContro
 
 Route::get('/hotel/{slug}/architecture','FrontEnd\HotelDetailController@architecture')->where(['slug' => '.*']);
 
+Route::get('/hotel/get-reviews/{id}','FrontEnd\ReviewController@getPropertyReviews');
 Route::get('/hotel/{slug}', 'FrontEnd\PropertyController@getProperty');
 Route::get('/hotel/{slug}/{suite}', 'FrontEnd\HotelDetailController@suites');
 Route::get('/hotel/detailsuite', 'FrontEnd\HotelDetailController@detailsuite');
@@ -78,7 +79,6 @@ Route::get('/hotel/social','FrontEnd\HotelDetailController@social');
 Route::get('/hotel/faq','FrontEnd\HotelDetailController@faq');
 Route::post('/add_collection','FrontEnd\HotelDetailController@add_collection');
 //HotelDetail Reviews
-Route::get('/hotel/get-reviews/{id}','FrontEnd\ReviewController@getPropertyReviews');
 Route::post('/hotel/add-reviews','FrontEnd\ReviewController@addreviews');
 
 //
