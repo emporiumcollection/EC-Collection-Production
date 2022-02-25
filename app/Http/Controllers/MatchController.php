@@ -234,12 +234,14 @@ class MatchController extends Controller
                     return redirect('/search/destination');
                 }else{
                     foreach($response->result as $value){
-                        $insert = review::insert([
-                            'hotel_id' => $property_id,
-                            'fname' => $value->author->name,
-                            'comment' => 'Pros : '.$value->pros . PHP_EOL.'Cons : '.$value->cons,
-                            'is_approved' => 1
-                        ]);
+                        if(trim($value->pros) && trim($value->cons)){
+                            $insert = review::insert([
+                                'hotel_id' => $property_id,
+                                'fname' => $value->author->name,
+                                'comment' => 'Pros : '.$value->pros . PHP_EOL.'Cons : '.$value->cons,
+                                'is_approved' => 1
+                            ]);
+                        }
                     }
                 }
             }    
