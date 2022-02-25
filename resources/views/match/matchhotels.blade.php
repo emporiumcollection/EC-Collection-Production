@@ -49,10 +49,12 @@
                         $hotelId = 0;
                         $pId = 0;
                         $matchedKey = array_search($val->id, array_column($matched, 'property_id'));
-                        if($matchedKey !== false && !in_array($val->id, $shown)){
+                        if($matchedKey !== false){// && !in_array($val->id, $shown)
                             $hotelId = $matched[$matchedKey]['hotel_id'];
                             $pId = $matched[$matchedKey]['property_id'];
                             $shown[] = $val->id;
+                        }else{
+                            continue;
                         }
                         ?>
                         <tr id="match-row-{{ $val->id }}">
@@ -81,6 +83,46 @@
                                         }
                                         ?>
                                         >{{ $hotel['hotel_name'] }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td width="30">
+                                <a href="javascript:void(0)" target="_blank" onclick="viewPrice({{ $val->id }})">View Prices</a>
+                            </td>
+                            <td width="30">
+                                <a href="javascript:void(0)" target="_blank" onclick="editPrice({{ $val->id }})">Edit Prices</a>
+                            </td>
+                            <td width="30">
+                                <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal">View Suites</a>
+                            </td>
+                            <td width="30"><button class="btn btn-primary form-control" onclick="savematch({{ $val->id }});">Approve</button></td>
+                        </tr>
+                    @endforeach
+                    @endif    
+                    @if(isset($hotels))
+                    @foreach ($allprops as $val)
+                        <?php 
+                        $hotelId = 0;
+                        $pId = 0;
+                        $matchedKey = array_search($val->id, array_column($matched, 'property_id'));
+                        if($matchedKey !== false){
+                            continue;
+                        }
+                        ?>
+                        <tr id="match-row-{{ $val->id }}">
+                            <td width="30">
+                                <select class="form-control emp-property" name="matched_property" style="height: 28px; margin-left: 5px;" id="emp-property"> 
+                                    <option value="">Select</option>
+                                    @foreach ($allprops as $prop)
+                                        <option value="{{ $prop->id }}">{{ $prop->property_name }}</option>
+                                    @endforeach
+                                </select>
+                            </td>
+                            <td width="50">
+                                <select class="form-control booking-property" name='hotel_property'style="height: 28px; margin-left: 5px;" id="booking-property"> 
+                                    <option value="">Select</option>
+                                    @foreach ($hotels as $hotel)
+                                        <option value="{{ $hotel['hotel_id'] }}">{{ $hotel['hotel_name'] }}</option>
                                     @endforeach
                                 </select>
                             </td>

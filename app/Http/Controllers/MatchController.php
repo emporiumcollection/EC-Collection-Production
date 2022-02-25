@@ -131,7 +131,7 @@ class MatchController extends Controller
                         }else{
                             $searchValue = $parts[0];
                         }
-                        //$searchValue = str_replace(' ', ' +', $searchValue);
+                        $searchValue = str_replace(' ', ' +', $searchValue);
                         $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")->first();
                         
                         //where('property_name','like', "%$value->hotel_name%")->first();
@@ -140,7 +140,7 @@ class MatchController extends Controller
                             'hotel_name' => $value->hotel_name,
                             
                         ];
-                        if(!empty($property) && !in_array($property->id, $matchedIds)){
+                        if(!empty($property)){ // && !in_array($property->id, $matchedIds)
                             $matchedIds[] = $property->id;
                             $matched[] = [
                                 'property_id' => $property->id,
