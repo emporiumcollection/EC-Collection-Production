@@ -120,6 +120,7 @@ class MatchController extends Controller
                         $searchValue = addslashes($value->hotel_name);
                         $searchValue = str_replace("Hotel", "", $searchValue);
                         $searchValue = str_replace("$keyword", "", $searchValue);
+                        $searchValue = preg_replace('/[^A-Za-z0-9\-]/', '', $searchValue);
                         $parts = explode(" ", $searchValue);
                     
                         if(count($parts)>=2){
@@ -133,7 +134,6 @@ class MatchController extends Controller
                         }else{
                             $searchValue = $parts[0];
                         }
-                        $searchValue = preg_replace('/[^A-Za-z0-9\-]/', '', $searchValue);
                         $searchValue = str_replace(' ', ' +', trim($searchValue));
                         $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")
                         ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
