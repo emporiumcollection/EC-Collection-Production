@@ -133,12 +133,13 @@ class MatchController extends Controller
                         }else{
                             $searchValue = $parts[0];
                         }
-                        $searchValue = str_replace(' ', ' +', $searchValue);
+                        $searchValue = preg_replace('/[^A-Za-z0-9\-]/', '', $searchValue);
+                        $searchValue = str_replace(' '  , ' +', $searchValue);
                         $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")
                         ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
                         ->first();
                         
-                        //where('property_name','like', "%$value->hotel_name%")->first();
+                        // where('property_name','like', "%$value->hotel_name%")->first();
                         $hotels[] = [
                             'hotel_id' => $value->hotel_id,
                             'hotel_name' => $value->hotel_name,
