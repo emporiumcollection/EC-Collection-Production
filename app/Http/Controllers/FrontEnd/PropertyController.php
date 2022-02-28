@@ -2895,9 +2895,16 @@ class PropertyController extends Controller {
         }
         
         $keyword = $request->input('s');
-        
+
         if($keyword==''){
             return Redirect::to($request->fullUrl().'&s='.\Session::get('keyword'));
+        }
+        if($keyword != "")
+        {
+            $search_hotel = properties::where('property_name',$keyword)->first();
+            if(!empty($search_hotel->property_name)){
+                return redirect('/hotel/'.$search_hotel->property_slug);
+            }
         }
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
