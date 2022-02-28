@@ -1139,6 +1139,8 @@ class PropertyController extends Controller {
         $relatedgridpropertiesArr = array();
         $this->data['slug'] = rtrim($request->slug,'-');
 
+        return redirect('/hotel/'.$this->data['slug']);
+
         //$props = \DB::table('tb_properties')->where('property_slug', $request->slug)->first();
 
         $props = \DB::table('tb_properties')->select('tb_properties.*')->whereRaw("TRIM(TRAILING '-' FROM property_slug ) = ?", [$this->data['slug']])->first();
