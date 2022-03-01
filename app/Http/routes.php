@@ -58,6 +58,8 @@ Route::get('/search/destination', 'MatchController@matchHotels');
 Route::get('matchhotels', 'MatchController@machDestination');
 Route::post('savematchhotels', 'MatchController@saveMatchHotels');
 Route::get('roomdetail/{id}', 'MatchController@getRoomDetail');
+Route::post('/import/hotels','MatchController@importHotelDetail');
+Route::get('dipslay/room/','MatchController@DisplayRoomImages');
 
 //HotelDetail Routes
 Route::get('/hotel/{slug}/restaurant','FrontEnd\HotelDetailController@restaurant')->where(['slug' => '.*']);

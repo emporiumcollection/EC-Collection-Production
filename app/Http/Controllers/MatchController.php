@@ -9,7 +9,9 @@ use App\Http\Controllers\Controller;
 use App\Models\properties;
 use App\Models\categories;
 use App\Models\Review;
+use App\Models\PropertyCategoryTypes;
 use DB;
+use Carbon\Carbon;
 
 class MatchController extends Controller
 {
@@ -54,7 +56,7 @@ class MatchController extends Controller
         $this->data['allprops'] = properties::select(['id', 'property_name'])
         ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
         ->orderBy('property_name', 'asc')
-       // ->limit(2)    
+       ->limit(2)    
         ->get();
 
         $curl = curl_init();
@@ -102,7 +104,6 @@ class MatchController extends Controller
 
     private function getProperties($dest_id, $keyword, $destinationId){
         $response = $this->getHotelDetail(0,$dest_id);
-        
         if (!$response['status'] == 'success') {
             echo "cURL Error #:".$response['err'];
         } else {
@@ -163,7 +164,7 @@ class MatchController extends Controller
         }    
     }
 
-    private function getHotelDetail($pages_no,$dest_id){ 
+    private function getHotelDetail($pages_no,$dest_id){
         $checkin_date = date ('Y-m-d', strtotime ('+28 day'));
         $checkout_date = date ('Y-m-d', strtotime ('+30 day'));
         $curl = curl_init();
@@ -184,6 +185,7 @@ class MatchController extends Controller
             ]);
 
             $response = curl_exec($curl);
+
             $err = curl_error($curl);
 
             curl_close($curl);
@@ -332,7 +334,6 @@ class MatchController extends Controller
 
     public function saveMatchHotels(Request $request)
     {
-        //$this->getRoomDetail($request->hotel_id);
         $this->getHotelPolicy($request->hotel_id,$request->property_id);
         $this->getHotelReviews($request->hotel_id,$request->property_id);
 
@@ -408,5 +409,134 @@ class MatchController extends Controller
     }
 
 
-       
-}
+    public function importHotelDetail(Request $request)
+    {
+        $hotelDetail =  $this->getHotelDetail(0,$request->dest_id);
+        print_r($hotelDetail);exit;
+        foreach($hotelDetail['response']->result as $hotels){
+            if($hotels->hotel_id == $request->id){
+                echo "this is if Section";
+            }else{
+                $pages_no = $hotelDetail['response']->count / 20;
+                for($i=0; $i <=$pages_no; $i++){
+                
+                    $hotelDetail = $this->getHotelDetail($i,$request->dest_id);
+                    foreach($hotelDetail['response']->result as $hotels){
+
+                        if(isset($hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value)){
+                            $city_tax = $hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value;
+                        }
+                        if($hotels->hotel_id == $request->hotel_id){
+                            properties::insert([
+                                'property_name' => $hotels->hotel_name,
+                                'city' => $hotels->city,
+                                'hotel_currency' => $hotels->currencycode,
+                                'latitude' => $hotels->latitude,
+                                'longitude' => $hotels->longitude,
+                                'address' => $hotels->address,
+                                'hotel_time_zone' => $hotels->timezone,
+                                'city_tax' => $city_tax,
+                                'created' => Carbon::now(),
+                                'updated' => Carbon::now()
+                            ]);
+                            $property_id = DB::getPdo()->lastInsertId();
+
+                            $roomDetail = $this->blockDetail($hotels->hotel_id);
+                            $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
+                            $hotelPolicies = $this->getHotelPolicy($hotels->hotel_id,$property_id);
+
+                            $rooms_array = [];
+                            $policies = "";
+                            
+                            foreach($roomDetail[0]->block as $rooms){
+                                foreach($rooms->block_text->policies as $policy){
+                                    $policies .= PHP_EOL;
+                                    $policies .= $policy->class.PHP_EOL;
+                                    $policies .= $policy->content.PHP_EOL;
+                                    $policies .= PHP_EOL;
+                                }
+                                if(!in_array($rooms->room_id, $rooms_array) && !in_array($rooms->room_name, $rooms_array)){
+                                    $room_name = $rooms->room_name;
+                                    $room_id = $rooms->room_id;
+                                    $rooms_array[] = $room_id;
+                                    $rooms_array[] = $room_name;
+
+                                    if(PropertyCategoryTypes::where('property_id',$property_id)->where('category_name',$room_name)->exists()){
+                                        
+                                    }else{
+                                        PropertyCategoryTypes::insert([
+                                            'property_id' => $property_id,
+                                            'category_name' => $room_name,
+                                            'booking_policy' => $policies,
+                                            // 'bathroom' => $rooms->number_of_bathrooms,
+                                            // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
+                                            'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
+                                            'created' => Carbon::now(),
+                                            'updated' => Carbon::now(),
+                                        ]);
+                                    }
+                                }
+                            } 
+                        }
+                    }    
+                }
+            }
+        }       
+    }
+
+
+    public function blockDetail($hotel_id){
+        $checkin_date = date ('Y-m-d', strtotime ('+15 day'));
+        $checkout_date = date ('Y-m-d', strtotime ('+17 day'));
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/room-list?currency=AED&adults_number_by_rooms=3%2C1&checkin_date=".$checkin_date."&hotel_id=".$hotel_id."&units=metric&checkout_date=".$checkout_date."&locale=en-gb&children_number_by_rooms=2%2C1&children_ages=5%2C0%2C9",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: booking-com.p.rapidapi.com",
+                "x-rapidapi-key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $response = json_decode($response);
+            if(!empty($response[0])){
+                $rooms = $response;
+                return $rooms;
+            }    
+        }
+    }
+
+    public function DisplayRoomImages(Request $request){
+        $roomImages = $this->blockDetail($request->hotel_id);
+        
+        $room_id = $roomImages[0]->block[0]->room_id;
+        foreach ($roomImages[0]->rooms as $key => $value) {
+            if($key == $room_id){
+
+                $roomsphotos = view('match.roomphotos', [
+                'photos' => $value->photos
+                ])->render();
+
+                return json_encode([
+                    'roomphotos' => $roomsphotos
+                ]);
+            }
+        }
+    }
+
+}    
