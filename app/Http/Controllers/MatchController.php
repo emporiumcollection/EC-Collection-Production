@@ -412,74 +412,77 @@ class MatchController extends Controller
     public function importHotelDetail(Request $request)
     {
         $hotelDetail =  $this->getHotelDetail(0,$request->dest_id);
-        print_r($hotelDetail);exit;
         foreach($hotelDetail['response']->result as $hotels){
             if($hotels->hotel_id == $request->id){
                 echo "this is if Section";
             }else{
-                $pages_no = $hotelDetail['response']->count / 20;
-                for($i=0; $i <=$pages_no; $i++){
-                
-                    $hotelDetail = $this->getHotelDetail($i,$request->dest_id);
-                    foreach($hotelDetail['response']->result as $hotels){
+                if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
+                    
+                }else{
+                    $pages_no = $hotelDetail['response']->count / 20;
+                    for($i=0; $i <=$pages_no; $i++){
+                    
+                        $hotelDetail = $this->getHotelDetail($i,$request->dest_id);
+                        foreach($hotelDetail['response']->result as $hotels){
 
-                        if(isset($hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value)){
-                            $city_tax = $hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value;
-                        }
-                        if($hotels->hotel_id == $request->hotel_id){
-                            properties::insert([
-                                'property_name' => $hotels->hotel_name,
-                                'city' => $hotels->city,
-                                'hotel_currency' => $hotels->currencycode,
-                                'latitude' => $hotels->latitude,
-                                'longitude' => $hotels->longitude,
-                                'address' => $hotels->address,
-                                'hotel_time_zone' => $hotels->timezone,
-                                'city_tax' => $city_tax,
-                                'created' => Carbon::now(),
-                                'updated' => Carbon::now()
-                            ]);
-                            $property_id = DB::getPdo()->lastInsertId();
+                            if(isset($hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value)){
+                                $city_tax = $hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value;
+                            }
+                            if($hotels->hotel_id == $request->hotel_id){
+                                properties::insert([
+                                    'booking_hotel_id' => $request->hotel_id,
+                                    'property_name' => $hotels->hotel_name,
+                                    'city' => $hotels->city,
+                                    'hotel_currency' => $hotels->currencycode,
+                                    'latitude' => $hotels->latitude,
+                                    'longitude' => $hotels->longitude,
+                                    'address' => $hotels->address,
+                                    'hotel_time_zone' => $hotels->timezone,
+                                    'city_tax' => $city_tax,
+                                    'created' => Carbon::now(),
+                                    'updated' => Carbon::now()
+                                ]);
+                                $property_id = DB::getPdo()->lastInsertId();
 
-                            $roomDetail = $this->blockDetail($hotels->hotel_id);
-                            $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
-                            $hotelPolicies = $this->getHotelPolicy($hotels->hotel_id,$property_id);
-
-                            $rooms_array = [];
-                            $policies = "";
-                            
-                            foreach($roomDetail[0]->block as $rooms){
-                                foreach($rooms->block_text->policies as $policy){
-                                    $policies .= PHP_EOL;
-                                    $policies .= $policy->class.PHP_EOL;
-                                    $policies .= $policy->content.PHP_EOL;
-                                    $policies .= PHP_EOL;
-                                }
-                                if(!in_array($rooms->room_id, $rooms_array) && !in_array($rooms->room_name, $rooms_array)){
-                                    $room_name = $rooms->room_name;
-                                    $room_id = $rooms->room_id;
-                                    $rooms_array[] = $room_id;
-                                    $rooms_array[] = $room_name;
-
-                                    if(PropertyCategoryTypes::where('property_id',$property_id)->where('category_name',$room_name)->exists()){
-                                        
-                                    }else{
-                                        PropertyCategoryTypes::insert([
-                                            'property_id' => $property_id,
-                                            'category_name' => $room_name,
-                                            'booking_policy' => $policies,
-                                            // 'bathroom' => $rooms->number_of_bathrooms,
-                                            // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
-                                            'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
-                                            'created' => Carbon::now(),
-                                            'updated' => Carbon::now(),
-                                        ]);
+                                $roomDetail = $this->blockDetail($hotels->hotel_id);
+                                $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
+                                $hotelPolicies = $this->getHotelPolicy($hotels->hotel_id,$property_id);
+                                $rooms_array = [];
+                                $policies = "";
+                                
+                                foreach($roomDetail[0]->block as $rooms){
+                                    foreach($rooms->block_text->policies as $policy){
+                                        $policies .= PHP_EOL;
+                                        $policies .= $policy->class.PHP_EOL;
+                                        $policies .= $policy->content.PHP_EOL;
+                                        $policies .= PHP_EOL;
                                     }
-                                }
-                            } 
-                        }
-                    }    
-                }
+                                    if(!in_array($rooms->room_id, $rooms_array) && !in_array($rooms->room_name, $rooms_array)){
+                                        $room_name = $rooms->room_name;
+                                        $room_id = $rooms->room_id;
+                                        $rooms_array[] = $room_id;
+                                        $rooms_array[] = $room_name;
+
+                                        if(PropertyCategoryTypes::where('property_id',$property_id)->where('category_name',$room_name)->exists()){
+                                            
+                                        }else{
+                                            PropertyCategoryTypes::insert([
+                                                'property_id' => $property_id,
+                                                'category_name' => $room_name,
+                                                'booking_policy' => $policies,
+                                                // 'bathroom' => $rooms->number_of_bathrooms,
+                                                // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
+                                                'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
+                                                'created' => Carbon::now(),
+                                                'updated' => Carbon::now(),
+                                            ]);
+                                        }
+                                    }
+                                } 
+                            }
+                        }    
+                    }
+                }    
             }
         }       
     }
