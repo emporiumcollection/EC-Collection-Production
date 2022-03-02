@@ -111,7 +111,7 @@ class MatchController extends Controller
             $matched = [];
             $hotels = [];
             $pages_no = $response['response']->count / 20;
-            for($i=0; $i <=1; $i++){
+            for($i=0; $i <=$pages_no; $i++){
                 
                 $response = $this->getHotelDetail($i,$dest_id);
                 if (!$response['status'] == 'success') {
