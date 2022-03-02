@@ -43,6 +43,7 @@
                     <tbody>
                     <?php //if($prop->id == $val['property_id']){ echo ' selected="selected"';} 
                     $shown = [];
+                    print count($matched);exit;
                     ?>
                     @if(isset($hotels))
                     @foreach ($matched as $key => $val)
