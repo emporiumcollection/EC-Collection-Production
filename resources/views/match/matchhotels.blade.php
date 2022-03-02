@@ -204,6 +204,15 @@
             type: 'post',
 
             success:function(response){
+                console.log(response)
+                if(response.status === true){
+                    $('#guestValidationMsg').find('#massage').html("Hotel Data is Imported from booking.com");
+                    $('#guestValidationMsg').show();
+                }   
+                if(response.status === false){
+                    $('#guestValidationMsg').find('#massage').html("This hotel data is already Imported");
+                    $('#guestValidationMsg').show();
+                }
           }
         });
     }

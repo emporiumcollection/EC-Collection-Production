@@ -278,6 +278,7 @@ class MatchController extends Controller
         } else {
             $policies = '';
             $response = json_decode($response);
+            print_r($response);exit;
             if(isset($response->policy)){
                 foreach ($response->policy as $key => $value) {
                     $policies .= PHP_EOL;
@@ -417,7 +418,7 @@ class MatchController extends Controller
                 echo "this is if Section";
             }else{
                 if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
-                    
+                    return response()->json(['status' => false]);
                 }else{
                     $pages_no = $hotelDetail['response']->count / 20;
                     for($i=0; $i <=$pages_no; $i++){
@@ -446,7 +447,8 @@ class MatchController extends Controller
 
                                 $roomDetail = $this->blockDetail($hotels->hotel_id);
                                 $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
-                                $hotelPolicies = $this->getHotelPolicy($hotels->hotel_id,$property_id);
+
+                                $this->getHotelPolicy($hotels->hotel_id,$property_id);
                                 $rooms_array = [];
                                 $policies = "";
                                 
@@ -470,15 +472,16 @@ class MatchController extends Controller
                                                 'property_id' => $property_id,
                                                 'category_name' => $room_name,
                                                 'booking_policy' => $policies,
-                                                // 'bathroom' => $rooms->number_of_bathrooms,
+                                                'bathroom' => $rooms->number_of_bathrooms,
                                                 // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
-                                                'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
+                                                // 'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
                                                 'created' => Carbon::now(),
                                                 'updated' => Carbon::now(),
                                             ]);
                                         }
                                     }
-                                } 
+                                }
+                                 return response()->json(['status' => true]);
                             }
                         }    
                     }
