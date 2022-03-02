@@ -104,6 +104,7 @@ class MatchController extends Controller
 
     private function getProperties($dest_id, $keyword, $destinationId){
         $response = $this->getHotelDetail(0,$dest_id);
+        print 'here';exit;
         if (!$response['status'] == 'success') {
             echo "cURL Error #:".$response['err'];
         } else {
