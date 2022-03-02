@@ -37,7 +37,7 @@ class MatchController extends Controller
     }
 
     public function machDestination(Request $request){
-        $this->data['category'] = [];//\DB::table('tb_categories')->orderBy('category_name','asc')->get();
+        $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
 
         $destinationId = 0;
         $keyword = $request->selcat;
@@ -67,7 +67,7 @@ class MatchController extends Controller
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING => "",
             CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 60,
+            CURLOPT_TIMEOUT => 30,
             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
             CURLOPT_CUSTOMREQUEST => "GET",
             CURLOPT_HTTPHEADER => [
@@ -175,7 +175,7 @@ class MatchController extends Controller
                 CURLOPT_FOLLOWLOCATION => true,
                 CURLOPT_ENCODING => "",
                 CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 60,
+                CURLOPT_TIMEOUT => 30,
                 CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST => "GET",
                 CURLOPT_HTTPHEADER => [
