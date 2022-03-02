@@ -80,7 +80,7 @@ class MatchController extends Controller
         $err = curl_error($curl);
 
         curl_close($curl);
-
+print 'here';exit;
         if ($err) {
             echo "cURL Error #:" . $err;echo "here";
         } else {
