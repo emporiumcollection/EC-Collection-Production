@@ -151,6 +151,20 @@ body {font-family: Arial, Helvetica, sans-serif;}
     <!-- Favicon END -->
     
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
+        <link href="{{ asset('themes/EC/css/style_voyage.css') }}" rel="stylesheet">
+    <?php } ?>
+        
+    <?php if(\Config::get('app.currentdomain') == 'spa'){?>
+        <link href="{{ asset('themes/EC/css/style_spa.css') }}" rel="stylesheet">
+    <?php } ?>
+        
+    <?php if(\Config::get('app.currentdomain') == 'safari'){?>
+        <link href="{{ asset('themes/EC/css/style_safari.css') }}" rel="stylesheet">
+    <?php } ?>    
+    <?php if(\Config::get('app.currentdomain') == 'islands'){?>
+        <link href="{{ asset('themes/EC/css/style_islands.css') }}" rel="stylesheet">
+    <?php } ?>
     <link rel="stylesheet" href="{{ asset('themes/EC/css/styles.css') }}">
     <link rel="stylesheet" href="{{ asset('themes/EC/css/credit.css') }}">
     <!-- tilt css include -->

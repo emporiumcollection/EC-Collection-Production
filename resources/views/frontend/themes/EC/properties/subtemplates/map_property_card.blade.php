@@ -5,7 +5,7 @@
 </script>
 <div class="inner-wrapper hotel-page-list suite-ontouch no-opacity">
     @if(!empty($block_title))
-      <div class="hotel-tag-label" style="background: #89a49f;">
+      <div class="hotel-tag-label featured-bg">
         <?php echo $block_title;?>
       </div>
     @endif

@@ -77,7 +77,7 @@ return [
     | will not be safe. Please do this before deploying an application!
     |
     */
-    'currentdomain' => env('EC_CURRENT_DOMAIN','voyage'),
+    'currentdomain' => env('EC_CURRENT_DOMAIN','http://development.emporium-voyage.com'),
     'spadomain' => env('EC_SPA_URL', 'emporium-spa.com'),
     'safaridomain' => env('EC_SAFARI_URL', 'emporium-safari.com'),
     'islandsdomain' => env('EC_ISLANDS_URL', 'emporium-islands.com'),

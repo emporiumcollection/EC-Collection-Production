@@ -42,7 +42,7 @@
     </div>
   </div>
   <div class="hero-container">  
-    <div class="hotel-tag-label" style="background: #89a49f;">
+    <div class="hotel-tag-label featured-bg">
       <?php echo $block_title;?>
     </div>
     <div class="row hero-row mt-4">

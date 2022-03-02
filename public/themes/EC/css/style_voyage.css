@@ -1,0 +1,23 @@
+.bg-btn-gl-001 {
+  background: #a8c5c0 !important;
+  color: #fff !important;
+  flex-basis: 0;
+  flex-grow: 1;
+  max-width: 100%;
+  text-align: center;
+  padding: 15px 0px!important; 
+}
+
+.bg-btn-gl-001:hover {
+  background: #000000 !important; 
+}
+
+.featured-bg{
+  background: #89a49f !important;
+}
+
+.btn-primary {
+  color: #fff !important;
+  background-color: #89a49f !important;
+  border-color: #89a49f !important; 
+}
