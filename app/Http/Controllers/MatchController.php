@@ -24,7 +24,7 @@ class MatchController extends Controller
     public function matchHotels(){
         $config_root_destinations = explode(',',\Config::get('app.root_destinations'));
         
-        $this->data['category'] = [];//\DB::table('tb_categories')->orderBy('category_name','asc')->get();
+        $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
 
         $this->data['approvedhotels'] = \DB::table('tb_matched_hotels')->get();
         $this->data['allprops'] = properties::select(['id', 'property_name'])
@@ -37,7 +37,7 @@ class MatchController extends Controller
     }
 
     public function machDestination(Request $request){
-        $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
+        $this->data['category'] = [];//\DB::table('tb_categories')->orderBy('category_name','asc')->get();
 
         $destinationId = 0;
         $keyword = $request->selcat;
