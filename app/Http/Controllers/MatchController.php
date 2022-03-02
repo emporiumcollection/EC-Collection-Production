@@ -420,7 +420,7 @@ class MatchController extends Controller
                     return response()->json(['status' => false]);
                 }else{
                     $pages_no = $hotelDetail['response']->count / 20;
-                    for($i=0; $i <=10; $i++){
+                    for($i=0; $i <=1; $i++){
                     
                         $hotelDetail = $this->getHotelDetail($i,$request->dest_id);
                         foreach($hotelDetail['response']->result as $hotels){
