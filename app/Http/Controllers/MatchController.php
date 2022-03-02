@@ -104,7 +104,6 @@ class MatchController extends Controller
 
     private function getProperties($dest_id, $keyword, $destinationId){
         $response = $this->getHotelDetail(0,$dest_id);
-        print 'here';exit;
         if (!$response['status'] == 'success') {
             echo "cURL Error #:".$response['err'];
         } else {
@@ -112,7 +111,7 @@ class MatchController extends Controller
             $matched = [];
             $hotels = [];
             $pages_no = $response['response']->count / 20;
-            for($i=0; $i <=5; $i++){
+            for($i=0; $i <=1; $i++){
                 
                 $response = $this->getHotelDetail($i,$dest_id);
                 if (!$response['status'] == 'success') {
