@@ -11,7 +11,6 @@ use App\Models\categories;
 use App\Models\Review;
 use App\Models\PropertyCategoryTypes;
 use DB;
-use Carbon\Carbon;
 
 class MatchController extends Controller
 {
@@ -24,7 +23,7 @@ class MatchController extends Controller
     public function matchHotels(){
         $config_root_destinations = explode(',',\Config::get('app.root_destinations'));
         
-        $this->data['category'] = [];//\DB::table('tb_categories')->orderBy('category_name','asc')->get();
+        $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
 
         $this->data['approvedhotels'] = \DB::table('tb_matched_hotels')->get();
         $this->data['allprops'] = properties::select(['id', 'property_name'])
@@ -111,7 +110,7 @@ class MatchController extends Controller
             $matched = [];
             $hotels = [];
             $pages_no = $response['response']->count / 20;
-            for($i=0; $i <=$pages_no; $i++){
+            for($i=0; $i <=5; $i++){
                 
                 $response = $this->getHotelDetail($i,$dest_id);
                 if (!$response['status'] == 'success') {
@@ -278,7 +277,6 @@ class MatchController extends Controller
         } else {
             $policies = '';
             $response = json_decode($response);
-            print_r($response);exit;
             if(isset($response->policy)){
                 foreach ($response->policy as $key => $value) {
                     $policies .= PHP_EOL;
@@ -440,8 +438,8 @@ class MatchController extends Controller
                                     'address' => $hotels->address,
                                     'hotel_time_zone' => $hotels->timezone,
                                     'city_tax' => $city_tax,
-                                    'created' => Carbon::now(),
-                                    'updated' => Carbon::now()
+                                    'created' => date("Y-m-d: H:i:s"),
+                                    'updated' => date("Y-m-d: H:i:s"),
                                 ]);
                                 $property_id = DB::getPdo()->lastInsertId();
 
@@ -459,27 +457,21 @@ class MatchController extends Controller
                                         $policies .= $policy->content.PHP_EOL;
                                         $policies .= PHP_EOL;
                                     }
-                                    if(!in_array($rooms->room_id, $rooms_array) && !in_array($rooms->room_name, $rooms_array)){
-                                        $room_name = $rooms->room_name;
-                                        $room_id = $rooms->room_id;
-                                        $rooms_array[] = $room_id;
-                                        $rooms_array[] = $room_name;
 
-                                        if(PropertyCategoryTypes::where('property_id',$property_id)->where('category_name',$room_name)->exists()){
-                                            
-                                        }else{
-                                            PropertyCategoryTypes::insert([
-                                                'property_id' => $property_id,
-                                                'category_name' => $room_name,
-                                                'booking_policy' => $policies,
-                                                'bathroom' => $rooms->number_of_bathrooms,
-                                                // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
-                                                // 'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
-                                                'created' => Carbon::now(),
-                                                'updated' => Carbon::now(),
-                                            ]);
-                                        }
-                                    }
+                                    $room_name = $rooms->room_name;
+                                    $room_id = $rooms->room_id;
+                                    
+                                    PropertyCategoryTypes::insert([
+                                        'property_id' => $property_id,
+                                        'category_name' => $room_name,
+                                        'booking_policy' => $policies,
+                                        'bathroom' => $rooms->number_of_bathrooms,
+                                        // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
+                                        // 'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
+                                        'status' => 0,
+                                        'created' => date("Y-m-d: H:i:s"),
+                                        'updated' => date("Y-m-d: H:i:s"),
+                                    ]);
                                 }
                                  return response()->json(['status' => true]);
                             }
