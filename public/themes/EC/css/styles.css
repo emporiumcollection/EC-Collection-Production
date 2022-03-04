@@ -2601,6 +2601,20 @@ input[type="button"].btn-block {
   .input-group-text input[type="checkbox"] {
     margin-top: 0; }
 
+.search-field input {
+  background: #ebebeb;
+  padding-left: 44px; 
+}
+.search-field {
+  background: #ebebeb;
+  padding-left: 15px;
+  padding-right: 15px; 
+}
+.wizard-nav .nav-link.active, .wizard-nav .nav-link:hover {
+  background: #89a49f1a;
+  color: #89a49f; 
+}
+
 .input-group-lg > .form-control:not(textarea),
 .input-group-lg > .custom-select {
   height: calc(1.5em + 1rem + 2px); }
@@ -27313,11 +27327,6 @@ a:hover {
     padding-left: 27px;
     padding-right: 27px;
     padding-top: 22px; }
-  .top-header .menu-s {
-    padding-left: 25px;
-    padding-right: 25px;
-    padding-top: 7px;
-    background: #f0f0f0; }
   .top-header hr {
     border-color: #000; }
     .top-header.header-transition {
@@ -31617,14 +31626,7 @@ span.calElement.prev:hover {
   color: #686868 !important;
   background-color: transparent !important;
   border-color: transparent !important; }
-
-.search-field {
-  background: #ebebeb;
-  padding-left: 15px;
-  padding-right: 15px; }
-  .search-field input {
-    background: transparent;
-    padding-left: 44px; }
+  
     .search-field input:focus {
       background: transparent; }
   .search-field .wherepopup {
@@ -36341,27 +36343,12 @@ button#clear span {
   left: 0;
   z-index: 99; }
 
-.wizard-nav {
-  width: 120px;
-  position: fixed;
-  top: 0;
-  left: -100%;
-  bottom: 0;
-  background: #fff;
-  z-index: 10;
-  padding-top: 93px;
-  overflow-y: auto;
-  overflow-x: hidden;
-  transition: all 0.3s ease-in-out; }
   .wizard-nav.show {
     left: 0; }
   .wizard-nav .nav-link {
     text-align: center;
     font-size: 14px;
     padding: 15px 10px; }
-    .wizard-nav .nav-link.active, .wizard-nav .nav-link:hover {
-      background: rgba(137, 164, 159, 0.1);
-      color: #89a49f; }
       .wizard-nav .nav-link.active .ico, .wizard-nav .nav-link:hover .ico {
         filter: invert(67%) sepia(30%) saturate(170%) hue-rotate(119deg) brightness(90%) contrast(87%); }
   .wizard-nav .ico-flight {

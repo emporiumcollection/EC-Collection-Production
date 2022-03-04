@@ -102,104 +102,142 @@ class MatchController extends Controller
 
 
     private function getProperties($dest_id, $keyword, $destinationId){
-        $response = $this->getHotelDetail(0,$dest_id);
-        if (!$response['status'] == 'success') {
-            echo "cURL Error #:".$response['err'];
-        } else {
-            $matchedIds = [];
-            $matched = [];
-            $hotels = [];
-            $pages_no = $response['response']->count / 20;
-            for($i=0; $i <=5; $i++){
-                
-                $response = $this->getHotelDetail($i,$dest_id);
-                if (!$response['status'] == 'success') {
-                    echo "cURL Error #:" . $response['err'];
-                } else {
-                    foreach ($response['response']->result as $value) {
-                        $searchValue = addslashes($value->hotel_name);
-                        $searchValue = str_replace("Hotel", "", $searchValue);
-                        $searchValue = str_replace("$keyword", "", $searchValue);
-                        $searchValue = preg_replace('/[^A-Za-z0-9\-]/', '', $searchValue);
-                        $parts = explode(" ", $searchValue);
+        if(\DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->exists()){
+
+            $fetchDtlFrmdb =  $this->getDetailFromDatabse($dest_id);
+
+        }else{
+
+            $response = $this->getHotelDetail(0,$dest_id);
+            
+            if (!$response['status'] == 'success') {
+                echo "cURL Error #:".$response['err'];
+            } else {
+                $matchedIds = [];
+                $matched = [];
+                $hotels = [];
+                $pages_no = $response['response']->count / 20;
+                for($i=0; $i <=5; $i++){
                     
-                        if(count($parts)>=2){
-                            $searchValue = "$parts[0] $parts[1]";
-                            if(isset($parts[2])){
-                                $searchValue = "$parts[0] $parts[1] $parts[2]";
-                            }
-                            if(isset($parts[3])){
-                                $searchValue = "$parts[0] $parts[1] $parts[2] $parts[3]";
-                            }
-                        }else{
-                            $searchValue = $parts[0];
-                        }
-                        $searchValue = str_replace(' ', ' +', trim($searchValue));
-                        $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")
-                        ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
-                        ->first();
+                    $response = $this->getHotelDetail($i,$dest_id);
+                    if (!$response['status'] == 'success') {
+                        echo "cURL Error #:" . $response['err'];
+                    } else {
+                        foreach ($response['response']->result as $value) {
+                            $searchValue = addslashes($value->hotel_name);
+                            $searchValue = str_replace("Hotel", "", $searchValue);
+                            $searchValue = str_replace("$keyword", "", $searchValue);
+                            $searchValue = preg_replace('/[^A-Za-z0-9\-]/', '', $searchValue);
+                            $parts = explode(" ", $searchValue);
                         
-                        // where('property_name','like', "%$value->hotel_name%")->first();
-                        $hotels[] = [
-                            'hotel_id' => $value->hotel_id,
-                            'hotel_name' => $value->hotel_name,
+                            if(count($parts)>=2){
+                                $searchValue = "$parts[0] $parts[1]";
+                                if(isset($parts[2])){
+                                    $searchValue = "$parts[0] $parts[1] $parts[2]";
+                                }
+                                if(isset($parts[3])){
+                                    $searchValue = "$parts[0] $parts[1] $parts[2] $parts[3]";
+                                }
+                            }else{
+                                $searchValue = $parts[0];
+                            }
+                            $searchValue = str_replace(' ', ' +', trim($searchValue));
+                            $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")
+                            ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
+                            ->first();
                             
-                        ];
-                        if(!empty($property)){ // && !in_array($property->id, $matchedIds)
-                            $matchedIds[] = $property->id;
-                            $matched[] = [
-                                'property_id' => $property->id,
-                                'dest_id' => $dest_id,
-                                'hotel_name' => $value->hotel_name,
+                            // where('property_name','like', "%$value->hotel_name%")->first();
+                            $hotels[] = [
                                 'hotel_id' => $value->hotel_id,
-                                'matched_property' => $property->property_name
+                                'hotel_name' => $value->hotel_name,
+                                
                             ];
-                            // print $value->hotel_name . '==' . $property->property_name."\n";
+                            if(!empty($property)){ // && !in_array($property->id, $matchedIds)
+                                $matchedIds[] = $property->id;
+                                $matched[] = [
+                                    'property_id' => $property->id,
+                                    'dest_id' => $dest_id,
+                                    'hotel_name' => $value->hotel_name,
+                                    'hotel_id' => $value->hotel_id,
+                                    'matched_property' => $property->property_name
+                                ];
+                                // print $value->hotel_name . '==' . $property->property_name."\n";
+                            }
                         }
-                    }
-                }    
+                    }    
+                }
+                return ['hotels' => $hotels, 'matched' => $matched];
             }
-            return ['hotels' => $hotels, 'matched' => $matched];
         }    
     }
 
     private function getHotelDetail($pages_no,$dest_id){
-        $checkin_date = date ('Y-m-d', strtotime ('+28 day'));
-        $checkout_date = date ('Y-m-d', strtotime ('+30 day'));
-        $curl = curl_init();
+        $array = array();
 
-            curl_setopt_array($curl, [
-                CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/search?checkin_date=".$checkin_date."&checkout_date=".$checkout_date."&room_number=1&filter_by_currency=USD&dest_type=city&locale=en-gb&adults_number=2&order_by=popularity&units=metric&dest_id=".$dest_id."&children_number=2&page_number=".$pages_no,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "GET",
-                CURLOPT_HTTPHEADER => [
-                    "x-rapidapi-host: booking-com.p.rapidapi.com",
-                    "x-rapidapi-key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
-                ],
-            ]);
+            $checkin_date = date ('Y-m-d', strtotime ('+28 day'));
+            $checkout_date = date ('Y-m-d', strtotime ('+30 day'));
+            $curl = curl_init();
 
-            $response = curl_exec($curl);
+                curl_setopt_array($curl, [
+                    CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/search?checkin_date=".$checkin_date."&checkout_date=".$checkout_date."&room_number=1&filter_by_currency=USD&dest_type=city&locale=en-gb&adults_number=2&order_by=popularity&units=metric&dest_id=".$dest_id."&children_number=2&page_number=".$pages_no,
+                    CURLOPT_RETURNTRANSFER => true,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "GET",
+                    CURLOPT_HTTPHEADER => [
+                        "x-rapidapi-host: booking-com.p.rapidapi.com",
+                        "x-rapidapi-key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
+                    ],
+                ]);
 
-            $err = curl_error($curl);
+                $response = curl_exec($curl);
 
-            curl_close($curl);
-            $array = array();
-            if ($err) {
-                $array['status'] = 'failed' ;
-                $array['err'] = $err;
-                return $array;
-            } else {
-                $response = json_decode($response);
-                $array['status'] = 'success' ;
-                $array['response'] = $response;
-                return $array;
-            }    
+                $destination = json_decode($response);
+                $addResponse = \DB::table('tb_booking_hotel_response')->insert([
+                    'page_no' => $pages_no,
+                    'dest_id' => $dest_id,
+                    'destination' => $destination->result[0]->city,
+                    'response' => $response
+                ]);
 
+                $err = curl_error($curl);
+
+                curl_close($curl);
+
+                
+                if ($err) {
+                    $array['status'] = 'failed' ;
+                    $array['err'] = $err;
+                    return $array;
+                } else {
+                    $response = json_decode($response);
+                    $array['status'] = 'success' ;
+                    $array['response'] = $response;
+                    return $array;
+                }
+
+    }
+
+    public function getDetailFromDatabse($dest_id){
+
+        $response = \DB::table('tb_booking_hotel_response')
+            ->where('dest_id',$dest_id)
+            ->count();
+
+        for($i=0; $i <= $response;$i++){
+            $getHotelDetail = \DB::table('tb_booking_hotel_response')
+                    ->where('dest_id',$dest_id)
+                    ->where('page_no',$i)
+                    ->first();
+            // $response = json_decode()                    
+        print_r($getHotelDetail->response);exit;
+        }
+        $array['status'] = 'success' ;
+        $array['response'] = $response;
+        return $array;
     }
 
     private function getHotelReviews($hotel_gds_id,$property_id){

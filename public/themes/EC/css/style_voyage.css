@@ -11,13 +11,45 @@
 .bg-btn-gl-001:hover {
   background: #000000 !important; 
 }
-
 .featured-bg{
   background: #89a49f !important;
 }
-
 .btn-primary {
   color: #fff !important;
   background-color: #89a49f !important;
   border-color: #89a49f !important; 
+}
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: #000 !important;
+  border-color: #000 !important; 
+}
+.wizard-nav .nav-link.active, .wizard-nav .nav-link:hover {
+  background: #F9F8F2;
+  color: #89a49f;
+}
+
+.top-header .menu-s, .top-header-reservation .menu-s {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 7px;
+  background: #FFFFFF;
+}
+.wizard-nav {
+  width: 120px;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  bottom: 0;
+  background: #FFFFFF;
+  z-index: 10;
+  padding-top: 93px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 0.3s ease-in-out; 
+}
+.top-header .menu-s {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 7px;
+  background: #FFFFFF; 
 }

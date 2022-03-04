@@ -66,7 +66,20 @@
     <meta name="msapplication-TileImage" content="{{ asset('assets/images/favicon/ms-icon-144x144.png') }}" />
     <meta name="theme-color" content="#ffffff" />
     <!-- Favicon END -->
-    
+    <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
+        <link href="{{ asset('themes/EC/css/style_voyage.css') }}" rel="stylesheet">
+    <?php } ?>
+        
+    <?php if(\Config::get('app.currentdomain') == 'spa'){?>
+        <link href="{{ asset('themes/EC/css/style_spa.css') }}" rel="stylesheet">
+    <?php } ?>
+        
+    <?php if(\Config::get('app.currentdomain') == 'safari'){?>
+        <link href="{{ asset('themes/EC/css/style_safari.css') }}" rel="stylesheet">
+    <?php } ?>    
+    <?php if(\Config::get('app.currentdomain') == 'islands'){?>
+        <link href="{{ asset('themes/EC/css/style_islands.css') }}" rel="stylesheet">
+    <?php } ?>
     <link rel="stylesheet" href="{{ asset('themes/EC/css/styles.css') }}">
     
     <!-- tilt css include -->

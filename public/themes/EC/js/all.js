@@ -633,32 +633,32 @@ var ajaxReq = 'ToCancelPrevReq';
                 $('.title-third').html(data[0]['city']);
                 $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
                 var images = data[0]['propertyImages'];
-                // console.log(images);
+                console.log(images);
                 var d_image = '';                
-                  $(images).each(function (key, value) {
-                    try{
-                      d_image += '<div>'
-                      +'<img src="/property-image/resize/645x600/'+ containername +'/'+ value['file_name']+'/property-image" class="img-fluid" alt="">'
+                  // $(images).each(function (key, value) {
+                    // try{
+                      d_image += '<div style="padding-top:20px;">'
+                      +'<img src="/property-image/resize/645x600/'+ containername +'/'+ images[1]['file_name']+'/property-image" class="img-fluid" alt="">'
                       +'</div>';
-                    }catch(e){
+                    // }catch(e){
 
-                    }
-                  });
+                    // }
+                  // });
                   // console.log('here',d_image);
                   $("#images").html(d_image);
 
-                  setTimeout(function () {                    
-                    $('.quick-prev').slick({
-                      slidesToShow: 1,
-                      prevArrow: '<button type="button" class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-                      nextArrow: '<button type="button" class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-                    });
-                  }, 2000);
+                  // setTimeout(function () {                    
+                  //   $('.quick-prev').slick({
+                  //     slidesToShow: 1,
+                  //     prevArrow: '<button type="button" class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
+                  //     nextArrow: '<button type="button" class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
+                  //   });
+                  // }, 2000);
 
-                  $(document).on("scroll", function () {
-                    $('.quick-prev').slick('setPosition');
-                    $('.quick-prev').slick('resize');
-                  });
+                  // $(document).on("scroll", function () {
+                  //   $('.quick-prev').slick('setPosition');
+                  //   $('.quick-prev').slick('resize');
+                  // });
         }
     });
   }

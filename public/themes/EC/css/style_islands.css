@@ -21,3 +21,32 @@
   background-color: #0FC2C0 !important;
   border-color: #0FC2C0 !important; 
 }
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  background-color: #000 !important;
+  border-color: #000 !important; 
+}
+.top-header .menu-s, .top-header-reservation .menu-s {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 7px;
+  background: #FFFFFF !important;
+}
+.wizard-nav {
+  width: 120px;
+  position: fixed;
+  top: 0;
+  left: -100%;
+  bottom: 0;
+  background: #FFFFFF;
+  z-index: 10;
+  padding-top: 93px;
+  overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 0.3s ease-in-out; 
+}
+.top-header .menu-s {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 7px;
+  background: #EFEAE4; 
+}
