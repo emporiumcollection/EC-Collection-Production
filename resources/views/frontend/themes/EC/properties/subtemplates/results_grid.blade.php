@@ -79,7 +79,7 @@
                   $total_feature = count($featureProperties);
                   $total_properties= $total_editors + $total_feature;
                 ?>
-                <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true">LIFESTYLE (<?php print count($propertyResultsForView['lifestyle']) + $total_properties ?>)</a>
+                <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true" onclick="getattribute()">LIFESTYLE (<?php print count($propertyResultsForView['lifestyle']) + $total_properties ?>)</a>
               </li>
             <?php endif; ?>
             <?php if (!empty($propertyResultsForView['dedicated'])) : ?>
@@ -355,3 +355,14 @@
   <?php endif; ?>        
   </div>
 </div>
+<script type="text/javascript">
+  $(document).ready(function () {
+    var hash = window.location.hash;
+    if(hash){
+        $('#search-results-content #myTab a').removeClass('active');
+        $('#search-results-content #myTab ' + hash + '-tab').addClass('active');
+        $(hash).show();
+    }
+
+  });
+</script>

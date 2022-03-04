@@ -2610,10 +2610,6 @@ input[type="button"].btn-block {
   padding-left: 15px;
   padding-right: 15px; 
 }
-.wizard-nav .nav-link.active, .wizard-nav .nav-link:hover {
-  background: #89a49f1a;
-  color: #89a49f; 
-}
 
 .input-group-lg > .form-control:not(textarea),
 .input-group-lg > .custom-select {
@@ -7830,11 +7826,6 @@ a.text-dark:hover, a.text-dark:focus {
   border-spacing: 0;
   border-collapse: collapse; }
 
-.daterangepicker td.available:hover, .daterangepicker th.available:hover {
-  background-color: #eee;
-  border-color: transparent;
-  color: inherit; }
-
 .daterangepicker td.week, .daterangepicker th.week {
   font-size: 80%;
   color: #ccc; }
@@ -7858,11 +7849,6 @@ a.text-dark:hover, a.text-dark:focus {
 
 .daterangepicker td.start-date.end-date {
   border-radius: 4px; }
-
-.daterangepicker td.active, .daterangepicker td.active:hover {
-  background-color: #357ebd;
-  border-color: transparent;
-  color: #fff; }
 
 .daterangepicker th.month {
   width: auto; }
@@ -25667,19 +25653,9 @@ tr.introjs-showElement > th {
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select.xdsoft_yearselect {
   right: 2px; }
 
-.xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
-  color: #fff;
-  background: #89a49f; }
-
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option {
   padding: 2px 10px 2px 5px;
   text-decoration: none !important; }
-
-.xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option.xdsoft_current {
-  background: #89a49f;
-  box-shadow: #89a49f 0 1px 3px 0 inset;
-  color: #fff;
-  font-weight: 700; }
 
 .xdsoft_datetimepicker .xdsoft_month {
   width: 100px;
@@ -25720,10 +25696,6 @@ tr.introjs-showElement > th {
 
 .xdsoft_datetimepicker .xdsoft_calendar th {
   background: #f1f1f1; }
-
-.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_today {
-  color: #89a49f; }
-
 .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_highlighted_default {
   background: #ffe9d2;
   box-shadow: #ffb871 0 1px 4px 0 inset;
@@ -25733,14 +25705,6 @@ tr.introjs-showElement > th {
   background: #c1ffc9;
   box-shadow: #00dd1c 0 1px 4px 0 inset;
   color: #000; }
-
-.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_default,
-.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_current,
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div.xdsoft_current {
-  background: #89a49f;
-  box-shadow: #89a49f 0 1px 3px 0 inset;
-  color: #fff;
-  font-weight: 700; }
 
 .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month,
 .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_disabled,
@@ -25752,18 +25716,6 @@ tr.introjs-showElement > th {
 .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_other_month.xdsoft_disabled {
   opacity: 0.2;
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)"; }
-
-.xdsoft_datetimepicker .xdsoft_calendar td:hover,
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div:hover {
-  color: #fff !important;
-  background: #89a49f !important;
-  box-shadow: none !important; }
-
-.xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_current.xdsoft_disabled:hover,
-.xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div.xdsoft_current.xdsoft_disabled:hover {
-  background: #89a49f !important;
-  box-shadow: #89a49f 0 1px 3px 0 inset !important;
-  color: #fff !important; }
 
 .xdsoft_datetimepicker .xdsoft_calendar td.xdsoft_disabled:hover,
 .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div.xdsoft_disabled:hover {
@@ -27258,14 +27210,6 @@ tr.introjs-showElement > th {
   overflow: unset;
   border-radius: 0 .25rem .25rem 0; }
 
-.color-primary {
-  color: #89a49f; }
-
-.link-primary {
-  color: #89a49f; }
-  .link-primary:hover {
-    color: #000; }
-
 body {
   font-size: 15px;
   color: #282828; }
@@ -27294,10 +27238,6 @@ a:focus,
 
 a {
   color: #000; }
-
-a:hover {
-  text-decoration: none;
-  color: #89a49f; }
 
 .saol-font {
   font-family: "SaolDisplay-Regular"; }
@@ -27523,24 +27463,12 @@ h3 {
   text-align: right;
   font-size: 14px;
   margin-bottom: 15px; }
-  .top-menu-s span {
-    color: #89a49f; }
+  
   .top-menu-s .dropdown-toggle {
     padding: 12px; }
-  .top-menu-s.show .dropdown-toggle {
-    background: #89a49f;
-    color: #fff; }
+
     .top-menu-s.show .dropdown-toggle span {
       color: #fff; }
-  .top-menu-s .dropdown-menu {
-    background: #89a49f;
-    border-radius: 0;
-    border: 1px #89a49f solid;
-    padding: 20px 40px;
-    padding-bottom: 40px;
-    min-width: 956px;
-    margin-top: 0;
-    margin-left: 1.3px; }
     .top-menu-s .dropdown-menu i {
       margin-left: 5px;
       font-size: 10px;
@@ -27784,15 +27712,6 @@ h3 {
     background: #fff;
     border-radius: 4px;
     padding: 0 15px; }
-  .filter .filter-tag {
-    position: relative;
-    border-radius: 8px;
-    background-color: #89a49f;
-    padding: 13px 24px;
-    font-size: 15px;
-    margin: 0 10px;
-    margin-right: 0;
-    color: #fff; }
     .filter .filter-tag span {
       position: absolute;
       right: 8px;
@@ -27800,15 +27719,6 @@ h3 {
       font-size: 15px; }
       .filter .filter-tag span a {
         color: #fff; }
-
-.hotel-category .hotel-result {
-  background-color: #89a49f;
-  padding: 10px;
-  position: relative; }
-  .hotel-category .hotel-result h3 {
-    font-size: 18px;
-    color: #fff;
-    margin-top: 10px; }
 
 .favoicon.on {
   background: url(../images/heart-on.svg) no-repeat 50%;
@@ -27985,11 +27895,7 @@ h3 {
     justify-content: center; }
     .hotel-page-list .hotel-title .inc {
       font-size: 13px; }
-  .hotel-page-list .hotel-prices {
-    background: #89a49f;
-    padding: 22px 40px;
-    color: #fff;
-    font-size: 20px; }
+  
     .hotel-page-list .hotel-prices.hotel-price-detail {
       background: #fff;
       padding: 0 20px;
@@ -28029,8 +27935,6 @@ h3 {
         left: 0;
         top: 50%;
         transform: translateY(-50%); }
-      .hotel-page-list .action-hotel .nav .nav-link:last-child {
-        background: #89a49f; }
         .hotel-page-list .action-hotel .nav .nav-link:last-child::before {
           display: none; }
       .hotel-page-list .action-hotel .nav .nav-link:first-child::before {
@@ -28214,9 +28118,6 @@ h3 {
         width: 2rem;
         height: 2rem;
         top: 0; }
-      .img-top .ccs-t .custom-control .custom-control-input:checked ~ .custom-control-label::before {
-        color: #89a49f;
-        border-color: #89a49f; }
 
 .line-white {
   border-top: 1px solid #fff;
@@ -28758,9 +28659,6 @@ h3 {
   border-radius: 41px;
   font-size: 14px;
   transition: color 0.3s ease; }
-  .btn-white:hover {
-    background: #89a49f; }
-
 .hotel-deeail h4 {
   font-size: 18px; }
 
@@ -28931,9 +28829,6 @@ h3 {
 
 .btn-dark {
   background: #000; }
-  .btn-dark:hover {
-    background: #89a49f;
-    border-color: #89a49f; }
 
 .kldk {
   border: 1px #c9ccd4 solid;
@@ -29737,11 +29632,6 @@ span.calElement.prev:hover {
         margin: 0; }
       .filter-price .dropdown-menu .range-container .range-input input[type="number"] {
         -moz-appearance: textfield; }
-    .filter-price .dropdown-menu .range-container .ui-state-default,
-    .filter-price .dropdown-menu .range-container .ui-widget-content .ui-state-default {
-      border-radius: 50%;
-      background: #89a49f; }
-
 .child-before {
   display: none; }
   .child-before.show {
@@ -29784,11 +29674,6 @@ span.calElement.prev:hover {
 .daterangepicker td.off, .daterangepicker td.off.in-range, .daterangepicker td.off.start-date, .daterangepicker td.off.end-date {
   background-color: #fff;
   color: #999; }
-
-.daterangepicker td.active, .daterangepicker td.active:hover {
-  background-color: #89a49f;
-  color: #fff; }
-
 .daterangepicker td.start-date {
   border-radius: 0; }
 
@@ -30114,14 +29999,6 @@ span.calElement.prev:hover {
   .editor-cc-content .editor-cc--desc {
     padding-left: 26px;
     position: relative; }
-    .editor-cc-content .editor-cc--desc::before {
-      position: absolute;
-      content: "";
-      left: 0;
-      top: 10px;
-      width: 18px;
-      height: 2px;
-      background: #89a49f; }
 
 .jkla-ss {
   margin-left: 15px; }
@@ -30347,27 +30224,11 @@ span.calElement.prev:hover {
     left: 0;
     color: #fff;
     padding: 15px; }
-    .item-containe-ame .ame-ctn .label-ame {
-      background: #89a49f;
-      color: #757373;
-      font-size: 12px;
-      padding: 1px 7px;
-      border-radius: 4px; }
     .item-containe-ame .ame-ctn h4 {
       font-size: 18px; }
     .item-containe-ame .ame-ctn p {
       font-size: 14px;
       margin-bottom: 0; }
-
-.all-amini {
-  background: #89a49f;
-  font-size: 27px;
-  text-align: center;
-  padding: 30px 15px;
-  border-radius: 4px;
-  color: #fff;
-  display: block;
-  transition: all 0.3s ease; }
   .all-amini:hover {
     background-color: #c68063;
     color: #fff; }
@@ -30450,10 +30311,6 @@ span.calElement.prev:hover {
   color: #383838; }
   .facilities-contain .nav-pills .nav-link:last-child {
     margin-bottom: 0; }
-
-.facilities-contain .nav-pills .nav-link.active {
-  background: #89a49f;
-  color: #fff; }
 
 .facilities-contain .fasssld {
   position: relative;
@@ -30573,11 +30430,6 @@ span.calElement.prev:hover {
   width: 100%;
   top: calc(50% - 33px); }
 
-.since {
-  text-align: right;
-  position: relative;
-  z-index: 99;
-  color: #89a49f; }
   .since h2 {
     font-size: 152px;
     line-height: 105px; }
@@ -31316,9 +31168,6 @@ span.calElement.prev:hover {
     margin: auto; }
     .pr-lst.collection-lst .act-lst a {
       color: #d5d5d5; }
-      .pr-lst.collection-lst .act-lst a:hover {
-        font-family: "SaolDisplay-LightItalic";
-        color: #89a49f; }
 
 .nav-text {
   margin-top: -7px;
@@ -31498,10 +31347,6 @@ span.calElement.prev:hover {
   align-items: center;
   font-size: 20px; }
 
-.accor-body {
-  background: #89a49f;
-  color: #fff;
-  padding: 25px; }
   .accor-body .form-control {
     border-radius: 0;
     border: 0;
@@ -31560,9 +31405,6 @@ span.calElement.prev:hover {
     border: 1px #fff solid;
     margin-right: 10px;
     font-size: 20px; }
-    .menu-media .nav-sos:hover {
-      color: #89a49f;
-      border-color: #89a49f; }
 
 .main-container {
   position: relative; }
@@ -31959,9 +31801,6 @@ span.calElement.prev:hover {
       font-family: "SaolDisplay-LightItalic";
       font-size: 19px; }
 
-.hover-primary:hover {
-  color: #89a49f; }
-
 .dash-clp {
   width: 193px;
   margin-top: 49px;
@@ -32001,9 +31840,6 @@ span.calElement.prev:hover {
 
 .filter-container-mm .col-ews:nth-of-type(2n + 1) {
   border-left: 1px transparent solid; }
-
-.filter-container-mm .confirm-room {
-  color: #89a49f; }
   .filter-container-mm .confirm-room:hover {
     color: #000; }
 
@@ -32023,8 +31859,6 @@ span.calElement.prev:hover {
     padding: 7px 12px;
     border-radius: 7px;
     margin-left: 10px; }
-    .menu-nav.text-menu:hover {
-      border: 1px #89a49f solid; }
   .menu-nav .city-result {
     border: 1px #000 solid;
     padding: 10px;
@@ -32032,8 +31866,6 @@ span.calElement.prev:hover {
     height: 36px;
     display: flex;
     align-items: center; }
-  .menu-nav:hover .city-result {
-    border: 1px #89a49f solid; }
 
 .label-city {
   width: 20px;
@@ -32310,9 +32142,6 @@ span.calElement.prev:hover {
       width: 60px; }
   .sidebar-scroller .accordion .btn {
     color: #212529; }
-    .sidebar-scroller .accordion .btn:hover {
-      text-decoration: none;
-      color: #89a49f; }
   .sidebar-scroller .accordion .card-header {
     position: relative; }
     .sidebar-scroller .accordion .card-header i {
@@ -32365,12 +32194,6 @@ span.calElement.prev:hover {
   padding-top: 40px;
   padding-left: 20px;
   padding-right: 20px; }
-
-.nav-tab-main.nav-pills .nav-link.active,
-.nav-tab-main.nav-pills .show > .nav-link {
-  color: #89a49f;
-  background-color: transparent;
-  border-bottom: 2px #89a49f solid; }
 
 .nav-tab-main .nav-link {
   border-radius: 0;
@@ -32508,13 +32331,6 @@ span.calElement.prev:hover {
   border: 2px solid #e3e3e3;
   border-radius: 26px;
   transition: all 0.3s ease-in 0s; }
-
-.onoffswitch-checkbox:checked + .onoffswitch-label {
-  background-color: #89a49f; }
-
-.onoffswitch-checkbox:checked + .onoffswitch-label,
-.onoffswitch-checkbox:checked + .onoffswitch-label:before {
-  border-color: #89a49f; }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label:before {
   right: 0px; }
@@ -32857,9 +32673,6 @@ span.calElement.prev:hover {
     right: 0;
     top: 50%;
     transform: translateY(-50%); }
-  .accordion-ex .card-header .btn:hover {
-    text-decoration: none;
-    color: #89a49f; }
 
 .accordion-ex h2 {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
@@ -32900,8 +32713,6 @@ span.calElement.prev:hover {
 .added {
   display: none; }
 
-.btn-red-link {
-  color: #89a49f; }
   .btn-red-link:hover {
     opacity: 0.6; }
 
@@ -32968,18 +32779,7 @@ span.calElement.prev:hover {
     .collection-slide .right-collection p {
       font-size: 14px;
       margin-top: 10px;
-      padding-left: 16px; }
-
-.btn-add-collection {
-  width: 50px;
-  height: 50px;
-  background: #89a49f;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 34px;
-  color: #fff;
-  border-radius: 50%; }
+      padding-left: 16px; }    
   .btn-add-collection.is-small {
     width: 30px;
     height: 30px;
@@ -33001,14 +32801,6 @@ span.calElement.prev:hover {
   width: 300px; }
   .swipe-item.is-small {
     width: 230px; }
-  .swipe-item .swipe-round {
-    position: absolute;
-    left: 0;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    border: 2px #89a49f solid;
-    overflow: hidden; }
     .swipe-item .swipe-round img {
       width: 100%;
       height: 100%;
@@ -33111,11 +32903,6 @@ span.calElement.prev:hover {
   .mail-list:last-child {
     border-bottom: 0; }
 
-.custom-control-input:checked ~ .custom-control-label::before {
-  color: #fff;
-  border-color: #89a49f;
-  background-color: #89a49f; }
-
 .calendar-availability {
   width: 1000px;
   padding: 35px; }
@@ -33142,11 +32929,6 @@ span.calElement.prev:hover {
     float: none; }
   .calendar-availability .fc .fc-row .fc-content-skeleton td {
     text-align: center; }
-  .calendar-availability .fc-bgevent {
-    background: #89a49f;
-    opacity: 1;
-    color: #fff;
-    position: relative; }
   .calendar-availability .fc th,
   .calendar-availability .fc td {
     border-width: 0; }
@@ -33546,9 +33328,6 @@ button:focus {
     padding-top: 0;
     padding-bottom: 0;
     text-align: center; }
-    .nav-info .nav-link.active {
-      color: #89a49f;
-      font-family: "SaolDisplay-LightItalic"; }
   .nav-info .hidden {
     display: none; }
   .nav-info .show {
@@ -33720,15 +33499,6 @@ button:focus {
   width: 73%;
   display: block; }
 
-.remove-collection {
-  position: absolute;
-  display: inline-block;
-  background: #89a49f;
-  color: #fff;
-  top: 0;
-  right: 0;
-  font-size: 13px;
-  padding: 2px 9px; }
   .remove-collection:hover {
     color: #fff;
     background-color: #cc0606; }
@@ -33790,10 +33560,6 @@ button:focus {
       visibility: visible; }
     .avail-htl---0029 .select-check--000 input.checkbox:checked + label:before {
       content: ""; }
-  .avail-htl---0029:hover .avl-dsc p {
-    color: #89a49f; }
-  .avail-htl---0029:hover .title-line::before {
-    background: #89a49f; }
 
 .txt--010 {
   font-size: 18px;
@@ -33925,28 +33691,9 @@ button:focus {
 .nav-link-parrent[aria-expanded="true"] i {
   transform: translateY(-50%) rotate(180deg); }
 
-.nav-link-parrent:hover i {
-  color: #89a49f; }
-
 .sidebarFixedpages.onstick-width {
   width: 294px; }
 
-.help {
-  position: fixed;
-  right: -100%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background: #89a49f;
-  border-radius: 50%;
-  color: #fff;
-  font-size: 20px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 999;
-  transition: all 0.3s ease; }
   .help.show {
     right: 0;
     transition: all 0.3s ease; }
@@ -33972,15 +33719,6 @@ button:focus {
 
 .price-range.ui-slider-horizontal {
   height: 0.4em; }
-
-.price-range .ui-widget-header {
-  background: #89a49f; }
-
-.price-range .ui-slider-handle {
-  border-radius: 50%;
-  top: -0.444em;
-  border: 1px solid #89a49f;
-  background: #fff; }
 
 .input-filter {
   position: relative; }
@@ -34282,8 +34020,6 @@ button:focus {
 
 .link-white {
   color: #fff; }
-  .link-white:hover {
-    color: #89a49f; }
 
 .map-box {
   position: relative; }
@@ -34353,8 +34089,6 @@ button:focus {
   padding-top: 5px;
   padding-bottom: 5px;
   cursor: default; }
-  .history-list:hover {
-    color: #89a49f; }
     .history-list:hover .btn-visited-action {
       display: flex; }
 
@@ -34384,8 +34118,6 @@ button:focus {
   border-radius: 50px;
   padding-left: 10px;
   padding-right: 10px; }
-  .calendar-nav .nav-link.active {
-    color: #89a49f; }
 
 .weekselect {
   padding-left: 5px;
@@ -34593,8 +34325,6 @@ button:focus {
     border-radius: 7px;
     margin-right: 5px;
     margin-bottom: 10px; }
-    .search-suggest .suggest-item:hover {
-      border-color: #89a49f; }
   .search-suggest h5 {
     margin-bottom: 15px; }
 
@@ -35064,10 +34794,6 @@ button:focus {
     padding: 8px 15px;
     border-radius: 20px;
     cursor: pointer; }
-  .category-select .custom-control-input:checked ~ .custom-control-label {
-    border: 1px solid #89a49f;
-    background: #89a49f;
-    color: #fff; }
 
 .btn-category {
   position: fixed;
@@ -35190,8 +34916,6 @@ footer {
     border-left: 1px #000 solid;
     padding-top: 0;
     padding-bottom: 0; }
-    .nav-header-menu .nav-item .nav-link.active {
-      color: #89a49f; }
   .nav-header-menu .nav-item:first-child .nav-link {
     border-left: 0; }
 
@@ -35308,14 +35032,6 @@ footer {
     min-height: 54px;
     display: flex;
     flex-wrap: wrap; }
-  .select-destination .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice {
-    padding: 7px 16px 7px 11px;
-    border-radius: 21px;
-    margin: 5px 0 5px 6px;
-    font-size: 17px;
-    border-color: transparent;
-    background: #89a49f;
-    color: #fff; }
   .select-destination .select2-container--bootstrap .select2-selection--multiple .select2-selection__choice__remove {
     background: transparent;
     border: 0;
@@ -35603,8 +35319,6 @@ footer {
       border: 0;
       padding-top: 20px;
       padding-bottom: 20px; }
-      .hero-row .hero-meta .nav-pills .nav-link:hover {
-        color: #89a49f; }
 
 .val-count {
   width: 100%; }
@@ -35626,12 +35340,6 @@ footer {
   .mobile-flex .login-nav {
     width: 50px;
     margin-left: auto; }
-
-.btn-use-addr.active {
-  background: #89a49f;
-  color: #fff;
-  padding: 2px 5px;
-  border-radius: 5px; }
 
 .visa {
   display: inline-block;
@@ -35732,13 +35440,6 @@ footer {
   position: relative;
   width: 80px;
   height: 80px; }
-
-.spinner div {
-  position: absolute;
-  border: 4px solid #89a49f;
-  opacity: 1;
-  border-radius: 50%;
-  animation: spinner 1s cubic-bezier(0, 0.2, 0.8, 1) infinite; }
 
 .spinner div:nth-child(2) {
   animation-delay: -0.5s; }
@@ -35897,18 +35598,6 @@ footer {
     border-radius: 0;
     color: #000;
     padding-left: 16px; }
-
-.hotel-meta .hotel-tag {
-  display: none;
-  margin-right: auto;
-  background: #89a49f;
-  padding: 0 15px;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  width: 50%;
-  font-family: "SaolDisplay-Regular";
-  font-size: 16px; }
 
 .tooltip.bs-tooltip-top .arrow::before, .tooltip.bs-tooltip-auto[x-placement^="top"] .arrow::before {
   display: none; }
@@ -36100,10 +35789,6 @@ footer {
       top: 50%;
       width: 6px;
       z-index: 2; }
-    .nav-tags .nav-item .nav-link:hover {
-      background-color: #89a49f; }
-      .nav-tags .nav-item .nav-link:hover .taxonomyTags-roundedArrow {
-        color: #89a49f; }
     .nav-tags .nav-item .nav-link a {
       color: #fff; }
   .nav-tags .nav-item .delete {
@@ -36128,13 +35813,6 @@ footer {
 .img-pad--1 {
   padding-left: 3rem;
   padding-right: 3rem; }
-
-.restaurant-reservation {
-  background: #89a49f;
-  padding: 10px;
-  border-radius: 10px;
-  color: #fff !important;
-  font-size: 14px; }
 
 .reserve-sidebar {
   width: 750px; }
@@ -36175,18 +35853,6 @@ footer {
 .date-reserve .xdsoft_datetimepicker .xdsoft_calendar th {
   height: 33px;
   border: 0; }
-
-.date-reserve .xdsoft_datetimepicker .xdsoft_calendar th {
-  background: rgba(137, 164, 159, 0.4);
-  color: #89a49f; }
-
-.date-reserve .xdsoft_datetimepicker .xdsoft_timepicker .xdsoft_time_box > div > div {
-  height: 45px;
-  line-height: 45px;
-  font-size: 15px;
-  margin: 8px;
-  border: 1px #89a49f solid;
-  border-radius: 10px; }
 
 .date-reserve .xdsoft_time_variant {
   display: flex;
@@ -36413,20 +36079,6 @@ button#clear span {
 .jet-checkbox {
   padding-left: 0;
   text-align: center; }
-  .jet-checkbox .img-plane {
-    width: 110px;
-    height: 110px;
-    border-radius: 50%;
-    overflow: hidden;
-    margin: auto;
-    position: relative;
-    margin-top: -25px;
-    border: 4px #89a49f solid;
-    margin-bottom: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: #fff; }
     .jet-checkbox .img-plane img {
       width: 100%; }
   .jet-checkbox .custom-control-label::before,
@@ -36445,8 +36097,6 @@ button#clear span {
     padding: 15px 25px;
     border-radius: 10px;
     padding-bottom: 30px; }
-  .jet-checkbox .custom-control-input:checked ~ .custom-control-label {
-    background: #89a49f; }
 
 .btn-search-yacht {
   margin-top: 70px; }
@@ -36544,21 +36194,7 @@ button#clear span {
   .modal-fullscreen .modal-dialog-scrollable {
     max-height: 100%; }
   .modal-fullscreen .modal-dialog-scrollable .modal-content {
-    max-height: 100vh; }
-  .scroll-totop {
-    position: fixed;
-    bottom: 15px;
-    right: 15px;
-    display: inline-flex;
-    width: 50px;
-    height: 50px;
-    justify-content: center;
-    align-items: center;
-    font-size: 30px;
-    background: #89a49f;
-    color: #fff !important;
-    border-radius: 5px;
-    z-index: 99; }
+    max-height: 100vh; }  
     .scroll-totop i {
       transform: rotate(-90deg); }
 @media (max-width: 1627.98px) {
@@ -37117,11 +36753,6 @@ button#clear span {
     display: block; }
   .hotel-page-list .hotel-meta {
     justify-content: flex-end; }
-  .book-suite a {
-    padding: 16px 10px;
-    display: inline-block;
-    background: #89a49f;
-    color: #fff; }
   .sidebar-main .hotel-page-list .hotel-meta.hotel-meta-details {
     bottom: -55px; }
   .gallery-wrapper .nav-sidebar .nav-item .nav-link {
@@ -38147,9 +37778,6 @@ button#clear span {
       padding-top: 4px; }
   .slider-detail {
     margin-top: 30px; }
-  .hotel-meta.full-width.hotel-meta-details .dropdown-bs {
-    width: 50%;
-    background: #89a49f; }
     .hotel-meta.full-width.hotel-meta-details .dropdown-bs .dropdown-menu.show {
       transform: translate3d(0px, 37px, 0px) !important;
       box-shadow: none; }
