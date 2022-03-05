@@ -358,13 +358,15 @@
 <script>
   function getattribute(e)
   {
-    window.history.pushState({}, document.title, window.location.pathname);
-
     var href = $(e).attr("href");  
     var url = $(location).attr('href');
 
+    url = url.replace('#lifestyle', '');
+    url = url.replace('#dedicated', '');
+    url = url.replace('#bespoke', '');
+
     var fullurl = url + href;
-     window.history.pushState('active-tab', 'tab',fullurl);
+    window.history.pushState({}, '', fullurl);
     var hash = window.location.hash;
 
     if(hash){
