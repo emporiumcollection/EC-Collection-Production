@@ -6639,7 +6639,7 @@ class PropertyController extends Controller {
         }elseif($collection=='spa'){
             $site_url = 'https://emporium-spa.com';
             $conn = $spaconn;
-        }elseif($collection=='islands'){
+        }elseif($collection=='island'){
             $site_url = 'https://emporium-islands.com';
             $conn = $islandconn;
         }
