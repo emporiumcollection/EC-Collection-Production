@@ -628,7 +628,7 @@ var homePageFeaturedProperties;
             containername + `/` + 
             data[0]['propimage'][1]['file_name'] + 
             `/property-image" class="img-fluid" alt="" />`);                
-
+          $('.featured_hotel_2').attr('href','/hotel/'+data[0]['objprop']['property_slug']);
           $('.fetaruer .title-2').html(data[0]['property_name']);
           $('.title-third').html();
           $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
@@ -665,7 +665,7 @@ var homePageFeaturedProperties;
       +'<img src="/property-image/resize/645x600/'+ containername +'/'+ homePageFeaturedProperties[1]['propimage'][1]['file_name']+'/property-image" class="img-fluid" alt="">'
       +'</div>';
     $("#images").html(d_image);
-
+      $('.featured_hotel_1').attr('href','/hotel/'+homePageFeaturedProperties[1]['objprop']['property_slug']);
       $('.to-right .title-1').html(homePageFeaturedProperties[1]['objprop']['property_name']);
       $('.fetaruer .font-1').html(homePageFeaturedProperties[1]['objprop']['detail_section1_description_box1']);  
   });

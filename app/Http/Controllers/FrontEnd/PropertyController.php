@@ -6648,7 +6648,7 @@ class PropertyController extends Controller {
         $featured_hotel = array();
         $obj_featured_hotel = array();
         $featured_hotel = \DB::connection($conn)->table('tb_properties')
-        ->select(['id', 'property_name', 'detail_section1_description_box1'])
+        ->select(['id', 'property_name','property_slug','detail_section1_description_box1'])
         ->where('feature_property', 1)
         ->orderByRaw(DB::raw("RAND()"))->limit(2)->get();
         foreach($featured_hotel as $props){
