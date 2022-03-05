@@ -1,5 +1,6 @@
 var SHOW_PARENT_CITIES = 0;
 var ajaxReq = 'ToCancelPrevReq';
+var homePageFeaturedProperties;
 (function ($) {
 
   $.fn.niceSelect = function (method) {
@@ -592,7 +593,6 @@ var ajaxReq = 'ToCancelPrevReq';
                 });
   });
   
-  var homePageFeaturedProperties = '';
   function get_featured_prop(_type, _collection, _location){
     var _token = $('meta[name="csrf-token"]').attr('content');
     //console.log(BaseURL);
