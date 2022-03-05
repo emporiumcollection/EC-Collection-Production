@@ -288,9 +288,9 @@
               <img src="images/60c5a787075247-1.5dad757ad76ab.jpg" alt="">
             </div>
             <div class="fetaruer to-right">
-              <h2 class="title-2 title-i"></h2>
+              <h2 class="title-1 title-i"></h2>
               <h3 class="title-3 title-i">— featured hotel —</h3>
-              <p class="font-2">
+              <p class="font-1">
                 <i>
                   Think about New York of the 1980s with its large artwork, early hip hop, and punk rock scenes. Then
                   translate that vitality to a lodge on the Decrease East Aspect. Put collectively you get The Ludlow

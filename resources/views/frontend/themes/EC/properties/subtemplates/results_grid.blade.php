@@ -363,7 +363,7 @@
     window.history.pushState({}, '', href);
 
     var hash = window.location.hash;
-
+    alert(hash);
     if(hash){
       $('#search-results-content #myTab a').removeClass('active');
       $('#search-results-content #myTab ' + hash + '-tab').addClass('active');

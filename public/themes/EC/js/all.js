@@ -629,9 +629,9 @@ var ajaxReq = 'ToCancelPrevReq';
             data[0]['propimage'][1]['file_name'] + 
             `/property-image" class="img-fluid" alt="" />`);                
 
-          $('.to-right .title-2').html(data[0]['property_name']);
+          $('.fetaruer .title-1').html(data[0]['property_name']);
           $('.title-third').html();
-          $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
+          $('.fetaruer .font-1').html(data[0]['detail_section1_description_box1']);
       }
     });
   }
@@ -666,7 +666,7 @@ var ajaxReq = 'ToCancelPrevReq';
       +'</div>';
     $("#images").html(d_image);
 
-      $('.fetaruer .title-2').html(homePageFeaturedProperties[1]['property_name']);
+      $('.to-right .title-1').html(homePageFeaturedProperties[1]['property_name']);
       $('.fetaruer .font-2').html(homePageFeaturedProperties[1]['detail_section1_description_box1']);  
   });
 
