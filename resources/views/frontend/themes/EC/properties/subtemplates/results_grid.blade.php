@@ -79,17 +79,17 @@
                   $total_feature = count($featureProperties);
                   $total_properties= $total_editors + $total_feature;
                 ?>
-                <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true" onclick="getattribute()">LIFESTYLE (<?php print count($propertyResultsForView['lifestyle']) + $total_properties ?>)</a>
+                <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" onclick="getattribute(this);" role="tab" aria-controls="lifestyle" aria-selected="true">LIFESTYLE (<?php print count($propertyResultsForView['lifestyle']) + $total_properties ?>)</a>
               </li>
             <?php endif; ?>
             <?php if (!empty($propertyResultsForView['dedicated'])) : ?>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="dedicated-tab" data-toggle="pill" href="#dedicated" role="tab" aria-controls="dedicated" aria-selected="false">DEDICATED (<?php print count($propertyResultsForView['dedicated'])?>)</a>
+                <a class="nav-link" id="dedicated-tab" data-toggle="pill" href="#dedicated" role="tab" aria-controls="dedicated" aria-selected="false" onclick="getattribute(this);">DEDICATED (<?php print count($propertyResultsForView['dedicated'])?>)</a>
               </li>
             <?php endif; ?>
             <?php if (!empty($propertyResultsForView['bespoke'])) : ?>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="bespoke-tab" data-toggle="pill" href="#bespoke" role="tab" aria-controls="bespoke" aria-selected="false">BESPOKE (<?php print count($propertyResultsForView['bespoke'])?>)</a>
+                <a class="nav-link" id="bespoke-tab" data-toggle="pill" href="#bespoke" role="tab" aria-controls="bespoke" aria-selected="false" onclick="getattribute(this);">BESPOKE (<?php print count($propertyResultsForView['bespoke'])?>)</a>
               </li>
             <?php endif; ?>
           </ul>
@@ -355,9 +355,21 @@
   <?php endif; ?>        
   </div>
 </div>
-<script type="text/javascript">
+<script>
+  function getattribute(e)
+    {
+      // alert(e);
+      var href = $(this).attr('href');
+      // alert(href);
+      window.history.pushState({}, '', href);
+      var hash = window.location.hash;
+
+      return href;
+    }
   $(document).ready(function () {
+    // getattribute();
     var hash = window.location.hash;
+
     if(hash){
         $('#search-results-content #myTab a').removeClass('active');
         $('#search-results-content #myTab ' + hash + '-tab').addClass('active');

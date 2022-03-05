@@ -1353,12 +1353,14 @@ class ContainerController extends Controller {
 		$folds = array_reverse($this->fetchFolderParentList($id));
 		if(!empty($folds))
 		{
+			return $folds[1];
 			foreach($folds as $fold)
 			{
 				$fpath .= $fold.'/';
 			}
 		}
-		$actPath = $publicpath.'/uploads/container_user_files/'.$fpath;
+		//$actPath = $publicpath.'/uploads/container_user_files/'.$fpath;
+		$actPath = $fpath;
 		return $actPath;
 	}
 	

@@ -633,7 +633,7 @@ Route::get('getpropertyById/{id}','FrontEnd\PropertyController@getProperty_Ajax'
 
 Route::get('globalsearchavailability', 'FrontEnd\PropertyController@globalsearchavailability');
 Route::get('searchavailability', 'FrontEnd\PropertyController@propertySearchAvailability');
-Route::get('featuredproperty', 'FrontEnd\PropertyController@featuredProperty');
+Route::get('featuredproperty', 'FrontEnd\PropertyController@featuredproperties');
 Route::get('property/prices', 'FrontEnd\PropertyController@propertyRoomPrices');
 Route::get('property/refresh-map/{lat}/{lng}', 'FrontEnd\PropertyController@refreshMap');
 Route::get('api/property/{id}', 'FrontEnd\PropertyController@apiPropertyDetail');

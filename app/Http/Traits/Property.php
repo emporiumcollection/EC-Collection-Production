@@ -343,7 +343,7 @@ trait Property {
                     return $query->select(['id','file_name']);
 
                 }]);
-                //->limit(20);
+                // ->limit(2);
             }
         ])
         ->where('property_slug','=', $slug);

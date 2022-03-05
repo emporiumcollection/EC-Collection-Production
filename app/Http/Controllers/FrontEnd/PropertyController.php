@@ -6618,6 +6618,7 @@ class PropertyController extends Controller {
     }
 
     function featuredproperties(Request $request){
+
         $type = $request->input('type');
         $collection = $request->input('collection');
         /** Collection connection **/
@@ -6631,109 +6632,50 @@ class PropertyController extends Controller {
         $site_url = '';
         if($collection=='voyage'){
             $site_url = 'https://emporium-voyage.com';
-            //$site_url = 'http://staging.emporium-voyage.com/';
+            $conn = $voyageconn;
         }elseif($collection=='safari'){
             $site_url = 'https://emporium-safari.com';
+            $conn = $safariconn;
         }elseif($collection=='spa'){
             $site_url = 'https://emporium-spa.com';
+            $conn = $spaconn;
         }elseif($collection=='islands'){
             $site_url = 'https://emporium-islands.com';
+            $conn = $islandconn;
         }
+
         /** End */
         $featured_hotel = array();
         $obj_featured_hotel = array();
-        /*if($type=="hotel"){*/
-            if($collection == 'voyage'){
-                $featured_hotel = \DB::connection($voyageconn)->table('tb_properties')->where('feature_property', 1)->orderByRaw(DB::raw("RAND()"))->limit(2)->get();
-                foreach($featured_hotel as $props){
+        $featured_hotel = \DB::connection($conn)->table('tb_properties')
+        ->select(['id', 'property_name', 'detail_section1_description_box1'])
+        ->where('feature_property', 1)
+        ->orderByRaw(DB::raw("RAND()"))->limit(2)->get();
+        foreach($featured_hotel as $props){
 
-                    $propimage = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-                    $propimage_thumbpath = '';
-                    $propimage_thumbpath_dir= '';
-                    $propimage_containerpath = '';
-                    if(!empty($propimage)){
-                        $propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
-                        //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
-                        //$propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
-                    }
-                    $prop['propimage'] = $propimage;
-                    $prop['thumb'] = $propimage_thumbpath;
-                    //$prop['thumb_dir'] = $propimage_thumbpath_dir;
-                    //$prop['containerpath'] = $propimage_thumbpath_dir;
-                    $prop['objprop'] = $props;
-
-                    $obj_featured_hotel[] = $prop;
-                }
-
-            }elseif($collection == 'spa'){
-                $featured_hotel = \DB::connection($spaconn)->table('tb_properties')->where('feature_property', 1)->orderByRaw(DB::raw("RAND()"))->limit(2)->get();
-                foreach($featured_hotel as $props){
-
-                    $propimage = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-                    $propimage_thumbpath = '';
-                    $propimage_thumbpath_dir= '';
-                    $propimage_containerpath = '';
-                    if(!empty($propimage)){
-                        $propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
-                        //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
-                        //$propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
-                    }
-                    $prop['propimage'] = $propimage;
-                    $prop['thumb'] = $propimage_thumbpath;
-                    //$prop['thumb_dir'] = $propimage_thumbpath_dir;
-                    //$prop['containerpath'] = $propimage_thumbpath_dir;
-                    $prop['objprop'] = $props;
-
-                    $obj_featured_hotel[] = $prop;
-                }
-            }elseif($collection == 'safari'){
-                $featured_hotel = \DB::connection($safariconn)->table('tb_properties')->where('feature_property', 1)->orderByRaw(DB::raw("RAND()"))->limit(2)->get();
-                foreach($featured_hotel as $props){
-
-                    $propimage = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-                    $propimage_thumbpath = '';
-                    $propimage_thumbpath_dir= '';
-                    $propimage_containerpath = '';
-                    if(!empty($propimage)){
-                        $propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
-                        //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
-                        //$propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
-                    }
-                    $prop['propimage'] = $propimage;
-                    $prop['thumb'] = $propimage_thumbpath;
-                    //$prop['thumb_dir'] = $propimage_thumbpath_dir;
-                    //$prop['containerpath'] = $propimage_thumbpath_dir;
-                    $prop['objprop'] = $props;
-
-                    $obj_featured_hotel[] = $prop;
-                }
-            }elseif($collection == 'islands'){
-                $featured_hotel = \DB::connection($islandconn)->table('tb_properties')->where('feature_property', 1)->orderByRaw(DB::raw("RAND()"))->limit(2)->get();
-                foreach($featured_hotel as $props){
-
-                    $propimage = \DB::table('tb_properties_images')->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')->where('tb_properties_images.property_id', $props->id)->where('tb_properties_images.type', 'Property Images')->orderBy('tb_container_files.file_sort_num', 'asc')->get();
-                    $propimage_thumbpath = '';
-                    $propimage_thumbpath_dir= '';
-                    $propimage_containerpath = '';
-                    if(!empty($propimage)){
-                        $propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
-                        //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
-                        //$propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
-                    }
-                    $prop['propimage'] = $propimage;
-                    $prop['thumb'] = $propimage_thumbpath;
-                    //$prop['thumb_dir'] = $propimage_thumbpath_dir;
-                    //$prop['containerpath'] = $propimage_thumbpath_dir;
-                    $prop['objprop'] = $props;
-
-                    $obj_featured_hotel[] = $prop;
-                }
+            $propimage = \DB::table('tb_properties_images')
+            ->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')
+            ->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')
+            ->where('tb_properties_images.property_id', $props->id)
+            ->where('tb_properties_images.type', 'Property Images')
+            ->orderBy('tb_container_files.file_sort_num', 'asc')
+            ->get();
+            $propimage_thumbpath = '';
+            $propimage_thumbpath_dir= '';
+            $propimage_containerpath = '';
+            if(!empty($propimage)){
+                //$propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
+                //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
+                $propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
             }
-        /*}else{
+            $prop['propimage'] = $propimage;
+            //$prop['thumb'] = $propimage_thumbpath;
+            //$prop['thumb_dir'] = $propimage_thumbpath_dir;
+            $prop['containerpath'] = $propimage_containerpath;
+            $prop['objprop'] = $props;
 
-        }*/
-        //echo "</pre>";
-        //print_r($obj_featured_hotel); die;
+            $obj_featured_hotel[] = $prop;
+        }
 
         if(count($obj_featured_hotel)>0){
             $res['status'] = 'success';

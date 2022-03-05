@@ -601,65 +601,45 @@ var ajaxReq = 'ToCancelPrevReq';
         type: "get",
         dataType: "json",
         data: {'type':_type, 'collection':_collection, '_token':_token, 'keyword':_location},
-        success: function (data){
-          console.log(data);
-                homePageFeaturedProperties = data;
-            //if(data.status == "success"){
-                $('.title-2').html(data[0]['property_name']);
-                $('.title-third').html(data[0]['city']);
-                $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
+        success: function (response){
+          var data = response.data;
+          if(data.length <= 0){
+            return false;
+          }
 
-                var containername;
-                try{
-                  if(data[0]['container']){
-                    containername = data[0]['container']['name'];
-                  }else{
-                    containername = data[0]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
-                  }
-                }catch(e){
+          homePageFeaturedProperties = data;
+          $('.title-2').html(data[0]['objprop']['property_name']);
+          $('.title-third').html(data[0]['propimage']['containerpath']);
+          $('.fetaruer .font-2').html(data[0]['objprop']['detail_section1_description_box1']);
 
-                }
+          var containername;
+          try{
+            if(data[0]['containerpath']){
+              containername = data[0]['containerpath'];
+            }else{
+              containername = data[0]['objprop']['property_name'].trim().replaceAll(" ", '-').toLowerCase();
+            }
+          }catch(e){}
 
-                $('.herl').html(`<img src="uploads/container_user_files/locations/` 
-                  + containername + `/property-images/` + data[0]['propertyImages'][0]['file_name'] + `" class="img-fluid" alt="" />`);
+          $('.herl').html(`<img src="uploads/container_user_files/locations/` 
+            + containername + `/property-images/` + data[0]['propimage'][0]['file_name'] + `" class="img-fluid" alt="" />`);
+          $('.img-left-when').html(`<img src="/property-image/resize/645x600/` + 
+            containername + `/` + 
+            data[0]['propimage'][1]['file_name'] + 
+            `/property-image" class="img-fluid" alt="" />`);                
 
-                $('.img-left-when').html(`<img src="/property-image/resize/645x600/` + 
-                  containername + `/` + 
-                  data[0]['propertyImages'][1]['file_name'] + 
-                  `/property-image" class="img-fluid" alt="" />`);                
+          $('.to-right .title-2').html(data[0]['property_name']);
+          $('.title-third').html();
+          $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
 
-                $('.to-right .title-2').html(data[0]['property_name']);
-                // alert(data[0]['city']);
-                $('.title-third').html(data[0]['city']);
-                $('.fetaruer .font-2').html(data[0]['detail_section1_description_box1']);
-                var images = data[0]['propertyImages'];
-                console.log(images);
-                var d_image = '';                
-                  // $(images).each(function (key, value) {
-                    // try{
-                      d_image += '<div style="padding-top:20px;">'
-                      +'<img src="/property-image/resize/645x600/'+ containername +'/'+ images[1]['file_name']+'/property-image" class="img-fluid" alt="">'
-                      +'</div>';
-                    // }catch(e){
-
-                    // }
-                  // });
-                  // console.log('here',d_image);
-                  $("#images").html(d_image);
-
-                  // setTimeout(function () {                    
-                  //   $('.quick-prev').slick({
-                  //     slidesToShow: 1,
-                  //     prevArrow: '<button type="button" class="slide-arrow prev-arrow"><i class="ico ico-back"></i></button>',
-                  //     nextArrow: '<button type="button" class="slide-arrow next-arrow"><i class="ico ico-next"></i></button>'
-                  //   });
-                  // }, 2000);
-
-                  // $(document).on("scroll", function () {
-                  //   $('.quick-prev').slick('setPosition');
-                  //   $('.quick-prev').slick('resize');
-                  // });
-        }
+          var images = data[0]['propertyImages'];
+        
+          var d_image = '';
+            d_image += '<div style="padding-top:20px;">'
+            +'<img src="/property-image/resize/645x600/'+ containername +'/'+ data[1]['propimage'][1]['file_name']+'/property-image" class="img-fluid" alt="">'
+            +'</div>';
+          $("#images").html(d_image);
+      }
     });
   }
 
@@ -669,20 +649,20 @@ var ajaxReq = 'ToCancelPrevReq';
     }
     var containername;
     try{
-      if(homePageFeaturedProperties[1]['container']){
-        containername = homePageFeaturedProperties[1]['container']['name'];
+      if(homePageFeaturedProperties[1]['containerpath']){
+        containername = homePageFeaturedProperties[1]['containerpath'];
       }else{
-        containername = homePageFeaturedProperties[1]['property_name'].trim().replaceAll(" ", '-').toLowerCase();
+        containername = homePageFeaturedProperties[1]['objprop']['property_name'].trim().replaceAll(" ", '-').toLowerCase();
       }
     }catch(e){
 
     }
     
     $('.who-container .herl').html(`<img src="uploads/container_user_files/locations/` 
-                  + containername + `/property-images/` + homePageFeaturedProperties[1]['property_images'][0]['file']['file_name'] + `" class="img-fluid" alt="" />`);
+                  + containername + `/property-images/` + homePageFeaturedProperties[1]['propimage'][0]['file_name'] + `" class="img-fluid" alt="" />`);
     $('.who-container .img-left-when').html(`<img src="/property-image/resize/645x600/` + 
       containername + `/` + 
-      homePageFeaturedProperties[1]['property_images'][1]['file']['file_name'] + 
+      homePageFeaturedProperties[1]['propimage'][1]['file_name'] + 
       `/property-image" class="img-fluid" alt="" />`);  
 
       $('.to-right .title-2').html(homePageFeaturedProperties[1]['property_name']);
