@@ -358,12 +358,15 @@
 <script>
   function getattribute(e)
   {
-    var href = $(this).attr('href');  
+    window.history.pushState({}, document.title, window.location.pathname);
 
-    window.history.pushState({}, '', href);
+    var href = $(e).attr("href");  
+    var url = $(location).attr('href');
 
+    var fullurl = url + href;
+     window.history.pushState('active-tab', 'tab',fullurl);
     var hash = window.location.hash;
-    alert(hash);
+
     if(hash){
       $('#search-results-content #myTab a').removeClass('active');
       $('#search-results-content #myTab ' + hash + '-tab').addClass('active');
