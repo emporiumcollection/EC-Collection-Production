@@ -6653,7 +6653,7 @@ class PropertyController extends Controller {
         ->orderByRaw(DB::raw("RAND()"))->limit(2)->get();
         foreach($featured_hotel as $props){
 
-            $propimage = \DB::table('tb_properties_images')
+            $propimage = \DB::connection($conn)->table('tb_properties_images')
             ->join('tb_container_files', 'tb_container_files.id', '=', 'tb_properties_images.file_id')
             ->select('tb_container_files.id', 'tb_container_files.file_name', 'tb_container_files.folder_id')
             ->where('tb_properties_images.property_id', $props->id)
