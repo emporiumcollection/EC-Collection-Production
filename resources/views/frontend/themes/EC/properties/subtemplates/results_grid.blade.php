@@ -357,24 +357,26 @@
 </div>
 <script>
   function getattribute(e)
-    {
-      // alert(e);
-      var href = $(this).attr('href');
-      // alert(href);
-      window.history.pushState({}, '', href);
-      var hash = window.location.hash;
+  {
+    var href = $(this).attr('href');  
 
-      return href;
-    }
-  $(document).ready(function () {
-    // getattribute();
+    window.history.pushState({}, '', href);
+
     var hash = window.location.hash;
 
+    if(hash){
+      $('#search-results-content #myTab a').removeClass('active');
+      $('#search-results-content #myTab ' + hash + '-tab').addClass('active');
+      $(hash).show();
+    }
+  }
+
+  $(document).ready(function () {
+    var hash = window.location.hash;
     if(hash){
         $('#search-results-content #myTab a').removeClass('active');
         $('#search-results-content #myTab ' + hash + '-tab').addClass('active');
         $(hash).show();
     }
-
   });
 </script>
