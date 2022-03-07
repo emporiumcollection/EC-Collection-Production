@@ -35,12 +35,6 @@ body {
   background-color: #000 !important;
   border-color: #000 !important; 
 }
-.top-header .menu-s, .top-header-reservation .menu-s {
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 7px;
-  background: #FFFFFF !important;
-}
 .wizard-nav {
   width: 120px;
   position: fixed;

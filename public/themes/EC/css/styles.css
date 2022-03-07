@@ -446,6 +446,13 @@ pre {
   min-height: 45px;
 }
 
+.card-body img {
+    width: 100%;
+}
+.card-body h4, .card-body a {
+    padding: 5px;
+}
+
 @media (min-width: 576px) {
   .container, .container-sm {
     max-width: 540px; } }
@@ -27449,6 +27456,13 @@ h3 {
   -moz-osx-font-smoothing: grayscale;
   vertical-align: baseline; }
 
+.top-header .menu-s, .top-header-reservation .menu-s {
+  padding-left: 25px;
+  padding-right: 25px;
+  padding-top: 7px;
+  background: #FFF !important;
+}
+
 .top-menu-s {
   text-align: right;
   font-size: 14px;
@@ -30716,6 +30730,7 @@ span.calElement.prev:hover {
       font-size: 30px; }
     .gal .gal-list:hover img {
       transform: scale(1.1); }
+
 
 @media (max-width: 500px) {
   .gal {
@@ -36007,6 +36022,8 @@ button#clear span {
     padding: 15px 10px; }
       .wizard-nav .nav-link.active .ico, .wizard-nav .nav-link:hover .ico {
         filter: invert(67%) sepia(30%) saturate(170%) hue-rotate(119deg) brightness(90%) contrast(87%); }
+        .wizard-nav .nav-link.active .ico, .wizard-nav .nav-link:hover .wiza-title{
+        color: #EFEAE4;}
   .wizard-nav .ico-flight {
     width: 41px;
     height: 28px; }

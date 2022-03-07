@@ -6,7 +6,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #F9F8F2;
+  background-color: #FFFFFF;
 }
 .bg-btn-gl-001 {
   background: #13678A !important;
@@ -34,12 +34,6 @@ body {
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
   background-color: #000 !important;
   border-color: #000 !important; 
-}
-.top-header .menu-s, .top-header-reservation .menu-s {
-  padding-left: 25px;
-  padding-right: 25px;
-  padding-top: 7px;
-  background: #F9F8F2;
 }
 .wizard-nav {
   width: 120px;
