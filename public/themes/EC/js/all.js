@@ -2311,12 +2311,12 @@ function getNavitems(location, collection_name){
   var searchResultsChannelUrl = "/globalsearchavailability?view=channel&s="+location+"&arrive="+$("#arrive").val()+"&departure="+$("#departure").val()+"&type=destination&rac=r0a2c1#";
 
   return `<li class="nav-item">
-      <a class="nav-link nav-link-map" data-page="map" href="`+searchResultsPageUrl+`">
+      <a class="nav-link nav-link-map" data-page="map" data-collection="`+collection_name+`" href="`+searchResultsPageUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Map</span>
       </a>
     </li>
    <li class="nav-item">
-      <a class="nav-link nav-link-map" data-page="channel" href="`+searchResultsChannelUrl+`">
+      <a class="nav-link nav-link-map" data-page="channel" data-collection="`+collection_name+`" href="`+searchResultsChannelUrl+`">
         <span class="city-l">` + location + `</span> <span class="cat-l">Channel</span>
       </a>
     </li>

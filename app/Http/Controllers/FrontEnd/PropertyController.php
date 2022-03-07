@@ -7489,16 +7489,20 @@ class PropertyController extends Controller {
                         'image' => $this->getBestPlacesImages($place->fsq_id)
                     ];
                 }
-                $place_list = json_encode($data);
-                
-                \DB::table('tb_best_places')->insert([
-                    'location' => $near,
-                    'category' => $category,
-                    'best_places' => $place_list
-                ]);
-                $best_place_list = json_decode($place_list);
-                if(!empty($places)){
-                    $html .= view('frontend.themes.EC.layouts.subsections.best-places-section', ['places' => $best_place_list])->render();
+                foreach($data as $val){
+                    \DB::table('tb_best_places')->insert([
+                        'name' => $val['name'],
+                        'image' =>  $val['image'],
+                        'location' => $near,
+                        'category' => $category,
+                        'address' => $val['location']->formatted_address
+                    ]);
+                }
+
+                $best_place = \DB::table('tb_best_places')->where('location', '=', $near)->where('category', '=', $category)->get();
+
+                if(!empty($best_place)){
+                    $html .= view('frontend.themes.EC.layouts.subsections.best-places-section', ['places' => $best_place])->render();
                 }
             }
             echo json_encode([
@@ -7508,9 +7512,11 @@ class PropertyController extends Controller {
             exit;
         }
         else{
-            $place_list = json_decode($best_place[0]->best_places);
+            
+            $best_place = \DB::table('tb_best_places')->where('location', '=', $near)->where('category', '=', $category)->get();
+
             $html = '';
-            $html .= view('frontend.themes.EC.layouts.subsections.best-places-section', ['places' => $place_list])->render();
+            $html .= view('frontend.themes.EC.layouts.subsections.best-places-section', ['places' => $best_place])->render();
             echo json_encode([
                 'html' => $html
             ]);
