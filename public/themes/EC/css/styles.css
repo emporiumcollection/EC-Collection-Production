@@ -125,9 +125,6 @@ a {
   color: #007bff;
   text-decoration: none;
   background-color: transparent; }
-  a:hover {
-    color: #0056b3;
-    text-decoration: underline; }
 
 a:not([href]):not([class]) {
   color: inherit;
@@ -34873,11 +34870,7 @@ button:focus {
     font-weight: 600; }
   .hotel-book-container .card-body {
     font-size: 16px; }
-
-footer {
-  padding-top: 100px;
-  border-top: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: #f7f7f7; }
+    
   footer .container {
     max-width: 97%; }
   footer h3 {
@@ -35716,10 +35709,10 @@ footer {
   width: 50px;
   height: 50px; }
 
-.logo-list-container {
+/*.logo-list-container {
   background: #a8c5c0;
   padding-left: 45px;
-  padding-right: 45px; }
+  padding-right: 45px; }*/
 
 .logo-list {
   padding-top: 20px;

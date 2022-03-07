@@ -52,7 +52,36 @@
 
     <!-- Web Application Manifest -->
     <link rel="manifest" href="manifest.json">
-
+    <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
+    <style type="text/css">
+      body{
+        background-color: #FFFFF!important;
+      }
+    </style>
+<?php } ?>
+    
+<?php if(\Config::get('app.currentdomain') == 'spa'){?>
+    <style type="text/css">
+      body{
+        background-color: #F9F8F2!important;
+      }
+    </style>
+<?php } ?>
+    
+<?php if(\Config::get('app.currentdomain') == 'safari'){?>
+    <style type="text/css">
+      body{
+        background-color: #EFEAE4!important;
+      }
+    </style>
+<?php } ?>    
+<?php if(\Config::get('app.currentdomain') == 'islands'){?>
+    <style type="text/css">
+      body{
+        background-color: #FFFFFF!important;
+      }
+    </style>
+<?php } ?>
     <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}

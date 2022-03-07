@@ -69,6 +69,23 @@ body {
   background: #6A695C;
   color: #EFEAE4; 
 }
+
+.logo-list-container {
+  background: #6A695C;
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+footer {
+  padding-top: 100px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #EFEAE4;
+}
+a:hover {
+  color: #6A695C;
+  text-decoration: underline;
+}
+
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
   color: #fff;
   background: #6A695C; 
