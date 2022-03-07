@@ -122,18 +122,19 @@
               <i class="ico ico-mixer"></i>
             </a>
           </li> --}}
-          <?php if(Request::get('view') == 'map'):?>
+          <?php if(Request::get('view') == 'map'){?>
           <li class="nav-item">
             <a class="nav-link" href="<?php echo str_replace('&view=map','',Request::fullUrl());?>">
               <i class="ico ico-menu-grid mr-2"></i>
             </a>
           </li>
+          <?php }else{?>
           <li>
-            <a class="nav-link" href="<?php echo str_replace('&view=results','&view=map',Request::fullUrl());?>">
+            <a class="nav-link" href="<?php echo str_replace('&view=results','',Request::fullUrl()).'&view=map';?>">
               <i class="ico ico-place"></i>
             </a>
           </li>
-          <?php endif;?>
+          <?php }?>
           @if(Request::segment(1) != 'hotel')
           <?php if(Request::get('view') != 'map'):?>
           <li class="nav-item">

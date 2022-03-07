@@ -7419,6 +7419,7 @@ class PropertyController extends Controller {
     public function gallery_image_Api($keyword){
         $photos = LocationImage::where('location', '=', $keyword)
         ->get()->toArray();
+        // print_r($photos);exit;  
 
         if(empty($photos)){
             $us = new UnsplashSearch();

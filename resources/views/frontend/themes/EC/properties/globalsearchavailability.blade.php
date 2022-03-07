@@ -11,9 +11,40 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
 @section('meta_keywords', '')
 {{-- For Meta Description --}}
 @section('meta_description', '')
+
 {{-- For Page's Content Part --}}
 @section('content')
 
+<?php if(\Config::get('app.currentdomain') == 'voyage'){?>
+    <style type="text/css">
+      body{
+        background-color: #FFFFF!important;
+      }
+    </style>
+<?php } ?>
+    
+<?php if(\Config::get('app.currentdomain') == 'spa'){?>
+    <style type="text/css">
+      body{
+        background-color: #F9F8F2!important;
+      }
+    </style>
+<?php } ?>
+    
+<?php if(\Config::get('app.currentdomain') == 'safari'){?>
+    <style type="text/css">
+      body{
+        background-color: #EFEAE4!important;
+      }
+    </style>
+<?php } ?>    
+<?php if(\Config::get('app.currentdomain') == 'islands'){?>
+    <style type="text/css">
+      body{
+        background-color: #FFFFFF!important;
+      }
+    </style>
+<?php } ?>
 <script type="text/javascript" src="{{ asset('themes/EC/js/global-availability-search.js') }}"></script>
 <script type="text/javascript" src="{{ asset('themes/EC/js/reviews.js') }}"></script>
 <script type="text/javascript">
