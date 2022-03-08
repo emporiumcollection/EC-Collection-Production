@@ -192,8 +192,8 @@ class HotelDetailController extends Controller
             $this->data['res_menu'] = $this->get_restaurant_files($restaurant_detail->id, 'res', 'menu');
         }
         if(request()->segment(3) == 'bar' AND isset($bar_detail->id)){
-            $this->data['res_slider'] = $this->get_restaurant_files($restaurant_detail->id, 'res','slider');
-            $this->data['res_menu'] = $this->get_restaurant_files($restaurant_detail->id, 'res', 'menu');   
+            $this->data['res_slider'] = $this->get_restaurant_files($bar_detail->id, 'res','slider');
+            $this->data['res_menu'] = $this->get_restaurant_files($bar_detail->id, 'res', 'menu');   
         }   
 
         if(Session::has('keyword')){

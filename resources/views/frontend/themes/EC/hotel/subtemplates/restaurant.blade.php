@@ -31,11 +31,13 @@
         <?php if(isset($property->restaurantList) && !empty($property->restaurantList)){
           foreach ($property->restaurantList as $key => $value) {
             $slug = str_slug($value['title']);
-            if(is_array($value)){
-              $file_name = $value['gallery']['files'][0]['file_name'];
-            }else{
-              $file_name = 'default-image.png';
-            }
+            if(isset($value['gallery']['files'][0]['file_name']) && !empty($value['gallery']['files'][0]['file_name']))){
+              if(is_array($value)){
+                $file_name = $value['gallery']['files'][0]['file_name'];
+              }else{
+                $file_name = 'default-image.png';
+              }
+            }  
           ?>
           <div class="slider-item">
             <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}"  class="tab-lin scrollto">
