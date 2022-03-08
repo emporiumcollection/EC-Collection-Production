@@ -37,7 +37,7 @@ class CustomerController extends Controller {
         endif;
         $currentdomain = \Config::get('app.currentdomain');
         $onelogindomain = \Config::get('app.onelogindomain');
-        if($currentdomain != 'http://development.emporium-voyage.com'){
+        if($currentdomain != 'emporium-collection'){
             return Redirect::to($onelogindomain.'/register?referer='.request()->getSchemeAndHttpHost());
         }
         if (CNF_REGIST == 'false') :

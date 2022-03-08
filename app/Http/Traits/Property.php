@@ -481,9 +481,9 @@ trait Property {
                         ];
                     }
                     $property->suites[$sk]->price = $this->getSuitePrice($suite->id);
-                    if($property->suites[$sk]->price == 0){
-                        unset($property->suites[$sk]);
-                    }
+                    // if($property->suites[$sk]->price == 0){
+                    //     unset($property->suites[$sk]);
+                    // }
                 }
                 // print_r($property->suites->toArray());
                 $property->suites = $property->suites->values();
