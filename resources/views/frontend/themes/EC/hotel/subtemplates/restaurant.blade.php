@@ -28,7 +28,8 @@
     <div class="main-content">
       <div class="bg-grey p-4 restarant-container">
         <div class="restaurant-slide">
-          <?php foreach ($property->restaurantList as $key => $value) {
+        <?php if(isset($property->restaurantList) && !empty($property->restaurantList)){
+          foreach ($property->restaurantList as $key => $value) {
             $slug = str_slug($value['title']);
             if(is_array($value)){
               $file_name = $value['gallery']['files'][0]['file_name'];
@@ -46,7 +47,7 @@
               </div>
             </a>
           </div>
-          <?php }    
+          <?php } }   
             if (isset($property->barList) && !empty($property->barList)) {
               foreach ($property->barList as $key => $bar) {
                 $slug = str_slug($bar['title']);
