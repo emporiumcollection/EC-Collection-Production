@@ -50,25 +50,27 @@
             if (isset($property->barList) && !empty($property->barList)) {
               foreach ($property->barList as $key => $bar) {
                 $slug = str_slug($bar['title']);
-                foreach($bar['gallery']['files'] as $key => $image){
-                  if($key == 0){
-                    if(is_array($image)){
-                      $file_name = $image['file_name'];
-                    }else{
-                      $file_name = 'default-image.png';
-                    }?>
-                    <div class="slider-item">
-                      <a href="/hotel/{{ $property->property_slug }}/{{'bar'}}/{{$slug}}" class="tab-link scrollto">
-                        <div class="slider-item-img">
-                          <img src="{{ asset('/property-image/resize/205x300/'.$slug.'/'.$file_name.'/bar-image')}}" alt="">
-                        </div>
-                        <div class="text-center mt-3">
-                          <p class="mb-0">{{ $bar['title'] }}</p>
-                        </div>
-                      </a>
-                    </div>
-                  <?php }
-                }
+                if(isset($bar['gallery']['files'])){
+                  foreach($bar['gallery']['files'] as $key => $image){
+                    if($key == 0){
+                      if(is_array($image)){
+                        $file_name = $image['file_name'];
+                      }else{
+                        $file_name = 'default-image.png';
+                      }?>
+                      <div class="slider-item">
+                        <a href="/hotel/{{ $property->property_slug }}/{{'bar'}}/{{$slug}}" class="tab-link scrollto">
+                          <div class="slider-item-img">
+                            <img src="{{ asset('/property-image/resize/205x300/'.$slug.'/'.$file_name.'/bar-image')}}" alt="">
+                          </div>
+                          <div class="text-center mt-3">
+                            <p class="mb-0">{{ $bar['title'] }}</p>
+                          </div>
+                        </a>
+                      </div>
+                    <?php }
+                  }
+                }  
               }
             } ?>    
           </div>

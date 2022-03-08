@@ -129,6 +129,8 @@ Route::get('/reserve/summary/{id}', 'Traveller\ReservationController@summaryData
 
 Route::get('/reserve_data', 'FrontEnd\ReservationController@addReservationData');
 
+Route::get('/getloaderimg/{dest}', 'FrontEnd\PropertyController@getLoaderImagesApi');
+
 // Route::post('/users/bookingsummary', 'UserController@bookingsummary');
 
 /**

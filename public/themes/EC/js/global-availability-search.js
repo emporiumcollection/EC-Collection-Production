@@ -1051,12 +1051,51 @@ function getUrlParam(p){
 
 var currentSearch = '';
 function filterDestination(dest){
+  getLoaderInfo(dest);
+  $('.pageload').show();
+
   currentSearch = dest;
   $('.close-collapse').trigger("click");
   var view = getUrlParam('view');
   var url = createSearchUrl('', view);
   //searchResults(url);
   document.location = url;
+}
+function getLoaderInfo(dest){
+  $.ajax({
+      url: '/getloaderimg/'+dest,
+      dataType:'json',
+      type: 'get',
+      async: false,
+      success: function(response){ 
+          console.log(response.title);
+          console.log(response.image);
+          console.log(response.description);
+        $('.loading-title').html(response.title);
+        $('.pageload').css("background-image", 'url("'+response.image+'")');
+        $('.loading-content').html(response.description);
+
+      //   var loaderImage = ''; 
+      //   if(response[0]['files'] != '' && response[0]['files'][0]['file_name'] != ''){
+      //       loaderImage = `url("uploads/container_user_files/emotional-gallery-loader/` + response[0]['name'] + `/` + response[0]['files'][0]['file_name']+`")`;
+      //       $('.pageload').css("background-image",loaderImage);
+      //   }else{
+      //     loaderImage = 'images/ecd67d87075247.5dad757ad6705.jpg';
+      //     $('.pageload').css("background-image",loaderImage);
+      //   }
+      //   console.log(loaderImage);
+      //   if(response[0]['title']){
+      //     var loaderTitle = response[0]['title'];
+      //     $('.loading-title').html(loaderTitle);
+      //     console.log(loaderTitle);
+      //   }
+      //   if(response[0]['description']){
+      //     var loaderDescription = response[0]['description'];
+      //     $('.loading-content').html(loaderDescription);
+      //     console.log(loaderDescription);
+      //   }
+      }
+    }); 
 }
 
 function createSearchUrl(experience = '', layoutView = 'ajax'){

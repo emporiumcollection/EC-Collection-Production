@@ -772,9 +772,9 @@ trait Property {
         ->with(['files'])
         ->get()
         ->toArray();
-
         Cache::store('file')->put($cacheKey, $loaderImages, 14400);
 
+        // print_r($loaderImages);exit;
         return $loaderImages;
     }
 

@@ -7557,4 +7557,29 @@ class PropertyController extends Controller {
         }
         return $PlaceImageUrl;
     }
+    public function getLoaderImagesApi($dest){
+        
+        $loaderinfo = $this->getLoaderImages($dest);
+        $loaderImage = 'images/ecd67d87075247.5dad757ad6705.jpg';
+        $loaderTitle = 'Loading Luxury-Collection-Name';
+        $loaderDescription = 'We are working to get collection of your choice.';
+
+        if(isset($loaderinfo[0]['files']) && !empty($loaderinfo[0]['files'])){
+            foreach($loaderinfo as $limage){      
+                if(file_exists(public_path().'/uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $limage['files'][0]['file_name'])){
+
+                $loaderImage = 'uploads/container_user_files/emotional-gallery-loader/' . $limage['name'] . '/' . $limage['files'][0]['file_name'];
+
+                $loaderTitle = $limage['title'];
+                $loaderDescription = $limage['description'];    
+                break;
+              }
+            }
+        }
+        
+        $res['image'] = $loaderImage;
+        $res['title'] = $loaderTitle;
+        $res['description'] = $loaderDescription;
+        echo json_encode($res);
+    }
 }
