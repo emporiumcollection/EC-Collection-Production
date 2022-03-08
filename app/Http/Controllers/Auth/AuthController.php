@@ -72,7 +72,7 @@ class AuthController extends Controller
         $request->mobile_number =  $Countrycode.$mobile_number;
         
         $valid = $this->validate($request, [
-            'mobile_number' => 'required|unique:tb_users',
+            'mobile_number' => 'required:tb_users',
             'email' => 'required|string||unique:tb_users',
             'password' => 'required|string|max:15',
         ]);
