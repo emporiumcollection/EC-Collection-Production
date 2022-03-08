@@ -60,6 +60,18 @@ body {
   background: #89a49f1a;
   color: #89a49f; 
 }
+.logo-list-container {
+  background: #a8c5c0;
+  padding-left: 45px;
+  padding-right: 45px;
+}
+
+footer {
+  padding-top: 100px;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #FFFFFF;
+} 
+
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
   color: #fff;
   background: #89a49f; 

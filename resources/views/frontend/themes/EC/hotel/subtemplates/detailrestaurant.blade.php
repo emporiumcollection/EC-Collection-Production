@@ -116,6 +116,7 @@ if(Request::segment(3) == 'bar'){
         <div class="col-md-12 mmb-4">
           <div class="grid-layout" id="location_gallery_hotel">
             <?php
+            if(isset($value['gallery']['files'])):
               foreach ($value['gallery']['files'] as $key => $image): 
               if($key == 0){
               if(is_array($image)){
@@ -143,6 +144,7 @@ if(Request::segment(3) == 'bar'){
             </a>
             <?php }  
              endforeach;
+            endif;
             ?>
           </div>
         </div>
