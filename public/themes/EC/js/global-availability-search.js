@@ -218,6 +218,7 @@ function replaceGalleryImages(id, place, list, image_path){
   if(!properties[id]){
     getPropertybyId(id);
   }
+  $('#hotel_gallery-tab').trigger('click');
   try{
     $('[data-place="' + place + '"]').each(function() {
         // field = $(this).attr('data-replace');
