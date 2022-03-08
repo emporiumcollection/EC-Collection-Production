@@ -6666,7 +6666,7 @@ class PropertyController extends Controller {
             if(!empty($propimage)){
                 //$propimage_thumbpath = $site_url.(new ContainerController)->getThumbpathForSearch($propimage[0]->folder_id);
                 //$propimage_thumbpath_dir = public_path(str_replace(url().'/', '', (new ContainerController)->getThumbpath($propimage[0]->folder_id)));
-                $propimage_containerpath = (new ContainerController)->getContainerUserPath($propimage[0]->folder_id);
+                $propimage_containerpath = (new ContainerController)->getContainerPath2($propimage[0]->folder_id);
             }
             $prop['propimage'] = $propimage;
             //$prop['thumb'] = $propimage_thumbpath;
