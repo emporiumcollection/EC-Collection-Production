@@ -32723,9 +32723,6 @@ span.calElement.prev:hover {
 
 .nav-pills.tabs-w3 .nav-link {
   background: #f3f3f3; }
-  .nav-pills.tabs-w3 .nav-link.active {
-    background: #e4e4e4;
-    color: #000; }
 
 .barcode-suite {
   width: 57%;

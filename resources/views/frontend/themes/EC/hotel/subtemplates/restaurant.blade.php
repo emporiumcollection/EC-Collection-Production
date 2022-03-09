@@ -31,7 +31,7 @@
         <?php if(isset($property->restaurantList) && !empty($property->restaurantList)){
           foreach ($property->restaurantList as $key => $value) {
             $slug = str_slug($value['title']);
-            if(isset($value['gallery']['files'][0]['file_name']) && !empty($value['gallery']['files'][0]['file_name']))){
+            if(isset($value['gallery']['files'][0]['file_name']) && !empty($value['gallery']['files'][0]['file_name'])){
               if(is_array($value)){
                 $file_name = $value['gallery']['files'][0]['file_name'];
               }else{

@@ -84,6 +84,10 @@ a:hover {
   color: #13678A;
   text-decoration: underline;
 }
+.nav-pills.tabs-w3 .nav-link.active {
+  background: #13678A;
+  color: #000; 
+}
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
   color: #fff;
   background: #13678A; 

@@ -71,7 +71,10 @@ footer {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   background-color: #FFFFFF;
 } 
-
+.nav-pills.tabs-w3 .nav-link.active {
+  background: #89a49f;
+  color: #000; 
+}
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
   color: #fff;
   background: #89a49f; 
