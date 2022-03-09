@@ -6,7 +6,7 @@ body {
   line-height: 1.5;
   color: #212529;
   text-align: left;
-  background-color: #FFFFFF;
+  background-color: #f3ebe8;
 }
 .bg-btn-gl-001 {
   background: #a8c5c0 !important;
@@ -69,11 +69,23 @@ body {
 footer {
   padding-top: 100px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);
-  background-color: #FFFFFF;
+  background-color: #f3ebe8;
 } 
 .nav-pills.tabs-w3 .nav-link.active {
   background: #89a49f;
   color: #000; 
+}
+.covid-info {
+  position: absolute;
+  z-index: 1;
+  bottom: 17px;
+  left: 20px;
+  right: 20px;
+  background: linear-gradient(92.49deg, #045d52 15.4%, #02a175 123.85%);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: flex;
 }
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
   color: #fff;

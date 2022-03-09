@@ -34174,17 +34174,6 @@ button:focus {
   .valmonth span.show {
     display: inline-block; }
 
-.covid-info {
-  position: absolute;
-  z-index: 1;
-  bottom: 17px;
-  left: 20px;
-  right: 20px;
-  background: linear-gradient(92.49deg, #045d52 15.4%, #02a175 123.85%);
-  color: #fff;
-  padding: 10px 15px;
-  border-radius: 8px;
-  display: flex; }
   .covid-info .ico-security {
     flex: 0 0 44px;
     height: 44px;

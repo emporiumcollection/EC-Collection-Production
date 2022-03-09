@@ -87,6 +87,18 @@ a:hover {
   background: #0FC2C0;
   color: #000; 
 }
+.covid-info {
+  position: absolute;
+  z-index: 1;
+  bottom: 17px;
+  left: 20px;
+  right: 20px;
+  background: linear-gradient(92.49deg, #0FC2C0 15.4%, #0FC2C0 123.85%);
+  color: #fff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: flex;
+}
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
   color: #fff;
   background: #0FC2C0; 
