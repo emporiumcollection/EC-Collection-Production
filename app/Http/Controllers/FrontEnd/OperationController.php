@@ -18,7 +18,6 @@ class OperationController extends Controller
     }
 
     public function removePropertyDir($id){
-        print_r($id);exit;
         $property = properties::select('id','property_name','property_slug')
         ->where('id',$id)
         ->first();
