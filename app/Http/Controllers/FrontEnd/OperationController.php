@@ -4,7 +4,7 @@ namespace App\Http\Controllers\FrontEnd;
 use App\Http\Controllers\controller;	
 use Illuminate\Http\Request;
 use App\Helpers\CommonHelper;
-
+use App\Models\properties;
 /**
  * 
  */
@@ -18,6 +18,7 @@ class OperationController extends Controller
     }
 
     public function removePropertyDir($id){
+        print_r($id);exit;
         $property = properties::select('id','property_name','property_slug')
         ->where('id',$id)
         ->first();
