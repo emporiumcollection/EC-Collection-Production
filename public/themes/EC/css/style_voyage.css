@@ -87,6 +87,13 @@ footer {
   border-radius: 8px;
   display: flex;
 }
+.covid-info .ico-security {
+  flex: 0 0 44px;
+  height: 44px;
+  background: #045d52;
+  border-radius: 50%;
+  padding: 11px;
+}
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
   color: #fff;
   background: #89a49f; 
