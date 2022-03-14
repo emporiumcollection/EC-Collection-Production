@@ -256,7 +256,7 @@
             })
         });
     <?php if(isset($matched) && !empty($matched)){ ?>
-        var matched = '<?=json_encode( addslashes($matched))?>'; 
+        var matched = '<?php echo addslashes(json_encode($matched))?>'; 
     <?php } 
     ?>
     $(document).ready(function () {
