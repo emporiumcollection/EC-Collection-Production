@@ -233,52 +233,53 @@ class ContainerController extends Controller {
 					}
 					if($exFtype[0]=="image")
 					{
-						if (!File::exists(public_path(). '/uploads/thumbs/thumb_'.$filesObj->folder_id.'_'.$filesObj->file_name))
-						{
-							$mdimg = \Image::make($imgpath.$filesObj->file_name);
-							$mdimg->resize(128, 130);
-							$thumbfile = 'thumb_'.$filesObj->folder_id.'_'.$filesObj->file_name;
-							$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
-						}
+						// if (!File::exists(public_path(). '/uploads/thumbs/thumb_'.$filesObj->folder_id.'_'.$filesObj->file_name))
+						// {
+						// 	$mdimg = \Image::make($imgpath.$filesObj->file_name);
+						// 	$mdimg->resize(128, 130);
+						// 	$thumbfile = 'thumb_'.$filesObj->folder_id.'_'.$filesObj->file_name;
+						// 	$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+						// }
 						
-						if (!File::exists(public_path(). '/uploads/thumbs/format_'.$filesObj->folder_id.'_'.$filesObj->file_name))
-						{
-							$mdimg = \Image::make($imgpath.$filesObj->file_name);
-							$actualsize = getimagesize($imgpath.$filesObj->file_name);
-							if($actualsize[0]>$actualsize[1])
-							{
-								$mdimg->resize(320, null, function ($constraint) {
-									$constraint->aspectRatio();
-								});
-							}
-							else
-							{
-								$mdimg->resize(null, 320, function ($constraint) {
-									$constraint->aspectRatio();
-								});
-							}
-							$thumbfile = 'format_'.$filesObj->folder_id.'_'.$filesObj->file_name;
-							$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
-						}
-						if (!File::exists(public_path(). '/uploads/thumbs/highflip_'.$filesObj->folder_id.'_'.$filesObj->file_name))
-						{
-							$mdimg = \Image::make($imgpath.$filesObj->file_name);
-							$actualsize = getimagesize($imgpath.$filesObj->file_name);
-							if($actualsize[0]>$actualsize[1])
-							{
-								$mdimg->resize(1000, null, function ($constraint) {
-									$constraint->aspectRatio();
-								});
-							}
-							else
-							{
-								$mdimg->resize(null, 1000, function ($constraint) {
-									$constraint->aspectRatio();
-								});
-							}
-							$thumbfile = 'highflip_'.$filesObj->folder_id.'_'.$filesObj->file_name;
-							$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
-						}
+						// if (!File::exists(public_path(). '/uploads/thumbs/format_'.$filesObj->folder_id.'_'.$filesObj->file_name))
+						// {
+						// 	$mdimg = \Image::make($imgpath.$filesObj->file_name);
+						// 	$actualsize = getimagesize($imgpath.$filesObj->file_name);
+						// 	if($actualsize[0]>$actualsize[1])
+						// 	{
+						// 		$mdimg->resize(320, null, function ($constraint) {
+						// 			$constraint->aspectRatio();
+						// 		});
+						// 	}
+						// 	else
+						// 	{
+						// 		$mdimg->resize(null, 320, function ($constraint) {
+						// 			$constraint->aspectRatio();
+						// 		});
+						// 	}
+						// 	$thumbfile = 'format_'.$filesObj->folder_id.'_'.$filesObj->file_name;
+						// 	$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+						// }
+						// if (!File::exists(public_path(). '/uploads/thumbs/highflip_'.$filesObj->folder_id.'_'.$filesObj->file_name))
+						// {
+						// 	echo"hereImahe12";exit;
+						// 	$mdimg = \Image::make($imgpath.$filesObj->file_name);
+						// 	$actualsize = getimagesize($imgpath.$filesObj->file_name);
+						// 	if($actualsize[0]>$actualsize[1])
+						// 	{
+						// 		$mdimg->resize(1000, null, function ($constraint) {
+						// 			$constraint->aspectRatio();
+						// 		});
+						// 	}
+						// 	else
+						// 	{
+						// 		$mdimg->resize(null, 1000, function ($constraint) {
+						// 			$constraint->aspectRatio();
+						// 		});
+						// 	}
+						// 	$thumbfile = 'highflip_'.$filesObj->folder_id.'_'.$filesObj->file_name;
+						// 	$mdimg->save(public_path(). '/uploads/thumbs/'.$thumbfile);
+						// }
 					}
 					
 					// delete landing_info view
@@ -628,7 +629,7 @@ class ContainerController extends Controller {
 				return view('container.iframe',$this->data);
 			}
 			else
-			{    
+			{    	
 			    $is_demo6 = trim(\CommonHelper::isHotelDashBoard());
                 $file_name = (strlen($is_demo6) > 0)?$is_demo6.'.container.index':'container.index';
                 
@@ -1410,7 +1411,7 @@ class ContainerController extends Controller {
 		$uid = \Auth::user()->id;
 		$items = Input::get('selecteditems');
 		if($items!='')
-		{
+		{			
 			$comsep = explode(',',$items);
 			foreach($comsep as $sepr)
 			{
@@ -1419,7 +1420,6 @@ class ContainerController extends Controller {
 				{
 					$childs = $this->fetchFolderChildListIds($undsep[1]);
 					$dirPath = $this->getContainerUserPath($undsep[1]);
-
 					if( is_dir($dirPath) === true )
 					{
 						array_unshift($childs, $undsep[1]);
@@ -1463,6 +1463,7 @@ class ContainerController extends Controller {
 		}
 		else
 		{
+
 			return Redirect::to(Input::get('curnurl'))->with('messagetext','Please Select Folders/Files First.')->with('msgstatus','error');
 		}
 	}

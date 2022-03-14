@@ -55,7 +55,7 @@ class MatchController extends Controller
         $this->data['allprops'] = properties::select(['id', 'property_name'])
         ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
         ->orderBy('property_name', 'asc')
-       ->limit(2)    
+       ->limit(10)    
         ->get();
 
         $curl = curl_init();
@@ -81,14 +81,14 @@ class MatchController extends Controller
         curl_close($curl);
 
         if ($err) {
-            echo "cURL Error #:" . $err;echo "here";
+            echo "cURL Error #:" . $err;
         } else {
             $response = json_decode($response);
             if(!empty($response)){
                 foreach($response as $val){
                     
                     if(trim($val->dest_type) == 'city'){
-                        $res =  $this->getProperties($val->dest_id, $keyword, $destinationId);
+                        $res =  $this->getProperties($val->dest_id,$keyword, $destinationId);
                         $this->data['hotels'] = $res['hotels'];
                         $this->data['matched'] = $res['matched'];
                         return view('match.matchhotels')->with($this->data);
@@ -101,13 +101,62 @@ class MatchController extends Controller
     }
 
 
-    private function getProperties($dest_id, $keyword, $destinationId){
-        if(\DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->exists()){
+    private function getProperties($dest_id,$keyword, $destinationId){
+        if(\DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('destination',$keyword)->exists()){
+            $fetchedData = \DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('destination',$keyword)->get();
+            
+            $matchedIds = [];
+            $matched = [];
+            $hotels = [];
 
-            $fetchDtlFrmdb =  $this->getDetailFromDatabse($dest_id);
+            foreach ($fetchedData as $key => $value) {
+                $DecodedData = json_decode($value->response);
+                 foreach ($DecodedData->result as $value) {
+                    $searchValue = addslashes($value->hotel_name);
+                    $searchValue = str_replace("Hotel", "", $searchValue);
+                    $searchValue = str_replace("$keyword", "", $searchValue);
+                    $searchValue = preg_replace('/[^A-Za-z0-9\-]/', '', $searchValue);
+                    $parts = explode(" ", $searchValue);
+                
+                    if(count($parts)>=2){
+                        $searchValue = "$parts[0] $parts[1]";
+                        if(isset($parts[2])){
+                            $searchValue = "$parts[0] $parts[1] $parts[2]";
+                        }
+                        if(isset($parts[3])){
+                            $searchValue = "$parts[0] $parts[1] $parts[2] $parts[3]";
+                        }
+                    }else{
+                        $searchValue = $parts[0];
+                    }
+                    $searchValue = str_replace(' ', ' +', trim($searchValue));
+                    $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")
+                    ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
+                    ->first();
+                    
+                    // where('property_name','like', "%$value->hotel_name%")->first();
+                    $hotels[] = [
+                        'hotel_id' => $value->hotel_id,
+                        'hotel_name' => $value->hotel_name,
+                        
+                    ];
+                    if(!empty($property)){ // && !in_array($property->id, $matchedIds)
+                        $matchedIds[] = $property->id;
+                        $matched[] = [
+                            'property_id' => $property->property_id,
+                            'dest_id' => $dest_id,
+                            'hotel_name' => $value->hotel_name,
+                            'hotel_id' => $value->hotel_id,
+                            'matched_property' => $property->property_name
+                        ];
+                    }
+                }
 
-        }else{
-
+            }
+            return ['hotels' => $hotels, 'matched' => $matched];
+        }
+        else
+        {
             $response = $this->getHotelDetail(0,$dest_id);
             
             if (!$response['status'] == 'success') {
@@ -117,9 +166,9 @@ class MatchController extends Controller
                 $matched = [];
                 $hotels = [];
                 $pages_no = $response['response']->count / 20;
-                for($i=0; $i <=5; $i++){
-                    
+                for($i=0; $i <=$pages_no; $i++){
                     $response = $this->getHotelDetail($i,$dest_id);
+                    
                     if (!$response['status'] == 'success') {
                         echo "cURL Error #:" . $response['err'];
                     } else {
@@ -172,7 +221,23 @@ class MatchController extends Controller
     }
 
     private function getHotelDetail($pages_no,$dest_id){
-        $array = array();
+        if(\DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('page_no',$pages_no)->exists()){
+
+            $fetchedData = \DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('page_no',$pages_no)->first();
+
+            if (empty($fetchedData->response)) {
+                $array['status'] = 'failed' ;
+                $array['err'] = "Hotel Data Not Found.";
+                return $array;
+            } else {
+                $response = json_decode($fetchedData->response);
+                $array['status'] = 'success' ;
+                $array['fetchFrom'] = 'database' ;
+                $array['response'] = $response;
+                return $array;
+            }
+        }else{
+            $array = array();
 
             $checkin_date = date ('Y-m-d', strtotime ('+28 day'));
             $checkout_date = date ('Y-m-d', strtotime ('+30 day'));
@@ -194,15 +259,17 @@ class MatchController extends Controller
                 ]);
 
                 $response = curl_exec($curl);
-
                 $destination = json_decode($response);
-                $addResponse = \DB::table('tb_booking_hotel_response')->insert([
-                    'page_no' => $pages_no,
-                    'dest_id' => $dest_id,
-                    'destination' => $destination->result[0]->city,
-                    'response' => $response
-                ]);
+                if(\DB::table('tb_booking_hotel_response')->where('page_no',$pages_no)->exists()){
 
+                }else{
+                    $addResponse = \DB::table('tb_booking_hotel_response')->insert([
+                        'page_no' => $pages_no,
+                        'dest_id' => $dest_id,
+                        'destination' => $destination->result[0]->city,
+                        'response' => $response
+                    ]);
+                }
                 $err = curl_error($curl);
 
                 curl_close($curl);
@@ -217,7 +284,9 @@ class MatchController extends Controller
                     $array['status'] = 'success' ;
                     $array['response'] = $response;
                     return $array;
-                }
+                }    
+        }
+        
 
     }
 
@@ -233,7 +302,7 @@ class MatchController extends Controller
                     ->where('page_no',$i)
                     ->first();
             // $response = json_decode()                    
-        print_r($getHotelDetail->response);exit;
+        // print_r($getHotelDetail->response);exit;
         }
         $array['status'] = 'success' ;
         $array['response'] = $response;
@@ -449,75 +518,134 @@ class MatchController extends Controller
     public function importHotelDetail(Request $request)
     {
         $hotelDetail =  $this->getHotelDetail(0,$request->dest_id);
-        foreach($hotelDetail['response']->result as $hotels){
-            if($hotels->hotel_id == $request->id){
-                echo "this is if Section";
-            }else{
-                if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
-                    return response()->json(['status' => false]);
-                }else{
-                    $pages_no = $hotelDetail['response']->count / 20;
-                    for($i=0; $i <=$pages_no; $i++){
-                    
-                        $hotelDetail = $this->getHotelDetail($i,$request->dest_id);
-                        foreach($hotelDetail['response']->result as $hotels){
+        
+            if(isset($hotelDetail['fetchFrom']) && $hotelDetail['fetchFrom'] == 'database'){
+                foreach($hotelDetail['response']->result as $hotels){                    
 
-                            if(isset($hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value)){
-                                $city_tax = $hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value;
-                            }
-                            if($hotels->hotel_id == $request->hotel_id){
-                                properties::insert([
-                                    'booking_hotel_id' => $request->hotel_id,
-                                    'property_name' => $hotels->hotel_name,
-                                    'city' => $hotels->city,
-                                    'hotel_currency' => $hotels->currencycode,
-                                    'latitude' => $hotels->latitude,
-                                    'longitude' => $hotels->longitude,
-                                    'address' => $hotels->address,
-                                    'hotel_time_zone' => $hotels->timezone,
-                                    'city_tax' => $city_tax,
+                        if(isset($hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value)){
+                            $city_tax = $hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value;
+                        }
+
+                        if($hotels->hotel_id == $request->hotel_id){
+                            properties::insert([
+                                'booking_hotel_id' => $request->hotel_id,
+                                'property_name' => $hotels->hotel_name,
+                                'city' => $hotels->city,
+                                'hotel_currency' => $hotels->currencycode,
+                                'latitude' => $hotels->latitude,
+                                'longitude' => $hotels->longitude,
+                                'address' => $hotels->address,
+                                'hotel_time_zone' => $hotels->timezone,
+                                'city_tax' => $city_tax,
+                                'created' => date("Y-m-d: H:i:s"),
+                                'updated' => date("Y-m-d: H:i:s"),
+                            ]);
+                            $property_id = DB::getPdo()->lastInsertId();
+
+                            $roomDetail = $this->blockDetail($hotels->hotel_id);
+                            $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
+                            $this->getHotelPolicy($hotels->hotel_id,$property_id);
+                            $rooms_array = [];
+                            $policies = "";
+                            
+                            foreach($roomDetail[0]->block as $rooms){
+                                foreach($rooms->block_text->policies as $policy){
+                                    $policies .= PHP_EOL;
+                                    $policies .= $policy->class.PHP_EOL;
+                                    $policies .= $policy->content.PHP_EOL;
+                                    $policies .= PHP_EOL;
+                                }
+
+                                $room_name = $rooms->room_name;
+                                $room_id = $rooms->room_id;
+                                
+                                PropertyCategoryTypes::insert([
+                                    'property_id' => $property_id,
+                                    'category_name' => $room_name,
+                                    'booking_policy' => $policies,
+                                    'bathroom' => $rooms->number_of_bathrooms,
+                                    'bads' => $rooms->extrabed_available,
+                                    'guests_adults' => $rooms->nr_adults,
+                                    // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
+                                    'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
+                                    'status' => 0,
                                     'created' => date("Y-m-d: H:i:s"),
                                     'updated' => date("Y-m-d: H:i:s"),
                                 ]);
-                                $property_id = DB::getPdo()->lastInsertId();
-
-                                $roomDetail = $this->blockDetail($hotels->hotel_id);
-                                $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
-
-                                $this->getHotelPolicy($hotels->hotel_id,$property_id);
-                                $rooms_array = [];
-                                $policies = "";
-                                
-                                foreach($roomDetail[0]->block as $rooms){
-                                    foreach($rooms->block_text->policies as $policy){
-                                        $policies .= PHP_EOL;
-                                        $policies .= $policy->class.PHP_EOL;
-                                        $policies .= $policy->content.PHP_EOL;
-                                        $policies .= PHP_EOL;
+                            }
+                             return response()->json(['status' => true]);
+                        }
+                    }    
+            }
+            else
+            {
+                foreach($hotelDetail['response']->result as $hotels){
+                    
+                    if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
+                            return response()->json(['status' => false]);
+                        }else{
+                            $pages_no = $hotelDetail['response']->count / 20;
+                            for($i=0; $i <=$pages_no; $i++){
+                                $hotelDetail = $this->getHotelDetail($i,$request->dest_id);
+                                foreach($hotelDetail['response']->result as $hotels){
+                                    if(isset($hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value)){
+                                        $city_tax = $hotels->composite_price_breakdown->product_price_breakdowns[0]->items[0]->item_amount->value;
                                     }
+                                    if($hotels->hotel_id == $request->hotel_id){
+                                        properties::insert([
+                                            'booking_hotel_id' => $request->hotel_id,
+                                            'property_name' => $hotels->hotel_name,
+                                            'city' => $hotels->city,
+                                            'hotel_currency' => $hotels->currencycode,
+                                            'latitude' => $hotels->latitude,
+                                            'longitude' => $hotels->longitude,
+                                            'address' => $hotels->address,
+                                            'hotel_time_zone' => $hotels->timezone,
+                                            'city_tax' => $city_tax,
+                                            'created' => date("Y-m-d: H:i:s"),
+                                            'updated' => date("Y-m-d: H:i:s"),
+                                        ]);
+                                        $property_id = DB::getPdo()->lastInsertId();
 
-                                    $room_name = $rooms->room_name;
-                                    $room_id = $rooms->room_id;
-                                    
-                                    PropertyCategoryTypes::insert([
-                                        'property_id' => $property_id,
-                                        'category_name' => $room_name,
-                                        'booking_policy' => $policies,
-                                        'bathroom' => $rooms->number_of_bathrooms,
-                                        // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
-                                        // 'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
-                                        'status' => 0,
-                                        'created' => date("Y-m-d: H:i:s"),
-                                        'updated' => date("Y-m-d: H:i:s"),
-                                    ]);
-                                }
-                                 return response()->json(['status' => true]);
+                                        $roomDetail = $this->blockDetail($hotels->hotel_id);
+
+                                        $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
+
+                                        $this->getHotelPolicy($hotels->hotel_id,$property_id);
+                                        $rooms_array = [];
+                                        $policies = "";
+                                        
+                                        foreach($roomDetail[0]->block as $rooms){
+                                            foreach($rooms->block_text->policies as $policy){
+                                                $policies .= PHP_EOL;
+                                                $policies .= $policy->class.PHP_EOL;
+                                                $policies .= $policy->content.PHP_EOL;
+                                                $policies .= PHP_EOL;
+                                            }
+
+                                            $room_name = $rooms->room_name;
+                                            $room_id = $rooms->room_id;
+                                            
+                                            PropertyCategoryTypes::insert([
+                                                'property_id' => $property_id,
+                                                'category_name' => $room_name,
+                                                'booking_policy' => $policies,
+                                                'bathroom' => $rooms->number_of_bathrooms,
+                                                // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
+                                                // 'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
+                                                'status' => 0,
+                                                'created' => date("Y-m-d: H:i:s"),
+                                                'updated' => date("Y-m-d: H:i:s"),
+                                            ]);
+                                        }
+                                         return response()->json(['status' => true]);
+                                    }
+                                }    
                             }
                         }    
                     }
-                }    
-            }
-        }       
+                }
+        
     }
 
 
@@ -559,8 +687,10 @@ class MatchController extends Controller
 
     public function DisplayRoomImages(Request $request){
         $roomImages = $this->blockDetail($request->hotel_id);
+        if(isset($roomImages[0]->block[0]->room_id)){
+            $room_id = $roomImages[0]->block[0]->room_id;    
+        }
         
-        $room_id = $roomImages[0]->block[0]->room_id;
         foreach ($roomImages[0]->rooms as $key => $value) {
             if($key == $room_id){
 

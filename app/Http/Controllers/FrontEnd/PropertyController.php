@@ -7480,6 +7480,7 @@ class PropertyController extends Controller {
             if($curl_status == 200){
                 $response = json_decode($response);
                 $places = $response->results;
+
                 foreach($places as $place){
                     $data[]= [
                         'fsq_id' => $place->fsq_id,
@@ -7489,18 +7490,18 @@ class PropertyController extends Controller {
                         'image' => $this->getBestPlacesImages($place->fsq_id)
                     ];
                 }
-                foreach($data as $val){
-                    \DB::table('tb_best_places')->insert([
-                        'name' => $val['name'],
-                        'image' =>  $val['image'],
-                        'location' => $near,
-                        'category' => $category,
-                        'address' => $val['location']->formatted_address
-                    ]);
+                if(isset($data)){
+                    foreach($data as $val){
+                        \DB::table('tb_best_places')->insert([
+                            'name' => $val['name'],
+                            'image' =>  $val['image'],
+                            'location' => $near,
+                            'category' => $category,
+                            'address' => $val['location']->formatted_address
+                        ]);
+                    }
                 }
-
                 $best_place = \DB::table('tb_best_places')->where('location', '=', $near)->where('category', '=', $category)->get();
-
                 if(!empty($best_place)){
                     $html .= view('frontend.themes.EC.layouts.subsections.best-places-section', ['places' => $best_place])->render();
                 }

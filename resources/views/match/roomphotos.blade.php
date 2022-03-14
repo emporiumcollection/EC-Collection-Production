@@ -7,9 +7,13 @@
             </div>
         </div>
     @endif
-        <?php foreach ($photos as $key => $value) { ?>
-            <div class="col-sm-12">
-                <a href="{{ $value->url_640x200}}" target="blank">Room Image{{ $key}}</a>
+        <?php foreach ($photos as $key => $value) { 
+            
+        ?>
+            <div class="col-sm-12" style="padding-top: 10px;padding-bottom: 10px;">
+                <a href="{{ str_replace( "640x200","1800x1200",$value->url_640x200) }}" target="blank" >
+                    <img src="{{ $value->url_640x200 }}" width="550">
+                </a>
             </div>  
         <?php } ?>    
     </div> 

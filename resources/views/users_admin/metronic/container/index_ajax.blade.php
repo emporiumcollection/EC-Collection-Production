@@ -1278,6 +1278,7 @@ $(function(){
 				if(this.checked)
 				{
 					sList += (sList=="" ? $(this).val() : "," + $(this).val());
+					alert(sList);
 				}
 				
 			});

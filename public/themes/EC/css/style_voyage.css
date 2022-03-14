@@ -61,7 +61,7 @@ body {
   color: #89a49f; 
 }
 .logo-list-container {
-  background: #a8c5c0;
+  background: #045d52;
   padding-left: 45px;
   padding-right: 45px;
 }
@@ -71,10 +71,6 @@ footer {
   border-top: 1px solid rgba(0, 0, 0, 0.1);
   background-color: #f3ebe8;
 } 
-.nav-pills.tabs-w3 .nav-link.active {
-  background: #89a49f;
-  color: #000; 
-}
 .covid-info {
   position: absolute;
   z-index: 1;
@@ -93,6 +89,10 @@ footer {
   background: #045d52;
   border-radius: 50%;
   padding: 11px;
+}
+.menunav-group .clp {
+  background: #f3ebe8;
+  border-top: 1px #fff solid;
 }
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
   color: #fff;

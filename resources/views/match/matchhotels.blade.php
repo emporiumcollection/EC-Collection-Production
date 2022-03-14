@@ -27,6 +27,28 @@
             </div>
         </div>
         @if(isset($hotels))
+        <?php
+
+        $hotelDropDwn = "";
+        $allproperties = "";
+
+        $hotelDropDwn .= '<select class="form-control booking-property" name="hotel_property[]" style="height: 28px; margin-left: 5px;">
+                <option value=""> Select </option>';
+                 foreach ($hotels as $value) { 
+                    $hotelDropDwn .= '<option value="'.$value['hotel_id'].'">'. $value['hotel_name'] . '</option>';
+                }
+
+                $hotelDropDwn .= '</select>';
+
+        $allproperties .= '<select class="form-control emp-property" name="matched_property[]" style="height: 28px; margin-left: 5px;"> 
+            <option value="">Select</option>';
+
+            foreach ($allprops as $prop){
+                $allproperties .= '<option value="'. $prop->id .'">'. $prop->property_name .'</option>';
+            }
+            $allproperties .= '</select>';
+
+        ?>  
             <div class="table-responsive" style="min-height:300px;">
                 <table class="table table-striped ">
                     <thead>
@@ -44,73 +66,37 @@
                     <?php //if($prop->id == $val['property_id']){ echo ' selected="selected"';} 
                     $shown = [];
                     ?>
-                    @if(isset($hotels))
-                    @foreach ($matched as $key => $val)
-                        <?php 
-                        $hotelId = $val['hotel_id'];
-                        $pId = $val['property_id'];
-                        /*
-                        $matchedKey = array_search($val->id, array_column($matched, 'hotel_id'));
-                        if($matchedKey !== false){// && !in_array($val->id, $shown)
-                            $hotelId = $matched[$matchedKey]['hotel_id'];
-                            $pId = $matched[$matchedKey]['property_id'];
-                            $shown[] = $val->id;
-                        }else{
-                            continue;
-                        }
-                        */
-                        ?>
-                        <tr id="match-row-{{ $key.'-'.$val['property_id'] }}">
+                    @if(isset($allprops))
+
+                    @foreach($allprops as $key => $val)
+                        <tr id="match-row-{{ $key.'-'.$val['id'] }}" class="match-row">
                             <td width="30">
-                                <select class="form-control emp-property" name="matched_property" style="height: 28px; margin-left: 5px;" id="emp-property"> 
-                                    <option value="">Select</option>
-                                    @foreach ($allprops as $prop)
-                                        <option value="{{ $prop->id }}" 
-                                            <?php 
-                                            if($prop->id == $pId){
-                                                echo ' selected="selected"';
-                                            }
-                                            ?>
-                                            >{{ $prop->property_name }}</option>
-                                    @endforeach
-                                </select>
+                                <?php echo $allproperties; ?>
                             </td>
                             <td width="50">
-                                <select class="form-control booking-property" name='hotel_property'style="height: 28px; margin-left: 5px;" id="booking-property"> 
-                                    <option value="">Select</option>
-                                    @foreach ($hotels as $hotel)
-                                        <option value="{{ $hotel['hotel_id'] }}" 
-                                        <?php
-                                        if($hotel['hotel_id'] == $hotelId){
-                                            echo ' selected="selected"';
-                                        }
-                                        ?>
-                                        >{{ $hotel['hotel_name'] }}</option>
-                                    @endforeach
-                                </select>
+                                <?php echo $hotelDropDwn;?>
                             </td>
                             <td width="30">
-                                <a href="javascript:void(0)" onclick="viewPrice('{{ $key.'-'.$val['property_id'] }}')">View Prices</a>
+                                <a href="javascript:void(0)" onclick="viewPrice('{{ $key.'-'.$val['id'] }}')">View Prices</a>
                             </td>
                             <td width="30">
-                                <a href="javascript:void(0)" onclick="editPrice('{{ $key.'-'.$val['property_id'] }}')">Edit Prices</a>
+                                <a href="javascript:void(0)" onclick="editPrice('{{ $key.'-'.$val['id'] }}')">Edit Prices</a>
                             </td>
                             <td width="30">
                                 <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal">View Suites</a>
                             </td>
                             <td width="30">
-                                <a class="text-secondary" data-toggle="modal" id="displayButton" data-target="#displayImages" onclick="DisplayImages('{{ $key.'-'.$val['property_id'] }}');">RoomImage</a>
+                                <a class="text-secondary" data-toggle="modal" id="displayButton" data-target="#displayImages" onclick="DisplayImages('{{ $key.'-'.$val['id'] }}');">RoomImage</a>
                             </td>
-                            <td width="30"><button class="btn btn-primary form-control " onclick="savematch('{{ $key.'-'.$val['property_id'] }}');">Approve</button>
-                            <button class="btn btn-primary form-control" onclick="importHotelDetail('{{ $key.'-'.$val['property_id'] }}');">Import</button></td>
-                            <input type="hidden" name="dest_id" id="dest_id" value="{{ $val['dest_id'] }}">
+                            <td width="30"><button class="btn btn-primary form-control " onclick="savematch('{{ $key.'-'.$val['id'] }}');">Approve</button>
+                            <button class="btn btn-primary form-control" onclick="importHotelDetail('{{ $key.'-'.$val['id'] }}');">Import</button></td>
                         </tr>
                     @endforeach
                     @endif    
                     </tbody>
                 </table>  
             </div>
-        @endif    
+        @endif
     </div>        
 </div>
 
@@ -145,6 +131,7 @@
     </div>
 </div>
 <script type="text/javascript">
+
     function editPrice(id){
         var property_id = $('.emp-property', $('#match-row-' + id)).val();
         if(!property_id){
@@ -197,10 +184,11 @@
     function importHotelDetail(id){
         var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
         var dest_id = $("#dest_id").val();
+
         $.ajax({
             url: '/import/hotels',
             data: { hotel_id: hotel_id,
-                    dest_id: dest_id },
+                    dest_id: 0 }, 
             type: 'post',
 
             success:function(response){
@@ -267,8 +255,31 @@
                 timeout: 8000
             })
         });
-
+    <?php if(isset($matched) && !empty($matched)){ ?>
+        var matched = '<?=json_encode($matched)?>'; 
+    <?php } ?>
     $(document).ready(function () {
+        
+        let arr = jQuery.parseJSON( matched );
+        var propDrp = [];
+        var hotelDrp = [];
+        
+        
+        $(".match-row").each(function(){
+            var tr = $(this);
+            var isSetVal = false;
+            $.each(arr, function (key, value) {
+                var ProOpt = $('.emp-property', tr).val();
+                if(propDrp.indexOf(value.property_id) == -1 && !isSetVal){
+                    $('.emp-property', tr).val(value.property_id);
+                    $('.booking-property', tr).val(value.hotel_id);
+                    propDrp.push(value.property_id);
+                    isSetVal = true;
+                }
+            });
+        });    
+        
+
         $('.matched_property').selectize({
             sortField: 'text'
         });

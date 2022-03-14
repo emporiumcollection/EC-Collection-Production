@@ -85,10 +85,6 @@ a:hover {
   color: #6A695C;
   text-decoration: underline;
 }
-.nav-pills.tabs-w3 .nav-link.active {
-  background: #6A695C;
-  color: #000; 
-}
 .covid-info {
   position: absolute;
   z-index: 1;
@@ -107,6 +103,10 @@ a:hover {
   background: #6A695C;
   border-radius: 50%;
   padding: 11px;
+}
+.menunav-group .clp {
+  background: #FFF;
+  border-top: 1px #fff solid;
 }
 .xdsoft_datetimepicker .xdsoft_label > .xdsoft_select > div > .xdsoft_option:hover {
   color: #fff;

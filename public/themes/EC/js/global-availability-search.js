@@ -990,6 +990,10 @@ function getBestPlases(category, near){
     type: 'GET',
     dataType: 'json',
     success: function(response){
+      if(response.html == ''){
+        alert();
+        $("#best-places-section .col-md-12").html("record not found");
+      }
       $('#best-places-section').html(response.html);
     },
     error: function(response){}

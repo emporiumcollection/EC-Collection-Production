@@ -470,7 +470,7 @@ pre {
   display: flex;
   flex-wrap: wrap;
   margin-right: -15px;
-  margin-left: 20px; }
+  /*margin-left: 20px;*/ }
 
 .no-gutters {
   margin-right: 0;
@@ -31795,13 +31795,11 @@ span.calElement.prev:hover {
   right: 0;
   z-index: 999;
   margin: auto; }
-  .menunav-group .clp {
-    background: #f7f7f7;
-    border-top: 1px #fff solid; }
-    .menunav-group .clp .nav-clr .nav-link.active {
-      text-decoration: underline;
-      font-family: "SaolDisplay-LightItalic";
-      font-size: 19px; }
+    
+.menunav-group .clp .nav-clr .nav-link.active {
+  text-decoration: underline;
+  font-family: "SaolDisplay-LightItalic";
+  font-size: 19px; }
 
 .dash-clp {
   width: 193px;
@@ -32721,6 +32719,10 @@ span.calElement.prev:hover {
 .nav-pills.tabs-w3 .nav-item {
   padding-right: 10px; }
 
+.nav-pills.tabs-w3 .nav-link.active {
+  background: #FFFFFF;
+  color: #000; 
+}
 .nav-pills.tabs-w3 .nav-link {
   background: #f3f3f3; }
 
@@ -35996,7 +35998,8 @@ button#clear span {
       .wizard-nav .nav-link.active .ico, .wizard-nav .nav-link:hover .ico {
         filter: invert(67%) sepia(30%) saturate(170%) hue-rotate(119deg) brightness(90%) contrast(87%); }
         .wizard-nav .nav-link.active .ico, .wizard-nav .nav-link:hover .wiza-title{
-        color: #EFEAE4;}
+        color: #FFFFFF;}
+    }
   .wizard-nav .ico-flight {
     width: 41px;
     height: 28px; }
@@ -36010,8 +36013,8 @@ button#clear span {
     line-height: 13px;
     margin-top: 8px; }
 
-.menu-index {
-  padding-left: 15px; }
+/*.menu-index {
+  padding-left: 15px; }*/
 
 .trip-add {
   display: flex; }
