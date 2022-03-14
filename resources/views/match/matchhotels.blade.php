@@ -256,8 +256,9 @@
             })
         });
     <?php if(isset($matched) && !empty($matched)){ ?>
-        var matched = '<?=json_encode($matched)?>'; 
-    <?php } ?>
+        var matched = '<?=json_encode( addslashes($matched))?>'; 
+    <?php } 
+    ?>
     $(document).ready(function () {
         
         let arr = jQuery.parseJSON( matched );
