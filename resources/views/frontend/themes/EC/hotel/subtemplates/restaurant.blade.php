@@ -29,6 +29,7 @@
       <div class="bg-grey p-4 restarant-container">
         <div class="restaurant-slide">
         <?php if(isset($property->restaurantList) && !empty($property->restaurantList)){
+          $file_name = "";
           foreach ($property->restaurantList as $key => $value) {
             $slug = str_slug($value['title']);
             if(isset($value['gallery']['files']) && !empty($value['gallery']['files'])){
