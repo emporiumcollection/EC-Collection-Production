@@ -38,7 +38,7 @@
               }else{
                 $file_name = 'default-image.png';
               }
-            if(isset($file_name)){  
+            if(isset($file_name) && !empty($file_name)){  
           ?>
           <div class="slider-item">
             <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}"  class="tab-lin scrollto">
