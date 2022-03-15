@@ -32719,12 +32719,8 @@ span.calElement.prev:hover {
 .nav-pills.tabs-w3 .nav-item {
   padding-right: 10px; }
 
-.nav-pills.tabs-w3 .nav-link.active {
-  background: #FFFFFF;
-  color: #000; 
-}
 .nav-pills.tabs-w3 .nav-link {
-  background: #f3f3f3; }
+  background: #FFFFFF; }
 
 .barcode-suite {
   width: 57%;

@@ -75,7 +75,10 @@ body {
   padding-left: 45px;
   padding-right: 45px;
 }
-
+.nav-pills.tabs-w3 .nav-link.active {
+  background: #6A695C;
+  color: #000; 
+}
 footer {
   padding-top: 100px;
   border-top: 1px solid rgba(0, 0, 0, 0.1);

@@ -68,7 +68,10 @@ body {
   background: #13678A1a;
   color: #13678A; 
 }
-
+.nav-pills.tabs-w3 .nav-link.active {
+  background: #13678A;
+  color: #000; 
+}
 .logo-list-container {
   background: #13678A;
   padding-left: 45px;
