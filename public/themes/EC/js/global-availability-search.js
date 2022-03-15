@@ -557,7 +557,6 @@ function replaceSuiteDetail(property_id, category_id){
   setTimeout('appendSlider()', 1000);
   replacePropertyData(property_id);
   setTimeout("$('.suite-popup').slick('setPosition');", 1000);
-
   $("#property-name").hide();
 }
 
@@ -991,7 +990,6 @@ function getBestPlases(category, near){
     dataType: 'json',
     success: function(response){
       if(response.html == ''){
-        alert();
         $("#best-places-section .col-md-12").html("record not found");
       }
       $('#best-places-section').html(response.html);

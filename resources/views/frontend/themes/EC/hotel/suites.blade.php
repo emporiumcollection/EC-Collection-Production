@@ -29,7 +29,7 @@
         <div class="col-lg-4 mb-4 pt-3">
             @include('frontend.themes.EC.hotel.sidebar_nav')
         </div>
-        <div class="col-lg-8 col-hotel-slider" id="suiteslist-column">
+        <div class="col-lg-8 col-hotel-slider col-suite-list-slider" id="suiteslist-column">
             <div class="header-suite-list justify-content-between align-items-center mb-2">
                 <div class="title-outer-container">
                     <div class="title-main offset-930 pr-3 title-subs">
@@ -41,7 +41,7 @@
               @include('frontend.themes.EC.properties.subtemplates.suite_list_template')
             </div>
         </div>    
-        <div class="col-lg-8 col-hotel-slider" id="suiteinfo" style="display: none;">
+        <div class="col-lg-8 col-hotel-slider col-suite-info-slider" id="suiteinfo" style="display: none;">
             @include('frontend.themes.EC.properties.subtemplates.suite_detail_template')
         </div>
         <input type="hidden" name="city_" id="city" value="<?php echo $property->city;?>">

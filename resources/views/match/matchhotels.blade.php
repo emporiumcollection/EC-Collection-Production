@@ -97,6 +97,10 @@
                 </table>  
             </div>
         @endif
+        <?php 
+        if(isset($dest_id)) { ?>
+        <input type="hidden" name="dest_id" id="dest_id" value="{{ $dest_id }}">    
+        <?php } ?>
     </div>        
 </div>
 
@@ -184,20 +188,22 @@
     function importHotelDetail(id){
         var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
         var dest_id = $("#dest_id").val();
-
+        alert(dest_id);
         $.ajax({
             url: '/import/hotels',
             data: { hotel_id: hotel_id,
-                    dest_id: 0 }, 
+                    dest_id: dest_id }, 
             type: 'post',
 
             success:function(response){
                 console.log(response)
                 if(response.status === true){
+                    alert("Hotel Data is Imported from booking.com");
                     $('#guestValidationMsg').find('#massage').html("Hotel Data is Imported from booking.com");
                     $('#guestValidationMsg').show();
                 }   
                 if(response.status === false){
+                    alert("Hotel Data is Imported djhf from booking.com");
                     $('#guestValidationMsg').find('#massage').html("This hotel data is already Imported");
                     $('#guestValidationMsg').show();
                 }

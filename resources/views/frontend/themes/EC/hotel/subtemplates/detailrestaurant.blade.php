@@ -92,9 +92,11 @@ if(Request::segment(3) == 'bar'){
         Reservation
       </a> --}}
       {{-- <a class="nav-link btn-sidebar" href="#" data-sidebar="#info_sidebar"> --}}
+      <?php if(isset($res_menu) && !empty($res_menu)){ ?>
       <a href="#" class="view btn-sidebar" data-sidebar="#restaurant_menu">
         Menu
       </a>
+      <?php } ?>
       <a href="#" class="view btn-sidebar" data-sidebar="#direction">
         Directions
       </a>

@@ -61,7 +61,7 @@ body {
   color: #89a49f; 
 }
 .logo-list-container {
-  background: #045d52;
+  background: #a8c5c0;
   padding-left: 45px;
   padding-right: 45px;
 }
@@ -77,8 +77,8 @@ footer {
   bottom: 17px;
   left: 20px;
   right: 20px;
-  background: linear-gradient(92.49deg, #045d52 15.4%, #02a175 123.85%);
-  color: #fff;
+  background: linear-gradient(92.49deg, #a8c5c0 15.4%, #f3ebe8 123.85%);
+  color: #000000;
   padding: 10px 15px;
   border-radius: 8px;
   display: flex;

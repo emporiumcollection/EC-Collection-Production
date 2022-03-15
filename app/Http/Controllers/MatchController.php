@@ -91,6 +91,7 @@ class MatchController extends Controller
                         $res =  $this->getProperties($val->dest_id,$keyword, $destinationId);
                         $this->data['hotels'] = $res['hotels'];
                         $this->data['matched'] = $res['matched'];
+                        $this->data['dest_id'] = $res['dest_id'];                        
                         return view('match.matchhotels')->with($this->data);
                     }
                 }
@@ -102,6 +103,7 @@ class MatchController extends Controller
 
 
     private function getProperties($dest_id,$keyword, $destinationId){
+
         if(\DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('destination',$keyword)->exists()){
             $fetchedData = \DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('destination',$keyword)->get();
             
@@ -153,7 +155,7 @@ class MatchController extends Controller
                 }
 
             }
-            return ['hotels' => $hotels, 'matched' => $matched];
+            return ['hotels' => $hotels, 'matched' => $matched,'dest_id' => $dest_id];
         }
         else
         {
@@ -215,7 +217,7 @@ class MatchController extends Controller
                         }
                     }    
                 }
-                return ['hotels' => $hotels, 'matched' => $matched];
+                return ['hotels' => $hotels, 'matched' => $matched,'dest_id' => $dest_id];
             }
         }    
     }
@@ -608,7 +610,7 @@ class MatchController extends Controller
                                         $property_id = DB::getPdo()->lastInsertId();
 
                                         $roomDetail = $this->blockDetail($hotels->hotel_id);
-
+                                        
                                         $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
 
                                         $this->getHotelPolicy($hotels->hotel_id,$property_id);

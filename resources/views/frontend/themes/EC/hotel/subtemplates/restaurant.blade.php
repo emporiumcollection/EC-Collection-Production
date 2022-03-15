@@ -31,13 +31,12 @@
         <?php if(isset($property->restaurantList) && !empty($property->restaurantList)){
           foreach ($property->restaurantList as $key => $value) {
             $slug = str_slug($value['title']);
-            if(isset($value['gallery']['files'][0]['file_name']) && !empty($value['gallery']['files'][0]['file_name'])){
-              if(is_array($value)){
+            if(isset($value['gallery']['files']) && !empty($value['gallery']['files'])){
+              if(isset($value['gallery']['files'][0]['file_name'])){
                 $file_name = $value['gallery']['files'][0]['file_name'];
               }else{
                 $file_name = 'default-image.png';
               }
-            }  
           ?>
           <div class="slider-item">
             <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}"  class="tab-lin scrollto">
@@ -49,14 +48,14 @@
               </div>
             </a>
           </div>
-          <?php } }   
+          <?php } } }   
             if (isset($property->barList) && !empty($property->barList)) {
               foreach ($property->barList as $key => $bar) {
                 $slug = str_slug($bar['title']);
                 if(isset($bar['gallery']['files'])){
                   foreach($bar['gallery']['files'] as $key => $image){
                     if($key == 0){
-                      if(is_array($image)){
+                      if(isset($image['file_name'])){
                         $file_name = $image['file_name'];
                       }else{
                         $file_name = 'default-image.png';

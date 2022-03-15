@@ -2523,6 +2523,7 @@ $(document).ready(function () {
       return this;
   }
 })($.fn.removeClass);
+
 $('.humburger-menu-sidebar').click(function(){
   $(this).closest('.sidebar-nav-section').find('.nav-collapse').toggleClass('show')
 })
@@ -2530,33 +2531,38 @@ $('.close-second-menu').click(function(e){
   e.preventDefault();
   $(this).closest('.sidebar-nav-section').find('.nav-collapse').removeClass('show')
   $(this).closest('.sidebar-nav-section').removeClass('show')
-})
+});
 
-const postDetails = document.querySelector(".col-hotel-slider, .col-restaurant-slider");
-const postSidebar = document.querySelector("#sidebar");
-const postSidebarContent = document.querySelector(".nav-collapse");
 
-const controller = new ScrollMagic.Controller();
-const scene = new ScrollMagic.Scene({
+/*var postDetails = document.querySelector(".col-hotel-slider, .col-restaurant-slider, .col-suite-slider");
+var postSidebar = document.querySelector("#sidebar");
+var postSidebarContent = document.querySelector(".nav-collapse");
+
+var controller = new ScrollMagic.Controller();
+var scene = new ScrollMagic.Scene({
   triggerElement: postSidebar,
   triggerHook: 0,
   duration: getDuration,
   offset: -170
 }).addTo(controller);
 
-if (window.matchMedia("(min-width: 768px)").matches) {
-  scene.setPin(postSidebar, { pushFollowers: false });
-}
-
-// in your projects, you might want to debounce resize event for better performance
-window.addEventListener("resize", () => {
+initLeftHotelMenu();
+function initLeftHotelMenu(){
   if (window.matchMedia("(min-width: 768px)").matches) {
     scene.setPin(postSidebar, { pushFollowers: false });
-  } else {
-    scene.removePin(postSidebar, true);
   }
-});
+
+  // in your projects, you might want to debounce resize event for better performance
+  window.addEventListener("resize", () => {
+    if (window.matchMedia("(min-width: 768px)").matches) {
+      scene.setPin(postSidebar, { pushFollowers: false });
+    } else {
+      scene.removePin(postSidebar, true);
+    }
+  });
+}
 
 function getDuration() {
+  console.log(postDetails.offsetHeight - postSidebarContent.offsetHeight);
   return postDetails.offsetHeight - postSidebarContent.offsetHeight;
-}
+}*/
