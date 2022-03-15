@@ -38,6 +38,7 @@
               }else{
                 $file_name = 'default-image.png';
               }
+            if(isset($file_name)){  
           ?>
           <div class="slider-item">
             <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}"  class="tab-lin scrollto">
@@ -49,7 +50,7 @@
               </div>
             </a>
           </div>
-          <?php } } }   
+          <?php} } } }   
             if (isset($property->barList) && !empty($property->barList)) {
               foreach ($property->barList as $key => $bar) {
                 $slug = str_slug($bar['title']);
