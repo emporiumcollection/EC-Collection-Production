@@ -89,7 +89,15 @@
                                 <a class="text-secondary" data-toggle="modal" id="displayButton" data-target="#displayImages" onclick="DisplayImages('{{ $key.'-'.$val['id'] }}');">RoomImage</a>
                             </td>
                             <td width="30"><button class="btn btn-primary form-control " onclick="savematch('{{ $key.'-'.$val['id'] }}');">Approve</button>
-                            <button class="btn btn-primary form-control" onclick="importHotelDetail('{{ $key.'-'.$val['id'] }}');">Import</button></td>
+                            <?php
+                                $Import = ""; 
+                                $Import .= '<button class="btn btn-primary form-control" onclick="importHotelDetail('. $key.'-'.$val['id'] .');">Import</button></td>';
+
+                                $suite = ""; 
+                                $suite .= '<button class="btn btn-primary form-control" onclick="importsuites('. $key.'-'.$val['id'] .');">Import</button></td>';
+
+                             ?>    
+                            <a class="text-secondary" data-toggle="modal" id="import" data-target="#importdata" onclick="importHotelDetails('{{ $key.'-'.$val['id'] }}');">ImportData</a>
                         </tr>
                     @endforeach
                     @endif    
@@ -134,7 +142,41 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="importdata" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">ImportData</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="importdata">
+                
+            </div>
+        </div>
+    </div>
+</div>
 <script type="text/javascript">
+
+    function importHotelDetails(id){
+        alert(id);
+        var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
+        var property_id = $('.emp-property', $('#match-row-' + id)).val();
+        alert(hotel_id);
+        alert(property_id);
+        $.ajax({
+            url: '/importdetail',
+            type: 'get',
+            data: { hotel_id:hotel_id,
+                    property_id: property_id },
+            dataType: 'json',
+
+            success:function(response){
+                
+            }
+        });
+    }
 
     function editPrice(id){
         var property_id = $('.emp-property', $('#match-row-' + id)).val();

@@ -518,6 +518,10 @@ class MatchController extends Controller
 
     public function importHotelDetail(Request $request)
     {
+
+        // $this->Surroundings($request->hotel_id);
+        $this->facilities($request->hotel_id);
+        exit;
         $hotelDetail =  $this->getHotelDetail(0,$request->dest_id);
         
             if(isset($hotelDetail['fetchFrom']) && $hotelDetail['fetchFrom'] == 'database'){
@@ -608,7 +612,7 @@ class MatchController extends Controller
                                         ]);
                                         $property_id = DB::getPdo()->lastInsertId();
 
-                                        $roomDetail = $this->blockDetail($hotels->hotel_id);
+                                        $roomDetail = $this->blockDetail($hotels->hotel_id);    
                                         
                                         $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
 
@@ -705,5 +709,97 @@ class MatchController extends Controller
             }
         }
     }
+
+    public function  Surroundings($hotel_id){
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/location-highlights?hotel_id=".$hotel_id."&locale=en-gb",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: booking-com.p.rapidapi.com",
+                "x-rapidapi-key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $response = json_decode($response);
+            foreach($response as $key => $val){
+
+                $jsonData = json_encode($val);
+                $addResponse = \DB::table('tb_surroundings')->insert([
+                    'property_id' => 1,
+                    'type' => $key,
+                    'info' => $jsonData
+                ]);
+            }
+        }
+    }
+
+    public function facilities($hotel_id){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/facilities?hotel_id=".$hotel_id."&locale=en-gb",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: booking-com.p.rapidapi.com",
+                "x-rapidapi-key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            // echo $response;
+            $response = json_decode($response);
+            foreach($response as $val){
+                $insData = \DB::table('tb_booking_hotel_facilities')->insert([ 
+                    'property_id' => 1,
+                    'facility_name' => $val->facility_name,
+                    'hotelfacilitytype_id' => $val->hotelfacilitytype_id,
+                    'facilitytype_name' => $val->facilitytype_name  
+                 ]); 
+            }
+        }
+    }
+
+    public function ImportDetailOption(Request $request){
+        print_r($request->all());exit;
+        
+        $roomsdetail = view('match.roomdetail', [
+            'rooms' => $rooms
+            ])->render();
+
+            return json_encode([
+                'roomdetail' => $roomsdetail
+            ]);        
+    } 
+
 
 }    

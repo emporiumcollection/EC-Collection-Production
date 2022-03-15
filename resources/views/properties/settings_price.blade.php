@@ -59,6 +59,7 @@
 										<h3>{{$cat['data']->category_name}}</h3>
 									</div>
 									<div class="col-lg-4 align-right">
+
 										<div class="butt margin-top-10">
 											<button type="submit" class="btn btn-success b-btn"><i class="fa fa-save"></i> Save</button>
 										</div>
@@ -159,11 +160,20 @@
 								</div>
 								@if(!empty($Seasons))
 									@foreach($Seasons as $season)
+									<?php 
+
+										$from = new DateTime($season->created);
+										$to = new DateTime($season->updated);
+									?>
 										<input type="hidden" name="seasonid[]" value="{{$season->id}}" />
 										<input type="hidden" name="edit_room_price_id[]" value="{{ (array_key_exists('rooms_price', $cat) && array_key_exists($season->id, $cat['rooms_price'])) ? $cat['rooms_price'][$season->id]->id : '' }}" >
 										<div class="row">
 											<div class="col-lg-2">
-												<div style="background:#ccc; text-align:center; padding:40px 0;">{{$season->season_name}}</div>
+												<div style="background:#ccc; text-align:center; padding:40px 0;">
+													{{$season->season_name}} <br>	
+													{{ $from->format('Y-m-d') }}<br>
+													{{ $to->format('Y-m-d') }}
+												</div>
 											</div>
 											<div class="col-lg-10">
 												<div class="row">

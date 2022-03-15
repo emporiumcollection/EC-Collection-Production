@@ -29,7 +29,6 @@
       <div class="bg-grey p-4 restarant-container">
         <div class="restaurant-slide">
         <?php if(isset($property->restaurantList) && !empty($property->restaurantList)){
-          $file_name = "";
           foreach ($property->restaurantList as $key => $value) {
             $slug = str_slug($value['title']);
             if(isset($value['gallery']['files']) && !empty($value['gallery']['files'])){
@@ -38,7 +37,6 @@
               }else{
                 $file_name = 'default-image.png';
               }
-            if(isset($file_name) && !empty($file_name)){  
           ?>
           <div class="slider-item">
             <a href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}"  class="tab-lin scrollto">
@@ -50,7 +48,7 @@
               </div>
             </a>
           </div>
-          <?php} } } }   
+          <?php } } }   
             if (isset($property->barList) && !empty($property->barList)) {
               foreach ($property->barList as $key => $bar) {
                 $slug = str_slug($bar['title']);
