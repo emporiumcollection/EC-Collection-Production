@@ -89,15 +89,13 @@
                                 <a class="text-secondary" data-toggle="modal" id="displayButton" data-target="#displayImages" onclick="DisplayImages('{{ $key.'-'.$val['id'] }}');">RoomImage</a>
                             </td>
                             <td width="30"><button class="btn btn-primary form-control " onclick="savematch('{{ $key.'-'.$val['id'] }}');">Approve</button>
-                            <?php
-                                $Import = ""; 
-                                $Import .= '<button class="btn btn-primary form-control" onclick="importHotelDetail('. $key.'-'.$val['id'] .');">Import</button></td>';
+                                <button class="btn btn-primary form-control" onclick="importHotelDetail({{ $key.'-'.$val['id'] }});">ImportHotel</button>
+                                <button class="btn btn-primary form-control" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">ImportingOtherDetail</button>
+                            </td>
+                            <td width="30">
+                                {{-- <a class="text-secondary" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">ImportData</a> --}}
+                            </td>
 
-                                $suite = ""; 
-                                $suite .= '<button class="btn btn-primary form-control" onclick="importsuites('. $key.'-'.$val['id'] .');">Import</button></td>';
-
-                             ?>    
-                            <a class="text-secondary" data-toggle="modal" id="import" data-target="#importdata" onclick="importHotelDetails('{{ $key.'-'.$val['id'] }}');">ImportData</a>
                         </tr>
                     @endforeach
                     @endif    
@@ -142,7 +140,7 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="importdata" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+<div class="modal fade" id="displayImportBtn" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -151,7 +149,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body" id="importdata">
+            <div class="modal-body" id="importmodelId">
                 
             </div>
         </div>
@@ -159,8 +157,9 @@
 </div>
 <script type="text/javascript">
 
-    function importHotelDetails(id){
-        alert(id);
+    function OpenImportModel(id){
+        
+        $("#importdata").html("");
         var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
         var property_id = $('.emp-property', $('#match-row-' + id)).val();
         alert(hotel_id);
@@ -173,7 +172,9 @@
             dataType: 'json',
 
             success:function(response){
-                
+                $("#importmodelId").html(response.html);
+                $('#displayImportBtn').modal("show");
+
             }
         });
     }
@@ -265,6 +266,9 @@
             success:function(response){
                 $('#roomPhotos').html(response.roomphotos);
                 $('#displayImages').modal("show");
+                if(response.status === false){
+                    alert("This Hotel has no Images!");
+                }
             }
         });
 

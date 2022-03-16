@@ -11,6 +11,7 @@ use App\Models\categories;
 use App\Models\Review;
 use App\Models\PropertyCategoryTypes;
 use DB;
+use ZipArchive;
 
 class MatchController extends Controller
 {
@@ -310,11 +311,12 @@ class MatchController extends Controller
         return $array;
     }
 
-    private function getHotelReviews($hotel_gds_id,$property_id){
+    public function getHotelReviews(Request $request){
+
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/reviews?locale=en-gb&sort_type=SORT_MOST_RELEVANT&hotel_id=".$hotel_gds_id."&customer_type=solo_traveller%2Creview_category_group_of_friends&language_filter=en-gb%2Cde%2Cfr",
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/reviews?locale=en-gb&sort_type=SORT_MOST_RELEVANT&hotel_id=".$request->hotel_id."&customer_type=solo_traveller%2Creview_category_group_of_friends&language_filter=en-gb%2Cde%2Cfr",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING => "",
@@ -340,28 +342,34 @@ class MatchController extends Controller
             $response = json_decode($response);
             
             if(isset($response->result) && !empty($response->result)){
-                if(review::where('hotel_id',$property_id)->exists()){
+                if(review::where('hotel_id',$request->property_id)->exists()){
                     return redirect('/search/destination');
                 }else{
                     foreach($response->result as $value){
                         if(trim($value->pros) && trim($value->cons)){
                             $insert = review::insert([
-                                'hotel_id' => $property_id,
+                                'hotel_id' => $request->property_id,
                                 'fname' => $value->author->name,
                                 'comment' => 'Pros : '.$value->pros . PHP_EOL.'Cons : '.$value->cons,
                                 'is_approved' => 1
                             ]);
                         }
                     }
+                    if($insert){
+                        return response()->json(['status' => true]);
+                    }else{
+                        return response()->json(['status' => true]);
+                    }
                 }
             }    
         }
     }
 
-    private function getHotelPolicy($hotel_gds_id,$property_id){
+    public function getHotelPolicy(Request $request){
+        // print_r($request->hotel_id);
         $curl = curl_init();
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/policies?locale=en-gb&hotel_id=" . $hotel_gds_id,
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/policies?locale=en-gb&hotel_id=" . $request->hotel_id,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING => "",
@@ -385,6 +393,7 @@ class MatchController extends Controller
         } else {
             $policies = '';
             $response = json_decode($response);
+            // print_r($response);exit();
             if(isset($response->policy)){
                 foreach ($response->policy as $key => $value) {
                     $policies .= PHP_EOL;
@@ -426,14 +435,15 @@ class MatchController extends Controller
                     }
                 }
                 if(\DB::table('td_property_terms_n_conditions')
-                    ->where('property_id', $property_id)->exists()) {
-                    return redirect('/search/destination');
+                    ->where('property_id', $request->property_id)->exists()) {
+                    return response()->json(['status' => false]);
                 }else{
                     $insert = \DB::table('td_property_terms_n_conditions')
                     ->insert([
-                        'property_id' => $property_id,
+                        'property_id' => $request->property_id,
                         'terms_n_conditions' => $policies     
                     ]);
+                    return response()->json(['status' => true]);
                 }    
             } 
         }
@@ -518,10 +528,6 @@ class MatchController extends Controller
 
     public function importHotelDetail(Request $request)
     {
-
-        // $this->Surroundings($request->hotel_id);
-        $this->facilities($request->hotel_id);
-        exit;
         $hotelDetail =  $this->getHotelDetail(0,$request->dest_id);
         
             if(isset($hotelDetail['fetchFrom']) && $hotelDetail['fetchFrom'] == 'database'){
@@ -547,37 +553,11 @@ class MatchController extends Controller
                             ]);
                             $property_id = DB::getPdo()->lastInsertId();
 
-                            $roomDetail = $this->blockDetail($hotels->hotel_id);
-                            $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
-                            $this->getHotelPolicy($hotels->hotel_id,$property_id);
+                            // $roomDetail = $this->blockDetail($hotels->hotel_id);
+                            // $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
+                            // $this->getHotelPolicy($hotels->hotel_id,$property_id);
                             $rooms_array = [];
-                            $policies = "";
                             
-                            foreach($roomDetail[0]->block as $rooms){
-                                foreach($rooms->block_text->policies as $policy){
-                                    $policies .= PHP_EOL;
-                                    $policies .= $policy->class.PHP_EOL;
-                                    $policies .= $policy->content.PHP_EOL;
-                                    $policies .= PHP_EOL;
-                                }
-
-                                $room_name = $rooms->room_name;
-                                $room_id = $rooms->room_id;
-                                
-                                PropertyCategoryTypes::insert([
-                                    'property_id' => $property_id,
-                                    'category_name' => $room_name,
-                                    'booking_policy' => $policies,
-                                    'bathroom' => $rooms->number_of_bathrooms,
-                                    'bads' => $rooms->extrabed_available,
-                                    'guests_adults' => $rooms->nr_adults,
-                                    // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
-                                    'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
-                                    'status' => 0,
-                                    'created' => date("Y-m-d: H:i:s"),
-                                    'updated' => date("Y-m-d: H:i:s"),
-                                ]);
-                            }
                              return response()->json(['status' => true]);
                         }
                     }    
@@ -610,39 +590,16 @@ class MatchController extends Controller
                                             'created' => date("Y-m-d: H:i:s"),
                                             'updated' => date("Y-m-d: H:i:s"),
                                         ]);
-                                        $property_id = DB::getPdo()->lastInsertId();
+                                        // $property_id = DB::getPdo()->lastInsertId();
 
-                                        $roomDetail = $this->blockDetail($hotels->hotel_id);    
+                                        // $roomDetail = $this->blockDetail($hotels->hotel_id);    
                                         
-                                        $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
+                                        // $hotelReview = $this->getHotelReviews($hotels->hotel_id,$property_id);
 
-                                        $this->getHotelPolicy($hotels->hotel_id,$property_id);
-                                        $rooms_array = [];
-                                        $policies = "";
-                                        
-                                        foreach($roomDetail[0]->block as $rooms){
-                                            foreach($rooms->block_text->policies as $policy){
-                                                $policies .= PHP_EOL;
-                                                $policies .= $policy->class.PHP_EOL;
-                                                $policies .= $policy->content.PHP_EOL;
-                                                $policies .= PHP_EOL;
-                                            }
-
-                                            $room_name = $rooms->room_name;
-                                            $room_id = $rooms->room_id;
-                                            
-                                            PropertyCategoryTypes::insert([
-                                                'property_id' => $property_id,
-                                                'category_name' => $room_name,
-                                                'booking_policy' => $policies,
-                                                'bathroom' => $rooms->number_of_bathrooms,
-                                                // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
-                                                // 'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
-                                                'status' => 0,
-                                                'created' => date("Y-m-d: H:i:s"),
-                                                'updated' => date("Y-m-d: H:i:s"),
-                                            ]);
-                                        }
+                                        // $this->getHotelPolicy($hotels->hotel_id,$property_id);
+                                        // $rooms_array = [];
+                                        // $policies = "";
+                                       
                                          return response()->json(['status' => true]);
                                     }
                                 }    
@@ -653,6 +610,42 @@ class MatchController extends Controller
         
     }
 
+
+    public function importrooms($hotel_id){
+
+    $roomDetail = $this->blockDetail($hotel_id);
+
+        $policies = "";
+        foreach($roomDetail[0]->block as $rooms){
+            foreach($rooms->block_text->policies as $policy){
+                $policies .= PHP_EOL;
+                $policies .= $policy->class.PHP_EOL;
+                $policies .= $policy->content.PHP_EOL;
+                $policies .= PHP_EOL;
+            }
+
+            $room_name = $rooms->room_name;
+            $room_id = $rooms->room_id;
+            
+            $insert =  PropertyCategoryTypes::insert([
+                'property_id' => $property_id,
+                'category_name' => $room_name,
+                'booking_policy' => $policies,
+                'bathroom' => $rooms->number_of_bathrooms,
+                // 'cancelation_period' => $rooms->paymentterms->cancellation->timeline->stages[0]->limit_from .','. $rooms->paymentterms->cancellation->timeline->stages[0]->limit_until,
+                // 'cancelation_duration' => $rooms->paymentterms->cancellation->timeline->stages[0]->text,
+                'status' => 0,
+                'created' => date("Y-m-d: H:i:s"),
+                'updated' => date("Y-m-d: H:i:s"),
+            ]);
+        }
+        if(isset($insert)){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => true]);
+        }
+
+    }
 
     public function blockDetail($hotel_id){
         $checkin_date = date ('Y-m-d', strtotime ('+15 day'));
@@ -684,38 +677,42 @@ class MatchController extends Controller
         } else {
             $response = json_decode($response);
             if(!empty($response[0])){
-                $rooms = $response;
-                return $rooms;
+                $roomDetail = $response;
+                return $roomDetail;
             }    
         }
     }
 
     public function DisplayRoomImages(Request $request){
         $roomImages = $this->blockDetail($request->hotel_id);
+
         if(isset($roomImages[0]->block[0]->room_id)){
             $room_id = $roomImages[0]->block[0]->room_id;    
         }
-        
-        foreach ($roomImages[0]->rooms as $key => $value) {
-            if($key == $room_id){
+        if(isset($roomImages[0]->rooms)){
+            foreach ($roomImages[0]->rooms as $key => $value) {
+                if($key == $room_id){
+                    $roomsphotos = view('match.roomphotos', [
+                    'photos' => $value->photos,
+                    'hotel_id' => $request->hotel_id
+                    ])->render();
 
-                $roomsphotos = view('match.roomphotos', [
-                'photos' => $value->photos
-                ])->render();
-
-                return json_encode([
-                    'roomphotos' => $roomsphotos
-                ]);
+                    return json_encode([
+                        'roomphotos' => $roomsphotos
+                    ]);
+                }
             }
+
+        }else{
+            return response()->json(['status' => false]);
         }
     }
 
-    public function  Surroundings($hotel_id){
-
+    public function  Surroundings(Request $request){
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/location-highlights?hotel_id=".$hotel_id."&locale=en-gb",
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/location-highlights?hotel_id=".$request->hotel_id."&locale=en-gb",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING => "",
@@ -747,14 +744,19 @@ class MatchController extends Controller
                     'info' => $jsonData
                 ]);
             }
+            if($addResponse){
+                return response()->json(['status' => true]);
+            }else{
+                return response()->json(['status' => true]);
+            }
         }
     }
 
-    public function facilities($hotel_id){
+    public function facilities(Request $request){
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/facilities?hotel_id=".$hotel_id."&locale=en-gb",
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/facilities?hotel_id=".$request->hotel_id."&locale=en-gb",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING => "",
@@ -786,19 +788,53 @@ class MatchController extends Controller
                     'facilitytype_name' => $val->facilitytype_name  
                  ]); 
             }
+            if($insData){
+                return response()->json(['status' => true]);
+            }else{
+                return response()->json(['status' => true]);
+            }
         }
     }
 
     public function ImportDetailOption(Request $request){
-        print_r($request->all());exit;
         
-        $roomsdetail = view('match.roomdetail', [
-            'rooms' => $rooms
+        $html = view('match.importhotel', [
+            'hotel_id' => $request->hotel_id,
+            'property_id' => $request->property_id
             ])->render();
 
             return json_encode([
-                'roomdetail' => $roomsdetail
+                'html' => $html
             ]);        
+    }
+
+    public function MakeZipOfImages(Request $request){
+        $files = json_decode($request->image);
+        // print_r($files);exit;
+        # create new zip object
+        $zip = new ZipArchive();
+
+        # create a temp file & open it
+        $tmp_file = tempnam('.', '');
+        $zip->open($tmp_file, ZipArchive::CREATE);
+
+        # loop through each file
+        foreach ($files as $file) {
+            # download file
+            $download_file = file_get_contents($file);
+
+            #add it to the zip
+            $zip->addFromString(basename($file), $download_file);
+        }
+
+        # close zip
+        $zip->close();
+
+        # send the file to the browser as a download
+        header('Content-disposition: attachment; filename="my file.zip"');
+        header('Content-type: application/zip');
+        readfile($tmp_file);
+        unlink($tmp_file);
     } 
 
 
