@@ -722,11 +722,11 @@ class MatchController extends Controller
             return response()->json(['status' => true]);
         }else{
 
-            $this->importHotelDetail($hotel_id,$dest_id);
+            $this->importHotelDetail($request->hotel_id,$request->dest_id);
 
             $property_id = properties::orderBy('created', 'desc')->first();
 
-            $roomDetail = $this->blockDetail($hotel_id);
+            $roomDetail = $this->blockDetail($request->hotel_id);
 
             $policies = "";
             foreach($roomDetail[0]->block as $rooms){
