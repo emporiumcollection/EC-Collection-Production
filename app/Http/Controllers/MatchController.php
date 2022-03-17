@@ -529,7 +529,7 @@ class MatchController extends Controller
                 }else{
                     $insert = \DB::table('td_property_terms_n_conditions')
                     ->insert([
-                        'property_id' => $request->property_id,
+                        'property_id' => $property_id->id,
                         'terms_n_conditions' => $policies     
                     ]);
                     return response()->json(['status' => true]);
@@ -726,11 +726,11 @@ class MatchController extends Controller
             return response()->json(['status' => true]);
         }else{
 
-            $this->importHotelDetail($hotel_id,$dest_id);
+            $this->importHotelDetail($request->hotel_id,$request->dest_id);
 
             $property_id = properties::orderBy('created', 'desc')->first();
 
-            $roomDetail = $this->blockDetail($hotel_id);
+            $roomDetail = $this->blockDetail($request->hotel_id);
 
             $policies = "";
             foreach($roomDetail[0]->block as $rooms){

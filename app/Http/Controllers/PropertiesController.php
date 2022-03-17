@@ -1619,9 +1619,9 @@ class PropertiesController extends Controller {
         } elseif ($active == 'price') {
             $seasonArr = array();
             if ($this->data['property_data']->default_seasons != 1) {
-                $checkseason = \DB::table('tb_seasons')->where('property_id', $property_id)->orderBy('season_priority', 'asc')->get();
+                $checkseason = \DB::table('tb_seasons')->where('tb_seasons.property_id', $property_id)->leftJoin('tb_seasons_dates', 'tb_seasons_dates.season_id', '=', 'tb_seasons.id')->orderBy('tb_seasons.season_priority', 'asc')->get();
             } else {
-                $checkseason = \DB::table('tb_seasons')->where('property_id', 0)->orderBy('season_priority', 'asc')->get();
+                $checkseason = \DB::table('tb_seasons')->leftJoin('tb_seasons_dates', 'tb_seasons_dates.season_id', '=', 'tb_seasons.id')->where('tb_seasons.property_id', 0)->orderBy('tb_seasons.season_priority', 'asc')->get();
             }
 
             $this->data['Seasons'] = $checkseason;
