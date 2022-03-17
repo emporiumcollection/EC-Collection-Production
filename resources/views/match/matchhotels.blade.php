@@ -90,7 +90,7 @@
                             </td>
                             <td width="30">{{-- <button class="btn btn-primary form-control " onclick="savematch('{{ $key.'-'.$val['id'] }}');">Approve</button> --}}
                                 {{-- <button class="btn btn-primary form-control" onclick="importHotelDetail('{{ $key.'-'.$val['id'] }}');">ImportHotel</button> --}}
-                                <button class="btn btn-primary form-control" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">ImportingOtherDetail</button>
+                                <button class="btn btn-primary form-control" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">Import</button>
                             </td>
                         </tr>
                     @endforeach
