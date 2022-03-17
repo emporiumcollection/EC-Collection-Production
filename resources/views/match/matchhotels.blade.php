@@ -89,13 +89,9 @@
                                 <a class="text-secondary" data-toggle="modal" id="displayButton" data-target="#displayImages" onclick="DisplayImages('{{ $key.'-'.$val['id'] }}');">RoomImage</a>
                             </td>
                             <td width="30"><button class="btn btn-primary form-control " onclick="savematch('{{ $key.'-'.$val['id'] }}');">Approve</button>
-                                <button class="btn btn-primary form-control" onclick="importHotelDetail({{ $key.'-'.$val['id'] }});">ImportHotel</button>
+                                <button class="btn btn-primary form-control" onclick="importHotelDetail('{{ $key.'-'.$val['id'] }}');">ImportHotel</button>
                                 <button class="btn btn-primary form-control" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">ImportingOtherDetail</button>
                             </td>
-                            <td width="30">
-                                {{-- <a class="text-secondary" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">ImportData</a> --}}
-                            </td>
-
                         </tr>
                     @endforeach
                     @endif    
@@ -162,13 +158,14 @@
         $("#importdata").html("");
         var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
         var property_id = $('.emp-property', $('#match-row-' + id)).val();
-        alert(hotel_id);
-        alert(property_id);
+        var dest_id = $("#dest_id").val();
+
         $.ajax({
             url: '/importdetail',
             type: 'get',
             data: { hotel_id:hotel_id,
-                    property_id: property_id },
+                    property_id: property_id,
+                    dest_id: dest_id  },
             dataType: 'json',
 
             success:function(response){
@@ -180,6 +177,7 @@
     }
 
     function editPrice(id){
+
         var property_id = $('.emp-property', $('#match-row-' + id)).val();
         if(!property_id){
             alert("Please select emporium hotel");
@@ -189,6 +187,7 @@
     }
 
     function viewPrice(id){
+
         var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
         if(!hotel_id){
             alert("Please select booking.com hotel");
@@ -229,26 +228,24 @@
     }
 
     function importHotelDetail(id){
+        alert(id);
         var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
+        alert(hotel_id);
         var dest_id = $("#dest_id").val();
-        alert(dest_id);
         $.ajax({
-            url: '/import/hotels',
-            data: { hotel_id: hotel_id,
-                    dest_id: dest_id }, 
-            type: 'post',
+            url: '/import/hotels/'+ hotel_id +'/'+ dest_id,
+            // data: { hotel_id: hotel_id,
+            //         dest_id: dest_id }, 
+            type: 'get',
+            dataType: 'json',
 
             success:function(response){
                 console.log(response)
                 if(response.status === true){
                     alert("Hotel Data is Imported from booking.com");
-                    $('#guestValidationMsg').find('#massage').html("Hotel Data is Imported from booking.com");
-                    $('#guestValidationMsg').show();
                 }   
                 if(response.status === false){
                     alert("Hotel Data is Imported djhf from booking.com");
-                    $('#guestValidationMsg').find('#massage').html("This hotel data is already Imported");
-                    $('#guestValidationMsg').show();
                 }
           }
         });

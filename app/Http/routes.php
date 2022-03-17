@@ -58,15 +58,18 @@ Route::get('/search/destination', 'MatchController@matchHotels');
 Route::get('matchhotels', 'MatchController@machDestination');
 Route::post('savematchhotels', 'MatchController@saveMatchHotels');
 Route::get('roomdetail/{id}', 'MatchController@getRoomDetail');
-Route::post('/import/hotels','MatchController@importHotelDetail');
+Route::get('/import/hotels/{hotel_id}/{dest_id}','MatchController@importHotelDetail');
 Route::get('dipslay/room/','MatchController@DisplayRoomImages');
 Route::get('/importdetail','MatchController@ImportDetailOption');
-Route::get('/importsuites/{id}','MatchController@importrooms');
+Route::post('/importsuites','MatchController@importsuite');
 Route::post('/importpolicies','MatchController@getHotelPolicy');
 Route::post('/importreview','MatchController@getHotelReviews');
 Route::post('/importsurrounding','MatchController@Surroundings');
 Route::post('/importfacilities','MatchController@facilities');
-Route::post('/makezip','MatchController@MakeZipOfImages');
+Route::get('makezip/{id}','MatchController@MakeZipOfImages');
+Route::post('/faqs','MatchController@faqs');
+Route::post('/childpolicy','MatchController@ChildrenPolicies');
+Route::post('/tips','MatchController@tips');
 
 //HotelDetail Routes
 Route::get('/hotel/{slug}/restaurant','FrontEnd\HotelDetailController@restaurant')->where(['slug' => '.*']);

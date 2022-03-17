@@ -1,5 +1,5 @@
 <div style="float:right;">
-    <button class="btn btn-primary form-control" onclick="DownloadZipFile();">Download Zipfile</button>
+    <button class="btn btn-primary form-control" onclick="DownloadZipFile('{{ $hotel_id }}');">Download Zipfile</button>
 </div>
 <div class="row">
     <?php $images = [];
@@ -15,20 +15,11 @@
 </div>
 
 <script type="text/javascript">
-    var image = '<?php echo addslashes(json_encode($images))?>'; 
+    var image = '<?php echo json_encode($hotel_id)?>'; 
 
-    function DownloadZipFile(){
-        let arr = jQuery.parseJSON(image);
-        console.log(arr);
-        $.ajax({
-            url: '/makezip',
-            type: 'post',
-            data: { image: image },
-            datatype: 'json',
-
-            success:function(response){
-
-            }
-        });
+    function DownloadZipFile(id){
+        
+        window.location.href = "{{URL::to('makezip/file')}}?id="+id;
+        
     }
 </script>
