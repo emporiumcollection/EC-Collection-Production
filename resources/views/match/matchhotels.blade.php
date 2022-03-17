@@ -88,8 +88,8 @@
                             <td width="30">
                                 <a class="text-secondary" data-toggle="modal" id="displayButton" data-target="#displayImages" onclick="DisplayImages('{{ $key.'-'.$val['id'] }}');">RoomImage</a>
                             </td>
-                            <td width="30"><button class="btn btn-primary form-control " onclick="savematch('{{ $key.'-'.$val['id'] }}');">Approve</button>
-                                <button class="btn btn-primary form-control" onclick="importHotelDetail('{{ $key.'-'.$val['id'] }}');">ImportHotel</button>
+                            <td width="30">{{-- <button class="btn btn-primary form-control " onclick="savematch('{{ $key.'-'.$val['id'] }}');">Approve</button> --}}
+                                {{-- <button class="btn btn-primary form-control" onclick="importHotelDetail('{{ $key.'-'.$val['id'] }}');">ImportHotel</button> --}}
                                 <button class="btn btn-primary form-control" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">ImportingOtherDetail</button>
                             </td>
                         </tr>
