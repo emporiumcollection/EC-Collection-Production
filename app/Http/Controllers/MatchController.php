@@ -529,7 +529,7 @@ class MatchController extends Controller
                 }else{
                     $insert = \DB::table('td_property_terms_n_conditions')
                     ->insert([
-                        'property_id' => $request->property_id,
+                        'property_id' => $property_id->id,
                         'terms_n_conditions' => $policies     
                     ]);
                     return response()->json(['status' => true]);

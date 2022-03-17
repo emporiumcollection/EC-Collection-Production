@@ -160,10 +160,9 @@
 								</div>
 								@if(!empty($Seasons))
 									@foreach($Seasons as $season)
-									<?php 
-
-										$from = new DateTime($season->created);
-										$to = new DateTime($season->updated);
+									<?php
+										$from = new DateTime($season->season_from_date);
+										$to = new DateTime($season->season_to_date);
 									?>
 										<input type="hidden" name="seasonid[]" value="{{$season->id}}" />
 										<input type="hidden" name="edit_room_price_id[]" value="{{ (array_key_exists('rooms_price', $cat) && array_key_exists($season->id, $cat['rooms_price'])) ? $cat['rooms_price'][$season->id]->id : '' }}" >
