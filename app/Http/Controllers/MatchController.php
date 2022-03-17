@@ -691,7 +691,11 @@ class MatchController extends Controller
 
 
     public function importsuite(Request $request){
+
         if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
+            
+            $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
+            $property_id = $property->id;
 
             $roomDetail = $this->blockDetail($request->hotel_id);
 
@@ -819,9 +823,12 @@ class MatchController extends Controller
         }
     }
 
-    public function  Surroundings(Request $request){
+    public function Surroundings(Request $request){
 
         if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
+
+            $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
+            $property_id = $property->id;
 
             $curl = curl_init();
 
@@ -857,7 +864,7 @@ class MatchController extends Controller
 
                         $jsonData = json_encode($val);
                         $addResponse = \DB::table('tb_surroundings')->insert([
-                            'property_id' => 1,
+                            'property_id' => $property_id,
                             'hotel_id' => $request->hotel_id,
                             'type' => $key,
                             'info' => $jsonData
@@ -923,6 +930,9 @@ class MatchController extends Controller
     public function facilities(Request $request){
         if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
 
+            $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
+            $property_id = $property->id;
+
             $curl = curl_init();
 
             curl_setopt_array($curl, [
@@ -954,7 +964,7 @@ class MatchController extends Controller
                     $response = json_decode($response);
                     foreach($response as $val){
                         $insData = DB::table('tb_booking_hotel_facilities')->insert([ 
-                            'property_id' => 1,
+                            'property_id' => $property_id,
                             'hotel_id' => $request->hotel_id,
                             'facility_name' => $val->facility_name,
                             'hotelfacilitytype_id' => $val->hotelfacilitytype_id,
@@ -1000,7 +1010,7 @@ class MatchController extends Controller
                     $response = json_decode($response);
                     foreach($response as $val){
                         $insData = DB::table('tb_booking_hotel_facilities')->insert([ 
-                            'property_id' => 1,
+                            'property_id' => $property_id,
                             'hotel_id' => $request->hotel_id,
                             'property_id' => $property_id->id,
                             'facility_name' => $val->facility_name,
@@ -1082,8 +1092,10 @@ class MatchController extends Controller
 
         if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
 
-            $curl = curl_init();
+            $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
+            $property_id = $property->id;
 
+            $curl = curl_init();
             curl_setopt_array($curl, [
                 CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/questions?locale=en-gb&hotel_id=".$request->hotel_id,
                 CURLOPT_RETURNTRANSFER => true,
@@ -1115,6 +1127,7 @@ class MatchController extends Controller
                     foreach ($response->q_and_a_pairs as $key => $value) {
                         DB::table('tb_faqs')->insert([
                             'hotel_id' => $request->hotel_id,
+                            'property_id' => $property_id,
                             'question' => $value->question,
                             'answer' => $value->answer,
                         ]);
@@ -1177,8 +1190,10 @@ class MatchController extends Controller
 
         if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
 
-            $curl = curl_init();
+            $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
+            $property_id = $property->id;
 
+            $curl = curl_init();
             curl_setopt_array($curl, [
                 CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/children-policies?hotel_id=".$request->hotel_id."&locale=en-gb&children_age=5",
                 CURLOPT_RETURNTRANSFER => true,
@@ -1215,6 +1230,7 @@ class MatchController extends Controller
                         }
                     }
                     DB::table('tb_children_policies')->insert([
+                        'property_id' => $property_id,
                         'hotel_id' => $request->hotel_id,
                         'policy' => $policies
                     ]);
@@ -1277,6 +1293,8 @@ class MatchController extends Controller
 
         if(properties::where('booking_hotel_id',$request->hotel_id)->exists()){
 
+            $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
+            $property_id = $property->id;
         
             $curl = curl_init();
 
@@ -1315,6 +1333,7 @@ class MatchController extends Controller
                     }
 
                     DB::table('tb_tips')->insert([
+                        'property_id' => $property_id,
                         'hotel_id' => $request->hotel_id,
                         'tips' => $tips 
                     ]);
