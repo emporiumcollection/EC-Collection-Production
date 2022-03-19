@@ -1,4 +1,4 @@
-
+<div style="text-align:center;"><span id="loading"><h3><b>Wait while importing...</b><h3></span></div>
 <table>
     <tr>
         <td style="padding-right: 20px;"><p>Import Suites</p></td>
@@ -42,6 +42,14 @@
     </tr>
 </table>
 <script type="text/javascript">
+    $(document).ready(function(){
+        $(document).ajaxStart(function() {
+          $("#loading").show();
+        }).ajaxStop(function() {
+          $("#loading").hide();
+        });
+
+    });   
     function ImportSuitDetail(hotel_id,dest_id){
 
         $.ajax({
@@ -195,5 +203,6 @@
             }
         }) ;  
     }
+
 
 </script>

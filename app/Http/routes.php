@@ -54,22 +54,23 @@ Route::get('/users/setting', 'UserController@getSettings');
 
 
 // Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
-Route::get('/search/destination', 'MatchController@matchHotels');
-Route::get('matchhotels', 'MatchController@machDestination');
-Route::post('savematchhotels', 'MatchController@saveMatchHotels');
-Route::get('roomdetail/{id}', 'MatchController@getRoomDetail');
-Route::get('/import/hotels/{hotel_id}/{dest_id}','MatchController@importHotelDetail');
-Route::get('dipslay/room/','MatchController@DisplayRoomImages');
-Route::get('/importdetail','MatchController@ImportDetailOption');
-Route::post('/importsuites','MatchController@importsuite');
+Route::get('/search/destination', 'MatchController@searchDestination');
+Route::get('matchhotels', 'MatchController@matchHotels');
+Route::post('savematchhotels', 'MatchController@savematchhotels');
+Route::get('roomdetail/{id}', 'MatchController@getroomdetail');
+Route::get('/import/hotels/{hotel_id}/{dest_id}','MatchController@importhoteldetail');
+Route::get('dipslay/room/','MatchController@displayroomimages');
+Route::get('/importdetail','MatchController@importdetailoption');
+Route::post('/importsuites','MatchController@importSuites');
 Route::post('/importpolicies','MatchController@getHotelPolicy');
 Route::post('/importreview','MatchController@getHotelReviews');
-Route::post('/importsurrounding','MatchController@Surroundings');
+Route::post('/importsurrounding','MatchController@surroundings');
 Route::post('/importfacilities','MatchController@facilities');
-Route::get('makezip/{id}','MatchController@MakeZipOfImages');
+Route::get('makezip/{id}','MatchController@makezipOfimages');
 Route::post('/faqs','MatchController@faqs');
-Route::post('/childpolicy','MatchController@ChildrenPolicies');
+Route::post('/childpolicy','MatchController@childrenPolicies');
 Route::post('/tips','MatchController@tips');
+Route::get('/viewprice','MatchController@viewprice');
 
 //HotelDetail Routes
 Route::get('/hotel/{slug}/restaurant','FrontEnd\HotelDetailController@restaurant')->where(['slug' => '.*']);

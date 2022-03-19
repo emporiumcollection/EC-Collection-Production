@@ -1,12 +1,4 @@
-
 <div class="row">
-    @if(isset($error))
-        <div class="col-sm-6">
-            <div id="guestValidationMsg" class="alert alert-danger">
-                <p id="massage" class="mb-0">{{$error}}</p>
-            </div>
-        </div>
-    @endif
     <?php 
     $name = "";
     $rooms_array = [];
@@ -28,4 +20,4 @@
         <?php } 
         }
     }?>    
-</div>
+</div>  

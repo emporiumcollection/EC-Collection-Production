@@ -2,6 +2,7 @@
 @extends('layouts.app')
 
 @section('content')
+
 <div id="guestValidationMsg" class="alert alert-success fade show mt-4" style="display: none;">
     <p id="massage" class="mb-0"></p>
 </div>
@@ -26,6 +27,7 @@
                 </div>
             </div>
         </div>
+        
         @if(isset($hotels))
         <?php
 
@@ -77,10 +79,10 @@
                                 <?php echo $hotelDropDwn;?>
                             </td>
                             <td width="30">
-                                <a href="javascript:void(0)" onclick="viewPrice('{{ $key.'-'.$val['id'] }}')">View Prices</a>
+                                <a data-toggle="modal" id="sessionprice" data-target="#viewprice" onclick="viewPrice('{{ $key.'-'.$val['id'] }}')">View Prices</a>
                             </td>
                             <td width="30">
-                                <a href="javascript:void(0)" onclick="editPrice('{{ $key.'-'.$val['id'] }}')">Edit Prices</a>
+                                <a href="javascript:void(0);" onclick="editPrice('{{ $key.'-'.$val['id'] }}')">Edit Prices</a>
                             </td>
                             <td width="30">
                                 <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal">View Suites</a>
@@ -136,6 +138,21 @@
         </div>
     </div>
 </div>
+<div class="modal fade" id="viewprice" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">View Price</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="PriceDetail">
+                
+            </div>
+        </div>
+    </div>
+</div>
 <div class="modal fade" id="displayImportBtn" tabindex="-1" role="dialog" aria-labelledby="mediumModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -152,6 +169,7 @@
     </div>
 </div>
 <script type="text/javascript">
+ 
 
     function OpenImportModel(id){
         
@@ -188,12 +206,30 @@
 
     function viewPrice(id){
 
+        var property_id = $('.emp-property', $('#match-row-' + id)).val();
         var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
-        if(!hotel_id){
+
+        if(!property_id){
             alert("Please select booking.com hotel");
             return false;
         }
-        window.open("https://secure.booking.com/book.html?hotel_id=" + hotel_id + "&checkout={{ date ('Y-m-d', strtotime ('+180 day')) }}&checkin={{ date ('Y-m-d', strtotime ('+178 day')) }}&interval=2&stage=1&nr_rooms_729233401_325315371_3_0_0=1");
+
+        $("#PriceDetail").html("");
+
+        $.ajax({
+            url: '/viewprice',
+            type:'get',
+            data:{ property_id: property_id,
+                hotel_id: hotel_id },
+            dataType:'json',
+
+            success:function(response){
+                $("#PriceDetail").html(response.seasondate);
+                $('#viewprice').modal("show");
+            }
+        });
+
+        
     }
 
     function machhotels(catg)
