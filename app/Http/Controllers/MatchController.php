@@ -112,8 +112,8 @@ class MatchController extends Controller
             $matched = [];
             $hotels = [];
 
-            foreach ($fetchedData as $key => $value) {
-                $DecodedData = json_decode($value->response);
+            foreach ($fetchedData as $key => $hotelData) {
+                $DecodedData = json_decode($hotelData->response);
                  foreach ($DecodedData->result as $value) {
                     $searchValue = addslashes($value->hotel_name);
                     $searchValue = str_replace("Hotel", "", $searchValue);
@@ -140,7 +140,7 @@ class MatchController extends Controller
                     // where('property_name','like', "%$value->hotel_name%")->first();
                     $hotels[] = [
                         'hotel_id' => $value->hotel_id,
-                        'hotel_name' => $value->hotel_name,
+                        'hotel_name' => $value->hotel_name . ' (' . $value->class . ' Star)',
                         
                     ];
                     if(!empty($property)){ // && !in_array($property->id, $matchedIds)
@@ -247,7 +247,7 @@ class MatchController extends Controller
             $curl = curl_init();
 
                 curl_setopt_array($curl, [
-                    CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/search?checkin_date=".$checkin_date."&checkout_date=".$checkout_date."&room_number=1&filter_by_currency=USD&dest_type=city&locale=en-gb&adults_number=2&order_by=popularity&units=metric&dest_id=".$dest_id."&children_number=2&categories_filter_ids=class::5&page_number=".$pages_no,
+                    CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/search?checkin_date=".$checkin_date."&checkout_date=".$checkout_date."&room_number=1&filter_by_currency=USD&dest_type=city&locale=en-gb&adults_number=2&order_by=popularity&units=metric&dest_id=".$dest_id."&children_number=2&page_number=".$pages_no,
                     CURLOPT_RETURNTRANSFER => true,
                     CURLOPT_FOLLOWLOCATION => true,
                     CURLOPT_ENCODING => "",
@@ -263,7 +263,8 @@ class MatchController extends Controller
 
                 $response = curl_exec($curl);
                 $destination = json_decode($response);
-                if(\DB::table('tb_booking_hotel_response')->where('page_no',$pages_no)->exists()){
+
+                if(\DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('page_no',$pages_no)->exists()){
 
                 }else{
                     $addResponse = \DB::table('tb_booking_hotel_response')->insert([
@@ -528,7 +529,6 @@ class MatchController extends Controller
     public function importhoteldetail($hotel_id)
     {
         $hotelDetail =  $this->getHotelData($hotel_id);
-        
         properties::insert([
             'booking_hotel_id' => $hotelDetail->hotel_id,
             'property_name' => $hotelDetail->name,
