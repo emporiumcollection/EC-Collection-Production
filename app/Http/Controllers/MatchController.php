@@ -202,7 +202,7 @@ class MatchController extends Controller
                             // where('property_name','like', "%$value->hotel_name%")->first();
                             $hotels[] = [
                                 'hotel_id' => $value->hotel_id,
-                                'hotel_name' => $value->hotel_name,
+                                'hotel_name' => $value->hotel_name . ' (' . $value->class . ' Star)',
                                 
                             ];
                             if(!empty($property)){ // && !in_array($property->id, $matchedIds)
