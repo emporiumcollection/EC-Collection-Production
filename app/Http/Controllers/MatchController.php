@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Models\properties;
 use App\Models\categories;
 use App\Models\Review;
+use App\Models\Seasons;
 use App\Models\SeasonDates;
 use App\Models\PropertyCategoryTypes;
 use DB;
@@ -962,10 +963,11 @@ class MatchController extends Controller
 
     public function viewprice(Request $request){
 
-        $FetchSession = SeasonDates::where('property_id',$request->property_id)->get();
+        $fetchSession = Seasons::with(["dates"])
+        ->where('property_id', $request->property_id)->get();
         
         $Seasondate = view('match.viewprice', [
-            'seasondate' => $FetchSession,
+            'seasondate' => $fetchSession,
             'hotel_id' => $request->hotel_id
         ])->render();
 

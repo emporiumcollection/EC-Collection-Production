@@ -14,8 +14,8 @@
                     </tr>
                      <?php foreach ($seasondate as $key => $value) {
                         
-                        $sdate = date_create($value->season_from_date); 
-                        $fdate = date_create($value->season_from_date); 
+                        $sdate = date_create($value->dates[0]->season_from_date); 
+                        $fdate = date_create($value->dates[0]->season_from_date); 
                         $cdate = date_create(date("Y-m-d")); 
 
                         if($fdate < $cdate){
@@ -31,10 +31,10 @@
                      ?>
                         <tr>
                             <td>
-                                <span class="form-control">{{ $value->season_from_date }}</span>
+                                <span class="form-control">{{ $value->dates[0]->season_from_date }}</span>
                             </td>
                             <td>
-                                <span class="form-control">{{ $value->season_to_date }}</span>
+                                <span class="form-control">{{ $value->dates[0]->season_to_date }}</span>
                             </td>
                             <td style="padding-left: 20px;">
                                 <a href="{{ $a }}" class="text-secondary" target="blank">View Price</a>
