@@ -944,16 +944,13 @@ class MatchController extends Controller
             }else{
 
                 $response = json_decode($response);
-                $tips = '';
                 foreach($response->result as $val){
-                    $tips .= $val->user_tip.PHP_EOL;
+                    DB::table('tb_tips')->insert([
+                        'property_id' => $property_id,
+                        'hotel_id' => $request->hotel_id,
+                        'tips' => $val->user_tip 
+                    ]);
                 }
-
-                DB::table('tb_tips')->insert([
-                    'property_id' => $property_id,
-                    'hotel_id' => $request->hotel_id,
-                    'tips' => $tips 
-                ]);
                 return response()->json(['status' => true]);
             }
 

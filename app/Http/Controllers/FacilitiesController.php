@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\controller;
 use App\Models\Facilities;
+use App\Models\Properties;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ; 
@@ -45,7 +46,13 @@ class FacilitiesController extends Controller {
 		// End Filter sort and order for query 
 		// Filter Search for query		
 		$filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
-
+		$this->data['curntprop'] =  '';
+		
+		if(!is_null($request->input('selprop')) && $request->input('selprop')!='')
+		{
+			$filter .= ' AND FIND_IN_SET('.$request->input('selprop').', property_id)';
+			$this->data['curntprop'] = $request->input('selprop');
+		}
 		
 		$page = $request->input('page', 1);
 		$params = array(
@@ -80,7 +87,8 @@ class FacilitiesController extends Controller {
 		// Detail from master if any
 		
 		// Master detail link if any 
-		$this->data['subgrid']	= (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array()); 
+		$this->data['subgrid']	= (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array());
+		$this->data['fetch_prop'] = Properties::orderBy('id','desc')->get(); 
 		// Render into template
 		return view('facilities.index',$this->data);
 	}	

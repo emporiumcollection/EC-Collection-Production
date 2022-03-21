@@ -1,5 +1,12 @@
 @extends('layouts.app')
-
+<style>
+	#s2id_property {
+		width: 30% !important;
+	}
+	#s2id_property_category{
+		width: 15% !important;
+	}
+</style>
 @section('content')
 {{--*/ usort($tableGrid, "SiteHelpers::_sort") /*--}}
   <div class="page-content row">
@@ -42,7 +49,15 @@
 			@if($access['is_excel'] ==1)
 			<a href="{{ URL::to('facilities/download?return='.$return) }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_download') }}">
 			<i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
-			@endif			
+			@endif
+			<select name='property' id='property' style="height: 28px; margin-left: 5px;" class='select2'  onchange="fetchproperty(this.value);" > 
+				<option value="">-Select Property- </option>
+				@if(!empty($fetch_prop))
+					@foreach($fetch_prop as $proplist)
+						<option value="{{$proplist->id}}" <?php echo ($curntprop == $proplist->id) ? " selected='selected' " : '' ; ?>>{{$proplist->property_name}}</option>
+					@endforeach
+				@endif
+			</select>			
 		 
 		</div> 		
 
@@ -78,7 +93,6 @@
 						<a  href="{{ URL::to('facilities/update/'.$row->id.'?return='.$return) }}" class="tips btn btn-xs btn-success" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit "></i></a>
 						@endif
 												
-					
 				</td>				 
                 </tr>
 				
@@ -96,6 +110,11 @@
 	</div>	  
 </div>	
 <script>
+function fetchproperty(prop)
+{
+	window.location.href = "{{URL::to('facilities')}}?selprop="+prop;
+}
+
 $(document).ready(function(){
 
 	$('.do-quick-search').click(function(){

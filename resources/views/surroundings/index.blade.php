@@ -1,5 +1,12 @@
 @extends('layouts.app')
-
+<style>
+	#s2id_property {
+		width: 30% !important;
+	}
+	#s2id_property_category{
+		width: 15% !important;
+	}
+</style>
 @section('content')
 {{--*/ usort($tableGrid, "SiteHelpers::_sort") /*--}}
   <div class="page-content row">
@@ -42,7 +49,15 @@
 			@if($access['is_excel'] ==1)
 			<a href="{{ URL::to('surroundings/download?return='.$return) }}" class="tips btn btn-sm btn-white" title="{{ Lang::get('core.btn_download') }}">
 			<i class="fa fa-download"></i>&nbsp;{{ Lang::get('core.btn_download') }} </a>
-			@endif			
+			@endif
+			<select name='property' id='property' style="height: 28px; margin-left: 5px; width: 24%;" class='select2 '  onchange="fetchproperty(this.value);" > 
+				<option value="">-Select Property-</option>
+				@if(!empty($fetch_prop))
+					@foreach($fetch_prop as $proplist)
+						<option value="{{$proplist->id}}" <?php echo ($curntprop == $proplist->id) ? " selected='selected' " : '' ; ?>>{{$proplist->property_name}}</option>
+					@endforeach
+				@endif
+			</select>			
 		 
 		</div> 		
 
@@ -94,6 +109,12 @@
 	</div>	  
 </div>	
 <script>
+
+function fetchproperty(prop)
+{
+	window.location.href = "{{URL::to('surroundings')}}?selprop="+prop;
+}
+
 $(document).ready(function(){
 
 	$('.do-quick-search').click(function(){

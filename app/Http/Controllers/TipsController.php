@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\controller;
 use App\Models\Tips;
+use App\Models\Properties;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ; 
@@ -45,7 +46,15 @@ class TipsController extends Controller {
 		// End Filter sort and order for query 
 		// Filter Search for query		
 		$filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
+		//Filter Search for properties
 
+		$this->data['curntprop'] =  '';
+		
+		if(!is_null($request->input('selprop')) && $request->input('selprop')!='')
+		{
+			$filter .= ' AND FIND_IN_SET('.$request->input('selprop').', property_id)';
+			$this->data['curntprop'] = $request->input('selprop');
+		}
 		
 		$page = $request->input('page', 1);
 		$params = array(
@@ -81,6 +90,7 @@ class TipsController extends Controller {
 		
 		// Master detail link if any 
 		$this->data['subgrid']	= (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array()); 
+		$this->data['fetch_prop'] = Properties::orderBy('id','desc')->get();
 		// Render into template
 		return view('tips.index',$this->data);
 	}	

@@ -1,6 +1,7 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\controller;
+use App\Models\Properties;
 use App\Models\Surroundings;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -46,7 +47,15 @@ class SurroundingsController extends Controller {
 		// Filter Search for query		
 		$filter = (!is_null($request->input('search')) ? $this->buildSearch() : '');
 
+		//Filter Search for query
+		$this->data['curntprop'] =  '';
 		
+		if(!is_null($request->input('selprop')) && $request->input('selprop')!='')
+		{
+			$filter .= ' AND FIND_IN_SET('.$request->input('selprop').', property_id)';
+			$this->data['curntprop'] = $request->input('selprop');
+		}
+
 		$page = $request->input('page', 1);
 		$params = array(
 			'page'		=> $page ,
@@ -81,6 +90,7 @@ class SurroundingsController extends Controller {
 		
 		// Master detail link if any 
 		$this->data['subgrid']	= (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array()); 
+		$this->data['fetch_prop'] = Properties::orderBy('id','desc')->get();
 		// Render into template
 		return view('surroundings.index',$this->data);
 	}	

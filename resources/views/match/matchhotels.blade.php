@@ -343,13 +343,11 @@
     <?php } 
     ?>
     $(document).ready(function () {
-        if(matched){
-            let arr = jQuery.parseJSON( matched );
-        }   
+        let arr = jQuery.parseJSON( matched );
+        
         var propDrp = [];
         var hotelDrp = [];
         
-        if(typeof(arr) != "undefined" && arr !== null){
         $(".match-row").each(function(){
             var tr = $(this);
             var isSetVal = false;
@@ -363,7 +361,6 @@
                 }
             });
         });    
-        }
 
         $('.matched_property').selectize({
             sortField: 'text'
