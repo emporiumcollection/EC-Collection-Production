@@ -264,9 +264,7 @@
     }
 
     function importHotelDetail(id){
-        alert(id);
         var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
-        alert(hotel_id);
         var dest_id = $("#dest_id").val();
         $.ajax({
             url: '/import/hotels/'+ hotel_id +'/'+ dest_id,
@@ -345,12 +343,13 @@
     <?php } 
     ?>
     $(document).ready(function () {
-        
-        let arr = jQuery.parseJSON( matched );
+        if(matched){
+            let arr = jQuery.parseJSON( matched );
+        }   
         var propDrp = [];
         var hotelDrp = [];
         
-        
+        if(typeof(arr) != "undefined" && arr !== null){
         $(".match-row").each(function(){
             var tr = $(this);
             var isSetVal = false;
@@ -364,7 +363,7 @@
                 }
             });
         });    
-        
+        }
 
         $('.matched_property').selectize({
             sortField: 'text'

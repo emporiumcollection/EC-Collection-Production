@@ -1012,7 +1012,7 @@ class MatchController extends Controller
 
     private function checkAndGetPropertyId($request){
         if(!properties::where('booking_hotel_id',$request->hotel_id)->exists()){
-            $this->importHotelDetail($request->hotel_id);            
+            $this->importhoteldetail($request->hotel_id);            
         }
 
         $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
