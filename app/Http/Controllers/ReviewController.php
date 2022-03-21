@@ -50,7 +50,7 @@ class ReviewController extends Controller {
 		$this->data['curstatus'] =  '';
 		if(!is_null($request->input('selprop')) && $request->input('selprop')!='')
 		{
-			$filter .= ' AND FIND_IN_SET('.$request->input('selprop').', property_id)';
+			$filter .= ' AND FIND_IN_SET('.$request->input('selprop').', hotel_id)';
 			$this->data['curntprop'] = $request->input('selprop');
 		}
 		if(!is_null($request->input('selstatus')) && $request->input('selstatus')!='')

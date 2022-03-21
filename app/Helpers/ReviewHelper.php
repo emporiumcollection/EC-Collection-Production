@@ -9,7 +9,10 @@ class ReviewHelper
     {
 		
 		$property = properties::select('property_name')->where("id", "=", $id)->first();
-		 
-		return $property->property_name;
+		
+		if(!empty($property))
+			return $property->property_name;
+		else 
+			return '';
     }
 }
