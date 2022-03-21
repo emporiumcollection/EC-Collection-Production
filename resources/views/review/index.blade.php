@@ -55,6 +55,7 @@
 				<option value="">-Select Property-</option>
 				@if(!empty($fetch_prop))
 					@foreach($fetch_prop as $proplist)
+					<?php print_r($proplist);exit;?>
 						<option value="{{$proplist->id}}" <?php echo ($curntprop == $proplist->id) ? " selected='selected' " : '' ; ?>>{{$proplist->property_name}}</option>
 					@endforeach
 				@endif
