@@ -2,9 +2,8 @@
     <button class="btn btn-primary form-control" onclick="DownloadZipFile('{{ $hotel_id }}');">Download Zipfile</button>
 </div>
 <div class="row">
-    <?php $images = [];
+    <?php 
      foreach ($photos as $key => $value) { 
-        $images[] =  $value->url_640x200 ;
     ?>
     <div class="col-sm-12" style="padding-top: 10px;padding-bottom: 10px;">
         <a href="{{ str_replace( "640x200","1800x1200",$value->url_640x200) }}" target="blank" >

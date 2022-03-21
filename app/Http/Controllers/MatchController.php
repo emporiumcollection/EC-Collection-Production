@@ -11,6 +11,7 @@ use App\Models\categories;
 use App\Models\Review;
 use App\Models\Seasons;
 use App\Models\SeasonDates;
+use App\Models\PropertyRooms;
 use App\Models\PropertyCategoryTypes;
 use DB;
 use ZipArchive;
@@ -396,7 +397,7 @@ class MatchController extends Controller
         } else {
             $policies = '';
             $response = json_decode($response);
-            
+            print_r($response);exit;
             if(isset($response->policy)){
                 foreach ($response->policy as $key => $value) {
                     $policies .= PHP_EOL;
@@ -546,7 +547,6 @@ class MatchController extends Controller
         ]);
     }
 
-
     public function importSuites(Request $request){
 
         $property_id = $this->checkAndGetPropertyId($request);
@@ -591,6 +591,21 @@ class MatchController extends Controller
                 'created' => date("Y-m-d: H:i:s"),
                 'updated' => date("Y-m-d: H:i:s"),
             ]);
+            // $lastId = DB::getPdo()->lastInsertId();
+            $category_id = PropertyCategoryTypes::where('property_id',$property_id)->first();
+
+            DB::table('tb_properties_category_rooms')->insert([
+                'property_id' => $property_id,
+                'category_id' => $category_id->id,
+                'room_name' => $room_name,
+                'status' => 1,
+                'room_active_from' => date ('Y-m-d', strtotime ('+2 year')),
+                'room_active_to' => date ('Y-m-d', strtotime ('+2 year')),
+                'created' => date("Y-m-d: H:i:s"),
+                'updated' => date("Y-m-d: H:i:s")
+            ]);
+
+
         }
 
         return response()->json(['status' => true]);
@@ -779,7 +794,7 @@ class MatchController extends Controller
 
                     $images = [];
                     foreach ($value->photos as $key => $value) { 
-                        $images[] =  $value->url_640x200 ;
+                        $images[] =  str_replace("640x200","1800x1200",$value->url_640x200);
                     }
                     // $files = json_decode($images);
                     # create new zip object
@@ -889,22 +904,20 @@ class MatchController extends Controller
             echo "cURL Error #:" . $err;
         } else {
             $response = json_decode($response);
-            $policies = '';
             if(DB::table('tb_children_policies')->where('property_id',$property_id)->exists()){
                 return response()->json(['status' => false]);
             }else{
                 foreach($response->props->children[0]->props->component->props->children as $value){
                     if(isset($value->props->children)){
                         foreach($value->props->children as $val){
-                            $policies .= $val->props->text.PHP_EOL;
+                            DB::table('tb_children_policies')->insert([
+                                'property_id' => $property_id,
+                                'hotel_id' => $request->hotel_id,
+                                'policy' => $val->props->text
+                            ]);
                         }
                     }
                 }
-                DB::table('tb_children_policies')->insert([
-                    'property_id' => $property_id,
-                    'hotel_id' => $request->hotel_id,
-                    'policy' => $policies
-                ]);
                 return response()->json(['status' => true]);
             }
         }

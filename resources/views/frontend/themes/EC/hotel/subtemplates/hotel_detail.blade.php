@@ -73,8 +73,11 @@
       <a href="#" data-sidebar="#quickinfo" onclick="replacePropertyData(<?php echo $hotel_data[0]->id ;?>)" class="view btn-sidebar i-none">
         Hotel Info
       </a>
+      <a href="#" data-sidebar="#policies" class="view btn-sidebar i-none">
+        Policies
+      </a>
       <input type="hidden" name="city_" id="city" value="<?php echo $hotel_data[0]->city?>">
-      <a href="#" class="view btn-sidebar i-none" title="Privacy and cookie policy" data-toggle="modal" data-target="#privacy_policy">Policies</a>
+      {{-- <a href="#" class="view btn-sidebar i-none" title="Privacy and cookie policy" data-toggle="modal" data-target="#privacy_policy">Policies</a> --}}
       {{-- <script type="text/javascript" src="https://cdn.iubenda.com/iubenda_i_badge.js"></script> --}}
       {{-- <script src="https://cdn.iubenda.com/iubenda.js"></script><script src="https://cdn.iubenda.com/iubenda.js"></script><script type="text/javascript">(function (w, d) { var loader = function () { var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0]; s.src = "https://cdn.iubenda.com/iubenda.js"; tag.parentNode.insertBefore(s, tag); }; if (w.addEventListener) { w.addEventListener("load", loader, false); } else if (w.attachEvent) { w.attachEvent("onload", loader); } else { w.onload = loader; } })(window, document);</script> --}}
 
@@ -1972,6 +1975,7 @@
 </div>
 
 @include('frontend.themes.EC.layouts.subsections.quick_info')
+@include('frontend.themes.EC.layouts.subsections.policies_info')
 @include('frontend.themes.EC.layouts.subsections.reviews')
 @include('frontend.themes.EC.layouts.subsections.priceinfo')
 @include('frontend.themes.EC.layouts.subsections.share')

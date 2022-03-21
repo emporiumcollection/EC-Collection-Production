@@ -78,7 +78,7 @@
                             <td width="50">
                                 <?php echo $hotelDropDwn;?>
                             </td>
-                            <td width="30">
+                            <td width="30"> 
                                 <a data-toggle="modal" id="sessionprice" data-target="#viewprice" onclick="viewPrice('{{ $key.'-'.$val['id'] }}')">View Prices</a>
                             </td>
                             <td width="30">
@@ -343,24 +343,27 @@
     <?php } 
     ?>
     $(document).ready(function () {
-        let arr = jQuery.parseJSON( matched );
-        
+        if(matched !== null){
+            var arr = jQuery.parseJSON( matched );
+        }    
         var propDrp = [];
         var hotelDrp = [];
-        
-        $(".match-row").each(function(){
-            var tr = $(this);
-            var isSetVal = false;
-            $.each(arr, function (key, value) {
-                var ProOpt = $('.emp-property', tr).val();
-                if(propDrp.indexOf(value.property_id) == -1 && !isSetVal){
-                    $('.emp-property', tr).val(value.property_id);
-                    $('.booking-property', tr).val(value.hotel_id);
-                    propDrp.push(value.property_id);
-                    isSetVal = true;
-                }
-            });
-        });    
+
+        if(typeof arr !== null){
+            $(".match-row").each(function(){
+                var tr = $(this);
+                var isSetVal = false;
+                $.each(arr, function (key, value) {
+                    var ProOpt = $('.emp-property', tr).val();
+                    if(propDrp.indexOf(value.property_id) == -1 && !isSetVal){
+                        $('.emp-property', tr).val(value.property_id);
+                        $('.booking-property', tr).val(value.hotel_id);
+                        propDrp.push(value.property_id);
+                        isSetVal = true;
+                    }
+                });
+            });    
+        }
 
         $('.matched_property').selectize({
             sortField: 'text'
