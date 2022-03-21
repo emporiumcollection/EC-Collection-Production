@@ -68,4 +68,8 @@
                     Route::controller('propertyusp', 'PropertyuspController');
                     Route::controller('availableservices', 'AvailableservicesController');
                     Route::controller('tips', 'TipsController');
+                    Route::controller('facilities', 'FacilitiesController');
+                    Route::controller('surroundings', 'SurroundingsController');
+                    Route::controller('childpolicies', 'ChildpoliciesController');
+                    Route::controller('review', 'ReviewController');
                     ?>

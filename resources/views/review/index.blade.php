@@ -74,17 +74,11 @@
         <thead>
 			<tr>
 				<th class="number"> No </th>
-				<th> <input type="checkbox" class="checkall" /></th>
-				
-				@foreach ($tableGrid as $t)
-					@if($t['view'] =='1')				
-						<?php $limited = isset($t['limited']) ? $t['limited'] :''; ?>
-						@if(SiteHelpers::filterColumn($limited ))
-						
-							<th>{{ $t['label'] }}</th>			
-						@endif 
-					@endif
-				@endforeach
+				<th> <input type="checkbox" class="checkall" /></th>				
+				<td>Property</td>
+				<th>Rate</th>
+				<th>Name</th>
+				<th>Review</th>
 				<th width="70" >{{ Lang::get('core.btn_action') }}</th>
 			  </tr>
         </thead>
@@ -94,11 +88,10 @@
                 <tr>
 					<td width="30"> {{ ++$i }} </td>
 					<td width="50"><input type="checkbox" class="ids" name="ids[]" value="{{ $row->id }}" />  </td>									
-					<td>{{ ReviewHelper::getHotelName($row->hotel_id) }}</td>
+					<td>{{ ReviewHelper::getHotelName($row->property_id) }}</td>
 					<td>{{ $row->rating }}</td>
 					<td>{{ $row->fname }}</td>
-					<td>{{ $row->lname }}</td>
-					<td>{{ $row->country }}</td>
+					<td>{{ $row->comment }}</td>
 				 <td>
 					 	@if($access['is_detail'] ==1)
 						<a href="{{ URL::to('review/show/'.$row->id.'?return='.$return)}}" class="tips btn btn-xs btn-primary" title="{{ Lang::get('core.btn_view') }}"><i class="fa  fa-search "></i></a>
