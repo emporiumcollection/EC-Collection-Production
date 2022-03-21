@@ -397,7 +397,7 @@ class MatchController extends Controller
         } else {
             $policies = '';
             $response = json_decode($response);
-            print_r($response);exit;
+            // print_r($response);exit;
             if(isset($response->policy)){
                 foreach ($response->policy as $key => $value) {
                     $policies .= PHP_EOL;
@@ -591,12 +591,12 @@ class MatchController extends Controller
                 'created' => date("Y-m-d: H:i:s"),
                 'updated' => date("Y-m-d: H:i:s"),
             ]);
-            // $lastId = DB::getPdo()->lastInsertId();
-            $category_id = PropertyCategoryTypes::where('property_id',$property_id)->first();
+            $lastId = DB::getPdo()->lastInsertId();
+            // $category_id = PropertyCategoryTypes::where('property_id',$property_id)->first();
 
             DB::table('tb_properties_category_rooms')->insert([
                 'property_id' => $property_id,
-                'category_id' => $category_id->id,
+                'category_id' => $lastId,
                 'room_name' => $room_name,
                 'status' => 1,
                 'room_active_from' => date ('Y-m-d', strtotime ('+2 year')),
