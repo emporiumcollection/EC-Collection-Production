@@ -132,7 +132,111 @@
                         <p class="mb-0">Laundry service</p>
                     </div>
                 </div>
-                
+                @if(isset($surroundings) && !empty($surroundings))
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h3><b>Surrounding</b></h3>
+                        </div>
+                        <?php foreach($surroundings as $val) {  ?>
+                            <?php 
+                                if($val->type == 'location_highlights'){
+                                    $info = json_decode($val->info);                                
+                                    foreach($info as $key => $value){ ?>
+
+                                    <div class="col-md-4 col-sm-6 mb-4">
+                                    <?php if($key == 'has_restaurant' ){ ?>
+                                        <p><b>Restaurant</b></p>
+                                    <?php }elseif($key == 'popular_landmarks') {?>
+                                        <p><b>Landmark</b></p>
+                                    <?php }elseif($key == 'nearby_stations'){ ?>
+                                        <p><b>Nearby Station</b></p>
+                                    <?php }
+                                    foreach($value as $data){
+
+                                            if(isset($data->name)){ ?>
+                                                <p class="mb-0">{{ $data->name }}</p>
+                                            <?php }elseif($key == 'popular_landmarks'){ ?>
+                                                <p class="mb-0"><?php  print_r($data); ?></p>
+                                    <?php   }elseif($key == 'nearby_stations'){ 
+                                                foreach($data as $key => $near){
+                                    ?>  <table><tr><td>
+                                            {{ ucwords(str_replace("_"," ",$key)) }} : </td><td>{{ $near }}</td></tr>
+                                            </table>
+                                    <?php        }
+                                        }
+                                        
+                                    }?> 
+                                    </div> <?php 
+                                }
+                            ?>
+                            <?php } } ?>
+                    </div>
+                @endif
+                @if(isset($fac) && !empty($fac))
+                    <div class="row mb-5">
+                        <div class="col-md-12"><h3><b>Facilities</b><h3></div>
+                         <?php 
+                            $general = "";
+                            $business = "";
+                            $activities = "";
+                            $cleaning = "";
+                            $reception = "";
+                            $food = "";
+                         ?>
+                        @foreach($fac as $key => $val)
+                       
+                            
+                                @if($val->facilitytype_name == 'General')
+                                <?php  $general .= $val->facility_name.PHP_EOL; ?>
+                                    
+                                @elseif($val->facilitytype_name == 'Business facilities')
+                                    <?php  $business .= $val->facility_name.PHP_EOL; ?>
+                                    
+                                @elseif($val->facilitytype_name == 'Food & Drink')
+                                <?php  $food .= $val->facility_name.PHP_EOL; ?>
+                                   
+                                @elseif($val->facilitytype_name == 'Reception services')
+                                <?php  $reception .= $val->facility_name.PHP_EOL; ?>
+                                    
+                                @elseif($val->facilitytype_name == 'Cleaning services')
+                                <?php  $cleaning .= $val->facility_name.PHP_EOL; ?>
+                                   
+                                @elseif($val->facilitytype_name == 'Activities')
+                                <?php  $activities .= $val->facility_name.PHP_EOL; ?>
+                                   
+                                @endif    
+                        @endforeach
+                         <div class="col-md-4 col-sm-6 mb-4">
+                            <p><b>general</b></p>
+                            <p style="margin: 0; display: inline;">{{ $general }}</p>
+                        </div>
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <p><b>Business facilities</b></p>
+                            <p style="margin: 0; display: inline;">{{ $business }}</p>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <p><b>Food & Drink</b></p>
+                            <p style="margin: 0; display: inline;">{{ $food }}</p>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <p><b>Reception services</b></p>
+                            <p style="margin: 0; display: inline;">{{ $reception }}</p>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <p><b>Cleaning services</b></p>
+                            <p style="margin: 0; display: inline;">{{ $cleaning }}</p>
+                        </div>
+
+                        <div class="col-md-4 col-sm-6 mb-4">
+                            <p><b>Activities</b></p>
+                            <p style="margin: 0; display: inline;">{{ $activities }}</p>
+                        </div>
+
+                    </div>
+                @endif
                 <!--<div class="row my-5">
                     <div class="col text-center">
                         <div class="i-touch">

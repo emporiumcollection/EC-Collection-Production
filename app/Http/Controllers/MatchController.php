@@ -576,36 +576,35 @@ class MatchController extends Controller
             $beds = isset($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->count)? $roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->count:0;
             $guests_adults = $rooms->nr_adults;
             $guests_juniors = $rooms->nr_children;
-            
-            $insert =  PropertyCategoryTypes::insert([
-                'property_id' => $property_id,
-                'category_name' => $room_name,
-                'booking_policy' => $policies,
-                'bathroom' => $rooms->number_of_bathrooms,
-                'guests_adults' => $guests_adults,
-                'guests_juniors' => $guests_juniors,
-                'bads' => $beds,
-                'booking_facilities' => $facilities,
-                'room_desc' => $room_desc,
-                'status' => 0,
-                'created' => date("Y-m-d: H:i:s"),
-                'updated' => date("Y-m-d: H:i:s"),
-            ]);
-            $lastId = DB::getPdo()->lastInsertId();
-            // $category_id = PropertyCategoryTypes::where('property_id',$property_id)->first();
+            if(!PropertyCategoryTypes::where('category_name',$room_name)->exists()){
+                $insert =  PropertyCategoryTypes::insert([
+                    'property_id' => $property_id,
+                    'category_name' => $room_name,
+                    'booking_policy' => $policies,
+                    'bathroom' => $rooms->number_of_bathrooms,
+                    'guests_adults' => $guests_adults,
+                    'guests_juniors' => $guests_juniors,
+                    'bads' => $beds,
+                    'booking_facilities' => $facilities,
+                    'room_desc' => $room_desc,
+                    'status' => 0,
+                    'created' => date("Y-m-d: H:i:s"),
+                    'updated' => date("Y-m-d: H:i:s"),
+                ]);
+                $lastId = DB::getPdo()->lastInsertId();
+                // $category_id = PropertyCategoryTypes::where('property_id',$property_id)->first();
 
-            DB::table('tb_properties_category_rooms')->insert([
-                'property_id' => $property_id,
-                'category_id' => $lastId,
-                'room_name' => $room_name,
-                'status' => 1,
-                'room_active_from' => date ('Y-m-d', strtotime ('+2 year')),
-                'room_active_to' => date ('Y-m-d', strtotime ('+2 year')),
-                'created' => date("Y-m-d: H:i:s"),
-                'updated' => date("Y-m-d: H:i:s")
-            ]);
-
-
+                DB::table('tb_properties_category_rooms')->insert([
+                    'property_id' => $property_id,
+                    'category_id' => $lastId,
+                    'room_name' => $room_name,
+                    'status' => 1,
+                    'room_active_from' => date ('Y-m-d', strtotime ('+2 year')),
+                    'room_active_to' => date ('Y-m-d', strtotime ('+2 year')),
+                    'created' => date("Y-m-d: H:i:s"),
+                    'updated' => date("Y-m-d: H:i:s")
+                ]);
+            }    
         }
 
         return response()->json(['status' => true]);

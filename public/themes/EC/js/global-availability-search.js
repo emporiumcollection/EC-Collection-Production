@@ -21,7 +21,7 @@ function replacePropertyData(id){
   currentPropertyId = id;
   var field = '';
   $('[data-place="property"]').each(function() {
-      field = $(this).attr('data-replace');
+      field = $(this).attr('data-replace'); 
       console.log(properties[id][field]);
       if(properties[id][field]){
         $(this).html(properties[id][field]);

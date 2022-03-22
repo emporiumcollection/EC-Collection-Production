@@ -3372,6 +3372,12 @@ class PropertyController extends Controller {
         $this->data['hotel_data'] = $this->getPropertyByslug($slug);
         $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['hotel_data'][0]->id)->first();
 
+        $this->data['faq'] = \DB::table('tb_faqs')->where('property_id', $this->data['hotel_data'][0]->id)->get();
+
+        $this->data['surroundings'] = \DB::table('tb_surroundings')->where('property_id', $this->data['hotel_data'][0]->id)->get(); 
+
+        $this->data['fac'] = \DB::table('tb_booking_hotel_facilities')->where('property_id', $this->data['hotel_data'][0]->id)->get(); 
+
         $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
 
 

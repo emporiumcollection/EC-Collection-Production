@@ -447,7 +447,7 @@ pre {
     width: 100%;
 }
 .card-body h4, .card-body a {
-    padding: 5px;
+    /*padding: 5px;*/
 }
 
 @media (min-width: 576px) {
@@ -32582,18 +32582,18 @@ span.calElement.prev:hover {
   margin-bottom: 20px; }
 
 .additional-list {
-  text-align: center;
+  /*text-align: center;*/
   border: 1px #dfdfdf solid;
-  padding: 30px 22px;
+  padding: 30px 22px; 
   display: flex;
-  flex-direction: column;
+  /*flex-direction: column;*/
   position: relative;
   height: 100%; }
   .additional-list h4 {
     font-size: 16px;
     letter-spacing: 2px;
     font-weight: 700;
-    margin-bottom: 40px; }
+    /*margin-bottom: 40px;*/ }
   .additional-list .qty-label {
     font-size: 14px;
     font-weight: 700; }

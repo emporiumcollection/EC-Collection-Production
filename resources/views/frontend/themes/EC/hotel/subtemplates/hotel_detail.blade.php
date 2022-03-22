@@ -253,6 +253,41 @@
         </div>
       </div>
     </div>
+    @if(isset($faq) && !empty($faq))
+    <div class="row"> 
+      <div class="col-md-12">
+        <h3><b>FAQs</b></h3>
+        <div class="main-container wow fadeInUp" data-wow-delay=".3s">
+          <div class="main-content p-2" style="background-color: #FFFFFF;">
+            <div class="accordion accordion-ex p-2" id="accordionExample1">
+              <?php foreach ($faq as $key => $value) { ?>
+              <div class="card" style="display:none;">
+                <div class="card-header" id="headingOne">
+                  <h2 class="mb-0">
+                    <button class="btn btn-link btn-block text-left btn-accordion collapsed p-2" type="button" data-toggle="collapse"
+                      data-target="#collapseOne-{{ $key }}" aria-expanded="false" aria-controls="collapseOne">
+                      {{ $value->question }}
+                      <i class="fa fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                  </h2>
+                </div>
+
+                <div id="collapseOne-{{ $key }}" class="collapse p-3" aria-labelledby="headingOne" data-parent="#accordionExample1">
+                  <div class="card-body">
+                    {{ $value->answer }}
+                  </div>
+                </div>
+              </div>
+              <?php } ?>
+            </div>
+          </div>
+          <h4 style="text-align: right;"><a href="#" class="more" onclick="more();">more...</a></h4>
+          <h4 style="text-align: right;"><a href="#" class="less" onclick="less();">less...</a></h4>
+        </div>
+      </div>
+      </div>
+      @endif  
+    </div>
     <div class="accordion accordion-ex" id="accordionExample">
         <!-- display on ipad only -->
       <div class="card ipad-view">
@@ -1973,7 +2008,23 @@
     </div> --}}
   </div>
 </div>
-
+<script type="text/javascript">
+  function more(){
+    $('#accordionExample1 .card').show();
+    $('.more').hide();
+    $('.less').show();
+  }
+  function less(){
+    $('#accordionExample1 .card').hide();
+    $('#accordionExample1 .card').filter(':lt(5)').show();
+    $('.less').hide();
+    $('.more').show();
+  }
+  $(document).ready(function(){
+    $('#accordionExample1 .card').filter(':lt(5)').show();
+    $('.less').hide();
+  });  
+</script>
 @include('frontend.themes.EC.layouts.subsections.quick_info')
 @include('frontend.themes.EC.layouts.subsections.policies_info')
 @include('frontend.themes.EC.layouts.subsections.reviews')
