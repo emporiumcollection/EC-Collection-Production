@@ -206,35 +206,42 @@
                                    
                                 @endif    
                         @endforeach
-                         <div class="col-md-4 col-sm-6 mb-4">
-                            <p><b>general</b></p>
-                            <p style="margin: 0; display: inline;">{{ $general }}</p>
-                        </div>
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <p><b>Business facilities</b></p>
-                            <p style="margin: 0; display: inline;">{{ $business }}</p>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <p><b>Food & Drink</b></p>
-                            <p style="margin: 0; display: inline;">{{ $food }}</p>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <p><b>Reception services</b></p>
-                            <p style="margin: 0; display: inline;">{{ $reception }}</p>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <p><b>Cleaning services</b></p>
-                            <p style="margin: 0; display: inline;">{{ $cleaning }}</p>
-                        </div>
-
-                        <div class="col-md-4 col-sm-6 mb-4">
-                            <p><b>Activities</b></p>
-                            <p style="margin: 0; display: inline;">{{ $activities }}</p>
-                        </div>
-
+                        @if($general != "" && !empty($general))
+                             <div class="col-md-4 col-sm-6 mb-4">
+                                <p><b>General</b></p>
+                                <p style="margin: 0; display: inline;">{{ $general }}</p>
+                            </div>
+                        @endif    
+                        @if($business != "" && !empty($business))
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <p><b>Business facilities</b></p>
+                                <p style="margin: 0; display: inline;">{{ $business }}</p>
+                            </div>
+                        @endif    
+                        @if($food != "" && !empty($food))
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <p><b>Food & Drink</b></p>
+                                <p style="margin: 0; display: inline;">{{ $food }}</p>
+                            </div>
+                        @endif    
+                        @if($reception != "" && !empty($reception))
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <p><b>Reception services</b></p>
+                                <p style="margin: 0; display: inline;">{{ $reception }}</p>
+                            </div>
+                        @endif    
+                        @if($cleaning != "" && !empty($cleaning))
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <p><b>Cleaning services</b></p>
+                                <p style="margin: 0; display: inline;">{{ $cleaning }}</p>
+                            </div>
+                        @endif    
+                        @if($activities != "" && !empty($activities))
+                            <div class="col-md-4 col-sm-6 mb-4">
+                                <p><b>Activities</b></p>
+                                <p style="margin: 0; display: inline;">{{ $activities }}</p>
+                            </div>
+                        @endif
                     </div>
                 @endif
                 <!--<div class="row my-5">
