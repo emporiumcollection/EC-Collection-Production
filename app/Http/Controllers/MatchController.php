@@ -275,7 +275,7 @@ class MatchController extends Controller
                     $addResponse = \DB::table('tb_booking_hotel_response')->insert([
                         'page_no' => $pages_no,
                         'dest_id' => $dest_id,
-                        'destination' => $destination->result[0]->city,
+                        'destination' => isset($destination->result[0]->city)?$destination->result[0]->city:'',
                         'response' => $response
                     ]);
                 }
@@ -1035,11 +1035,12 @@ class MatchController extends Controller
             $property = properties::where('id',$request->property_id)->first();
             return $property->id;            
         }
+
         if(!properties::where('booking_hotel_id',$request->hotel_id)->exists()){
             $this->importhoteldetail($request->hotel_id);            
         }
         $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
-        return $property->id;
+        return $property->id;   
     }
 
     private function clearArray($parts){
