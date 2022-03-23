@@ -66,15 +66,17 @@
         var importedentity = '<?php echo json_encode($importedentity) ?>'; 
         var booking_hotel_id = '<?php echo ($hotel_id) ?>';
     <?php } ?>
-    if(typeof importedentity !== ' ' && typeof importedentity !== null){
-    var importedentity1 = jQuery.parseJSON(importedentity);
-    $.each(importedentity1, function (key, value) {
-        if(value.hotel_id == booking_hotel_id){
-            $("#"+value.entity).hide();
-            $("#"+value.entity+"-span").html('Imported');
-            $("#"+value.entity+"-span").show();
-        }
-    });  
+
+    if(importedentity != ''){
+        var importedentity1 = jQuery.parseJSON(importedentity);
+        $.each(importedentity1, function (key, value) {
+            if(value.hotel_id == booking_hotel_id){
+                $("#"+value.entity).hide();
+                $("#"+value.entity+"-span").html('Imported');
+                $("#"+value.entity+"-span").show();
+            }
+        });  
+    }    
 
     $(document).ready(function () {
               
