@@ -580,6 +580,7 @@ class MatchController extends Controller
                 $insert =  PropertyCategoryTypes::insert([
                     'property_id' => $property_id,
                     'category_name' => $room_name,
+                    'cat_short_name' => $room_name,
                     'booking_policy' => $policies,
                     'bathroom' => $rooms->number_of_bathrooms,
                     'guests_adults' => $guests_adults,

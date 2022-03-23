@@ -113,7 +113,7 @@
 											</div>
 											<div class="form-group col-lg-3">
 												<label for="suite_size">Suite Size</label>
-												<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="{{ $cat->suite_size }}" required="required" /> 
+												<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="{{ $cat->suite_size }}"/> 
 											</div>
 											<div class="form-group col-lg-3">
 												<label for="view">View</label>
@@ -125,7 +125,7 @@
 											</div>
 											<div class="form-group col-lg-3">
 												<label for="location">Location</label>
-												<input name="location" id="location" type="text" class="form-control input-sm" value="{{ $cat->location }}" required="required" /> 
+												<input name="location" id="location" type="text" class="form-control input-sm" value="{{ $cat->location }}"/> 
 											</div>
 											<div class="form-group col-lg-3">
 												<label for="bathroom">Bathroom(s)</label>

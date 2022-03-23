@@ -343,7 +343,7 @@
     <?php } 
     ?>
     $(document).ready(function () {
-        if(matched !== null){
+        if(typeof matched !== 'undefined' && typeof matched !== null){
             var arr = jQuery.parseJSON( matched );
         }    
         var propDrp = [];

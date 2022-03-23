@@ -281,8 +281,8 @@
               <?php } ?>
             </div>
           </div>
-          <h4 style="text-align: right;"><a href="#" class="more" onclick="more();">more...</a></h4>
-          <h4 style="text-align: right;"><a href="#" class="less" onclick="less();">less...</a></h4>
+          <h4 style="text-align: right;"><a href="javascript:void(0);" class="more" onclick="more();">more...</a></h4>
+          <h4 style="text-align: right;"><a href="javascript:void(0);" class="less" onclick="less();">less...</a></h4>
         </div>
       </div>
       </div>
