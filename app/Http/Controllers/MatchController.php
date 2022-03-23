@@ -1026,10 +1026,18 @@ class MatchController extends Controller
     }
 
     private function checkAndGetPropertyId($request){
+
+        if(!empty($request->hotel_id) && !empty($request->property_id)){
+            properties::where('id',$request->property_id)
+                ->update([
+                    'booking_hotel_id' => $request->hotel_id
+                ]);
+            $property = properties::where('id',$request->property_id)->first();
+            return $property->id;            
+        }
         if(!properties::where('booking_hotel_id',$request->hotel_id)->exists()){
             $this->importhoteldetail($request->hotel_id);            
         }
-
         $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
         return $property->id;
     }
@@ -1047,7 +1055,7 @@ class MatchController extends Controller
     public function addentity(Request $request){
            
         $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
-
+        print_r($property);exit;
         DB::table('tb_imported_entity')
             ->insert([
                 'property_id' => $property->id ,

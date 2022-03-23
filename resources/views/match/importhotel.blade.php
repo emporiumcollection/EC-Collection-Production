@@ -56,6 +56,7 @@
             <span id="tips-span" style="display: none; font-size: 13px;"></span>
         </td>
         <td><span id="tipsimp" style="display: none; font-size: x-large;"></span></td>
+        <input type="hidden" name="property_id" id="property_id" value="{{ $property_id }}">
     </tr>
 </table>
 <script type="text/javascript">
@@ -92,11 +93,12 @@
     function ImportSuitDetail(hotel_id,dest_id){
         var suite = 'suites';
         ImportEntity(hotel_id,suite);
+        var property_id = $("#property_id").val();
         $.ajax({
             url: '/importsuites',   
             type: 'post',
             data: { hotel_id: hotel_id,
-                    dest_id: dest_id },
+                    property_id: property_id },
             datatype: 'json',
 
             success:function(response){
