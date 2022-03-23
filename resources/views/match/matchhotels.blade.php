@@ -359,7 +359,7 @@
                     if(propDrp.indexOf(value.property_id) == -1 && !isSetVal){
                         $('.emp-property', tr).val(value.property_id);
                         $('.booking-property', tr).val(value.hotel_id);
-                        if(value.booking_hotel_id !== 0){
+                        if(value.booking_hotel_id){
                             $('.imported ', tr).html('✔');
                             $('.imported ', tr).show();
                         }
