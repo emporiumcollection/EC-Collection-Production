@@ -72,6 +72,7 @@
 
                     @foreach($allprops as $key => $val)
                         <tr id="match-row-{{ $key.'-'.$val['id'] }}" class="match-row">
+                            <td width="10"><span id="imported" class="imported" style="display: none; font-size: x-large;"></span></td>
                             <td width="30">
                                 <?php echo $allproperties; ?>
                             </td>
@@ -90,8 +91,7 @@
                             <td width="30">
                                 <a class="text-secondary" data-toggle="modal" id="displayButton" data-target="#displayImages" onclick="DisplayImages('{{ $key.'-'.$val['id'] }}');">RoomImage</a>
                             </td>
-                            <td width="30">{{-- <button class="btn btn-primary form-control " onclick="savematch('{{ $key.'-'.$val['id'] }}');">Approve</button> --}}
-                                {{-- <button class="btn btn-primary form-control" onclick="importHotelDetail('{{ $key.'-'.$val['id'] }}');">ImportHotel</button> --}}
+                            <td width="30">
                                 <button class="btn btn-primary form-control" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">Import</button>
                             </td>
                         </tr>
@@ -358,6 +358,10 @@
                     if(propDrp.indexOf(value.property_id) == -1 && !isSetVal){
                         $('.emp-property', tr).val(value.property_id);
                         $('.booking-property', tr).val(value.hotel_id);
+                        if(value.booking_hotel_id !== 0){
+                            $('.imported ', tr).html('✔');
+                            $('.imported ', tr).show();
+                        }
                         propDrp.push(value.property_id);
                         isSetVal = true;
                     }

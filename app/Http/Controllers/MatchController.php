@@ -94,7 +94,7 @@ class MatchController extends Controller
                         $res =  $this->getProperties($val->dest_id,$keyword, $destinationId);
                         $this->data['hotels'] = $res['hotels'];
                         $this->data['matched'] = $res['matched'];
-                        $this->data['dest_id'] = $res['dest_id'];                        
+                        $this->data['dest_id'] = $res['dest_id'];
                         return view('match.matchhotels')->with($this->data);
                     }
                 }
@@ -154,7 +154,8 @@ class MatchController extends Controller
                             'dest_id' => $dest_id,
                             'hotel_name' => $value->hotel_name,
                             'hotel_id' => $value->hotel_id,
-                            'matched_property' => $property->property_name
+                            'matched_property' => $property->property_name,
+                            'booking_hotel_id' =>$property->booking_hotel_id
                         ];
                     }
                 }
@@ -352,7 +353,7 @@ class MatchController extends Controller
                 foreach($response->result as $value){
                     if(trim($value->pros) && trim($value->cons)){
                         $insert = review::insert([
-                            'property_id' => $property_id,
+                            // 'property_id' => $property_id,
                             'fname' => $value->author->name,
                             'comment' => 'Pros : '.$value->pros . PHP_EOL.'Cons : '.$value->cons,
                             'is_approved' => 1
@@ -772,11 +773,12 @@ class MatchController extends Controller
         \DB::table('tb_properties')->where('id', $request->property_id)->update([
                     'booking_hotel_id' => $request->hotel_id
                 ]);
-
+        $importedentity = DB::table('tb_imported_entity')->get(); 
         $html = view('match.importhotel', [
             'hotel_id' => $request->hotel_id,
             'property_id' => $request->property_id,
-            'dest_id' => $request->dest_id
+            'dest_id' => $request->dest_id,
+            'importedentity' => $importedentity
             ])->render();
 
             return json_encode([
@@ -1040,6 +1042,17 @@ class MatchController extends Controller
         }
 
         return $cleaned;
+    }
+    public function addentity(Request $request){
+           
+        $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
+
+        DB::table('tb_imported_entity')
+            ->insert([
+                'property_id' => $property->id ,
+                'hotel_id' => $request->hotel_id ,
+                'entity' => $request->entity
+            ]);
     }
 
 }    

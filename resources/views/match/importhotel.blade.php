@@ -1,47 +1,85 @@
+
 <div style="text-align:center;"><span id="loading"><h3><b>Wait while importing...</b><h3></span></div>
 <table>
     <tr>
         <td style="padding-right: 20px;"><p>Import Suites</p></td>
-        <td width="50"><button class="btn btn-primary form-control " onclick="ImportSuitDetail('{{ $hotel_id }}','{{ $dest_id }}');">Import</button></td>
-        <td><span id="suite" style="display: none; font-size: x-large;"></span></td>
+        <td width="50"><button class="btn btn-primary form-control" id="suites" onclick="ImportSuitDetail('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
+            <span id="suites-span" style="display: none; font-size: 13px;"></span>
+            <td></td>
+        </td>
+        <td><span id="suiteimp" style="display: none; font-size: x-large;"></span></td>
     </tr>
     <tr>
         <td style="padding-right: 20px;"><p>Import Policies</p></td>
-        <td width="50"><button class="btn btn-primary form-control " onclick="ImportHotelPolicies('{{ $hotel_id }}','{{ $dest_id }}');">Import</button></td>
-        <td><span id="hotelpolicy" style="display: none; font-size: x-large;"></span></td>
+        <td width="50"><button class="btn btn-primary form-control " id="policy" onclick="ImportHotelPolicies('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
+            <span id="policy-span" style="display: none; font-size: 13px;"></span>
+        </td>
+        <td><span id="hotelpolicyimp" style="display: none; font-size: x-large;"></span></td>
     </tr>
     <tr>
         <td style="padding-right: 20px;"><p>Import HotelReview</p></td>
-        <td width="50"><button class="btn btn-primary form-control " onclick="ImportHotelReview('{{ $hotel_id }}','{{ $dest_id }}');">Import</button></td>
-        <td><span id="review" style="display: none; font-size: x-large;"></span></td>
+        <td width="50"><button class="btn btn-primary form-control" id="review" onclick="ImportHotelReview('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
+            <span id="review-span" style="display: none; font-size: 13px;"></span>
+        </td>
+        <td><span id="reviewimp" style="display: none; font-size: x-large;"></span></td>
     </tr>
     <tr>
         <td style="padding-right: 20px;"><p>Import HotelSurroundings</p></td>
-        <td width="50"><button class="btn btn-primary form-control " onclick="ImportHotelSurroundings('{{ $hotel_id }}','{{ $dest_id }}');">Import</button></td>
-        <td><span id="nearby" style="display: none; font-size: x-large;"></span></td>
+        <td width="50"><button class="btn btn-primary form-control" id="surrounding" onclick="ImportHotelSurroundings('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
+            <span id="surrounding-span" style="display: none; font-size: 13px;"></span>
+        </td>
+        <td><span id="surroundingimp" style="display: none; font-size: x-large;"></span></td>
     </tr>
     <tr>
         <td style="padding-right: 20px;"><p>Import HotelFacilities</p></td>
-        <td width="50"><button class="btn btn-primary form-control " onclick="ImportHotelFacilities('{{ $hotel_id }}','{{ $dest_id }}');">Import</button></td>
-        <td><span id="facility" style="display: none; font-size: x-large;"></span></td>
+        <td width="50"><button class="btn btn-primary form-control" id="facilities" onclick="ImportHotelFacilities('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
+        <span id="facilities-span" style="display: none; font-size: 13px;"></span>
+        </td>
+        <td><span id="facilityimp" style="display: none; font-size: x-large;"></span></td>
     </tr>
     <tr>
         <td style="padding-right: 20px;"><p>Import FAQS</p></td>
-        <td width="50"><button class="btn btn-primary form-control " onclick="ImportQUestionAnswer('{{ $hotel_id }}','{{ $dest_id }}');">Import</button></td>
-        <td><span id="faq" style="display: none; font-size: x-large;"></span></td>
+        <td width="50"><button class="btn btn-primary form-control" id="faqs" onclick="ImportQUestionAnswer('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
+            <span id="faqs-span" style="display: none; font-size: 13px;"></span>
+        </td>
+        <td><span id="faqimp" style="display: none; font-size: x-large;"></span></td>
     </tr>
     <tr>
         <td style="padding-right: 20px;"><p>Import ChildrenPolicies</p></td>
-        <td width="50"><button class="btn btn-primary form-control " onclick="ImportChildrenPolicies('{{ $hotel_id }}','{{ $dest_id }}');">Import</button></td>
-        <td><span id="childpolicy" style="display: none; font-size: x-large;"></span></td>
+        <td width="50"><button class="btn btn-primary form-control" id="children" onclick="ImportChildrenPolicies('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
+            <span id="children-span" style="display: none; font-size: 13px;"></span>
+        </td>
+        <td><span id="childpolicyimp" style="display: none; font-size: x-large;"></span></td>
     </tr>
     <tr>
         <td style="padding-right: 20px;"><p>Import Tips</p></td>
-        <td width="50"><button class="btn btn-primary form-control " onclick="ImportTips('{{ $hotel_id }}','{{ $dest_id }}');">Import</button></td>
-        <td><span id="tips" style="display: none; font-size: x-large;"></span></td>
+        <td width="50"><button class="btn btn-primary form-control" id="tips" onclick="ImportTips('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
+            <span id="tips-span" style="display: none; font-size: 13px;"></span>
+        </td>
+        <td><span id="tipsimp" style="display: none; font-size: x-large;"></span></td>
     </tr>
 </table>
 <script type="text/javascript">
+
+
+    <?php if(isset($importedentity) && !empty($importedentity)){ ?>    
+        var importedentity = '<?php echo json_encode($importedentity) ?>'; 
+        var booking_hotel_id = '<?php echo ($hotel_id) ?>';
+    <?php } ?>
+
+    var importedentity1 = jQuery.parseJSON(importedentity);
+    $.each(importedentity1, function (key, value) {
+        if(value.hotel_id == booking_hotel_id){
+            $("#"+value.entity).hide();
+            $("#"+value.entity+"-span").html('Imported');
+            $("#"+value.entity+"-span").show();
+        }
+    });  
+
+    $(document).ready(function () {
+              
+    });
+
     $(document).ready(function(){
         $(document).ajaxStart(function() {
           $("#loading").show();
@@ -51,7 +89,8 @@
 
     });   
     function ImportSuitDetail(hotel_id,dest_id){
-
+        var suite = 'suites';
+        ImportEntity(hotel_id,suite);
         $.ajax({
             url: '/importsuites',   
             type: 'post',
@@ -62,8 +101,8 @@
             success:function(response){
                 if(response.status === true){
                     alert("Data Inserted Successfully!");
-                    $("#suite").html('✔');
-                    $("#suite").show();
+                    $("#suiteimp").html('✔');
+                    $("#suiteimp").show();
                 }else{
                     alert("Data already Inserted in Databade.");
                 }
@@ -72,7 +111,9 @@
     }
 
     function ImportHotelPolicies(hotel_id,dest_id){
-        
+        var policy = 'policy';
+        ImportEntity(hotel_id,policy);
+
         $.ajax({
             url: '/importpolicies',
             type: 'post',
@@ -81,8 +122,8 @@
             datatype: 'json',
             success:function(response){
                 if(response.status === true){
-                    $("#hotelpolicy").html('✔');
-                    $("#hotelpolicy").show();
+                    $("#hotelpolicyimp").html('✔');
+                    $("#hotelpolicyimp").show();
                 }else{
                     alert("Data already Inserted in Databade.");
                 }
@@ -91,7 +132,8 @@
     }
 
     function ImportHotelReview(hotel_id,dest_id){
-        
+        var review = 'review';
+        ImportEntity(hotel_id,review);
         $.ajax({
             url: '/importreview',
             type: 'post',
@@ -101,15 +143,16 @@
 
             success:function(response){
                 if(response.status === true){
-                    $("#review").html('✔');
-                    $("#review").show();
+                    $("#reviewimp").html('✔');
+                    $("#reviewimp").show();
                 }
             }
         });
     }
 
     function ImportHotelSurroundings(hotel_id,dest_id){
-
+        var surrounding = 'surrounding';
+        ImportEntity(hotel_id,surrounding);
         $.ajax({
             url: '/importsurrounding',
             type: 'post',
@@ -119,15 +162,16 @@
 
             success:function(response){
                 if(response.status === true){
-                    $("#nearby").html('✔');
-                    $("#nearby").show();
+                    $("#surroundingimp").html('✔');
+                    $("#surroundingimp").show();
                 }
             }
         });
     } 
 
     function ImportHotelFacilities(hotel_id,dest_id){
-
+        var facilities = 'facilities';
+        ImportEntity(hotel_id,facilities);
         $.ajax({
             url: '/importfacilities',
             type: 'post',
@@ -137,8 +181,8 @@
 
             success:function(response){
                 if(response.status === true){
-                    $("#facility").html('✔');
-                    $("#facility").show();
+                    $("#facilityimp").html('✔');
+                    $("#facilityimp").show();
                 }
             }
         });
@@ -146,7 +190,8 @@
     }
 
     function ImportQUestionAnswer(hotel_id,dest_id){
-
+        var faqs = 'faqs';
+        ImportEntity(hotel_id,faqs);
         $.ajax({
             url: '/faqs',
             type: 'post',
@@ -156,8 +201,8 @@
 
             success:function(response){ 
                 if(response.status === true){
-                    $("#faq").html('✔');
-                    $("#faq").show();
+                    $("#faqimp").html('✔');
+                    $("#faqimp").show();
                 }else{
                     alert("Data already Inserted.");
                 }
@@ -166,7 +211,8 @@
     }
 
     function ImportChildrenPolicies(hotel_id,dest_id){
-
+        var children = 'children';
+        ImportEntity(hotel_id,children);
         $.ajax({
             url: '/childpolicy',
             type: 'post',
@@ -176,8 +222,8 @@
 
             success:function(response){ 
                 if(response.status === true){
-                    $("#childpolicy").html('✔');
-                    $("#childpolicy").show();
+                    $("#childpolicyimp").html('✔');
+                    $("#childpolicyimp").show();
                 }else{
                     alert("Data already Inserted.");
                 }
@@ -185,7 +231,8 @@
         });
     }
     function ImportTips(hotel_id,dest_id){
-
+        var tips = 'tips';
+        ImportEntity(hotel_id,tips);
         $.ajax({
             url: '/tips',
             type: 'post',
@@ -195,14 +242,26 @@
 
             success:function(response){
                 if(response.status == true){
-                    $("#tips").html('✔');
-                    $("#tips").show();
+                    $("#tipsimp").html('✔');
+                    $("#tipsimp").show();
                 }else{
                     alert('Data Already Inserted!');
                 }
             }
         }) ;  
     }
+    function ImportEntity(hotel_id,entity){
+        $.ajax({
+            url: '/entity',
+            type: 'get',
+            data: { hotel_id: hotel_id,
+                    entity: entity },
+            datatype: 'json',
+            
+            success:function(response){
 
+            }        
+        });
+    }
 
 </script>
