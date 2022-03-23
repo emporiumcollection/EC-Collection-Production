@@ -61,7 +61,7 @@
 </table>
 <script type="text/javascript">
 
-
+    var importedentity = "";
     <?php if(isset($importedentity) && !empty($importedentity)){ ?>    
         var importedentity = '<?php echo json_encode($importedentity) ?>'; 
         var booking_hotel_id = '<?php echo ($hotel_id) ?>';
