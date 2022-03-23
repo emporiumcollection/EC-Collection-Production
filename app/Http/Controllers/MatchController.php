@@ -123,6 +123,7 @@ class MatchController extends Controller
                     $searchValue = preg_replace('/[^A-Za-z0-9\-]/', ' ', $searchValue);
                     $searchValue = str_replace("-", "", $searchValue);
                     $parts = explode(" ", $searchValue);
+                    $parts = $this->clearArray($parts);
                 
                     if(count($parts)>=2){
                         $searchValue = "$parts[0] $parts[1]";
@@ -1029,5 +1030,15 @@ class MatchController extends Controller
         return $property->id;
     }
 
+    private function clearArray($parts){
+        $cleaned = [];
+        foreach($parts as $a){
+            if(trim($a) != ''){
+                $cleaned[] = $a;
+            }
+        }
+
+        return $cleaned;
+    }
 
 }    
