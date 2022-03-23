@@ -55,6 +55,7 @@
                 <table class="table table-striped ">
                     <thead>
                         <tr>
+                            <th>Imported hotel</th>
                             <th>Emporium Hotel</th>
                             <th>Booking.com Hotel</th>
                             <th>Booking.com Prices</th>
@@ -72,7 +73,7 @@
 
                     @foreach($allprops as $key => $val)
                         <tr id="match-row-{{ $key.'-'.$val['id'] }}" class="match-row">
-                            <td width="10"><span id="imported" class="imported" style="display: none; font-size: x-large;"></span></td>
+                            <td width="10"  ><span id="imported" class="imported" style="display: none; font-size: x-large;"></span></td>
                             <td width="30">
                                 <?php echo $allproperties; ?>
                             </td>
