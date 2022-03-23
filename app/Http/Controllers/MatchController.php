@@ -537,6 +537,7 @@ class MatchController extends Controller
         properties::insert([
             'booking_hotel_id' => $hotelDetail->hotel_id,
             'property_name' => $hotelDetail->name,
+            'property_slug' => str_slug($hotelDetail->name),
             'city' => $hotelDetail->city,
             'country' => $hotelDetail->country,
             'hotel_currency' => $hotelDetail->currencycode,

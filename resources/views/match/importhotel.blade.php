@@ -5,7 +5,6 @@
         <td style="padding-right: 20px;"><p>Import Suites</p></td>
         <td width="50"><button class="btn btn-primary form-control" id="suites" onclick="ImportSuitDetail('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
             <span id="suites-span" style="display: none; font-size: 13px;"></span>
-            <td></td>
         </td>
         <td><span id="suiteimp" style="display: none; font-size: x-large;"></span></td>
     </tr>
