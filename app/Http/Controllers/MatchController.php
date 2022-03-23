@@ -121,6 +121,7 @@ class MatchController extends Controller
                     $searchValue = str_replace("Hotel", "", $searchValue);
                     $searchValue = str_replace("$keyword", "", $searchValue);
                     $searchValue = preg_replace('/[^A-Za-z0-9\-]/', ' ', $searchValue);
+                    $searchValue = str_replace("-", "", $searchValue);
                     $parts = explode(" ", $searchValue);
                 
                     if(count($parts)>=2){
