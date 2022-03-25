@@ -26,6 +26,7 @@
                         {{ $hotel_data[0]->suites[0]->booking_policy }} 
                     </div>
                 @else
+                    <div>
                     @if(isset($global_policies))
                         @foreach($global_policies as $policy)
                             @if(Config::get('app.currentdomain') == 'voyage')  
@@ -47,6 +48,7 @@
                             @endif
                         @endforeach
                     @endif
+                    </div>
                 @endif
             </div>            
         </div>

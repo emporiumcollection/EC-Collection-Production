@@ -90,18 +90,15 @@ class MatchController extends Controller
             echo "cURL Error #:" . $err;
         } else {
             $response = json_decode($response);
-            // print_r($response);exit;
+            
             if(!empty($response)){
                 foreach($response as $val){
-                    
                     if(trim($val->dest_type) == 'city'){
                         $res =  $this->getProperties($val->dest_id,$keyword, $destinationId);
                         $this->data['hotels'] = $res['hotels'];
                         $this->data['matched'] = $res['matched'];
                         $this->data['dest_id'] = $res['dest_id'];
                         return view('match.matchhotels')->with($this->data);
-                    }else{
-                        return redirect('/search/destination');          
                     }
                 }
             }else{
@@ -359,7 +356,8 @@ class MatchController extends Controller
                 foreach($response->result as $value){
                     if(trim($value->pros) && trim($value->cons)){
                         $insert = review::insert([
-                            // 'property_id' => $property_id,
+                            'hotel_id' => $request->hotel_id,
+                            'property_id' => $property_id,
                             'fname' => $value->author->name,
                             'comment' => 'Pros : '.$value->pros . PHP_EOL.'Cons : '.$value->cons,
                             'is_approved' => 1
@@ -550,8 +548,8 @@ class MatchController extends Controller
             'latitude' => $hotelDetail->location->latitude,
             'longitude' => $hotelDetail->location->longitude,
             'address' => $hotelDetail->address,
-            // 'hotel_time_zone' => $hotels->timezone,
-            // 'city_tax' => $city_tax,
+            'checkin' => $hotelDetail->checkin->from,
+            'checkout' => $hotelDetail->checkout->to,
             'created' => date("Y-m-d: H:i:s"),
             'updated' => date("Y-m-d: H:i:s"),
         ]);

@@ -132,11 +132,11 @@ function appendReviewData(data){
         $('#reviews_list').append(post);
 
         $(".reviews_list").slice(0, 10).show();
-        $(".underline").on('click', function () {
-            $(".reviews_list:hidden").slice(0, 10).slideDown();
-            if ($(".reviews_list:hidden").length == 0) {
-                $(".underline").fadeOut('slow');
-            }
-        });
+        // $(".underline").on('click', function () {
+        //     $(".reviews_list:hidden").slice(0, 10).slideDown();
+        //     if ($(".reviews_list:hidden").length == 0) {
+        //         $(".underline").fadeOut('slow');
+        //     }
+        // });
     });
 }

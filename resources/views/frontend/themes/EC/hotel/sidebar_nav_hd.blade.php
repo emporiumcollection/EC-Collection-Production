@@ -171,4 +171,3 @@ if(!isset($property)){
 <?php if(isset($restaurant)):?>
 @include('frontend.themes.EC.hotel.subtemplates.detailrestaurant')
 <?php endif;?>
-

@@ -11,11 +11,9 @@
       <div class="modal-body">
         @if(isset($hotel_data[0]->suites[0]->booking_policy) && !empty($hotel_data[0]->suites[0]->booking_policy) )
           <div class="iubenda_legal_document">
-            {{ $hotel_data[0]->suites[0]->booking_policy }} 
+            {{ $hotel_data[0]->suites[0]->booking_policy }} </div>
           </div>
-        @endif
-
-        @if(isset( $terms_n_conditions->terms_n_conditions ) && !empty( $terms_n_conditions->terms_n_conditions ))
+        @elseif(isset( $terms_n_conditions->terms_n_conditions ) && !empty( $terms_n_conditions->terms_n_conditions ))
             {{ $terms_n_conditions->terms_n_conditions }} </div>
         @else
       <div class="iubenda_legal_document"> 
@@ -42,9 +40,8 @@
             @endforeach
           @endif      
         </p>
+        </div>
       </div>
-    </div>  
-    </div>
       @endif
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>

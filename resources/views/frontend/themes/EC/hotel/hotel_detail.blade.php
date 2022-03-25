@@ -60,6 +60,7 @@
     </div>
   </div>
 </div>
+@include('frontend.themes.EC.layouts.subsections.policies_info')
 @section('mobile_hotel_header')
 <script>
   $('.top-header').addClass('mobile-off');

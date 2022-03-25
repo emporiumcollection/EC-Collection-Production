@@ -11,8 +11,7 @@ trait ReviewTrait {
     public function getReviews($id){
         
        
-        $reviews = review::where('hotel_id', '=', $id)->where('is_approved', '=', '1')->orderBy('id', 'DESC')->get();
-        
+        $reviews = review::where('property_id', $id)->where('is_approved', '=', '1')->orderBy('id', 'DESC')->get();
         return $reviews;
     }
 }

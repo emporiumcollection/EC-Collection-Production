@@ -3400,6 +3400,7 @@ class PropertyController extends Controller {
         }
 
         $this->data['reviews'] = $this->getReviews($this->data['hotel_data'][0]->id);
+        
         $this->setGalleryAndFormat($this->data['hotel_data']);
         $this->data['layout_type'] = 'old';
         $this->setFitlerOptions();
