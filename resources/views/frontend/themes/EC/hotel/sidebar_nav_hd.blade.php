@@ -124,7 +124,7 @@ if(!isset($property)){
                 <a class="nav-link btn-sidebar" href="#" data-sidebar="#facilities">Facilities</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#childpolicy">Children Policy</a>
+                <a class="nav-link btn-sidebar" href="#" data-sidebar="#child_policy">Children Policy</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link btn-sidebar" href="#" data-sidebar="#tips">Tips</a>
