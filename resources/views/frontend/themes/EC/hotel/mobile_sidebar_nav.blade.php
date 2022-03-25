@@ -20,7 +20,7 @@ if(!isset($property)){
             <a href="#" class="sidebar-back" data-close="sidebar">
                 <i class="ico ico-back"></i>
             </a>
-            <h3 class="mb-5">{{$hotel_data[0]->property_name}}</h3>
+            <h3 class="mb-5">{{$property->property_name}}</h3>
         </div>
         <div class="filter-list">
             <div class="accordion accordion-ex" id="accordionExample">
@@ -69,7 +69,7 @@ if(!isset($property)){
             <a href="#" class="sidebar-back" data-close="sidebar">
                 <i class="ico ico-back"></i>
             </a>
-            <h3 class="mb-5"> {{$hotel_data[0]->property_name}}</h3>
+            <h3 class="mb-5"> {{$property->property_name}}</h3>
         </div>
     </div>
 </div>

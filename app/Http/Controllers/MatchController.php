@@ -60,11 +60,14 @@ class MatchController extends Controller
         ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
         ->orderBy('property_name', 'asc')
         ->get();
-
+        // print_r($this->data['allprops']);exit;
         $curl = curl_init();
-
+        $rep = str_replace(" ", "+", $request->selcat);
+        $bar = ucfirst($rep);
+        $bar = ucfirst(strtolower($bar));
+        // print_r($bar);exit;
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/locations?locale=en-gb&name=".$request->selcat,
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/locations?locale=en-gb&name=".$bar,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING => "",
@@ -87,6 +90,7 @@ class MatchController extends Controller
             echo "cURL Error #:" . $err;
         } else {
             $response = json_decode($response);
+            // print_r($response);exit;
             if(!empty($response)){
                 foreach($response as $val){
                     
@@ -96,6 +100,8 @@ class MatchController extends Controller
                         $this->data['matched'] = $res['matched'];
                         $this->data['dest_id'] = $res['dest_id'];
                         return view('match.matchhotels')->with($this->data);
+                    }else{
+                        return redirect('/search/destination');          
                     }
                 }
             }else{

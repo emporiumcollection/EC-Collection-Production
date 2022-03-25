@@ -46,25 +46,20 @@
   </div>
 </div>
 <div class="content-em content-detail-hotel">
-<div class="top-wrapper" id="main-content">
-  <div class="slide-023k4"></div>
-  <div class="slider-bg-inner">
-    <div class="container">
-      <div class="row mt-5">
-        <div class="col-lg-4 mb-4 pt-3">
-            @include('frontend.themes.EC.hotel.sidebar_nav_hd')
-        </div>        
-        @include('frontend.themes.EC.hotel.subtemplates.hotel_detail')
+  <div class="top-wrapper" id="main-content">
+    <div class="slide-023k4"></div>
+    <div class="slider-bg-inner">
+      <div class="container">
+        <div class="row mt-5">
+          <div class="col-lg-4 mb-4 pt-3">
+              @include('frontend.themes.EC.hotel.sidebar_nav_hd')
+          </div>        
+          @include('frontend.themes.EC.hotel.subtemplates.hotel_detail')
+        </div>
       </div>
     </div>
   </div>
 </div>
-</div>
-@include('frontend.themes.EC.hotel.mobile_sidebar_nav')
-@include('frontend.themes.EC.layouts.subsections.property_gallery')
-@include('frontend.themes.EC.layouts.subsections.channel_popup')
-@include('frontend.themes.EC.layouts.subsections.location_info')
-@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
 @section('mobile_hotel_header')
 <script>
   $('.top-header').addClass('mobile-off');

@@ -1,4 +1,4 @@
-<div class="sidebar-main" id="policies">
+<div class="sidebar-main" id="terms">
     <a href="#" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
             xmlns="http://www.w3.org/2000/svg">
@@ -20,34 +20,35 @@
         <div class="row">
             <div class="col-12">
                 @if(isset( $terms_n_conditions->terms_n_conditions ) && !empty( $terms_n_conditions->terms_n_conditions ))
-                        <?php echo nl2br($terms_n_conditions->terms_n_conditions) ?>
+                    <?php echo nl2br($terms_n_conditions->terms_n_conditions) ?>
                 @elseif(isset($hotel_data[0]->suites[0]->booking_policy) && !empty($hotel_data[0]->suites[0]->booking_policy) )
                     <div class="iubenda_legal_document">
                         {{ $hotel_data[0]->suites[0]->booking_policy }} 
                     </div>
                 @else
-                     @if(isset($global_policies))
+                    @if(isset($global_policies))
                         @foreach($global_policies as $policy)
-                          @if(Config::get('app.currentdomain') == 'voyage')  
+                            @if(Config::get('app.currentdomain') == 'voyage')  
                                 @if($policy->domain == 'voyage')
                                     <?php echo $policy->policy; ?>
                                 @endif 
-                          @elseif(Config::get('app.currentdomain') == 'safari')
+                            @elseif(Config::get('app.currentdomain') == 'safari')
                                 @if($policy->domain == 'safari')
                                     <?php echo $policy->policy; ?>
                                 @endif                  
-                          @elseif(Config::get('app.currentdomain') == 'spa')
+                            @elseif(Config::get('app.currentdomain') == 'spa')
                                 @if($policy->domain == 'spa')
                                     <?php echo $policy->policy; ?>
                                 @endif  
-                          @elseif(Config::get('app.currentdomain') == 'islands')
+                            @elseif(Config::get('app.currentdomain') == 'islands')
                                 @if($policy->domain == 'islands')
                                     <?php echo $policy->policy; ?>
                                 @endif  
-                          @endif
+                            @endif
                         @endforeach
                     @endif
-            </div>
-            
-            @endif
+                @endif
+            </div>            
         </div>
+    </div>
+</div>        

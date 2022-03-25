@@ -15,8 +15,6 @@
         <div class="col-lg-4 mb-4 pt-3">
             @include('frontend.themes.EC.hotel.sidebar_nav_hd')
         </div>        
-        @include('frontend.themes.EC.hotel.subtemplates.detailrestaurant')
-        @include('frontend.themes.EC.layouts.subsections.channel_popup')
       </div>
     </div>
   </div>

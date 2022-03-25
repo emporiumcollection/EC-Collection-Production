@@ -106,7 +106,35 @@ if(!isset($property)){
               </ul>
             </div>
           </li>
-        <?php endif; ?>  
+        <?php endif; ?>
+
+        <li class="nav-item">
+          <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#hotel_info" role="button" aria-expanded="false" aria-controls="hotel_info">
+          Hotel Info<i class="fa fa-angle-down" aria-hidden="true"></i>
+          </a>
+          <div class="collapse show" id="hotel_info">
+            <ul class="nav flex-column nav-sidebar is-small">
+              <li class="nav-item">
+                <a class="nav-link btn-sidebar" href="#" data-sidebar="#QueAns">FAQs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn-sidebar" href="#" data-sidebar="#sourounding">Sourounding</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn-sidebar" href="#" data-sidebar="#facilities">Facilities</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn-sidebar" href="#" data-sidebar="#childpolicy">Children Policy</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn-sidebar" href="#" data-sidebar="#tips">Tips</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link btn-sidebar" href="#" data-sidebar="#policy">Policies</a>
+              </li>
+            </ul>
+          </div>
+        </li>
         <li class="nav-item">
           <a class="nav-link @@locActive" href="/hotel-location/{{ $property->property_slug }}">Location</a>
         </li>
@@ -122,11 +150,25 @@ if(!isset($property)){
             <a class="nav-link btn-sidebar" href="#" onclick="getHotelDefaultChannel(<?php echo $property->id;?>)" data-sidebar="#channel-popup">Video Channel</a>
           </li>
         @endif
-       {{--<li class="nav-item">
-          <a class="nav-link @@sosActive" href="/hotel/social">Social</a>
-        </li>--}}
-        
       </ul>
     </div>
   </div>
-  
+@include('frontend.themes.EC.layouts.subsections.priceinfo')
+@include('frontend.themes.EC.layouts.subsections.quick_info')
+@include('frontend.themes.EC.layouts.subsections.reviews')
+@include('frontend.themes.EC.layouts.subsections.share')
+@include('frontend.themes.EC.layouts.subsections.suiteinfo')
+@include('frontend.themes.EC.layouts.subsections.faqs')
+@include('frontend.themes.EC.layouts.subsections.surrounding')
+@include('frontend.themes.EC.layouts.subsections.facilities')  
+@include('frontend.themes.EC.hotel.child_policy')
+@include('frontend.themes.EC.hotel.tips')
+@include('frontend.themes.EC.hotel.policy')  
+@include('frontend.themes.EC.layouts.subsections.property_gallery')
+@include('frontend.themes.EC.layouts.subsections.channel_popup')
+
+@include('frontend.themes.EC.hotel.mobile_sidebar_nav')
+<?php if(isset($restaurant)):?>
+@include('frontend.themes.EC.hotel.subtemplates.detailrestaurant')
+<?php endif;?>
+

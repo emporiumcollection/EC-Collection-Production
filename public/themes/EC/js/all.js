@@ -2184,6 +2184,7 @@ var homePageFeaturedProperties;
   });
 
   $('body').on('click', '.sidebar-overlay', function () {
+    alert('sidebar-overlay'); 
     $('.sidebar-main').removeClass('show');
     $('.sidebar-overlay').remove();
     $('body').css('overflow', 'auto');

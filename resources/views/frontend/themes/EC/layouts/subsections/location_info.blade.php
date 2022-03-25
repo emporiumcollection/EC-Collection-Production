@@ -1,3 +1,10 @@
+<?php
+if(Session::has('keyword')){
+    $location_name = Session::get('keyword');
+}else{
+    $location_name = isset($hotel_data[0]->city)?$hotel_data[0]->city:'';
+}
+?>
 <div class="sidebar-main" id="info_sidebar">
     <a href="#" class="close-sidebar">
         <svg fill="currentColor" focusable="false" height="20px" viewBox="0 0 24 24" width="24"
@@ -91,12 +98,8 @@
                                 </select>
                             </div>
                         </div>
-                        @if(Session::has('keyword'))
-                            <?php $near = Session::get('keyword'); ?>
-                        @else
-                            <?php $near = $hotel_data[0]->city; ?>
-                        @endif
-                        <input type="hidden" name="best_places_near" value="{{ $near }}">
+                        <?php $location_name;?>
+                        <input type="hidden" name="best_places_near" value="{{ $location_name }}">
                         <div id="best-places-section">
                             @include('frontend.themes.EC.layouts.subsections.best-places-section')
                         </div>

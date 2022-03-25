@@ -48,16 +48,8 @@
       </div>
     </div>
   </div>
+</div>  
 </div>
-</div>
-@include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
-@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
-@include('frontend.themes.EC.layouts.subsections.priceinfo')
-@include('frontend.themes.EC.layouts.subsections.quick_info')
-@include('frontend.themes.EC.layouts.subsections.reviews')
-@include('frontend.themes.EC.layouts.subsections.share')
-@include('frontend.themes.EC.layouts.subsections.suiteinfo')
-@include('frontend.themes.EC.layouts.subsections.channel_popup')
 <?php if(isset($property_id)):?>
 <script>
    $('.top-header').addClass('mobile-off');

@@ -118,7 +118,25 @@ if(!isset($property)){
               </ul>
             </div>
           </li>
-        <?php endif;?>  
+        <?php endif;?>
+         <li class="nav-item">
+          <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#hotel_info" role="button" aria-expanded="false" aria-controls="hotel_info">
+          Hotel Info<i class="fa fa-angle-down" aria-hidden="true"></i>
+          </a>
+          <div class="collapse show" id="hotel_info">
+            <ul class="nav flex-column nav-sidebar is-small">
+              <li class="nav-item">
+                <a class="nav-link nav-link-sub" href="#" data-sidebar="#QueAns">FAQs</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-sub" href="#" data-sidebar="#sourounding">Sourounding</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link nav-link-sub" href="#" data-sidebar="#facilities">Facilities</a>
+              </li>
+            </ul>
+          </div>
+        </li>
         <li class="nav-item">
           <a class="nav-link @@locActive" href="/hotel-location/{{ $property->property_slug }}">Location</a>
         </li>
@@ -140,4 +158,24 @@ if(!isset($property)){
       </ul>
     </div>
   </div>
-  @include('frontend.themes.EC.layouts.subsections.property_gallery')
+@include('frontend.themes.EC.layouts.subsections.priceinfo')
+@include('frontend.themes.EC.layouts.subsections.quick_info')
+@include('frontend.themes.EC.layouts.subsections.reviews')
+@include('frontend.themes.EC.layouts.subsections.share')
+@include('frontend.themes.EC.layouts.subsections.suiteinfo')
+@include('frontend.themes.EC.layouts.subsections.faqs')  
+@include('frontend.themes.EC.layouts.subsections.surrounding')
+@include('frontend.themes.EC.layouts.subsections.facilities')  
+@include('frontend.themes.EC.layouts.subsections.property_gallery')
+@include('frontend.themes.EC.layouts.subsections.channel_popup')
+@include('frontend.themes.EC.layouts.subsections.location_info')
+@include('frontend.themes.EC.layouts.subsections.channel_popup')
+
+@include('frontend.themes.EC.hotel.mobile_sidebar_nav')
+<?php if(isset($restaurant)):?>
+  @include('frontend.themes.EC.hotel.subtemplates.detailrestaurant')
+<?php endif;?>
+
+@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
+@include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
+@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
