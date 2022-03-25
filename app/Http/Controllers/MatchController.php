@@ -91,7 +91,6 @@ class MatchController extends Controller
         } else {
             $response = json_decode($response);
             
-            print_r($response);exit;
             if(!empty($response)){
                 foreach($response as $val){
                     if(trim($val->dest_type) == 'city'){
