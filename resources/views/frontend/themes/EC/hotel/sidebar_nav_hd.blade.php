@@ -115,22 +115,22 @@ if(!isset($property)){
           <div class="collapse show" id="hotel_info">
             <ul class="nav flex-column nav-sidebar is-small">
               <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#QueAns">FAQs</a>
+                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#QueAns">FAQs</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#sourounding">Sourounding</a>
+                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#sourounding">Sourounding</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#facilities">Facilities</a>
+                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#facilities">Facilities</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#child_policy">Children Policy</a>
+                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#child_policy">Children Policy</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#tips">Tips</a>
+                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#tips">Tips</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#policy">Policies</a>
+                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#policy">Policies</a>
               </li>
             </ul>
           </div>
