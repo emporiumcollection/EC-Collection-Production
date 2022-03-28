@@ -138,7 +138,7 @@ class ConfigController extends Controller {
 
 	public function getPolicyscript(){
 		$this->data['policyscript'] = \DB::table('tb_policy_script')->first();
-		$this->data['active'] = 'policy_script';
+		$this->data['active'] = 'policyscript';
 		$this->data['pageTitle'] = 'Policies Script';
 
 		// print_r($this->data['globalpolicies']);die();
