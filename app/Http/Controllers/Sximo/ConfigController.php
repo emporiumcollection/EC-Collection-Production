@@ -137,7 +137,7 @@ class ConfigController extends Controller {
 	}
 
 	public function getPolicyscript(){
-		$this->data['policyscript'] = \DB::table('tb_policy_script')->first();
+		$this->data['policyscript'] = \DB::table('tb_policy_script')->orderBy('id', 'desc')->first();
 		$this->data['active'] = 'policyscript';
 		$this->data['pageTitle'] = 'Policies Script';
 
@@ -146,13 +146,14 @@ class ConfigController extends Controller {
 	}
 
 	public function postPolicyscript(Request $request){
+
 		\DB::table('tb_policy_script')->insert([
 			'privacy' => $request->privacy,
 			'cookie' => $request->cookie,
 			'termandcondition' => $request->termandcondition,
 			'cookie_script' => $request->cookie_script
-			
 		]);
+
 		return Redirect::to('sximo/config/policyscript')->with('messagetext', 'policies Has Been Updated')->with('msgstatus','success');
 	}
 	public function postPolicies(Request $request)
