@@ -1,4 +1,4 @@
-<div class="container h-100 d-flex align-items-center">
+<div class="container h-100 align-items-center">
   <div class="row w-100">
     <div class="col-sm-3">
       <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
@@ -22,11 +22,6 @@
         <?php echo $lmenu['childs'];?>
         <?php endforeach;?>
       </ul>
-      <div class="menu-media">
-        <a href="#" class="nav-sos"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-        <a href="#" class="nav-sos"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-        <a href="#" class="nav-sos"><i class="fa fa-twitter" aria-hidden="true"></i></a>
-      </div>
     </div>
     <div class="col-md-3">
       <ul class="nav flex-column nav-sidebar" data-wow-delay=".3s">
@@ -70,5 +65,17 @@
         @endforeach
       </ul>
     </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="menu-media">
+        <a href="#" class="nav-sos"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+        <a href="#" class="nav-sos"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+        <a href="#" class="nav-sos"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        <?php echo $policyscript->privacy;?>
+        <?php echo $policyscript->cookie;?>
+        <?php echo $policyscript->termandcondition;?>
+      </div>
+    </div> 
   </div>
 </div>

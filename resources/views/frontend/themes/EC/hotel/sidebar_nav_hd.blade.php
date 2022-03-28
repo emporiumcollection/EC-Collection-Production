@@ -114,24 +114,36 @@ if(!isset($property)){
           </a>
           <div class="collapse show" id="hotel_info">
             <ul class="nav flex-column nav-sidebar is-small">
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#QueAns">FAQs</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#sourounding">Sourounding</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#facilities">Facilities</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#child_policy">Children Policy</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#tips">Tips</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar" href="#" data-sidebar="#policy">Policies</a>
-              </li>
+              @if(isset($faq) && !empty($faq))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#QueAns">FAQs</a>
+                </li>
+              @endif
+              @if(isset($surroundings) && !empty($surroundings))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#sourounding">Sourounding</a>
+                </li>
+              @endif
+              @if(isset($fac) && !empty($fac))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#facilities">Facilities</a>
+                </li>
+              @endif
+              @if(isset($childpolicy) && !empty($childpolicy))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#child_policy">Children Policy</a>
+                </li>
+              @endif
+              @if(isset($tips) && !empty($tips))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#tips">Tips</a>
+                </li>
+              @endif
+              @if(isset($policy) && !empty($policy))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#policy">Policies</a>
+                </li>
+              @endif
             </ul>
           </div>
         </li>

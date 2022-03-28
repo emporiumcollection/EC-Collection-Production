@@ -235,6 +235,13 @@ body {font-family: Arial, Helvetica, sans-serif;}
         <!-- End of HubSpot Embed Code -->
         @endif
     @endif
+    @if(defined('CNF_IUBCOOKIE_SCRIPT'))
+        @if(CNF_IUBCOOKIE_SCRIPT != '')
+        <!-- Start of HubSpot Embed Code -->
+        {!! CNF_IUBCOOKIE_SCRIPT !!}
+        <!-- End of HubSpot Embed Code -->
+        @endif
+    @endif
     <script type="text/javascript" src="{{ asset('js/jquery-3.5.1.min.js')}}"></script>
     <!--<script type="text/javascript" src="{{ asset('themes/EC/js/jquery.lazy.js') }}"></script>-->
 </head>

@@ -61,8 +61,6 @@
                     <div>
                         <nav class="nav">
                             <a class="nav-link py-0 pl-0" href="#">&copy; Emporium Collection</a>
-                            <a class="nav-link py-0" href="#">Privacy</a>
-                            <a class="nav-link py-0" href="#">Terms</a>
                             <a class="nav-link py-0" href="#">Sitemap</a>
                         </nav>
                     </div>

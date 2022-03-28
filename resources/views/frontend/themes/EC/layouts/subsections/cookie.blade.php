@@ -1,0 +1,8 @@
+<script type="text/javascript">
+var _iub = _iub || [];
+_iub.csConfiguration = {"askConsentAtCookiePolicyUpdate":true,"ccpaAcknowledgeOnDisplay":true,"ccpaApplies":true,"consentOnContinuedBrowsing":false,"enableCcpa":true,"enableTcf":true,"floatingPreferencesButtonDisplay":"anchored-center-right","invalidateConsentWithoutLog":true,"lang":"en","perPurposeConsent":true,"siteId":1195410,"tcfPurposes":{"1":true,"2":"consent_only","3":"consent_only","4":"consent_only","5":"consent_only","6":"consent_only","7":"consent_only","8":"consent_only","9":"consent_only","10":"consent_only"},"whitelabel":false,"cookiePolicyId":70156957, "banner":{ "acceptButtonCaptionColor":"#FFFFFF","acceptButtonColor":"#000000","acceptButtonDisplay":true,"backgroundColor":"#FFFFFF","backgroundOverlay":true,"brandTextColor":"#787878","closeButtonRejects":true,"customizeButtonCaptionColor":"#4D4D4D","customizeButtonColor":"#DADADA","customizeButtonDisplay":true,"explicitWithdrawal":true,"fontSize":"18px","listPurposes":true,"logo":"https://company.emporium-collection.com","position":"float-top-center","rejectButtonCaptionColor":"#ffffff","rejectButtonColor":"#89a49f","rejectButtonDisplay":true,"textColor":"#000000","acceptButtonCaption":"Yes, I agree","customizeButtonCaption":"Learn more, customize","rejectButtonCaption":"No, I don't agree" }};
+</script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/tcf/stub-v2.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/tcf/safe-tcf-v2.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/ccpa/stub.js"></script>
+<script type="text/javascript" src="//cdn.iubenda.com/cs/iubenda_cs.js" charset="UTF-8" async></script>

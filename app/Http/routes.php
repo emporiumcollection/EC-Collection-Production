@@ -41,6 +41,9 @@ Route::post('/userregister', 'Auth\AuthController@verify');
 Route::get('/check-one-login', 'OneLoginController@getloggedIn');
 
 Route::post('/sendinvitation','UserController@EmailInvitation');
+//Sximo\ConfigController route for getting policy script
+Route::get('/sximo/config/policyscript', 'Sximo\ConfigController@getPolicyscript');
+Route::post('/sximo/config/policyscript', 'Sximo\ConfigController@postPolicyscript');
 
 // Route::post('/invite/companionemail', 'UserController@inviteCompanion');
 Route::get('/', 'HomeController@index')->name('homepage');
@@ -863,8 +866,6 @@ Route::group(['middleware' => 'auth' , 'middleware'=>'sximoauth'], function()
 		'sximo/module' 		=> 'Sximo\ModuleController',
 		'sximo/tables'		=> 'Sximo\TablesController'
 	]);
-
-
 
 });
 

@@ -129,6 +129,13 @@
         var voyagedomain = '{{ \Config::get('app.voyagedomain') }}';
         var magazinedomain = '{{ \Config::get('app.magazinedomain') }}';
     </script>
+    @if(defined('CNF_IUBCOOKIE_SCRIPT'))
+        @if(CNF_IUBCOOKIE_SCRIPT != '')
+        <!-- Start of HubSpot Embed Code -->
+        {!! CNF_IUBCOOKIE_SCRIPT !!}
+        <!-- End of HubSpot Embed Code -->
+        @endif
+    @endif
 </head>
 <body>
     @section('header')

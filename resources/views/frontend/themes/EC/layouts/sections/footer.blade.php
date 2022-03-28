@@ -47,14 +47,28 @@
         <div class="footer-top pb-4">
             <div class="row">
                 <?php foreach($footer_menus as $menu):?>
+                <?php if($menu['menu_name'] == 'About Emporium-Collection'){ ?>
                 <div class="col-md-3 mmb-4 mb-lg-4">
-                    <h4><?php echo $menu['menu_name'];?></h4>
-                    <nav class="nav flex-column">
-                        <?php foreach($menu['childs'] as $child):?>
-                        <a class="nav-link pl-0" href="<?php echo $child['url'];?>"><?php echo $child['menu_name'];?></a>
-                        <?php endforeach;?>
-                    </nav>
-                </div>
+                     <h4><?php echo $menu['menu_name'];?></h4>
+                        <nav class="nav flex-column">
+                            <?php echo $policyscript->privacy;?>
+                            <br>
+                            <?php echo $policyscript->cookie;?>
+                            <br>
+                            <?php echo $policyscript->termandcondition;?>
+                            <br>
+                        </nav>
+                    </div>    
+                <?php }else{ ?>
+                    <div class="col-md-3 mmb-4 mb-lg-4">
+                            <h4><?php echo $menu['menu_name'];?></h4>
+                            <nav class="nav flex-column">
+                                <?php foreach($menu['childs'] as $child):?>
+                                <a class="nav-link pl-0" href="<?php echo $child['url'];?>"><?php echo $child['menu_name'];?></a>
+                                <?php endforeach;?>
+                            </nav>
+                    </div>
+                <?php } ?>    
                 <?php endforeach;?>                
             </div>
         </div>
@@ -65,9 +79,8 @@
                     <div>
                         <nav class="nav">
                             <a class="nav-link py-0 pl-0" href="#">© Emporium Collection</a>
-                            <a class="nav-link py-0" href="#">Privacy</a>
-                            <a class="nav-link py-0" href="#">Terms</a>
                             <a class="nav-link py-0" href="#">Sitemap</a>
+
                         </nav>
                     </div>
                 </div>

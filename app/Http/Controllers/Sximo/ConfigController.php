@@ -136,12 +136,29 @@ class ConfigController extends Controller {
 		return view('sximo.config.policies',$this->data);
 	}
 
+	public function getPolicyscript(){
+		$this->data['policyscript'] = \DB::table('tb_policy_script')->first();
+		$this->data['active'] = 'policy_script';
+		$this->data['pageTitle'] = 'Policies Script';
+
+		// print_r($this->data['globalpolicies']);die();
+		return view('sximo.config.policyscript',$this->data);	
+	}
+
+	public function postPolicyscript(Request $request){
+		\DB::table('tb_policy_script')->insert([
+			'privacy' => $request->privacy,
+			'cookie' => $request->cookie,
+			'termandcondition' => $request->termandcondition
+		]);
+		return Redirect::to('sximo/config/policyscript')->with('messagetext', 'policies Has Been Updated')->with('msgstatus','success');
+	}
 	public function postPolicies(Request $request)
 	{
 		
 		$this->data = array(
 			'pageTitle'	=> 'Policies',
-			'active'		=> 'policies',
+			'active'	=> 'policies',
 		);
 
 		foreach( $request->domains as $domain => $value ){
