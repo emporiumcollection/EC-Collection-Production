@@ -51,12 +51,18 @@
                 <div class="col-md-3 mmb-4 mb-lg-4">
                      <h4><?php echo $menu['menu_name'];?></h4>
                         <nav class="nav flex-column">
+                            @if(isset($policyscript->privacy))
                             <?php echo $policyscript->privacy;?>
                             <br>
+                            @endif
+                            @if(isset($policyscript->cookie))
                             <?php echo $policyscript->cookie;?>
                             <br>
+                            @endif
+                            @if(isset($policyscript->termandcondition))
                             <?php echo $policyscript->termandcondition;?>
                             <br>
+                            @endif
                         </nav>
                     </div>    
                 <?php }else{ ?>

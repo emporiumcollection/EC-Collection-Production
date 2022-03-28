@@ -41,7 +41,7 @@
 		  <div class="form-group">
 		    <label for="ipt" class=" control-label col-md-4">Privacy Policy </label>
 			<div class="col-md-8">
-                <textarea class="form-control input-sm"  name="privacy">{{ $policyscript->privacy }}</textarea>
+                <textarea class="form-control input-sm"  name="privacy">@if(isset($policyscript->privacy)){{ $policyscript->privacy }}@endif</textarea>
 			 </div> 
 		  </div>  
 		  
@@ -51,7 +51,7 @@
             <div class="form-group">
               <label for="ipt" class=" control-label col-md-4">Cookie policy </label>
               <div class="col-md-8">
-                <textarea class="form-control input-sm"  name="cookie">{{ $policyscript->cookie }}</textarea>
+                <textarea class="form-control input-sm"  name="cookie">@if(isset($policyscript->privacy)){{ $policyscript->cookie }}@endif</textarea>
                </div> 
             </div>  
             
@@ -61,7 +61,7 @@
             <div class="form-group">
               <label for="ipt" class=" control-label col-md-4">Terms and Conditions</label>
               <div class="col-md-8">
-                <textarea class="form-control input-sm"  name="termandcondition">{{ $policyscript->termandcondition }}</textarea> 
+                <textarea class="form-control input-sm" name="termandcondition">@if(isset($policyscript->privacy)){{ $policyscript->termandcondition }}@endif</textarea> 
                </div> 
             </div>  
             
