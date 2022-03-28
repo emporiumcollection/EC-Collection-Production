@@ -235,10 +235,11 @@ body {font-family: Arial, Helvetica, sans-serif;}
         <!-- End of HubSpot Embed Code -->
         @endif
     @endif
+
     @if(isset($policyscript->cookie_script))
         @if($policyscript->cookie_script != '')
         <!-- Start of HubSpot Embed Code -->
-        {!! $policyscript->cookie_script !!}
+        <?echo $policyscript->cookie_script; ?>
         <!-- End of HubSpot Embed Code -->
         @endif
     @endif
