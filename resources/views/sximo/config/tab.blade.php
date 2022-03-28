@@ -14,7 +14,7 @@ $tabs = array(
         'contract'			=> 'Contract',
         'citytax'			=> 'City Tax',
         'policies'			=> 'Policies',
-        'policyscript'		=> 'policyscript',
+        'policyscript'		=> 'Policy Script',
 	);
 
 ?>

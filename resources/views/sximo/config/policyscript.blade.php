@@ -66,6 +66,15 @@
             </div>  
             
           </div>
+          <div class="col-sm-4 animated fadeInRight ">
+            <div class="form-group">
+              <label for="ipt" class=" control-label col-md-4">Cookie script</label>
+              <div class="col-md-8">
+                <textarea class="form-control input-sm" name="cookie_script">@if(isset($policyscript->privacy)){{ $policyscript->cookie_script }}@endif</textarea> 
+               </div> 
+            </div>  
+            
+          </div>
         
         <div class="col-sm-12 animated">
             <div class="form-group">

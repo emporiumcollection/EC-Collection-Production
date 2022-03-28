@@ -149,13 +149,14 @@ class ConfigController extends Controller {
 		\DB::table('tb_policy_script')->insert([
 			'privacy' => $request->privacy,
 			'cookie' => $request->cookie,
-			'termandcondition' => $request->termandcondition
+			'termandcondition' => $request->termandcondition,
+			'cookie_script' => $request->cookie_script
+			
 		]);
 		return Redirect::to('sximo/config/policyscript')->with('messagetext', 'policies Has Been Updated')->with('msgstatus','success');
 	}
 	public function postPolicies(Request $request)
-	{
-		
+	{		
 		$this->data = array(
 			'pageTitle'	=> 'Policies',
 			'active'	=> 'policies',
