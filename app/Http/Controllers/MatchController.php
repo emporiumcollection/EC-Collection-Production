@@ -537,7 +537,11 @@ class MatchController extends Controller
     public function importhoteldetail($hotel_id)
     {
         $hotelDetail =  $this->getHotelData($hotel_id);
-
+        if(isset($hotelDetail->description_translations[0]->description)){
+            $description = $hotelDetail->description_translations[0]->description;
+        }else{
+            $description = " ";
+        }
         properties::insert([
             'booking_hotel_id' => $hotelDetail->hotel_id,
             'property_name' => $hotelDetail->name,
@@ -550,7 +554,7 @@ class MatchController extends Controller
             'address' => $hotelDetail->address,
             'checkin' => $hotelDetail->checkin->from,
             'checkout' => $hotelDetail->checkout->to,
-            'detail_section1_description_box1' => $hotelDetail->description_translations[0]->description,
+            'detail_section1_description_box1' => $description,
             'created' => date("Y-m-d: H:i:s"),
             'updated' => date("Y-m-d: H:i:s"),
         ]);
