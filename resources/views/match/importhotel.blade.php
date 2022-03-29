@@ -3,7 +3,7 @@
 <table>
     <tr>
         <td style="padding-right: 20px;"><p>Import Suites</p></td>
-        <td width="50"><button class="btn btn-primary form-control" id="suites" onclick="ImportSuitDetail('{{ $hotel_id }}','{{ $dest_id }}');">Import</button>
+        <td width="50"><button class="btn btn-primary form-control" id="suites" onclick="ImportSuitDetail('{{ $hotel_id }}');">Import</button>
             <span id="suites-span" style="display: none; font-size: 13px;"></span>
         </td>
         <td><span id="suiteimp" style="display: none; font-size: x-large;"></span></td>
@@ -90,7 +90,7 @@
         });
 
     });   
-    function ImportSuitDetail(hotel_id,dest_id){
+    function ImportSuitDetail(hotel_id){
         var suite = 'suites';
         ImportEntity(hotel_id,suite);
         var property_id = $("#property_id").val();

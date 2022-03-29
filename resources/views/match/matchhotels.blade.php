@@ -25,6 +25,13 @@
                         <div>
                     </div>         
                 </div>
+                <div class="col-sm-3">
+                    <input type="text" name="search_hotel" id="search_hotel" class="form-control">
+                </div>
+                <div class="col-sm-3">
+                    <button class="btn btn-primary form-control" data-toggle="modal" id="import" data-target="#importdata" onclick="ImportWithId();">Import</button>
+                    {{-- <button name="submit" class="btn btn-primary form-control" onclick="ImportWithId();">Import Hotel</button> --}}
+                </div>
             </div>
         </div>
         
@@ -283,6 +290,22 @@
                     alert("Hotel Data is Imported djhf from booking.com");
                 }
           }
+        });
+    }
+
+    function ImportWithId(){
+        var hotel_id = $("#search_hotel").val();
+
+        $.ajax({
+            url: '/searchwithid',
+            data: { hotel_id: hotel_id },
+            type: 'get',
+            dataType: 'json',
+
+            success:function(response){
+                $("#importmodelId").html(response.html);
+                $('#displayImportBtn').modal("show");
+            }
         });
     }
 

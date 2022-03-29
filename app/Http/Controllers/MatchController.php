@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Models\properties;
@@ -1069,6 +1068,19 @@ class MatchController extends Controller
                 'hotel_id' => $request->hotel_id ,
                 'entity' => $request->entity
             ]);
+    }       
+    public function searchwithid(Request $request){
+        $importedentity = DB::table('tb_imported_entity')->get(); 
+        $html = view('match.importhotel', [
+            'hotel_id' => $request->hotel_id,
+            'property_id' => $request->property_id,
+            'dest_id' => $request->dest_id,
+            'importedentity' => $importedentity
+            ])->render();
+
+            return json_encode([
+                'html' => $html
+            ]);  
     }
 
 }    
