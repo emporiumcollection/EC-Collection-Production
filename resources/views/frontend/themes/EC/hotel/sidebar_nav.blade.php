@@ -87,38 +87,7 @@ if(!isset($property)){
         {{-- <li class="nav-item">
           <a class="nav-link " href="/hotel/spa">Spa & Wellness </a>
         </li> --}}
-        <?php if(!empty($property->restaurantList) || !empty($property->barList)): ?>
-          <li class="nav-item">
-            <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#restaurant" role="button" aria-expanded="false"
-              aria-controls="restaurant">
-              Restaurants & Bars<i class="fa fa-angle-down" aria-hidden="true"></i>
-            </a>
-            <div class="collapse show" id="restaurant">
-              <ul class="nav flex-column nav-sidebar is-small">
-                <li class="nav-item">
-                  <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/restaurant">All Restaurants & Bars</a>
-                </li>
-                <?php if(isset($property->restaurantList)):
-                 foreach($property->restaurantList as $key => $value): 
-                 $slug = str_slug($value['title']); ?>
-                <li class="nav-item">
-                  <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/{{'restaurant'}}/{{$slug}}">{{ $value['title'] }}</a>
-                </li>
-                <?php endforeach; 
-                endif;
-
-                if(isset($property->barList)):
-                  foreach($property->barList as $key => $value): 
-                  $slug = str_slug($value['title']); ?>
-                  <li class="nav-item">
-                    <a class="nav-link nav-link-sub" href="/hotel/{{ $property->property_slug }}/{{'bar'}}/{{$slug}}">{{ $value['title'] }}</a>
-                  </li>
-                <?php endforeach; 
-                endif; ?>
-              </ul>
-            </div>
-          </li>
-        <?php endif;?>
+        
          <li class="nav-item">
           <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#hotel_info" role="button" aria-expanded="false" aria-controls="hotel_info">
           Hotel Info<i class="fa fa-angle-down" aria-hidden="true"></i>

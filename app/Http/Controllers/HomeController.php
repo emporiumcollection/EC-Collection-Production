@@ -55,8 +55,9 @@ class HomeController extends Controller {
 
             $this->formatPropertyRecords($this->data['featureProperties']);
         }
-*/
+*/  
         //return view('frontend.themes.emporium.pages.index', $this->data);
+        $this->data['policyscript'] = \DB::table('tb_policy_script')->first();
         return view('frontend.themes.EC.pages.index', $this->data);
     }
 
