@@ -602,6 +602,7 @@ class MatchController extends Controller
                     'booking_facilities' => $facilities,
                     'room_desc' => $room_desc,
                     'status' => 0,
+                    'show_on_booking' => 1,
                     'created' => date("Y-m-d: H:i:s"),
                     'updated' => date("Y-m-d: H:i:s"),
                 ]);
