@@ -122,6 +122,13 @@
     <!-- End of HubSpot Embed Code -->
     @endif
 @endif
+    @if(isset($policyscript->cookie_script))
+        @if($policyscript->cookie_script != '')
+        <!-- Start of HubSpot Embed Code -->
+        <?echo $policyscript->cookie_script; ?>
+        <!-- End of HubSpot Embed Code -->
+        @endif
+    @endif
     <script>
         var spadomain = '{{ \Config::get('app.spadomain') }}';
         var safaridomain = '{{ \Config::get('app.safaridomain') }}';
