@@ -625,8 +625,8 @@ class MatchController extends Controller
     }
 
     public function blockDetail($hotel_id){
-        $checkin_date = date ('Y-m-d', strtotime ('+180 day'));
-        $checkout_date = date ('Y-m-d', strtotime ('+187 day'));
+        $checkin_date = date ('Y-m-d', strtotime ('+90 day'));
+        $checkout_date = date ('Y-m-d', strtotime ('+91 day'));
         $curl = curl_init();
 
         curl_setopt_array($curl, [
