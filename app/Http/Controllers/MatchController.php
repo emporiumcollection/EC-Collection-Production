@@ -1065,13 +1065,14 @@ class MatchController extends Controller
     public function addentity(Request $request){
            
         $property = properties::where('booking_hotel_id',$request->hotel_id)->first();
-
-        DB::table('tb_imported_entity')
+        if(isset($property->id) && !empty($property->id)){
+            DB::table('tb_imported_entity')
             ->insert([
                 'property_id' => $property->id ,
                 'hotel_id' => $request->hotel_id ,
                 'entity' => $request->entity
             ]);
+        }
     }       
     public function searchwithid(Request $request){
         $importedentity = DB::table('tb_imported_entity')->get(); 
