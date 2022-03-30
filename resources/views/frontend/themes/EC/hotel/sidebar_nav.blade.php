@@ -94,24 +94,36 @@ if(!isset($property)){
           </a>
           <div class="collapse show" id="hotel_info">
             <ul class="nav flex-column nav-sidebar is-small">
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#QueAns">FAQs</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#sourounding">Sourounding</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#facilities">Facilities</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#child_policy">Children Policy</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#tips">Tips</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#policy">Policies</a>
-              </li>
+              @if(isset($faq) && !empty($faq))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#QueAns">FAQs</a>
+                </li>
+              @endif
+              @if(isset($surroundings) && !empty($surroundings))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#sourounding">Sourounding</a>
+                </li>
+              @endif
+              @if(isset($fac) && !empty($fac))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#facilities">Facilities</a>
+                </li>
+              @endif
+              @if(isset($childpolicy) && !empty($childpolicy))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#child_policy">Children Policy</a>
+                </li>
+              @endif
+              @if(isset($tips) && !empty($tips))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#tips">Tips</a>
+                </li>
+              @endif
+              @if(isset($policy) && !empty($policy))
+                <li class="nav-item">
+                  <a class="nav-link btn-sidebar" href="#" data-sidebar="#policy">Policies</a>
+                </li>
+              @endif
             </ul>
           </div>
         </li>
@@ -136,24 +148,3 @@ if(!isset($property)){
       </ul>
     </div>
   </div>
-@include('frontend.themes.EC.layouts.subsections.priceinfo')
-@include('frontend.themes.EC.layouts.subsections.quick_info')
-@include('frontend.themes.EC.layouts.subsections.reviews')
-@include('frontend.themes.EC.layouts.subsections.share')
-@include('frontend.themes.EC.layouts.subsections.suiteinfo')
-@include('frontend.themes.EC.layouts.subsections.faqs')  
-@include('frontend.themes.EC.layouts.subsections.surrounding')
-@include('frontend.themes.EC.layouts.subsections.facilities')  
-@include('frontend.themes.EC.layouts.subsections.property_gallery')
-@include('frontend.themes.EC.layouts.subsections.channel_popup')
-@include('frontend.themes.EC.layouts.subsections.location_info')
-@include('frontend.themes.EC.layouts.subsections.channel_popup')
-
-@include('frontend.themes.EC.hotel.mobile_sidebar_nav')
-<?php if(isset($restaurant)):?>
-  @include('frontend.themes.EC.hotel.subtemplates.detailrestaurant')
-<?php endif;?>
-
-@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')
-@include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
-@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')

@@ -3382,7 +3382,7 @@ class PropertyController extends Controller {
 
         $this->data['childpolicy'] = \DB::table('tb_children_policies')->where('property_id', $this->data['hotel_data'][0]->id)->get();
 
-        $this->data['tips'] = \DB::table('tb_tips')->where('property_id', $this->data['hotel_data'][0]->id)->get();
+        $this->data['tips'] = \DB::table('tb_tips')->where('property_id', $this->data['hotel_data'][0]->id)->where('status',0)->get();
 
         $this->data['policy'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['hotel_data'][0]->id)->get(); 
         

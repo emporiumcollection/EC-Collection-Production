@@ -135,21 +135,3 @@ if(!isset($property)){
       </ul>
     </div>
   </div>
-@include('frontend.themes.EC.layouts.subsections.priceinfo')
-@include('frontend.themes.EC.layouts.subsections.quick_info')
-@include('frontend.themes.EC.layouts.subsections.reviews')
-@include('frontend.themes.EC.layouts.subsections.share')
-@include('frontend.themes.EC.layouts.subsections.suiteinfo')
-@include('frontend.themes.EC.layouts.subsections.faqs')
-@include('frontend.themes.EC.layouts.subsections.surrounding')
-@include('frontend.themes.EC.layouts.subsections.facilities')  
-@include('frontend.themes.EC.hotel.child_policy')
-@include('frontend.themes.EC.hotel.tips')
-@include('frontend.themes.EC.hotel.policy')  
-@include('frontend.themes.EC.layouts.subsections.property_gallery')
-@include('frontend.themes.EC.layouts.subsections.channel_popup')
-
-@include('frontend.themes.EC.hotel.mobile_sidebar_nav')
-<?php if(isset($restaurant)):?>
-@include('frontend.themes.EC.hotel.subtemplates.detailrestaurant')
-<?php endif;?>

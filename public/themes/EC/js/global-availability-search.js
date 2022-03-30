@@ -501,7 +501,9 @@ function replaceSuiteDetail(property_id, category_id){
   //     $('[data-place="suite_image"]').attr('src', '/room-image/resize/85x71/'+containerName+'/'+suite.rooms[0].images[0]['file']['name']+'/'+suite.rooms[0].images[0]['file']['file_name'])
   //   }
   // }
-  var amenities = suite.amenities[0].why_we_love_it;
+  if(typeof suite.amenities[0] !== 'undefined'){
+    var amenities = suite.amenities[0].why_we_love_it;
+  }  
   try{
     suite.rooms[0].images.forEach(function(rm){
       roomimages += `<div>

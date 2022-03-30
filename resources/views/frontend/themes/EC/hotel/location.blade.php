@@ -25,3 +25,4 @@
 </div>
 @include('frontend.themes.EC.layouts.subsections.property_gallery')
 @endsection
+@include('frontend.themes.EC.hotel.sidebar-templates')

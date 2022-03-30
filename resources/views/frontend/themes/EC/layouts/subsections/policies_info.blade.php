@@ -14,7 +14,9 @@
                 <i class="ico ico-back"></i>
             </a>
             <h3 class="title-second title-line mb-0" data-place="property" data-replace="property_short_name">
-                {{ $hotel_data[0]->propperty_name }}
+                @if(isset($hotel_data[0]->propperty_name))
+                    {{ $hotel_data[0]->propperty_name }}
+                @endif
             </h3>
         </div>
         <div class="row">

@@ -125,7 +125,7 @@
 @if(isset($policyscript->cookie_script))
     @if($policyscript->cookie_script != '')
     <!-- Start of HubSpot Embed Code -->
-    <?echo $policyscript->cookie_script; ?>
+    <?php echo $policyscript->cookie_script; ?>
     <!-- End of HubSpot Embed Code -->
     @endif
 @endif

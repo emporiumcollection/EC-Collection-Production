@@ -1326,3 +1326,6 @@
         </div>
     </div>
 --> 
+@include('frontend.themes.EC.layouts.subsections.quick_info')
+@include('frontend.themes.EC.layouts.subsections.reviews')
+@include('frontend.themes.EC.layouts.subsections.location_info')

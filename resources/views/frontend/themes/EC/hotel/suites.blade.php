@@ -21,34 +21,34 @@
   </div>
 </div>
 <div class="content-em">
-<div class="container pt-5" id="main-content">
-  <div class="slide-023k4"></div>
-  <div class="slider-bg-inner">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-4 mb-4 pt-3">
-            @include('frontend.themes.EC.hotel.sidebar_nav')
+  <div class="container pt-5" id="main-content">
+    <div class="slide-023k4"></div>
+    <div class="slider-bg-inner">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 mb-4 pt-3">
+              @include('frontend.themes.EC.hotel.sidebar_nav')
+          </div>
+          <div class="col-lg-8 col-hotel-slider col-suite-list-slider" id="suiteslist-column">
+              <div class="header-suite-list justify-content-between align-items-center mb-2">
+                  <div class="title-outer-container">
+                      <div class="title-main offset-930 pr-3 title-subs">
+                          <h2 data-place="property_name"><?php echo $property->property_name;?></h2>
+                      </div>
+                  </div>
+              </div>
+              <div class="col-hotel-slider" id="suiteslist">
+                @include('frontend.themes.EC.properties.subtemplates.suite_list_template')
+              </div>
+          </div>    
+          <div class="col-lg-8 col-hotel-slider col-suite-info-slider" id="suiteinfo" style="display: none;">
+              @include('frontend.themes.EC.properties.subtemplates.suite_detail_template')
+          </div>
+          <input type="hidden" name="city_" id="city" value="<?php echo $property->city;?>">
         </div>
-        <div class="col-lg-8 col-hotel-slider col-suite-list-slider" id="suiteslist-column">
-            <div class="header-suite-list justify-content-between align-items-center mb-2">
-                <div class="title-outer-container">
-                    <div class="title-main offset-930 pr-3 title-subs">
-                        <h2 data-place="property_name"><?php echo $property->property_name;?></h2>
-                    </div>
-                </div>
-            </div>
-            <div class="col-hotel-slider" id="suiteslist">
-              @include('frontend.themes.EC.properties.subtemplates.suite_list_template')
-            </div>
-        </div>    
-        <div class="col-lg-8 col-hotel-slider col-suite-info-slider" id="suiteinfo" style="display: none;">
-            @include('frontend.themes.EC.properties.subtemplates.suite_detail_template')
-        </div>
-        <input type="hidden" name="city_" id="city" value="<?php echo $property->city;?>">
       </div>
     </div>
-  </div>
-</div>  
+  </div>  
 </div>
 <?php if(isset($property_id)):?>
 <script>
@@ -69,9 +69,9 @@
 <?php endif; ?>
 @section('mobile_hotel_header')
 <script>
-  $('.top-header').addClass('mobile-off');
-  
+  $('.top-header').addClass('mobile-off');  
 </script>
 @endsection
 @endsection
+
 

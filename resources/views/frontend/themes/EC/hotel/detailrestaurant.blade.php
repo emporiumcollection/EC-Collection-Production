@@ -21,3 +21,4 @@
 </div>
 </div>
 @endsection
+@include('frontend.themes.EC.hotel.sidebar-templates')

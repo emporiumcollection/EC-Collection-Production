@@ -14,15 +14,12 @@
               <i class="ico ico-back"></i>
           </a>
           <h3 class="title-second title-line mb-0" data-place="property">
-            @if(isset($hotel_data[0]))
-              {{ $hotel_data[0]->property_name }}
-            @endif  
+            <b>Surrounding</b>  
           </h3>
       </div>
       @if(isset($surroundings) && !empty($surroundings))
         <div class="row mb-5">
             <div class="col-md-12">
-                <h3><b>Surrounding</b></h3>
             </div>
             <?php foreach($surroundings as $val) {  ?>
                 <?php 

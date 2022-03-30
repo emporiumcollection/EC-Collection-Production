@@ -14,15 +14,12 @@
             <i class="ico ico-back"></i>
         </a>
         <h3 class="title-second title-line mb-0" data-place="property">
-          @if(isset($hotel_data[0]))
-            {{ $hotel_data[0]->propperty_name }}
-          @endif  
+          <b>Policies</b>
         </h3>
     </div>
     @if(isset($policy) && !empty($policy))
       <div class="row"> 
-        <div class="col-md-12">
-          <h3><b>Policies</b></h3>
+        <div class="col-md-8">
           <div class="main-container wow fadeInUp" data-wow-delay=".3s">
             @foreach($policy as $val)
               <p>{{ $val->terms_n_conditions }}</p>

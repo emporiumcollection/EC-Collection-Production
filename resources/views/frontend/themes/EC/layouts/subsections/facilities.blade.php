@@ -14,14 +14,11 @@
               <i class="ico ico-back"></i>
           </a>
           <h3 class="title-second title-line mb-0" data-place="property">
-            @if(isset($hotel_data[0]))
-              {{ $hotel_data[0]->propperty_name }}
-            @endif  
+            Facilities
           </h3>
       </div>
       @if(isset($fac) && !empty($fac))
         <div class="row mb-5">
-            <div class="col-md-12"><h3><b>Facilities</b><h3></div>
              <?php 
                 $general = "";
                 $business = "";

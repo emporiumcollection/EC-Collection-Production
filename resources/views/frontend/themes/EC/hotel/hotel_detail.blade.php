@@ -60,7 +60,6 @@
     </div>
   </div>
 </div>
-@include('frontend.themes.EC.layouts.subsections.policies_info')
 @section('mobile_hotel_header')
 <script>
   $('.top-header').addClass('mobile-off');
@@ -101,3 +100,4 @@ if ($(window).width() < 992) {
 </script>
 @endsection
 @endsection
+@include('frontend.themes.EC.hotel.sidebar-templates')
