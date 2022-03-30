@@ -358,7 +358,8 @@ class MatchController extends Controller
                             'hotel_id' => $request->hotel_id,
                             'property_id' => $property_id,
                             'fname' => $value->author->name,
-                            'comment' => 'Pros : '.$value->pros . PHP_EOL.'Cons : '.$value->cons,
+                            'comment' => 'Pros : '.$value->pros . PHP_EOL.
+                                        'Cons : '.$value->cons . PHP_EOL,
                             'is_approved' => 1
                         ]);
                     }

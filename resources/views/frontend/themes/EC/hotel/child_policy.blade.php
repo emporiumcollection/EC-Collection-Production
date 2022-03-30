@@ -19,10 +19,11 @@
       </div>
       @if(isset($childpolicy) && !empty($childpolicy))
         <div class="row"> 
-          <div class="col-md-12">
+          <div class="col-md-8">
             <div class="main-container wow fadeInUp" data-wow-delay=".3s">
               @foreach($childpolicy as $val)
                 <p>{{ $val->policy }}</p>
+                <hr>
               @endforeach
             </div>
           </div>

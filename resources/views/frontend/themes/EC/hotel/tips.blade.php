@@ -23,6 +23,7 @@
           <div class="main-container wow fadeInUp" data-wow-delay=".3s">
             @foreach($tips as $val)
               <p>{{ $val->tips }}</p>
+              <hr>
             @endforeach
           </div>
         </div>

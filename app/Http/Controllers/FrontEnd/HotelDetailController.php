@@ -60,6 +60,22 @@ class HotelDetailController extends Controller
             $this->data['path'] = $this->getLocationPath($this->data['property']->city);
         }
 
+
+         $this->data['terms_n_conditions'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['property_id'])->first();
+
+        $this->data['faq'] = \DB::table('tb_faqs')->where('property_id', $this->data['property_id'])->where('status',0)->limit(20)->get();
+
+        $this->data['surroundings'] = \DB::table('tb_surroundings')->where('property_id',$this->data['property_id'])->get(); 
+
+        $this->data['fac'] = \DB::table('tb_booking_hotel_facilities')->where('property_id', $this->data['property_id'])->get();
+
+        $this->data['childpolicy'] = \DB::table('tb_children_policies')->where('property_id', $this->data['property_id'])->get();
+
+        $this->data['tips'] = \DB::table('tb_tips')->where('property_id', $this->data['property_id'])->where('status',0)->get();
+
+        $this->data['policy'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['property_id'])->get(); 
+        
+        
         $this->setFitlerOptions();
         $this->data = $this->setFitlerOptions();
         
