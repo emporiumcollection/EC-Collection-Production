@@ -59,12 +59,12 @@ class MatchController extends Controller
         ->whereRaw(" (country = '$keyword' or city = '$keyword' or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
         ->orderBy('property_name', 'asc')
         ->get();
-        // print_r($this->data['allprops']);exit;
+        
         $curl = curl_init();
         $rep = str_replace(" ", "+", $request->selcat);
         $bar = ucfirst($rep);
         $bar = ucfirst(strtolower($bar));
-        // print_r($bar);exit;
+        
         curl_setopt_array($curl, [
             CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/locations?locale=en-gb&name=".$bar,
             CURLOPT_RETURNTRANSFER => true,
@@ -358,8 +358,7 @@ class MatchController extends Controller
                             'hotel_id' => $request->hotel_id,
                             'property_id' => $property_id,
                             'fname' => $value->author->name,
-                            'comment' => 'Pros : '.$value->pros . PHP_EOL.
-                                        'Cons : '.$value->cons . PHP_EOL,
+                            'comment' => 'Pros : '.$value->pros . '<br>Cons : '.$value->cons,
                             'is_approved' => 1
                         ]);
                     }
@@ -404,7 +403,7 @@ class MatchController extends Controller
         } else {
             $policies = '';
             $response = json_decode($response);
-            // print_r($response);exit;
+            
             if(isset($response->policy)){
                 foreach ($response->policy as $key => $value) {
                     $policies .= PHP_EOL;
@@ -547,7 +546,7 @@ class MatchController extends Controller
             'booking_hotel_id' => $hotelDetail->hotel_id,
             'property_name' => $hotelDetail->name,
             'property_slug' => str_slug($hotelDetail->name),
-            'city' => $hotelDetail->city,
+            'city' => $hotelDetail->city,   
             'country' => $hotelDetail->country,
             'hotel_currency' => $hotelDetail->currencycode,
             'latitude' => $hotelDetail->location->latitude,
@@ -563,9 +562,23 @@ class MatchController extends Controller
 
     public function importSuites(Request $request){
 
-        $property_id = $this->checkAndGetPropertyId($request);
-
         $roomDetail = $this->blockDetail($request->hotel_id);
+        if(empty($roomDetail[0]->block)){
+
+            return response()->json(['status' => false]);
+
+        }else{
+
+            $property_id = $this->checkAndGetPropertyId($request);
+
+            $this->insertSuite($property_id,$roomDetail);
+
+
+            return response()->json(['status' => true]);
+        }
+    }
+
+    public function insertSuite($property_id,$roomDetail){
 
         $policies = "";
         foreach($roomDetail[0]->block as $rooms){
@@ -622,8 +635,42 @@ class MatchController extends Controller
                 ]);
             }    
         }
+    }
 
-        return response()->json(['status' => true]);
+    public function datevisesuite(){
+        
+        $checkin_date = date ('Y-m-d', strtotime ('+90 day'));
+        $checkout_date = date ('Y-m-d', strtotime ('+91 day'));
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/room-list?currency=EUR&adults_number_by_rooms=3%2C1&checkin_date=".$checkin_date."&hotel_id=".$hotel_id."&units=metric&checkout_date=".$checkout_date."&locale=en-gb&children_number_by_rooms=2%2C1&children_ages=5%2C0%2C9",
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "x-rapidapi-host: booking-com.p.rapidapi.com",
+                "x-rapidapi-key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $response = json_decode($response);
+            if(!empty($response[0])){
+                return $response;
+            }    
+        }
     }
 
     public function blockDetail($hotel_id){

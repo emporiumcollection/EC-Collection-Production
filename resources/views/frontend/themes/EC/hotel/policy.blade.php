@@ -14,7 +14,9 @@
             <i class="ico ico-back"></i>
         </a>
         <h3 class="title-second title-line mb-0" data-place="property">
-          <b>Policies</b>
+            @if(isset($hotel_data[0]->property_name))
+                <b>{{ $hotel_data[0]->property_name }}</b>
+            @endif 
         </h3>
     </div>
     @if(isset($policy) && !empty($policy))

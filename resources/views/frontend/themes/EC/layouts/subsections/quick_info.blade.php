@@ -14,7 +14,7 @@
                 <i class="ico ico-back"></i>
             </a>
             <h3 class="title-second title-line mb-0" data-place="property" data-replace="property_short_name">
-                The Ludlow Hotel
+                {{ $hotel_data[0]->property_name }}
             </h3>
         </div>
         <div class="row">

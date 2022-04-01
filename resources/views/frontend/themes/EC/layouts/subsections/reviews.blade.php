@@ -50,7 +50,7 @@
                         </div>
                         <div class="review-content">
                             <p>
-                                {!! $review->comment !!}
+                                <?php echo $review->comment ; ?>
                             </p>
                         </div>
                     </div>

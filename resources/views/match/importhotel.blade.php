@@ -6,7 +6,12 @@
         <td width="50"><button class="btn btn-primary form-control" id="suites" onclick="ImportSuitDetail('{{ $hotel_id }}');">Import</button>
             <span id="suites-span" style="display: none; font-size: 13px;"></span>
         </td>
-        <td><span id="suiteimp" style="display: none; font-size: x-large;"></span></td>
+        <td><span id="suiteimp" style="display: none; font-size: x-large;"></span>
+        </td>
+        <td>
+            <input type="text" class="form-control range_date" name="daterange" style="display: none;"/>
+            <button class="btn btn-primary form-control " id="select_date">Submit</button>   
+        </td>
     </tr>
     <tr>
         <td style="padding-right: 20px;"><p>Import Policies</p></td>
@@ -59,8 +64,18 @@
         <input type="hidden" name="property_id" id="property_id" value="{{ $property_id }}">
     </tr>
 </table>
+
+
 <script type="text/javascript">
 
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+          opens: 'true',
+        }, function(start, end, label) {
+          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+    });
+    
     var importedentity = "";
     <?php if(isset($importedentity) && !empty($importedentity)){ ?>    
         var importedentity = '<?php echo json_encode($importedentity) ?>'; 
@@ -78,10 +93,7 @@
         });  
     }    
 
-    $(document).ready(function () {
-              
-    });
-
+   
     $(document).ready(function(){
         $(document).ajaxStart(function() {
           $("#loading").show();
@@ -89,6 +101,20 @@
           $("#loading").hide();
         });
 
+        $(document).on('click','#select_date',function(){
+            var date = $(".range_date").val().split('-');
+            alert(date);
+            var arrival_date = date[0];
+            alert(arrival_date);
+            var departure_date = date[1];
+
+            $.ajax({
+                url: '/select_date',
+                type: 'get',
+                data: { arrival_date: arrival_date,
+                        departure_date: departure_date }
+            })
+        });
     });   
     function ImportSuitDetail(hotel_id){
         var suite = 'suites';
@@ -106,8 +132,9 @@
                     alert("Data Inserted Successfully!");
                     $("#suiteimp").html('✔');
                     $("#suiteimp").show();
-                }else{
-                    alert("Data already Inserted in Databade.");
+                }if(response.status === false){
+                    alert("Suites Not Found Please select date again!");
+                    $(".range_date").show();
                 }
             }
         });

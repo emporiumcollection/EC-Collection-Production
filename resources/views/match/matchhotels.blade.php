@@ -41,7 +41,7 @@
         $hotelDropDwn = "";
         $allproperties = "";
 
-        $hotelDropDwn .= '<select class="form-control booking-property" name="hotel_property[]" style="height: 28px; margin-left: 5px;">
+        $hotelDropDwn .= '<select class="form-control booking-property" name="hotel_property" style="height: 28px; margin-left: 5px;">
                 <option value=""> Select </option>';
                  foreach ($hotels as $value) { 
                     $hotelDropDwn .= '<option value="'.$value['hotel_id'].'">'. $value['hotel_name'] . '</option>';
@@ -65,6 +65,7 @@
                             <th>Imported hotel</th>
                             <th>Emporium Hotel</th>
                             <th>Booking.com Hotel</th>
+                            <th>Hotel Id</th>
                             <th>Booking.com Prices</th>
                             <th>Edit Prices</th>
                             <th>Booking.com Suites</th>
@@ -87,6 +88,8 @@
                             <td width="50">
                                 <?php echo $hotelDropDwn;?>
                             </td>
+                            <td width="50"><input type="text" name="hotel_id" id="search_hotel_id" class="form-control search_hotel_id">
+                            </td>
                             <td width="30"> 
                                 <a data-toggle="modal" id="sessionprice" data-target="#viewprice" onclick="viewPrice('{{ $key.'-'.$val['id'] }}')">View Prices</a>
                             </td>
@@ -101,7 +104,7 @@
                             </td>
                             <td width="30">
                                 <button class="btn btn-primary form-control" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">Import</button>
-                            </td>
+                            </td>                            
                         </tr>
                     @endforeach
                     @endif    
@@ -176,9 +179,10 @@
         </div>
     </div>
 </div>
-<script type="text/javascript">
- 
 
+
+<script type="text/javascript">    
+   
     function OpenImportModel(id){
         
         $("#importdata").html("");
@@ -329,7 +333,7 @@
 
     }
 
-     $(document).on('click', '#mediumButton', function(event) {        
+    $(document).on('click', '#mediumButton', function(event) {        
             event.preventDefault();
             $('#mediumBody').html("");
             var hotel_id = $('.booking-property', $(event.target).parents('tr')).val();
@@ -367,6 +371,7 @@
     <?php } 
     ?>
     $(document).ready(function () {
+
         if(typeof matched !== 'undefined' && typeof matched !== null){
             var arr = jQuery.parseJSON( matched );
         }    
@@ -402,6 +407,13 @@
         $('.booking-property').selectize({
             sortField: 'text'
         });
+
+        $(document).on('blur', '.search_hotel_id', function(){
+            var hotel_id = $(this).val();
+            var property_select = $(this).parents('tr').find('.booking-property');
+            $(property_select).data('selectize').setValue(hotel_id);
+        });
+    
     });
 
 </script> 
