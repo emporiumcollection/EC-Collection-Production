@@ -106,7 +106,6 @@ class MatchController extends Controller
         }
     }
 
-
     private function getProperties($dest_id,$keyword, $destinationId){
 
         if(\DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('destination',$keyword)->exists()){
@@ -402,12 +401,13 @@ class MatchController extends Controller
             echo "cURL Error #:" . $err;
         } else {
             $policies = '';
+            $type = '';
             $response = json_decode($response);
             
             if(isset($response->policy)){
                 foreach ($response->policy as $key => $value) {
                     $policies .= PHP_EOL;
-                    $policies .= str_replace("_"," ",$value->type).PHP_EOL;
+                    $type .= str_replace("_"," ",$value->type).PHP_EOL;
                     if (isset($value->content[0]->cribs_and_extra_beds)) {
                         foreach($value->content[0]->cribs_and_extra_beds as $key => $data){
 
@@ -443,15 +443,14 @@ class MatchController extends Controller
                             }
                         }
                     }
-                }
-                
                     $insert = \DB::table('td_property_terms_n_conditions')
                     ->insert([
                         'property_id' => $property_id,
+                        'type' => $type,
                         'terms_n_conditions' => $policies     
                     ]);
-                    return response()->json(['status' => true]);
-                
+                }
+                return response()->json(['status' => true]);
             } 
         }
 
@@ -563,6 +562,7 @@ class MatchController extends Controller
     public function importSuites(Request $request){
 
         $roomDetail = $this->blockDetail($request->hotel_id);
+        
         if(empty($roomDetail[0]->block)){
 
             return response()->json(['status' => false]);
@@ -572,7 +572,6 @@ class MatchController extends Controller
             $property_id = $this->checkAndGetPropertyId($request);
 
             $this->insertSuite($property_id,$roomDetail);
-
 
             return response()->json(['status' => true]);
         }
@@ -598,12 +597,21 @@ class MatchController extends Controller
 
             $room_name = $rooms->room_name;
             $room_id = $rooms->room_id;
-
+            $benefits = "";
+            foreach($roomDetail[0]->top_ufi_benefits as $value){
+                $benefits .= $value->translated_name.',';
+            }
+            $highlights = "";
+            foreach ($roomDetail[0]->rooms->$roomId->highlights as $key => $value) {
+                $highlights .= $value->translated_name.',';
+            }
             $room_desc = $roomDetail[0]->rooms->$roomId->description;
             $beds = isset($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->count)? $roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->count:0;
+            $bed_type = isset($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->name_with_count) ? $roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->name_with_count:0;
+
             $guests_adults = $rooms->nr_adults;
             $guests_juniors = $rooms->nr_children;
-            if(!PropertyCategoryTypes::where('category_name',$room_name)->exists()){
+            if(!PropertyCategoryTypes::where('category_name',$room_name)->where('property_id',$property_id)->exists()){
                 $insert =  PropertyCategoryTypes::insert([
                     'property_id' => $property_id,
                     'category_name' => $room_name,
@@ -615,19 +623,21 @@ class MatchController extends Controller
                     'bads' => $beds,
                     'booking_facilities' => $facilities,
                     'room_desc' => $room_desc,
+                    'bed_1_description' => $bed_type,
                     'status' => 0,
                     'show_on_booking' => 1,
                     'created' => date("Y-m-d: H:i:s"),
                     'updated' => date("Y-m-d: H:i:s"),
                 ]);
                 $lastId = DB::getPdo()->lastInsertId();
-                // $category_id = PropertyCategoryTypes::where('property_id',$property_id)->first();
 
                 DB::table('tb_properties_category_rooms')->insert([
                     'property_id' => $property_id,
                     'category_id' => $lastId,
                     'room_name' => $room_name,
                     'status' => 1,
+                    'highlights' =>$highlights,
+                    'benefits' =>$benefits,
                     'room_active_from' => date ('Y-m-d', strtotime ('+2 year')),
                     'room_active_to' => date ('Y-m-d', strtotime ('+2 year')),
                     'created' => date("Y-m-d: H:i:s"),
@@ -637,14 +647,14 @@ class MatchController extends Controller
         }
     }
 
-    public function datevisesuite(){
-        
-        $checkin_date = date ('Y-m-d', strtotime ('+90 day'));
-        $checkout_date = date ('Y-m-d', strtotime ('+91 day'));
+    public function DateViseSuiteImport(Request $request){
+
+        $checkin_date = date ('Y-m-d', strtotime ($request->arrival_date));
+        $checkout_date = date ('Y-m-d', strtotime ($request->departure_date));
         $curl = curl_init();
 
         curl_setopt_array($curl, [
-            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/room-list?currency=EUR&adults_number_by_rooms=3%2C1&checkin_date=".$checkin_date."&hotel_id=".$hotel_id."&units=metric&checkout_date=".$checkout_date."&locale=en-gb&children_number_by_rooms=2%2C1&children_ages=5%2C0%2C9",
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/room-list?currency=EUR&adults_number_by_rooms=3%2C1&checkin_date=".$checkin_date."&hotel_id=".$request->hotel_id."&units=metric&checkout_date=".$checkout_date."&locale=en-gb&children_number_by_rooms=2%2C1&children_ages=5%2C0%2C9",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FOLLOWLOCATION => true,
             CURLOPT_ENCODING => "",
@@ -668,7 +678,13 @@ class MatchController extends Controller
         } else {
             $response = json_decode($response);
             if(!empty($response[0])){
-                return $response;
+
+                $property_id = $this->checkAndGetPropertyId($request);
+
+                $this->insertSuite($property_id,$response);
+
+                return response()->json(['status' => true]);
+
             }    
         }
     }

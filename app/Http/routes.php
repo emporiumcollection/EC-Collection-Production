@@ -76,6 +76,7 @@ Route::post('/tips','MatchController@tips');
 Route::get('/viewprice','MatchController@viewprice');
 Route::get('/entity','MatchController@addentity');
 Route::get('/searchwithid','MatchController@searchwithid');
+Route::get('/select_date','MatchController@DateViseSuiteImport');
 
 //HotelDetail Routes
 Route::get('/hotel/{slug}/restaurant','FrontEnd\HotelDetailController@restaurant')->where(['slug' => '.*']);

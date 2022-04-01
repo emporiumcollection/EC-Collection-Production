@@ -66,6 +66,7 @@
                             <th>Emporium Hotel</th>
                             <th>Booking.com Hotel</th>
                             <th>Hotel Id</th>
+                            <th>Edit Suites</th>
                             <th>Booking.com Prices</th>
                             <th>Edit Prices</th>
                             <th>Booking.com Suites</th>
@@ -89,6 +90,9 @@
                                 <?php echo $hotelDropDwn;?>
                             </td>
                             <td width="50"><input type="text" name="hotel_id" id="search_hotel_id" class="form-control search_hotel_id">
+                            </td>
+                            <td width="30">
+                                <a href="javascript:void(0);" onclick="editSuites('{{ $key.'-'.$val['id'] }}')">Edit Suites</a>
                             </td>
                             <td width="30"> 
                                 <a data-toggle="modal" id="sessionprice" data-target="#viewprice" onclick="viewPrice('{{ $key.'-'.$val['id'] }}')">View Prices</a>
@@ -205,7 +209,15 @@
             }
         });
     }
+    function editSuites(id){
 
+        var property_id = $('.emp-property', $('#match-row-' + id)).val();
+        if(!property_id){
+            alert("Please select emporium hotel");
+            return false;
+        }
+        window.open("/properties_settings/"+property_id+"/types");        
+    }
     function editPrice(id){
 
         var property_id = $('.emp-property', $('#match-row-' + id)).val();

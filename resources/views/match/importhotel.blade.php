@@ -10,7 +10,9 @@
         </td>
         <td>
             <input type="text" class="form-control range_date" name="daterange" style="display: none;"/>
-            <button class="btn btn-primary form-control " id="select_date">Submit</button>   
+        </td>
+        <td>
+            <button class="btn btn-primary form-control " id="select_date" style="display:none;" onclick="selectdate('{{ $hotel_id }}')">Submit</button>
         </td>
     </tr>
     <tr>
@@ -67,14 +69,6 @@
 
 
 <script type="text/javascript">
-
-    $(function() {
-        $('input[name="daterange"]').daterangepicker({
-          opens: 'true',
-        }, function(start, end, label) {
-          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
-        });
-    });
     
     var importedentity = "";
     <?php if(isset($importedentity) && !empty($importedentity)){ ?>    
@@ -102,20 +96,36 @@
         });
 
         $(document).on('click','#select_date',function(){
-            var date = $(".range_date").val().split('-');
-            alert(date);
-            var arrival_date = date[0];
-            alert(arrival_date);
-            var departure_date = date[1];
-
-            $.ajax({
-                url: '/select_date',
-                type: 'get',
-                data: { arrival_date: arrival_date,
-                        departure_date: departure_date }
-            })
+            
         });
     });   
+
+    function selectdate(hotel_id){
+        var date = $(".range_date").val().split('-');
+        var arrival_date = date[0];
+        var departure_date = date[1];
+        var property_id = $("#property_id").val();
+        $.ajax({
+            url: '/select_date',
+            type: 'get',
+            data: { arrival_date: arrival_date,
+                departure_date: departure_date,
+                hotel_id: hotel_id ,
+                property_id: property_id  },
+            datatype: 'json',
+
+            success:function(response){
+                if(response.status == true){
+                    alert("Data Inserted Successfully!");
+                    $(".range_date").hide();
+                    $("#select_date").hide();  
+                }else{
+                    alert("Suites Not Found Please select date again!");
+                }
+            }
+        });
+    }
+
     function ImportSuitDetail(hotel_id){
         var suite = 'suites';
         ImportEntity(hotel_id,suite);
@@ -135,6 +145,7 @@
                 }if(response.status === false){
                     alert("Suites Not Found Please select date again!");
                     $(".range_date").show();
+                    $("#select_date").show();
                 }
             }
         });
@@ -155,7 +166,7 @@
                     $("#hotelpolicyimp").html('✔');
                     $("#hotelpolicyimp").show();
                 }else{
-                    alert("Data already Inserted in Databade.");
+                    alert("Policy Not Found.");
                 }
             }
         });
@@ -175,6 +186,8 @@
                 if(response.status === true){
                     $("#reviewimp").html('✔');
                     $("#reviewimp").show();
+                }else{
+                    alert("Review Not Found.");
                 }
             }
         });
@@ -194,6 +207,8 @@
                 if(response.status === true){
                     $("#surroundingimp").html('✔');
                     $("#surroundingimp").show();
+                }else{
+                    alert("Data Not Found.");
                 }
             }
         });
@@ -206,13 +221,15 @@
             url: '/importfacilities',
             type: 'post',
             data: { hotel_id: hotel_id ,
-                    dest_id: dest_id },
+                    dest_id: dest_id    },
             datatype: 'json',
 
             success:function(response){
                 if(response.status === true){
                     $("#facilityimp").html('✔');
                     $("#facilityimp").show();
+                }else{
+                    alert("Facilities Not Found.");
                 }
             }
         });
@@ -234,7 +251,7 @@
                     $("#faqimp").html('✔');
                     $("#faqimp").show();
                 }else{
-                    alert("Data already Inserted.");
+                    alert("FAQs Not found!.");
                 }
             }
         });
@@ -255,7 +272,7 @@
                     $("#childpolicyimp").html('✔');
                     $("#childpolicyimp").show();
                 }else{
-                    alert("Data already Inserted.");
+                    alert("Children Policies Not found.");
                 }
             }
         });
@@ -293,5 +310,12 @@
             }        
         });
     }
+    $(function() {
+        $('input[name="daterange"]').daterangepicker({
+          opens: 'true',
+        }, function(start, end, label) {
+          console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+    });
 
 </script>
