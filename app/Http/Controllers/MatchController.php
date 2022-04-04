@@ -578,7 +578,7 @@ class MatchController extends Controller
     }
 
     public function insertSuite($property_id,$roomDetail){
-
+        
         $policies = "";
         foreach($roomDetail[0]->block as $rooms){
             foreach($rooms->block_text->policies as $policy){

@@ -87,8 +87,7 @@ if(!isset($property)){
         {{-- <li class="nav-item">
           <a class="nav-link " href="/hotel/spa">Spa & Wellness </a>
         </li> --}}
-        @if(isset($faq) || isset($surroundings) || isset($fac) || isset($childpolicy) || isset($tips) || isset($policy) || !empty($faq) || !empty($surroundings) || !empty($fac) || 
-        !empty($childpolicy) || !empty($tips) || !empty($policy) || !empty($policy))
+        <div id="personaldetails">
           <li class="nav-item">
             <a class="nav-link nav-link-parrent" data-toggle="collapse" href="#hotel_info" role="button" aria-expanded="false" aria-controls="hotel_info">
             Hotel Info<i class="fa fa-angle-down" aria-hidden="true"></i>
@@ -97,38 +96,38 @@ if(!isset($property)){
               <ul class="nav flex-column nav-sidebar is-small">
                 @if(isset($faq) && !empty($faq))
                   <li class="nav-item">
-                    <a class="nav-link btn-sidebar" href="#" data-sidebar="#QueAns">FAQs</a>
+                    <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#QueAns">FAQs</a>
                   </li>
                 @endif
                 @if(isset($surroundings) && !empty($surroundings))
                   <li class="nav-item">
-                    <a class="nav-link btn-sidebar" href="#" data-sidebar="#sourounding">Sourounding</a>
+                    <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#sourounding">Sourounding</a>
                   </li>
                 @endif
                 @if(isset($fac) && !empty($fac))
                   <li class="nav-item">
-                    <a class="nav-link btn-sidebar" href="#" data-sidebar="#facilities">Facilities</a>
+                    <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#facilities">Facilities</a>
                   </li>
                 @endif
                 @if(isset($childpolicy) && !empty($childpolicy))
                   <li class="nav-item">
-                    <a class="nav-link btn-sidebar" href="#" data-sidebar="#child_policy">Children Policy</a>
+                    <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#child_policy">Children Policy</a>
                   </li>
                 @endif
                 @if(isset($tips) && !empty($tips))
                   <li class="nav-item">
-                    <a class="nav-link btn-sidebar" href="#" data-sidebar="#tips">Tips</a>
+                    <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#tips">Tips</a>
                   </li>
                 @endif
                 @if(isset($policy) && !empty($policy))
                   <li class="nav-item">
-                    <a class="nav-link btn-sidebar" href="#" data-sidebar="#policy">Policies</a>
+                    <a class="nav-link btn-sidebar nav-link-sub" href="#" data-sidebar="#policy">Policies</a>
                   </li>
                 @endif
               </ul>
             </div>
           </li>
-        @endif  
+        </div>
         <li class="nav-item">
           <a class="nav-link @@locActive" href="/hotel-location/{{ $property->property_slug }}">Location</a>
         </li>
@@ -150,3 +149,14 @@ if(!isset($property)){
       </ul>
     </div>
   </div>
+  <script type="text/javascript">
+    $('#personaldetails').find('ul').each(function(){
+      var txt = $("li", this).text();
+      if(txt.length <= 0){
+        $(this).hide();
+      }
+    });
+    if(!$('#personaldetails').find('ul:visible').length){
+      $('#personaldetails').hide();
+    }
+  </script>
