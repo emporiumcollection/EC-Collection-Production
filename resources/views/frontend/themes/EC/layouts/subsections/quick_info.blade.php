@@ -15,11 +15,11 @@
             </a>
             <h3 class="title-second title-line mb-0" data-place="property" data-replace="property_short_name">
                 <?php 
-                    if(isset($property)){ ?>
-                        {{ $property->property_name }}
-                    <?php  } elseif(isset($hotel_data[0])){ ?>
-                        {{ $hotel_data[0]->property_name }}
-                    <?php } ?>
+                if(isset($property)){ ?>
+                    {{ $property->property_name }}
+                <?php  } elseif(isset($hotel_data[0])){ ?>
+                    {{ $hotel_data[0]->property_name }}
+                <?php } ?>
             </h3>
         </div>
         <div class="row">

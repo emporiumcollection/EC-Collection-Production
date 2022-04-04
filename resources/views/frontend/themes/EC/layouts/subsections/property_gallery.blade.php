@@ -14,7 +14,9 @@
                 <i class="ico ico-back"></i>
             </a>
             <h3 class="title-second title-line mb-0" data-place="property" data-replace="property_short_name">
-                {{ $hotel_data[0]->property_name }}
+                @if(isset($hotel_data[0]))
+                    {{ $hotel_data[0]->property_name }}
+                @endif
             </h3>
         </div>
         <ul class="nav nav-tab-main nav-pills nav-justified mb-2">
