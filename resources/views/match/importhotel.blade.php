@@ -154,7 +154,6 @@
 
     function ImportHotelPolicies(hotel_id,dest_id){
         var policy = 'policy';
-        ImportEntity(hotel_id,policy);
 
         $.ajax({
             url: '/importpolicies',
@@ -166,6 +165,7 @@
                 if(response.status === true){
                     $("#hotelpolicyimp").html('✔');
                     $("#hotelpolicyimp").show();
+                    ImportEntity(hotel_id,policy);
                 }else{
                     alert("Policy Not Found.");
                 }
@@ -175,7 +175,7 @@
 
     function ImportHotelReview(hotel_id,dest_id){
         var review = 'review';
-        ImportEntity(hotel_id,review);
+        
         $.ajax({
             url: '/importreview',
             type: 'post',
@@ -187,6 +187,7 @@
                 if(response.status === true){
                     $("#reviewimp").html('✔');
                     $("#reviewimp").show();
+                    ImportEntity(hotel_id,review);
                 }else{
                     alert("Review Not Found.");
                 }
@@ -196,7 +197,6 @@
 
     function ImportHotelSurroundings(hotel_id,dest_id){
         var surrounding = 'surrounding';
-        ImportEntity(hotel_id,surrounding);
         $.ajax({
             url: '/importsurrounding',
             type: 'post',
@@ -208,6 +208,7 @@
                 if(response.status === true){
                     $("#surroundingimp").html('✔');
                     $("#surroundingimp").show();
+                    ImportEntity(hotel_id,surrounding);
                 }else{
                     alert("Data Not Found.");
                 }
@@ -217,7 +218,7 @@
 
     function ImportHotelFacilities(hotel_id,dest_id){
         var facilities = 'facilities';
-        ImportEntity(hotel_id,facilities);
+        
         $.ajax({
             url: '/importfacilities',
             type: 'post',
@@ -229,6 +230,7 @@
                 if(response.status === true){
                     $("#facilityimp").html('✔');
                     $("#facilityimp").show();
+                    ImportEntity(hotel_id,facilities);
                 }else{
                     alert("Facilities Not Found.");
                 }
@@ -239,7 +241,7 @@
 
     function ImportQUestionAnswer(hotel_id,dest_id){
         var faqs = 'faqs';
-        ImportEntity(hotel_id,faqs);
+        
         $.ajax({
             url: '/faqs',
             type: 'post',
@@ -251,6 +253,7 @@
                 if(response.status === true){
                     $("#faqimp").html('✔');
                     $("#faqimp").show();
+                    ImportEntity(hotel_id,faqs);
                 }else{
                     alert("FAQs Not found!.");
                 }
@@ -260,7 +263,7 @@
 
     function ImportChildrenPolicies(hotel_id,dest_id){
         var children = 'children';
-        ImportEntity(hotel_id,children);
+        
         $.ajax({
             url: '/childpolicy',
             type: 'post',
@@ -272,6 +275,7 @@
                 if(response.status === true){
                     $("#childpolicyimp").html('✔');
                     $("#childpolicyimp").show();
+                    ImportEntity(hotel_id,children);
                 }else{
                     alert("Children Policies Not found.");
                 }
@@ -280,7 +284,7 @@
     }
     function ImportTips(hotel_id,dest_id){
         var tips = 'tips';
-        ImportEntity(hotel_id,tips);
+        
         $.ajax({
             url: '/tips',
             type: 'post',
@@ -292,6 +296,7 @@
                 if(response.status == true){
                     $("#tipsimp").html('✔');
                     $("#tipsimp").show();
+                    ImportEntity(hotel_id,tips);
                 }else{
                     alert('Data Already Inserted!');
                 }
