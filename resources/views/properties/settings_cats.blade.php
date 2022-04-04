@@ -129,7 +129,7 @@
 											</div>
 											<div class="form-group col-lg-3">
 												<label for="bathroom">Bathroom(s)</label>
-												<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="{{ $cat->bathroom }}" required="required" /> 
+												<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="{{ $cat->bathroom }}" /> 
 											</div>
 										</div>
 										<div class="row">

@@ -99,7 +99,7 @@
 								  <div class="form-group  " >
 									<label for="Slider Link" class=" control-label col-md-4 text-left"> Slider Link <span class="asterix"> * </span></label>
 									<div class="col-md-6">
-									  {!! Form::text('slider_link', $row['slider_link'],array('class'=>'form-control', 'placeholder'=>'', 'required'=>'true'  )) !!} 
+									  {!! Form::text('slider_link', $row['slider_link'],array('class'=>'form-control', 'placeholder'=>''  )) !!} 
 									 </div> 
 									 <div class="col-md-2">
 									 	

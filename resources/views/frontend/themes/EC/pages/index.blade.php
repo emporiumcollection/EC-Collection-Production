@@ -49,9 +49,9 @@
           <?php echo $slide->slider_description;?>
         </p>
         <?php if( !empty($slide->slider_link) ) { ?>
-          <div class="action-button">
+          {{-- <div class="action-button">
             <a href="<?php echo $slide->slider_link;?>" class="btn btn-outline-white btn-lg">View</a>
-          </div>
+          </div> --}}
         <?php } ?>
       </div>
     </div>

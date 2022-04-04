@@ -129,7 +129,6 @@ class SliderController extends Controller {
 
 	function getUpdate(Request $request, $id = null)
 	{
-	
 		if($id =='')
 		{
 			if($this->access['is_add'] ==0 )
@@ -181,8 +180,9 @@ class SliderController extends Controller {
 
 	function postSave( Request $request)
 	{
+		
 		$id = $request->input('id');
-		$rules = $this->validateForm();
+		// $rules = $this->validateForm();
 		if($request->input('id') =='')
 		{
 			$rules['slider_img'] = 'required|mimes:jpeg,png';
