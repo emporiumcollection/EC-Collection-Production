@@ -543,6 +543,7 @@ class MatchController extends Controller
     public function importhoteldetail($hotel_id)
     {
         $hotelDetail =  $this->getHotelData($hotel_id);
+        
         if(isset($hotelDetail->description_translations[0]->description)){
             $description = $hotelDetail->description_translations[0]->description;
         }else{
