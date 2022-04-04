@@ -24,9 +24,9 @@
         <div class="col-md-8">
           <div class="main-container wow fadeInUp" data-wow-delay=".3s">
               <div class="main-content p-2" style="background-color: #FFFFFF;">
-                <div class="accordion accordion-ex p-2" id="accordionExample1">
+                <div class="accordion accordion-ex p-2" id="accordionExample2">
                   <?php foreach ($policy as $key => $value) { ?>
-                    <div class="card" style="display:none;">
+                    <div class="card">
                       <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
                           <button class="btn btn-link btn-block text-left btn-accordion collapsed p-2" type="button" data-toggle="collapse"
@@ -37,7 +37,7 @@
                         </h2>
                       </div>
 
-                      <div id="collapseOne-{{ $key }}" class="collapse p-3" aria-labelledby="headingOne" data-parent="#accordionExample1">
+                      <div id="collapseOne-{{ $key }}" class="collapse p-3" aria-labelledby="headingOne" data-parent="#accordionExample2">
                         <div class="card-body">
                           {{ $value->terms_n_conditions }}
                         </div>
