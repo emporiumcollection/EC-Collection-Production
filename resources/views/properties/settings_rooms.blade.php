@@ -315,6 +315,18 @@
 																	</div>
 																	<div class="row">
 																		<div class="form-group col-lg-12">
+																			<label for="room_name">Benefits</label>
+																			<textarea name="amenities_eng" class="form-control input-sm">@if(isset($cat['rooms'])) {{ $cat['rooms'][0]->benefits }} @endif</textarea>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="form-group col-lg-12">
+																			<label for="room_name">Highlights</label>
+																			<textarea name="amenities_eng" class="form-control input-sm">@if(isset($cat['rooms'])) {{ $cat['rooms'][0]->highlights }} @endif</textarea>
+																		</div>
+																	</div>
+																	<div class="row">
+																		<div class="form-group col-lg-12">
 																			<label for="room_name">Description </label>
 																			<textarea name="room_amenities_desc" class="form-control input-sm">@if(!empty($room_amenties_desc)){{$room_amenties_desc[$cat['data']->id]}}@endif</textarea>
 																		</div>

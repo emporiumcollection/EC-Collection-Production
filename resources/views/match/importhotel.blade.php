@@ -128,7 +128,7 @@
 
     function ImportSuitDetail(hotel_id){
         var suite = 'suites';
-        ImportEntity(hotel_id,suite);
+        
         var property_id = $("#property_id").val();
         $.ajax({
             url: '/importsuites',   
@@ -142,6 +142,7 @@
                     alert("Data Inserted Successfully!");
                     $("#suiteimp").html('✔');
                     $("#suiteimp").show();
+                    ImportEntity(hotel_id,suite);
                 }if(response.status === false){
                     alert("Suites Not Found Please select date again!");
                     $(".range_date").show();

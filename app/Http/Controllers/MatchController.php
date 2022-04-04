@@ -14,6 +14,7 @@ use App\Models\PropertyRooms;
 use App\Models\PropertyCategoryTypes;
 use DB;
 use ZipArchive;
+use Redirect;
 
 class MatchController extends Controller
 {
@@ -23,7 +24,10 @@ class MatchController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function searchDestination(){
+    public function searchDestination()
+    {
+        if (!\Auth::check())
+            return Redirect::to('user/login');
         $config_root_destinations = explode(',',\Config::get('app.root_destinations'));
         
         $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
@@ -38,7 +42,10 @@ class MatchController extends Controller
         return view($file_name,$this->data);    
     }
 
-    public function matchHotels(Request $request){
+    public function matchHotels(Request $request)
+    {
+        if (!\Auth::check())
+            return Redirect::to('user/login');
         $this->data['category'] = \DB::table('tb_categories')->orderBy('category_name','asc')->get();
 
         $destinationId = 0;
@@ -580,6 +587,7 @@ class MatchController extends Controller
     public function insertSuite($property_id,$roomDetail){
         
         $policies = "";
+        $facilities = "";
         foreach($roomDetail[0]->block as $rooms){
             foreach($rooms->block_text->policies as $policy){
                 $policies .= PHP_EOL;
@@ -589,11 +597,10 @@ class MatchController extends Controller
             }
 
             $roomId = $rooms->room_id;
-            $facilities = [];
+            
             foreach($roomDetail[0]->rooms->$roomId->facilities as $facility){
-                $facilities[] = $facility->facilitytype_name;
+                $facilities .= $facility->facilitytype_name.',';
             }
-            $facilities = implode(',', $facilities);
 
             $room_name = $rooms->room_name;
             $room_id = $rooms->room_id;

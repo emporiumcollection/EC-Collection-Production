@@ -138,6 +138,16 @@
                 </p>
 
                 <!-- display only on dektop -->
+                {{-- <div class="i-none">
+                    <h4 class="mt-5 mb-4 color-dark-grey ">Booking Facilities</h4>
+                    <div class="row mb-4">
+                        <ul data-place="booking_facilities">
+                        </ul>
+                    </div>
+                </div> --}}
+                <!-- display only on dektop end -->
+
+                <!-- display only on dektop -->
                 <div class="i-none">
                     <h4 class="mt-5 mb-4 color-dark-grey ">Amenities</h4>
                     <div class="row mb-4">
@@ -177,8 +187,11 @@
             </div>
         </div>
 </div>
-@include('frontend.themes.EC.layouts.subsections.quick_info')
-@include('frontend.themes.EC.layouts.subsections.reviews')
+
+@if(Request::segment(3) == 'suites')
+    @include('frontend.themes.EC.layouts.subsections.quick_info')   
+    @include('frontend.themes.EC.layouts.subsections.reviews')
+@endif
 @include('frontend.themes.EC.layouts.subsections.location_info')
 @include('frontend.themes.EC.layouts.subsections.faqs')
 @include('frontend.themes.EC.hotel.child_policy')  
