@@ -142,8 +142,9 @@ class MatchController extends Controller
                             $searchValue = $parts[0] . ' ' . $parts[1] . ' ' . $parts[2] . ' ' . $parts[3];
                         }
                     }else{
-                        print_r($parts[0]);exit;
-                        $searchValue = $parts[0];
+                        if(isset($parts[0])){
+                            $searchValue = $parts[0];
+                        }   
                     }
                     $searchValue = str_replace(' ', ' +', trim($searchValue));
                     $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")
