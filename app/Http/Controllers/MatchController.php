@@ -133,7 +133,6 @@ class MatchController extends Controller
                     $parts = explode(" ", $searchValue);
                     $parts = $this->clearArray($parts);
                     if(count($parts)>=2){
-                        echo "here"; print_r($parts);
                         $searchValue = "$parts[0] $parts[1]";
                         if(isset($parts[2])){
                             $searchValue = $parts[0] . ' ' . $parts[1] . ' ' . $parts[2];
