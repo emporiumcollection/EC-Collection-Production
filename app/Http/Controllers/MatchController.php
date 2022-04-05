@@ -142,6 +142,7 @@ class MatchController extends Controller
                             $searchValue = $parts[0] . ' ' . $parts[1] . ' ' . $parts[2] . ' ' . $parts[3];
                         }
                     }else{
+                        print_r($parts);exit;
                         $searchValue = $parts[0];
                     }
                     $searchValue = str_replace(' ', ' +', trim($searchValue));
