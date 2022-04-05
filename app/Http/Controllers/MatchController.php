@@ -130,6 +130,7 @@ class MatchController extends Controller
                     $searchValue = str_replace("$keyword", "", $searchValue);
                     $searchValue = preg_replace('/[^A-Za-z0-9\-]/', ' ', $searchValue);
                     $searchValue = str_replace("-", "", $searchValue);
+                    echo "here"; print_r($searchValue);exit;
                     $parts = explode(" ", $searchValue);
                     $parts = $this->clearArray($parts);
                 
