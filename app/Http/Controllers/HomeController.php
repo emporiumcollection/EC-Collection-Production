@@ -57,7 +57,7 @@ class HomeController extends Controller {
         }
 */  
         //return view('frontend.themes.emporium.pages.index', $this->data);
-        $this->data['policyscript'] = \DB::table('tb_policy_script')->first();
+        $this->data['policyscript'] = \DB::table('tb_policy_script')->orderBy('id', 'desc')->first();
         return view('frontend.themes.EC.pages.index', $this->data);
     }
 

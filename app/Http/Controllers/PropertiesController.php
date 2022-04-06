@@ -1978,6 +1978,7 @@ class PropertiesController extends Controller {
             $data['view'] = $request->input('view');
             $data['location'] = $request->input('location');
             $data['bathroom'] = $request->input('bathroom');
+            $data['membership_level'] = $request->input('membership_level');
             $data['cancelation_period'] = $request->input('cancelation_period');
             $data['cancelation_duration'] = $request->input('cancelation_duration');
             //$data['booking_policy'] =  $request->input('bookingPolicy');

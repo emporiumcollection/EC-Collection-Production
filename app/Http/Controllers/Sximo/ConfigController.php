@@ -28,7 +28,7 @@ class ConfigController extends Controller {
         
         $this->data['b2c_packages'] = \DB::table('tb_packages')->select('tb_packages.id','tb_packages.package_title', 'tb_packages.is_public')->join('tb_packages_user_groups', 'tb_packages.id', '=', 'tb_packages_user_groups.package_id')->where('tb_packages_user_groups.group_id', $gId)->get();
         
-		return view('sximo.config.index',$this->data);	
+		return view('sximo.config.index', $this->data);	
 	}
 
 
@@ -117,7 +117,10 @@ class ConfigController extends Controller {
                 }
             }
             
-			return Redirect::to('sximo/config')->with('messagetext','Setting Has Been Save Successful')->with('msgstatus','success');
+			return Redirect::to('sximo/config/index')
+			->header('Cache-Control', 'no-store, no-cache, must-revalidate')
+			->with('messagetext','Setting Has Been Save Successful')
+			->with('msgstatus','success');
 		} else {
 			return Redirect::to('sximo/config')->with('messagetext', 'The following errors occurred')->with('msgstatus','success')
 			->withErrors($validator)->withInput();
