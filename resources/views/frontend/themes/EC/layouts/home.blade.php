@@ -65,7 +65,7 @@
     <meta name="msapplication-TileImage" content="{{ asset('assets/images/favicon/ms-icon-144x144.png') }}" />
     <meta name="theme-color" content="#ffffff" />
     <!-- Favicon END -->
-    <?php if(\Config::get('app.currentdomain') == 'voyage' || \Config::get('app.currentdomain') == 'emporiumcollection'){?>
+    <?php if(\Config::get('app.currentdomain') == 'voyage' || \Config::get('app.currentdomain') == 'emporium-collection'){?>
         <link href="{{ asset('themes/EC/css/style_voyage.css') }}" rel="stylesheet">
     <?php } ?>
         

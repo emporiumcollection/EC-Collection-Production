@@ -180,7 +180,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
     <!-- Favicon END -->
     
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
-    <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
+    <?php if(\Config::get('app.currentdomain') == 'voyage' || \Config::get('app.currentdomain') == 'emporium-collection'){?>
         <link href="{{ asset('themes/EC/css/style_voyage.css') }}" rel="stylesheet">
     <?php } ?>
         
