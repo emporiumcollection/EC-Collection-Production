@@ -2904,7 +2904,7 @@ class PropertyController extends Controller {
                 return redirect('/hotel/'.$search_hotel->property_slug);
             }
         }
-        $this->data['policyscript'] = \DB::table('tb_policy_script')->first();
+        $this->data['policyscript'] = \DB::table('tb_policy_script')->orderBy('id', 'desc')->first();
 
         $this->data['path'] = $this->getLocationPath($keyword);
         $this->data['location'] = $this->getLocationDescription($keyword);
@@ -3387,7 +3387,7 @@ class PropertyController extends Controller {
 
         $this->data['policy'] = \DB::table('td_property_terms_n_conditions')->where('property_id', $this->data['hotel_data'][0]->id)->get(); 
         
-        $this->data['policyscript'] = \DB::table('tb_policy_script')->first();
+        $this->data['policyscript'] = \DB::table('tb_policy_script')->orderBy('id', 'desc')->first();
 
         $this->data['global_policies'] = \DB::table('tb_global_policies')->get();
 

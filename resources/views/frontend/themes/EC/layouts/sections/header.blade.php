@@ -8,7 +8,7 @@
           </div>
         </div>
         <div class="col-md-2 col-4 text-center">
-          <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
+          <a href="https://emporium-collection.com/"> 
             <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
               <img src="{{ asset('/images/Emporium-Voyage-Logo-72dpi.png') }}" width="131" height="60">
             <?php } ?>

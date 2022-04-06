@@ -226,7 +226,7 @@ $instagramurl = URL::to("social-instagram?" . Request::getQueryString());
   });
    
 </script>
-
+  
 
 @include('frontend.themes.EC.layouts.subsections.mobile_hotel_info')
 @include('frontend.themes.EC.layouts.subsections.suites')

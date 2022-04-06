@@ -27,8 +27,9 @@ class UserController extends Controller {
     }
 
 
-    public function getRegister($pid) {
-
+    public function getRegister($pid = null) {
+        return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
+        
         if (CNF_REGIST == 'false') :
             if (\Auth::check()):
                 return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));

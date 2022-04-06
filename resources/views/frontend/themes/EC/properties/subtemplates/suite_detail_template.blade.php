@@ -191,8 +191,9 @@
 @if(Request::segment(3) == 'suites')
     @include('frontend.themes.EC.layouts.subsections.quick_info')   
     @include('frontend.themes.EC.layouts.subsections.reviews')
+    @include('frontend.themes.EC.layouts.subsections.location_info')
+    @include('frontend.themes.EC.layouts.subsections.priceinfo')
 @endif
-@include('frontend.themes.EC.layouts.subsections.location_info')
 @include('frontend.themes.EC.layouts.subsections.faqs')
 @include('frontend.themes.EC.hotel.child_policy')  
 @include('frontend.themes.EC.hotel.policy')  

@@ -42,7 +42,8 @@
         @endif 
         </div>
         <div class="col-md-2 col-4 header-center text-center px-0">
-          <a href="#" class="btn-sidebar" data-sidebar="#dashboard_menu">
+          {{-- class="btn-sidebar" data-sidebar="#dashboard_menu" --}}
+          <a href="https://emporium-collection.com/">
             <?php if(\Config::get('app.currentdomain') == 'voyage'){?>
               <img src="{{ asset('/images/Emporium-Voyage-Logo-72dpi.png') }}" width="131" height="60">
             <?php } ?>

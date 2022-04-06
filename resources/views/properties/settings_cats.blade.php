@@ -131,6 +131,15 @@
 												<label for="bathroom">Bathroom(s)</label>
 												<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="{{ $cat->bathroom }}" /> 
 											</div>
+											<div class="form-group col-lg-3">
+												<label for="membership_level">Membership Level</label>
+												<select name="membership_level" class="form-control input-sm" required="required">
+													<option>Membership Level</option>
+													<option value="lifestyle" {{ ($cat->membership_level == 'lifestyle') ? 'selected="selected"' : ''}} >Lifestyle</option>
+													<option value="dedicated" {{ ($cat->membership_level == 'dedicated') ? 'selected="selected"' : ''}} >Dedicated</option>
+													<option value="bespoke" {{ ($cat->membership_level == 'bespoke') ? 'selected="selected"' : ''}}>Bespoke</option>
+												</select>
+											</div>
 										</div>
 										<div class="row">
 											<div class="form-group col-lg-3">
@@ -146,12 +155,12 @@
 												</select>
 											</div>
 										</div>
-					                    <div class="row">
-					                      <div class="form-group col-lg-12">
-					                        <label for="booingPolicy">Booking Policy</label>
-					                        <textarea name="bookingPolicy" cols="4" class="form-control">{{$cat->booking_policy}}</textarea>
-					                      </div>
-					                    </div>
+                    <div class="row">
+                      <div class="form-group col-lg-12">
+                        <label for="booingPolicy">Booking Policy</label>
+                        <textarea name="bookingPolicy" cols="4" class="form-control">{{$cat->booking_policy}}</textarea>
+                      </div>
+                    </div>
 									</div>
 									<div class="col-lg-3 align-right">
 										<div class="butt">
@@ -391,7 +400,7 @@
 											<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="" required="required" /> 
 										</div>
 									</div>
-									<div class="row">
+									<div class="row">										
 										<div class="form-group col-lg-3">
 											<label for="cancelation_period">Cancellation Period</label>
 											<input name="cancelation_period" id="cancelation_period" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 

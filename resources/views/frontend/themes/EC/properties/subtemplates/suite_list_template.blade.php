@@ -118,4 +118,3 @@
         </a>
     </div>
 </div>
-@include('frontend.themes.EC.layouts.subsections.priceinfo') 

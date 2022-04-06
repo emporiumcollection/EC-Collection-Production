@@ -274,7 +274,7 @@ Route::controller('home', 'HomeController');
 Route::controller('/user', 'UserController');
 Route::controller('/customer', 'CustomerController');
 Route::get('/traveller', 'CustomerController@traveller');
-Route::get('/register/', 'CustomerController@getregister');
+Route::get('/register/', 'CustomerController@getRegister');
 Route::get('/supplier', 'CustomerController@supplier');
 Route::post('/supplier', 'CustomerController@postSupplier');
 Route::get('/distributor', 'CustomerController@distributor');

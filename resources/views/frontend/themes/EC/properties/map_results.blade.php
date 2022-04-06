@@ -291,6 +291,7 @@
 @include('frontend.themes.EC.layouts.subsections.suite_deal')
 @include('frontend.themes.EC.layouts.subsections.filter')
 @include('frontend.themes.EC.layouts.subsections.priceinfo')
+
 @include('frontend.themes.EC.layouts.subsections.location_info')
 @include('frontend.themes.EC.layouts.subsections.quick_info')
 @include('frontend.themes.EC.layouts.subsections.reviews')

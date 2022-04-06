@@ -288,6 +288,12 @@ body {font-family: Arial, Helvetica, sans-serif;}
         @parent
         @include('frontend.themes.EC.layouts.sections.footer')
     @show
+    <style type="text/css">
+        .iubenda-embed:not(.iubenda-nostyle):hover
+            {
+                background-color: transparent;
+            }
+    </style>
 
 @include('frontend.themes.EC.layouts.subsections.videos')
 <script type="text/javascript" src="{{ asset('js/mediaelement-and-player.min.js')}}"></script>

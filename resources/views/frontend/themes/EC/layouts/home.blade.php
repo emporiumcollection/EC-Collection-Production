@@ -46,8 +46,6 @@
     
     <!-- Web Application Manifest -->
     <link rel="manifest" href="manifest.json">
-
-    
     <!-- Favicon Start -->
     <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('assets/images/favicon/apple-icon-57x57.png') }}" />
     <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('assets/images/favicon/apple-icon-60x60.png') }}" />
@@ -214,5 +212,11 @@
     picker.data('daterangepicker').hide = function () { };
     picker.data('daterangepicker').show();
   </script>
+  <script type="text/javascript">
+      $(document).ready(function(){
+        $(".iubenda-embed:not(.iubenda-nostyle):hover").css({ 'background-color' : 'yellow'});
+      });
+  </script>
 </body>
 </html>
+
