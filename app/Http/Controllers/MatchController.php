@@ -89,14 +89,12 @@ class MatchController extends Controller
 
         $response = curl_exec($curl);
         $err = curl_error($curl);
-
         curl_close($curl);
 
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
             $response = json_decode($response);
-            
             if(!empty($response)){
                 foreach($response as $val){
                     if(trim($val->dest_type) == 'city'){
@@ -105,6 +103,8 @@ class MatchController extends Controller
                         $this->data['matched'] = $res['matched'];
                         $this->data['dest_id'] = $res['dest_id'];
                         return view('match.matchhotels')->with($this->data);
+                    }else{
+                        return redirect('/search/destination');        
                     }
                 }
             }else{
@@ -114,7 +114,6 @@ class MatchController extends Controller
     }
 
     private function getProperties($dest_id,$keyword, $destinationId){
-
         if(\DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('destination',$keyword)->exists()){
             $fetchedData = \DB::table('tb_booking_hotel_response')->where('dest_id',$dest_id)->where('destination',$keyword)->get();
             
@@ -205,7 +204,9 @@ class MatchController extends Controller
                                     $searchValue = "$parts[0] $parts[1] $parts[2] $parts[3]";
                                 }
                             }else{
-                                $searchValue = $parts[0];
+                                if(isset($parts[0])){
+                                    $searchValue = $parts[0];
+                                }   
                             }
                             $searchValue = str_replace(' ', ' +', trim($searchValue));
                             $property = properties::whereRaw("MATCH(property_name)AGAINST('" . $searchValue . "' IN BOOLEAN MODE)")
