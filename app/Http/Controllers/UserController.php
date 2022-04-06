@@ -986,7 +986,7 @@ class UserController extends Controller {
         \Auth::logout();
         \Session::flush();
 
-        if($currentdomain != 'emporiumcollection'){
+        if($currentdomain != 'emporium-collection'){
             return Redirect::to($onelogindomain.'/user/logout?referer='.request()->getSchemeAndHttpHost());
         }else{
             return Redirect::to($request->get('referer'))->with('message', \SiteHelpers::alert('info', 'Sie sind derzeit nicht eingeloggt'));

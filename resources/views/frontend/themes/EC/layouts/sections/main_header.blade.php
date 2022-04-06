@@ -64,7 +64,7 @@
               <img src="{{ asset('/images/Emporium-Magazine-Large.svg') }}" width="131" height="60">
             <?php } ?>
             
-            <?php if(\Config::get('app.currentdomain') == 'emporiumcollection'){?>
+            <?php if(\Config::get('app.currentdomain') == 'emporium-collection'){?>
               <img src="{{ asset('/images/Emporium-Collection-Logo-1.png') }}" width="131" height="60">
             <?php } ?>
           </a>
