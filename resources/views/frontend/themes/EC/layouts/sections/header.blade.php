@@ -4,7 +4,7 @@
       <div class="row align-items-md-end align-items-center">
         <div class="col-md-5 col-4">
           <div class="d-flex">
-            <a href="#" class="nav-link menu-index">Menu</a>
+            <a href="#" class="menu-index" style="padding: 10px 10px 10px 10px;">Menu</a>
           </div>
         </div>
         <div class="col-md-2 col-4 text-center">

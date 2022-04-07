@@ -3002,7 +3002,7 @@ input[type="button"].btn-block {
 
 .nav-link {
   display: block;
-  /*padding: 0.5rem 1rem;*/ }
+  padding: 0.5rem 1rem; }
   .nav-link:hover, .nav-link:focus {
     text-decoration: none; }
   .nav-link.disabled {
@@ -27263,7 +27263,7 @@ a {
   background: #fff;
   box-shadow: rgba(0, 0, 0, 0.1) -2px 2px 5px; }
   .top-header .top-header-inner {
-    padding-left: 27px;
+    padding-left: 17px;
     padding-right: 27px;
     padding-top: 22px; }
   .top-header hr {
