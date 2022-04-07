@@ -1,6 +1,7 @@
 var SHOW_PARENT_CITIES = 0;
 var ajaxReq = 'ToCancelPrevReq';
 var homePageFeaturedProperties;
+var var_collection;
 (function ($) {
 
   $.fn.niceSelect = function (method) {
@@ -595,7 +596,7 @@ var homePageFeaturedProperties;
   
   function get_featured_prop(_type, _collection, _location){
     var _token = $('meta[name="csrf-token"]').attr('content');
-    //console.log(BaseURL);
+    var_collection = _collection;
     $.ajax({
         url: BaseURL + '/featuredproperty',
         type: "get",
@@ -650,10 +651,9 @@ var homePageFeaturedProperties;
     }catch(e){
 
     }
-    
       // $('.who-container .herl').html(`<img src="/property-image/resize/645x600/` 
                     // + containername + `/` + homePageFeaturedProperties[1]['propimage'][0]['file_name'] + `/property-image" class="img-fluid" alt="" />`);
-    $('.who-container .img-left-when').html(`<img src="/property-image/resize/645x600/` + 
+    $('.who-container .img-left-when').html(`<img src="https://emporium-`+var_collection+`.com/property-image/resize/645x600/` + 
       containername + `/` + 
       homePageFeaturedProperties[1]['propimage'][0]['file_name'] + 
       `/property-image" class="img-fluid" alt="" />`);  
@@ -662,7 +662,7 @@ var homePageFeaturedProperties;
         
     var d_image = '';
       d_image += '<div style="padding-top:20px;">'
-      +'<img src="/property-image/resize/645x600/'+ containername +'/'+ homePageFeaturedProperties[1]['propimage'][1]['file_name']+'/property-image" class="img-fluid" alt="">'
+      +'<img src="https://emporium-`+var_collection+`.com/property-image/resize/645x600/'+ containername +'/'+ homePageFeaturedProperties[1]['propimage'][1]['file_name']+'/property-image" class="img-fluid" alt="">'
       +'</div>';
     $("#images").html(d_image);
       $('.featured_hotel_1').attr('href','/hotel/'+homePageFeaturedProperties[1]['objprop']['property_slug']);
