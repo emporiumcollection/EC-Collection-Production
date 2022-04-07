@@ -27499,7 +27499,9 @@ h3 {
   text-align: left;
   overflow-y: auto; }
   .menu.show {
-    display: block; }
+    display: block; 
+    padding-top:  8%;
+  }
   .menu .nav .nav-item .nav-link {
     color: #fff; }
     .menu .nav .nav-item .nav-link i {
