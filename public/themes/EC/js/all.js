@@ -662,7 +662,7 @@ var var_collection;
         
     var d_image = '';
       d_image += '<div style="padding-top:20px;">'
-      +'<img src="https://emporium-`+var_collection+`.com/property-image/resize/645x600/'+ containername +'/'+ homePageFeaturedProperties[1]['propimage'][1]['file_name']+'/property-image" class="img-fluid" alt="">'
+      +'<img src="https://emporium-'+var_collection+'.com/property-image/resize/645x600/'+ containername +'/'+ homePageFeaturedProperties[1]['propimage'][1]['file_name']+'/property-image" class="img-fluid" alt="">'
       +'</div>';
     $("#images").html(d_image);
       $('.featured_hotel_1').attr('href','/hotel/'+homePageFeaturedProperties[1]['objprop']['property_slug']);
