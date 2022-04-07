@@ -596,7 +596,12 @@ var var_collection;
   
   function get_featured_prop(_type, _collection, _location){
     var _token = $('meta[name="csrf-token"]').attr('content');
-    var_collection = _collection;
+    if(_collection == 'island'){
+      var_collection = 'islands';
+    }else{
+      var_collection = _collection;  
+    }
+    
     $.ajax({
         url: BaseURL + '/featuredproperty',
         type: "get",
