@@ -628,9 +628,9 @@ var var_collection;
             }
           }catch(e){}
           
-          $('.herl').html(`<img src="https://emporium-`+_collection+`.com/property-image/resize/645x600/` 
+          $('.herl').html(`<img src="https://emporium-`+var_collection+`.com/property-image/resize/645x600/` 
             + containername + `/` + data[0]['propimage'][0]['file_name'] + `/property-image" class="img-fluid" alt="" />`);
-          $('.img-left-when').html(`<img src="https://emporium-`+_collection+`.com/property-image/resize/645x600/` + 
+          $('.img-left-when').html(`<img src="https://emporium-`+var_collection+`.com/property-image/resize/645x600/` + 
             containername + `/` + 
             data[0]['propimage'][1]['file_name'] + 
             `/property-image" class="img-fluid" alt="" />`);                
