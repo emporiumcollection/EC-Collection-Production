@@ -15,6 +15,7 @@ use App\Http\Traits\Property;
 use App\Http\Traits\Category;
 use App\Http\Traits\ReviewTrait;
 use App\Models\amenities;
+use App\Models\categories;
 use App\Models\Review;
 use DB,Validator, Input, Redirect, CustomQuery, Image;
 use UnsplashSearch;
