@@ -47,36 +47,36 @@ if(isset($trendingFilters)):
 </div> -->
 <?php endif;?>
 <?php
-$voyage = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-desti-header">Voyage</h3>
+$voyage = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-desti-header">Voyage Collection</h3>
         <ul class="nav border-bottom-0 flex-column voyage-destination">
         </ul>';
 
 $spa = '
-        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-desti-header">Spa</h3>
+        <h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-desti-header">Spa Collection</h3>
         <ul class="nav border-bottom-0 flex-column spa-destination">
         </ul>';
 
-$safari = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-desti-header">Safari</h3>
+$safari = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-desti-header">Safari Collection</h3>
         <ul class="nav border-bottom-0 flex-column safari-destination">
         </ul>';
 
-$islands = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-desti-header">Islands</h3>
+$islands = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-desti-header">Islands Collection</h3>
         <ul class="nav border-bottom-0 flex-column islands-destination">
         </ul>';
 
-$voyage_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-hotel-header">Voyage</h3>
+$voyage_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="voyage-hotel-header">Voyage Hotels</h3>
         <ul class="nav border-bottom-0 flex-column voyage-hotels">
         </ul>';
 
-$spa_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-hotel-header">Spa</h3>
+$spa_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="spa-hotel-header">Spa Hotels</h3>
         <ul class="nav border-bottom-0 flex-column spa-hotels">
         </ul>';
 
-$safari_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-hotel-header">Safari</h3>
+$safari_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="safari-hotel-header">Safari Hotels</h3>
         <ul class="nav border-bottom-0 flex-column safari-hotels">
         </ul>';
 
-$islands_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-hotel-header">Islands</h3>
+$islands_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;" id="islands-hotel-header">Islands Hotels</h3>
         <ul class="nav border-bottom-0 flex-column islands-hotels">
         </ul>';      
 ?>
