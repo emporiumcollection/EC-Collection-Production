@@ -122,6 +122,11 @@ $islands_hotel = '<h3 class="nav" style="text-transform: uppercase; color: #FFF;
           echo $spa_hotel;
           echo $safari_hotel;
           echo $islands_hotel;
+        }else if(\Config::get('app.currentdomain') == 'emporium-collection'){
+          echo $voyage_hotel;
+          echo $spa_hotel;
+          echo $safari_hotel;
+          echo $islands_hotel;
         }else if(\Config::get('app.currentdomain') == 'spa'){
           echo $spa_hotel;
           echo $voyage_hotel;
