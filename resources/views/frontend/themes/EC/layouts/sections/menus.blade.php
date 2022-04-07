@@ -69,19 +69,19 @@
   <div class="row">
     <div class="col-sm-6">
       <div class="menu-media">
-        <a href="#" class="nav-sos"><i class="fa fa-facebook" aria-hidden="true"></i></a>
-        <a href="#" class="nav-sos"><i class="fa fa-instagram" aria-hidden="true"></i></a>
-        <a href="#" class="nav-sos"><i class="fa fa-twitter" aria-hidden="true"></i></a>
+        <a href="https://www.facebook.com/luxurylifestyleexpereinces/" class="nav-sos"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+        <a href="https://www.instagram.com/emporiummagazine/" class="nav-sos"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+        <a href="https://www.linkedin.com/company/emporium-collection/" class="nav-sos"><i class="fa fa-linkedin" aria-hidden="true"></i></a>
         @if(isset($policyscript->privacy))
-        <?php echo $policyscript->privacy;?>
+        <?php //echo $policyscript->privacy;?>
         <br>
         @endif
         @if(isset($policyscript->cookie))
-        <?php echo $policyscript->cookie;?>
+        <?php //echo $policyscript->cookie;?>
         <br>
         @endif
         @if(isset($policyscript->termandcondition))
-        <?php echo $policyscript->termandcondition;?>
+        <?php //echo $policyscript->termandcondition;?>
         <br>
         @endif
       </div>
