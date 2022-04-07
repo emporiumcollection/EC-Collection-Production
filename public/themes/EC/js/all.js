@@ -621,10 +621,10 @@ var homePageFeaturedProperties;
               containername = data[0]['objprop']['property_name'].trim().replaceAll(" ", '-').toLowerCase();
             }
           }catch(e){}
-
-          $('.herl').html(`<img src="/property-image/resize/645x600/` 
+          
+          $('.herl').html(`<img src="https://emporium-`+_collection+`.com/property-image/resize/645x600/` 
             + containername + `/` + data[0]['propimage'][0]['file_name'] + `/property-image" class="img-fluid" alt="" />`);
-          $('.img-left-when').html(`<img src="/property-image/resize/645x600/` + 
+          $('.img-left-when').html(`<img src="https://emporium-`+_collection+`.com/property-image/resize/645x600/` + 
             containername + `/` + 
             data[0]['propimage'][1]['file_name'] + 
             `/property-image" class="img-fluid" alt="" />`);                
