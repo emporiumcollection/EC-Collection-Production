@@ -103,8 +103,6 @@ class MatchController extends Controller
                         $this->data['matched'] = $res['matched'];
                         $this->data['dest_id'] = $res['dest_id'];
                         return view('match.matchhotels')->with($this->data);
-                    }else{
-                        return redirect('/search/destination');        
                     }
                 }
             }else{
