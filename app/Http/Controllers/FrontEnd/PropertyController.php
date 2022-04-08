@@ -15,6 +15,7 @@ use App\Http\Traits\Property;
 use App\Http\Traits\Category;
 use App\Http\Traits\ReviewTrait;
 use App\Models\amenities;
+use App\Models\categories;
 use App\Models\Review;
 use DB,Validator, Input, Redirect, CustomQuery, Image;
 use UnsplashSearch;
@@ -6661,6 +6662,16 @@ class PropertyController extends Controller {
             $site_url = 'https://emporium-islands.com';
             $conn = $islandconn;
         }
+        
+        $keyword = $request->query->get('keyword');
+        $destinationId = 0;
+        $destination = categories::select(['id'])
+        ->where('category_name', '=', $keyword)
+        ->get()
+        ->toArray();
+        if(!empty($destination)){
+            $destinationId = $destination[0]['id'];
+        }
 
         /** End */
         $featured_hotel = array();
@@ -6668,6 +6679,7 @@ class PropertyController extends Controller {
         $featured_hotel = \DB::connection($conn)->table('tb_properties')
         ->select(['id', 'property_name','property_slug','detail_section1_description_box1'])
         ->where('feature_property', 1)
+        ->whereRaw(" (country = '$keyword' or city = '$keyword'  or FIND_IN_SET('".$destinationId."',`property_category_id`) <> 0) ")
         ->orderByRaw(DB::raw("RAND()"))->limit(2)->get();
         foreach($featured_hotel as $props){
 
