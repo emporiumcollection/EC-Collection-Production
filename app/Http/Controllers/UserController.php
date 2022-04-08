@@ -360,13 +360,31 @@ class UserController extends Controller {
     }
 
     public function getLogin() {
-
         if (\Auth::check()) {
+            if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
+                return Redirect::to(request()->getSchemeAndHttpHost());   
+            }else{
+                return redirect('/');
+            }
             return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         } else {
-            $this->data['socialize'] = config('services');
-            $this->data['questions'] = SecurityQuestions::all();
-            return View('user.login', $this->data);
+            $currentdomain = \Config::get('app.currentdomain');
+            $onelogindomain = \Config::get('app.onelogindomain');
+
+            if($currentdomain == 'http://emporium-onelogin.test/'){
+                //if session has refere or get query has refer
+                if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
+                    $this->data['socialize'] = config('services');
+                    $this->data['questions'] = SecurityQuestions::all();
+                    return View('user.login', $this->data);
+                }else{
+                    // redirect to home page
+                    return redirect('/');
+                }
+            }else{
+                // redirec to collection with referer
+                return Redirect::to('http://development.emporium-voyage.com/?referer='.request()->getSchemeAndHttpHost());
+            }
         }
     }
 

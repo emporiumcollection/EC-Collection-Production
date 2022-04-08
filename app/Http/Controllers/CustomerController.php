@@ -26,13 +26,18 @@ class CustomerController extends Controller {
         $this->data['pageMetadesc'] = "Front end dashboard";
     }
 
-    public function getRegister(Request $request, $pid = null) {
+   public function getRegister(Request $request, $pid = null) {
         $reff = $request->input('referer');
         if($reff){
             \Session::put('referer', $reff);
             \Session::save();
         }
         if (\Auth::check()):
+            if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
+                return Redirect::to(request()->getSchemeAndHttpHost());   
+            }else{
+                return redirect('/');
+            }
             return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         endif;
         $currentdomain = \Config::get('app.currentdomain');
@@ -40,23 +45,39 @@ class CustomerController extends Controller {
         if($currentdomain != 'emporium-collection'){
             return Redirect::to($onelogindomain.'/register?referer='.request()->getSchemeAndHttpHost());
         }
+
         if (CNF_REGIST == 'false') :
             if (\Auth::check()):
+
+                if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
+                    return Redirect::to(request()->getSchemeAndHttpHost());   
+                }else{
+                    return redirect('/');
+                }
                 return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
             else:
                 return Redirect::to('customer/login');
             endif;
 
         else :
-            $this->data['planId'] = $pid;
-            $plan = \DB::table('tb_membership')->where('status', 1)->get();
-            $questions = \DB::table('tb_security_questions')->get();
-            $packages = \DB::table('tb_packages')->get();
-            $this->data['plans'] = $plan;
-            return view('users_admin.traveller.users.register',$this->data,compact('questions','packages'));
+            if($currentdomain == 'emporium-collection'){
+                //if session has refere or get query has refer
+                if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
+                    $this->data['planId'] = $pid;
+                    $plan = \DB::table('tb_membership')->where('status', 1)->get();
+                    $questions = \DB::table('tb_security_questions')->get();
+                    $packages = \DB::table('tb_packages')->get();
+                    $this->data['plans'] = $plan;
+                    return view('users_admin.traveller.users.register',$this->data,compact('questions','packages'));
+                }else{
+                    return redirect('/');
+                }
+                
+            }else{
+                return Redirect::to('http://emporium-onelogin.test/?referer='.request()->getSchemeAndHttpHost());
+            }
         endif;
     }
-
     public function postCreate(Request $request) {
 
         $rules = array(
