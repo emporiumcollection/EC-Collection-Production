@@ -54,6 +54,8 @@ Route::get('/users/my-preferences/{id}', 'UserController@editPreferences');
 Route::get('/users/delete-preferences/{id}', 'UserController@deletePreferences');
 Route::get('/users/profile', 'UserController@getProfile');
 Route::get('/users/setting', 'UserController@getSettings');
+// Route::get('/import/file', 'UserController@explodefiledata');
+
 
 
 // Route::get('/users/companion', 'Traveller\CompanionController@getCompanion');
@@ -110,6 +112,7 @@ Route::post('/users/questions', 'UserController@postSecurityQuestion');
 Route::post('/users/CardDetail', 'UserController@userCardDetail');
 Route::get('/users/default-card/{id}', 'UserController@default_Card');
 Route::get('/users/CardDetail/{id}', 'UserController@deleteCard');
+Route::post('/users/invite', 'UserController@postInvite');
 Route::post('/users/invite', 'UserController@postInvite');
 // Route::get('/users/reservation', 'ReservationsController@getReservation');
 
@@ -274,7 +277,7 @@ Route::controller('home', 'HomeController');
 Route::controller('/user', 'UserController');
 Route::controller('/customer', 'CustomerController');
 Route::get('/traveller', 'CustomerController@traveller');
-Route::get('/register/', 'CustomerController@getRegister');
+Route::get('/register', 'CustomerController@getRegister');
 Route::get('/supplier', 'CustomerController@supplier');
 Route::post('/supplier', 'CustomerController@postSupplier');
 Route::get('/distributor', 'CustomerController@distributor');

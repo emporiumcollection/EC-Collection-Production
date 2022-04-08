@@ -182,8 +182,13 @@ class AuthController extends Controller
         Auth::logout();
 
 
-        if($currentdomain != 'emporium-collection'){    
-            return Redirect::to($onelogindomain.'/user/login?referer='.request()->getSchemeAndHttpHost());
+        if($currentdomain != 'emporium-collection'){ 
+
+            if(request()->getSchemeAndHttpHost()){
+                return Redirect::to($onelogindomain.'/user/login?referer='.request()->getSchemeAndHttpHost());
+            }else{
+                return redirect('/');        
+            }    
         }else{
             return Redirect::to('/user/login');
         }

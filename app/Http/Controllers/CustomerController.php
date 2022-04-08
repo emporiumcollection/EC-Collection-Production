@@ -38,7 +38,11 @@ class CustomerController extends Controller {
         $currentdomain = \Config::get('app.currentdomain');
         $onelogindomain = \Config::get('app.onelogindomain');
         if($currentdomain != 'emporium-collection'){
-            return Redirect::to($onelogindomain.'/register?referer='.request()->getSchemeAndHttpHost());
+            if(request()->getSchemeAndHttpHost()){
+                return Redirect::to($onelogindomain.'/register?referer='.request()->getSchemeAndHttpHost());
+            }else{
+                return redirect('/');        
+            } 
         }
         if (CNF_REGIST == 'false') :
             if (\Auth::check()):
