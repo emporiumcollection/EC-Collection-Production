@@ -60,7 +60,7 @@ class CustomerController extends Controller {
             endif;
 
         else :
-            if($currentdomain == 'emporium-collection'){
+            if($currentdomain == 'http://emporium-onelogin.test'){
                 //if session has refere or get query has refer
                 if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
                     $this->data['planId'] = $pid;
@@ -74,7 +74,7 @@ class CustomerController extends Controller {
                 }
                 
             }else{
-                return Redirect::to('http://emporium-onelogin.test/?referer='.request()->getSchemeAndHttpHost());
+                return Redirect::to('http://emporium-onelogin.test?referer='.request()->getSchemeAndHttpHost());
             }
         endif;
     }

@@ -371,7 +371,7 @@ class UserController extends Controller {
             $currentdomain = \Config::get('app.currentdomain');
             $onelogindomain = \Config::get('app.onelogindomain');
 
-            if($currentdomain == 'http://emporium-onelogin.test/'){
+            if($currentdomain == 'http://emporium-onelogin.test'){
                 //if session has refere or get query has refer
                 if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
                     $this->data['socialize'] = config('services');
@@ -383,7 +383,7 @@ class UserController extends Controller {
                 }
             }else{
                 // redirec to collection with referer
-                return Redirect::to('http://development.emporium-voyage.com/?referer='.request()->getSchemeAndHttpHost());
+                return Redirect::to('http://emporium-onelogin.test?referer='.request()->getSchemeAndHttpHost());
             }
         }
     }
