@@ -253,7 +253,7 @@
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="suite_size">Suite Size</label>
-											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
+											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true"/> 
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="view">View</label>
