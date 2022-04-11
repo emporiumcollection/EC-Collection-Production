@@ -56,6 +56,7 @@ class Authenticate
         }
         
         if(in_array(request()->path(), $this->traveller_urls) && \Session::get('gid') != 3){
+            print 'here';exit;
             return redirect('dashboard');
         }
         

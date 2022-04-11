@@ -13,6 +13,7 @@ class OneLoginController extends Controller
     public function getloggedIn(Request $request){
         $reff = $request->input('referer');
         $page = $request->input('page');
+        // echo $page;exit;
         if($page){            
             \Session::put('page', $page);
             \Session::save();
@@ -25,7 +26,6 @@ class OneLoginController extends Controller
 
         if(\Auth::check())
         {
-            // echo \Session::get('referer');die();
             $userId = Auth::id();
             $fname = Auth::user()->first_name;
             $lname = Auth::user()->last_name;
@@ -35,10 +35,10 @@ class OneLoginController extends Controller
             $last_login = Auth::user()->last_login;
             $usernm = Auth::user()->username;
             // echo "hello"; die();
+
             return Redirect::to(\Session::get('referer').'/onelogin?authdata='.base64_encode($email."|".$fname."|".$lname."|".$userId."|".$g_id."|".$last_login."|".$pass."|".$usernm).'&page='.\Session::get('page'));
             
         }else{
-            // echo "hello"; die();
             return Redirect::to('user/login');
         }
     }

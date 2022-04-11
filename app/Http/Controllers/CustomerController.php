@@ -26,31 +26,32 @@ class CustomerController extends Controller {
         $this->data['pageMetadesc'] = "Front end dashboard";
     }
 
-   public function getRegister(Request $request, $pid = null) {
+    public function getRegister(Request $request, $pid = null) {
         $reff = $request->input('referer');
         if($reff){
             \Session::put('referer', $reff);
             \Session::save();
         }
         if (\Auth::check()):
-            if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
-                return Redirect::to(request()->getSchemeAndHttpHost());   
+            if(request()->query('referer') || session()->get('referer')){
+                return Redirect::to(session()->get('referer'));   
             }else{
                 return redirect('/');
             }
             return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         endif;
+
         $currentdomain = \Config::get('app.currentdomain');
         $onelogindomain = \Config::get('app.onelogindomain');
+        
         if($currentdomain != 'emporium-collection'){
             return Redirect::to($onelogindomain.'/register?referer='.request()->getSchemeAndHttpHost());
         }
 
         if (CNF_REGIST == 'false') :
             if (\Auth::check()):
-
-                if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
-                    return Redirect::to(request()->getSchemeAndHttpHost());   
+                if(request()->query('referer') || session()->get('referer')){
+                    return Redirect::to(session()->get('referer'));   
                 }else{
                     return redirect('/');
                 }
@@ -60,9 +61,8 @@ class CustomerController extends Controller {
             endif;
 
         else :
-            if($currentdomain == 'http://emporium-onelogin.test'){
-                //if session has refere or get query has refer
-                if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
+            if($currentdomain == 'emporium-collection'){
+                if(request()->query('referer') || session()->get('referer')){
                     $this->data['planId'] = $pid;
                     $plan = \DB::table('tb_membership')->where('status', 1)->get();
                     $questions = \DB::table('tb_security_questions')->get();
@@ -74,7 +74,7 @@ class CustomerController extends Controller {
                 }
                 
             }else{
-                return Redirect::to('http://emporium-onelogin.test?referer='.request()->getSchemeAndHttpHost());
+                return Redirect::to($onelogindomain.'?referer='.request()->getSchemeAndHttpHost());
             }
         endif;
     }

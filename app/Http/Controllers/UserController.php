@@ -361,29 +361,32 @@ class UserController extends Controller {
 
     public function getLogin() {
         if (\Auth::check()) {
-            if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
-                return Redirect::to(request()->getSchemeAndHttpHost());   
+            if(request()->query('referer') || session()->get('referer')){
+                return Redirect::to(session()->get('referer'));   
             }else{
                 return redirect('/');
             }
-            return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
+            // return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         } else {
+            
             $currentdomain = \Config::get('app.currentdomain');
             $onelogindomain = \Config::get('app.onelogindomain');
-
-            if($currentdomain == 'http://emporium-onelogin.test'){
+            
+            if($currentdomain == 'emporium-collection'){
                 //if session has refere or get query has refer
-                if(request()->getSchemeAndHttpHost() || session()->get('_previous.url')){
+
+                if(request()->query('referer') || session()->get('referer')){
                     $this->data['socialize'] = config('services');
                     $this->data['questions'] = SecurityQuestions::all();
                     return View('user.login', $this->data);
                 }else{
+            
                     // redirect to home page
                     return redirect('/');
                 }
             }else{
                 // redirec to collection with referer
-                return Redirect::to('http://emporium-onelogin.test?referer='.request()->getSchemeAndHttpHost());
+                return Redirect::to($onelogindomain.'/user/login/?referer='.request()->getSchemeAndHttpHost());
             }
         }
     }
@@ -408,7 +411,6 @@ class UserController extends Controller {
              
                 
             if (\Auth::attempt(array('email' => $request->input('email'), 'password' => $request->input('password')), $remember)) {
-                
                 if (\Auth::check()) {
                     if($request->input('question') && $request->input('answer')){
                         $question = User::select(['id'])
@@ -429,6 +431,7 @@ class UserController extends Controller {
                         \Auth::logout();
                         return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Account is not active'));
                     } else if ($row->active == '3') {
+                        exit;
                         // BLocked users
                         \Auth::logout();
                         return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Account is BLocked'));

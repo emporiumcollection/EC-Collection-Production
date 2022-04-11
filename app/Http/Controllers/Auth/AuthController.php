@@ -79,13 +79,13 @@ class AuthController extends Controller
 
         if (empty($valid)) {
         
-        $token = Config::get('app.TWILIO_AUTH_TOKEN');
-        $twilio_sid = Config::get("app.TWILIO_SID");
-        $twilio_verify_sid = Config::get("app.TWILIO_VERIFY_SID");
-        $twilio = new Client($twilio_sid, $token);
-        $varification = $twilio->verify->v2->services($twilio_verify_sid)
-            ->verifications
-            ->create($request->mobile_number, "sms");
+        // $token = Config::get('app.TWILIO_AUTH_TOKEN');
+        // $twilio_sid = Config::get("app.TWILIO_SID");
+        // $twilio_verify_sid = Config::get("app.TWILIO_VERIFY_SID");
+        // $twilio = new Client($twilio_sid, $token);
+        // $varification = $twilio->verify->v2->services($twilio_verify_sid)
+        //     ->verifications
+        //     ->create($request->mobile_number, "sms");
         }else{
             return redirect()->to('/register')->with(['message' => 'Please Enter valid detail']);
         }
@@ -108,13 +108,13 @@ class AuthController extends Controller
         );
         $validator = Validator::make($request->all(), $rules);
         /* Get credentials from .env */
-        $token = Config::get('app.TWILIO_AUTH_TOKEN');
-        $twilio_sid = Config::get("app.TWILIO_SID");
-        $twilio_verify_sid = Config::get("app.TWILIO_VERIFY_SID");
-        $twilio = new Client($twilio_sid, $token);
-        $verification = $twilio->verify->v2->services($twilio_verify_sid)
-            ->verificationChecks
-            ->create($request->verification_code, array('to' => $request->mobile_number));
+        // $token = Config::get('app.TWILIO_AUTH_TOKEN');
+        // $twilio_sid = Config::get("app.TWILIO_SID");
+        // $twilio_verify_sid = Config::get("app.TWILIO_VERIFY_SID");
+        // $twilio = new Client($twilio_sid, $token);
+        // $verification = $twilio->verify->v2->services($twilio_verify_sid)
+        //     ->verificationChecks
+        //     ->create($request->verification_code, array('to' => $request->mobile_number));
 
         if ($validator->passes()) {
 

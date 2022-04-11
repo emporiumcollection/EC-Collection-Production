@@ -1385,6 +1385,7 @@ $allowedCurrenciesinProject=array("OMR","BHD","KWD","USD","CHF","EUR","KYD","GIP
      */
     public static function checkReservation()
     {
+        // if()
         $redirect_to = 'dashboard';
         $reservation = Session::get('reservation');
         if(!empty($reservation) && isset($reservation['redirect_url'])){

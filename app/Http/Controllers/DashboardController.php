@@ -16,6 +16,9 @@ class DashboardController extends Controller {
     
 	public function getIndex( Request $request )
 	{
+          if(request()->query('referer') || session()->get('referer')){
+               return Redirect::to(request()->query('referer'));
+          }
         /*$url = \CommonHelper::check_membership_package(\Session::get('uid'));
         if(strlen(trim($url))>0){
             return Redirect::to($url);
