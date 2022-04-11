@@ -1952,9 +1952,9 @@ class PropertiesController extends Controller {
         $rules['guests_junior'] = 'required|numeric';
         $rules['guests_babies'] = 'required|numeric';
         // $rules['suite_size'] = 'required|numeric';
-        $rules['bads'] = 'required|numeric';
-        $rules['bed_1_description'] = 'max:255';
-        $rules['bed_2_description'] = 'max:255';
+        // $rules['bads'] = 'required|numeric';
+        // $rules['bed_1_description'] = 'max:255';
+        // $rules['bed_2_description'] = 'max:255';
         $rules['view'] = 'max:255';
         // $rules['location'] = 'max:255';
         // $rules['bathroom'] = 'max:255';
