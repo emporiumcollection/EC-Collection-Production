@@ -39,7 +39,8 @@
 	  <div class="tab-pane active use-padding" id="types">	
 		<div class="sbox  "> 
 			<div class="sbox-title">@if(!empty($property_data)) {{$property_data->property_name}} @endif <a href="{{URL::to('properties/update/'.$pid)}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Property Management"><i class="fa fa-edit"></i>&nbsp;Property Management</a></div>
-				<div class="sbox-content"> 
+				<div class="sbox-content">
+				<?php print_r($cat_types);exit; ?> 
 					@if(!empty($cat_types))					
 					{{--*/ $c=1; /*--}}
 						@foreach($cat_types as $cat)
