@@ -42,8 +42,8 @@
 				<div class="sbox-content">
 					@if(!empty($cat_types))					
 					{{--*/ $c=1; /*--}}
+					<?php print_r($cat_types);exit; ?> 
 						@foreach($cat_types as $cat)
-					<?php print_r($cat);exit; ?> 
 							<form id="add_property_type_setup-{{$c}}" class="add_property_type_setup">
 								<input type="hidden" name="property_id" value="{{$pid}}" >
 								<input type="hidden" name="edit_type_id" value="{{$cat->id}}" >
@@ -299,9 +299,9 @@
 												<label for="membership_level">Membership Level</label>
 												<select name="membership_level" class="form-control input-sm" >
 													<option value="">Select Membership</option>
-													<option value="lifestyle" {{ ($cat->membership_level == 'lifestyle') ? 'selected="selected"' : ''}} >Lifestyle</option>
-													<option value="dedicated" {{ ($cat->membership_level == 'dedicated') ? 'selected="selected"' : ''}} >Dedicated</option>
-													<option value="bespoke" {{ ($cat->membership_level == 'bespoke') ? 'selected="selected"' : ''}}>Bespoke</option>
+													<option value="lifestyle" @if(isset($cat->membership_level)){{ ($cat->membership_level == 'lifestyle') ? 'selected="selected"' : ''}} @endif>Lifestyle</option>
+													<option value="dedicated" @if(isset($cat->membership_level)) {{ ($cat->membership_level == 'dedicated') ? 'selected="selected"' : ''}} @endif>Dedicated</option>
+													<option value="bespoke" @if(isset($cat->membership_level)) {{ ($cat->membership_level == 'bespoke') ? 'selected="selected"' : ''}} @endif>Bespoke</option>
 												</select>
 											</div>
 									</div>
