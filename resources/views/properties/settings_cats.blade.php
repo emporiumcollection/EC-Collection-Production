@@ -43,6 +43,7 @@
 					@if(!empty($cat_types))					
 					{{--*/ $c=1; /*--}}
 						@foreach($cat_types as $cat)
+					<?php print_r($cat);exit; ?> 
 							<form id="add_property_type_setup-{{$c}}" class="add_property_type_setup">
 								<input type="hidden" name="property_id" value="{{$pid}}" >
 								<input type="hidden" name="edit_type_id" value="{{$cat->id}}" >
