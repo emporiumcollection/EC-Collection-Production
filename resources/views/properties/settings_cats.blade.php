@@ -133,8 +133,8 @@
 											</div>
 											<div class="form-group col-lg-3">
 												<label for="membership_level">Membership Level</label>
-												<select name="membership_level" class="form-control input-sm" required="required">
-													<option>Membership Level</option>
+												<select name="membership_level" class="form-control input-sm" >
+													<option value="">Select Membership</option>
 													<option value="lifestyle" {{ ($cat->membership_level == 'lifestyle') ? 'selected="selected"' : ''}} >Lifestyle</option>
 													<option value="dedicated" {{ ($cat->membership_level == 'dedicated') ? 'selected="selected"' : ''}} >Dedicated</option>
 													<option value="bespoke" {{ ($cat->membership_level == 'bespoke') ? 'selected="selected"' : ''}}>Bespoke</option>
@@ -152,6 +152,15 @@
 													<option>Select Duration</option>
 													<option value="hrs" {{ ($cat->cancelation_duration=='hrs') ? 'selected="selected"' : ''}}>Hours</option>
 													<option value="days" {{ ($cat->cancelation_duration=='days') ? 'selected="selected"' : ''}}>Days</option>
+												</select>
+											</div>
+											<div class="form-group col-lg-3">
+												<label for="membership_level">Membership Level</label>
+												<select name="membership_level" class="form-control input-sm" >
+													<option value="">Select Membership</option>
+													<option value="lifestyle" {{ ($cat->membership_level == 'lifestyle') ? 'selected="selected"' : ''}} >Lifestyle</option>
+													<option value="dedicated" {{ ($cat->membership_level == 'dedicated') ? 'selected="selected"' : ''}} >Dedicated</option>
+													<option value="bespoke" {{ ($cat->membership_level == 'bespoke') ? 'selected="selected"' : ''}}>Bespoke</option>
 												</select>
 											</div>
 										</div>
@@ -241,7 +250,7 @@
 									<div class="row">
 										<div class="form-group col-lg-3">
 											<label for="bads"># Beds</label>
-											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
+											<input name="bads" id="bads" type="text" class="form-control input-sm" value="" data-rule-number="true"/> 
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="bed_1_description">Bed 1</label>
@@ -253,7 +262,7 @@
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="suite_size">Suite Size</label>
-											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true" required="required" /> 
+											<input name="suite_size" id="suite_size" type="text" class="form-control input-sm" value="" data-rule-number="true"/> 
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="view">View</label>
@@ -265,11 +274,11 @@
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="location">Location</label>
-											<input name="location" id="location" type="text" class="form-control input-sm" value="" required="required" /> 
+											<input name="location" id="location" type="text" class="form-control input-sm" value=""/> 
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="bathroom">Bathroom(s)</label>
-											<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="" required="required" /> 
+											<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="" /> 
 										</div>
 									</div>
 									<div class="row">
@@ -285,6 +294,15 @@
 												<option value="days">Days</option>
 											</select>
 										</div>
+										<div class="form-group col-lg-3">
+												<label for="membership_level">Membership Level</label>
+												<select name="membership_level" class="form-control input-sm" >
+													<option value="">Select Membership</option>
+													<option value="lifestyle" {{ ($cat->membership_level == 'lifestyle') ? 'selected="selected"' : ''}} >Lifestyle</option>
+													<option value="dedicated" {{ ($cat->membership_level == 'dedicated') ? 'selected="selected"' : ''}} >Dedicated</option>
+													<option value="bespoke" {{ ($cat->membership_level == 'bespoke') ? 'selected="selected"' : ''}}>Bespoke</option>
+												</select>
+											</div>
 									</div>
                                     <div class="row">
                                         <div class="form-group col-lg-12">
@@ -393,11 +411,11 @@
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="location">Location</label>
-											<input name="location" id="location" type="text" class="form-control input-sm" value="" required="required" /> 
+											<input name="location" id="location" type="text" class="form-control input-sm" value="" /> 
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="bathroom">Bathroom(s)</label>
-											<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value="" required="required" /> 
+											<input name="bathroom" id="bathroom" type="text" class="form-control input-sm" value=""/> 
 										</div>
 									</div>
 									<div class="row">										
@@ -413,6 +431,15 @@
 												<option value="days" @if(isset($cat->is_accessible) && isset($cat)) {{ (isset($cat) && $cat->is_accessible=='days') ? 'selected="selected"' : ''}} @endif>Days</option>
 											</select>
 										</div>
+										<div class="form-group col-lg-3">
+												<label for="membership_level">Membership Level</label>
+												<select name="membership_level" class="form-control input-sm" >
+													<option value="">Select Membership</option>
+													<option value="lifestyle" {{ ($cat->membership_level == 'lifestyle') ? 'selected="selected"' : ''}} >Lifestyle</option>
+													<option value="dedicated" {{ ($cat->membership_level == 'dedicated') ? 'selected="selected"' : ''}} >Dedicated</option>
+													<option value="bespoke" {{ ($cat->membership_level == 'bespoke') ? 'selected="selected"' : ''}}>Bespoke</option>
+												</select>
+											</div>
 									</div>
                                     <div class="row">
                                         <div class="form-group col-lg-12">
