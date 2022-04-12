@@ -134,7 +134,7 @@
 											<div class="form-group col-lg-3">
 												<label for="membership_level">Membership Level</label>
 												<select name="membership_level" class="form-control input-sm" required="required">
-													<option>Membership Level</option>
+													<option >Membership Level</option>
 													<option value="lifestyle" {{ ($cat->membership_level == 'lifestyle') ? 'selected="selected"' : ''}} >Lifestyle</option>
 													<option value="dedicated" {{ ($cat->membership_level == 'dedicated') ? 'selected="selected"' : ''}} >Dedicated</option>
 													<option value="bespoke" {{ ($cat->membership_level == 'bespoke') ? 'selected="selected"' : ''}}>Bespoke</option>
@@ -265,7 +265,7 @@
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="location">Location</label>
-											<input name="location" id="location" type="text" class="form-control input-sm" value="" required="required" /> 
+											<input name="location" id="location" type="text" class="form-control input-sm" value="" /> 
 										</div>
 										<div class="form-group col-lg-3">
 											<label for="bathroom">Bathroom(s)</label>

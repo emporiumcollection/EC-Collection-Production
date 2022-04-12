@@ -17,6 +17,7 @@ use Validator,
     Redirect;
 use Illuminate\Support\Facades\Crypt;
 use Auth;
+use DB;
 
 class UserController extends Controller {
     
@@ -360,13 +361,31 @@ class UserController extends Controller {
     }
 
     public function getLogin() {
-
+        $currentdomain = \Config::get('app.currentdomain');
+        $onelogindomain = \Config::get('app.onelogindomain');
+        
         if (\Auth::check()) {
+            if($currentdomain != 'emporium-collection' && (request()->query('referer') || session()->get('referer'))){
+                return Redirect::to(session()->get('referer'));   
+            }
+            
             return Redirect::to('dashboard')->with('message', \SiteHelpers::alert('success', 'Youre already login'));
         } else {
-            $this->data['socialize'] = config('services');
-            $this->data['questions'] = SecurityQuestions::all();
-            return View('user.login', $this->data);
+            if($currentdomain == 'emporium-collection'){
+                
+                //if session has refere or get query has refer
+                if(request()->query('referer') || session()->get('referer')){
+                    $this->data['socialize'] = config('services');
+                    $this->data['questions'] = SecurityQuestions::all();
+                    return View('user.login', $this->data);
+                }else{
+                    // redirect to home page
+                    return redirect('/');
+                }
+            }else{
+                // redirec to collection with referer
+                return Redirect::to($onelogindomain.'/user/login');
+            }
         }
     }
 
@@ -441,6 +460,8 @@ class UserController extends Controller {
                                     return Redirect::to('customer/profile')->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
                                 }
                                 session()->forget('login.attempts');
+
+                                session()->forget('referer');
                                 return Redirect::to($redirect_to)->with('messagetext', 'Please complete your profile and company details')->with('msgstatus', 'error');
                             }
 
@@ -986,8 +1007,8 @@ class UserController extends Controller {
         \Auth::logout();
         \Session::flush();
 
-        if($currentdomain != 'emporium-collection'){
-            return Redirect::to($onelogindomain.'/logout?referer='.request()->getSchemeAndHttpHost());
+        if($currentdomain != 'emporiumcollection'){
+            return Redirect::to($onelogindomain.'/user/logout?referer='.request()->getSchemeAndHttpHost());
         }else{
             return Redirect::to($request->get('referer'))->with('message', \SiteHelpers::alert('info', 'Sie sind derzeit nicht eingeloggt'));
         }        
@@ -1013,7 +1034,9 @@ class UserController extends Controller {
             \Session::put('page', $page);
             \Session::save();
         }
-        // print_r(\Session::get('page'));die();
+        
+        // \Session::forget('referer');
+        \Session::forget('referer');
 		if(isset($authdata)){
 			$decodeurl = base64_decode($authdata);
 			$reqauthdata=explode("|",$decodeurl);
@@ -1061,7 +1084,7 @@ class UserController extends Controller {
 
                 if ($row->active == '0') {
                     // inactive 
-                    Auth::logout();
+                    Auth::logout(); 
                     return Redirect::to('user/login')->with('message', \SiteHelpers::alert('error', 'Your Account is not active'));
                 } else if ($row->active == '2') {
                     // BLocked users
@@ -3153,6 +3176,7 @@ class UserController extends Controller {
 		{
 			return Redirect::to($red)->with('messagetext','Invalid link.')->with('msgstatus','error');
 		}
-	} 
+	}
+     
     
 }

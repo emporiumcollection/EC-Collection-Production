@@ -34,11 +34,10 @@ class OneLoginController extends Controller
             $g_id = Auth::user()->group_id;
             $last_login = Auth::user()->last_login;
             $usernm = Auth::user()->username;
-            // echo "hello"; die();
+            
             return Redirect::to(\Session::get('referer').'/onelogin?authdata='.base64_encode($email."|".$fname."|".$lname."|".$userId."|".$g_id."|".$last_login."|".$pass."|".$usernm).'&page='.\Session::get('page'));
             
         }else{
-            // echo "hello"; die();
             return Redirect::to('user/login');
         }
     }

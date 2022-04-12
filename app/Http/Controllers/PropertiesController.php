@@ -1943,6 +1943,7 @@ class PropertiesController extends Controller {
     // category
 
     function save_property_type_data(Request $request) {
+        print_r($request->input('membership_level'));exit;
         $uid = \Auth::user()->id;
         $rules['cat_name'] = 'required';
         $rules['cat_short_name'] = 'required';
