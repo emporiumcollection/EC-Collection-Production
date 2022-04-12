@@ -40,7 +40,7 @@
 		<div class="sbox  "> 
 			<div class="sbox-title">@if(!empty($property_data)) {{$property_data->property_name}} @endif <a href="{{URL::to('properties/update/'.$pid)}}" class="tips btn btn-xs btn-primary pull-right" title="" data-original-title="Property Management"><i class="fa fa-edit"></i>&nbsp;Property Management</a></div>
 				<div class="sbox-content"> 
-					@if(!empty($cat_types))
+					@if(!empty($cat_types))					
 					{{--*/ $c=1; /*--}}
 						@foreach($cat_types as $cat)
 							<form id="add_property_type_setup-{{$c}}" class="add_property_type_setup">
@@ -409,8 +409,8 @@
 											<label for="cancelation_duration">Cancellation Duration</label>
 											<select name="cancelation_duration" class="form-control input-sm" required="required">
 												<option>Select Duration</option>
-												<option value="hrs" {{ (isset($cat) && $cat->is_accessible=='hrs') ? 'selected="selected"' : ''}}>Hours</option>
-												<option value="days" {{ (isset($cat) && $cat->is_accessible=='days') ? 'selected="selected"' : ''}}>Days</option>
+												<option value="hrs" @if(isset($cat->is_accessible) && isset($cat)) {{ (isset($cat) &&  $cat->is_accessible=='hrs') ? 'selected="selected"' : '' }} @endif>Hours</option>
+												<option value="days" @if(isset($cat->is_accessible) && isset($cat)) {{ (isset($cat) && $cat->is_accessible=='days') ? 'selected="selected"' : ''}} @endif>Days</option>
 											</select>
 										</div>
 									</div>
