@@ -281,7 +281,6 @@
 														</div>
 													</div>
 													
-													
 													<div class="tab-pane use-padding" id="rooms_amenity_cat{{$cat['data']->id}}">
 														<form id="add_amenities_room_setup{{$cat['data']->id}}" class="add_amenities_room_setup">
 															<input type="hidden" name="property_id" value="{{$pid}}" >
@@ -316,13 +315,13 @@
 																	<div class="row">
 																		<div class="form-group col-lg-12">
 																			<label for="room_name">Benefits</label>
-																			<textarea name="amenities_eng" class="form-control input-sm">@if(isset($cat['rooms'])) {{ $cat['rooms'][0]->benefits }} @endif</textarea>
+																			<textarea name="benefits" class="form-control input-sm">@if(isset($cat['rooms'])) {{ $cat['rooms'][0]->benefits }} @endif</textarea>
 																		</div>
 																	</div>
 																	<div class="row">
 																		<div class="form-group col-lg-12">
 																			<label for="room_name">Highlights</label>
-																			<textarea name="amenities_eng" class="form-control input-sm">@if(isset($cat['rooms'])) {{ $cat['rooms'][0]->highlights }} @endif</textarea>
+																			<textarea name="highlights" class="form-control input-sm">@if(isset($cat['rooms'])) {{ $cat['rooms'][0]->highlights }} @endif</textarea>
 																		</div>
 																	</div>
 																	<div class="row">

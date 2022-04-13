@@ -118,3 +118,4 @@
         </a>
     </div>
 </div>
+{{-- @include('frontend.themes.EC.layouts.subsections.property_gallery') --}}

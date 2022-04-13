@@ -2450,6 +2450,13 @@ class PropertiesController extends Controller {
             }
 
             $check_pcats_exist = \DB::table('tb_properties_category_amenities')->where('property_id', $request->input('property_id'))->where('cat_id', $request->input('category_id'))->first();
+
+            //Insert data in rooms table
+            $room_data['highlights'] = $request->input('highlights');
+            $room_data['benefits'] = $request->input('benefits');
+             
+            \DB::table('tb_properties_category_rooms')->where('property_id', $request->input('property_id'))->where('category_id', $request->input('category_id'))->update($room_data);
+
             if (empty($check_pcats_exist)) {
                 $data['created'] = date('Y-m-d h:i:s');
                 $id = \DB::table('tb_properties_category_amenities')->insertGetId($data);
