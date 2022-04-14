@@ -31,59 +31,59 @@
              ?>
             @foreach($fac as $key => $val)
                 @if($val->facilitytype_name == 'General')
-                <?php  $general .= $val->facility_name.PHP_EOL; ?>
+                <?php  $general .= $val->facility_name.','; ?>
                     
                 @elseif($val->facilitytype_name == 'Business facilities')
-                    <?php  $business .= $val->facility_name.PHP_EOL; ?>
+                    <?php  $business .= $val->facility_name.','; ?>
                     
                 @elseif($val->facilitytype_name == 'Food & Drink')
-                <?php  $food .= $val->facility_name.PHP_EOL; ?>
+                <?php  $food .= $val->facility_name.','; ?>
                    
                 @elseif($val->facilitytype_name == 'Reception services')
-                <?php  $reception .= $val->facility_name.PHP_EOL; ?>
+                <?php  $reception .= $val->facility_name.','; ?>
                     
                 @elseif($val->facilitytype_name == 'Cleaning services')
-                <?php  $cleaning .= $val->facility_name.PHP_EOL; ?>
+                <?php  $cleaning .= $val->facility_name.','; ?>
                    
                 @elseif($val->facilitytype_name == 'Activities')
-                <?php  $activities .= $val->facility_name.PHP_EOL; ?>
+                <?php  $activities .= $val->facility_name.','; ?>
                    
                 @endif    
             @endforeach
             @if($general != "" && !empty($general))
                  <div class="col-md-3 col-sm-6 mb-4">
                     <p><b>General</b></p>
-                    <p style="margin: 0; display: inline;">{{ $general }}</p>
+                    <p style="margin: 0;">{!! str_replace(',', '</br>' ,$general) !!}</p>
                 </div>
             @endif    
             @if($business != "" && !empty($business))
                 <div class="col-md-3 col-sm-6 mb-4">
                     <p><b>Business facilities</b></p>
-                    <p style="margin: 0; display: inline;">{{ $business }}</p>
+                    <p style="margin: 0; ">{!! str_replace(',','</br>' ,$business) !!}</p>
                 </div>
             @endif    
             @if($food != "" && !empty($food))
                 <div class="col-md-3 col-sm-6 mb-4">
                     <p><b>Food & Drink</b></p>
-                    <p style="margin: 0; display: inline;">{{ $food }}</p>
+                    <h5 style="margin: 0;">{!! str_replace(',','</br>' ,$food) !!}</h5>
                 </div>
             @endif    
             @if($reception != "" && !empty($reception))
                 <div class="col-md-3 col-sm-6 mb-4">
                     <p><b>Reception services</b></p>
-                    <p style="margin: 0; display: inline;">{{ $reception }}</p>
+                    <p style="margin: 0; display: inline;">{!! str_replace(',','</br>' ,$reception) !!}</p>
                 </div>
             @endif    
             @if($cleaning != "" && !empty($cleaning))
                 <div class="col-md-3 col-sm-6 mb-4">
                     <p><b>Cleaning services</b></p>
-                    <p style="margin: 0; display: inline;">{{ $cleaning }}</p>
+                    <p style="margin: 0; display: inline;">{!! str_replace(',','</br>' ,$cleaning) !!}</p>
                 </div>
             @endif    
             @if($activities != "" && !empty($activities))
                 <div class="col-md-3 col-sm-6 mb-4">
                     <p><b>Activities</b></p>
-                    <p style="margin: 0; display: inline;">{{ $activities }}</p>
+                    <p style="margin: 0; display: inline;">{!! str_replace(',','</br>' ,$activities) !!}</p>
                 </div>
             @endif
         </div>  

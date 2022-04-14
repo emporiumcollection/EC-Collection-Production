@@ -69,8 +69,10 @@
                             <th>Edit Suites</th>
                             <th>Booking.com Prices</th>
                             <th>Edit Prices</th>
+                            <th>Edit Property Images</th>
                             <th>Booking.com Suites</th>
-                            <th>PropertyRoomImage</th>
+                            {{-- <th>PropertyRoomImage</th> --}}
+                            <th>Property Images</th>
                             <th>Actions</th>
                           </tr>
                     </thead>
@@ -101,10 +103,13 @@
                                 <a href="javascript:void(0);" onclick="editPrice('{{ $key.'-'.$val['id'] }}')">Edit Prices</a>
                             </td>
                             <td width="30">
+                                <a href="javascript:void(0);" onclick="EditPropertiesImages('{{ $key.'-'.$val['id'] }}')">Edit Property Images</a>
+                            </td>
+                            <td width="30">
                                 <a class="text-secondary" data-toggle="modal" id="mediumButton" data-target="#mediumModal">View Suites</a>
                             </td>
                             <td width="30">
-                                <a class="text-secondary" data-toggle="modal" id="displayButton" data-target="#displayImages" onclick="DisplayImages('{{ $key.'-'.$val['id'] }}');">View Images</a>
+                                <a class="text-secondary" data-toggle="modal" onclick="DownloadHotelImages('{{ $key.'-'.$val['id'] }}');">Download HotelImages</a> ||                                 <a class="text-secondary" data-toggle="modal" id="displayButton" data-target="#displayImages" onclick="DisplayImages('{{ $key.'-'.$val['id'] }}');">View Images</a>
                             </td>
                             <td width="30">
                                 <button class="btn btn-primary form-control" data-toggle="modal" id="import" data-target="#importdata" onclick="OpenImportModel('{{ $key.'-'.$val['id'] }}');">Import</button>
@@ -228,6 +233,15 @@
         window.open("/properties_settings/"+property_id+"/price");
     }
 
+    function EditPropertiesImages(id){
+        var property_id = $('.emp-property', $('#match-row-' + id)).val();
+        if(!property_id){
+            alert("Please select emporium hotel");
+            return false;
+        }
+        window.open("/properties_settings/"+property_id+"/property_images");   
+    }
+
     function viewPrice(id){
 
         var property_id = $('.emp-property', $('#match-row-' + id)).val();
@@ -259,6 +273,15 @@
     function machhotels(catg)
     {
         window.location.href = "{{URL::to('matchhotels')}}?selcat="+catg;
+    }
+
+    function DownloadHotelImages(id){
+        var hotel_id = $('.booking-property', $('#match-row-' + id)).val();
+        if(!hotel_id){
+            alert("Please select booking.com hotels");
+            return false;
+        }
+        window.location.href = "{{URL::to('downloadimages')}}?hotel_id="+hotel_id;   
     }
 
     function savematch(id){
@@ -331,7 +354,7 @@
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: 'dipslay/room/',
+            url: '/display/hotelimages',
             data: { hotel_id: hotel_id },
 
             success:function(response){
@@ -423,6 +446,10 @@
         $(document).on('blur', '.search_hotel_id', function(){
             var hotel_id = $(this).val();
             var property_select = $(this).parents('tr').find('.booking-property');
+            var drpdwn_val = $(this).parents('tr').find('.booking-property').val();
+            if(hotel_id == drpdwn_val){
+                $(this).parents('tr').find('.booking-property').css("border","solid 1px green");;
+            }
             $(property_select).data('selectize').setValue(hotel_id);
         });
     

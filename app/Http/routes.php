@@ -62,7 +62,8 @@ Route::get('matchhotels', 'MatchController@matchHotels');
 Route::post('savematchhotels', 'MatchController@savematchhotels');
 Route::get('roomdetail/{id}', 'MatchController@getroomdetail');
 Route::get('/import/hotels/{hotel_id}/{dest_id}','MatchController@importhoteldetail');
-Route::get('dipslay/room/','MatchController@displayroomimages');
+// Route::get('dipslay/room/','MatchController@displayroomimages');
+Route::get('/display/hotelimages','MatchController@displayhotelimages');
 Route::get('/importdetail','MatchController@importdetailoption');
 Route::post('/importsuites','MatchController@importSuites');
 Route::post('/importpolicies','MatchController@getHotelPolicy');
@@ -77,6 +78,7 @@ Route::get('/viewprice','MatchController@viewprice');
 Route::get('/entity','MatchController@addentity');
 Route::get('/searchwithid','MatchController@searchwithid');
 Route::get('/select_date','MatchController@DateViseSuiteImport');
+Route::get('/downloadimages','MatchController@HotelImagesZip');
 
 //HotelDetail Routes
 Route::get('/hotel/{slug}/restaurant','FrontEnd\HotelDetailController@restaurant')->where(['slug' => '.*']);

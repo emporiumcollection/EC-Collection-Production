@@ -9,7 +9,7 @@
       </div>
       <ul class="breadcrumb">
         <li><a href="{{ URL::to('dashboard') }}">{{ Lang::get('core.home') }}</a></li>
-		<li><a href="{{ URL::to('surroundings?return='.$return) }}">{{ $pageTitle }}</a></li>
+		<li><a href="{{ URL::to('faqs?return='.$return) }}">{{ $pageTitle }}</a></li>
         <li class="active"> {{ Lang::get('core.detail') }} </li>
       </ul>
 	 </div>  
@@ -19,9 +19,9 @@
 
 <div class="sbox animated fadeInRight">
 	<div class="sbox-title"> 
-   		<a href="{{ URL::to('surroundings?return='.$return) }}" class="tips btn btn-xs btn-default pull-right" title="{{ Lang::get('core.btn_back') }}"><i class="fa fa-arrow-circle-left"></i>&nbsp;{{ Lang::get('core.btn_back') }}</a>
+   		<a href="{{ URL::to('faqs?return='.$return) }}" class="tips btn btn-xs btn-default pull-right" title="{{ Lang::get('core.btn_back') }}"><i class="fa fa-arrow-circle-left"></i>&nbsp;{{ Lang::get('core.btn_back') }}</a>
 		@if($access['is_add'] ==1)
-   		<a href="{{ URL::to('surroundings/update/'.$id.'?return='.$return) }}" class="tips btn btn-xs btn-primary pull-right" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit"></i>&nbsp;{{ Lang::get('core.btn_edit') }}</a>
+   		<a href="{{ URL::to('faqs/update/'.$id.'?return='.$return) }}" class="tips btn btn-xs btn-primary pull-right" title="{{ Lang::get('core.btn_edit') }}"><i class="fa fa-edit"></i>&nbsp;{{ Lang::get('core.btn_edit') }}</a>
 		@endif 
 	</div>
 	<div class="sbox-content" style="background:#fff;"> 	
@@ -36,26 +36,26 @@
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Hotel Id</td>
-						<td>{{ $row->hotel_id }} </td>
-						
-					</tr>
-				
-					<tr>
 						<td width='30%' class='label-view text-right'>Property Id</td>
 						<td>{{ $row->property_id }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Type</td>
-						<td>{{ $row->type }} </td>
+						<td width='30%' class='label-view text-right'>Hotel Id</td>
+						<td>{{ $row->hotel_id }} </td>
 						
 					</tr>
 				
 					<tr>
-						<td width='30%' class='label-view text-right'>Info</td>
-						<td>{{ $row->info }} </td>
+						<td width='30%' class='label-view text-right'>Question</td>
+						<td>{{ $row->question }} </td>
+						
+					</tr>
+				
+					<tr>
+						<td width='30%' class='label-view text-right'>Answer</td>
+						<td>{{ $row->answer }} </td>
 						
 					</tr>
 				

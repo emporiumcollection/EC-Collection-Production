@@ -62,7 +62,14 @@
 									<label for="Policy" class=" control-label col-md-4 text-left"> Policy </label>
 									<div class="col-md-6">
 									  {!! Form::textarea('policy', $row['policy'],array('class'=>'form-control', 'placeholder'=>'','type'=>'textarea'   )) !!} 
-									 </div> 
+									 </div>
+									<div class="form-group  " >
+										<label for="Facilitytype Name" class=" control-label col-md-4 text-left">Status</label>
+										<div class="col-md-6" style="padding-top:6px;">
+										  Active :  <input type="checkbox" class="form-control" name="status" value="0" @if($row['status'] == '0') checked="checked" @endif/>
+										  Inactive :  <input type="checkbox" class="form-control" name="status" value="1" @if($row['status'] == '1') checked="checked" @endif/>
+										</div> 
+								  </div>  
 									 <div class="col-md-2">
 									 	
 									 </div>

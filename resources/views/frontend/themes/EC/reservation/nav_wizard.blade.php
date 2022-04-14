@@ -35,7 +35,7 @@
         <span class="<?php  if($actionIndex == 1){ echo "active"; } ?>" data-id="step-0">1. When</span>
       </div>
       <div class="nv-wz">
-        <span class="<?php  if($actionIndex == 2){ echo "active"; } ?>" data-id="step-1">2. Where</span>
+        <span class="<?php  if($actionIndex == 2){ echo "active"; } ?>" data-id="step-1">2. Who</span>
       </div>
       <div class="nv-wz">
         <span class="<?php  if($actionIndex == 3){ echo "active"; } ?>" data-id="step-2">3. Suite</span>
@@ -73,7 +73,7 @@
 
     <li>
       @if ($actionIndex >= 2)
-        <a class="nav-link @if($actionIndex == 2 ) inactive @else done @endif{{ Request::is('reservation/where') ? 'active' : ''}}" href="/reservation/where"><div>2</div>Where</a>
+        <a class="nav-link @if($actionIndex == 2 ) inactive @else done @endif{{ Request::is('reservation/where') ? 'active' : ''}}" href="/reservation/where"><div>2</div>Who</a>
       @endif
     </li>
 

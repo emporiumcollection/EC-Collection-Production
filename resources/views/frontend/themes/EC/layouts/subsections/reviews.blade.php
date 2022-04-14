@@ -44,9 +44,14 @@
                                 @endfor
                                
                             </span>
-                            <span>
-                                <b>{{ $review->rating }}/10</b>
-                            </span>
+                            @if($review->rating !== '0')
+
+                            @else
+                                <span>
+                                    <b>{{ $review->rating }}/10</b>
+                                </span>
+                            @endif 
+
                         </div>
                         <div class="review-content">
                             <p>

@@ -14,7 +14,8 @@
             {{ $hotel_data[0]->suites[0]->booking_policy }} </div>
           </div>
         @elseif(isset( $terms_n_conditions->terms_n_conditions ) && !empty( $terms_n_conditions->terms_n_conditions ))
-            {{ $terms_n_conditions->terms_n_conditions }} </div>
+            <?php  $data = str_replace("\n",'</br>' ,$terms_n_conditions->terms_n_conditions) ?>
+            {!! str_replace(':','</br>' ,$data) !!} </div>
         @else
       <div class="iubenda_legal_document"> 
         <p>

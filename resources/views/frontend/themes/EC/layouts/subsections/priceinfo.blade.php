@@ -97,9 +97,7 @@
                         <input type="checkbox" class="custom-control-input" id="policies43">
                         <label class="custom-control-label" for="policies43">
                             Your reservation is made subject to our
-                            <a href="#" data-toggle="modal" data-target="#terms-and-conditions" ><b>Terms & Conditions</b> </a>(available
-                            in other
-                            languages <a href="#"><b>here</b></a>) and the
+                            <a href="#" data-toggle="modal" data-target="#terms-and-conditions" ><b>Terms & Conditions</b> </a>and the
                             specific
                             payment terms (deposit, tax and cancellation) set out above, Please
                             check
@@ -108,10 +106,10 @@
                             <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a>
                         </label>
                     </div>
-                    <p>
+                    {{-- <p>
                         For further information about how we use your data, please see our
                         <a href="#" data-toggle="modal" data-target="#privacy_policy"><b>privacy policy</b></a>
-                    </p>
+                    </p> --}}
                     <div class="row mt-4">
                         <div class="col-6">
                             {{-- <a href="#" class="btn btn-dark btn-small-sm  px-5 btn-backwizard">Go back</a> --}}
@@ -127,3 +125,5 @@
         </div>
     </div>
 </div>
+ @include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
+@include('frontend.themes.EC.reservation.partials.privacy_model.privacy-policy')

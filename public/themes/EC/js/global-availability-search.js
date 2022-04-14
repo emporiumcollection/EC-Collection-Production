@@ -455,9 +455,11 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_category_name"]').html(suite.category_name);
   $('[data-place="suite_description"]').html(suite.room_desc);
   $('[data-place="suite_amenities"]').html(suite.suiteamenities);
-  // if(suite.booking_facilities){
-  //   $('[data-place="booking_facilities"]').html(suite.booking_facilities);
-  // }
+  $('[data-place="bathroom_facilities"]').html(suite.bathroom_facilities);
+  $('[data-place="highlights"]').html(suite.highlights.replaceAll(",","\n"));
+  $('[data-place="benefits"]').html(suite.benefits);
+  var facilities =  suite.booking_facilities
+  $('[data-place="booking_facilities"]').html(facilities.replaceAll(",","\n"));
   console.log(suite.bads, 'Number of Beds');
   $('.number_of_beds_placement').hide();
   $('.number_of_beds_placement').find('#number_of_beds').html('');

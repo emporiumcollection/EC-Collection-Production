@@ -1,24 +1,24 @@
 <?php namespace App\Http\Controllers;
 
 use App\Http\Controllers\controller;
-use App\Models\Surroundings;
+use App\Models\Faqs;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
 use Validator, Input, Redirect ; 
 
 
-class SurroundingsController extends Controller {
+class FaqsController extends Controller {
 
 	protected $layout = "layouts.main";
 	protected $data = array();	
-	public $module = 'surroundings';
+	public $module = 'faqs';
 	static $per_page	= '10';
 
 	public function __construct()
 	{
 		
 		$this->beforeFilter('csrf', array('on'=>'post'));
-		$this->model = new Surroundings();
+		$this->model = new Faqs();
 		
 		$this->info = $this->model->makeInfo( $this->module);
 		$this->access = $this->model->validAccess($this->info['id']);
@@ -26,7 +26,7 @@ class SurroundingsController extends Controller {
 		$this->data = array(
 			'pageTitle'	=> 	$this->info['title'],
 			'pageNote'	=>  $this->info['note'],
-			'pageModule'=> 'surroundings',
+			'pageModule'=> 'faqs',
 			'return'	=> self::returnUrl()
 			
 		);
@@ -62,7 +62,7 @@ class SurroundingsController extends Controller {
 		// Build pagination setting
 		$page = $page >= 1 && filter_var($page, FILTER_VALIDATE_INT) !== false ? $page : 1;	
 		$pagination = new Paginator($results['rows'], $results['total'], $params['limit']);	
-		$pagination->setPath('surroundings');
+		$pagination->setPath('faqs');
 		
 		$this->data['rowData']		= $results['rows'];
 		// Build Pagination 
@@ -82,7 +82,7 @@ class SurroundingsController extends Controller {
 		// Master detail link if any 
 		$this->data['subgrid']	= (isset($this->info['config']['subgrid']) ? $this->info['config']['subgrid'] : array()); 
 		// Render into template
-		return view('surroundings.index',$this->data);
+		return view('faqs.index',$this->data);
 	}	
 
 
@@ -107,12 +107,12 @@ class SurroundingsController extends Controller {
 		{
 			$this->data['row'] =  $row;
 		} else {
-			$this->data['row'] = $this->model->getColumnTable('tb_surroundings'); 
+			$this->data['row'] = $this->model->getColumnTable('tb_faqs'); 
 		}
 		$this->data['fields'] 		=  \SiteHelpers::fieldLang($this->info['config']['forms']);
 		
 		$this->data['id'] = $id;
-		return view('surroundings.form',$this->data);
+		return view('faqs.form',$this->data);
 	}	
 
 	public function getShow( $id = null)
@@ -127,13 +127,13 @@ class SurroundingsController extends Controller {
 		{
 			$this->data['row'] =  $row;
 		} else {
-			$this->data['row'] = $this->model->getColumnTable('tb_surroundings'); 
+			$this->data['row'] = $this->model->getColumnTable('tb_faqs'); 
 		}
 		$this->data['fields'] 		=  \SiteHelpers::fieldLang($this->info['config']['grid']);
 		
 		$this->data['id'] = $id;
 		$this->data['access']		= $this->access;
-		return view('surroundings.view',$this->data);	
+		return view('faqs.view',$this->data);	
 	}	
 
 	function postSave( Request $request)
@@ -142,15 +142,15 @@ class SurroundingsController extends Controller {
 		$rules = $this->validateForm();
 		$validator = Validator::make($request->all(), $rules);	
 		if ($validator->passes()) {
-			$data = $this->validatePost('tb_surroundings');
+			$data = $this->validatePost('tb_faqs');
 				
 			$id = $this->model->insertRow($data , $request->input('id'));
 			
 			if(!is_null($request->input('apply')))
 			{
-				$return = 'surroundings/update/'.$id.'?return='.self::returnUrl();
+				$return = 'faqs/update/'.$id.'?return='.self::returnUrl();
 			} else {
-				$return = 'surroundings?return='.self::returnUrl();
+				$return = 'faqs?return='.self::returnUrl();
 			}
 
 			// Insert logs into database
@@ -165,7 +165,7 @@ class SurroundingsController extends Controller {
 			
 		} else {
 
-			return Redirect::to('surroundings/update/'.$id)->with('messagetext',\Lang::get('core.note_error'))->with('msgstatus','error')
+			return Redirect::to('faqs/update/'.$id)->with('messagetext',\Lang::get('core.note_error'))->with('msgstatus','error')
 			->withErrors($validator)->withInput();
 		}	
 	
@@ -184,11 +184,11 @@ class SurroundingsController extends Controller {
 			
 			\SiteHelpers::auditTrail( $request , "ID : ".implode(",",$request->input('ids'))."  , Has Been Removed Successfull");
 			// redirect
-			return Redirect::to('surroundings')
+			return Redirect::to('faqs')
         		->with('messagetext', \Lang::get('core.note_success_delete'))->with('msgstatus','success'); 
 	
 		} else {
-			return Redirect::to('surroundings')
+			return Redirect::to('faqs')
         		->with('messagetext','No Item Deleted')->with('msgstatus','error');				
 		}
 

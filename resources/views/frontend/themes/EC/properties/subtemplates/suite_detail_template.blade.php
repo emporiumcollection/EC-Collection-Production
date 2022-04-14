@@ -136,16 +136,40 @@
                     molestias voluptatum maiores
                     blanditiis aliquam natus!
                 </p>
+                <div class="i-none">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="color-dark-grey ">Highlights</h4>
+
+                            <ul data-place="highlights">
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="color-dark-grey ">Benefits</h4>
+                            <ul data-place="benefits">
+                            </ul>
+                        </div>
+                    </div>
+                </div>
 
                 <!-- display only on dektop -->
-                {{-- <div class="i-none">
-                    <h4 class="mt-5 mb-4 color-dark-grey ">Booking Facilities</h4>
-                    <div class="row mb-4">
-                        <ul data-place="booking_facilities">
-                        </ul>
+                <div class="i-none">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <h4 class="color-dark-grey ">Booking Facilities</h4>
+
+                            <ul data-place="booking_facilities">
+                            </ul>
+                        </div>
+                        <div class="col-md-6">
+                            <h4 class="color-dark-grey ">Bathroom Facilities</h4>
+                            <ul data-place="bathroom_facilities">
+                            </ul>
+                        </div>
                     </div>
-                </div> --}}
+                </div>
                 <!-- display only on dektop end -->
+
 
                 <!-- display only on dektop -->
                 <div class="i-none">

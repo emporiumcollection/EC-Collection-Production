@@ -75,6 +75,25 @@
 									 <div class="col-md-2">
 									 	
 									 </div>
+								  </div> 					
+								  <div class="form-group  " >
+									<label for="Status" class=" control-label col-md-4 text-left"> Status </label>
+									<div class="col-md-6">
+									  {!! Form::text('status', $row['status'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+									 </div> 
+									 <div class="col-md-2">
+									 	
+									 </div>
+								  </div>
+								  <div class="form-group  " >
+									<label for="Facilitytype Name" class=" control-label col-md-4 text-left">Status</label>
+									<div class="col-md-6" style="padding-top:6px;">
+									  Active :  <input type="checkbox" class="form-control" name="status" value="0" @if($row['status'] == '0') checked="checked" @endif/>
+									  Inactive :  <input type="checkbox" class="form-control" name="status" value="1" @if($row['status'] == '1') checked="checked" @endif/>
+									</div> 
+									 <div class="col-md-2">
+									 	
+									 </div>
 								  </div> </fieldset>
 			</div>
 			

@@ -10,7 +10,7 @@
       </div>
       <ul class="breadcrumb">
         <li><a href="{{ URL::to('dashboard') }}">{{ Lang::get('core.home') }}</a></li>
-		<li><a href="{{ URL::to('facilities?return='.$return) }}">{{ $pageTitle }}</a></li>
+		<li><a href="{{ URL::to('faq?return='.$return) }}">{{ $pageTitle }}</a></li>
         <li class="active">{{ Lang::get('core.addedit') }} </li>
       </ul>
 	  	  
@@ -27,23 +27,14 @@
 	<div class="sbox-title"> <h4> <i class="fa fa-table"></i> </h4></div>
 	<div class="sbox-content"> 	
 
-		 {!! Form::open(array('url'=>'facilities/save?return='.$return, 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ')) !!}
+		 {!! Form::open(array('url'=>'faq/save?return='.$return, 'class'=>'form-horizontal','files' => true , 'parsley-validate'=>'','novalidate'=>' ')) !!}
 <div class="col-md-12">
-						<fieldset><legend> Facilities</legend>
+						<fieldset><legend> faq</legend>
 									
 								  <div class="form-group  " >
 									<label for="Id" class=" control-label col-md-4 text-left"> Id </label>
 									<div class="col-md-6">
 									  {!! Form::text('id', $row['id'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
-									 </div> 
-									 <div class="col-md-2">
-									 	
-									 </div>
-								  </div> 					
-								  <div class="form-group  " >
-									<label for="Hotel Id" class=" control-label col-md-4 text-left"> Hotel Id </label>
-									<div class="col-md-6">
-									  {!! Form::text('hotel_id', $row['hotel_id'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
@@ -59,38 +50,37 @@
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Facility Name" class=" control-label col-md-4 text-left"> Facility Name </label>
+									<label for="Hotel Id" class=" control-label col-md-4 text-left"> Hotel Id </label>
 									<div class="col-md-6">
-									  {!! Form::text('facility_name', $row['facility_name'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+									  {!! Form::text('hotel_id', $row['hotel_id'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Hotelfacilitytype Id" class=" control-label col-md-4 text-left"> Hotelfacilitytype Id </label>
+									<label for="Question" class=" control-label col-md-4 text-left"> Question </label>
 									<div class="col-md-6">
-									  {!! Form::text('hotelfacilitytype_id', $row['hotelfacilitytype_id'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+									  {!! Form::text('question', $row['question'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
 								  </div> 					
 								  <div class="form-group  " >
-									<label for="Facilitytype Name" class=" control-label col-md-4 text-left"> Facilitytype Name </label>
+									<label for="Answer" class=" control-label col-md-4 text-left"> Answer </label>
 									<div class="col-md-6">
-									  {!! Form::text('facilitytype_name', $row['facilitytype_name'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+									  {!! Form::text('answer', $row['answer'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
 									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
-								  </div>
+								  </div> 					
 								  <div class="form-group  " >
-									<label for="Facilitytype Name" class=" control-label col-md-4 text-left">Status</label>
+									<label for="Status" class=" control-label col-md-4 text-left"> Status </label>
 									<div class="col-md-6">
-									  Active :  <input type="checkbox" class="form-control" name="status" value="0" @if($row['status'] == '0') checked="checked" @endif/>
-									  Inactive :  <input type="checkbox" class="form-control" name="status" value="1" @if($row['status'] == '1') checked="checked" @endif/>
-									</div> 
+									  {!! Form::text('status', $row['status'],array('class'=>'form-control', 'placeholder'=>'',   )) !!} 
+									 </div> 
 									 <div class="col-md-2">
 									 	
 									 </div>
@@ -108,7 +98,7 @@
 					<div class="col-sm-8">	
 					<button type="submit" name="apply" class="btn btn-info btn-sm" ><i class="fa  fa-check-circle"></i> {{ Lang::get('core.sb_apply') }}</button>
 					<button type="submit" name="submit" class="btn btn-primary btn-sm" ><i class="fa  fa-save "></i> {{ Lang::get('core.sb_save') }}</button>
-					<button type="button" onclick="location.href='{{ URL::to('facilities?return='.$return) }}' " class="btn btn-success btn-sm "><i class="fa  fa-arrow-circle-left "></i>  {{ Lang::get('core.sb_cancel') }} </button>
+					<button type="button" onclick="location.href='{{ URL::to('faq?return='.$return) }}' " class="btn btn-success btn-sm "><i class="fa  fa-arrow-circle-left "></i>  {{ Lang::get('core.sb_cancel') }} </button>
 					</div>	  
 			
 				  </div> 

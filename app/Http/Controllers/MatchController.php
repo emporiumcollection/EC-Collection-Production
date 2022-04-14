@@ -148,11 +148,12 @@ class MatchController extends Controller
                     ->first();
                     
                     // where('property_name','like', "%$value->hotel_name%")->first();
-                    $hotels[] = [
-                        'hotel_id' => $value->hotel_id,
-                        'hotel_name' => $value->hotel_name . ' (' . $value->class . ' Star)',
-                        
-                    ];
+                    if($value->class == '4' || $value->class == '5'){
+                        $hotels[] = [
+                            'hotel_id' => $value->hotel_id,
+                            'hotel_name' => $value->hotel_name . ' (' . $value->class . ' Star)',
+                        ];
+                    }
                     if(!empty($property)){ // && !in_array($property->id, $matchedIds)
                         $matchedIds[] = $property->id;
                         $matched[] = [
@@ -518,7 +519,7 @@ class MatchController extends Controller
                 $rooms = $response[0]->block;
 
                 $roomsdetail = view('match.roomdetail', [
-                'rooms' => $rooms
+                    'rooms' => $rooms,'hotel_id' => $hotel_id
                 ])->render();
 
                 return json_encode([
@@ -586,7 +587,7 @@ class MatchController extends Controller
     }
 
     public function insertSuite($property_id,$roomDetail){
-        
+        // print_r($roomDetail);exit;
         $policies = "";
         $facilities = "";
         foreach($roomDetail[0]->block as $rooms){
@@ -600,7 +601,13 @@ class MatchController extends Controller
             $roomId = $rooms->room_id;
             
             foreach($roomDetail[0]->rooms->$roomId->facilities as $facility){
-                $facilities .= $facility->facilitytype_name.',';
+                $facilities .= $facility->name.PHP_EOL;
+            }
+
+            foreach($roomDetail[0]->rooms->$roomId->facilities as $key => $facility){
+                if($facility->facilitytype_name == 'Bathroom'){
+                    $bath_facilities .= $facility->name.PHP_EOL;
+                }
             }
 
             $room_name = $rooms->room_name;
@@ -615,10 +622,32 @@ class MatchController extends Controller
             }
             $room_desc = $roomDetail[0]->rooms->$roomId->description;
             $beds = isset($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->count)? $roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->count:0;
-            $bed_type = isset($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->name_with_count) ? $roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->name_with_count:0;
+            $bed_type = '';
+            if(isset($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0])){
+                foreach($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0] as $key => $data){
+                    if($key !== 'bed_type'){
+                        $bed_type .= $data.',';
+                    }
+
+                }
+            }    
+            $bed_type1 = "";
+            if(isset($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[1])){
+                foreach($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[1] as $key => $data1){
+                    if($key !== 'bed_type'){
+                        $bed_type1 .= $data1.',';
+                    }
+                }
+            }
+
+            // $bed_type = isset($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->name_with_count) ? $roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[0]->name_with_count:0;
+
+            // $bed_type1 = isset($roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[1]->name_with_count) ? $roomDetail[0]->rooms->$roomId->bed_configurations[0]->bed_types[1]->name_with_count:0;
 
             $guests_adults = $rooms->nr_adults;
             $guests_juniors = $rooms->nr_children;
+            $total_guests = intval($guests_adults) + intval($guests_juniors);
+
             if(!PropertyCategoryTypes::where('category_name',$room_name)->where('property_id',$property_id)->exists()){
                 $insert =  PropertyCategoryTypes::insert([
                     'property_id' => $property_id,
@@ -626,14 +655,19 @@ class MatchController extends Controller
                     'cat_short_name' => $room_name,
                     'booking_policy' => $policies,
                     'bathroom' => $rooms->number_of_bathrooms,
+                    'total_guests' => $total_guests,
                     'guests_adults' => $guests_adults,
                     'guests_juniors' => $guests_juniors,
                     'bads' => $beds,
                     'booking_facilities' => $facilities,
                     'room_desc' => $room_desc,
                     'bed_1_description' => $bed_type,
+                    'bed_2_description' => $bed_type1,
                     'status' => 0,
                     'show_on_booking' => 1,
+                    'bathroom_facilities' => $bath_facilities,
+                    'highlights' =>$highlights,
+                    'benefits' =>$benefits,
                     'created' => date("Y-m-d: H:i:s"),
                     'updated' => date("Y-m-d: H:i:s"),
                 ]);
@@ -733,10 +767,15 @@ class MatchController extends Controller
     }
 
     public function displayroomimages(Request $request){
+
         $roomImages = $this->blockDetail($request->hotel_id);
 
-        if(isset($roomImages[0]->block[0]->room_id)){
-            $room_id = $roomImages[0]->block[0]->room_id;    
+        if(empty($request->room_id)){
+            if(isset($roomImages[0]->block[0]->room_id)){
+                $room_id = $roomImages[0]->block[0]->room_id;    
+            }
+        }else{
+            $room_id = $request->room_id;
         }
         if(isset($roomImages[0]->rooms)){
             foreach ($roomImages[0]->rooms as $key => $value) {
@@ -870,11 +909,19 @@ class MatchController extends Controller
     }
 
     public function makezipOfimages(Request $request){
-        $roomImages = $this->blockDetail($request->id);
-
-        if(isset($roomImages[0]->block[0]->room_id)){
-            $room_id = $roomImages[0]->block[0]->room_id;    
+        // print_r($request->all());exit;
+        if(isset($request->hotel_id)){
+            $roomImages = $this->blockDetail($request->hotel_id);
+        }else{
+            $roomImages = $this->blockDetail($request->id);
         }
+        if(isset($request->room_id)){
+            $room_id = $request->room_id;    
+        }else{
+            if(isset($roomImages[0]->block[0]->room_id)){
+                $room_id = $roomImages[0]->block[0]->room_id;    
+            }
+        }   
         if(isset($roomImages[0]->rooms)){
             foreach ($roomImages[0]->rooms as $key => $value) {
                 if($key == $room_id){
@@ -1159,6 +1206,86 @@ class MatchController extends Controller
             return json_encode([
                 'html' => $html
             ]);  
+    }
+
+    public function HotelImagesZip(Request $request)
+    {
+        $response = $this->HotelImagesApi($request);
+        $images = [];
+        foreach($response as $image){
+            if(isset($image->url_1440)){
+                $images[] =  str_replace("640x200","1440x1440",$image->url_1440);
+            }
+        }
+        // print_r($images);exit;
+        // $files = json_decode($images);
+        # create new zip object
+        $zip = new ZipArchive();
+
+        # create a temp file & open it
+        $tmp_file = tempnam('.', '');
+        $zip->open($tmp_file, ZipArchive::CREATE);
+        # loop through each file
+        foreach ($images as $key => $file) {
+            # download file
+            $download_file = file_get_contents($file);
+            $ext = pathinfo(basename($file), PATHINFO_EXTENSION);
+            $ext = explode('?', $ext);
+            $n = "$key.$ext[0]";
+            #add it to the zip
+            $zip->addFromString($n, $download_file);
+        }
+
+        # close zip
+        $zip->close();
+        $random_code = md5(rand(10,10000).strtotime(date("YmdHis")));
+        # send the file to the browser as a download
+
+        header('Content-disposition: attachment; filename="'.$random_code.'.zip"');
+        header('Content-type: application/zip');
+        readfile($tmp_file);
+        unlink($tmp_file);
+    }
+    public function HotelImagesApi($request){
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "https://booking-com.p.rapidapi.com/v1/hotels/photos?locale=en-gb&hotel_id=".$request->hotel_id,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_HTTPHEADER => [
+                "X-RapidAPI-Host: booking-com.p.rapidapi.com",
+                "X-RapidAPI-Key: 4016c144e9msh77dd9511d4a3990p1a7da4jsnb74f29e0e60c"
+            ],
+        ]);
+
+        $response = curl_exec($curl);
+        $err = curl_error($curl);
+
+        curl_close($curl);
+
+        if ($err) {
+            echo "cURL Error #:" . $err;
+        } else {
+            $response = json_decode($response);
+            return $response;
+        }
+    }
+    public function displayhotelimages(Request $request){
+        $response = $this->HotelImagesApi($request);
+        $roomsphotos = view('match.hotelimages', [
+            'photos' => $response,
+            'hotel_id' => $request->hotel_id
+        ])->render();
+
+        return json_encode([
+            'roomphotos' => $roomsphotos
+        ]);
     }
 
 }    

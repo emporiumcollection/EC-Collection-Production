@@ -39,7 +39,8 @@
 
                       <div id="collapseOne-{{ $key }}" class="collapse p-3" aria-labelledby="headingOne" data-parent="#accordionExample2">
                         <div class="card-body">
-                          {{ $value->terms_n_conditions }}
+                          <?php  $data = str_replace("\n",'</br>' ,$value->terms_n_conditions) ?>
+                          {!! $data = str_replace(':','</br>' ,$data) !!}
                         </div>
                       </div>
                     </div>
