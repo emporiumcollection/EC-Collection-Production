@@ -32,6 +32,8 @@
                     @endforeach                 
                   @elseif(isset( $terms_n_conditions->terms_n_conditions ) && !empty( $terms_n_conditions->terms_n_conditions ))
                     {{ $terms_n_conditions->terms_n_conditions }}
+                    <?php  $data = str_replace("\n",'</br>' ,$terms_n_conditions->terms_n_conditions) ?>
+                      {!! $data = str_replace(':','</br>' ,$data) !!}
                     <hr>
                   @endif 
                   <div class="col-sm-3">

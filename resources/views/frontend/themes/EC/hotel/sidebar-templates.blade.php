@@ -1,3 +1,4 @@
+<div id="above-all" style="visibility: hidden;">
 @include('frontend.themes.EC.layouts.subsections.priceinfo')
 @include('frontend.themes.EC.layouts.subsections.quick_info')
 @include('frontend.themes.EC.layouts.subsections.reviews')
@@ -21,3 +22,4 @@
 <?php endif;?>
 
 @include('frontend.themes.EC.reservation.partials.privacy_model.terms_and_conditions')
+</div>

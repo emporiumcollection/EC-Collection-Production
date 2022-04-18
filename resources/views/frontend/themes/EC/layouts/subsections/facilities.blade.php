@@ -65,7 +65,7 @@
             @if($food != "" && !empty($food))
                 <div class="col-md-3 col-sm-6 mb-4">
                     <p><b>Food & Drink</b></p>
-                    <h5 style="margin: 0;">{!! str_replace(',','</br>' ,$food) !!}</h5>
+                    <p style="margin: 0;">{!! str_replace(',','</br>' ,$food) !!}</p>
                 </div>
             @endif    
             @if($reception != "" && !empty($reception))

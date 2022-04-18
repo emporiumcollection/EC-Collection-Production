@@ -81,7 +81,7 @@
                     <label>Country/Region<sup>*</sup></label>
                     <select class="form-control address_country" name="address_country" id="address_country">
                       <option value="" selected disabled></option>
-                      <option value="AF">Afghanistan</option>
+                      <option value="Afghanistan">Afghanistan</option>
                       <option value="AX">Aland Islands</option>
                       <option value="AL">Albania</option>
                       <option value="DZ">Algeria</option>

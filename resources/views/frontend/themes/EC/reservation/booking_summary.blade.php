@@ -32,7 +32,7 @@
                         <h3>Policies</h3>
                         <div class="card card-body rounded-0">
                           @if(!empty($policies))
-                            {{ $policies->booking_policy }}
+                            {{ $policies->śśś }}
                           @else
                             <h3>Hotel has no policies</h3>
                           @endif

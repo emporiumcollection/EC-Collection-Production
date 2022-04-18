@@ -97,6 +97,9 @@ if ($(window).width() < 992) {
     }, 500);
   });
 }
+$( window ).on( "load", function() {
+  $("#above-all").attr("style", "display:block")
+});
 </script>
 @endsection
 @endsection
