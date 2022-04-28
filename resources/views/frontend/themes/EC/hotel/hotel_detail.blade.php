@@ -102,5 +102,5 @@ $( window ).on( "load", function() {
 });
 </script>
 @endsection
-@endsection
 @include('frontend.themes.EC.hotel.sidebar-templates')
+@endsection

@@ -31,17 +31,17 @@
 </div>
 
 <script>
-    $('.copy_text').click(function (e) {
-   e.preventDefault();
-   var copyText = $(this).attr('href');
+$('.copy_text').click(function (e) {
+    e.preventDefault();
+    var copyText = $(this).attr('href');
 
-   document.addEventListener('copy', function(e) {
+    document.addEventListener('copy', function(e) {
       e.clipboardData.setData('text/plain', copyText);
       e.preventDefault();
-   }, true);
+    }, true);
 
-   document.execCommand('copy');  
-   console.log('copied text : ', copyText);
-   // alert('copied text: ' + copyText); 
- });
+    document.execCommand('copy');  
+    console.log('copied text : ', copyText);
+    // alert('copied text: ' + copyText); 
+});
 </script>
