@@ -456,11 +456,21 @@ function replaceSuiteDetail(property_id, category_id){
   $('[data-place="suite_description"]').html(suite.room_desc);
   $('[data-place="suite_amenities"]').html(suite.suiteamenities);
   $('[data-place="bathroom_facilities"]').html(suite.bathroom_facilities);
-  $('[data-place="highlights"]').html(suite.highlights.replaceAll(",","\n"));
+
+  var highlights = suite.highlights;
+  if(highlights){
+    highlights = highlights.replaceAll(",","\n");
+  }
+
+  $('[data-place="highlights"]').html(highlights);
   $('[data-place="benefits"]').html(suite.benefits);
+
   var facilities =  suite.booking_facilities
-  $('[data-place="booking_facilities"]').html(facilities.replaceAll(",","\n"));
-  console.log(suite.bads, 'Number of Beds');
+  if(facilities){
+    facilities = facilities.replaceAll(",","\n");
+  }
+  $('[data-place="booking_facilities"]').html(facilities);
+
   $('.number_of_beds_placement').hide();
   $('.number_of_beds_placement').find('#number_of_beds').html('');
   if(suite.bads > 0){
