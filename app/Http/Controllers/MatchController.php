@@ -408,36 +408,17 @@ class MatchController extends Controller
         if ($err) {
             echo "cURL Error #:" . $err;
         } else {
-            $policies = '';
-            $type = '';
+            
             $response = json_decode($response);
             
             if(isset($response->policy)){
+                $type = '';
+                print_r($response->policy);
                 foreach ($response->policy as $key => $value) {
+                    $policies = '';
                     $policies .= PHP_EOL;
                     $type .= str_replace("_"," ",$value->type).PHP_EOL;
-                    if (isset($value->content[0]->cribs_and_extra_beds)) {
-                        foreach($value->content[0]->cribs_and_extra_beds as $key => $data){
-
-                            if($key == 0){
-                                $policies .= PHP_EOL;
-                                $policies .='Cribs and extra beds : '. $data->text.PHP_EOL;
-                            }else{
-                                $policies .= $data->text.PHP_EOL;
-                            }    
-                        }
-                    }
-
-                    if (isset($value->content[0]->children_at_the_property)) {    
-                        foreach($value->content[0]->children_at_the_property as $key => $data){
-                            if($key == 0){
-                                $policies .= PHP_EOL;
-                                $policies .='Children at the property : '. $data->text.PHP_EOL;
-                            }else{
-                                $policies .= $data->text.PHP_EOL;   
-                            }    
-                        }
-                    }
+                    
                     if (isset($value->content[0]->ruleset)) {
                         foreach ($value->content[0]->ruleset as $key => $data) {
                             foreach($data->rule as $key => $rules){
@@ -447,7 +428,6 @@ class MatchController extends Controller
                                 }else{
                                     $policies .= $rules->content.PHP_EOL;    
                                 }
-                                
                             }
                         }
                     }
@@ -456,7 +436,7 @@ class MatchController extends Controller
                         'property_id' => $property_id,
                         'type' => $type,
                         'terms_n_conditions' => $policies     
-                    ]);
+                    ]);   
                 }
                 return response()->json(['status' => true]);
             } 
@@ -586,10 +566,11 @@ class MatchController extends Controller
         }
     }
 
-    public function insertSuite($property_id,$roomDetail){
-        // print_r($roomDetail);exit;
+    public function insertSuite($property_id,$roomDetail)
+    {
         $policies = "";
         $facilities = "";
+        $numberOfBathroom = "";
         foreach($roomDetail[0]->block as $rooms){
             foreach($rooms->block_text->policies as $policy){
                 $policies .= PHP_EOL;
@@ -603,7 +584,7 @@ class MatchController extends Controller
             foreach($roomDetail[0]->rooms->$roomId->facilities as $facility){
                 $facilities .= $facility->name.PHP_EOL;
             }
-
+            $bath_facilities = "";
             foreach($roomDetail[0]->rooms->$roomId->facilities as $key => $facility){
                 if($facility->facilitytype_name == 'Bathroom'){
                     $bath_facilities .= $facility->name.PHP_EOL;
@@ -647,14 +628,16 @@ class MatchController extends Controller
             $guests_adults = $rooms->nr_adults;
             $guests_juniors = $rooms->nr_children;
             $total_guests = intval($guests_adults) + intval($guests_juniors);
-
+            if(isset($rooms->number_of_bathrooms) && !empty($rooms->number_of_bathrooms)){
+                $numberOfBathroom = $rooms->number_of_bathrooms;
+            }
             if(!PropertyCategoryTypes::where('category_name',$room_name)->where('property_id',$property_id)->exists()){
                 $insert =  PropertyCategoryTypes::insert([
                     'property_id' => $property_id,
                     'category_name' => $room_name,
                     'cat_short_name' => $room_name,
                     'booking_policy' => $policies,
-                    'bathroom' => $rooms->number_of_bathrooms,
+                    'bathroom' => $numberOfBathroom ? $numberOfBathroom : 0,
                     'total_guests' => $total_guests,
                     'guests_adults' => $guests_adults,
                     'guests_juniors' => $guests_juniors,
