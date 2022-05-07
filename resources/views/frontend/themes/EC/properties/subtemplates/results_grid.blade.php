@@ -99,13 +99,29 @@
             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Lifestyle
           </button>
           <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
-            <?php if (!empty($propertyResultsForView['lifestyle'])) : ?>
+            <?php
+            $lifestyleTabActive = 'active';
+            $dedicatedTabActive = '';
+            $bespokeTabActive = ''; 
+            if (!empty($propertyResultsForView['lifestyle'])){
+            ?>
               <a class="dropdown-item" data-toggle="tab" href="#lifestyle">Lifestyle</a>
-            <?php endif; ?>
-            <?php if (!empty($propertyResultsForView['dedicated'])) : ?>
+            <?php 
+            }else{
+              $lifestyleTabActive = '';
+            }
+            ?>
+
+            <?php 
+            if (!empty($propertyResultsForView['dedicated'])) : 
+              if(!$lifestyleTabActive) $dedicatedTabActive = 'active';
+            ?>
               <a class="dropdown-item" data-toggle="tab" href="#dedicated">Dedicated</a>
             <?php endif; ?>
-            <?php if (!empty($propertyResultsForView['bespoke'])) : ?>
+            <?php 
+            if (!empty($propertyResultsForView['bespoke'])) : 
+              if(!$lifestyleTabActive && !$dedicatedTabActive) $bespokeTabActive = 'active';
+            ?>
               <a class="dropdown-item" data-toggle="tab" href="#bespoke">Bespoke</a>
             <?php endif; ?>
           </div>
@@ -263,7 +279,7 @@
         </ul>
         <div class="tab-content pt-lg-5 pt-xl-5">
           <?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
-  <div class="tab-pane fade active show" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
+  <div class="tab-pane fade <?php echo $lifestyleTabActive;?> show" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
       <?php
       foreach ($editorsProperties as $editorChoice) :
       ?>
@@ -292,7 +308,7 @@
   </div>
   <?php endif; ?>
   <?php if (!empty($propertyResultsForView['dedicated'])) : ?>
-  <div class="tab-pane fade" id="dedicated" role="tabpanel" aria-labelledby="dedicated-tab">
+  <div class="tab-pane <?php echo $dedicatedTabActive;?> fade" id="dedicated" role="tabpanel" aria-labelledby="dedicated-tab">
       <?php
       foreach ($editorsProperties as $editorChoice) :
       ?>
@@ -321,7 +337,7 @@
   </div>
   <?php endif; ?>
   <?php if (!empty($propertyResultsForView['bespoke'])) : ?>
-  <div class="tab-pane fade" id="bespoke" role="tabpanel" aria-labelledby="bespoke-tab">
+  <div class="tab-pane <?php echo $bespokeTabActive;?> fade" id="bespoke" role="tabpanel" aria-labelledby="bespoke-tab">
       <?php
       foreach ($editorsProperties as $editorChoice) :
       ?>
