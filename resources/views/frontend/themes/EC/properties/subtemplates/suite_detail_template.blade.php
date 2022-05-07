@@ -211,18 +211,3 @@
             </div>
         </div>
 </div>
-
-@if(Request::segment(3) == 'suites')
-    @include('frontend.themes.EC.layouts.subsections.quick_info')   
-    @include('frontend.themes.EC.layouts.subsections.reviews')
-    @include('frontend.themes.EC.layouts.subsections.location_info')
-    @include('frontend.themes.EC.layouts.subsections.priceinfo')
-    @include('frontend.themes.EC.layouts.subsections.property_gallery')
-@endif
-
-@include('frontend.themes.EC.layouts.subsections.faqs')
-@include('frontend.themes.EC.hotel.child_policy')  
-@include('frontend.themes.EC.hotel.policy')  
-@include('frontend.themes.EC.hotel.tips')  
-@include('frontend.themes.EC.layouts.subsections.surrounding')
-@include('frontend.themes.EC.layouts.subsections.facilities') 

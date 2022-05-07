@@ -56,7 +56,7 @@
             </div>
         </a>
         <div class="hotel-meta full-width hotel-meta-details">
-            <a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews" onclick="replaceReviewData()">
+            <a href="#" class="view btn-sidebar i-none" data-sidebar="#reviews" onclick="replaceReviewData(<!--PROPERTY-ID-->)">
                 Reviews
             </a>
             <a href="#" class="view btn-sidebar i-none suite_info" data-sidebar="#suiteinfo" onclick="replaceSuiteBoard();">

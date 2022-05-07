@@ -72,6 +72,7 @@
   $('.top-header').addClass('mobile-off');  
 </script>
 @endsection
+@include('frontend.themes.EC.hotel.sidebar-templates')
 @endsection
 
 
