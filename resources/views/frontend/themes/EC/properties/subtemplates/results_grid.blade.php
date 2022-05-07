@@ -72,13 +72,13 @@
         </div>
         <div class="mobile-off">          
           <ul class="nav nav-pills tabs-w3" id="myTab" role="tablist">
-            <?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
+            <?php 
+              $total_editors = count($editorsProperties);
+              $total_feature = count($featureProperties);
+              $total_properties= $total_editors + $total_feature;
+            ?>
+            <?php if (count($propertyResultsForView['lifestyle']) + $total_properties) : ?>
               <li class="nav-item" role="presentation">
-                <?php 
-                  $total_editors = count($editorsProperties);
-                  $total_feature = count($featureProperties);
-                  $total_properties= $total_editors + $total_feature;
-                ?>
                 <a class="nav-link active" id="lifestyle-tab" data-toggle="pill" href="#lifestyle" role="tab" aria-controls="lifestyle" aria-selected="true">LIFESTYLE (<?php print count($propertyResultsForView['lifestyle']) + $total_properties ?>)</a>
               </li>
             <?php endif; ?>
