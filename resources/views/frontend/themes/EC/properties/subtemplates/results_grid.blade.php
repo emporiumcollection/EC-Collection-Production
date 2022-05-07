@@ -100,7 +100,7 @@
           </button>
           <div class="dropdown-menu w-100" aria-labelledby="dropdownMenuButton">
             <?php
-            $lifestyleTabActive = 'active';
+            $lifestyleTabActive = 'active show';
             $dedicatedTabActive = '';
             $bespokeTabActive = ''; 
             if (!empty($propertyResultsForView['lifestyle'])){
@@ -114,13 +114,13 @@
 
             <?php 
             if (!empty($propertyResultsForView['dedicated'])) : 
-              if(!$lifestyleTabActive) $dedicatedTabActive = 'active';
+              if(!$lifestyleTabActive) $dedicatedTabActive = 'active show';
             ?>
               <a class="dropdown-item" data-toggle="tab" href="#dedicated">Dedicated</a>
             <?php endif; ?>
             <?php 
             if (!empty($propertyResultsForView['bespoke'])) : 
-              if(!$lifestyleTabActive && !$dedicatedTabActive) $bespokeTabActive = 'active';
+              if(!$lifestyleTabActive && !$dedicatedTabActive) $bespokeTabActive = 'active show';
             ?>
               <a class="dropdown-item" data-toggle="tab" href="#bespoke">Bespoke</a>
             <?php endif; ?>
@@ -279,7 +279,7 @@
         </ul>
         <div class="tab-content pt-lg-5 pt-xl-5">
           <?php if (!empty($propertyResultsForView['lifestyle']) || !empty($editorsProperties) || !empty($featureProperties)) : ?>
-  <div class="tab-pane fade <?php echo $lifestyleTabActive;?> show" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
+  <div class="tab-pane fade <?php echo $lifestyleTabActive;?>" id="lifestyle" role="tabpanel" aria-labelledby="lifestyle-tab">
       <?php
       foreach ($editorsProperties as $editorChoice) :
       ?>
