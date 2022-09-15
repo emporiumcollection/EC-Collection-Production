@@ -1200,8 +1200,9 @@ class MatchController extends Controller
                 $images[] =  str_replace("640x200","1280x900",$image->url_max);
             }
         }
-        // print_r($images);exit;
+        
         // $files = json_decode($images);
+        // print_r($images);exit;
         # create new zip object
         $zip = new ZipArchive();
 
