@@ -1196,8 +1196,8 @@ class MatchController extends Controller
         $response = $this->HotelImagesApi($request);
         $images = [];
         foreach($response as $image){
-            if(isset($image->url_1440)){
-                $images[] =  str_replace("640x200","1440x1440",$image->url_1440);
+            if(isset($image->url_max)){
+                $images[] =  str_replace("640x200","1280x900",$image->url_max);
             }
         }
         // print_r($images);exit;
