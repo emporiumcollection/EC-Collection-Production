@@ -777,7 +777,7 @@ class DestinationController extends Controller {
         $parent_id = 0;
         if($showparent){
             $parentQuery = "select id, parent_category_id, category_name from tb_categories where category_name='$keyword' and is_hotels_available=1";
-            $parentCategory = \DB::connection($conn)->SELECT($parentQuery)->toArray();
+            $parentCategory = \DB::connection($conn)->SELECT($parentQuery);
 
             /*$parentCategory = categories::select(['id', 'parent_category_id', 'category_name'])
             ->where('category_name', '=', $keyword)
