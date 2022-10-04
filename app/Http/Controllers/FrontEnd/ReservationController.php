@@ -15,6 +15,7 @@ use App\Models\availableservices;
 use App\Models\properties;
 use App\User;
 use Auth;
+use DB;
 use Config;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\LengthAwarePaginator as Paginator;
@@ -687,8 +688,7 @@ class ReservationController extends Controller {
             'Zambia',
             'Zimbabwe'
 
-        ];
-        print_r($country);exit;  
+        ];  
         
         $this->data['address'] = User::find(Session::get('uid'));
         $this->data['layout_type'] = 'old';
@@ -1117,28 +1117,38 @@ class ReservationController extends Controller {
     public function databaseName(){
 
         if(Config::get('app.currentdomain') == 'voyage'){
-
-        $db = Config::get('app.EmporiumVoyage');   
-
-        }
-
-        if(Config::get('app.currentdomain') == 'safari'){
-
-        $db = Config::get('app.EmporiumSafari');   
+            // echo "hello";exit;
+            $db = Config::get('app.EmporiumVoyage');   
 
         }
 
-        if(Config::get('app.currentdomain') == 'spa'){
+        elseif(Config::get('app.currentdomain') == 'safari'){
 
-        $db = Config::get('app.EmporiumSpa');   
+            $db = Config::get('app.EmporiumSafari');   
+            // echo "hello";exit;
+
+        }
+
+        elseif(Config::get('app.currentdomain') == 'spa'){
+
+            $db = Config::get('app.EmporiumSpa');   
+            // echo "hello";exit;
 
         }
 
-        if(Config::get('app.currentdomain') == 'islands'){
+        elseif(Config::get('app.currentdomain') == 'islands'){
 
-        $db = Config::get('app.EmporiumIslands');   
+            $db = Config::get('app.EmporiumIslands');   
+                        // echo "hello";exit;
 
         }
+        else
+        {
+            $db = Config::get('app.EmporiumVoyage');
+        }
+
+        // echo "hello"; exit;
+
         return $db; 
     }
 
